@@ -1,0 +1,2490 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis:500,600,700|Rubik:400,400i,700,700i|PT+Sans:400,400i,700,700i');
+a {
+  outline: none;
+}
+a:focus {
+  outline: none;
+  outline: 0;
+}
+.sectionlabel {
+  font-family: "Dosis";
+  padding-bottom: 20px;
+  border-bottom: 2px solid #dedede;
+  position: relative;
+}
+.sectionlabel::before {
+  content: "";
+  background-color: #dedede;
+  width: 600px;
+  height: 2px;
+  position: absolute;
+  right: 100px;
+  display: inline-block;
+  bottom: -2px;
+}
+.sectionlabel .bold {
+  background-color: #000;
+  display: inline-block;
+  color: #fff;
+  padding: 1px 8px 0 8px;
+  position: relative;
+  left: -8px;
+  margin-bottom: 5px;
+}
+.sectionlabel span {
+  display: block;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+body header {
+  height: 70px;
+  position: relative;
+}
+body header .wrap {
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  z-index: 6;
+  top: 0;
+}
+body header .wrap::after,
+body header .wrap::before {
+  width: 50%;
+  position: absolute;
+  content: "";
+  right: 0;
+  height: 70px;
+  background: #00d19e;
+  z-index: -1;
+  top: 0;
+}
+body header .wrap::before {
+  background: #fff;
+  right: auto;
+  left: 0;
+}
+body header .wrap .container {
+  background: #fff;
+  height: 70px;
+  padding-right: 0;
+}
+body header .wrap .container:before,
+body header .wrap .container:after {
+  content: " ";
+  display: table;
+}
+body header .wrap .container:after {
+  clear: both;
+}
+body header .wrap .container .logo {
+  float: left;
+  display: inline-block;
+  margin: 16px 0 0 0;
+}
+body header .wrap .container .mobilemenu {
+  float: right;
+  margin-top: 21px;
+  display: none;
+}
+body header .wrap .container nav {
+  float: right;
+  position: relative;
+  right: -70px;
+}
+body header .wrap .container nav ul.main {
+  float: right;
+  padding-top: 22px;
+}
+body header .wrap .container nav ul.main li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 30px;
+}
+body header .wrap .container nav ul.main li a {
+  color: inherit;
+  font-family: "Dosis";
+  font-size: 1.6rem;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+body header .wrap .container nav ul.main li a:hover {
+  text-decoration: none;
+  color: #00b88b;
+}
+body header .wrap .container nav .account {
+  float: right;
+  height: 70px;
+  position: relative;
+}
+body header .wrap .container nav .account a {
+  display: inline-block;
+  background: #00d19e;
+  font-size: 1.6rem;
+}
+body header .wrap .container nav .account a:before,
+body header .wrap .container nav .account a:after {
+  content: " ";
+  display: table;
+}
+body header .wrap .container nav .account a:after {
+  clear: both;
+}
+body header .wrap .container nav .account a .lbl {
+  height: 70px;
+  float: left;
+  text-align: center;
+  color: #fff;
+  font-family: "Dosis";
+  padding: 22px 30px 0 30px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body header .wrap .container nav .account a .thumb {
+  width: 70px;
+  height: 70px;
+  float: left;
+}
+body header .wrap .container nav .account a .thumb img {
+  width: 100%;
+  height: 100%;
+}
+body header .wrap .container nav .account a:hover .lbl {
+  background-color: #00b88b;
+}
+body header .wrap .container nav .account .accountmenu {
+  position: absolute;
+  top: 70px;
+  width: 250px;
+  right: 0;
+  background-color: #00d19e;
+  margin: 0;
+  display: none;
+  padding: 0;
+}
+body header .wrap .container nav .account .accountmenu.active {
+  display: block;
+}
+body header .wrap .container nav .account .accountmenu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+body header .wrap .container nav .account .accountmenu li a {
+  display: block;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 8px 20px 8px 20px;
+  background-color: #00d19e;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body header .wrap .container nav .account .accountmenu li a:hover {
+  text-decoration: none;
+  background-color: #00b88b;
+}
+body main section.banner {
+  height: 350px;
+}
+body main section.banner.mini {
+  height: 260px;
+}
+body main section.banner.mini .container {
+  padding-right: 0;
+}
+body main section.banner.mini .container .bannertext {
+  padding-top: 80px;
+}
+body main section.banner.mini .container .progress {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0;
+  box-shadow: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 15px;
+  margin: 0;
+  overflow: inherit;
+}
+body main section.banner.mini .container .progress .progress-bar {
+  box-shadow: none;
+  background-color: #ffbb00;
+  position: relative;
+}
+body main section.banner.mini .container .progress .progress-bar .labl {
+  position: absolute;
+  right: -25px;
+  top: -40px;
+  display: inline-block;
+  padding: 1px 0px 1px 0px;
+  width: 50px;
+  background-color: #ffbb00;
+  z-index: 5;
+  color: #fff;
+  font-family: "Dosis";
+}
+body main section.banner.mini .container .progress .progress-bar .labl::after {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 5px 0 5px;
+  border-color: #ffb701 transparent transparent transparent;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  bottom: -5px;
+}
+body main section.banner.mini .bgwrap {
+  background-image: url('../img/bg-banner2.png');
+}
+body main section.banner.mini.detail .container .bannertext {
+  padding-top: 50px;
+}
+body main section.banner.mini.detail .collectioninfo {
+  bottom: 0;
+  right: 0;
+  left: 15px;
+  position: absolute;
+  background-color: #ffbb00;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 60px;
+}
+body main section.banner.mini.detail .collectioninfo li {
+  list-style: none;
+}
+body main section.banner.mini.detail .collectioninfo li.title {
+  float: left;
+  text-align: left;
+  font-size: 1.5rem;
+  font-family: "Dosis";
+  padding: 17px 0 0 30px;
+}
+body main section.banner.mini.detail .collectioninfo li.count {
+  float: right;
+  text-align: right;
+}
+body main section.banner.mini.detail .collectioninfo li.count .info {
+  display: inline-block;
+  font-family: "Dosis";
+  margin: 18px 20px 0 0;
+}
+body main section.banner.mini.detail .collectioninfo li.count .next {
+  float: right;
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #fff;
+  border-color: #fff;
+  padding: 4px 15px 3px 15px;
+  margin: 13px 20px 0 0;
+}
+body main section.banner.mini.detail .collectioninfo li.count .next:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.banner.mini.detail .collectioninfo li.count .next:hover {
+  background-color: #fff;
+  color: #ffbb00;
+  border-color: #fff;
+}
+body main section.banner .container {
+  position: relative;
+  height: 100%;
+}
+body main section.banner .container .bannertext {
+  padding-top: 100px;
+}
+body main section.banner .container .bannertext .line {
+  margin-bottom: 10px;
+}
+body main section.banner .container .bannertext .line .lbl span {
+  background-color: #00d19e;
+  display: inline-block;
+  font-family: "Dosis";
+  color: #fff;
+  padding: 3px 10px 3px 10px;
+  font-size: 1.6rem;
+}
+body main section.banner .container .bannertext .line .wrap {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+body main section.banner .container .bannertext .line .wrap span {
+  display: inline-block;
+  color: #000;
+  font-size: 4.0rem;
+  padding: 0px 15px 2px 15px;
+  font-family: "Dosis";
+  background: #fff;
+}
+body main section.banner .container .bannertext .line .wrap span::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  background-color: #00d19e;
+  top: 5px;
+  left: 5px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+body main section.banner .container nav.vertical {
+  width: 70px;
+  height: 100%;
+  position: absolute;
+  right: -70px;
+  background-color: #fff;
+  top: 0;
+  z-index: 2;
+}
+body main section.banner .container nav.vertical ul {
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+  display: inline-block;
+  width: 400px;
+  position: absolute;
+  bottom: -25px;
+  left: 25px;
+  font-family: "Dosis";
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+body main section.banner .container nav.vertical ul li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 30px;
+  color: #00d19e;
+}
+body main section.banner .container nav.vertical ul li a {
+  color: #000;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+body main section.banner .container nav.vertical ul li a img {
+  position: relative;
+  top: -2px;
+  margin-right: 10px;
+  margin-left: 3px;
+}
+body main section.banner .container nav.vertical ul li a:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  text-decoration: none;
+}
+body main section.banner .container nav.vertical ul li .space {
+  margin-left: 10px;
+}
+body main section.banner .bgwrap {
+  position: absolute;
+  width: 100vw;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: -1;
+  background-image: url('../img/bg-banner.png');
+  background-size: cover;
+}
+body main section.campaigns {
+  padding: 60px 0 60px 0;
+}
+body main section.campaigns:before,
+body main section.campaigns:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigns:after {
+  clear: both;
+}
+body main section.campaigns > .container {
+  padding-right: 0;
+}
+body main section.campaigns .list .campaign {
+  margin-bottom: 55px;
+}
+body main section.campaigns .list .campaign:before,
+body main section.campaigns .list .campaign:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigns .list .campaign:after {
+  clear: both;
+}
+body main section.campaigns .list .campaign:hover span.no {
+  color: #00d19e;
+}
+body main section.campaigns .list .campaign:hover .thumbs a .action {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.campaigns .list .campaign:hover .details a h1 {
+  color: #00d19e;
+}
+body main section.campaigns .list .campaign span.no {
+  width: 10%;
+  float: left;
+  font-size: 6.0rem;
+  font-family: "Dosis";
+  color: #d6d6d6;
+  display: block;
+  line-height: 4.0rem;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.campaigns .list .campaign .thumbs {
+  width: 25%;
+  float: left;
+}
+body main section.campaigns .list .campaign .thumbs a {
+  width: 100%;
+  position: relative;
+  display: block;
+}
+body main section.campaigns .list .campaign .thumbs a img {
+  width: 100%;
+}
+body main section.campaigns .list .campaign .thumbs a .action {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 186, 9, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  padding-top: 47%;
+  color: #fff;
+  font-family: "Dosis";
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.campaigns .list .campaign .thumbs a .action .plus {
+  font-size: 2.5rem;
+  line-height: 1.5rem;
+}
+body main section.campaigns .list .campaign .thumbs a::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: -1;
+  background-color: #00d19e;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+body main section.campaigns .list .campaign .thumbs a::before {
+  content: "";
+  position: absolute;
+  border: 2px solid #fff;
+  z-index: 1;
+  left: 30px;
+  right: 30px;
+  top: 30px;
+  bottom: 30px;
+}
+body main section.campaigns .list .campaign .details {
+  width: 65%;
+  float: left;
+  padding-left: 50px;
+}
+body main section.campaigns .list .campaign .details a h1 {
+  font-size: 2.0rem;
+  margin: 0 0 10px 0;
+  padding: 0;
+  color: #000;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+body main section.campaigns .list .campaign .details a:hover {
+  text-decoration: none;
+}
+body main section.campaigns .list .campaign .details .progress-line:before,
+body main section.campaigns .list .campaign .details .progress-line:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigns .list .campaign .details .progress-line:after {
+  clear: both;
+}
+body main section.campaigns .list .campaign .details .progress-line .progress {
+  width: 87%;
+  float: left;
+  height: 3px;
+  box-shadow: none;
+  border-radius: 0;
+  margin-top: 9px;
+  background-color: #e7e7e7;
+}
+body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar {
+  background-color: #ffbb00;
+  box-shadow: none;
+}
+body main section.campaigns .list .campaign .details .progress-line .target {
+  width: 13%;
+  float: left;
+  font-family: "Dosis";
+  font-size: 1.4rem;
+  color: #ffbb00;
+  text-align: right;
+}
+body main section.campaigns .list .campaign .details ul.stats {
+  margin: 0;
+  padding: 0;
+}
+body main section.campaigns .list .campaign .details ul.stats li {
+  list-style: none;
+  display: inline-block;
+  font-family: "Dosis";
+  margin-right: 20px;
+}
+body main section.campaigns .list .campaign .details ul.stats li .lbl {
+  color: #909090;
+}
+body main section.campaigns .list .campaign .details ul.stats li .val {
+  color: #000;
+  font-size: 3.6rem;
+  line-height: 5rem;
+}
+body main section.campaigns .list .campaign .details ul.stats li .val small {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  color: #909090;
+}
+body main section.campaigns .list .campaign .details ul.stats li.contribute {
+  float: right;
+  margin-right: 0;
+  margin-top: 15px;
+}
+body main section.campaigns .list .campaign .details ul.stats li.contribute a {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.campaigns .list .campaign .details ul.stats li.contribute a:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.campaigns .list .loadmore {
+  text-align: center;
+}
+body main section.campaigns .list .loadmore a {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  margin: 0 auto;
+  display: inline-block;
+}
+body main section.campaigns .list .loadmore a:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.collections {
+  padding: 60px 0 60px 0;
+}
+body main section.collections:before,
+body main section.collections:after {
+  content: " ";
+  display: table;
+}
+body main section.collections:after {
+  clear: both;
+}
+body main section.collections > .container {
+  padding-right: 0;
+}
+body main section.collections .campaignlist .entries {
+  margin: 0px -30px 0 -30px;
+}
+body main section.collections .campaignlist .entries:before,
+body main section.collections .campaignlist .entries:after {
+  content: " ";
+  display: table;
+}
+body main section.collections .campaignlist .entries:after {
+  clear: both;
+}
+body main section.collections .campaignlist .entries .sizer {
+  display: none;
+}
+body main section.collections .campaignlist .entries .sizer,
+body main section.collections .campaignlist .entries .entry {
+  width: 33.333%;
+  padding: 0 30px 0 30px;
+  margin-bottom: 35px;
+}
+body main section.collections .campaignlist .entries .sizer .thumbs,
+body main section.collections .campaignlist .entries .entry .thumbs {
+  width: 100%;
+  position: relative;
+}
+body main section.collections .campaignlist .entries .sizer .thumbs img,
+body main section.collections .campaignlist .entries .entry .thumbs img {
+  width: 100%;
+}
+body main section.collections .campaignlist .entries .sizer .thumbs .action,
+body main section.collections .campaignlist .entries .entry .thumbs .action {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 186, 9, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: "Dosis";
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.collections .campaignlist .entries .sizer .thumbs .action .plus,
+body main section.collections .campaignlist .entries .entry .thumbs .action .plus {
+  font-size: 2.5rem;
+  position: relative;
+  top: -4px;
+  margin-right: 5px;
+}
+body main section.collections .campaignlist .entries .sizer .thumbs::before,
+body main section.collections .campaignlist .entries .entry .thumbs::before {
+  content: "";
+  position: absolute;
+  border: 2px solid #fff;
+  z-index: 1;
+  left: 30px;
+  right: 30px;
+  top: 30px;
+  bottom: 30px;
+}
+body main section.collections .campaignlist .entries .sizer .detail,
+body main section.collections .campaignlist .entries .entry .detail {
+  padding: 25px 0 25px 0;
+}
+body main section.collections .campaignlist .entries .sizer .detail:before,
+body main section.collections .campaignlist .entries .entry .detail:before,
+body main section.collections .campaignlist .entries .sizer .detail:after,
+body main section.collections .campaignlist .entries .entry .detail:after {
+  content: " ";
+  display: table;
+}
+body main section.collections .campaignlist .entries .sizer .detail:after,
+body main section.collections .campaignlist .entries .entry .detail:after {
+  clear: both;
+}
+body main section.collections .campaignlist .entries .sizer .detail .count,
+body main section.collections .campaignlist .entries .entry .detail .count {
+  font-family: "Dosis";
+  font-size: 3.5rem;
+  width: 25%;
+  float: left;
+  line-height: 0.8em;
+  text-align: center;
+  padding: 5px 0 0 0;
+  color: #000;
+}
+body main section.collections .campaignlist .entries .sizer .detail .count span,
+body main section.collections .campaignlist .entries .entry .detail .count span {
+  font-size: 1.2rem;
+  text-align: center;
+  display: block;
+  color: #838383;
+}
+body main section.collections .campaignlist .entries .sizer .detail .desc,
+body main section.collections .campaignlist .entries .entry .detail .desc {
+  width: 75%;
+  float: left;
+  line-height: 1.7em;
+  font-size: 1.4rem;
+  color: #000;
+}
+body main section.collections .campaignlist .entries .sizer .detail .desc .owner,
+body main section.collections .campaignlist .entries .entry .detail .desc .owner {
+  color: #838383;
+}
+body main section.collections .campaignlist .entries .sizer a:hover .thumbs .action,
+body main section.collections .campaignlist .entries .entry a:hover .thumbs .action {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.collections .campaignlist .loadmore {
+  text-align: center;
+}
+body main section.collections .campaignlist .loadmore a {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  margin: 0 auto;
+  display: inline-block;
+}
+body main section.collections .campaignlist .loadmore a:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.campaignstats {
+  padding: 0 0 0px 0;
+}
+body main section.campaignstats:before,
+body main section.campaignstats:after {
+  content: " ";
+  display: table;
+}
+body main section.campaignstats:after {
+  clear: both;
+}
+body main section.campaignstats .container {
+  width: 100%;
+  padding: 0px;
+}
+body main section.campaignstats .left {
+  width: 65%;
+  height: 380px;
+  float: left;
+  position: relative;
+}
+body main section.campaignstats .left .maps {
+  width: 100%;
+  height: 100%;
+  background-color: #c8d7d4;
+  position: absolute;
+  right: 0;
+}
+body main section.campaignstats .left .maps .mapswrap {
+  width: 100%;
+  height: 100%;
+}
+body main section.campaignstats .left .maps .heading {
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  right: -260px;
+  width: 230px;
+  font-size: 2.0rem;
+  font-family: "Dosis";
+}
+body main section.campaignstats .left .maps .heading::after {
+  position: absolute;
+  right: 0;
+  width: 400px;
+  height: 2px;
+  content: "";
+  background-color: #ffbb00;
+  display: block;
+  bottom: -20px;
+}
+body main section.campaignstats .left .graphs {
+  width: 65%;
+  background-color: #00d19e;
+  position: absolute;
+  height: 150px;
+  right: 0;
+  bottom: -100px;
+}
+body main section.campaignstats .right {
+  width: 35%;
+  float: left;
+}
+body main section.campaignstats .right .leaderboard {
+  padding: 75px 0px 30px 30px;
+  width: 57%;
+}
+body main section.campaignstats .right .leaderboard .heading {
+  background-color: #000;
+  display: inline-block;
+  color: #fff;
+  padding: 1px 8px 0 8px;
+  position: relative;
+  margin-bottom: 5px;
+  font-family: "Dosis";
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist {
+  margin: 0;
+  padding: 30px 0 0 0;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li {
+  list-style: none;
+  display: block;
+  margin-bottom: 10px;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li:before,
+body main section.campaignstats .right .leaderboard ul.leaderlist li:after {
+  content: " ";
+  display: table;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li:after {
+  clear: both;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.no {
+  float: left;
+  width: 10%;
+  padding-top: 13px;
+  font-family: "Dosis";
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.thumbs {
+  float: left;
+  width: 18%;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.thumbs img {
+  width: 50px;
+  border-radius: 25px;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.details {
+  float: left;
+  width: 56%;
+  padding-left: 20px;
+  padding-top: 9px;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.details .name {
+  font-size: 1.4rem;
+  line-height: 16px;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.details .location {
+  font-size: 1.2rem;
+  font-family: "Dosis";
+  color: #999;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.points {
+  float: right;
+  width: 16%;
+  line-height: 17px;
+  text-align: right;
+  padding-top: 9px;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li span.points .lbl {
+  font-size: 1.2rem;
+  font-family: "Dosis";
+  color: #ffbb00;
+}
+body main section.campaignstats .right .leaderboard .loadmore {
+  text-align: center;
+  margin-top: 30px;
+}
+body main section.campaignstats .right .leaderboard .loadmore a {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  margin: 0 auto;
+  display: inline-block;
+}
+body main section.campaignstats .right .leaderboard .loadmore a:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main .topsection {
+  padding-bottom: 50px;
+}
+body main .topsection:before,
+body main .topsection:after {
+  content: " ";
+  display: table;
+}
+body main .topsection:after {
+  clear: both;
+}
+body main .topsection .sectionlabel {
+  float: left;
+}
+body main .topsection .sort {
+  float: right;
+  position: relative;
+  font-family: "Dosis";
+  padding-top: 30px;
+}
+body main .topsection .sort .lbl {
+  display: inline-block;
+}
+body main .topsection .sort a {
+  display: inline-block;
+  color: #00d19e;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+body main .topsection .sort a .arrow {
+  margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+body main .topsection .sort a:hover {
+  text-decoration: none;
+  color: #009e77;
+}
+body main .topsection .sort .dropdown-menu {
+  margin: 5px 0 0 0;
+  right: 10px;
+  padding: 0;
+  border-radius: 0;
+  border: 0px;
+  box-shadow: none;
+}
+body main .topsection .sort .dropdown-menu li {
+  display: block;
+  margin-bottom: 1px;
+}
+body main .topsection .sort .dropdown-menu li a {
+  display: block;
+  color: #555;
+  padding: 7px 10px 7px 10px;
+  background-color: #f2f2f2;
+}
+body main .topsection .sort .dropdown-menu li a:hover {
+  background-color: #00d19e;
+  color: #fff;
+}
+body main section.learnmore {
+  padding: 0px 0 0px 0;
+}
+body main section.learnmore:before,
+body main section.learnmore:after {
+  content: " ";
+  display: table;
+}
+body main section.learnmore:after {
+  clear: both;
+}
+body main section.learnmore .container {
+  width: 100%;
+  padding: 0;
+}
+body main section.learnmore .left {
+  float: left;
+  width: 50%;
+}
+body main section.learnmore .left img {
+  width: 100%;
+}
+body main section.learnmore .right {
+  float: left;
+  width: 50%;
+}
+body main section.learnmore .right .desc {
+  width: 585px;
+  padding: 40px 0 50px 70px;
+}
+body main section.learnmore .right .desc h1 {
+  font-size: 2.0rem;
+  margin: 0;
+  line-height: 2.7rem;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+body main section.learnmore .right .desc h1::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 350px;
+  height: 2px;
+  bottom: -20px;
+  background-color: #ffbb00;
+}
+body main section.learnmore .right .desc p {
+  margin-bottom: 0;
+}
+body main section.learnmore .right .register {
+  width: 100%;
+  height: 220px;
+  background: #00d19e;
+}
+body main section.learnmore .right .register .wrap {
+  width: 585px;
+  height: 100%;
+  color: #fff;
+  position: relative;
+  padding-left: 133px;
+}
+body main section.learnmore .right .register .wrap img {
+  height: 100%;
+  position: absolute;
+  left: -133px;
+  top: 0;
+}
+body main section.learnmore .right .register .wrap .text {
+  color: #fff;
+  padding: 40px 0 50px 50px;
+}
+body main section.learnmore .right .register .wrap .text h1 {
+  font-size: 2.0rem;
+  margin: 0 0 10px 0;
+}
+body main section.learnmore .right .register .wrap .text a.regbtn {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  border-color: #fff;
+  color: #fff;
+  display: inline-block;
+}
+body main section.learnmore .right .register .wrap .text a.regbtn:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.learnmore .right .register .wrap .text a.regbtn:hover {
+  background-color: #fff;
+  color: #00d19e;
+  border-color: #fff;
+}
+body main section.campaigninfo:before,
+body main section.campaigninfo:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigninfo:after {
+  clear: both;
+}
+body main section.campaigninfo .container {
+  width: 100%;
+  padding-right: 0;
+}
+body main section.campaigninfo .left {
+  width: 55%;
+  float: left;
+}
+body main section.campaigninfo .left:before,
+body main section.campaigninfo .left:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigninfo .left:after {
+  clear: both;
+}
+body main section.campaigninfo .left .wrap {
+  float: right;
+  width: 645px;
+  min-height: 390px;
+}
+body main section.campaigninfo .left .wrap .badges {
+  width: 42%;
+  float: left;
+  min-height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body main section.campaigninfo .left .wrap .userstat {
+  width: 58%;
+  float: left;
+  background-color: #f2f2f2;
+  min-height: 390px;
+  padding: 45px 50px 50px 50px;
+}
+body main section.campaigninfo .left .wrap .userstat h1 {
+  font-size: 2.0rem;
+  margin: 0;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats {
+  margin: 5px 0 0 0;
+  padding: 0;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats:before,
+body main section.campaigninfo .left .wrap .userstat ul.stats:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats:after {
+  clear: both;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats li {
+  list-style: none;
+  display: inline-block;
+  font-family: "Dosis";
+  width: 28%;
+  float: left;
+  margin-top: 15px;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats li.wide {
+  width: 42%;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats li .lbl {
+  color: #8f8f8f;
+  font-size: 1.4rem;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats li .val {
+  color: #000;
+  font-size: 3.0rem;
+  line-height: 4rem;
+}
+body main section.campaigninfo .left .wrap .userstat ul.stats li .val small {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  color: #909090;
+}
+body main section.campaigninfo .left .wrap .userstat .desc {
+  font-size: 1.4rem;
+  font-style: italic;
+  margin-top: 15px;
+  color: #636363;
+}
+body main section.campaigninfo .left .wrap .userstat .desc a {
+  color: inherit;
+  text-decoration: underline;
+}
+body main section.campaigninfo .right {
+  width: 45%;
+  float: left;
+  position: relative;
+  min-height: 390px;
+}
+body main section.campaigninfo .right:before,
+body main section.campaigninfo .right:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigninfo .right:after {
+  clear: both;
+}
+body main section.campaigninfo .right .wrap {
+  float: left;
+  width: 510px;
+  min-height: 390px;
+  padding: 50px 0 100px 50px;
+}
+body main section.campaigninfo .right .wrap .heading {
+  border-bottom: 2px solid #dedede;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+body main section.campaigninfo .right .wrap .heading span {
+  background-color: #000;
+  display: inline-block;
+  color: #fff;
+  padding: 1px 8px 0 8px;
+  margin-bottom: 5px;
+  font-family: "Dosis";
+}
+body main section.campaigninfo .right .wrap p {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+body main section.campaigninfo .right .wrap ul.stats {
+  margin: 0;
+  padding: 0;
+}
+body main section.campaigninfo .right .wrap ul.stats li {
+  list-style: none;
+  display: inline-block;
+  font-family: "Dosis";
+  margin-right: 20px;
+}
+body main section.campaigninfo .right .wrap ul.stats li .lbl {
+  color: #909090;
+}
+body main section.campaigninfo .right .wrap ul.stats li .val {
+  color: #000;
+  font-size: 3.6rem;
+  line-height: 5rem;
+}
+body main section.campaigninfo .right .wrap ul.stats li .val small {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  color: #909090;
+}
+body main section.campaigninfo .right .contribute {
+  left: 0;
+  padding: 20px 0 20px 50px;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  background-color: #00d19e;
+}
+body main section.campaigninfo .right .contribute a {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  border-color: #fff;
+  color: #fff;
+  display: inline-block;
+}
+body main section.campaigninfo .right .contribute a:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.campaigninfo .right .contribute a:hover {
+  background-color: #fff;
+  color: #00d19e;
+  border-color: #fff;
+}
+body main section.tagging {
+  padding: 40px 0 0 0;
+}
+body main section.tagging:before,
+body main section.tagging:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging:after {
+  clear: both;
+}
+body main section.tagging .collection {
+  font-family: "Dosis";
+  color: #cc9600;
+  display: none;
+}
+body main section.tagging .title {
+  font-size: 2.0rem;
+  font-family: "Dosis";
+  margin-bottom: 40px;
+  position: relative;
+}
+body main section.tagging .title::before {
+  height: 130px;
+  width: 2px;
+  position: absolute;
+  content: "";
+  background-color: #ffbb00;
+  left: -24px;
+  top: 9px;
+}
+body main section.tagging .left {
+  width: 50%;
+  float: left;
+}
+body main section.tagging .left .wrap {
+  float: right;
+  width: 570px;
+}
+body main section.tagging .left .img img {
+  width: 100%;
+}
+body main section.tagging .left .metadata {
+  background-color: #f2f2f2;
+  top: -40px;
+  padding: 40px;
+  position: relative;
+}
+body main section.tagging .left .metadata .heading {
+  position: absolute;
+  bottom: -24px;
+  left: -35px;
+  font-family: "Dosis";
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+}
+body main section.tagging .left .metadata ul.meta {
+  margin: 0;
+  padding: 0;
+}
+body main section.tagging .left .metadata ul.meta:before,
+body main section.tagging .left .metadata ul.meta:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging .left .metadata ul.meta:after {
+  clear: both;
+}
+body main section.tagging .left .metadata ul.meta li {
+  list-style: none;
+  display: block;
+  width: 50%;
+  margin-bottom: 15px;
+  float: left;
+}
+body main section.tagging .left .metadata ul.meta li.yellow .val {
+  color: #ffbb00;
+}
+body main section.tagging .left .metadata ul.meta li .lbl {
+  color: #888;
+  font-family: "Dosis";
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+body main section.tagging .left .metadata ul.meta li .val {
+  color: #000;
+  font-size: 1.4rem;
+}
+body main section.tagging .left .metadata ul.meta li .val small {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  color: #909090;
+}
+body main section.tagging .left .metadata .loadmore {
+  text-align: center;
+  margin-top: 20px;
+}
+body main section.tagging .left .metadata .loadmore a {
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  margin: 0 auto;
+  display: inline-block;
+}
+body main section.tagging .left .metadata .loadmore a:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.tagging .right {
+  width: 50%;
+  float: left;
+}
+body main section.tagging .right .wrap {
+  width: 585px;
+  padding-left: 50px;
+}
+body main section.tagging .right .tag-item,
+body main section.tagging .right .tag-geo,
+body main section.tagging .right .tag-color {
+  margin-bottom: 40px;
+}
+body main section.tagging .right .tag-item:before,
+body main section.tagging .right .tag-geo:before,
+body main section.tagging .right .tag-color:before,
+body main section.tagging .right .tag-item:after,
+body main section.tagging .right .tag-geo:after,
+body main section.tagging .right .tag-color:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging .right .tag-item:after,
+body main section.tagging .right .tag-geo:after,
+body main section.tagging .right .tag-color:after {
+  clear: both;
+}
+body main section.tagging .right .tag-item .infobar,
+body main section.tagging .right .tag-geo .infobar,
+body main section.tagging .right .tag-color .infobar {
+  font-size: 1.4rem;
+}
+body main section.tagging .right .tag-item .colorbox,
+body main section.tagging .right .tag-geo .colorbox,
+body main section.tagging .right .tag-color .colorbox {
+  background-color: #00d19e;
+  margin-top: 20px;
+  padding: 20px;
+  position: relative;
+  color: #fff;
+  font-family: "Dosis";
+}
+body main section.tagging .right .tag-item .coloraction,
+body main section.tagging .right .tag-geo .coloraction,
+body main section.tagging .right .tag-color .coloraction {
+  margin: 15px -1px 0 -1px;
+  padding: 0;
+}
+body main section.tagging .right .tag-item .coloraction:before,
+body main section.tagging .right .tag-geo .coloraction:before,
+body main section.tagging .right .tag-color .coloraction:before,
+body main section.tagging .right .tag-item .coloraction:after,
+body main section.tagging .right .tag-geo .coloraction:after,
+body main section.tagging .right .tag-color .coloraction:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging .right .tag-item .coloraction:after,
+body main section.tagging .right .tag-geo .coloraction:after,
+body main section.tagging .right .tag-color .coloraction:after {
+  clear: both;
+}
+body main section.tagging .right .tag-item .coloraction li,
+body main section.tagging .right .tag-geo .coloraction li,
+body main section.tagging .right .tag-color .coloraction li {
+  list-style: none;
+  float: left;
+  width: 10%;
+  padding: 0 1px 0 1px;
+  margin-bottom: 2px;
+}
+body main section.tagging .right .tag-item .coloraction li a,
+body main section.tagging .right .tag-geo .coloraction li a,
+body main section.tagging .right .tag-color .coloraction li a {
+  display: block;
+  position: relative;
+}
+body main section.tagging .right .tag-item .coloraction li a .action,
+body main section.tagging .right .tag-geo .coloraction li a .action,
+body main section.tagging .right .tag-color .coloraction li a .action {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+  border: 1px solid #fff;
+  display: none;
+}
+body main section.tagging .right .tag-item .coloraction li a .action .colorname,
+body main section.tagging .right .tag-geo .coloraction li a .action .colorname,
+body main section.tagging .right .tag-color .coloraction li a .action .colorname {
+  position: absolute;
+  top: -36px;
+  background-color: #00d19e;
+  display: block;
+  padding: 1px 8px 2px 8px;
+  color: #fff;
+  font-family: "Dosis";
+  font-size: 1.3rem;
+  width: 80px;
+  left: -25px;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.tagging .right .tag-item .coloraction li a .action .colorname::after,
+body main section.tagging .right .tag-geo .coloraction li a .action .colorname::after,
+body main section.tagging .right .tag-color .coloraction li a .action .colorname::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 8px 0 8px;
+  border-color: #00d19e transparent transparent transparent;
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  margin-left: -8px;
+}
+body main section.tagging .right .tag-item .coloraction li a:hover .action,
+body main section.tagging .right .tag-geo .coloraction li a:hover .action,
+body main section.tagging .right .tag-color .coloraction li a:hover .action {
+  display: block;
+}
+body main section.tagging .right .tag-item .coloraction li img,
+body main section.tagging .right .tag-geo .coloraction li img,
+body main section.tagging .right .tag-color .coloraction li img {
+  width: 100%;
+}
+body main section.tagging .right .tag-item .coloraction li.big,
+body main section.tagging .right .tag-geo .coloraction li.big,
+body main section.tagging .right .tag-color .coloraction li.big {
+  width: 20%;
+}
+body main section.tagging .right .tag-item .coloraction li.big a .colorname,
+body main section.tagging .right .tag-geo .coloraction li.big a .colorname,
+body main section.tagging .right .tag-color .coloraction li.big a .colorname {
+  left: 3px;
+}
+body main section.tagging .right .tag-item .searchbox,
+body main section.tagging .right .tag-geo .searchbox,
+body main section.tagging .right .tag-color .searchbox {
+  background-color: #00d19e;
+  margin-top: 15px;
+  padding: 20px;
+  position: relative;
+}
+body main section.tagging .right .tag-item .searchbox .wrap,
+body main section.tagging .right .tag-geo .searchbox .wrap,
+body main section.tagging .right .tag-color .searchbox .wrap {
+  width: 535px;
+  padding-left: 0;
+}
+body main section.tagging .right .tag-item .searchbox .input-tag,
+body main section.tagging .right .tag-geo .searchbox .input-tag,
+body main section.tagging .right .tag-color .searchbox .input-tag {
+  border: 0px;
+  border-bottom: 1px solid #75e6cb;
+  width: 100%;
+  background-color: transparent;
+  color: #fff;
+  padding: 5px 70px 5px 0;
+}
+body main section.tagging .right .tag-item .searchbox .input-tag::-webkit-input-placeholder,
+body main section.tagging .right .tag-geo .searchbox .input-tag::-webkit-input-placeholder,
+body main section.tagging .right .tag-color .searchbox .input-tag::-webkit-input-placeholder {
+  color: #bdf4e7;
+}
+body main section.tagging .right .tag-item .searchbox .input-tag:focus,
+body main section.tagging .right .tag-geo .searchbox .input-tag:focus,
+body main section.tagging .right .tag-color .searchbox .input-tag:focus {
+  outline: 0;
+  border-bottom: 1px solid #fff;
+}
+body main section.tagging .right .tag-item .searchbox .link,
+body main section.tagging .right .tag-geo .searchbox .link,
+body main section.tagging .right .tag-color .searchbox .link {
+  position: absolute;
+  font-size: 1.0rem;
+  color: #00d19e;
+  background: #fff;
+  border-radius: 2px;
+  text-align: center;
+  padding: 1px 3px 0px 3px;
+  letter-spacing: 1px;
+  right: 45px;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  top: 26px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.tagging .right .tag-item .searchbox .link:hover,
+body main section.tagging .right .tag-geo .searchbox .link:hover,
+body main section.tagging .right .tag-color .searchbox .link:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  text-decoration: none;
+}
+body main section.tagging .right .tag-item .searchbox .enter,
+body main section.tagging .right .tag-geo .searchbox .enter,
+body main section.tagging .right .tag-color .searchbox .enter {
+  position: absolute;
+  right: 20px;
+  top: 30px;
+}
+body main section.tagging .right .tag-item .geobox,
+body main section.tagging .right .tag-geo .geobox,
+body main section.tagging .right .tag-color .geobox {
+  background-color: #ffbb00;
+  color: #fff;
+  font-family: "Dosis";
+  padding: 20px;
+  position: relative;
+}
+body main section.tagging .right .tag-item .geobox .locations,
+body main section.tagging .right .tag-geo .geobox .locations,
+body main section.tagging .right .tag-color .geobox .locations {
+  margin: 0;
+  padding: 0;
+}
+body main section.tagging .right .tag-item .geobox .locations:before,
+body main section.tagging .right .tag-geo .geobox .locations:before,
+body main section.tagging .right .tag-color .geobox .locations:before,
+body main section.tagging .right .tag-item .geobox .locations:after,
+body main section.tagging .right .tag-geo .geobox .locations:after,
+body main section.tagging .right .tag-color .geobox .locations:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging .right .tag-item .geobox .locations:after,
+body main section.tagging .right .tag-geo .geobox .locations:after,
+body main section.tagging .right .tag-color .geobox .locations:after {
+  clear: both;
+}
+body main section.tagging .right .tag-item .geobox .locations li,
+body main section.tagging .right .tag-geo .geobox .locations li,
+body main section.tagging .right .tag-color .geobox .locations li {
+  list-style: none;
+  display: inline-block;
+  padding: 5px 10px 4px 10px;
+  font-size: 1.3rem;
+  border: 1px solid #fff;
+  color: #fff;
+  font-family: "Dosis";
+  position: relative;
+  margin-right: 3px;
+}
+body main section.tagging .right .tag-item .geobox .locations li img,
+body main section.tagging .right .tag-geo .geobox .locations li img,
+body main section.tagging .right .tag-color .geobox .locations li img {
+  position: relative;
+  top: -2px;
+  margin-right: 7px;
+}
+body main section.tagging .right .tag-item .geobox .locations li a,
+body main section.tagging .right .tag-geo .geobox .locations li a,
+body main section.tagging .right .tag-color .geobox .locations li a {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  color: #ffbb00;
+  text-align: center;
+  padding-top: 4px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.tagging .right .tag-item .geobox .locations li a img,
+body main section.tagging .right .tag-geo .geobox .locations li a img,
+body main section.tagging .right .tag-color .geobox .locations li a img {
+  position: relative;
+  top: -1px;
+}
+body main section.tagging .right .tag-item .geobox .locations li a:hover,
+body main section.tagging .right .tag-geo .geobox .locations li a:hover,
+body main section.tagging .right .tag-color .geobox .locations li a:hover {
+  text-decoration: none;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.tagging .right .tag-item .geomap,
+body main section.tagging .right .tag-geo .geomap,
+body main section.tagging .right .tag-color .geomap {
+  height: 400px;
+  width: 100%;
+  margin-top: 15px;
+}
+body main section.tagging .right .tag-item .geomap .mapswrap,
+body main section.tagging .right .tag-geo .geomap .mapswrap,
+body main section.tagging .right .tag-color .geomap .mapswrap {
+  height: 100%;
+  width: 100%;
+}
+body main section.tagging .right .tag-item .taglist,
+body main section.tagging .right .tag-geo .taglist,
+body main section.tagging .right .tag-color .taglist {
+  margin: 0;
+  padding: 0;
+}
+body main section.tagging .right .tag-item .taglist > li,
+body main section.tagging .right .tag-geo .taglist > li,
+body main section.tagging .right .tag-color .taglist > li {
+  list-style: none;
+  padding: 10px 20px 10px 20px;
+  font-family: "Dosis";
+  background-color: #f2f2f2;
+  margin-top: 1px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.tagging .right .tag-item .taglist > li:before,
+body main section.tagging .right .tag-geo .taglist > li:before,
+body main section.tagging .right .tag-color .taglist > li:before,
+body main section.tagging .right .tag-item .taglist > li:after,
+body main section.tagging .right .tag-geo .taglist > li:after,
+body main section.tagging .right .tag-color .taglist > li:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging .right .tag-item .taglist > li:after,
+body main section.tagging .right .tag-geo .taglist > li:after,
+body main section.tagging .right .tag-color .taglist > li:after {
+  clear: both;
+}
+body main section.tagging .right .tag-item .taglist > li .text,
+body main section.tagging .right .tag-geo .taglist > li .text,
+body main section.tagging .right .tag-color .taglist > li .text {
+  width: 60%;
+  float: left;
+}
+body main section.tagging .right .tag-item .taglist > li:hover,
+body main section.tagging .right .tag-geo .taglist > li:hover,
+body main section.tagging .right .tag-color .taglist > li:hover {
+  background-color: #ebeaea;
+  padding: 10px 20px 10px 25px;
+}
+body main section.tagging .right .tag-item .taglist > li .loc,
+body main section.tagging .right .tag-geo .taglist > li .loc,
+body main section.tagging .right .tag-color .taglist > li .loc {
+  margin-right: 10px;
+}
+body main section.tagging .right .tag-item .taglist > li .geo,
+body main section.tagging .right .tag-geo .taglist > li .geo,
+body main section.tagging .right .tag-color .taglist > li .geo {
+  color: #777;
+  font-size: 1.3rem;
+  margin-left: 5px;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action,
+body main section.tagging .right .tag-geo .taglist > li ul.action,
+body main section.tagging .right .tag-color .taglist > li ul.action {
+  float: right;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li,
+body main section.tagging .right .tag-geo .taglist > li ul.action li,
+body main section.tagging .right .tag-color .taglist > li ul.action li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 10px;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li .count {
+  font-size: 1.2rem;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+  font-family: "Dosis";
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon,
+body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon,
+body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon {
+  width: 15px;
+  height: 14px;
+  display: inline-block;
+  position: relative;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon.up,
+body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon.up,
+body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon.up {
+  top: 2px;
+  background: url('../img/ic-thumbs-ups.png') 0 -14px;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon.down,
+body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon.down,
+body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon.down {
+  top: 3px;
+  background: url('../img/ic-thumbs-downs.png') 0 -14px;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li img,
+body main section.tagging .right .tag-geo .taglist > li ul.action li img,
+body main section.tagging .right .tag-color .taglist > li ul.action li img {
+  position: relative;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.up a .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.up a .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li.up a .count {
+  color: #999;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover,
+body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover {
+  text-decoration: none;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover .count {
+  color: #00ac83;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover .thumbs-icon,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover .thumbs-icon,
+body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover .thumbs-icon {
+  background-position: 0 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.up.active .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.up.active .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li.up.active .count {
+  color: #00ac83;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.up.active .thumbs-icon,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.up.active .thumbs-icon,
+body main section.tagging .right .tag-color .taglist > li ul.action li.up.active .thumbs-icon {
+  background-position: 0 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.down a,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.down a,
+body main section.tagging .right .tag-color .taglist > li ul.action li.down a {
+  text-decoration: none;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.down a .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.down a .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li.down a .count {
+  color: #999;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.down a:hover .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.down a:hover .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li.down a:hover .count {
+  color: #ce5e5e;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.down a:hover .thumbs-icon,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.down a:hover .thumbs-icon,
+body main section.tagging .right .tag-color .taglist > li ul.action li.down a:hover .thumbs-icon {
+  background-position: 0 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .count,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .count,
+body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .count {
+  color: #00ac83;
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .thumbs-icon,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .thumbs-icon,
+body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .thumbs-icon {
+  background-position: 0 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+body main section.tagging .right .tag-item .taglist > li ul.action li.delete,
+body main section.tagging .right .tag-geo .taglist > li ul.action li.delete,
+body main section.tagging .right .tag-color .taglist > li ul.action li.delete {
+  position: absolute;
+  right: -45px;
+  top: 0px;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+body main section.tagging .right .tag-item .taglist.color > li,
+body main section.tagging .right .tag-geo .taglist.color > li,
+body main section.tagging .right .tag-color .taglist.color > li {
+  padding: 0;
+}
+body main section.tagging .right .tag-item .taglist.color > li:before,
+body main section.tagging .right .tag-geo .taglist.color > li:before,
+body main section.tagging .right .tag-color .taglist.color > li:before,
+body main section.tagging .right .tag-item .taglist.color > li:after,
+body main section.tagging .right .tag-geo .taglist.color > li:after,
+body main section.tagging .right .tag-color .taglist.color > li:after {
+  content: " ";
+  display: table;
+}
+body main section.tagging .right .tag-item .taglist.color > li:after,
+body main section.tagging .right .tag-geo .taglist.color > li:after,
+body main section.tagging .right .tag-color .taglist.color > li:after {
+  clear: both;
+}
+body main section.tagging .right .tag-item .taglist.color > li .thumbs,
+body main section.tagging .right .tag-geo .taglist.color > li .thumbs,
+body main section.tagging .right .tag-color .taglist.color > li .thumbs {
+  float: left;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+}
+body main section.tagging .right .tag-item .taglist.color > li .thumbs img,
+body main section.tagging .right .tag-geo .taglist.color > li .thumbs img,
+body main section.tagging .right .tag-color .taglist.color > li .thumbs img {
+  height: 50px;
+}
+body main section.tagging .right .tag-item .taglist.color > li .selected,
+body main section.tagging .right .tag-geo .taglist.color > li .selected,
+body main section.tagging .right .tag-color .taglist.color > li .selected {
+  float: left;
+  padding: 13px 0 0 20px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.tagging .right .tag-item .taglist.color > li:hover .selected,
+body main section.tagging .right .tag-geo .taglist.color > li:hover .selected,
+body main section.tagging .right .tag-color .taglist.color > li:hover .selected {
+  padding: 13px 0 0 25px;
+}
+body main section.tagging .right .tag-item .taglist.color > li ul.action,
+body main section.tagging .right .tag-geo .taglist.color > li ul.action,
+body main section.tagging .right .tag-color .taglist.color > li ul.action {
+  padding: 13px 20px 0 0;
+}
+body main section.tagging .right .tag-item .taglist.color > li ul.action li.delete,
+body main section.tagging .right .tag-geo .taglist.color > li ul.action li.delete,
+body main section.tagging .right .tag-color .taglist.color > li ul.action li.delete {
+  top: 13px;
+  right: -30px;
+}
+body main section.tagging .right .heading {
+  background-color: #000;
+  display: inline-block;
+  color: #fff;
+  padding: 1px 8px 0 8px;
+  position: relative;
+  margin-bottom: 15px;
+  font-family: "Dosis";
+}
+body main section.tagging .right .heading.green {
+  background-color: #00d19e;
+}
+body main section.tagging .right .heading.yellow {
+  background-color: #ffbb00;
+}
+body footer {
+  padding: 60px 0px 60px 0px;
+}
+body footer .container:before,
+body footer .container:after {
+  content: " ";
+  display: table;
+}
+body footer .container:after {
+  clear: both;
+}
+body footer .container .left {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+body footer .container .left li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 30px 0 0;
+}
+body footer .container .left li a {
+  color: inherit;
+}
+body footer .container .left li a:hover {
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+body footer .container .right {
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  float: right;
+}
+body footer .container .right li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 30px;
+}
+body footer .container .right li a {
+  color: inherit;
+  border-bottom: 1px solid #333;
+}
+body footer .container .right li a:hover {
+  text-decoration: none;
+  color: #000;
+}
+/* Medium devices (tablet wide, 1310px) */
+@media (max-width: 1310px) {
+  body header .wrap .container nav {
+    right: 0;
+  }
+  body main section.banner .container nav.vertical {
+    right: 0;
+  }
+  body main section.banner.mini.detail .collectioninfo {
+    right: 70px;
+  }
+}
+/* Medium devices (tablet landscape, 1200px) */
+@media (max-width: 1199px) {
+  body main section.learnmore .container {
+    width: 970px;
+    padding-left: 15px;
+  }
+  body main section.learnmore .right .desc {
+    width: 100%;
+  }
+  body main section.learnmore .right .register .wrap {
+    width: 100%;
+  }
+  body main section.tagging .container .title::before {
+    display: none;
+  }
+  body main section.tagging .wraps {
+    width: 970px;
+    padding: 0 0 0 15px;
+    margin: auto;
+  }
+  body main section.tagging .wraps:before,
+  body main section.tagging .wraps:after {
+    content: " ";
+    display: table;
+  }
+  body main section.tagging .wraps:after {
+    clear: both;
+  }
+  body main section.tagging .wraps .left {
+    width: 55%;
+  }
+  body main section.tagging .wraps .left .wrap {
+    width: 100%;
+    float: none;
+  }
+  body main section.tagging .wraps .left .wrap .metadata {
+    top: 0;
+  }
+  body main section.tagging .wraps .right {
+    width: 45%;
+    padding-left: 30px;
+  }
+  body main section.tagging .wraps .right .wrap {
+    width: 100%;
+    padding: 0;
+  }
+}
+/* Medium devices (tablet landscape, 1140px) */
+@media (max-width: 1310px) {
+  body main section.campaigninfo .container {
+    width: 970px;
+    padding-right: 15px;
+  }
+  body main section.campaigninfo .container .left {
+    width: 55%;
+  }
+  body main section.campaigninfo .container .left .wrap {
+    width: 100%;
+  }
+  body main section.campaigninfo .container .right {
+    width: 45%;
+  }
+  body main section.campaigninfo .container .right .wrap {
+    width: 100%;
+  }
+}
+/* Medium devices (tablet portrait, 991px) */
+@media (max-width: 991px) {
+  body header .wrap .container nav ul.main li {
+    margin-right: 20px;
+  }
+  body main section.banner .container nav.vertical {
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  body main section.banner .container nav.vertical ul {
+    padding: 0 0 0 20px;
+  }
+  body main section.campaigns .list .campaign .details ul.stats li .val {
+    font-size: 3.0rem;
+  }
+  body main section.campaigns .list .campaign .details .progress-line {
+    text-align: right;
+  }
+  body main section.campaigns .list .campaign .details .progress-line .progress {
+    width: 80%;
+  }
+  body main section.campaigns .list .campaign .details .progress-line .target {
+    float: right;
+    font-size: 1.3rem;
+  }
+  body main section.learnmore .container {
+    width: 750px;
+  }
+  body main section.learnmore .right .desc {
+    padding: 0 0 0 30px;
+  }
+  body main section.learnmore .right .desc h1 {
+    margin-bottom: 30px;
+  }
+  body main section.learnmore .right .desc h1::after {
+    bottom: -15px;
+  }
+  body main section.learnmore .right .register {
+    margin-left: 30px;
+    margin-top: 10px;
+    width: auto;
+    background: none;
+    height: auto;
+  }
+  body main section.learnmore .right .register .wrap {
+    padding-left: 0;
+  }
+  body main section.learnmore .right .register .wrap img {
+    display: none;
+  }
+  body main section.learnmore .right .register .wrap .text {
+    padding: 0;
+    color: #333;
+  }
+  body main section.learnmore .right .register .wrap .text h1 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffbb00;
+  }
+  body main section.learnmore .right .register .wrap .text a.regbtn {
+    color: inherit;
+    border-color: #dedede;
+  }
+  body main section.learnmore .right .register .wrap .text a.regbtn:hover {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+  }
+  body main section.campaigninfo .container {
+    width: 750px;
+  }
+  body main section.campaigninfo .container .left {
+    width: 100%;
+    float: none;
+  }
+  body main section.campaigninfo .container .right {
+    width: 100%;
+    float: none;
+    min-height: 0;
+  }
+  body main section.campaigninfo .container .right .wrap {
+    padding: 20px 0 0 0;
+    min-height: 0;
+    float: none;
+  }
+  body main section.campaigninfo .container .right .contribute {
+    position: static;
+    background: none;
+    padding: 10px 0 0 0;
+  }
+  body main section.campaigninfo .container .right .contribute a {
+    border-color: #00d19e;
+    color: #00d19e;
+  }
+  body main section.collections .container {
+    padding-right: 15px;
+  }
+  body main section.collections .campaignlist .entries .sizer,
+  body main section.collections .campaignlist .entries .entry {
+    width: 50%;
+  }
+  body main section.campaignstats .container {
+    width: 750px;
+  }
+  body main section.campaignstats .container .left {
+    width: 60%;
+    height: auto;
+  }
+  body main section.campaignstats .container .left .graphs {
+    position: static;
+    width: 100%;
+  }
+  body main section.campaignstats .container .left .maps {
+    height: 300px;
+    position: static;
+  }
+  body main section.campaignstats .container .right {
+    width: 40%;
+  }
+  body main section.campaignstats .container .right .leaderboard {
+    width: 100%;
+    padding: 75px 0 0 30px;
+  }
+  body main section.tagging .wraps {
+    width: 750px;
+  }
+  body main section.tagging .wraps .right .tag-geo .taglist > li .text,
+  body main section.tagging .wraps .right .tag-color .taglist > li .text,
+  body main section.tagging .wraps .right .tag-item .taglist > li .text {
+    width: 55%;
+  }
+  body main section.tagging .wraps .right .tag-geo .geomap {
+    height: 300px;
+  }
+  body footer .container .left li {
+    margin-right: 20px;
+  }
+  body footer .container .right li {
+    margin-left: 20px;
+  }
+}
+/* Medium devices (tablet portrait, 767px) */
+@media (max-width: 768px) {
+  body header .wrap .container {
+    padding-right: 15px;
+  }
+  body header .wrap .container .mobilemenu {
+    display: block;
+  }
+  body header .wrap .container nav {
+    display: none;
+    width: 250px;
+    position: absolute;
+    top: 70px;
+  }
+  body header .wrap .container nav .account {
+    float: none;
+    height: auto;
+  }
+  body header .wrap .container nav .account a {
+    display: block;
+  }
+  body header .wrap .container nav .account a .lbl {
+    width: calc(100% - 70px );
+    text-align: left;
+    padding: 23px 0px 8px 20px;
+  }
+  body header .wrap .container nav .account a .thumb {
+    float: right;
+  }
+  body header .wrap .container nav .account .accountmenu {
+    position: static;
+    display: block;
+  }
+  body header .wrap .container nav ul.main {
+    width: 100%;
+    float: none;
+    padding: 5px 0 5px 0;
+    margin: 0;
+    background-color: #fff;
+  }
+  body header .wrap .container nav ul.main li {
+    display: block;
+    padding: 8px 20px 8px 20px;
+    margin: 0;
+  }
+  body header .wrap .container nav ul.main li a {
+    display: block;
+  }
+  body header .wrap .container nav.active {
+    display: block;
+  }
+  body header .wrap .container nav::after {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    left: -5px;
+    top: 5px;
+    background-color: #00d19e;
+    content: "";
+    display: block;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+  }
+  body main section.banner {
+    height: 250px;
+  }
+  body main section.banner .container .bannertext {
+    padding-top: 70px;
+  }
+  body main section.banner .container .bannertext .line .wrap span {
+    font-size: 3rem;
+  }
+  body main section.banner .container .bannertext .line .lbl span {
+    font-size: 1.4rem;
+  }
+  body main section.banner .container nav.vertical {
+    display: none;
+  }
+  body main section.banner.mini .container {
+    padding-right: 15px;
+  }
+  body main section.banner.mini .container .progress {
+    right: 15px;
+  }
+  body main section.banner.mini.detail .collectioninfo {
+    right: 0;
+    left: 0;
+  }
+  body main section.banner.mini.detail .collectioninfo .title {
+    display: none;
+  }
+  body main section.campaigns {
+    padding: 40px 0 40px 0;
+  }
+  body main section.campaigns .container {
+    padding-right: 15px;
+  }
+  body main section.campaigns .list .campaign {
+    margin-bottom: 30px;
+  }
+  body main section.campaigns .list .campaign span.no {
+    font-size: 5rem;
+    width: 15%;
+  }
+  body main section.campaigns .list .campaign .thumbs {
+    display: none;
+  }
+  body main section.campaigns .list .campaign .details {
+    padding-left: 20px;
+    width: 85%;
+  }
+  body main section.campaigns .list .campaign .details .progress-line {
+    margin-bottom: 15px;
+  }
+  body main section.campaigns .list .campaign .details .progress-line .progress {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  body main section.campaigns .list .campaign .details .progress-line .target {
+    width: auto;
+  }
+  body main section.campaigns .list .campaign .details ul.stats li {
+    float: none;
+    display: none;
+    margin-bottom: 10px;
+  }
+  body main section.campaigns .list .campaign .details ul.stats li .lbl {
+    font-size: 1.3rem;
+  }
+  body main section.campaigns .list .campaign .details ul.stats li .val {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+  body main section.campaigns .list .campaign .details ul.stats li.contribute {
+    text-align: center;
+    float: none;
+    display: inline-block;
+  }
+  body main section.campaigns .list .loadmore a {
+    display: block;
+  }
+  body main .topsection {
+    padding-bottom: 40px;
+  }
+  body main .topsection .sectionlabel {
+    float: none;
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+  body main .topsection .sectionlabel .bold {
+    left: 0;
+  }
+  body main .topsection .sort {
+    display: block;
+    float: none;
+    padding-top: 10px;
+  }
+  body main section.learnmore .container {
+    padding-right: 15px;
+    width: 100%;
+  }
+  body main section.learnmore .left {
+    display: none;
+  }
+  body main section.learnmore .right {
+    float: none;
+    width: 100%;
+  }
+  body main section.learnmore .right .desc {
+    padding: 0;
+  }
+  body main section.learnmore .right .register {
+    margin: 10px 0 0 0;
+  }
+  body main section.learnmore .right .register .wrap .text a.regbtn {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+  body main section.campaigninfo .container {
+    width: 100%;
+  }
+  body main section.campaignstats .container {
+    width: 100%;
+    padding: 0 15px 0 15px;
+  }
+  body main section.campaignstats .container .left {
+    width: 100%;
+    float: none;
+  }
+  body main section.campaignstats .container .left .maps .heading {
+    display: none;
+  }
+  body main section.campaignstats .container .right {
+    width: 100%;
+    float: none;
+  }
+  body main section.campaignstats .container .right .leaderboard {
+    padding: 30px 0 0 0;
+  }
+  body main section.tagging .collection {
+    display: block;
+  }
+  body main section.tagging .wraps {
+    width: 100%;
+    padding-right: 15px;
+  }
+  body main section.tagging .wraps .left {
+    width: 100%;
+  }
+  body main section.tagging .wraps .left .metadata {
+    padding: 30px;
+  }
+  body main section.tagging .wraps .right {
+    padding: 0;
+    width: 100%;
+    margin: 30px 0 0 0;
+    padding-right: 20px;
+  }
+  body main section.tagging .wraps .right .tag-color .coloraction li {
+    width: 20%;
+  }
+  body main section.tagging .wraps .right .tag-color .coloraction li.big {
+    width: 40%;
+  }
+  body footer .container .left,
+  body footer .container .right {
+    width: 100%;
+    float: none;
+    text-align: center;
+  }
+  body footer .container .left li,
+  body footer .container .right li {
+    margin: 0 10px 0 10px;
+  }
+  body footer .container .right {
+    margin-top: 20px;
+  }
+}
+/* Medium devices (tablet portrait, 480) */
+@media (max-width: 480px) {
+  body main section.campaigninfo .container .left .wrap .badges {
+    width: 100%;
+    min-height: 0;
+    padding: 30px 0 30px 0;
+  }
+  body main section.campaigninfo .container .left .wrap .userstat {
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    min-height: 0;
+  }
+  body main section.collections .campaignlist .entries .sizer,
+  body main section.collections .campaignlist .entries .entry {
+    width: 100%;
+  }
+}

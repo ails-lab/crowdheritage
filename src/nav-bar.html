@@ -1,0 +1,37 @@
+<template bindable="router">
+  <header>
+    <!-- wrap-->
+    <div class="wrap">
+      <div class="container">
+        <!-- logo-->
+        <div class="logo"><a href="index.html" title="Home"><img src="../img/ic-logo.png" alt="Logo"></a></div>
+        <!-- mobile menu-->
+        <div class="mobilemenu"><a href="#" title="MENU" data-target="#mobilenav"><img src="../img/ic-menu.png"></a></div>
+        <!-- nav-->
+        <nav id="mobilenav">
+          <!-- account-->
+          <div class="account">
+            <!-- link--><a href="#" data-target="#accountmenu">
+              <!-- label-->
+              <div class="lbl">Hi Mark</div>
+              <!-- thumbnail-->
+              <div class="thumb">
+                <!-- img( src="../img/img-profile.png" class=page === "index" ? "hidden" : "" )--><img src="../img/img-profile.png">
+              </div></a>
+            <!-- account menu-->
+            <ul id="accountmenu" class="accountmenu">
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Sign Out</a></li>
+            </ul>
+          </div>
+          <!-- main-->
+          <ul class="main">
+            <li><a href="http://withculture.eu">WITH</a></li>
+            <li><a route-href="route:index">CAMPAIGNS</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+</template>

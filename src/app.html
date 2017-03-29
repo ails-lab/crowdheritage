@@ -1,0 +1,31 @@
+<template>
+  <require from="../js/vendor/bootstrap/css/bootstrap.css"></require>
+  <require from="../js/vendor/font-awesome/css/font-awesome.min.css"></require>
+  <require from="../js/vendor/slick.js/slick/slick.css"></require>
+
+  <require from="./nav-bar.html"></require>
+
+  <nav-bar router.bind="router"></nav-bar>
+
+  <div class="page-host">
+    <router-view></router-view>
+  </div>
+
+  <footer>
+    <div class="container">
+      <!-- ul-->
+      <ul class="left">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Campaigns</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Sign in</a></li>
+        <li><a href="#">Sign up</a></li>
+      </ul>
+      <!-- ul-->
+      <ul class="right">
+        <li>&copy; Withcrowd 2017 by NTUA</li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+</template>
