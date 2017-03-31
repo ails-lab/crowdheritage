@@ -3,7 +3,6 @@
  * Take a look at the README here: https://github.com/easy-webpack/core
  **/
 import { generateConfig, get, stripMetadata, EasyWebpackConfig } from '@easy-webpack/core'
-import path from 'path'
 
 import envProd from '@easy-webpack/config-env-production'
 import envDev from '@easy-webpack/config-env-development'
@@ -20,6 +19,12 @@ import commonChunksOptimize from '@easy-webpack/config-common-chunks-simple'
 import copyFiles from '@easy-webpack/config-copy-files'
 import uglify from '@easy-webpack/config-uglify'
 import generateCoverage from '@easy-webpack/config-test-coverage-istanbul'
+
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
+const project = require('./package.json');
 
 process.env.BABEL_ENV = 'webpack'
 const ENV = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() || (process.env.NODE_ENV = 'development')
@@ -68,6 +73,101 @@ const coreBundles = {
   ]
 }
 
+module.exports = {
+        entry: {
+            'app': [], // <-- this array will be filled by the aurelia-webpack-plugin
+            'aurelia': Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'))
+        },
+        output: {
+            path: path.resolve('dist'),
+            filename: '[name].bundle.js'
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: {
+                        presets: [
+                            [ 'es2015', {
+                                loose: true, // this helps simplify javascript transformation
+                                module: false // this helps enable tree shaking for webpack 2
+                            }],
+                            'stage-1'
+                        ],
+                        plugins: ['transform-decorators-legacy']
+                    }
+                },
+                {
+                    test: /\.html$/,
+                    exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
+                    use: [
+                        'raw-loader',
+                        'html-minifier-loader'
+                    ]
+                },
+                {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader']
+                },
+                {
+                    test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)$/,
+                    use: 'url-loader'
+                }
+            ]
+        },
+        plugins: [
+            new webpack.ProvidePlugin({
+                regeneratorRuntime: 'regenerator-runtime', // to support await/async syntax
+                Promise: 'bluebird', // because Edge browser has slow native Promise object
+                $: 'jquery', // because 'bootstrap' by Twitter depends on this
+                jQuery: 'jquery', // just an alias
+            }),
+            new HtmlWebpackPlugin({
+                template: 'index.html'
+            }),
+            new AureliaWebpackPlugin({
+                root: path.resolve(),
+                src: path.resolve('src'),
+                baseUrl: '/'
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ['aurelia']
+            }),
+            new webpack.LoaderOptionsPlugin({
+            options: {
+                context: __dirname,
+                'html-minifier-loader': {
+                    removeComments: true,               // remove all comments
+                    collapseWhitespace: true,           // collapse white space between block elements (div, header, footer, p etc...)
+                    collapseInlineTagWhitespace: true,  // collapse white space between inline elements (button, span, i, b, a etc...)
+                    collapseBooleanAttributes: true,    // <input required="required"/> => <input required />
+                    removeAttributeQuotes: true,        // <input class="abcd" /> => <input class=abcd />
+                    minifyCSS: true,                    // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
+                    minifyJS: true,                     // same with CSS but for javascript
+                    removeScriptTypeAttributes: true,   // <script type="text/javascript"> => <script>
+                    removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
+                }
+            }
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+              mangle: { screw_ie8: true, keep_fnames: true},
+              dead_code: true,
+              unused: true,
+              comments: true,
+              compress: {
+                  screw_ie8: true,
+                  keep_fnames: true,
+                  drop_debugger: false,
+                  dead_code: false,
+                  unused: false,
+                  warnings: false
+              }
+            })
+        ]
+    };
+
 /**
  * Main Webpack Configuration
  */
@@ -80,6 +180,9 @@ let config = generateConfig(
     },
     output: {
       path: outDir
+    },
+    node: {
+      fs: "empty"
     }
   },
 

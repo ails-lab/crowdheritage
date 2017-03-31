@@ -27,7 +27,13 @@ Bluebird.config({ warnings: false });
 export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .developmentLogging();
+    .developmentLogging()
+    .plugin('aurelia-animator-velocity', (instance) => {
+			instance.options.duration = 200;
+			instance.options.easing = 'linear';
+			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
+			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
+		});
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');
@@ -39,7 +45,7 @@ export async function configure(aurelia) {
   await aurelia.start();
   aurelia.setRoot('app');
 
-  // if you would like your website to work offline (Service Worker), 
+  // if you would like your website to work offline (Service Worker),
   // install and enable the @easy-webpack/config-offline package in webpack.config.js and uncomment the following code:
   /*
   const offline = await System.import('offline-plugin/runtime');

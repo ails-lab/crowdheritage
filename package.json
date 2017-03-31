@@ -1,6 +1,6 @@
 {
   "name": "crowdheritage",
-  "version": "1.1.2",
+  "version": "1.0.0",
   "description": "The web interface of CrowdHeritage",
   "main": "dist/main.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "build:prod": "cross-env NODE_ENV=production npm run webpack -- --progress --profile",
     "start": "npm run server:dev",
     "server": "npm run server:dev",
-    "server:dev": "cross-env NODE_ENV=development npm run webpack-dev-server -- --inline --progress --profile --watch",
+    "server:dev": "cross-env NODE_ENV=development npm run webpack-dev-server -- --inline --profile --watch",
     "server:dev:hmr": "npm run server:dev -- --hot",
     "server:prod": "http-server dist --cors",
     "webpack": "cross-env BABEL_ENV=node ./node_modules/.bin/webpack",
@@ -42,12 +42,6 @@
     "type": "git",
     "url": "git@git.image.ece.ntua.gr:mariaral/withcrowd.git"
   },
-  "keywords": [
-    "aurelia",
-    "skeleton",
-    "navigation",
-    "webpack"
-  ],
   "license": "Apache2",
   "author": "National Technical University of Athens",
   "homepage": "https://crowdheritage.eu/",
@@ -76,27 +70,14 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "aurelia-animator-velocity": "^1.0.0",
+    "aurelia-smooth-scroll": "git+https://git@github.com/finikm/aurelia-smooth-scroll.git",
+    "raw-loader": "^0.5.1",
+    "html-minifier": "^3.1.0",
+    "html-minifier-loader": "^1.3.3"
   },
   "devDependencies": {
-    "@easy-webpack/config-aurelia": "^2.2.2",
-    "@easy-webpack/config-babel": "^4.0.0",
-    "@easy-webpack/config-common-chunks-simple": "^2.0.3",
-    "@easy-webpack/config-copy-files": "^1.1.2",
-    "@easy-webpack/config-css": "^4.0.0",
-    "@easy-webpack/config-env-development": "^2.1.5",
-    "@easy-webpack/config-env-production": "^3.0.0",
-    "@easy-webpack/config-external-source-maps": "^3.1.0",
-    "@easy-webpack/config-fonts-and-images": "^2.1.0",
-    "@easy-webpack/config-generate-index-html": "^2.1.1",
-    "@easy-webpack/config-global-bluebird": "^2.1.0",
-    "@easy-webpack/config-global-jquery": "^2.1.0",
-    "@easy-webpack/config-global-regenerator": "^1.2.2",
-    "@easy-webpack/config-html": "^3.1.0",
-    "@easy-webpack/config-json": "^3.1.0",
-    "@easy-webpack/config-test-coverage-istanbul": "^3.2.0",
-    "@easy-webpack/config-uglify": "^2.2.3",
-    "@easy-webpack/core": "^2.0.0",
     "aurelia-protractor-plugin": "^1.0.1",
     "aurelia-tools": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.18.0",
@@ -120,6 +101,18 @@
     "protractor": "^4.0.11",
     "wait-on": "^2.0.1",
     "webpack": "2.2.0",
-    "webpack-dev-server": "2.1.0-beta.12"
+    "webpack-dev-server": "2.1.0-beta.12",
+    "aurelia-webpack-plugin": "^1.1.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "html-webpack-plugin": "^2.22.0",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "html-loader": "^0.4.4"
   }
 }

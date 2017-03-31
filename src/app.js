@@ -17,6 +17,9 @@
 export class App {
   configureRouter(config, router) {
     config.title = 'WITHcrowd';
+    config.addPipelineStep('postcomplete', PostCompleteStep);
+    config.options.pushState = true;
+    config.options.root = '/';
     config.map([
       { route: ['', 'index'], name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'Campaigns' },
       { route: 'summary',     name: 'summary', moduleId: './campaignSummary', nav: false, title: 'Campaign' },
@@ -24,5 +27,13 @@ export class App {
     ]);
 
     this.router = router;
+  }
+}
+
+class PostCompleteStep {
+  run(routingContext, next) {
+      window.scrollTo(0,0);
+
+      return next();
   }
 }
