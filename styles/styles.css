@@ -1309,6 +1309,7 @@ body main section.tagging .title {
   font-size: 2.0rem;
   font-family: "Dosis";
   margin-bottom: 40px;
+  margin-left: 50px;
   position: relative;
 }
 body main section.tagging .title::before {
@@ -1320,20 +1321,18 @@ body main section.tagging .title::before {
   left: -24px;
   top: 9px;
 }
-body main section.tagging .left {
-  width: 50%;
-  float: left;
+body main section.tagging .wraps .container {
+  padding-right: 0;
 }
-body main section.tagging .left .wrap {
-  float: right;
-  width: 570px;
+body main section.tagging .left {
+  width: 57%;
+  float: left;
 }
 body main section.tagging .left .img img {
   width: 100%;
 }
 body main section.tagging .left .metadata {
   background-color: #f2f2f2;
-  top: -40px;
   padding: 40px;
   position: relative;
 }
@@ -1406,11 +1405,10 @@ body main section.tagging .left .metadata .loadmore a:hover {
   text-decoration: none;
 }
 body main section.tagging .right {
-  width: 50%;
+  width: 43%;
   float: left;
 }
 body main section.tagging .right .wrap {
-  width: 585px;
   padding-left: 50px;
 }
 body main section.tagging .right .tag-item,
@@ -2022,6 +2020,33 @@ body footer .container .right li a:hover {
   body main section.banner.mini.detail .collectioninfo {
     right: 70px;
   }
+  body main section.tagging .title {
+    margin-left: 25px;
+  }
+  body main section.tagging .title::before {
+    z-index: 1;
+  }
+  body main section.tagging .wraps {
+    position: relative;
+  }
+  body main section.tagging .wraps .container {
+    width: 100%;
+    padding: 0;
+  }
+  body main section.tagging .wraps .container .left {
+    width: 55%;
+  }
+  body main section.tagging .wraps .container .left .wrap {
+    width: 632px;
+    float: right;
+  }
+  body main section.tagging .wraps .container .right {
+    width: 45%;
+  }
+  body main section.tagging .wraps .container .right .wrap {
+    width: 453px;
+    float: left;
+  }
 }
 /* Medium devices (tablet landscape, 1200px) */
 @media (max-width: 1199px) {
@@ -2035,46 +2060,38 @@ body footer .container .right li a:hover {
   body main section.learnmore .right .register .wrap {
     width: 100%;
   }
+  body main section.tagging .container .title {
+    margin-left: 0;
+  }
   body main section.tagging .container .title::before {
     display: none;
   }
   body main section.tagging .wraps {
-    width: 970px;
-    padding: 0 0 0 15px;
-    margin: auto;
+    position: relative;
   }
-  body main section.tagging .wraps:before,
-  body main section.tagging .wraps:after {
-    content: " ";
-    display: table;
-  }
-  body main section.tagging .wraps:after {
-    clear: both;
-  }
-  body main section.tagging .wraps .left {
-    width: 55%;
-  }
-  body main section.tagging .wraps .left .wrap {
-    width: 100%;
-    float: none;
-  }
-  body main section.tagging .wraps .left .wrap .metadata {
-    top: 0;
-  }
-  body main section.tagging .wraps .right {
-    width: 45%;
-    padding-left: 30px;
-  }
-  body main section.tagging .wraps .right .wrap {
+  body main section.tagging .wraps .container {
     width: 100%;
     padding: 0;
   }
+  body main section.tagging .wraps .container .left {
+    width: 55%;
+  }
+  body main section.tagging .wraps .container .left .wrap {
+    width: 530px;
+    float: right;
+  }
+  body main section.tagging .wraps .container .right {
+    width: 45%;
+  }
+  body main section.tagging .wraps .container .right .wrap {
+    width: 426px;
+    float: left;
+  }
 }
 /* Medium devices (tablet landscape, 1140px) */
-@media (max-width: 1310px) {
+@media (max-width: 1140px) {
   body main section.campaigninfo .container {
     width: 970px;
-    padding-right: 15px;
   }
   body main section.campaigninfo .container .left {
     width: 55%;
@@ -2183,9 +2200,6 @@ body footer .container .right li a:hover {
     border-color: #00d19e;
     color: #00d19e;
   }
-  body main section.collections .container {
-    padding-right: 15px;
-  }
   body main section.collections .campaignlist .entries .sizer,
   body main section.collections .campaignlist .entries .entry {
     width: 50%;
@@ -2213,14 +2227,33 @@ body footer .container .right li a:hover {
     padding: 75px 0 0 30px;
   }
   body main section.tagging .wraps {
-    width: 750px;
+    position: relative;
   }
-  body main section.tagging .wraps .right .tag-geo .taglist > li .text,
-  body main section.tagging .wraps .right .tag-color .taglist > li .text,
-  body main section.tagging .wraps .right .tag-item .taglist > li .text {
+  body main section.tagging .wraps .container {
+    width: 100%;
+    padding: 0;
+  }
+  body main section.tagging .wraps .container .left {
     width: 55%;
   }
-  body main section.tagging .wraps .right .tag-geo .geomap {
+  body main section.tagging .wraps .container .left .wrap {
+    width: 408px;
+    float: right;
+  }
+  body main section.tagging .wraps .container .right {
+    width: 45%;
+  }
+  body main section.tagging .wraps .container .right .wrap {
+    width: 327px;
+    float: left;
+    padding-left: 30px;
+  }
+  body main section.tagging .wraps .container .right .tag-geo .taglist > li .text,
+  body main section.tagging .wraps .container .right .tag-color .taglist > li .text,
+  body main section.tagging .wraps .container .right .tag-item .taglist > li .text {
+    width: 55%;
+  }
+  body main section.tagging .wraps .container .right .tag-geo .geomap {
     height: 300px;
   }
   body footer .container .left li {
@@ -2434,26 +2467,47 @@ body footer .container .right li a:hover {
   body main section.tagging .collection {
     display: block;
   }
+  body main section.tagging .title {
+    margin-bottom: 30px;
+  }
   body main section.tagging .wraps {
-    width: 100%;
-    padding-right: 15px;
+    position: relative;
   }
-  body main section.tagging .wraps .left {
+  body main section.tagging .wraps .container {
     width: 100%;
+    padding: 0 15px 0 15px;
   }
-  body main section.tagging .wraps .left .metadata {
+  body main section.tagging .wraps .container .left {
+    width: 100%;
+    float: none;
+  }
+  body main section.tagging .wraps .container .left .wrap {
+    width: 100%;
+    float: none;
+  }
+  body main section.tagging .wraps .container .left .metadata {
     padding: 30px;
   }
-  body main section.tagging .wraps .right {
-    padding: 0;
+  body main section.tagging .wraps .container .right {
     width: 100%;
-    margin: 30px 0 0 0;
-    padding-right: 20px;
+    float: none;
+    margin-top: 30px;
   }
-  body main section.tagging .wraps .right .tag-color .coloraction li {
+  body main section.tagging .wraps .container .right .wrap {
+    width: 100%;
+    float: none;
+    padding-left: 0px;
+  }
+  body main section.tagging .wraps .container .right .tag-item {
+    margin-bottom: 30px;
+  }
+  body main section.tagging .wraps .container .right .tag-geo {
+    margin-bottom: 0px;
+  }
+  body main section.tagging .wraps .container .right .tag-color .coloraction li {
     width: 20%;
   }
-  body main section.tagging .wraps .right .tag-color .coloraction li.big {
+  body main section.tagging .wraps .container .right .tag-color .coloraction li.big {
     width: 40%;
   }
   body footer .container .left,

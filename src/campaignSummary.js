@@ -14,6 +14,12 @@
  */
 
 
+//import {initAureliaIsotope} from '../js/Plugin.js'
+
 export class CampaignSummary {
-  
+  scrollTo(anchor) {
+    $('html, body').animate({
+      scrollTop: $(anchor).offset().top
+    }, 1000);
+  }
 }

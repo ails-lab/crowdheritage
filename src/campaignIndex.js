@@ -15,5 +15,9 @@
 
 
 export class CampaignIndex {
-  
+  scrollTo(anchor) {
+    $('html, body').animate({
+      scrollTop: $(anchor).offset().top
+    }, 1000);
+  }
 }
