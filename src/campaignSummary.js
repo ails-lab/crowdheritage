@@ -22,4 +22,8 @@ export class CampaignSummary {
       scrollTop: $(anchor).offset().top
     }, 1000);
   }
+
+  attached() {
+    $('.accountmenu').removeClass('active');
+  }
 }

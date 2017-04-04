@@ -14,10 +14,43 @@
  */
 
 
+import { inject } from 'aurelia-framework';
+import { Campaign } from './modules/Campaign.js';
+import { CampaignServices } from './modules/CampaignServices.js';
+
+@inject(CampaignServices)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
       scrollTop: $(anchor).offset().top
     }, 1000);
+  }
+
+  attached() {
+    $('.accountmenu').removeClass('active');
+  }
+
+  constructor(campaignServices) {
+    this.campaignServices = campaignServices;
+    this.campaigns = [];
+    this.fetchitemnum = 10;
+    this.answer = 'initial';
+  }
+
+  fillCampaignArray(campaignArray, results) {
+  		for (let item of results) {
+  			campaignArray.push(new Campaign(item));
+  		}
+  	}
+
+  activeCampaigns() {
+    this.campaignServices.getActiveCampaigns( {groupid: '', offset: 0, count: 0} )
+      .then( (resultsArray) => {
+        this.fillCampaignArray((this.campaigns), resultsArray);
+      });
+  }
+
+  activate() {
+    this.activeCampaigns();
   }
 }

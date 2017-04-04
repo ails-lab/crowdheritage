@@ -59,6 +59,10 @@
               <!-- title--><a href="summary">
                 <h1>Clothing Palette</h1></a>
               <!-- desc-->
+              <div repeat.for="camp of campaigns">
+                ${camp.description} <br/> ${camp.startDate} <br/> ${camp.endDate} <br/> ${camp.banner} <br/>
+                <img class="centered-and-cropped" src=`${camp.banner}`>
+              </div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
               <!-- progress-->
               <div class="progress-line">

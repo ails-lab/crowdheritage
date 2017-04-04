@@ -15,5 +15,8 @@
 
 
 export class CampaignItem {
-  
+
+  attached() {
+    $('.accountmenu').removeClass('active');
+  }
 }
