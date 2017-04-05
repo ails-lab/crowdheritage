@@ -23,34 +23,36 @@ export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
       scrollTop: $(anchor).offset().top
-    }, 1000);
+    }, 800);
+  }
+
+  constructor(campaignServices) {
+    this.campaignServices = campaignServices;
+    this.campaigns = [];
+    this.campaignsCount = 0;
+    this.fetchitemnum = 10;
+    this.answer = 'initial';
   }
 
   attached() {
     $('.accountmenu').removeClass('active');
   }
 
-  constructor(campaignServices) {
-    this.campaignServices = campaignServices;
-    this.campaigns = [];
-    this.fetchitemnum = 10;
-    this.answer = 'initial';
+  activate() {
+    this.activeCampaigns();
   }
-
-  fillCampaignArray(campaignArray, results) {
-  		for (let item of results) {
-  			campaignArray.push(new Campaign(item));
-  		}
-  	}
 
   activeCampaigns() {
     this.campaignServices.getActiveCampaigns( {groupid: '', offset: 0, count: 0} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
+        this.campaignsCount = resultsArray.length;
       });
   }
 
-  activate() {
-    this.activeCampaigns();
+  fillCampaignArray(campaignArray, results) {
+		for (let item of results) {
+			campaignArray.push(new Campaign(item));
+		}
   }
 }

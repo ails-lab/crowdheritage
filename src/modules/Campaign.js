@@ -20,16 +20,25 @@ export class Campaign {
 
   constructor(data) {
     this.dbId = data.dbId;
-    this.title = data.title;
+    this.title = data.campaignTitle;
     this.description = data.description;
-    this.banner = data.banner;
+    this.banner = data.campaignBanner;
+    if (this.banner) {
+			if (!this.banner.startsWith('http')) {
+				this.banner=`${settings.baseUrl}${this.banner}`;}
+		}
     this.space = data.space;
     this.startDate = data.startDate;
     this.endDate = data.endDate;
-    this.motivation = data.motivation;
+    this.motivation = data.campaignMotivation;
     this.purpose = data.purpose;
-    this.target = data.target;
-    this.current = data.current;
+    this.target = data.annotationTarget;
+    this.created = data.annotationCurrent.created;
+    this.approved = data.annotationCurrent.approved;
+    this.rejected = data.annotationCurrent.rejected;
+    this.contributorsCount = Object.keys(data.contributorsPoints).length;
+    this.totalCurrent = this.created + this.approved + this.rejected;
+    this.percentage = Math.min(100, Math.floor(100 * this.totalCurrent / this.target));
     //this. = data.;
   }
 }

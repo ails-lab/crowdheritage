@@ -16,7 +16,7 @@
         <nav class="vertical">
           <ul>
             <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')"> <img src="../img/ic-arrow-left-black.png">CONTRIBUTE NOW</a></li>
-            <li>22 CAMPAIGNS</li>
+            <li>${campaignsCount} CAMPAIGNS</li>
           </ul>
         </nav>
         <div class="bgwrap"></div>
@@ -44,34 +44,30 @@
           </div>
         </div>
         <!-- list-->
-        <div class="list">
+        <div class="list" repeat.for="camp of campaigns">
           <!-- campaign-->
           <div class="campaign">
-            <!-- no--><span class="no">01</span>
+            <!-- no--><span class="no">${$index+1}</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a href="summary"><img src="../img/img-thumbnail-campaign.png">
+              <!-- wrap--><a href="summary" params.bind="{campaign : 42}"><img class="centered-and-cropped" src="${camp.banner}">
                 <!-- action-->
                 <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a href="summary">
-                <h1>Clothing Palette</h1></a>
+              <!-- title--><a href="summary" params.bind="{campaign : 42}">
+                <h1>${camp.title}</h1></a>
               <!-- desc-->
-              <div repeat.for="camp of campaigns">
-                ${camp.description} <br/> ${camp.startDate} <br/> ${camp.endDate} <br/> ${camp.banner} <br/>
-                <img class="centered-and-cropped" src=`${camp.banner}`>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+              <p>${camp.description}</p>
               <!-- progress-->
               <div class="progress-line">
                 <!-- bar-->
                 <div class="progress">
-                  <div role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" style="width: 87%;" class="progress-bar"></div>
+                  <div role="progressbar" aria-valuenow="${camp.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${camp.percentage}%;" class="progress-bar"></div>
                 </div>
                 <!-- target-->
-                <div class="target">870 / 1000</div>
+                <div class="target">${camp.totalCurrent} / ${camp.target}</div>
               </div>
               <!-- stats-->
               <ul class="stats">
@@ -79,114 +75,24 @@
                   <div class="lbl">PROGRESS</div>
                   <div class="val">
 
-                    87%<small>870/1000</small>
+                    ${camp.percentage}%<small>${camp.totalCurrent}/${camp.target}</small>
                   </div>
                 </li>
                 <li>
                   <div class="lbl">CONTRIBUTORS</div>
-                  <div class="val">320</div>
+                  <div class="val">${camp.contributorsCount}</div>
                 </li>
                 <li>
                   <div class="lbl">END DATE</div>
-                  <div class="val">20/02/2017</div>
+                  <div class="val">${camp.endDate}</div>
                 </li>
                 <li class="contribute"><a href="item">CONTRIBUTE NOW</a></li>
               </ul>
             </div>
           </div>
-          <!-- campaign-->
-          <div class="campaign">
-            <!-- no--><span class="no">02</span>
-            <!-- thumbs-->
-            <div class="thumbs">
-              <!-- wrap--><a href="summary"><img src="../img/img-thumbnail-campaign2.png">
-                <!-- action-->
-                <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
-            </div>
-            <!-- detail-->
-            <div class="details">
-              <!-- title--><a href="summary">
-                <h1>Catwalk Attire</h1></a>
-              <!-- desc-->
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-              <!-- progress-->
-              <div class="progress-line">
-                <!-- bar-->
-                <div class="progress">
-                  <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;" class="progress-bar"></div>
-                </div>
-                <!-- target-->
-                <div class="target">870 / 1000</div>
-              </div>
-              <!-- stats-->
-              <ul class="stats">
-                <li>
-                  <div class="lbl">PROGRESS</div>
-                  <div class="val">
-
-                    60%<small>870/1000</small>
-                  </div>
-                </li>
-                <li>
-                  <div class="lbl">CONTRIBUTORS</div>
-                  <div class="val">320</div>
-                </li>
-                <li>
-                  <div class="lbl">END DATE</div>
-                  <div class="val">20/02/2017</div>
-                </li>
-                <li class="contribute"><a href="item">CONTRIBUTE NOW</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- campaign-->
-          <div class="campaign">
-            <!-- no--><span class="no">03</span>
-            <!-- thumbs-->
-            <div class="thumbs">
-              <!-- wrap--><a href="summary"><img src="../img/img-thumbnail-campaign3.png">
-                <!-- action-->
-                <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
-            </div>
-            <!-- detail-->
-            <div class="details">
-              <!-- title--><a href="summary">
-                <h1>Designing Spree</h1></a>
-              <!-- desc-->
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-              <!-- progress-->
-              <div class="progress-line">
-                <!-- bar-->
-                <div class="progress">
-                  <div role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;" class="progress-bar"></div>
-                </div>
-                <!-- target-->
-                <div class="target">870 / 1000</div>
-              </div>
-              <!-- stats-->
-              <ul class="stats">
-                <li>
-                  <div class="lbl">PROGRESS</div>
-                  <div class="val">
-
-                    20%<small>870/1000</small>
-                  </div>
-                </li>
-                <li>
-                  <div class="lbl">CONTRIBUTORS</div>
-                  <div class="val">320</div>
-                </li>
-                <li>
-                  <div class="lbl">END DATE</div>
-                  <div class="val">20/02/2017</div>
-                </li>
-                <li class="contribute"><a href="item">CONTRIBUTE NOW</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- more-->
-          <div class="loadmore"><a href="#">LOAD MORE</a></div>
         </div>
+        <!-- more-->
+        <div class="loadmore"><a href="#">LOAD MORE</a></div>
       </div>
     </section>
     <!-- learn more-->

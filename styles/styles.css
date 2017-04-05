@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis:500,600,700|Rubik:400,400i,700,700i|PT+Sans:400,400i,700,700i');
 .centered-and-cropped {
   object-fit: cover;
-  width: 250px;
-  height: 250px
+  width: 288.75px;
+  height: 288.75px
 }
 a {
   outline: none;
@@ -250,9 +250,6 @@ body main section.banner.mini .container .progress .progress-bar .labl::after {
   left: 50%;
   margin-left: -5px;
   bottom: -5px;
-}
-body main section.banner.mini .bgwrap {
-  background-image: url('../img/bg-banner2.png');
 }
 body main section.banner.mini.detail .container .bannertext {
   padding-top: 50px;
@@ -611,10 +608,10 @@ body main section.campaigns .list .campaign .details ul.stats li.contribute a:ho
   border-color: #000;
   text-decoration: none;
 }
-body main section.campaigns .list .loadmore {
+body main section.campaigns .loadmore {
   text-align: center;
 }
-body main section.campaigns .list .loadmore a {
+body main section.campaigns .loadmore a {
   font-family: "Dosis";
   display: block;
   border: 2px solid #dedede;
@@ -627,7 +624,7 @@ body main section.campaigns .list .loadmore a {
   margin: 0 auto;
   display: inline-block;
 }
-body main section.campaigns .list .loadmore a:hover {
+body main section.campaigns .loadmore a:hover {
   background-color: #000;
   color: #fff;
   border-color: #000;
@@ -2407,7 +2404,7 @@ body footer .container .right li a:hover {
     float: none;
     display: inline-block;
   }
-  body main section.campaigns .list .loadmore a {
+  body main section.campaigns .loadmore a {
     display: block;
   }
   body main .topsection {

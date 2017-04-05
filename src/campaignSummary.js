@@ -14,8 +14,11 @@
  */
 
 
-//import {initAureliaIsotope} from '../js/Plugin.js'
+import { inject } from 'aurelia-framework';
+import { Campaign } from './modules/Campaign.js';
+import { CampaignServices } from './modules/CampaignServices.js';
 
+@inject(CampaignServices)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -23,7 +26,21 @@ export class CampaignSummary {
     }, 1000);
   }
 
+  constructor(campaignServices) {
+    this.campaignServices = campaignServices;
+    this.campaignId = 0;
+    this.campaignIda = 0;
+  }
+
   attached() {
     $('.accountmenu').removeClass('active');
+  }
+
+  activate(params) {
+    this.campaignIda = params.campaign;
+  }
+
+  currentCampaign() {
+
   }
 }
