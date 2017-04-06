@@ -43,6 +43,8 @@
             </ul>
           </div>
         </div>
+
+
         <!-- list-->
         <div class="list" repeat.for="camp of campaigns">
           <!-- campaign-->
@@ -50,13 +52,13 @@
             <!-- no--><span class="no">${$index+1}</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a href="summary" params.bind="{campaign : 42}"><img class="centered-and-cropped" src="${camp.banner}">
+              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToCamp(camp)"><img class="centered-and-cropped" src="${camp.banner}">
                 <!-- action-->
                 <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a href="summary" params.bind="{campaign : 42}">
+              <!-- title--><a href="javascript:void(0)" click.delegate="goToCamp(camp)">
                 <h1>${camp.title}</h1></a>
               <!-- desc-->
               <p>${camp.description}</p>
@@ -91,6 +93,8 @@
             </div>
           </div>
         </div>
+
+
         <!-- more-->
         <div class="loadmore"><a href="#">LOAD MORE</a></div>
       </div>

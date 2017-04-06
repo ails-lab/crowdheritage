@@ -27,6 +27,12 @@ export class CampaignServices {
     this.http = http;
   }
 
+  getCampaign(campaignid) {
+    return this.http.fetch(`/campaign/getCampaign?campaignId=${campaignid}`, {
+			method: 'GET'
+		}).then((response) => response.json());
+  }
+
   getActiveCampaigns( {groupid = '', offset = 0, count = 0} = {} ) {
     return this.http.fetch(`/campaign/activeCampaigns?groupId=${groupid}&offset=${offset}&count=${count}`, {
 			method: 'GET'

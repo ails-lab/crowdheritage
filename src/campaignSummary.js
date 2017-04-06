@@ -28,19 +28,24 @@ export class CampaignSummary {
 
   constructor(campaignServices) {
     this.campaignServices = campaignServices;
-    this.campaignId = 0;
-    this.campaignIda = 0;
+    this.campaign = 0;
+    this.temp = 42;
   }
 
   attached() {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params) {
-    this.campaignIda = params.campaign;
-  }
-
-  currentCampaign() {
-
+  activate(params, routeData) {
+    if ( routeData.details ) {
+      this.campaign = routeData.details;
+    }
+    else {
+      this.temp = Object.keys(routeData).length;
+      this.campaignServices.getCampaign(params.id)
+        .then( (result) => {
+          this.campaign = new Campaign(result);
+      });
+    }
   }
 }

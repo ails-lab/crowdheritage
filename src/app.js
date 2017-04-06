@@ -21,12 +21,18 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ['', 'index'], name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'Campaigns' },
-      { route: 'summary',     name: 'summary', moduleId: './campaignSummary', nav: false, title: 'Campaign' },
-      { route: 'item',        name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
+      { route: [''],     name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'Campaigns' },
+      { route: ['/:id'], name: 'summary', moduleId: './campaignSummary', nav: false, title: 'Campaign' },
+      { route: 'item',   name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
     ]);
 
     this.router = router;
+  }
+
+  goToCamp(camp) {
+    let summary = this.router.routes.find(x => x.name === 'summary');
+    summary.details = camp;
+    this.router.navigateToRoute('summary', {id: camp.dbId});
   }
 }
 
