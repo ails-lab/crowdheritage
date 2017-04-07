@@ -29,7 +29,7 @@ export class CampaignSummary {
   constructor(campaignServices) {
     this.campaignServices = campaignServices;
     this.campaign = 0;
-    this.temp = 42;
+    this.user = 0;
   }
 
   attached() {
@@ -37,8 +37,9 @@ export class CampaignSummary {
   }
 
   activate(params, routeData) {
-    if ( routeData.details ) {
-      this.campaign = routeData.details;
+    if ( routeData.campaign ) {
+      this.campaign = routeData.campaign;
+      this.user = routeData.user;
     }
     else {
       this.temp = Object.keys(routeData).length;

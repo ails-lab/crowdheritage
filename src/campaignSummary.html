@@ -1,4 +1,7 @@
 <template>
+  <require from="./converters/date-format"></require>
+  <require from="./converters/index-format"></require>
+
   <main>
     <!-- new banner-->
     <section class="banner mini">
@@ -11,13 +14,13 @@
           </div>
         </div>
         <!-- vertical nav-->
-        <nav class="vertical">
+        <nav class="vertical" id="vert">
           <ul>
             <li><a href="index"> <img src="../img/ic-arrow-left-black.png">RETURN TO CAMPAIGN LIST</a></li>
           </ul>
         </nav>
         <!-- progress-->
-        <div class="progress">
+        <div class="progress" id="prog">
           <div role="progressbar" aria-valuenow="${campaign.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${campaign.percentage}%;" class="progress-bar">
             <div class="labl">${campaign.percentage}%</div>
           </div>
@@ -38,7 +41,7 @@
             <!-- user stat-->
             <div class="userstat">
               <!-- text-->
-              <h1>${temp}<br/>Congratulations, you have unlocked the bronze badge</h1>
+              <h1>Congratulations ${user.firstName}, you have unlocked the bronze badge</h1>
               <!-- stats-->
               <ul class="stats">
                 <li class="wide">
@@ -79,23 +82,23 @@
               <!-- heading-->
               <div class="heading"> <span>GOAL</span></div>
               <!-- desc-->
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea. </p>
+              <p>${campaign.description}</p>
               <!-- stats-->
               <ul class="stats">
                 <li>
                   <div class="lbl">PROGRESS</div>
                   <div class="val">
 
-                    87%<small>870/1000</small>
+                    ${campaign.percentage}%<small>${campaign.totalCurrent}/${campaign.target}</small>
                   </div>
                 </li>
                 <li>
                   <div class="lbl">CONTRIBUTORS</div>
-                  <div class="val">320</div>
+                  <div class="val">${campaign.contributorsCount}</div>
                 </li>
                 <li>
                   <div class="lbl">END DATE</div>
-                  <div class="val">20/02/2017</div>
+                  <div class="val">${campaign.endDate | dateFormat}</div>
                 </li>
               </ul>
             </div>

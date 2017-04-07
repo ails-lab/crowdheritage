@@ -16,22 +16,23 @@
 
 export class App {
   configureRouter(config, router) {
-    config.title = 'WITHcrowd';
+    config.title = '';
     config.addPipelineStep('postcomplete', PostCompleteStep);
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: [''],     name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'Campaigns' },
-      { route: ['/:id'], name: 'summary', moduleId: './campaignSummary', nav: false, title: 'Campaign' },
+      { route: [''],     name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
+      { route: ['/:id'], name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
       { route: 'item',   name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
     ]);
 
     this.router = router;
   }
 
-  goToCamp(camp) {
+  goToCamp(camp, user) {
     let summary = this.router.routes.find(x => x.name === 'summary');
-    summary.details = camp;
+    summary.campaign = camp;
+    summary.user = user;
     this.router.navigateToRoute('summary', {id: camp.dbId});
   }
 }

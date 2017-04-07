@@ -1,4 +1,7 @@
 <template>
+  <require from="./converters/date-format"></require>
+  <require from="./converters/index-format"></require>
+
   <main>
     <!-- banner-->
     <section class="banner">
@@ -49,16 +52,16 @@
         <div class="list" repeat.for="camp of campaigns">
           <!-- campaign-->
           <div class="campaign">
-            <!-- no--><span class="no">${$index+1}</span>
+            <!-- no--><span class="no">${($index+1) | indexFormat}</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToCamp(camp)"><img class="centered-and-cropped" src="${camp.banner}">
+              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToCamp(camp, user)"><img class="centered-and-cropped" src="${camp.banner}">
                 <!-- action-->
                 <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a href="javascript:void(0)" click.delegate="goToCamp(camp)">
+              <!-- title--><a href="javascript:void(0)" click.delegate="goToCamp(camp, user)">
                 <h1>${camp.title}</h1></a>
               <!-- desc-->
               <p>${camp.description}</p>
@@ -86,7 +89,7 @@
                 </li>
                 <li>
                   <div class="lbl">END DATE</div>
-                  <div class="val">${camp.endDate}</div>
+                  <div class="val">${camp.endDate | dateFormat}</div>
                 </li>
                 <li class="contribute"><a href="item">CONTRIBUTE NOW</a></li>
               </ul>

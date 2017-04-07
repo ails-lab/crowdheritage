@@ -17,8 +17,9 @@
 import { inject } from 'aurelia-framework';
 import { Campaign } from './modules/Campaign.js';
 import { CampaignServices } from './modules/CampaignServices.js';
+import { UserServices } from './modules/UserServices.js';
 
-@inject(CampaignServices)
+@inject(CampaignServices, UserServices)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -26,12 +27,17 @@ export class CampaignIndex {
     }, 800);
   }
 
-  constructor(campaignServices) {
+  constructor(campaignServices, userServices) {
     this.campaignServices = campaignServices;
+    this.userServices = userServices;
     this.campaigns = [];
     this.campaignsCount = 0;
-    this.fetchitemnum = 10;
-    this.answer = 'initial';
+    this.user = {
+      "_id" : "57fe58d14c747959989c8b0d",
+      "firstName" : "Spyros",
+      "lastName" : "Bek",
+      "username" : "Spyros B"
+    }
   }
 
   attached() {
