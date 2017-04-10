@@ -16,9 +16,11 @@
 
 import { inject } from 'aurelia-framework';
 import { Campaign } from './modules/Campaign.js';
+import { Collection } from './modules/Collection.js';
 import { CampaignServices } from './modules/CampaignServices.js';
+import { CollectionServices } from './modules/CollectionServices.js';
 
-@inject(CampaignServices)
+@inject(CampaignServices, CollectionServices)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -26,10 +28,11 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices) {
+  constructor(campaignServices, collectionServices) {
     this.campaignServices = campaignServices;
+    this.collectionServices = collectionServices;
     this.campaign = 0;
-    this.user = 0;
+    this.collections = [];
   }
 
   attached() {
@@ -37,16 +40,34 @@ export class CampaignSummary {
   }
 
   activate(params, routeData) {
+    let camp=0;
+    let cols=[];
+
     if ( routeData.campaign ) {
-      this.campaign = routeData.campaign;
-      this.user = routeData.user;
+      camp = routeData.campaign;
     }
     else {
-      this.temp = Object.keys(routeData).length;
       this.campaignServices.getCampaign(params.id)
         .then( (result) => {
-          this.campaign = new Campaign(result);
+          camp = new Campaign(result);
       });
     }
+
+    alert(camp.targetCollections);
+    this.collectionServices.getMultipleCollections(camp.targetCollections)
+      .then( response => {
+        cols = this.getCollections(response, 10);
+      });
+
+    this.campaign = camp;
+    this.collections = cols;
+  }
+
+  getCollections(data, offset) {
+    let cols = [];
+    for (let item in data) {
+      cols.push(new Collection(item));
+    }
+    return cols;
   }
 }
