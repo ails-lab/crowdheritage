@@ -761,10 +761,10 @@ body main section.collections .campaignlist .entries .entry a:hover .thumbs .act
   opacity: 1;
   filter: alpha(opacity=100);
 }
-body main section.collections .campaignlist .loadmore {
+body main section.collections .loadmore {
   text-align: center;
 }
-body main section.collections .campaignlist .loadmore a {
+body main section.collections .loadmore a {
   font-family: "Dosis";
   display: block;
   border: 2px solid #dedede;
@@ -777,7 +777,7 @@ body main section.collections .campaignlist .loadmore a {
   margin: 0 auto;
   display: inline-block;
 }
-body main section.collections .campaignlist .loadmore a:hover {
+body main section.collections .loadmore a:hover {
   background-color: #000;
   color: #fff;
   border-color: #000;

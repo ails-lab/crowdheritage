@@ -16,8 +16,8 @@
 
 import { inject } from 'aurelia-framework';
 import { Campaign } from './modules/Campaign.js';
-import { Collection } from './modules/Collection.js';
 import { CampaignServices } from './modules/CampaignServices.js';
+import { Collection } from './modules/Collection.js';
 import { CollectionServices } from './modules/CollectionServices.js';
 
 @inject(CampaignServices, CollectionServices)
@@ -40,34 +40,32 @@ export class CampaignSummary {
   }
 
   activate(params, routeData) {
-    let camp=0;
-    let cols=[];
-
     if ( routeData.campaign ) {
-      camp = routeData.campaign;
+      this.campaign = routeData.campaign;
+      this.getCampaignCollections(this.campaign.targetCollections);
     }
     else {
       this.campaignServices.getCampaign(params.id)
         .then( (result) => {
-          camp = new Campaign(result);
+          this.campaign = new Campaign(result);
+          this.getCampaignCollections(this.campaign.targetCollections);
       });
     }
-
-    alert(camp.targetCollections);
-    this.collectionServices.getMultipleCollections(camp.targetCollections)
-      .then( response => {
-        cols = this.getCollections(response, 10);
-      });
-
-    this.campaign = camp;
-    this.collections = cols;
   }
 
   getCollections(data, offset) {
     let cols = [];
-    for (let item in data) {
-      cols.push(new Collection(item));
+    for (let i in data) {
+      cols.push(new Collection(data[i]));
     }
     return cols;
   }
+
+  getCampaignCollections(colIds) {
+    this.collectionServices.getMultipleCollections(colIds)
+      .then( response => {
+        this.collections = this.getCollections(response, 10);
+      });
+  }
+
 }

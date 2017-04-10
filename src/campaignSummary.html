@@ -14,13 +14,13 @@
           </div>
         </div>
         <!-- vertical nav-->
-        <nav class="vertical" id="vert">
+        <nav class="vertical">
           <ul>
             <li><a href="index"> <img src="../img/ic-arrow-left-black.png">RETURN TO CAMPAIGN LIST</a></li>
           </ul>
         </nav>
         <!-- progress-->
-        <div class="progress" id="prog">
+        <div class="progress">
           <div role="progressbar" aria-valuenow="${campaign.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${campaign.percentage}%;" class="progress-bar">
             <div class="labl">${campaign.percentage}%</div>
           </div>
@@ -129,127 +129,13 @@
             </ul>
           </div>
         </div>
+
         <!-- campaign reel-->
-        <div class="campaignlist">
+        <div class="campaignlist" repeat.for="col of collections">
           <!-- entry-->
           <div class="entries isotoped">
             <!-- item-->
             <div class="sizer"></div>
-            <!-- entry-->
-            <div class="entry">
-              <!-- wrap--><a href="item">
-                <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src="../img/img-thumb-1.png">
-                  <!-- action-->
-                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
-                </div>
-                <!-- detail-->
-                <div class="detail">
-                  <!-- count-->
-                  <div class="count">
-
-                    45<span>ITEMS</span>
-                  </div>
-                  <!-- title-->
-                  <div class="desc">
-                    <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
-                    <div class="owner">By Space Ipsum</div>
-                  </div>
-                </div></a>
-            </div>
-            <!-- entry-->
-            <div class="entry">
-              <!-- wrap--><a href="item">
-                <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src="../img/img-thumb-2.png">
-                  <!-- action-->
-                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
-                </div>
-                <!-- detail-->
-                <div class="detail">
-                  <!-- count-->
-                  <div class="count">
-
-                    45<span>ITEMS</span>
-                  </div>
-                  <!-- title-->
-                  <div class="desc">
-                    <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
-                    <div class="owner">By Space Ipsum</div>
-                  </div>
-                </div></a>
-            </div>
-            <!-- entry-->
-            <div class="entry">
-              <!-- wrap--><a href="item">
-                <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src="../img/img-thumb-3.png">
-                  <!-- action-->
-                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
-                </div>
-                <!-- detail-->
-                <div class="detail">
-                  <!-- count-->
-                  <div class="count">
-
-                    45<span>ITEMS</span>
-                  </div>
-                  <!-- title-->
-                  <div class="desc">
-                    <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
-                    <div class="owner">By Space Ipsum</div>
-                  </div>
-                </div></a>
-            </div>
-            <!-- entry-->
-            <div class="entry">
-              <!-- wrap--><a href="item">
-                <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src="../img/img-thumb-4.png">
-                  <!-- action-->
-                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
-                </div>
-                <!-- detail-->
-                <div class="detail">
-                  <!-- count-->
-                  <div class="count">
-
-                    45<span>ITEMS</span>
-                  </div>
-                  <!-- title-->
-                  <div class="desc">
-                    <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
-                    <div class="owner">By Space Ipsum</div>
-                  </div>
-                </div></a>
-            </div>
-            <!-- entry-->
-            <div class="entry">
-              <!-- wrap--><a href="item">
-                <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src="../img/img-thumb-5.png">
-                  <!-- action-->
-                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
-                </div>
-                <!-- detail-->
-                <div class="detail">
-                  <!-- count-->
-                  <div class="count">
-
-                    45<span>ITEMS</span>
-                  </div>
-                  <!-- title-->
-                  <div class="desc">
-                    <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
-                    <div class="owner">By Space Ipsum</div>
-                  </div>
-                </div></a>
-            </div>
             <!-- entry-->
             <div class="entry">
               <!-- wrap--><a href="item">
@@ -274,11 +160,13 @@
                 </div></a>
             </div>
           </div>
-          <!-- more-->
-          <div class="loadmore"><a href="#">LOAD MORE</a></div>
         </div>
+
+        <!-- more-->
+        <div class="loadmore"><a href="#">LOAD MORE</a></div>
       </div>
     </section>
+
     <!-- campaign stats-->
     <section class="campaignstats">
       <!-- conty-->

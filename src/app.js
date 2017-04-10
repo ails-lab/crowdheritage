@@ -29,7 +29,7 @@ export class App {
     this.router = router;
   }
 
-  goToCamp(camp, user) {
+  goToCamp(camp) {
     let summary = this.router.routes.find(x => x.name === 'summary');
     summary.campaign = camp;
     this.router.navigateToRoute('summary', {id: camp.dbId});
