@@ -32,12 +32,6 @@ export class CampaignIndex {
     this.userServices = userServices;
     this.campaigns = [];
     this.campaignsCount = 0;
-    this.user = {
-      "_id" : "57fe58d14c747959989c8b0d",
-      "firstName" : "Spyros",
-      "lastName" : "Bek",
-      "username" : "Spyros B"
-    }
   }
 
   attached() {

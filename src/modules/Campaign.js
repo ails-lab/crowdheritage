@@ -40,6 +40,7 @@ export class Campaign {
     this.totalCurrent = this.created + this.approved + this.rejected;
     this.percentage = Math.min(100, Math.floor(100 * this.totalCurrent / this.target));
     this.userPoints = data.contributorsPoints;
+    this.targetCollections = data.targetCollections;
     //this. = data.;
   }
 }

@@ -32,7 +32,6 @@ export class App {
   goToCamp(camp, user) {
     let summary = this.router.routes.find(x => x.name === 'summary');
     summary.campaign = camp;
-    summary.user = user;
     this.router.navigateToRoute('summary', {id: camp.dbId});
   }
 }
