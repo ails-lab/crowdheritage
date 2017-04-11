@@ -27,6 +27,12 @@ export class CampaignServices {
     this.http = http;
   }
 
+  getCampaignsCount() {
+    return this.http.fetch(`/campaign/count`, {
+			method: 'GET'
+		}).then((response) => response.json());
+  }
+
   getCampaign(campaignid) {
     return this.http.fetch(`/campaign/getCampaign?campaignId=${campaignid}`, {
 			method: 'GET'

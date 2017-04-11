@@ -19,6 +19,8 @@ import { Campaign } from './modules/Campaign.js';
 import { CampaignServices } from './modules/CampaignServices.js';
 import { UserServices } from './modules/UserServices.js';
 
+let COUNT = 1;
+
 @inject(CampaignServices, UserServices)
 export class CampaignIndex {
   scrollTo(anchor) {
@@ -32,6 +34,9 @@ export class CampaignIndex {
     this.userServices = userServices;
     this.campaigns = [];
     this.campaignsCount = 0;
+    this.currentCount = 0;
+    this.loading = false;
+    this.more = true;
   }
 
   attached() {
@@ -39,15 +44,24 @@ export class CampaignIndex {
   }
 
   activate() {
+    this.campaignServices.getCampaignsCount()
+      .then( result => {
+        this.campaignsCount = result;
+      });
     this.activeCampaigns();
   }
 
   activeCampaigns() {
-    this.campaignServices.getActiveCampaigns( {groupid: '', offset: 0, count: 0} )
+    this.loading = true;
+    this.campaignServices.getActiveCampaigns( {groupid: '', offset: 0, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
-        this.campaignsCount = resultsArray.length;
+        this.currentCount = this.currentCount + resultsArray.length;
+        if (this.currentCount === this.campaignsCount) {
+          this.more = false;
+        }
       });
+    this.loading = false;
   }
 
   fillCampaignArray(campaignArray, results) {
@@ -55,4 +69,18 @@ export class CampaignIndex {
 			campaignArray.push(new Campaign(item));
 		}
   }
+
+  loadMore() {
+    this.loading = true;
+    this.campaignServices.getActiveCampaigns( {groupid: '', offset: this.currentCount, count: COUNT} )
+      .then( (resultsArray) => {
+        this.fillCampaignArray((this.campaigns), resultsArray);
+        this.currentCount = this.currentCount + resultsArray.length;
+        if (this.currentCount === this.campaignsCount) {
+          this.more = false;
+        }
+      });
+    this.loading = false;
+  }
+
 }
