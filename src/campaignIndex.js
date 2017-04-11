@@ -57,7 +57,7 @@ export class CampaignIndex {
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;
-        if (this.currentCount === this.campaignsCount) {
+        if (this.currentCount >= this.campaignsCount) {
           this.more = false;
         }
       });

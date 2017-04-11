@@ -128,7 +128,6 @@
             </ul>
           </div>
         </div>
-
         <!-- campaign reel-->
         <div class="campaignlist">
           <!-- entry-->
@@ -136,6 +135,7 @@
             <!-- item-->
             <div class="sizer"></div>
             <!-- entry-->
+
             <div class="entry" repeat.for="col of collections">
               <!-- wrap--><a href="item">
                 <!-- thumb-->
@@ -158,11 +158,14 @@
                   </div>
                 </div></a>
             </div>
+
           </div>
         </div>
-
         <!-- more-->
-        <div class="loadmore"><a href="#">LOAD MORE</a></div>
+        <div class="loadmore">
+          <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
+          <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+        </div>
       </div>
     </section>
 

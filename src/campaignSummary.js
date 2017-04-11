@@ -20,6 +20,8 @@ import { CampaignServices } from './modules/CampaignServices.js';
 import { Collection } from './modules/Collection.js';
 import { CollectionServices } from './modules/CollectionServices.js';
 
+let COUNT = 1;
+
 @inject(CampaignServices, CollectionServices)
 export class CampaignSummary {
   scrollTo(anchor) {
@@ -33,6 +35,10 @@ export class CampaignSummary {
     this.collectionServices = collectionServices;
     this.campaign = 0;
     this.collections = [];
+    this.collectionsCount = 0;
+    this.currentCount = 0;
+    this.loading = false;
+    this.more = true;
   }
 
   attached() {
@@ -42,13 +48,15 @@ export class CampaignSummary {
   activate(params, routeData) {
     if ( routeData.campaign ) {
       this.campaign = routeData.campaign;
-      this.getCampaignCollections(this.campaign.targetCollections);
+      this.collectionsCount = this.campaign.targetCollections.length;
+      this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
     }
     else {
       this.campaignServices.getCampaign(params.id)
         .then( (result) => {
           this.campaign = new Campaign(result);
-          this.getCampaignCollections(this.campaign.targetCollections);
+          this.collectionsCount = this.campaign.targetCollections.length;
+          this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
       });
     }
   }
@@ -61,11 +69,21 @@ export class CampaignSummary {
     return cols;
   }
 
-  getCampaignCollections(colIds) {
-    this.collectionServices.getMultipleCollections(colIds)
+  getCampaignCollections(colIds, offset, count) {
+    this.loading = true;
+    this.collectionServices.getMultipleCollections(colIds, offset, count)
       .then( response => {
-        this.collections = this.getCollections(response, 10);
+        this.currentCount = this.currentCount + count;
+        if (this.currentCount >= this.collectionsCount) {
+          this.more = false;
+        }
+        this.collections = this.collections.concat(this.getCollections(response, 10));
       });
+    this.loading = false;
+  }
+
+  loadMore() {
+    this.getCampaignCollections(this.campaign.targetCollections, this.currentCount, COUNT);
   }
 
 }
