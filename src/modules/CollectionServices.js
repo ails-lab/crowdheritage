@@ -68,9 +68,9 @@ export class CollectionServices {
 	}
 
 
-	getMultipleCollections(idArray) {
+	getMultipleCollections(idArray, offset, count) {
 		let idstr = '';
-		for (let i = 0; i < idArray.length; i++) {
+		for (let i = offset; i < (offset+count); i++) {
 			if (idstr.length > 0) {
 				idstr += '&';
 			}
