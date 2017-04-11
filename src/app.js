@@ -22,7 +22,7 @@ export class App {
     config.options.root = '/';
     config.map([
       { route: [''],     name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
-      { route: ['/:id'], name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
+      { route: ['/:id'], name: 'summary', moduleId: './campaignSummary', nav: false, title: 'Campaign' },
       { route: 'item',   name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
     ]);
 

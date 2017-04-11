@@ -55,7 +55,7 @@
             <!-- no--><span class="no">${($index+1) | indexFormat}</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToCamp(camp)"><img class="centered-and-cropped" src="${camp.banner}">
+              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToCamp(camp)"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
                 <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
             </div>

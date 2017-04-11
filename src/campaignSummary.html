@@ -16,7 +16,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="index"> <img src="../img/ic-arrow-left-black.png">RETURN TO CAMPAIGN LIST</a></li>
+            <li><a href=""> <img src="../img/ic-arrow-left-black.png">RETURN TO CAMPAIGN LIST</a></li>
           </ul>
         </nav>
         <!-- progress-->
@@ -67,7 +67,6 @@
               </ul>
               <!-- description-->
               <div class="desc">
-
                 Contribute more and unlocked new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
               </div>
             </div>
@@ -141,7 +140,7 @@
               <!-- wrap--><a href="item">
                 <!-- thumb-->
                 <div class="thumbs">
-                  <!-- img--><img src="../img/img-thumb-3.png">
+                  <!-- img--><img src.bind="col.backgroundImage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                   <!-- action-->
                   <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
                 </div>
@@ -150,12 +149,12 @@
                   <!-- count-->
                   <div class="count">
 
-                    45<span>ITEMS</span>
+                    ${col.entryCount}<span>ITEMS</span>
                   </div>
                   <!-- title-->
                   <div class="desc">
-                    <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
-                    <div class="owner">By Space Ipsum</div>
+                    <div class="title">${col.title}</div>
+                    <div class="owner">By ${col.creatorName}</div>
                   </div>
                 </div></a>
             </div>
