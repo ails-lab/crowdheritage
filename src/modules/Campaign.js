@@ -20,6 +20,7 @@ export class Campaign {
 
   constructor(data) {
     this.dbId = data.dbId;
+    this.name = data.name;
     this.title = data.campaignTitle;
     this.description = data.description;
     this.banner = data.campaignBanner;
