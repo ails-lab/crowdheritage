@@ -52,7 +52,7 @@ export class CampaignSummary {
       this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
     }
     else {
-      this.campaignServices.getCampaignByName(params.name)
+      this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
           this.collectionsCount = this.campaign.targetCollections.length;
