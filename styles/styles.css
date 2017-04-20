@@ -2049,6 +2049,9 @@ body footer .container .right li a:hover {
     width: 453px;
     float: left;
   }
+  body main section.banner.mini .container .progress {
+    margin-right: 70px;
+  }
 }
 /* Medium devices (tablet landscape, 1200px) */
 @media (max-width: 1199px) {
@@ -2349,6 +2352,7 @@ body footer .container .right li a:hover {
   }
   body main section.banner.mini .container .progress {
     right: 15px;
+    margin-right: 0px;
   }
   body main section.banner.mini.detail .collectioninfo {
     right: 0;
