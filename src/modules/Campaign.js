@@ -29,6 +29,7 @@ export class Campaign {
 				this.banner=`${settings.baseUrl}${this.banner}`;}
 		}
     this.space = data.space;
+    this.spacename = data.spacename;
     this.startDate = data.startDate;
     this.endDate = data.endDate;
     this.motivation = data.campaignMotivation;
@@ -42,6 +43,5 @@ export class Campaign {
     this.percentage = Math.min(100, Math.floor(100 * this.totalCurrent / this.target));
     this.userPoints = data.contributorsPoints;
     this.targetCollections = data.targetCollections;
-    //this. = data.;
   }
 }
