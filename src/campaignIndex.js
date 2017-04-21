@@ -37,23 +37,34 @@ export class CampaignIndex {
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
+    this.groupName = "";
   }
 
   attached() {
     $('.accountmenu').removeClass('active');
   }
 
-  activate() {
-    this.campaignServices.getCampaignsCount()
-      .then( result => {
-        this.campaignsCount = result;
-      });
-    this.activeCampaigns();
+  activate(params) {
+    this.groupName = params.gname;
+    if (params.gname == 'all') {
+      this.campaignServices.getCampaignsCount("")
+        .then( result => {
+          this.campaignsCount = result;
+        });
+      this.activeCampaigns("");
+    }
+    else {
+      this.campaignServices.getCampaignsCount(params.gname)
+        .then( result => {
+          this.campaignsCount = result;
+        });
+      this.activeCampaigns(params.gname);
+    }
   }
 
-  activeCampaigns() {
+  activeCampaigns(groupName) {
     this.loading = true;
-    this.campaignServices.getActiveCampaigns( {groupid: '', offset: 0, count: COUNT} )
+    this.campaignServices.getActiveCampaigns( {group: groupName, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;
@@ -72,7 +83,7 @@ export class CampaignIndex {
 
   loadMore() {
     this.loading = true;
-    this.campaignServices.getActiveCampaigns( {groupid: '', offset: this.currentCount, count: COUNT} )
+    this.campaignServices.getActiveCampaigns( {group: this.groupName, offset: this.currentCount, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;

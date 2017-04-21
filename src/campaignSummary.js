@@ -20,7 +20,7 @@ import { CampaignServices } from './modules/CampaignServices.js';
 import { Collection } from './modules/Collection.js';
 import { CollectionServices } from './modules/CollectionServices.js';
 
-let COUNT = 1;
+let COUNT = 2;
 
 @inject(CampaignServices, CollectionServices)
 export class CampaignSummary {
