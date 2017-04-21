@@ -45,9 +45,10 @@ export class CampaignSummary {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params, routeData) {
+  activate(params, route, routeData) {
     if ( routeData.campaign ) {
       this.campaign = routeData.campaign;
+      route.navModel.setTitle(this.campaign.title);
       this.collectionsCount = this.campaign.targetCollections.length;
       this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
     }
@@ -55,6 +56,7 @@ export class CampaignSummary {
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
+          route.navModel.setTitle(this.campaign.title);
           this.collectionsCount = this.campaign.targetCollections.length;
           this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
       });
