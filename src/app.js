@@ -21,9 +21,10 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ['', '/:gname?'], name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
-      { route: ['/:cname'],      name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
-      { route: 'item',           name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
+      { route: '',                 redirect: 'index' },
+      { route: ['all', ':gname'], name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
+      { route: [':gname/:cname'],  name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
+      { route: 'item',             name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
     ]);
 
     this.router = router;
@@ -32,7 +33,7 @@ export class App {
   goToCamp(camp) {
     let summary = this.router.routes.find(x => x.name === 'summary');
     summary.campaign = camp;
-    this.router.navigateToRoute('summary', {cname: camp.username});
+    this.router.navigateToRoute('summary', {cname: camp.username, gname: camp.spacename});
   }
 }
 
