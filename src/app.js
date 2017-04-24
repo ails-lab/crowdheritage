@@ -21,10 +21,9 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: '',                 redirect: 'index' },
-      { route: ['all', ':gname'], name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
-      { route: [':gname/:cname'],  name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
-      { route: 'item',             name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
+      { route: ['', ':gname'],    name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
+      { route: [':gname/:cname'], name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
+      { route: 'item',            name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
     ]);
 
     this.router = router;

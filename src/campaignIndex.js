@@ -46,7 +46,7 @@ export class CampaignIndex {
 
   activate(params) {
     this.groupName = params.gname;
-    if (params.gname == 'all') {
+    if (!params.gname) {
       this.campaignServices.getCampaignsCount("")
         .then( result => {
           this.campaignsCount = result;
