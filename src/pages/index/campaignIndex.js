@@ -19,7 +19,7 @@ import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { UserServices } from '../../modules/UserServices.js';
 
-let COUNT = 1;
+let COUNT = 2;
 
 @inject(CampaignServices, UserServices)
 export class CampaignIndex {
