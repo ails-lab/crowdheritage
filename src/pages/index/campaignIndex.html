@@ -1,6 +1,6 @@
 <template>
-  <require from="./converters/date-format"></require>
-  <require from="./converters/index-format"></require>
+  <require from="../../converters/date-format"></require>
+  <require from="../../converters/index-format"></require>
 
   <main>
     <!-- banner-->
@@ -18,7 +18,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')"> <img src="../img/ic-arrow-left-black.png">CONTRIBUTE NOW</a></li>
+            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')"> <img src="/img/ic-arrow-left-black.png">CONTRIBUTE NOW</a></li>
             <li>${campaignsCount} CAMPAIGNS</li>
           </ul>
         </nav>
@@ -38,7 +38,7 @@
           <div class="sort">
             <!-- label-->
             <div class="lbl">SORT BY </div>
-            <!-- sort--><a id="sorting" href="#" data-toggle="dropdown"><span class="text">ALPHABETICAL</span><span class="arrow"><img src="../img/ic-arrow-down-green.png"></span></a>
+            <!-- sort--><a id="sorting" href="#" data-toggle="dropdown"><span class="text">ALPHABETICAL</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
             <!-- dropdown-->
             <ul aria-labelledby="sorting" class="dropdown-menu">
               <li> <a href="#">ALPHABETICAL</a></li>
@@ -46,7 +46,6 @@
             </ul>
           </div>
         </div>
-
 
         <!-- list-->
         <div class="list" repeat.for="camp of campaigns">
@@ -79,7 +78,6 @@
                 <li>
                   <div class="lbl">PROGRESS</div>
                   <div class="val">
-
                     ${camp.percentage}%<small>${camp.totalCurrent}/${camp.target}</small>
                   </div>
                 </li>
@@ -97,7 +95,6 @@
           </div>
         </div>
 
-
         <!-- more-->
         <div class="loadmore">
           <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
@@ -105,17 +102,17 @@
         </div>
       </div>
     </section>
+
     <!-- learn more-->
     <section class="learnmore">
       <div class="container">
         <!-- left-->
-        <div class="left"><img src="../img/img-learnmore-1.png"></div>
+        <div class="left"><img src="/img/img-learnmore-1.png"></div>
         <!-- right-->
         <div class="right">
           <!-- desc-->
           <div class="desc">
             <h1>
-
               Learn more about <br>crowdsourcing campaign
             </h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
@@ -124,7 +121,7 @@
           <div class="register">
             <!-- wrap-->
             <div class="wrap">
-              <!-- img--><img src="../img/img-learnmore-2.png">
+              <!-- img--><img src="/img/img-learnmore-2.png">
               <!-- text-->
               <div class="text">
                 <h1>Want to create your own?</h1>
@@ -135,5 +132,6 @@
         </div>
       </div>
     </section>
+
   </main>
 </template>

@@ -15,9 +15,9 @@
 
 
 import { inject } from 'aurelia-framework';
-import { Campaign } from './modules/Campaign.js';
-import { CampaignServices } from './modules/CampaignServices.js';
-import { UserServices } from './modules/UserServices.js';
+import { Campaign } from '../../modules/Campaign.js';
+import { CampaignServices } from '../../modules/CampaignServices.js';
+import { UserServices } from '../../modules/UserServices.js';
 
 let COUNT = 1;
 

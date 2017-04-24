@@ -21,9 +21,10 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ['', ':gname'],    name: 'index',   moduleId: './campaignIndex',   nav: true,  title: 'WITHcrowd' },
-      { route: [':gname/:cname'], name: 'summary', moduleId: './campaignSummary', nav: false, title: '' },
-      { route: 'item',            name: 'item',    moduleId: './campaignItem',    nav: false, title: 'Annotate' }
+      { route: 'login',           name: 'login',   moduleId: './login',           nav: true,  title: 'Sign In' },
+      { route: ['', ':gname'],    name: 'index',   moduleId: './pages/index/campaignIndex',   nav: true,  title: 'WITHcrowd' },
+      { route: [':gname/:cname'], name: 'summary', moduleId: './pages/summary/campaignSummary', nav: false, title: '' },
+      { route: 'item',            name: 'item',    moduleId: './pages/item/campaignItem',    nav: false, title: 'Annotate' }
     ]);
 
     this.router = router;

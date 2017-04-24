@@ -15,10 +15,10 @@
 
 
 import { inject } from 'aurelia-framework';
-import { Campaign } from './modules/Campaign.js';
-import { CampaignServices } from './modules/CampaignServices.js';
-import { Collection } from './modules/Collection.js';
-import { CollectionServices } from './modules/CollectionServices.js';
+import { Campaign } from '../../modules/Campaign.js';
+import { CampaignServices } from '../../modules/CampaignServices.js';
+import { Collection } from '../../modules/Collection.js';
+import { CollectionServices } from '../../modules/CollectionServices.js';
 
 let COUNT = 2;
 
