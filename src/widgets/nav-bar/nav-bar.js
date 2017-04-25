@@ -20,7 +20,7 @@ import { Router } from 'aurelia-router';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 
-@inject(UserServices, Router, EventAggregator, SpaceServices, DialogService)
+@inject(UserServices, Router, EventAggregator, DialogService)
 export class NavBar {
 
   @bindable router = null;
@@ -36,4 +36,21 @@ export class NavBar {
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
+
+  asdf() {
+    alert("asdf");
+  }
+
+  // UI Functions
+  loginPopup() {
+		this.dialogService.open({
+			viewModel: 'widgets/logindialog/logindialog.js'
+		}).then((response) => {
+			if (!response.wasCancelled) {
+				console.log('NYI - Login User');
+			} else {
+				console.log('Login cancelled');
+			}
+		});
+	}
 }

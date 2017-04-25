@@ -1,0 +1,49 @@
+<template>
+	<ai-dialog id="loginPopup">
+		<button type="button" class="close" click.trigger="controller.cancel()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+
+		<h2>Sign in to WITH</h2>
+
+			<div class="externalLogin">
+				<button class="facebook" type="button" click.delegate="authenticate('facebook')">
+					<i class="facebook_small"></i>
+					<span>Facebook</span>
+				</button>
+				<button class="google" type="button" click.delegate="authenticate('google')">
+					<i class="google_small"></i>
+					<span>Google</span>
+				</button>
+				<button class="email" type="button" click.delegate="scrollEmail()">
+					<i class="email_small"></i>
+					<span>Email</span>
+				</button>
+
+				<div class="footer">Don't have an account? <a href="javascript:void(0)" click.delegate="register()">Joining is quick and easy</a>.</div>
+			</div>
+			<div class="emailLogin">
+				<form class="form">
+					<div class="col-md-5 col-sm-5 col-ms-5 col-xs-12">
+						<div class="form-group" data-bind="validationElement: emailUser" style="vertical-align: top;">
+							<label class="sr-only" for="useremail">Email address</label>
+							<input type="text" class="form-control" id="useremail" placeholder="Enter email" value.bind="email" hasfocus />
+						</div>
+					</div>
+					<div class="col-md-5 col-sm-5 col-ms-5 col-xs-12">
+						<div class="form-group" style="vertical-align: top;">
+							<label class="sr-only" for="userpass">Email address</label>
+							<input type="password" class="form-control" id="userpass" placeholder="Password" value.bind="password" />
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-2 col-ms-2 col-xs-12">
+						<button type="submit" class="btn btn-primary btn-block" click.delegate="signin()" style="vertical-align: top;">Login</button>
+					</div>
+
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-link" click.delegate="scrollDownEmail()">Login with Facebook or Google</span></button>
+					</div>
+				</form>
+			</div>
+	</ai-dialog>
+</template>

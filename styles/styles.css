@@ -2548,3 +2548,418 @@ body footer .container .right li a:hover {
     width: 100%;
   }
 }
+
+
+/* Popup Login */
+#login {
+	*:focus {
+    	outline: none!important;
+	}
+}
+#login h1,
+#login h2 {
+	color: black;
+}
+#login h2 {
+	font-family: 'Annie Use Your Telescope';
+	margin: 2em 0 1em;
+}
+/* Fix for nested rows */
+#login .row .row {
+	margin: 0 -15px;
+}
+/* Facebook/google Icons */
+button.huge,
+div.huge,
+i.huge {
+	margin: 0 10px 20px;
+	position: relative;
+	background-position: center center;
+	height: 170px;
+	width: 170px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+button.huge p {
+	position: absolute;
+	bottom: 10px;
+	visibility: hidden;
+	font-size: 14px;
+	font-weight: 400;
+	width: 100%;
+	text-align: center;
+	color: #fff;
+}
+button.huge > i {
+	transition: background-position 0.5s ease-out 0s;
+}
+button.huge:hover > i {
+	background-position: center -15px;
+}
+button.huge:hover > p {
+	visibility: visible;
+}
+button.email,
+button.facebook,
+button.google,
+button.google,
+div.email,
+div.facebook,
+div.google,
+div.google {
+	border: 0 none;
+	padding: 0;
+}
+.facebook,
+button.facebook,
+i.facebook {
+	background-color: #3b5997;
+}
+.google,
+button.google,
+i.twiter {
+	background-color: #cc3333;
+}
+.email,
+button.email,
+i.email {
+	background-color: #B5B5B5;
+}
+button.facebook:disabled,
+button.google:disabled {
+	background-color: #b5b5b5;
+}
+.email_huge,
+.facebook_huge,
+.google_huge,
+button:hover .email_huge,
+button:hover .facebook_huge,
+button:hover .google_huge {
+	display: inline-block;
+	width: 170px;
+	height: 170px;
+}
+.facebook_huge {
+	background-image: url("../img/assets/images/fb.png");
+}
+.google_huge {
+	background-image: url("../img/assets/images/google.png");
+}
+.email_huge {
+	background-image: url("../img/assets/images/email.png");
+}
+button:hover .facebook_huge {
+	background-image: url("../img/assets/images/fb_hover.png");
+}
+button:hover .google_huge {
+	background-image: url("../img/assets/images/google_hover.png");
+}
+button:hover .email_huge {
+	background-image: url("../img/assets/images/email_hover.png");
+}
+.vcenter {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+/* Popup Login */
+ai-dialog-open {
+	background-color: rgba(255, 255, 255, 0.95);
+}
+.externalLogin .footer {
+	font-weight: 500;
+	padding: 15px;
+}
+.email_small,
+.facebook_small,
+.google_small {
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.facebook_small {
+	background-image: url("../img/assets/images/fb_small.png");
+}
+.google_small {
+	background-image: url("../img/assets/images/google_small.png");
+}
+.email_small {
+	background-image: url("../img/assets/images/email_small.png");
+}
+button {
+	border-radius: 4px;
+}
+.button > i,
+.button > span,
+button > i,
+button > span {
+	vertical-align: middle;
+}
+.externalLogin button {
+	color: #fff;
+	margin: 10px 0;
+}
+button.facebook:hover:enabled {
+	background-image: linear-gradient(#3b5998, #354f87);
+	border-color: #314a7e;
+}
+button.google:hover:enabled {
+	background-image: linear-gradient(#cc3334, #bb2d2d);
+}
+button.email:hover:enabled {
+	background-image: linear-gradient(#b5b5b5, #a1a1a1);
+}
+#loginPopup {
+	box-sizing: border-box;
+	max-width: 570px;
+	padding: 10px;
+	width: 570px;
+	height: 220px;
+	text-align: center;
+}
+#loginPopup .emailLogin,
+#loginPopup .externalLogin {
+	float: left;
+	margin-right: 15px;
+	text-align: center;
+	width: 550px;
+	padding: 30px 0;
+}
+.emailLogin {
+	vertical-align: top;
+	display: none;
+}
+#loginPopup .externalLogin > button {
+	font-size: 14px;
+	font-weight: 400;
+	height: 42px;
+	line-height: 14px;
+	margin-right: 9px;
+	text-align: left;
+	width: 130px;
+}
+#loginPopup {
+	overflow: hidden;
+}
+button.close {
+	padding-right: 5px !important;
+}
+.emailLogin .col-md-2,
+.emailLogin .col-md-5,
+.emailLogin .col-ms-2,
+.emailLogin .col-ms-5,
+.emailLogin .col-sm-2,
+.emailLogin .col-sm-5 {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+/* Mid/Small Column sizes for supporting devices between 480 and 768px wide */
+.col-ms-1,
+.col-ms-10,
+.col-ms-11,
+.col-ms-12,
+.col-ms-2,
+.col-ms-3,
+.col-ms-4,
+.col-ms-5,
+.col-ms-6,
+.col-ms-7,
+.col-ms-8,
+.col-ms-9 {
+	position: relative;
+	min-height: 1px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+@media (min-width: 480px) {
+	.col-ms-1,
+	.col-ms-10,
+	.col-ms-11,
+	.col-ms-2,
+	.col-ms-3,
+	.col-ms-4,
+	.col-ms-5,
+	.col-ms-6,
+	.col-ms-7,
+	.col-ms-8,
+	.col-ms-9 {
+		float: left;
+	}
+	.col-ms-1 {
+		width: 8.33333333%;
+	}
+	.col-ms-2 {
+		width: 16.66666667%;
+	}
+	.col-ms-3 {
+		width: 25%;
+	}
+	.col-ms-4 {
+		width: 33.33333333%;
+	}
+	.col-ms-5 {
+		width: 41.66666667%;
+	}
+	.col-ms-6 {
+		width: 50%;
+	}
+	.col-ms-7 {
+		width: 58.33333333%;
+	}
+	.col-ms-8 {
+		width: 66.66666667%;
+	}
+	.col-ms-9 {
+		width: 75%;
+	}
+	.col-ms-10 {
+		width: 83.33333333%;
+	}
+	.col-ms-11 {
+		width: 91.66666667%;
+	}
+	.col-ms-12 {
+		width: 100%;
+	}
+	.col-ms-push-1 {
+		left: 8.33333333%;
+	}
+	.col-ms-push-2 {
+		left: 16.66666667%;
+	}
+	.col-ms-push-3 {
+		left: 25%;
+	}
+	.col-ms-push-4 {
+		left: 33.33333333%;
+	}
+	.col-ms-push-5 {
+		left: 41.66666667%;
+	}
+	.col-ms-push-6 {
+		left: 50%;
+	}
+	.col-ms-push-7 {
+		left: 58.33333333%;
+	}
+	.col-ms-push-8 {
+		left: 66.66666667%;
+	}
+	.col-ms-push-9 {
+		left: 75%;
+	}
+	.col-ms-push-10 {
+		left: 83.33333333%;
+	}
+	.col-ms-push-11 {
+		left: 91.66666667%;
+	}
+	.col-ms-pull-1 {
+		right: 8.33333333%;
+	}
+	.col-ms-pull-2 {
+		right: 16.66666667%;
+	}
+	.col-ms-pull-3 {
+		right: 25%;
+	}
+	.col-ms-pull-4 {
+		right: 33.33333333%;
+	}
+	.col-ms-pull-5 {
+		right: 41.66666667%;
+	}
+	.col-ms-pull-6 {
+		right: 50%;
+	}
+	.col-ms-pull-7 {
+		right: 58.33333333%;
+	}
+	.col-ms-pull-8 {
+		right: 66.66666667%;
+	}
+	.col-ms-pull-9 {
+		right: 75%;
+	}
+	.col-ms-pull-10 {
+		right: 83.33333333%;
+	}
+	.col-ms-pull-11 {
+		right: 91.66666667%;
+	}
+	.col-ms-offset-1 {
+		margin-left: 8.33333333%;
+	}
+	.col-ms-offset-2 {
+		margin-left: 16.66666667%;
+	}
+	.col-ms-offset-3 {
+		margin-left: 25%;
+	}
+	.col-ms-offset-4 {
+		margin-left: 33.33333333%;
+	}
+	.col-ms-offset-5 {
+		margin-left: 41.66666667%;
+	}
+	.col-ms-offset-6 {
+		margin-left: 50%;
+	}
+	.col-ms-offset-7 {
+		margin-left: 58.33333333%;
+	}
+	.col-ms-offset-8 {
+		margin-left: 66.66666667%;
+	}
+	.col-ms-offset-9 {
+		margin-left: 75%;
+	}
+	.col-ms-offset-10 {
+		margin-left: 83.33333333%;
+	}
+	.col-ms-offset-11 {
+		margin-left: 91.66666667%;
+	}
+}
+.resetPasswordPopup {
+	width: 400px;
+}
+.resetPasswordPopup .lead {
+	font-size: 120%;
+}
+#new-password {
+	margin-bottom: 50px;
+}
+#new-password form {
+	margin: 50px 0;
+}
+@media (min-width: 480px) and (max-width: 768px) {
+	.container {
+		max-width: 748px;
+	}
+}
+/* Media Queries */
+@media only screen and (max-width: 480px) {
+	#loginPopup {
+		max-width: 90%;
+		width: 90%;
+		padding: 10px;
+		max-height: 90%;
+		height: 320px;
+	}
+	#loginPopup .emailLogin,
+	#loginPopup .externalLogin {
+		width: 100%;
+	}
+	.external_login .footer {
+		width: 100%;
+	}
+}
+@media only screen and (max-height: 480px) and (max-width: 480px) {
+	#loginPopup {
+		min-height: 90%;
+	}
+}

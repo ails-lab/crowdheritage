@@ -33,7 +33,8 @@ export async function configure(aurelia) {
 			instance.options.easing = 'linear';
 			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
 			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
-		});
+		})
+    .plugin('aurelia-dialog'); 
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');
