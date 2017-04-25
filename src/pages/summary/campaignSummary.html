@@ -103,7 +103,7 @@
             </div>
           </div>
           <!-- contribute-->
-          <div class="contribute"><a href="item">CONTRIBUTE TO CAMPAIGN</a></div>
+          <div class="contribute"><a href="javascript:void(0)" click.delegate="goToItem(campaign, 0)">CONTRIBUTE TO CAMPAIGN</a></div>
         </div>
       </div>
     </section>
@@ -137,7 +137,7 @@
             <!-- entry-->
 
             <div class="entry" repeat.for="col of collections">
-              <!-- wrap--><a href="item">
+              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToItem(campaign, col)">
                 <!-- thumb-->
                 <div class="thumbs">
                   <!-- img--><img src.bind="col.backgroundImage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
