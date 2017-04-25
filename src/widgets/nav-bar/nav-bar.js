@@ -19,6 +19,8 @@ import { UserServices } from '../../modules/UserServices.js';
 import { Router } from 'aurelia-router';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
+import { Notification } from '../../modules/Notification.js';
+import settings from '../../conf/global.config.js';
 
 @inject(UserServices, Router, EventAggregator, DialogService)
 export class NavBar {
@@ -37,10 +39,6 @@ export class NavBar {
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
 
-  asdf() {
-    alert("asdf");
-  }
-
   // UI Functions
   loginPopup() {
 		this.dialogService.open({
@@ -52,5 +50,148 @@ export class NavBar {
 				console.log('Login cancelled');
 			}
 		});
+	}
+
+  logout(redirectUri) {
+		this.userServices.logout(redirectUri);
+	}
+
+  activate() {
+    // Socket initialization
+		let domainUrl = `${settings.baseUrl}`.replace('http://', '');
+
+		this.notificationSocket = new WebSocket('ws://' + domainUrl + '/notifications/socket');
+		if (this.userServices.current !== null) {
+			this.waitForConnection(() => {
+				this.notificationSocket.send('{"action":"login","id":"' + this.userServices.current.id + '"}');
+			}, 1000);
+		}
+
+		this.notificationSocket.onopen = () => {
+			// Socket open
+		};
+
+		this.notificationSocket.onmessage = (evt) => {
+			let notification = new Notification(JSON.parse(evt.data));
+			let message = this.extractNotificationMessage(notification);
+			if (message !== null) {
+				this.ea.publish('notification-received', notification);
+				toastr.info(message);
+			}
+
+			switch (notification.activity) {
+			case 'COLLECTION_SHARE':
+				this.ea.publish('collection-shared', notification.resource);
+				break;
+			case 'EXHIBITION_SHARE':
+				this.ea.publish('exhibition-shared', notification.resource);
+				break;
+			case 'COLLECTION_UNSHARED':
+				this.ea.publish('collection-unshared', notification.resource);
+				break;
+			case 'EXHIBITION_UNSHARED':
+				this.ea.publish('exhibition-unshared', notification.resource);
+				break;
+			case 'GROUP_REQUEST_ACCEPT':
+				this.ea.publish('group-joined', notification.group);
+				break;
+			case 'GROUP_REMOVAL':
+				this.ea.publish('group-left', notification.group);
+				break;
+			case 'RECORD_ANNOTATING_COMPLETED':
+				this.ea.publish('annotations-created', notification.resource);
+				break;
+			default: // Do nothing
+			}
+		};
+
+		this.notificationSocket.onclose = (evt) => {
+			console.log('disconnected');
+		};
+    
+		this.ea.subscribe('login', () => this.socketLoginHandler());
+		this.ea.subscribe('logout', () => this.socketLogoutHandler());
+  }
+
+  waitForConnection(callback, interval) {
+		if (this.notificationSocket.readyState === 1) {
+			callback();
+		} else {
+			// optional: implement backoff for interval here
+			setTimeout(() => {
+				this.waitForConnection(callback, interval);
+			}, interval);
+		}
+	}
+
+	socketLoginHandler() {
+		this.waitForConnection(() => {
+			this.notificationSocket.send('{"action":"login","id":"' + this.userServices.current.id + '"}');
+		}, 1000);
+	}
+
+	socketLogoutHandler() {
+		this.waitForConnection(() => {
+			this.notificationSocket.send('{"action":"logout","id":"' + this.userServices.current.id + '"}');
+		}, 1000);
+	}
+
+  extractNotificationMessage(value) {
+		switch (value.activity) {
+		case 'GROUP_INVITE':
+			return `<strong>${value.senderName}</strong> invites you to join <strong>${value.groupName}</strong>`;
+		case 'GROUP_INVITE_ACCEPT':
+			return `<strong>${value.senderName}</strong> joined <strong>${value.groupName}</strong>`;
+		case 'GROUP_INVITE_DECLINED':
+			return `<strong>${value.senderName}</strong> declined your invitation to join <strong>${value.groupName}</strong>`;
+		case 'GROUP_REQUEST':
+			return `<strong>${value.senderName}</strong> wants to join <strong>${value.groupName}</strong>`;
+		case 'GROUP_REQUEST_ACCEPT':
+			return `You joined <strong>${value.groupName}</strong>`;
+		case 'GROUP_REQUEST_DENIED':
+			return `Your request to join <strong>${value.groupName}</a> was declined`;
+		case 'COLLECTION_SHARE':
+			if (value.shareInfo.sharedWithGroup) {
+				return `<strong>${value.senderName}</strong> wants to share collection <strong>${value.resourceName}</strong> with <strong>${value.shareInfo.userOrGroupName}</strong>`;
+			}
+			return `<strong>${value.senderName}</strong> wants to share collection <strong>${value.resourceName}</strong> with you`;
+		case 'COLLECTION_SHARED':
+			if (value.shareInfo.sharedWithGroup) {
+				return `<strong>${value.resourceName}</strong> is now shared with <strong>${value.shareInfo.userOrGroupName}</strong>`;
+			}
+			return `<strong>${value.resourceName}</strong> is now shared with <strong>${value.senderName}</strong>`;
+		case 'COLLECTION_UNSHARED':
+			if (value.shareInfo.sharedWithGroup) {
+				return `<strong>${value.resourceName}</strong> is no longer shared with <strong>${value.shareInfo}.userOrGroupName</strong>`;
+			}
+			return `<strong>${value.resourceName}</strong> is no longer shared with you`;
+		case 'COLLECTION_REJECTED':
+			return `<strong>${value.shareInfo.userOrGroupName}</strong> is not interested in collection <strong>${value.resourceName}</strong>`;
+		case 'EXHIBITION_SHARE':
+			if (value.shareInfo.sharedWithGroup) {
+				return `<strong>${value.senderName}</strong> wants to share exhibition <strong>${value.resourceName}</strong> with <strong>${value.shareInfo.userOrGroupName}</strong>`;
+			}
+			return `<strong>${value.senderName}</strong> wants to share exhibition <strong>${value.resourceName}</strong> with you`;
+		case 'EXHIBITION_SHARED':
+			if (value.shareInfo.sharedWithGroup) {
+				return `<strong>${value.resourceName}</strong> is now shared with <strong>${value.shareInfo.userOrGroupName}</strong>`;
+			}
+			return `<strong>${value.resourceName}</strong> is now shared with <strong>${value.senderName}</strong>`;
+		case 'EXHIBITION_UNSHARED':
+			if (value.shareInfo.sharedWithGroup) {
+				return `<strong>${value.resourceName}</strong> is no longer shared with <strong>${value.shareInfo}.userOrGroupName</strong>`;
+			}
+			return `<strong>${value.resourceName}</strong> is no longer shared with you`;
+		case 'EXHIBITION_REJECTED':
+			return `<strong>${value.shareInfo.userOrGroupName}</strong> is not interested in exhibition <strong>${value.resourceName}</strong>`;
+		case 'COLLECTION_ANNOTATING_COMPLETED':
+			return `Annotating of collection <strong>${value.resourceName}</strong> has finished`;
+		case 'RECORD_ANNOTATING_COMPLETED':
+			return `Annotating of record <strong>${value.resourceName}</strong> has finished`;
+		case 'MESSAGE':
+			return value.message;
+		default:
+			return null;
+		}
 	}
 }
