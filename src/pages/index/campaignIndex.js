@@ -18,10 +18,11 @@ import { inject } from 'aurelia-framework';
 import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { UserServices } from '../../modules/UserServices.js';
+import { Router } from 'aurelia-router';
 
 let COUNT = 2;
 
-@inject(CampaignServices, UserServices)
+@inject(CampaignServices, UserServices, Router)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -29,7 +30,7 @@ export class CampaignIndex {
     }, 800);
   }
 
-  constructor(campaignServices, userServices) {
+  constructor(campaignServices, userServices, router) {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
     this.campaigns = [];
@@ -38,6 +39,7 @@ export class CampaignIndex {
     this.loading = false;
     this.more = true;
     this.groupName = "";
+    this.router = router;
   }
 
   attached() {
@@ -57,6 +59,10 @@ export class CampaignIndex {
       this.campaignServices.getCampaignsCount(params.gname)
         .then( result => {
           this.campaignsCount = result;
+          // If no campaigns found on this space, redirect to showing all campaigns
+          if (result == 0) {
+            this.router.navigateToRoute('index');
+          }
         });
       this.activeCampaigns(params.gname);
     }
