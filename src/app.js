@@ -21,10 +21,10 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: 'login',           name: 'login',   moduleId: './pages/login/login',             nav: true,  title: 'Sign In' },
-      { route: ['', ':gname'],    name: 'index',   moduleId: './pages/index/campaignIndex',     nav: true,  title: 'WITHcrowd' },
-      { route: [':gname/:cname'], name: 'summary', moduleId: './pages/summary/campaignSummary', nav: false, title: '' },
-      { route: 'item',            name: 'item',    moduleId: './pages/item/campaignItem',       nav: false, title: 'Annotate' }
+      { route: 'login',                name: 'login',   moduleId: './pages/login/login',             nav: false, title: 'Sign In' },
+      { route: ['', ':gname?'],        name: 'index',   moduleId: './pages/index/campaignIndex',     nav: true,  title: 'WITHcrowd' },
+      { route: ':gname/:cname',        name: 'summary', moduleId: './pages/summary/campaignSummary', nav: false, title: '' },
+      { route: ':gname/:cname/:recid', name: 'item',    moduleId: './pages/item/campaignItem',       nav: false, title: 'Annotate | WITHcrowd' }
     ]);
 
     this.router = router;
@@ -34,6 +34,13 @@ export class App {
     let summary = this.router.routes.find(x => x.name === 'summary');
     summary.campaign = camp;
     this.router.navigateToRoute('summary', {cname: camp.username, gname: camp.spacename});
+  }
+
+  goToItem(camp, col) {
+    let item = this.router.routes.find(x => x.name === 'item');
+    item.campaign = camp;
+    item.collection = col;
+    this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: "1234"});
   }
 }
 
