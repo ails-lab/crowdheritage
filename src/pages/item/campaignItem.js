@@ -15,17 +15,20 @@
 
 
 import { inject } from 'aurelia-framework';
+import { Record } from '../../modules/Record.js';
 import { Campaign } from '../../modules/Campaign.js';
-import { CampaignServices } from '../../modules/CampaignServices.js';
 import { Collection } from '../../modules/Collection.js';
+import { RecordServices } from '../../modules/RecordServices.js';
+import { CampaignServices } from '../../modules/CampaignServices.js';
 import { CollectionServices } from '../../modules/CollectionServices.js';
 
-@inject(CampaignServices, CollectionServices)
+@inject(RecordServices, CampaignServices, CollectionServices)
 export class CampaignItem {
 
-  constructor(campaignServices, collectionServices) {
+  constructor(recordServices, campaignServices, collectionServices) {
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
+    this.recordServices = recordServices;
     this.campaign = 0;
     this.collection = 0;
     this.collectionCount = 0;
@@ -33,6 +36,7 @@ export class CampaignItem {
     this.loading = false;
     this.more = true;
     this.hasCollection = false;
+    this.record = new Record();
   }
 
   attached() {
@@ -40,13 +44,16 @@ export class CampaignItem {
   }
 
   activate(params, routeData) {
+    this.loading = true;
     if ( routeData.campaign ) {
       this.campaign = routeData.campaign;
+      this.loading = false;
     }
     else {
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
+          this.loading = false;
       });
     }
     if ( routeData.collection ) {
@@ -54,4 +61,21 @@ export class CampaignItem {
       this.hasCollection = true;
     }
   }
+
+  hasMotivation(name) {
+    return !!this.campaign.motivation.includes(name);
+  }
+
+  loadRecord() {
+		this.loading = true;
+		this.recordServices.getRecord(this.id)
+			.then(data => {
+				this.record = new Record(data);
+				this.loading = false;
+			}).catch(error => {
+				this.loading = false;
+				console.log(error.message);
+				toastr.error("Error loading record:"+error.message);
+			});
+	}
 }

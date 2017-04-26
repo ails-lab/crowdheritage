@@ -1,0 +1,51 @@
+<template>
+  <div class="tag-geo">
+    <!-- infobar-->
+    <div class="wrap">
+      <!-- heading-->
+      <div class="heading yellow">GEOTAGGING</div>
+      <!-- info-->
+      <div class="infobar">Drop pins to countries or locations in the map that represents the picture.</div>
+      <!-- maps-->
+      <div class="geomap">
+        <div id="maps" class="mapswrap"></div>
+      </div>
+      <!-- searchbox-->
+      <div class="geobox">Vote submitted geo-tag by other users.</div>
+      <!-- taglist-->
+      <ul class="taglist">
+        <li>
+          <div class="text"> <img src="/img/ic-loc.png" class="loc">Amsterdam <span class="geo">45.87, 23.28</span></div>
+          <ul class="action">
+            <ul class="action"></ul>
+            <li class="up active"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
+            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="text"> <img src="/img/ic-loc.png" class="loc">Milan <span class="geo">45.87, 23.28</span></div>
+          <ul class="action">
+            <ul class="action"></ul>
+            <li class="up"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
+            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
+          </ul>
+        </li>
+        <!-- ul-->
+        <!--ul.locations
+        li
+          img( src="img/ic-loc.png" )
+          | Milan 45.87, 23.28
+          a.delete( href="#" )
+            img( src="img/ic-delete-yellow.png" )
+            | delete
+        li
+          img( src="img/ic-loc.png" )
+          | Amsterdam 45.87, 23.28
+          a.delete( href="#" )
+            img( src="img/ic-delete-yellow.png" )
+            | delete
+        -->
+      </ul>
+    </div>
+  </div>
+</template>

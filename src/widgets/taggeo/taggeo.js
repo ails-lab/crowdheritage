@@ -14,33 +14,6 @@
  */
 
 
-import { inject } from 'aurelia-framework';
-import { UserServices } from '../../modules/UserServices.js';
-
-@inject(UserServices)
-export class Login {
-
-	constructor(userServices) {
-		this.userServices = userServices;
-		this.error = '';
-	}
-
-	signin() {
-		this.userServices.login({
-			email: this.email,
-			password: this.password
-		}).then((error) => {
-			this.error = error;
-		});
-	}
-
-	deactivate() {
-		$('#login').hide();
-	}
-
-	authenticate(provider) {
-		this.userServices.authenticate(provider).then((error) => {
-			this.error = error;
-		});
-	}
+export class Taggeo {
+  
 }
