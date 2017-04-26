@@ -15,6 +15,8 @@
 
 
 // we want font-awesome to load as soon as possible to show the fa-spinner
+import config from './conf/auth.config.js';
+
 import '../styles/styles.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -34,7 +36,10 @@ export async function configure(aurelia) {
 			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
 			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
 		})
-    .plugin('aurelia-dialog'); 
+    .plugin('aurelia-dialog')
+    .plugin('aurelia-authentication', (baseConfig) => {
+			baseConfig.configure(config);
+		});
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');

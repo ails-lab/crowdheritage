@@ -19,10 +19,11 @@ import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { Collection } from '../../modules/Collection.js';
 import { CollectionServices } from '../../modules/CollectionServices.js';
+import { UserServices } from '../../modules/UserServices';
 
 let COUNT = 2;
 
-@inject(CampaignServices, CollectionServices)
+@inject(CampaignServices, CollectionServices, UserServices)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -30,9 +31,10 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices) {
+  constructor(campaignServices, collectionServices, userServices) {
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
+    this.userServices = userServices;
     this.campaign = 0;
     this.collections = [];
     this.collectionsCount = 0;
