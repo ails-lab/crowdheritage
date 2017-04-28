@@ -45,20 +45,24 @@ export class CampaignItem {
 
   activate(params, routeData) {
     this.loading = true;
-    if ( routeData.campaign ) {
+    if ( routeData ) {
       this.campaign = routeData.campaign;
       this.loading = false;
+      if ( routeData.collection ) {
+        this.collection = routeData.collection;
+        this.hasCollection = true;
+      }
+      if ( routeData.records.length > 0 ) {
+        alert("yes records");
+      }
     }
+
     else {
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
           this.loading = false;
       });
-    }
-    if ( routeData.collection ) {
-      this.collection = routeData.collection;
-      this.hasCollection = true;
     }
   }
 

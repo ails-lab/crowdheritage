@@ -35,10 +35,12 @@ export class App {
     this.router.navigateToRoute('summary', {cname: camp.username, gname: camp.spacename});
   }
 
-  goToItem(camp, col) {
+  goToItem(camp, col, records, offset) {
     let item = this.router.routes.find(x => x.name === 'item');
     item.campaign = camp;
     item.collection = col;
+    item.records = records;
+    item.offset = offset;
     this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: "1234"});
   }
 }
