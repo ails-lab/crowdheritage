@@ -21,7 +21,8 @@
         <ul class="collectioninfo">
           <li class="title" if.bind="hasCollection">${collection.title}</li>
           <li class="count">
-            <div class="info" if.bind="hasCollection">item 5 out of 23</div><a href="#" class="next">NEXT ITEM</a>
+            <div class="info" if.bind="hasCollection">item ${currentCount} out of ${collectionCount}</div>
+            <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
           </li>
         </ul>
         <!-- bg-->
@@ -31,14 +32,14 @@
     <!-- tagging-->
     <section class="tagging">
       <!-- title-->
-      <div class="container">
-        <div class="title">Marco de Vicenzo, Summer 2011 Womenswear</div>
+      <div class="container" if.bind="!loadRec">
+        <div class="title">${record.title}</div>
       </div>
       <!-- wraps-->
       <div class="wraps">
         <div class="container">
           <!-- left-->
-          <div class="left">
+          <div class="left" if.bind="!loadRec">
             <!-- img-->
             <div class="img"><img src="/img/img-tag.png"></div>
             <!-- metadata-->
@@ -87,7 +88,7 @@
             </div>
           </div>
           <!-- right-->
-          <div class="right" if.bind="!loading">
+          <div class="right" if.bind="!loadCamp && !loadRec">
             <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"></compose>
             <compose view-model="widgets/tagcolor/tagcolor" if.bind="hasMotivation('ColorTagging')"></compose>
             <compose view-model="widgets/taggeo/taggeo" if.bind="hasMotivation('GeoTagging')"></compose>

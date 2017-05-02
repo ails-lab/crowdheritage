@@ -23,7 +23,7 @@ export class App {
     config.map([
       { route: ['', ':gname?'],        name: 'index',   moduleId: './pages/index/campaignIndex',     nav: true,  title: 'WITHcrowd' },
       { route: ':gname/:cname',        name: 'summary', moduleId: './pages/summary/campaignSummary', nav: false, title: '' },
-      { route: ':gname/:cname/:recid', name: 'item',    moduleId: './pages/item/campaignItem',       nav: false, title: 'Annotate | WITHcrowd' }
+      { route: ':gname/:cname/:recid', name: 'item',    moduleId: './pages/item/campaignItem',       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' }
     ]);
 
     this.router = router;
