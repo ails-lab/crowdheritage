@@ -19,9 +19,9 @@
         </nav>
         <!-- progress-->
         <ul class="collectioninfo">
-          <li class="title" if.bind="hasCollection">${collection.title}</li>
+          <li class="title">${collectionTitle}</li>
           <li class="count">
-            <div class="info" if.bind="hasCollection">item ${currentCount} out of ${collectionCount}</div>
+            <div class="info" show.bind="hasCollection">item ${currentCount} out of ${collectionCount}</div>
             <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
           </li>
         </ul>
@@ -32,16 +32,18 @@
     <!-- tagging-->
     <section class="tagging">
       <!-- title-->
-      <div class="container" if.bind="!loadRec">
+      <div class="container" show.bind="!loadRec">
         <div class="title">${record.title}</div>
       </div>
       <!-- wraps-->
       <div class="wraps">
         <div class="container">
           <!-- left-->
-          <div class="left" if.bind="!loadRec">
+          <div class="left" show.bind="!loadRec">
             <!-- img-->
-            <div class="img"><img src="/img/img-tag.png"></div>
+            <div class="img" with.bind="record">
+              <img show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+            </div>
             <!-- metadata-->
             <div class="wrap">
               <div class="metadata">

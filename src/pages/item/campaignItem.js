@@ -23,7 +23,7 @@ import { RecordServices } from '../../modules/RecordServices.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { CollectionServices } from '../../modules/CollectionServices.js';
 
-let COUNT = 5;
+let COUNT = 10;
 
 @inject(RecordServices, CampaignServices, CollectionServices, Router)
 export class CampaignItem {
@@ -33,14 +33,18 @@ export class CampaignItem {
     this.collectionServices = collectionServices;
     this.recordServices = recordServices;
     this.router = router;
+
     this.campaign = 0;
     this.collection = 0;
+    this.collectionTitle = "";
     this.collectionCount = 0;
     this.currentCount = "";
+
     this.loadCamp = false;
     this.loadRec = false;
     this.more = true;
     this.hasCollection = false;
+
     this.record = 0;
     this.records = [];
     this.offset = 0;
@@ -53,12 +57,7 @@ export class CampaignItem {
       item.collection = col;
       item.records = records;
       item.offset = offset;
-      if (records.length > 0) {
-        this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
-      }
-      else {
-        this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: "42"});
-      }
+      this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
     }
 
     // If the collection ran out of records, go back to campaign summary page
@@ -80,11 +79,12 @@ export class CampaignItem {
       this.loadCamp = false;
       if ( routeData.collection ) {
         this.collection = routeData.collection;
+        this.collectionTitle = this.collection.title;
         this.collectionCount = this.collection.entryCount;
         this.hasCollection = true;
         // If the current record-batch still has items
         // get the next record from the batch
-        if ( routeData.records.length > 0 ) {
+        if ( routeData.records.length > 1 ) {
           this.loadRec = true;
           this.offset = routeData.offset;
           this.records = routeData.records;
@@ -97,7 +97,7 @@ export class CampaignItem {
         else {
           this.loadRec = true;
           this.offset = routeData.offset;
-          this.collectionServices.getRecords(this.collection.dbId, this.offset, COUNT)
+          this.collectionServices.getRecords(this.collection.dbId, this.offset, COUNT+1)
             .then(response => {
   						if (response.records.length>0) {
                 for (let i in response.records) {
@@ -108,6 +108,7 @@ export class CampaignItem {
                   }
                 }
                 this.record = this.records.shift();
+                //console.log(JSON.stringify(this.record));
                 this.currentCount = routeData.offset + 1;
                 this.loadRec = false;
               }
@@ -135,6 +136,7 @@ export class CampaignItem {
           this.loadCamp = false;
       });
     }
+    console.log(JSON.stringify(this.record));
   }
 
   hasMotivation(name) {
