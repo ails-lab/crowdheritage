@@ -18,11 +18,13 @@ import { inject } from 'aurelia-framework';
 import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { UserServices } from '../../modules/UserServices.js';
+import { Record } from '../../modules/Record.js';
+import { RecordServices } from '../../modules/RecordServices.js';
 import { Router } from 'aurelia-router';
 
 let COUNT = 2;
 
-@inject(CampaignServices, UserServices, Router)
+@inject(CampaignServices, UserServices, RecordServices, Router)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -30,16 +32,18 @@ export class CampaignIndex {
     }, 800);
   }
 
-  constructor(campaignServices, userServices, router) {
+  constructor(campaignServices, userServices, recordServices, router) {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
+    this.recordServices = recordServices;
+    this.router = router;
+
     this.campaigns = [];
     this.campaignsCount = 0;
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
     this.groupName = "";
-    this.router = router;
   }
 
   attached() {
@@ -98,6 +102,36 @@ export class CampaignIndex {
         }
       });
     this.loading = false;
+  }
+
+  goToRandomItem(camp, col, records, offset) {
+    let item = this.router.routes.find(x => x.name === 'item');
+    let recs = [];
+    item.campaign = camp;
+    item.collection = 0;
+    item.offset = offset;
+
+    // Get 2 random records to start annotating
+    this.loading = true;
+    this.recordServices.getRandomRecordsFromCollections(camp.targetCollections, 2)
+      .then(response => {
+        if (response.length>0) {
+          for (let i in response) {
+            let result = response[i];
+            if (result !== null) {
+              let record = new Record(result);
+              recs.push(record);
+            }
+          }
+          this.loading = false;
+          item.records = recs;
+          this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: recs[0].dbId});
+        }
+        })
+      .catch(error => {
+        this.loading = false;
+        console.log(error.message);
+      });
   }
 
 }

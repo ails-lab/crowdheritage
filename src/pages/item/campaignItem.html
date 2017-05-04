@@ -38,6 +38,7 @@
       <!-- wraps-->
       <div class="wraps">
         <div class="container">
+
           <!-- left-->
           <div class="left" show.bind="!loadRec">
             <!-- img-->
@@ -51,9 +52,9 @@
                 <div class="heading">ITEM METADATA</div>
                 <!-- info-->
                 <ul class="meta">
-                  <li>
-                    <div class="lbl">DESIGNER</div>
-                    <div class="val">Marco De Vicenzo</div>
+                  <li if.bind="record.description">
+                    <div class="lbl">DESCRIPTION</div>
+                    <div class="val">${record.description}</div>
                   </li>
                   <li>
                     <div class="lbl">DATE</div>
@@ -89,6 +90,7 @@
               </div>
             </div>
           </div>
+
           <!-- right-->
           <div class="right" if.bind="!loadCamp && !loadRec">
             <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"></compose>
