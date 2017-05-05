@@ -56,6 +56,13 @@ export class NavBar {
 		this.userServices.logout(redirectUri);
 	}
 
+  getProfileImage(user) {
+		if (user.avatar) {
+			return `${settings.baseUrl}${user.avatar}`;
+		}
+		return '/assets/images/user.png';
+	}
+
   activate() {
     // Socket initialization
 		let domainUrl = `${settings.baseUrl}`.replace('http://', '');
@@ -108,7 +115,7 @@ export class NavBar {
 		this.notificationSocket.onclose = (evt) => {
 			console.log('disconnected');
 		};
-    
+
 		this.ea.subscribe('login', () => this.socketLoginHandler());
 		this.ea.subscribe('logout', () => this.socketLogoutHandler());
   }

@@ -186,35 +186,7 @@
         </div>
         <div class="right">
           <!-- leaderboard-->
-          <div class="leaderboard">
-            <!-- heading-->
-            <div class="heading">CAMPAIGN LEADERBOARD</div>
-            <!-- list-->
-            <ul class="leaderlist">
-              <li><span class="no">1</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-                  <div class="name">Keenan Mcnamara</div>
-                  <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-                  <div class="lbl">POINTS</div></span></li>
-              <li><span class="no">2</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-                  <div class="name">Keenan Mcnamara</div>
-                  <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-                  <div class="lbl">POINTS</div></span></li>
-              <li><span class="no">3</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-                  <div class="name">Keenan Mcnamara</div>
-                  <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-                  <div class="lbl">POINTS</div></span></li>
-              <li><span class="no">4</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-                  <div class="name">Keenan Mcnamara</div>
-                  <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-                  <div class="lbl">POINTS</div></span></li>
-              <li><span class="no">5</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-                  <div class="name">Keenan Mcnamara</div>
-                  <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-                  <div class="lbl">POINTS</div></span></li>
-            </ul>
-            <!-- more-->
-            <div class="loadmore"><a href="#">LOAD MORE</a></div>
-          </div>
+          <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign}"></compose>
         </div>
       </div>
     </section>
