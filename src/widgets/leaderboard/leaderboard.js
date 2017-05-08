@@ -19,6 +19,7 @@ import { User } from '../../modules/User';
 import { UserServices } from '../../modules/UserServices';
 import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
+import settings from '../../conf/global.config.js';
 
 let COUNT = 5;
 
@@ -29,30 +30,86 @@ export class Leaderboard {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
 
-    this.points = new Map();
+    this.points = [];
+    this.topUsers = [];
+    this.offset = 0;
+    this.loading = false;
+    this.more = true;
   }
 
   activate(params) {
     this.campaign = params.campaign;
 
-    // Convert user points json into a map
-    // with keys the user ObjectIds
-    // and values their total points
+    // Convert user points object into an array formatted like:
+    // [[userId1,totalScore1], [userId2,totalScore2], ...]
+    // and sort it in descending order based on user's total points
     if (this.campaign.userPoints) {
-      Object.keys(this.campaign.userPoints).forEach( key => {
-        let score = this.campaign.userPoints[key].created +
-                    this.campaign.userPoints[key].approved +
-                    this.campaign.userPoints[key].rejected;
-        this.points.set(key, score);
+      Object.keys(this.campaign.userPoints).forEach( userId => {
+        let score = this.campaign.userPoints[userId].created +
+                    this.campaign.userPoints[userId].approved +
+                    this.campaign.userPoints[userId].rejected;
+        this.points.push([userId, score]);
       });
-    }
-    console.log(this.points.entries());
+      this.points.sort( function(a, b) {
+        return b[1] - a[1];
+      });
+      console.log(this.points);
 
-    //this.getTopUsers(COUNT);
+      this.getTopUsers();
+    }
+  }
+/*
+  getTopUsers(count) {
+    for (var i=0; i<COUNT; i++) {
+      this.userServices.getUser(this.points[i][0])
+        .then( data => {
+          let ret = new User(data);
+          this.topUsers.push([ret, this.points[i][1]]);
+        });
+    }
+    console.log(this.topUsers);
+  }
+*/
+
+  getTopUsers() {
+    alert(this.offset);
+    for (var i=this.offset; i<COUNT; i++) {
+      this.getUserData(this.points[i][0], this.points[i][1]);
+    }
+    this.offset = this.offset + COUNT;
+    console.log(this.topUsers);
   }
 
-  getTopUsers(count) {
+  getUserData(userId, points) {
+    this.userServices.getUser(userId)
+      .then( data => {
+        let user = new User(data);
+        this.topUsers.push([user, points]);
+      });
+  }
 
+  loadMore() {
+    this.loading = true;
+    this.getTopUsers();
+    if (this.offset < this.campaign.contributorsCount) {
+        this.more = false;
+    }
+  }
+
+  getProfileImage(user) {
+    if (user.avatar.Thumbnail) {
+			return `${settings.baseUrl}${user.avatar.Thumbnail}`;
+		}
+		return '/img/assets/images/user.png';
+	}
+
+  getName(user) {
+    if (user.firstName && user.lastName) {
+      return `${user.firstName} ${user.lastName}`;
+    }
+    else {
+      return `${user.username}`;
+    }
   }
 
 }

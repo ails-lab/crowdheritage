@@ -4,28 +4,23 @@
     <div class="heading">CAMPAIGN LEADERBOARD</div>
     <!-- list-->
     <ul class="leaderlist">
-      <li><span class="no">1</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-          <div class="name">Keenan Mcnamara</div>
-          <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-          <div class="lbl">POINTS</div></span></li>
-      <li><span class="no">2</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-          <div class="name">Keenan Mcnamara</div>
-          <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-          <div class="lbl">POINTS</div></span></li>
-      <li><span class="no">3</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-          <div class="name">Keenan Mcnamara</div>
-          <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-          <div class="lbl">POINTS</div></span></li>
-      <li><span class="no">4</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-          <div class="name">Keenan Mcnamara</div>
-          <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-          <div class="lbl">POINTS</div></span></li>
-      <li><span class="no">5</span><span class="thumbs"><img src="/img/img-profile.png"></span><span class="details">
-          <div class="name">Keenan Mcnamara</div>
-          <div class="location">MOZAMBIQUE</div></span><span class="points">1230
-          <div class="lbl">POINTS</div></span></li>
+      <li repeat.for="user of topUsers">
+        <span class="no">${$index+1}</span>
+        <span class="thumbs"><img src.bind="getProfileImage(user[0])"></span>
+        <span class="details">
+          <div class="name" innerhtml.bind="getName(user[0])"></div>
+          <div class="location">GREECE</div>
+        </span>
+        <span class="points">
+          ${user[1]}
+          <div class="lbl">POINTS</div>
+        </span>
+      </li>
     </ul>
     <!-- more-->
-    <div class="loadmore"><a href="#">LOAD MORE</a></div>
+    <div class="loadmore">
+      <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
+      <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+    </div>
   </div>
 </template>

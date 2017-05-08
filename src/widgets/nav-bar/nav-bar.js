@@ -57,10 +57,10 @@ export class NavBar {
 	}
 
   getProfileImage(user) {
-		if (user.avatar) {
-			return `${settings.baseUrl}${user.avatar}`;
+		if (user.avatar.Thumbnail) {
+			return `${settings.baseUrl}${user.avatar.Thumbnail}`;
 		}
-		return '/assets/images/user.png';
+		return '/img/assets/images/user.png';
 	}
 
   activate() {
