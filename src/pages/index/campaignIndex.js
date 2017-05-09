@@ -51,6 +51,10 @@ export class CampaignIndex {
   }
 
   activate(params) {
+    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+      this.userServices.reloadCurrentUser();
+    }
+
     this.groupName = params.gname;
     if (!params.gname) {
       this.campaignServices.getCampaignsCount("")

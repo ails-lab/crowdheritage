@@ -19,19 +19,21 @@ import { Router, activationStrategy } from 'aurelia-router';
 import { Record } from '../../modules/Record.js';
 import { Campaign } from '../../modules/Campaign.js';
 import { Collection } from '../../modules/Collection.js';
+import { UserServices } from '../../modules/UserServices';
 import { RecordServices } from '../../modules/RecordServices.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { CollectionServices } from '../../modules/CollectionServices.js';
 
 let COUNT = 10;
 
-@inject(RecordServices, CampaignServices, CollectionServices, Router)
+@inject(UserServices, RecordServices, CampaignServices, CollectionServices, Router)
 export class CampaignItem {
 
-  constructor(recordServices, campaignServices, collectionServices, router) {
+  constructor(userServices, recordServices, campaignServices, collectionServices, router) {
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.recordServices = recordServices;
+    this.userServices = userServices;
     this.router = router;
 
     this.campaign = 0;
@@ -144,6 +146,10 @@ export class CampaignItem {
   }
 
   activate(params, routeData) {
+    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+      this.userServices.reloadCurrentUser();
+    }
+
     this.loadCamp = true;
     if ( routeData.campaign ) {
       this.campaign = routeData.campaign;

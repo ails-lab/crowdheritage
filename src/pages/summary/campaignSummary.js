@@ -56,6 +56,10 @@ export class CampaignSummary {
   }
 
   activate(params, route) {
+    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+      this.userServices.reloadCurrentUser();
+    }
+
     if ( route.campaign ) {
       this.campaign = route.campaign;
       route.navModel.setTitle(this.campaign.title);
