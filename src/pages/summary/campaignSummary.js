@@ -49,15 +49,21 @@ export class CampaignSummary {
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
+
+    this.userPoints = 0;
+
   }
+
+  get isAuthenticated() { return this.userServices.isAuthenticated(); }
+	get user() { return this.userServices.current; }
 
   attached() {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params, route) {
+  async activate(params, route) {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
-      this.userServices.reloadCurrentUser();
+      await this.userServices.reloadCurrentUser();
     }
 
     if ( route.campaign ) {
@@ -65,6 +71,7 @@ export class CampaignSummary {
       route.navModel.setTitle(this.campaign.title);
       this.collectionsCount = this.campaign.targetCollections.length;
       this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
+      this.getUserPoints();
     }
     else {
       this.campaignServices.getCampaignByName(params.cname)
@@ -73,7 +80,19 @@ export class CampaignSummary {
           route.navModel.setTitle(this.campaign.title);
           this.collectionsCount = this.campaign.targetCollections.length;
           this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
+          this.getUserPoints();
       });
+    }
+  }
+
+  getUserPoints() {
+    if (this.userServices.current) {
+      let id = this.userServices.current.dbId;
+      if (this.campaign.userPoints.hasOwnProperty(id)) {
+        this.userPoints = this.campaign.userPoints[id].created +
+                          this.campaign.userPoints[id].approved +
+                          this.campaign.userPoints[id].rejected;
+      }
     }
   }
 

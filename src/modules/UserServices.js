@@ -43,7 +43,7 @@ export class UserServices {
 		return this.auth.isAuthenticated();
 	}
 
-	reloadCurrentUser() {
+	async reloadCurrentUser() {
 		return this.auth.getMe().then((response) => {
 			this.current = new User(response);
 		}).catch((error) => {

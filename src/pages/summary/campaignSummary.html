@@ -34,35 +34,37 @@
       <div class="container">
         <!-- left-->
         <div class="left">
+
           <!-- wrap-->
-          <div class="wrap">
+          <div class="wrap" if.bind="isAuthenticated">
             <!-- badge-->
             <div class="badges"><img src="/img/badge-bronze.png"></div>
             <!-- user stat-->
             <div class="userstat">
               <!-- text-->
-              <h1>Congratulations, you have unlocked the bronze badge</h1>
+              <h1>Congratulations ${user.firstName}!<br/>
+                  You have unlocked the bronze badge.</h1>
               <!-- stats-->
               <ul class="stats">
                 <li class="wide">
                   <div class="lbl">TAGS</div>
-                  <div class="val">251</div>
+                  <div class="val">${userPoints}</div>
                 </li>
                 <li>
                   <div class="lbl">ITEMS</div>
-                  <div class="val">68</div>
+                  <div class="val">42</div>
                 </li>
                 <li>
                   <div class="lbl">COLLECTION</div>
-                  <div class="val">10</div>
+                  <div class="val">42</div>
                 </li>
                 <li class="wide">
                   <div class="lbl">CAMPAIGN RANKS</div>
-                  <div class="val">6</div>
+                  <div class="val">42</div>
                 </li>
                 <li class="wide">
                   <div class="lbl">OVERALL RANKS</div>
-                  <div class="val">70</div>
+                  <div class="val">42</div>
                 </li>
               </ul>
               <!-- description-->
@@ -71,6 +73,7 @@
               </div>
             </div>
           </div>
+
         </div>
         <!-- right-->
         <div class="right">
