@@ -72,8 +72,15 @@ export class Leaderboard {
 */
 
   getTopUsers() {
-    alert(this.offset);
-    for (var i=this.offset; i<COUNT; i++) {
+    let lim = 0;
+    if (this.offset+COUNT > this.campaign.contributorsCount) {
+      lim = this.campaign.contributorsCount;
+    }
+    else {
+      lim = this.offset + COUNT;
+    }
+
+    for (var i=this.offset; i<lim; i++) {
       this.getUserData(this.points[i][0], this.points[i][1]);
     }
     this.offset = this.offset + COUNT;
@@ -91,9 +98,10 @@ export class Leaderboard {
   loadMore() {
     this.loading = true;
     this.getTopUsers();
-    if (this.offset < this.campaign.contributorsCount) {
-        this.more = false;
+    if (this.offset >= this.campaign.contributorsCount) {
+      this.more = false;
     }
+    this.loading = false;
   }
 
   getProfileImage(user) {
