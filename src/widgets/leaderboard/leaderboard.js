@@ -53,25 +53,12 @@ export class Leaderboard {
       this.points.sort( function(a, b) {
         return b[1] - a[1];
       });
-      console.log(this.points);
 
       this.getTopUsers();
     }
   }
-/*
-  getTopUsers(count) {
-    for (var i=0; i<COUNT; i++) {
-      this.userServices.getUser(this.points[i][0])
-        .then( data => {
-          let ret = new User(data);
-          this.topUsers.push([ret, this.points[i][1]]);
-        });
-    }
-    console.log(this.topUsers);
-  }
-*/
 
-  getTopUsers() {
+  async getTopUsers() {
     let lim = 0;
     if (this.offset+COUNT > this.campaign.contributorsCount) {
       lim = this.campaign.contributorsCount;
@@ -81,26 +68,24 @@ export class Leaderboard {
     }
 
     for (var i=this.offset; i<lim; i++) {
-      this.getUserData(this.points[i][0], this.points[i][1]);
+      await this.getUserData(this.points[i][0], this.points[i][1]);
     }
+
     this.offset = this.offset + COUNT;
-    console.log(this.topUsers);
+    if (this.offset >= this.campaign.contributorsCount) {
+      this.more = false;
+    }
   }
 
-  getUserData(userId, points) {
-    this.userServices.getUser(userId)
-      .then( data => {
-        let user = new User(data);
-        this.topUsers.push([user, points]);
-      });
+  async getUserData(userId, points) {
+    let data = await this.userServices.getUser(userId);
+    let user = new User(data);
+    this.topUsers.push([user, points]);
   }
 
   loadMore() {
     this.loading = true;
     this.getTopUsers();
-    if (this.offset >= this.campaign.contributorsCount) {
-      this.more = false;
-    }
     this.loading = false;
   }
 
