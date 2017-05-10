@@ -36,14 +36,19 @@
         <div class="left">
 
           <!-- wrap-->
-          <div class="wrap" if.bind="isAuthenticated">
+          <div class="wrap">
             <!-- badge-->
-            <div class="badges"><img src="/img/badge-bronze.png"></div>
+            <div class="badges" if.bind="isAuthenticated"><img src.bind="userBadge"></div>
+            <!-- badge-->
+            <div class="badges" if.bind="!isAuthenticated"><img src="/img/badges.png"></div>
             <!-- user stat-->
-            <div class="userstat">
+            <div class="userstat" if.bind="isAuthenticated">
               <!-- text-->
-              <h1>Congratulations ${user.firstName}!<br/>
-                  You have unlocked the bronze badge.</h1>
+              <h1 if.bind="userPoints >= campaign.badges.bronze">Congratulations ${user.firstName}!<br/>
+                You have unlocked the ${userBadgeName} badge.</h1>
+              <!-- text-->
+              <h1 if.bind="userPoints < campaign.badges.bronze">Hello ${user.firstName}!<br/>
+                Continue contributing to earn your first badge.</h1>
               <!-- stats-->
               <ul class="stats">
                 <li class="wide">
@@ -69,7 +74,17 @@
               </ul>
               <!-- description-->
               <div class="desc">
-                Contribute more and unlocked new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
+                Contribute more and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
+              </div>
+            </div>
+            <!-- user stat-->
+            <div class="userstat" if.bind="!isAuthenticated">
+              <!-- text-->
+              <h1>Get involved!<br/>
+                Join WITHcrowd and start contributing to our crowdsourcing campaigns.</h1>
+              <!-- description-->
+              <div class="desc">
+                Start contributing and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
               </div>
             </div>
           </div>

@@ -51,7 +51,8 @@ export class CampaignSummary {
     this.more = true;
 
     this.userPoints = 0;
-
+    this.userBadge = 0;
+    this.userBadgeName = "";
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
@@ -71,7 +72,7 @@ export class CampaignSummary {
       route.navModel.setTitle(this.campaign.title);
       this.collectionsCount = this.campaign.targetCollections.length;
       this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
-      this.getUserPoints();
+      this.getUserStats();
     }
     else {
       this.campaignServices.getCampaignByName(params.cname)
@@ -80,18 +81,34 @@ export class CampaignSummary {
           route.navModel.setTitle(this.campaign.title);
           this.collectionsCount = this.campaign.targetCollections.length;
           this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
-          this.getUserPoints();
+          this.getUserStats();
       });
     }
   }
 
-  getUserPoints() {
+  getUserStats() {
     if (this.userServices.current) {
       let id = this.userServices.current.dbId;
       if (this.campaign.userPoints.hasOwnProperty(id)) {
         this.userPoints = this.campaign.userPoints[id].created +
                           this.campaign.userPoints[id].approved +
                           this.campaign.userPoints[id].rejected;
+      }
+
+      if (this.userPoints < this.campaign.badges.bronze) {
+        this.userBadge = '/img/badges.png';
+      }
+      else if (this.userPoints < this.campaign.badges.silver) {
+        this.userBadge = '/img/badge-bronze.png';
+        this.userBadgeName = 'bronze';
+      }
+      else if (this.userPoints < this.campaign.badges.gold) {
+        this.userBadge = '/img/badge-silver.png';
+        this.userBadgeName = 'silver';
+      }
+      else {
+        this.userBadge = '/img/badge-gold.png';
+        this.userBadgeName = 'gold';
       }
     }
   }

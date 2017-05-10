@@ -43,5 +43,6 @@ export class Campaign {
     this.percentage = Math.min(100, Math.floor(100 * this.totalCurrent / this.target));
     this.userPoints = data.contributorsPoints;
     this.targetCollections = data.targetCollections;
+    this.badges = data.badges;
   }
 }
