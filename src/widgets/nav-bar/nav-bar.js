@@ -65,6 +65,17 @@ export class NavBar {
 		return '/img/assets/images/user.png';
 	}
 
+  getName(user) {
+    if (user) {
+      if (user.firstName && user.lastName) {
+        return `${user.firstName} ${user.lastName}`;
+      }
+      else {
+        return `${user.username}`;
+      }
+    }
+  }
+
   activate() {
     // Socket initialization
 		let domainUrl = `${settings.baseUrl}`.replace('http://', '');

@@ -26,7 +26,7 @@
           <div class="account" if.bind="isAuthenticated">
             <!-- link--><a href="#" data-target="#accountmenu">
               <!-- label-->
-              <div class="lbl">${user.fullName}</div>
+              <div class="lbl" innerhtml.bind="getName(user)"></div>
               <!-- thumbnail-->
               <div class="thumb">
                 <!-- img( src="/img/img-profile.png" class=page === "index" ? "hidden" : "" )-->
