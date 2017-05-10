@@ -46,30 +46,31 @@
               <!-- text-->
               <h1 if.bind="userPoints >= campaign.badges.bronze">Congratulations ${user.firstName}!<br/>
                 You have unlocked the ${userBadgeName} badge.</h1>
-              <!-- text-->
-              <h1 if.bind="userPoints < campaign.badges.bronze">Hello ${user.firstName}!<br/>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0">Hello ${user.firstName}!<br/>
                 Continue contributing to earn your first badge.</h1>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0">Hello ${user.firstName}!<br/>
+                Start contributing to earn your first badge.</h1>
               <!-- stats-->
               <ul class="stats">
                 <li class="wide">
                   <div class="lbl">TAGS</div>
-                  <div class="val">${userPoints}</div>
+                  <div class="val">${userTags}</div>
                 </li>
                 <li>
                   <div class="lbl">ITEMS</div>
-                  <div class="val">42</div>
+                  <div class="val">todo</div>
                 </li>
                 <li>
-                  <div class="lbl">COLLECTION</div>
-                  <div class="val">42</div>
+                  <div class="lbl">COLLECTIONS</div>
+                  <div class="val">todo</div>
                 </li>
                 <li class="wide">
-                  <div class="lbl">CAMPAIGN RANKS</div>
-                  <div class="val">42</div>
+                  <div class="lbl">CAMPAIGN RANK</div>
+                  <div class="val">${userRank}</div>
                 </li>
                 <li class="wide">
-                  <div class="lbl">OVERALL RANKS</div>
-                  <div class="val">42</div>
+                  <div class="lbl">POINTS</div>
+                  <div class="val">${userPoints}</div>
                 </li>
               </ul>
               <!-- description-->
@@ -84,7 +85,7 @@
                 Join WITHcrowd and start contributing to our crowdsourcing campaigns.</h1>
               <!-- description-->
               <div class="desc">
-                Start contributing and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
+                Start annotating and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
               </div>
             </div>
           </div>
@@ -204,7 +205,7 @@
         </div>
         <div class="right">
           <!-- leaderboard-->
-          <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign}"></compose>
+          <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
         </div>
       </div>
     </section>

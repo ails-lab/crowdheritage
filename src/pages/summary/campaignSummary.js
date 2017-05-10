@@ -50,9 +50,12 @@ export class CampaignSummary {
     this.loading = false;
     this.more = true;
 
+    this.userTags = 0;
     this.userPoints = 0;
     this.userBadge = 0;
+    this.userRank = 0;
     this.userBadgeName = "";
+    this.points = [];
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
@@ -69,6 +72,8 @@ export class CampaignSummary {
 
     if ( route.campaign ) {
       this.campaign = route.campaign;
+      this.getUserPoints();
+      this.getUserRank(this.userServices.current.dbId);
       route.navModel.setTitle(this.campaign.title);
       this.collectionsCount = this.campaign.targetCollections.length;
       this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
@@ -78,6 +83,8 @@ export class CampaignSummary {
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
+          this.getUserPoints();
+          this.getUserRank(this.userServices.current.dbId);
           route.navModel.setTitle(this.campaign.title);
           this.collectionsCount = this.campaign.targetCollections.length;
           this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
@@ -90,7 +97,8 @@ export class CampaignSummary {
     if (this.userServices.current) {
       let id = this.userServices.current.dbId;
       if (this.campaign.userPoints.hasOwnProperty(id)) {
-        this.userPoints = this.campaign.userPoints[id].created +
+        this.userTags = this.campaign.userPoints[id].created;
+        this.userPoints = this.userTags +
                           this.campaign.userPoints[id].approved +
                           this.campaign.userPoints[id].rejected;
       }
@@ -110,6 +118,33 @@ export class CampaignSummary {
         this.userBadge = '/img/badge-gold.png';
         this.userBadgeName = 'gold';
       }
+    }
+  }
+
+  getUserPoints() {
+    // Convert user points object into an array formatted like:
+    // [[userId1,totalScore1], [userId2,totalScore2], ...]
+    // and sort it in descending order based on user's total points
+    Object.keys(this.campaign.userPoints).forEach( userId => {
+      let score = this.campaign.userPoints[userId].created +
+                  this.campaign.userPoints[userId].approved +
+                  this.campaign.userPoints[userId].rejected;
+      this.points.push([userId, score]);
+    });
+    this.points.sort( function(a, b) {
+      return b[1] - a[1];
+    });
+    console.log(this.points);
+  }
+
+  getUserRank(userId) {
+    this.points.forEach((points, i) => {
+      if (userId == points[0]) {
+        this.userRank = ++i;
+      }
+    });
+    if (this.userRank == 0) {
+      this.userRank = '-';
     }
   }
 
