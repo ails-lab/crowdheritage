@@ -15,5 +15,28 @@
 
 
 export class Tagcolor {
-  
+
+  constructor() {
+    this.colorSet = [
+      ["/img/color/img-black.png", "Black"],
+      ["/img/color/img-gray.png", "Gray"],
+      ["/img/color/img-metallic.png", "Metallic"],
+      ["/img/color/img-silver.png", "Silver"],
+      ["/img/color/img-bronze.png", "Bronze"],
+      ["/img/color/img-brown.png", "Brown"],
+      ["/img/color/img-copper.png", "Copper"],
+      ["/img/color/img-red.png", "Red"],
+      ["/img/color/img-orange.png", "Orange"],
+      ["/img/color/img-beige.png", "Beige"],
+      ["/img/color/img-gold.png", "Gold"],
+      ["/img/color/img-yellow.png", "Yellow"],
+      ["/img/color/img-green.png", "Green"],
+      ["/img/color/img-blue.png", "Blue"],
+      ["/img/color/img-purple.png", "Purple"],
+      ["/img/color/img-pink.png", "Pink"],
+      ["/img/color/img-multicolored.png", "Multicolored", "big"],
+      ["/img/color/img-white.png", "White"],
+      ["/img/color/img-transparant.png", "Transparent"]
+    ];
+  }
 }

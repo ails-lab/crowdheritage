@@ -134,7 +134,6 @@ export class CampaignSummary {
     this.points.sort( function(a, b) {
       return b[1] - a[1];
     });
-    console.log(this.points);
   }
 
   getUserRank(userId) {

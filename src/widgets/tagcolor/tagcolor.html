@@ -5,86 +5,20 @@
       <!-- heading-->
       <div class="heading green">COLOR TAGGING</div>
       <!-- info-->
-      <div class="infobar">Select colors that you see on the left picture, you can also validate other colors that has been submitted for this item by voting it.</div>
+      <div class="infobar">Select colors that you see on the left picture. <br/>You can also validate other colors that has been submitted for this item by voting them.</div>
+
       <!-- color action-->
       <ul class="coloraction">
-        <li><a href="#"><img src="/img/color/img-black.png">
+        <li class.bind="color[2]" repeat.for="color of colorSet">
+          <a href="#">
+            <img src.bind="color[0]">
             <div class="action">
-              <div class="colorname">Black</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-gray.png">
-            <div class="action">
-              <div class="colorname">Gray</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-metallic.png">
-            <div class="action">
-              <div class="colorname">Metallic</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-silver.png">
-            <div class="action">
-              <div class="colorname">Silver</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-bronze.png">
-            <div class="action">
-              <div class="colorname">Bronze</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-brown.png">
-            <div class="action">
-              <div class="colorname">Brown</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-copper.png">
-            <div class="action">
-              <div class="colorname">Copper</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-red.png">
-            <div class="action">
-              <div class="colorname">Red</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-orange.png">
-            <div class="action">
-              <div class="colorname">Orange</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-beige.png">
-            <div class="action">
-              <div class="colorname">Beige</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-gold.png">
-            <div class="action">
-              <div class="colorname">Gold</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-yellow.png">
-            <div class="action">
-              <div class="colorname">Yellow</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-green.png">
-            <div class="action">
-              <div class="colorname">Green</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-blue.png">
-            <div class="action">
-              <div class="colorname">Blue</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-purple.png">
-            <div class="action">
-              <div class="colorname">Purple</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-pink.png">
-            <div class="action">
-              <div class="colorname">Pink</div>
-            </div></a></li>
-        <li class="big"><a href="#"><img src="/img/color/img-multicolored.png">
-            <div class="action">
-              <div class="colorname">Multicolored</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-white.png">
-            <div class="action">
-              <div class="colorname">White</div>
-            </div></a></li>
-        <li><a href="#"><img src="/img/color/img-transparant.png">
-            <div class="action">
-              <div class="colorname">Transparent</div>
-            </div></a></li>
+              <div class="colorname" innerhtml.bind="color[1]"></div>
+            </div>
+          </a>
+        </li>
       </ul>
+
       <!-- searchbox-->
       <div class="colorbox">Vote submitted colors by other users.</div>
       <!-- taglist-->
