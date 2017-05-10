@@ -39,21 +39,9 @@ export class Leaderboard {
 
   activate(params) {
     this.campaign = params.campaign;
+    this.points = params.points;
 
-    // Convert user points object into an array formatted like:
-    // [[userId1,totalScore1], [userId2,totalScore2], ...]
-    // and sort it in descending order based on user's total points
     if (this.campaign.userPoints) {
-      Object.keys(this.campaign.userPoints).forEach( userId => {
-        let score = this.campaign.userPoints[userId].created +
-                    this.campaign.userPoints[userId].approved +
-                    this.campaign.userPoints[userId].rejected;
-        this.points.push([userId, score]);
-      });
-      this.points.sort( function(a, b) {
-        return b[1] - a[1];
-      });
-
       this.getTopUsers();
     }
   }
