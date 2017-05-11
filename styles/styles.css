@@ -1873,7 +1873,7 @@ body main section.tagging .right .tag-color .taglist > li ul.action li.down a:ho
 body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .count {
-  color: #00ac83;
+  color: #ce5e5e;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .thumbs-icon,

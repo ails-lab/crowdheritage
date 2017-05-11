@@ -14,9 +14,14 @@
  */
 
 
+import { inject } from 'aurelia-dependency-injection';
+import { UserServices } from '../../modules/UserServices';
+import { RecordServices } from '../../modules/RecordServices';
+
+@inject(UserServices, RecordServices)
 export class Tagcolor {
 
-  constructor() {
+  constructor(userServices, recordServices) {
     this.colorSet = [
       ["/img/color/img-black.png", "Black"],
       ["/img/color/img-gray.png", "Gray"],
@@ -38,5 +43,25 @@ export class Tagcolor {
       ["/img/color/img-white.png", "White"],
       ["/img/color/img-transparant.png", "Transparent"]
     ];
+    this.userServices = userServices;
+    this.recordServices = recordServices;
+
+    this.annotations = [];
   }
+
+  activate(params) {
+    this.campaign = params.campaign;
+    this.userId = params.userId;
+    this.recId = params.recId;
+
+    /*
+    // CHANGE MOTIVATION TO ColorTagging
+    this.recordServices.getAnnotations(this.recId, "Tagging")
+      .then( response => {
+
+    });
+    console.log(this.annotations);
+    */
+  }
+
 }

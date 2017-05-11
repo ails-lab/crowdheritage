@@ -10,7 +10,15 @@
       <!-- color action-->
       <ul class="coloraction">
         <li class.bind="color[2]" repeat.for="color of colorSet">
-          <a href="#">
+          <!-- User logged -->
+          <a href="#" if.bind="userServices.isAuthenticated()">
+            <img src.bind="color[0]">
+            <div class="action">
+              <div class="colorname" innerhtml.bind="color[1]"></div>
+            </div>
+          </a>
+          <!-- No user -->
+          <a if.bind="!userServices.isAuthenticated()">
             <img src.bind="color[0]">
             <div class="action">
               <div class="colorname" innerhtml.bind="color[1]"></div>
@@ -27,44 +35,44 @@
           <div class="thumbs"><img src="/img/color/img-gray.png"></div>
           <div class="selected">Gray</div>
           <ul class="action">
-            <li class="up active"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
-            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
-          </ul>
-        </li>
-        <li>
-          <div class="thumbs"><img src="/img/color/img-blue.png"></div>
-          <div class="selected">Blue</div>
-          <ul class="action">
-            <li class="up"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
-            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
-          </ul>
-        </li>
-        <li>
-          <div class="thumbs"><img src="/img/color/img-copper.png"></div>
-          <div class="selected">Copper</div>
-          <ul class="action">
-            <li class="up"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
-            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
-          </ul>
-        </li>
-        <li>
-          <div class="thumbs"><img src="/img/color/img-silver.png"></div>
-          <div class="selected">Silver</div>
-          <ul class="action">
-            <li class="up"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
-            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
-          </ul>
-        </li>
-        <li>
-          <div class="thumbs"><img src="/img/color/img-red.png"></div>
-          <div class="selected">Red</div>
-          <ul class="action">
-            <li class="up"><a href="#"><span class="thumbs-icon up"></span><span class="count">23</span></a></li>
-            <li class="down"><a href="#"><span class="count">6</span><span class="thumbs-icon down"></span></a></li>
-            <li class="delete"><a href="#"><img src="/img/ic-delete.png"></a></li>
+            <li class="up active">
+              <!-- User logged -->
+              <a href="#" if.bind="userServices.isAuthenticated()">
+                <span class="thumbs-icon up"></span>
+                <span class="count">23</span>
+              </a>
+              <!-- No user -->
+              <a if.bind="!userServices.isAuthenticated()">
+                <span class="thumbs-icon up"></span>
+                <span class="count">23</span>
+              </a>
+            </li>
+            <li class="down">
+              <!-- User logged -->
+              <a href="#" if.bind="userServices.isAuthenticated()">
+                <span class="count">6</span>
+                <span class="thumbs-icon down"></span>
+              </a>
+              <!-- No user -->
+              <a if.bind="!userServices.isAuthenticated()">
+                <span class="count">6</span>
+                <span class="thumbs-icon down"></span>
+              </a>
+            </li>
+            <li class="delete">
+              <!-- User logged -->
+              <a href="#" if.bind="userServices.isAuthenticated()">
+                <img src="/img/ic-delete.png">
+              </a>
+              <!-- No user -->
+              <a if.bind="!userServices.isAuthenticated()">
+                <img src="/img/ic-delete.png">
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
+
     </div>
   </div>
 </template>
