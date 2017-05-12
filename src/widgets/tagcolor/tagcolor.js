@@ -15,13 +15,15 @@
 
 
 import { inject } from 'aurelia-dependency-injection';
+import { Annotation } from '../../modules/Annotation';
 import { UserServices } from '../../modules/UserServices';
 import { RecordServices } from '../../modules/RecordServices';
+import { CampaignServices } from '../../modules/CampaignServices.js';
 
-@inject(UserServices, RecordServices)
+@inject(UserServices, RecordServices, CampaignServices)
 export class Tagcolor {
 
-  constructor(userServices, recordServices) {
+  constructor(userServices, recordServices, campaignServices) {
     this.colorSet = [
       ["/img/color/img-black.png", "Black"],
       ["/img/color/img-gray.png", "Gray"],
@@ -45,23 +47,36 @@ export class Tagcolor {
     ];
     this.userServices = userServices;
     this.recordServices = recordServices;
+    this.campaignServices = campaignServices;
 
     this.annotations = [];
   }
 
-  activate(params) {
+  async activate(params) {
     this.campaign = params.campaign;
     this.userId = params.userId;
     this.recId = params.recId;
 
-    /*
-    // CHANGE MOTIVATION TO ColorTagging
-    this.recordServices.getAnnotations(this.recId, "Tagging")
-      .then( response => {
+    await this.getRecordAnnotations(this.recId);
+  }
 
+  score(annoType) {
+    this.campaignServices.incUserPoints(this.campaign.dbId, this.userId, annoType);
+  }
+
+  unscore(annoType) {
+    this.campaignServices.decUserPoints(this.campaign.dbId, this.userId, annoType);
+  }
+
+  async getRecordAnnotations(id) {
+    // CHANGE "Tagging" to : this.campaign.motivation
+    await this.recordServices.getAnnotations(this.recId, "Tagging")
+      .then( response => {
+        for (var i=0; i<response.length; i++) {
+          this.annotations.push(new Annotation(response[i], this.userId));
+        }
+        //this.parseAnnotations(response);
     });
-    console.log(this.annotations);
-    */
   }
 
 }
