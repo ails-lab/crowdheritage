@@ -51,7 +51,7 @@
               <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0">Hello ${user.firstName}!<br/>
                 Start contributing to earn your first badge.</h1>
               <!-- stats-->
-              <ul class="stats">
+              <ul class="stats" if.bind="userPoints>0">
                 <li class="wide">
                   <div class="lbl">TAGS</div>
                   <div class="val">${userTags}</div>

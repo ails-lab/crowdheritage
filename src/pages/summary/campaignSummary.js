@@ -73,7 +73,9 @@ export class CampaignSummary {
     if ( route.campaign ) {
       this.campaign = route.campaign;
       this.getUserPoints();
-      this.getUserRank(this.userServices.current.dbId);
+      if (this.userServices.isAuthenticated()) {
+        this.getUserRank(this.userServices.current.dbId);
+      }
       route.navModel.setTitle(this.campaign.title);
       this.collectionsCount = this.campaign.targetCollections.length;
       this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
@@ -84,7 +86,9 @@ export class CampaignSummary {
         .then( (result) => {
           this.campaign = new Campaign(result);
           this.getUserPoints();
-          this.getUserRank(this.userServices.current.dbId);
+          if (this.userServices.isAuthenticated()) {
+            this.getUserRank(this.userServices.current.dbId);
+          }
           route.navModel.setTitle(this.campaign.title);
           this.collectionsCount = this.campaign.targetCollections.length;
           this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
