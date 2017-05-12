@@ -50,4 +50,17 @@ export class CampaignServices {
 			method: 'GET'
 		}).then((response) => response.json());
   }
+
+  incUserPoints(campaignId, userId, annoType) {
+    return this.http.fetch(`/campaign/incUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {
+      method: 'GET'
+    }).then((response) => response.json());
+  }
+
+  decUserPoints(campaignId, userId, annoType) {
+    return this.http.fetch(`/campaign/decUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {
+      method: 'GET'
+    }).then((response) => response.json());
+  }
+
 }
