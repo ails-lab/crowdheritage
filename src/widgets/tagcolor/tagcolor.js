@@ -19,11 +19,12 @@ import { Annotation } from '../../modules/Annotation';
 import { UserServices } from '../../modules/UserServices';
 import { RecordServices } from '../../modules/RecordServices';
 import { CampaignServices } from '../../modules/CampaignServices.js';
+import { AnnotationServices } from '../../modules/AnnotationServices.js';
 
-@inject(UserServices, RecordServices, CampaignServices)
+@inject(UserServices, RecordServices, CampaignServices, AnnotationServices)
 export class Tagcolor {
 
-  constructor(userServices, recordServices, campaignServices) {
+  constructor(userServices, recordServices, campaignServices, annotationServices) {
     this.colorSet = [
       ["/img/color/img-black.png", "Black"],
       ["/img/color/img-gray.png", "Gray"],
@@ -48,6 +49,7 @@ export class Tagcolor {
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
+    this.annotationServices = annotationServices;
 
     this.annotations = [];
   }
@@ -69,13 +71,12 @@ export class Tagcolor {
   }
 
   async getRecordAnnotations(id) {
-    // CHANGE "Tagging" to : this.campaign.motivation
+    // CHANGE "Tagging" to "ColorTagging"
     await this.recordServices.getAnnotations(this.recId, "Tagging")
       .then( response => {
         for (var i=0; i<response.length; i++) {
           this.annotations.push(new Annotation(response[i], this.userId));
         }
-        //this.parseAnnotations(response);
     });
   }
 
