@@ -35,13 +35,13 @@
           <div class="thumbs"><img src="/img/color/img-gray.png"></div>
           <div class="selected">${ann.label}</div>
           <ul class="action">
-            <li class="up ${ann.approvedByMe ? 'active' : ''}">
+            <li class="up ${ann.approvedByMe ? 'active' : ''}" id=up_${ann.dbId}>
               <!-- User logged -->
-              <a href="javascript:void(0)" click.delegate="score('approved')" if.bind="userServices.isAuthenticated() && !ann.approvedByMe">
+              <a href="javascript:void(0)" click.delegate="score(ann.dbId, 'approved', $index)" if.bind="userServices.isAuthenticated() && !ann.approvedByMe">
                 <span class="thumbs-icon up"></span>
                 <span class="count">${ann.approvedBy.length}</span>
               </a>
-              <a href="javascript:void(0)" click.delegate="unscore('approved')" if.bind="userServices.isAuthenticated() && ann.approvedByMe">
+              <a href="javascript:void(0)" click.delegate="unscore(ann.dbId, 'approved', $index)" if.bind="userServices.isAuthenticated() && ann.approvedByMe">
                 <span class="thumbs-icon up"></span>
                 <span class="count">${ann.approvedBy.length}</span>
               </a>
@@ -51,13 +51,13 @@
                 <span class="count">${ann.approvedBy.length}</span>
               </a>
             </li>
-            <li class="down ${ann.rejectedByMe ? 'active' : ''}">
+            <li class="down ${ann.rejectedByMe ? 'active' : ''}" id=down_${ann.dbId}>
               <!-- User logged -->
-              <a href="javascript:void(0)" click.delegate="score('rejected')" if.bind="userServices.isAuthenticated() && !ann.rejectedByMe">
+              <a href="javascript:void(0)" click.delegate="score(ann.dbId, 'rejected', $index)" if.bind="userServices.isAuthenticated() && !ann.rejectedByMe">
                 <span class="count">${ann.rejectedBy.length}</span>
                 <span class="thumbs-icon down"></span>
               </a>
-              <a href="javascript:void(0)" click.delegate="unscore('rejected')" if.bind="userServices.isAuthenticated() && ann.rejectedByMe">
+              <a href="javascript:void(0)" click.delegate="unscore(ann.dbId, 'rejected', $index)" if.bind="userServices.isAuthenticated() && ann.rejectedByMe">
                 <span class="count">${ann.rejectedBy.length}</span>
                 <span class="thumbs-icon down"></span>
               </a>
@@ -69,7 +69,7 @@
             </li>
             <li class="delete" if.bind="ann.createdByMe">
               <!-- User logged -->
-              <a href="javascript:void(0)" click.delegate="unscore('created')" if.bind="userServices.isAuthenticated()">
+              <a href="javascript:void(0)" click.delegate="unscore(ann.dbId, 'created', $index)" if.bind="userServices.isAuthenticated()">
                 <img src="/img/ic-delete.png">
               </a>
             </li>

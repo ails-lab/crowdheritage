@@ -60,14 +60,81 @@ export class Tagcolor {
     this.recId = params.recId;
 
     await this.getRecordAnnotations(this.recId);
+    console.log(this.annotations);
   }
 
-  score(annoType) {
-    this.campaignServices.incUserPoints(this.campaign.dbId, this.userId, annoType);
+  async score(annoId, annoType, index) {
+    if ((annoType == 'approved') && (this.annotations[index].approvedByMe == false)) {
+      this.annotationServices.approve(annoId);
+      $(`#up_${annoId}`).addClass("active");
+      this.annotations[index].approvedBy.push(this.userServices.current.dbId);
+      this.annotations[index].approvedByMe = true;
+      if (this.annotations[index].rejectedByMe) {
+        $(`#down_${annoId}`).removeClass("active");
+        this.annotations[index].rejectedBy.pop(this.userServices.current.dbId);
+        this.annotations[index].rejectedByMe = true;
+      }
+      else {
+        if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+          await this.userServices.reloadCurrentUser();
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+        }
+        else {
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+        }
+      }
+    }
+
+    if ((annoType == 'rejected') && (this.annotations[index].rejectedByMe == false)) {
+      this.annotationServices.reject(annoId);
+      $(`#down_${annoId}`).addClass("active");
+      this.annotations[index].rejectedBy.push(this.userServices.current.dbId);
+      this.annotations[index].rejectedByMe = true;
+      if (this.annotations[index].approvedByMe) {
+        $(`#up_${annoId}`).removeClass("active");
+        this.annotations[index].approvedBy.pop(this.userServices.current.dbId);
+        this.annotations[index].approvedByMe = false;
+      }
+      else {
+        if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+          await this.userServices.reloadCurrentUser();
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+        }
+        else {
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+        }
+      }
+    }
   }
 
-  unscore(annoType) {
-    this.campaignServices.decUserPoints(this.campaign.dbId, this.userId, annoType);
+  async unscore(annoId, annoType, index) {
+    if ((annoType == 'approved') && (this.annotations[index].approvedByMe == true)) {
+      this.annotationServices.unscore(annoId);
+      $(`#up_${annoId}`).removeClass("active");
+      this.annotations[index].approvedBy.pop(this.userServices.current.dbId);
+      this.annotations[index].approvedByMe = false;
+      if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+        await this.userServices.reloadCurrentUser();
+        this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+      }
+      else {
+        this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+      }
+    }
+
+    if ((annoType == 'rejected') && (this.annotations[index].rejectedByMe == true)) {
+      this.annotationServices.unscore(annoId);
+      $(`#down_${annoId}`).removeClass("active");
+      this.annotations[index].rejectedBy.pop(this.userServices.current.dbId);
+      this.annotations[index].rejectedByMe = false;
+      if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+        await this.userServices.reloadCurrentUser();
+        this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+      }
+      else {
+        this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+      }
+    }
   }
 
   async getRecordAnnotations(id) {
