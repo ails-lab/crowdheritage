@@ -11,7 +11,7 @@
       <ul class="coloraction">
         <li class.bind="color[2]" repeat.for="color of colorSet">
           <!-- User logged -->
-          <a href="javascript:void(0)" click.delegate="score('created')" if.bind="userServices.isAuthenticated()">
+          <a href="javascript:void(0)" click.delegate="annotate(color[1])" if.bind="userServices.isAuthenticated()">
             <img src.bind="color[0]">
             <div class="action">
               <div class="colorname" innerhtml.bind="color[1]"></div>
@@ -32,7 +32,7 @@
       <!-- taglist-->
       <ul class="taglist color">
         <li repeat.for="ann of annotations">
-          <div class="thumbs"><img src="/img/color/img-gray.png"></div>
+          <div class="thumbs"><img src.bind="getColor(ann.label)"></div>
           <div class="selected">${ann.label}</div>
           <ul class="action">
             <li class="up ${ann.approvedByMe ? 'active' : ''}" id=up_${ann.dbId}>

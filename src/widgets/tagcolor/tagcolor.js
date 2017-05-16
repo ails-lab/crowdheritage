@@ -65,6 +65,19 @@ export class Tagcolor {
     else {
       await this.getRecordAnnotations(this.recId);
     }
+    console.log(this.annotations);
+  }
+
+  async annotate(label) {
+    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+      await this.userServices.reloadCurrentUser();
+    }
+    var term = {};
+    term['label'] = label.toLowerCase();
+    term['vocabulary'] = "fashion";
+    term['uri'] = "TODO";
+    //term['motivation'] = this.campaign.motivation[0];
+    this.annotationServices.annotateRecord(this.recId, term);
   }
 
   async score(annoId, annoType, index) {
@@ -154,6 +167,19 @@ export class Tagcolor {
           }
         }
     });
+  }
+
+  getColor(label) {
+    var index = this.colorSet.findIndex( element => {
+      return element[1] == label;
+    });
+
+    if (index == -1) {
+      return '/img/assets/images/no_image.jpg';
+    }
+    else {
+      return this.colorSet[index][0];
+    }
   }
 
 }

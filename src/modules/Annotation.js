@@ -18,12 +18,12 @@ export class Annotation {
 
   constructor(data, userId) {
     this.dbId = data.dbId;
-    this.label = data.body.label.default[0];
+    this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
 
     this.createdByMe = false;
-    for (let anno in data.annotators) {
-      if (anno.withCreator == userId) {
-        var createdByMe = true;
+    for (let i in data.annotators) {
+      if (data.annotators[i].withCreator == userId) {
+        this.createdByMe = true;
         break;
       }
     }
@@ -45,6 +45,10 @@ export class Annotation {
       }
     }
 
+  }
+
+  capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
 }
