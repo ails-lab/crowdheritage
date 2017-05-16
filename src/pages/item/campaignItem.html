@@ -96,7 +96,7 @@
             <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"></compose>
             <compose view-model="widgets/tagcolor/tagcolor"
                      if.bind="hasMotivation('ColorTagging')"
-                     model.bind="{'campaign': campaign, 'userId': userServices.current.dbId, 'recId': record.dbId}">
+                     model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
             <compose view-model="widgets/taggeo/taggeo" if.bind="hasMotivation('GeoTagging')"></compose>
           </div>

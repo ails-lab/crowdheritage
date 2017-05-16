@@ -56,11 +56,15 @@ export class Tagcolor {
 
   async activate(params) {
     this.campaign = params.campaign;
-    this.userId = params.userId;
     this.recId = params.recId;
 
-    await this.getRecordAnnotations(this.recId);
-    console.log(this.annotations);
+    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+      await this.userServices.reloadCurrentUser();
+      await this.getRecordAnnotations(this.recId);
+    }
+    else {
+      await this.getRecordAnnotations(this.recId);
+    }
   }
 
   async score(annoId, annoType, index) {
@@ -72,7 +76,7 @@ export class Tagcolor {
       if (this.annotations[index].rejectedByMe) {
         $(`#down_${annoId}`).removeClass("active");
         this.annotations[index].rejectedBy.pop(this.userServices.current.dbId);
-        this.annotations[index].rejectedByMe = true;
+        this.annotations[index].rejectedByMe = false;
       }
       else {
         if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
@@ -142,7 +146,12 @@ export class Tagcolor {
     await this.recordServices.getAnnotations(this.recId, "Tagging")
       .then( response => {
         for (var i=0; i<response.length; i++) {
-          this.annotations.push(new Annotation(response[i], this.userId));
+          if (!this.userServices.current) {
+            this.annotations.push(new Annotation(response[i], ""));
+          }
+          else {
+            this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
         }
     });
   }
