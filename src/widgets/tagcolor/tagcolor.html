@@ -67,9 +67,9 @@
                 <span class="thumbs-icon down"></span>
               </a>
             </li>
-            <li class="delete" if.bind="ann.createdByMe">
+            <li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==0 && ann.rejectedBy.length==0">
               <!-- User logged -->
-              <a href="javascript:void(0)" click.delegate="unscore(ann.dbId, 'created', $index)" if.bind="userServices.isAuthenticated()">
+              <a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index)" if.bind="userServices.isAuthenticated()">
                 <img src="/img/ic-delete.png">
               </a>
             </li>

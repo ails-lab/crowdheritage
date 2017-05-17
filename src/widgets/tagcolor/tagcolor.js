@@ -58,6 +58,8 @@ export class Tagcolor {
     this.campaign = params.campaign;
     this.recId = params.recId;
 
+    this.annotations.splice(0, this.annotations.length);
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
       await this.getRecordAnnotations(this.recId);
@@ -65,19 +67,42 @@ export class Tagcolor {
     else {
       await this.getRecordAnnotations(this.recId);
     }
-    console.log(this.annotations);
   }
 
   async annotate(label) {
-    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
-      await this.userServices.reloadCurrentUser();
+    var answer = this.annotationExists(label);
+
+    if (!answer) {
+      if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+        await this.userServices.reloadCurrentUser();
+      }
+      var term = {};
+      term['label'] = label.toLowerCase();
+      term['vocabulary'] = "fashion";
+      term['uri'] = "TODO";
+      // CHANGE term['motivation'] = this.campaign.motivation[0];
+      await this.annotationServices.annotateRecord(this.recId, term);
+
+      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+
+      // Clear and reload the annotations array
+      this.annotations.splice(0, this.annotations.length);
+      await this.getRecordAnnotations(this.recId);
     }
-    var term = {};
-    term['label'] = label.toLowerCase();
-    term['vocabulary'] = "fashion";
-    term['uri'] = "TODO";
-    //term['motivation'] = this.campaign.motivation[0];
-    this.annotationServices.annotateRecord(this.recId, term);
+    else {
+      this.score(answer.id, 'approved', answer.index);
+    }
+  }
+
+  deleteAnnotation(id, index) {
+    this.annotationServices.delete(id)
+      .then( () => {
+        this.annotations.splice(index, 1);
+        this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+      })
+      .catch(error => {
+				console.log(error.message);
+			});
   }
 
   async score(annoId, annoType, index) {
@@ -88,7 +113,10 @@ export class Tagcolor {
       this.annotations[index].approvedByMe = true;
       if (this.annotations[index].rejectedByMe) {
         $(`#down_${annoId}`).removeClass("active");
-        this.annotations[index].rejectedBy.pop(this.userServices.current.dbId);
+        let i = this.annotations[index].rejectedBy.indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.annotations[index].rejectedBy.splice(i, 1);
+        }
         this.annotations[index].rejectedByMe = false;
       }
       else {
@@ -109,7 +137,10 @@ export class Tagcolor {
       this.annotations[index].rejectedByMe = true;
       if (this.annotations[index].approvedByMe) {
         $(`#up_${annoId}`).removeClass("active");
-        this.annotations[index].approvedBy.pop(this.userServices.current.dbId);
+        let i = this.annotations[index].approvedBy.indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.annotations[index].approvedBy.splice(i, 1);
+        }
         this.annotations[index].approvedByMe = false;
       }
       else {
@@ -128,7 +159,10 @@ export class Tagcolor {
     if ((annoType == 'approved') && (this.annotations[index].approvedByMe == true)) {
       this.annotationServices.unscore(annoId);
       $(`#up_${annoId}`).removeClass("active");
-      this.annotations[index].approvedBy.pop(this.userServices.current.dbId);
+      let i = this.annotations[index].approvedBy.indexOf(this.userServices.current.dbId);
+      if (i > -1) {
+        this.annotations[index].approvedBy.splice(i, 1);
+      }
       this.annotations[index].approvedByMe = false;
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
@@ -142,7 +176,10 @@ export class Tagcolor {
     if ((annoType == 'rejected') && (this.annotations[index].rejectedByMe == true)) {
       this.annotationServices.unscore(annoId);
       $(`#down_${annoId}`).removeClass("active");
-      this.annotations[index].rejectedBy.pop(this.userServices.current.dbId);
+      let i = this.annotations[index].rejectedBy.indexOf(this.userServices.current.dbId);
+      if (i > -1) {
+        this.annotations[index].rejectedBy.splice(i, 1);
+      }
       this.annotations[index].rejectedByMe = false;
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
@@ -167,6 +204,12 @@ export class Tagcolor {
           }
         }
     });
+
+    // Sort the annotations in descending
+    // order based on their score
+    this.annotations.sort( function(a, b) {
+      return b.score - a.score;
+    });
   }
 
   getColor(label) {
@@ -180,6 +223,15 @@ export class Tagcolor {
     else {
       return this.colorSet[index][0];
     }
+  }
+
+  annotationExists(label) {
+    for (var i in this.annotations) {
+      if (this.annotations[i].label == label) {
+        return {'id': this.annotations[i].dbId, 'index': i};
+      }
+    }
+    return null;
   }
 
 }

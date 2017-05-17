@@ -32,16 +32,19 @@ export class Annotation {
     this.approvedByMe = false;
     this.rejectedBy = [];
     this.rejectedByMe = false;
+    this.score = 0;
     if (data.score) {
       if (data.score.approvedBy) {
         this.approvedBy = data.score.approvedBy;
         this.approvedByMe = this.approvedBy.includes(userId);
+        this.score = this.score + data.score.approvedBy.length;
       }
       if (data.score.rejectedBy) {
         this.rejectedBy = data.score.rejectedBy;
         if (!this.approvedByMe) {
           this.rejectedByMe = this.rejectedBy.includes(userId);;
         }
+        this.score = this.score - data.score.rejectedBy.length;
       }
     }
 

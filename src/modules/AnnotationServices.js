@@ -163,7 +163,7 @@ export class AnnotationServices {
 		});
 	}
 
-	annotateRecord(recid, term) {
+	async annotateRecord(recid, term) {
 		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
 		let target = { recordId: recid};
 		let annotation = { generator: 'WITH Manual Annotator', generated: new Date().toISOString(), confidence: 0.0, motivation: 'Tagging', body: body, target: target };
