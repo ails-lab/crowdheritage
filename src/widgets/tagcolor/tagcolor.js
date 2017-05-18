@@ -20,14 +20,15 @@ import { UserServices } from '../../modules/UserServices';
 import { RecordServices } from '../../modules/RecordServices';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import { AnnotationServices } from '../../modules/AnnotationServices.js';
+import { ThesaurusServices } from '../../modules/ThesaurusServices.js';
 
-@inject(UserServices, RecordServices, CampaignServices, AnnotationServices)
+@inject(UserServices, RecordServices, CampaignServices, AnnotationServices, ThesaurusServices)
 export class Tagcolor {
 
-  constructor(userServices, recordServices, campaignServices, annotationServices) {
+  constructor(userServices, recordServices, campaignServices, annotationServices, thesaurusServices) {
     this.colorSet = [
       ["/img/color/img-black.png", "Black"],
-      ["/img/color/img-gray.png", "Gray"],
+      ["/img/color/img-gray.png", "Grey"],
       ["/img/color/img-metallic.png", "Metallic"],
       ["/img/color/img-silver.png", "Silver"],
       ["/img/color/img-bronze.png", "Bronze"],
@@ -42,7 +43,7 @@ export class Tagcolor {
       ["/img/color/img-blue.png", "Blue"],
       ["/img/color/img-purple.png", "Purple"],
       ["/img/color/img-pink.png", "Pink"],
-      ["/img/color/img-multicolored.png", "Multicolored", "big"],
+      ["/img/color/img-multicolored.png", "Multicoloured", "big"],
       ["/img/color/img-white.png", "White"],
       ["/img/color/img-transparant.png", "Transparent"]
     ];
@@ -50,8 +51,10 @@ export class Tagcolor {
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
+    this.thesaurusServices = thesaurusServices;
 
     this.annotations = [];
+    this.suggestedAnnotation = {};
   }
 
   async activate(params) {
@@ -76,12 +79,13 @@ export class Tagcolor {
       if (this.userServices.isAuthenticated() && this.userServices.current === null) {
         await this.userServices.reloadCurrentUser();
       }
-      var term = {};
-      term['label'] = label.toLowerCase();
-      term['vocabulary'] = "fashion";
-      term['uri'] = "TODO";
-      // CHANGE term['motivation'] = this.campaign.motivation[0];
-      await this.annotationServices.annotateRecord(this.recId, term);
+
+      await this.thesaurusServices.getSuggestions(label, ["fashion"])
+        .then( res => {
+          this.suggestedAnnotation = res.results[0];
+        });
+
+      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation);
 
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
 
