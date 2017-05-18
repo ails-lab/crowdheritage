@@ -93,7 +93,7 @@ export class Tagcolor {
       this.annotations.splice(0, this.annotations.length);
       await this.getRecordAnnotations(this.recId);
     }
-    else {
+    else if (!this.annotations[answer.index].approvedByMe) {
       this.score(answer.id, 'approved', answer.index);
     }
   }
