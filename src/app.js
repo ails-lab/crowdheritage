@@ -14,7 +14,33 @@
  */
 
 
+import { inject } from 'aurelia-framework';
+import { DialogService } from 'aurelia-dialog';
+import { UserServices } from './modules/UserServices.js';
+
+@inject(DialogService, UserServices)
 export class App {
+  constructor(dialogService, userServices) {
+    this.dialogService = dialogService;
+    this.userServices = userServices;
+  }
+
+  // Properties
+	get isAuthenticated() { return this.userServices.isAuthenticated(); }
+
+  // UI Functions
+  loginPopup() {
+		this.dialogService.open({
+			viewModel: 'widgets/logindialog/logindialog.js'
+		}).then((response) => {
+			if (!response.wasCancelled) {
+				console.log('NYI - Login User');
+			} else {
+				console.log('Login cancelled');
+			}
+		});
+	}
+
   configureRouter(config, router) {
     config.title = '';
     config.addPipelineStep('postcomplete', PostCompleteStep);
