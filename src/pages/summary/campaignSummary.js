@@ -51,6 +51,7 @@ export class CampaignSummary {
     this.more = true;
 
     this.userTags = 0;
+    this.userRecords = 0;
     this.userPoints = 0;
     this.userBadge = 0;
     this.userRank = 0;
@@ -102,6 +103,7 @@ export class CampaignSummary {
       let id = this.userServices.current.dbId;
       if (this.campaign.userPoints.hasOwnProperty(id)) {
         this.userTags = this.campaign.userPoints[id].created;
+        this.userRecords = this.campaign.userPoints[id].records;
         this.userPoints = this.userTags +
                           this.campaign.userPoints[id].approved +
                           this.campaign.userPoints[id].rejected;
