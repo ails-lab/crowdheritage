@@ -73,6 +73,10 @@ export class Tagcolor {
   }
 
   async annotate(label) {
+    if (!this.hasContributed()) {
+      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+    }
+
     var answer = this.annotationExists(label);
 
     if (!answer) {
@@ -103,6 +107,9 @@ export class Tagcolor {
       .then( () => {
         this.annotations.splice(index, 1);
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        if (!this.hasContributed()) {
+          this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+        }
       })
       .catch(error => {
 				console.log(error.message);
@@ -110,7 +117,11 @@ export class Tagcolor {
   }
 
   async score(annoId, annoType, index) {
-    if ((annoType == 'approved') && (this.annotations[index].approvedByMe == false)) {
+    if (!this.hasContributed()) {
+      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+    }
+
+    if (annoType == 'approved') {
       this.annotationServices.approve(annoId);
       $(`#up_${annoId}`).addClass("active");
       this.annotations[index].approvedBy.push(this.userServices.current.dbId);
@@ -134,7 +145,7 @@ export class Tagcolor {
       }
     }
 
-    if ((annoType == 'rejected') && (this.annotations[index].rejectedByMe == false)) {
+    if (annoType == 'rejected') {
       this.annotationServices.reject(annoId);
       $(`#down_${annoId}`).addClass("active");
       this.annotations[index].rejectedBy.push(this.userServices.current.dbId);
@@ -160,7 +171,7 @@ export class Tagcolor {
   }
 
   async unscore(annoId, annoType, index) {
-    if ((annoType == 'approved') && (this.annotations[index].approvedByMe == true)) {
+    if (annoType == 'approved') {
       this.annotationServices.unscore(annoId);
       $(`#up_${annoId}`).removeClass("active");
       let i = this.annotations[index].approvedBy.indexOf(this.userServices.current.dbId);
@@ -177,7 +188,7 @@ export class Tagcolor {
       }
     }
 
-    if ((annoType == 'rejected') && (this.annotations[index].rejectedByMe == true)) {
+    if (annoType == 'rejected') {
       this.annotationServices.unscore(annoId);
       $(`#down_${annoId}`).removeClass("active");
       let i = this.annotations[index].rejectedBy.indexOf(this.userServices.current.dbId);
@@ -192,6 +203,10 @@ export class Tagcolor {
       else {
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
       }
+    }
+
+    if (!this.hasContributed()) {
+      this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
   }
 
@@ -236,6 +251,15 @@ export class Tagcolor {
       }
     }
     return null;
+  }
+
+  hasContributed() {
+    for (var i in this.annotations) {
+      if (this.annotations[i].createdByMe || this.annotations[i].approvedByMe || this.annotations[i].rejectedByMe) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
