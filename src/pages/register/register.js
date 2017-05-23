@@ -15,13 +15,15 @@
 
 
 import { inject } from 'aurelia-framework';
+import { Router } from 'aurelia-router';
 import { UserServices } from '../../modules/UserServices';
 
-@inject(UserServices)
+@inject(UserServices, Router)
 export class Register {
 
-	constructor(userServices) {
+	constructor(userServices, router) {
 		this.userServices = userServices;
+    this.router = router;
 
 		// Initialization
 		this.email = '';
@@ -39,6 +41,12 @@ export class Register {
 		];
 		this.errors = {};
 	}
+
+  activate() {
+    if (this.userServices.isAuthenticated()) {
+      this.router.navigateToRoute('index');
+    }
+  }
 
 	register() {
 		this.userServices.register({
