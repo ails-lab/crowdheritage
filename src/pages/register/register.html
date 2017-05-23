@@ -1,0 +1,60 @@
+<template>
+	<div role="main">
+		<div class="viewer">
+			<section class="entrance register-email">
+				<div class="section-header">
+					<div class="text">Register with your email address</div>
+				</div>
+				<div class="section-body">
+					<form role="form" submit.delegate="register()">
+						<div class="input-group">
+							<div class="left">
+								<input type="text" placeholder="Email" id="useremail" value.bind="email" autofocus />
+								<span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
+							</div>
+							<div class="right">
+								<input type="text" placeholder="Username" id="username" value.bind="username" />
+								<span class="help-block has-error" if.bind="errors.username">${errors.username}</span>
+							</div>
+						</div>
+						<div class="input-group" if.bind="usingEmail">
+							<div class="left">
+								<input type="password" placeholder="Password" id="userpassword" value.bind="password" />
+								<span class="help-block has-error" if.bind="errors.password">${errors.password}</span>
+							</div>
+							<div class="right">
+								<input type="password" placeholder="Repeat Password" id="userpassword2" value.bind="password2" />
+								<span class="help-block has-error" if.bind="errors.password2">${errors.password2}</span>
+							</div>
+						</div>
+						<div class="input-group">
+							<div class="left">
+								<input type="text" placeholder="First name" id="firstName" value.bind="firstName" />
+								<span class="help-block has-error" if.bind="errors.firstName">${errors.firstName}</span>
+							</div>
+							<div class="right">
+								<input type="text" placeholder="Last name" id="lastName" value.bind="lastName" />
+								<span class="help-block has-error" if.bind="errors.lastName">${errors.lastName}</span>
+							</div>
+						</div>
+						<div class="input-group">
+							<select id="gender" value.bind="gender" placeholder="Select your gender...">
+								<option value="" default selected>Select your gender...</option>
+								<option repeat.for="option of genders" value.bind="option">${option.name}</option>
+							</select>
+						</div>
+						<div class="input-group ack">
+							<input type="checkbox" id="ack" value.bind="acceptTerms" />
+							<label for="ack">I acknowledge the I have read and accept the <a href="#/terms"> Terms of Use agreement</a>.</label>
+						</div>
+						<div class="button-group">
+							<button class="btn-green" type="submit">Register</button>
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+	</div>
+
+
+</template>

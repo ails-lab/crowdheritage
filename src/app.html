@@ -19,7 +19,7 @@
         <li><a href="http://withculture.eu">WITH</a></li>
         <li><a href="#">About</a></li>
         <li><a if.bind="!isAuthenticated" href="javascript:void(0)" click.delegate="loginPopup()">Sign in</a></li>
-        <li><a if.bind="!isAuthenticated" href="#">Sign up</a></li>
+        <li><a if.bind="!isAuthenticated" route-href="route: register">Sign up</a></li>
       </ul>
       <!-- ul-->
       <ul class="right">
