@@ -44,6 +44,7 @@ export class CampaignIndex {
     this.loading = false;
     this.more = true;
     this.groupName = "";
+    this.sortBy = "Alphabetical";
   }
 
   attached() {
@@ -55,15 +56,15 @@ export class CampaignIndex {
       this.userServices.reloadCurrentUser();
     }
 
-    this.groupName = params.gname;
     if (!params.gname) {
       this.campaignServices.getCampaignsCount("")
         .then( result => {
           this.campaignsCount = result;
         });
-      this.activeCampaigns("");
+      this.activeCampaigns("", this.sortBy);
     }
     else {
+      this.groupName = params.gname;
       this.campaignServices.getCampaignsCount(params.gname)
         .then( result => {
           this.campaignsCount = result;
@@ -72,13 +73,13 @@ export class CampaignIndex {
             this.router.navigateToRoute('index');
           }
         });
-      this.activeCampaigns(params.gname);
+      this.activeCampaigns(params.gname, this.sortBy);
     }
   }
 
-  activeCampaigns(groupName) {
+  activeCampaigns(groupName, sortBy) {
     this.loading = true;
-    this.campaignServices.getActiveCampaigns( {group: groupName, offset: 0, count: COUNT} )
+    this.campaignServices.getActiveCampaigns( {group: groupName, sortBy: sortBy, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;
@@ -97,7 +98,7 @@ export class CampaignIndex {
 
   loadMore() {
     this.loading = true;
-    this.campaignServices.getActiveCampaigns( {group: this.groupName, offset: this.currentCount, count: COUNT} )
+    this.campaignServices.getActiveCampaigns( {group: this.groupName, sortBy: this.sortBy, offset: this.currentCount, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;
@@ -136,6 +137,23 @@ export class CampaignIndex {
         this.loading = false;
         console.log(error.message);
       });
+  }
+
+  toggleMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
+  }
+
+  reloadCampaigns(sortBy) {
+    this.campaigns.splice(0, this.campaigns.length);
+    this.currentCount = 0;
+    this.more = true;
+    this.sortBy = sortBy;
+    this.activeCampaigns(this.groupName, sortBy);
   }
 
 }
