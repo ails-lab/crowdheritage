@@ -45,8 +45,8 @@ export class CampaignServices {
 		}).then((response) => response.json());
   }
 
-  getActiveCampaigns( {group = '', offset = 0, count = 0} = {} ) {
-    return this.http.fetch(`/campaign/activeCampaigns?group=${group}&offset=${offset}&count=${count}`, {
+  getActiveCampaigns( {group = '', sortBy= "", offset = 0, count = 0} = {} ) {
+    return this.http.fetch(`/campaign/activeCampaigns?group=${group}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
