@@ -153,14 +153,6 @@ export class CampaignSummary {
     }
   }
 
-  getCollections(data, offset) {
-    let cols = [];
-    for (let i in data) {
-      cols.push(new Collection(data[i]));
-    }
-    return cols;
-  }
-
   getCampaignCollections(colIds, offset, count) {
     this.loading = true;
     this.collectionServices.getMultipleCollections(colIds, offset, count)
@@ -169,7 +161,9 @@ export class CampaignSummary {
         if (this.currentCount >= this.collectionsCount) {
           this.more = false;
         }
-        this.collections = this.collections.concat(this.getCollections(response, 10));
+        for (let i in response) {
+          this.collections.push(new Collection(response[i]));
+        }
       });
     this.loading = false;
   }
@@ -231,6 +225,15 @@ export class CampaignSummary {
 
   loadMore() {
     this.getCampaignCollections(this.campaign.targetCollections, this.currentCount, COUNT);
+  }
+
+  toggleMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
   }
 
 }
