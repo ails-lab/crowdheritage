@@ -2267,6 +2267,13 @@ body footer .container .right li a:hover {
   body footer .container .right li {
     margin-left: 20px;
   }
+
+  body div[role='main'].about .selectioncontent .content .left .thumbs {
+    max-width: 100%;
+  }
+  body div[role='main'].about .selectioncontent .content h1 {
+    margin-top: 0;
+  }
 }
 /* Medium devices (tablet portrait, 767px) */
 @media (max-width: 768px) {
@@ -2529,6 +2536,13 @@ body footer .container .right li a:hover {
   body footer .container .right {
     margin-top: 20px;
   }
+
+  body div[role='main'].about .selectioncontent .content .left .thumbs {
+    max-width: 100%;
+  }
+  body div[role='main'].about .selectioncontent .content h1 {
+    margin-top: 0;
+  }
 }
 /* Medium devices (tablet portrait, 480) */
 @media (max-width: 480px) {
@@ -2546,6 +2560,49 @@ body footer .container .right li a:hover {
   body main section.collections .campaignlist .entries .sizer,
   body main section.collections .campaignlist .entries .entry {
     width: 100%;
+  }
+
+  body div[role='main'].about .selectioncontent {
+    padding: 0 0 40px 0;
+    border-top: 1px solid #d7d7d7;
+  }
+  body div[role='main'].about .selectioncontent .content {
+    padding-bottom: 0;
+  }
+  body div[role='main'].about .selectioncontent .content .left,
+  body div[role='main'].about .selectioncontent .content .right {
+    float: none;
+    width: 100%;
+    padding: 0;
+  }
+  body div[role='main'].about .selectioncontent .content .thumbs,
+  body div[role='main'].about .selectioncontent .content .thumbwide {
+    display: none;
+  }
+  body div[role='main'].about .selectioncontent .content h1,
+  body div[role='main'].about .selectioncontent .content p {
+    width: 100%;
+  }
+  body div[role='main'].about .aboutlink {
+    padding-bottom: 25px;
+  }
+  body div[role='main'].about .aboutlink .left {
+    float: none;
+  }
+  body div[role='main'].about .aboutlink .left ul {
+    padding: 0;
+    text-align: center;
+  }
+  body div[role='main'].about .aboutlink .left ul li a {
+    font-size: 1.6rem;
+  }
+  body div[role='main'].about .aboutlink .right {
+    float: none;
+    margin-top: 20px;
+    text-align: center;
+  }
+  body div[role='main'] .selection {
+    display: none;
   }
 }
 
@@ -3186,4 +3243,351 @@ body div[role='main'] section.entrance {
   display: table;
   margin: 0 auto;
   padding-top: 100px;
+}
+
+body div[role='main'] section.pagehero.about {
+  background-image: url('../img/assets/img/content/bg-about.jpg');
+}
+body div[role='main'].about .selection ul li:hover .select-idle {
+  visibility: visible;
+  opacity: 1;
+}
+body div[role='main'].about .selection ul li:hover .select-idle::after {
+  opacity: 1;
+}
+body div[role='main'].about .selection ul li .select-idle a {
+  color: inherit;
+}
+body div[role='main'].about .selection ul li .select-idle a:hover {
+  text-decoration: none;
+}
+body div[role='main'].about .selection ul li .select-idle::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0px;
+  background: #4f7979;
+  width: 100%;
+  height: 5px;
+  border: 0;
+  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+body div[role='main'].about .selectioncontent {
+  padding: 40px 0 40px 0;
+  overflow: hidden;
+}
+body div[role='main'].about .selectioncontent .content {
+  padding: 40px 0 40px 0;
+}
+body div[role='main'].about .selectioncontent .content:before,
+body div[role='main'].about .selectioncontent .content:after {
+  content: " ";
+  display: table;
+}
+body div[role='main'].about .selectioncontent .content:after {
+  clear: both;
+}
+body div[role='main'].about .selectioncontent .content h1 {
+  font-size: 2.4rem;
+  margin: 0 0 20px 0;
+  color: #4f7979;
+  text-align: left;
+  width: 70%;
+  margin-top: 60px;
+}
+body div[role='main'].about .selectioncontent .content p {
+  color: #757575;
+  text-align: left;
+  width: 80%;
+}
+body div[role='main'].about .selectioncontent .content .thumbwide {
+  box-shadow: 10px;
+  -webkit-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
+  position: static;
+  overflow: hidden;
+  max-width: 300%;
+  float: left;
+  border-radius: 5px;
+}
+body div[role='main'].about .selectioncontent .content .thumbwide.left {
+  float: right;
+}
+body div[role='main'].about .selectioncontent .content .thumbs {
+  box-shadow: 10px;
+  -webkit-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+body div[role='main'].about .selectioncontent .content .left {
+  width: 50%;
+  float: left;
+  padding-right: 20px;
+  position: relative;
+  text-align: center;
+}
+body div[role='main'].about .selectioncontent .content .right {
+  width: 50%;
+  float: left;
+  padding-left: 20px;
+  position: relative;
+  text-align: center;
+}
+body div[role='main'].about .aboutlink {
+  border-top: 1px solid #d7d7d7;
+  padding: 20px 0 20px 0;
+}
+body div[role='main'].about .aboutlink:before,
+body div[role='main'].about .aboutlink:after {
+  content: " ";
+  display: table;
+}
+body div[role='main'].about .aboutlink:after {
+  clear: both;
+}
+body div[role='main'].about .aboutlink .left {
+  float: left;
+}
+body div[role='main'].about .aboutlink .left ul {
+  margin: 0;
+  padding: 5px 0 0 0;
+}
+body div[role='main'].about .aboutlink .left ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin: 0 15px 0 0;
+}
+body div[role='main'].about .aboutlink .left ul li a {
+  font-size: 1.4rem;
+}
+body div[role='main'].about .aboutlink .right {
+  float: right;
+}
+body div[role='main'].about .aboutlink .right .register {
+  padding: 5px 30px;
+  font-size: 12px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #b5b5b5;
+  display: block;
+  border: 1px solid #b5b5b5;
+  text-decoration: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  font-weight: 600;
+  clear: both;
+  display: table;
+  margin: 0 auto;
+  width: 200px;
+  text-align: center;
+}
+body div[role='main'].about .aboutlink .right .register:hover {
+  color: #828282;
+}
+body div[role='main'].about .aboutlink .right .register div {
+  position: absolute;
+  background: #9c9c9c;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body div[role='main'].about .aboutlink .right .register div.left {
+  left: -1px;
+  bottom: 0;
+  width: 2px;
+  height: 0;
+}
+body div[role='main'].about .aboutlink .right .register div.right {
+  right: -1px;
+  top: 0;
+  width: 2px;
+  height: 0;
+}
+body div[role='main'].about .aboutlink .right .register div.bot {
+  height: 2px;
+  width: 0;
+  right: 0;
+  bottom: -1px;
+}
+body div[role='main'].about .aboutlink .right .register div.top {
+  height: 2px;
+  width: 0;
+  left: 0;
+  top: -1px;
+}
+body div[role='main'].about .aboutlink .right .register:hover div.left {
+  height: 100%;
+}
+body div[role='main'].about .aboutlink .right .register:hover div.right {
+  height: 100%;
+}
+body div[role='main'].about .aboutlink .right .register:hover div.bot {
+  width: 100%;
+}
+body div[role='main'].about .aboutlink .right .register:hover div.top {
+  width: 100%;
+}
+body div[role='main'] section.action.profile textarea.about {
+  margin-bottom: 0px;
+}
+body div[role='main'] section.selection {
+  border-top: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+}
+body div[role='main'] section.selection ul {
+  margin: 0;
+  padding: 0;
+}
+body div[role='main'] section.selection ul:before,
+body div[role='main'] section.selection ul:after {
+  content: " ";
+  display: table;
+}
+body div[role='main'] section.selection ul:after {
+  clear: both;
+}
+body div[role='main'] section.selection ul li {
+  list-style: none;
+  float: left;
+  width: 16.66666667%;
+  border-right: 1px solid #d7d7d7;
+  height: 174px;
+  position: relative;
+}
+body div[role='main'] section.selection ul li:first-child {
+  border-left: 1px solid #d7d7d7;
+}
+body div[role='main'] section.selection ul li:hover .select-hover {
+  opacity: 1;
+}
+body div[role='main'] section.selection ul li:hover .select-idle {
+  opacity: 0;
+  visibility: hidden;
+}
+body div[role='main'] section.selection ul li .select-hover {
+  position: relative;
+  opacity: 0;
+  height: inherit;
+  padding: 34px 20px;
+  color: white;
+  background: #4f7979;
+  text-align: center;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body div[role='main'] section.selection ul li .select-hover p {
+  color: inherit;
+  margin-bottom: 15px;
+  font-size: 14px;
+  max-height: 70px;
+  overflow: hidden;
+}
+body div[role='main'] section.selection ul li .select-hover a {
+  color: #e6e6e6;
+  width: 100%;
+  border: 1px solid ;
+  text-transform: uppercase;
+  font-size: 11px;
+  display: block;
+  border: 1px solid #e6e6e6;
+  text-decoration: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  padding: 3px 0;
+  letter-spacing: 1.3px;
+}
+body div[role='main'] section.selection ul li .select-hover a div {
+  position: absolute;
+  background: white;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body div[role='main'] section.selection ul li .select-hover a div.left {
+  left: -1px;
+  bottom: 0;
+  width: 2px;
+  height: 0;
+}
+body div[role='main'] section.selection ul li .select-hover a div.right {
+  right: -1px;
+  top: 0;
+  width: 2px;
+  height: 0;
+}
+body div[role='main'] section.selection ul li .select-hover a div.bot {
+  height: 2px;
+  width: 0;
+  right: 0;
+  bottom: -1px;
+}
+body div[role='main'] section.selection ul li .select-hover a div.top {
+  height: 2px;
+  width: 0;
+  left: 0;
+  top: -1px;
+}
+body div[role='main'] section.selection ul li .select-hover a:hover div.left {
+  height: 100%;
+}
+body div[role='main'] section.selection ul li .select-hover a:hover div.right {
+  height: 100%;
+}
+body div[role='main'] section.selection ul li .select-hover a:hover div.bot {
+  width: 100%;
+}
+body div[role='main'] section.selection ul li .select-hover a:hover div.top {
+  width: 100%;
+}
+body div[role='main'] section.selection ul li .select-hover a:hover {
+  color: white;
+  background: #598080;
+}
+body div[role='main'] section.selection ul li .select-idle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+body div[role='main'] section.selection ul li .select-idle::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  bottom: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12px 0 12px 12px;
+  border-color: transparent transparent transparent #b5b5b5;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+body div[role='main'] section.selection ul li .select-idle .icon {
+  display: table;
+  height: 35px;
+  margin: 50px auto 22px;
+}
+body div[role='main'] section.selection ul li .select-idle .select-heading {
+  display: table;
+  margin: auto;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
