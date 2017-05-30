@@ -3245,6 +3245,27 @@ body div[role='main'] section.entrance {
   padding-top: 100px;
 }
 
+body div[role='main'] section.pagehero {
+  width: 100%;
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0px 0 0 0;
+}
+body div[role='main'] section.pagehero h1.lbl {
+  margin: 0;
+  padding: 0;
+  font-size: 3.5rem;
+  color: #fff;
+}
+body div[role='main'] section.pagehero .sublbl {
+  color: #fff;
+  font-size: 1.4rem;
+}
 body div[role='main'] section.pagehero.about {
   background-image: url('../img/assets/img/content/bg-about.jpg');
 }
@@ -3590,4 +3611,18 @@ body div[role='main'] section.selection ul li .select-idle .select-heading {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 1px;
+}
+body div[role='main'] section.generaltext {
+  padding: 50px 0 50px 0;
+}
+body div[role='main'] section.generaltext h1 {
+  margin-top: 0;
+}
+body div[role='main'] section.generaltext h2 {
+  margin-bottom: 25px;
+}
+body div[role='main'] section.generaltext .intro {
+  font-size: 1.6rem;
+  color: #666;
+  font-style: italic;
 }
