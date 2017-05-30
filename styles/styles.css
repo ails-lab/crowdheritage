@@ -3247,6 +3247,7 @@ body div[role='main'] section.entrance {
 
 body div[role='main'] section.pagehero {
   width: 100%;
+  background: url('../img/assets/img/content/bg-search.png');
   height: 280px;
   background-size: cover;
   background-position: center;
@@ -3625,4 +3626,77 @@ body div[role='main'] section.generaltext .intro {
   font-size: 1.6rem;
   color: #666;
   font-style: italic;
+}
+body div[role='main'] section.pagehero.static .container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body div[role='main'] section.pagehero .shortcut {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 30px;
+  right: 30px;
+}
+body div[role='main'] section.pagehero .shortcut li {
+  list-style: none;
+  float: left;
+  width: 25%;
+  border-top: 1px solid #fff;
+  opacity: 0.45;
+  filter: alpha(opacity=45);
+  padding: 8px 0 0 10px;
+  cursor: pointer;
+  text-align: left;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body div[role='main'] section.pagehero .shortcut li a {
+  color: #fff;
+  font-family: Lora, "Times New Roman", Times, serif;
+  font-style: italic;
+  outline: 0;
+  display: block;
+}
+body div[role='main'] section.pagehero .shortcut li a:hover {
+  text-decoration: none;
+}
+body div[role='main'] section.pagehero .shortcut li.active,
+body div[role='main'] section.pagehero .shortcut li:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+a {
+  outline: 0 !important;
+}
+a.action {
+  color: #7c7c7c;
+  border: 1px solid #b8b8b8;
+  width: 100%;
+  padding: 5px 30px 7px 30px;
+  display: block;
+  text-align: center;
+  margin: 20px 0 0 0;
+  font-size: 1.4rem;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+a.action:hover {
+  background: rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: #7c7c7c;
+}
+a.action.media {
+  border-color: #ff5b5b;
+  color: #ff5b5b;
+}
+a.action.media:hover {
+  background: rgba(255, 91, 91, 0.2);
 }

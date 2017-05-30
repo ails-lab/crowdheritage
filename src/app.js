@@ -51,7 +51,10 @@ export class App {
       { route: ':gname/:cname',        name: 'summary',  moduleId: './pages/summary/campaignSummary', nav: false, title: '' },
       { route: ':gname/:cname/:recid', name: 'item',     moduleId: './pages/item/campaignItem',       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
       { route: 'register',             name: 'register', moduleId: './pages/register/register',       nav: false, title: 'Register | WITHcrowd' },
-      { route: 'about',                name: 'about',    moduleId: './pages/about/about',             nav: true,  title: 'About | WITHcrowd' }
+      { route: 'about',                name: 'about',    moduleId: './pages/about/about',             nav: true,  title: 'About | WITHcrowd' },
+      { route: 'privacy',              name: 'privacy',  moduleId: './pages/privacy/privacy',         nav: false, title: 'Privacy Policy | WITHcrowd' },
+			{ route: 'terms',                name: 'terms',    moduleId: './pages/terms/terms',             nav: false, title: 'Terms and Conditions | WITHcrowd' },
+			{ route: 'feedback',             name: 'feedback', moduleId: './pages/feedback/feedback',       nav: false, title: 'Feedback & Contact | WITHcrowd' }
     ]);
 
     this.router = router;
