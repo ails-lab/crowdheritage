@@ -52,7 +52,7 @@ export class CampaignItem {
     this.offset = 0;
   }
 
-  nextItem(camp, col, records, offset) {
+  async nextItem(camp, col, records, offset) {
     // Random record retrieval
     if (col == 0) {
       if (records.length > 0) {
@@ -62,7 +62,7 @@ export class CampaignItem {
         this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
       }
       else {
-        this.randomRecords();
+        await this.randomRecords();
         this.router.navigateToRoute('item', {cname: this.campaign.username, gname: this.campaign.spacename, recid: this.records[0].dbId});
       }
     }
@@ -87,9 +87,9 @@ export class CampaignItem {
     }
   }
 
-  randomRecords() {
+  async randomRecords() {
     this.loadRec = true;
-    this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT+1)
+    await this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT+1)
       .then(response => {
         if (response.length>0) {
           for (let i in response) {
@@ -109,7 +109,7 @@ export class CampaignItem {
       });
   }
 
-  loadRecordFromBatch(routeData) {
+  async loadRecordFromBatch(routeData) {
     this.loadRec = true;
     this.offset = routeData.offset;
     this.records = routeData.records;
@@ -118,10 +118,10 @@ export class CampaignItem {
     this.loadRec = false;
   }
 
-  fetchRecordBatch(routeData) {
+  async fetchRecordBatch(routeData) {
     this.loadRec = true;
     this.offset = routeData.offset;
-    this.collectionServices.getRecords(this.collection.dbId, this.offset, COUNT+1)
+    await this.collectionServices.getRecords(this.collection.dbId, this.offset, COUNT+1)
       .then(response => {
         if (response.records.length>0) {
           for (let i in response.records) {
@@ -145,7 +145,7 @@ export class CampaignItem {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params, routeData) {
+  async activate(params, routeData) {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -163,21 +163,25 @@ export class CampaignItem {
         // If the current record-batch still has items
         // get the next record from the batch
         if ( routeData.records.length > 1 ) {
-          this.loadRecordFromBatch(routeData);
+          await this.loadRecordFromBatch(routeData);
+          this.showMedia();
         }
         // If the current record-batch ran out of items
         // make a call and get the next batch of records
         else {
-          this.fetchRecordBatch(routeData);
+          await this.fetchRecordBatch(routeData);
+          this.showMedia();
         }
       }
       // Random record retrieval
       else {
         if ( routeData.records.length > 1 ) {
-          this.loadRecordFromBatch(routeData);
+          await this.loadRecordFromBatch(routeData);
+          this.showMedia();
         }
         else {
-          this.randomRecords();
+          await this.randomRecords();
+          this.showMedia();
         }
       }
     }
@@ -187,6 +191,7 @@ export class CampaignItem {
       this.recordServices.getRecord(params.recid)
   			.then(data => {
   				this.record = new Record(data);
+          this.showMedia();
   				this.loadRec = false;
   			}).catch(error => {
   				// If the recordId is wrong, redirect to campaign summary page
@@ -204,4 +209,46 @@ export class CampaignItem {
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
   }
+
+  showMedia() {
+    alert(JSON.stringify(this.record));
+    if (this.record.source_uri && !this.checkURL(this.record.source_uri) && this.record.source_uri.indexOf('archives_items_') > -1) {
+      alert(1);
+    	var id = this.record.source_uri.split("_")[2];
+      alert(id);
+    	$('#mediadiv').html('<div><iframe id="mediaplayer" src="http://archives.crem-cnrs.fr/archives/items/'+id+'/player/346x130/" height="250px" scrolling="no" width="361px"></iframe></div>');
+      alert(JSON.stringify(($('#mediadiv')).html()));
+    }
+    else if (this.record.mediatype=="WEBPAGE") {
+      alert(2);
+    	$('#mediadiv').html('<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>');
+    }
+    else {
+      alert(3);
+      alert(this.record.mediatype);
+    	if(this.record.mediatype=="VIDEO" && !this.checkURL(this.record.fullresImage)) {
+        alert('a');
+    		$('#mediadiv').html('<video id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</video>');
+    	}
+    	else if(this.record.mediatype=="AUDIO"  && !this.checkURL(this.record.fullresImage)) {
+        alert('b');
+    		if(this.record.thumbnail) {
+          alert('i');
+    			$('#mediadiv').html('<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio></div>');
+        }
+        else {
+          alert('ii');
+    			$('#mediadiv').html('<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio>');
+        }
+      }
+    }
+  }
+
+  checkURL(url) {
+		if (url) {
+      return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
+		return false;
+	}
+
 }
