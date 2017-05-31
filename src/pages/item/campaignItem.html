@@ -56,34 +56,36 @@
                     <div class="lbl">DESCRIPTION</div>
                     <div class="val">${record.description}</div>
                   </li>
-                  <li>
-                    <div class="lbl">DATE</div>
-                    <div class="val">Sunday, 27 February 2015 - 15.00</div>
+                  <li if.bind="record.dataProvider">
+                    <div class="lbl">PROVIDER</div>
+                    <div class="val">${record.dataProvider}</div>
                   </li>
-                  <li>
-                    <div class="lbl">MODEL</div>
-                    <div class="val">Jefimija Jovic</div>
+                  <li if.bind="record.creator">
+                    <div class="lbl">CREATOR</div>
+                    <div class="val">${record.creator}</div>
                   </li>
-                  <li>
-                    <div class="lbl">LOCATION</div>
-                    <div class="val">Milan</div>
+                  <li if.bind="record.rights">
+                    <div class="lbl">RIGHTS</div>
+                    <div class="val">${record.rights}</div>
                   </li>
-                  <li>
-                    <div class="lbl">PHOTOGRAPHER</div>
-                    <div class="val">Etienne Todoir</div>
+                  <li if.bind="record.mediatype">
+                    <div class="lbl">MEDIA TYPE</div>
+                    <div class="val">${record.mediatype}</div>
                   </li>
-                  <li>
-                    <div class="lbl">OBJECT TYPE</div>
-                    <div class="val">fashion collection, fashion photograph</div>
+                  <li if.bind="record.dbId">
+                    <div class="lbl">ITEM URL</div>
+                    <div class="val"><a href.bind="record.loc">${record.loc}</a></div>
                   </li>
-                  <li>
-                    <div class="lbl">PLACE</div>
-                    <div class="val">Circolo Filologico, via Clerici, 10</div>
+                  <li if.bind="record.source">
+                    <div class="lbl">RECORD SOURCE</div>
+                    <div class="val">${record.source}</div>
                   </li>
-                  <li class="yellow">
-                    <div class="lbl">IDENTIFIER</div>
-                    <div class="val">10148</div>
-                  </li>
+                  <div repeat.for="dcfield of record.dcfields">
+                    <li>
+                      <div class="lbl">${dcfield.label.toUpperCase()}</div>
+                      <div class="val">${dcfield.value[0]}</div>
+                    </li>
+                  </div>
                 </ul>
                 <!-- more-->
                 <div class="loadmore"><a href="#">LOAD MORE</a></div>
