@@ -3726,3 +3726,7 @@ body div[role='main'] section.registernow .action {
   margin: auto;
   margin-top: 15px;
 }
+
+#mediadiv {
+  text-align: center;
+}
