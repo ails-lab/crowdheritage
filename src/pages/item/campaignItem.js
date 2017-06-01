@@ -50,21 +50,17 @@ export class CampaignItem {
     this.record = 0;
     this.records = [];
     this.offset = 0;
+
+    this.mediaDiv = '';
   }
 
-  async nextItem(camp, col, records, offset) {
+  nextItem(camp, col, records, offset) {
     // Random record retrieval
     if (col == 0) {
-      if (records.length > 0) {
-        let item = this.router.routes.find(x => x.name === 'item');
-        item.campaign = camp;
-        item.records = records;
-        this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
-      }
-      else {
-        await this.randomRecords();
-        this.router.navigateToRoute('item', {cname: this.campaign.username, gname: this.campaign.spacename, recid: this.records[0].dbId});
-      }
+      let item = this.router.routes.find(x => x.name === 'item');
+      item.campaign = camp;
+      item.records = records;
+      this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
     }
 
     // Record retrieval from specific collection
@@ -87,9 +83,9 @@ export class CampaignItem {
     }
   }
 
-  async randomRecords() {
+  randomRecords() {
     this.loadRec = true;
-    await this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT+1)
+    this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT+1)
       .then(response => {
         if (response.length>0) {
           for (let i in response) {
@@ -99,7 +95,10 @@ export class CampaignItem {
               this.records.push(record);
             }
           }
-          this.record = this.records.shift();
+          if (!this.record) {
+            this.record = this.records.shift();
+            this.showMedia();
+          }
           this.loadRec = false;
         }
         })
@@ -109,19 +108,20 @@ export class CampaignItem {
       });
   }
 
-  async loadRecordFromBatch(routeData) {
+  loadRecordFromBatch(routeData) {
     this.loadRec = true;
     this.offset = routeData.offset;
     this.records = routeData.records;
     this.record = this.records.shift();
     this.currentCount = routeData.offset + 1;
     this.loadRec = false;
+    this.showMedia();
   }
 
-  async fetchRecordBatch(routeData) {
+  fetchRecordBatch(routeData) {
     this.loadRec = true;
     this.offset = routeData.offset;
-    await this.collectionServices.getRecords(this.collection.dbId, this.offset, COUNT+1)
+    this.collectionServices.getRecords(this.collection.dbId, this.offset, COUNT+1)
       .then(response => {
         if (response.records.length>0) {
           for (let i in response.records) {
@@ -134,6 +134,7 @@ export class CampaignItem {
           this.record = this.records.shift();
           this.currentCount = routeData.offset + 1;
           this.loadRec = false;
+          this.showMedia();
         }
       }).catch(error => {
         this.loadRec = false;
@@ -145,10 +146,11 @@ export class CampaignItem {
     $('.accountmenu').removeClass('active');
   }
 
-  async activate(params, routeData) {
+  activate(params, routeData) {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
+    //console.log(routeData);
 
     this.loadCamp = true;
     if ( routeData.campaign ) {
@@ -163,25 +165,21 @@ export class CampaignItem {
         // If the current record-batch still has items
         // get the next record from the batch
         if ( routeData.records.length > 1 ) {
-          await this.loadRecordFromBatch(routeData);
-          this.showMedia();
+          this.loadRecordFromBatch(routeData);
         }
         // If the current record-batch ran out of items
         // make a call and get the next batch of records
         else {
-          await this.fetchRecordBatch(routeData);
-          this.showMedia();
+          this.fetchRecordBatch(routeData);
         }
       }
       // Random record retrieval
       else {
         if ( routeData.records.length > 1 ) {
-          await this.loadRecordFromBatch(routeData);
-          this.showMedia();
+          this.loadRecordFromBatch(routeData);
         }
         else {
-          await this.randomRecords();
-          this.showMedia();
+          this.randomRecords();
         }
       }
     }
@@ -191,8 +189,9 @@ export class CampaignItem {
       this.recordServices.getRecord(params.recid)
   			.then(data => {
   				this.record = new Record(data);
-          this.showMedia();
   				this.loadRec = false;
+          this.showMedia();
+          this.randomRecords();
   			}).catch(error => {
   				// If the recordId is wrong, redirect to campaign summary page
           this.router.navigateToRoute('summary', {cname: params.cname, gname: params.gname});
@@ -211,34 +210,23 @@ export class CampaignItem {
   }
 
   showMedia() {
-    alert(JSON.stringify(this.record));
     if (this.record.source_uri && !this.checkURL(this.record.source_uri) && this.record.source_uri.indexOf('archives_items_') > -1) {
-      alert(1);
     	var id = this.record.source_uri.split("_")[2];
-      alert(id);
-    	$('#mediadiv').html('<div><iframe id="mediaplayer" src="http://archives.crem-cnrs.fr/archives/items/'+id+'/player/346x130/" height="250px" scrolling="no" width="361px"></iframe></div>');
-      alert(JSON.stringify(($('#mediadiv')).html()));
+      this.mediaDiv = '<div><iframe id="mediaplayer" src="http://archives.crem-cnrs.fr/archives/items/'+id+'/player/346x130/" height="250px" scrolling="no" width="361px"></iframe></div>';
     }
     else if (this.record.mediatype=="WEBPAGE") {
-      alert(2);
-    	$('#mediadiv').html('<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>');
+      this.mediaDiv = '<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>';
     }
     else {
-      alert(3);
-      alert(this.record.mediatype);
     	if(this.record.mediatype=="VIDEO" && !this.checkURL(this.record.fullresImage)) {
-        alert('a');
-    		$('#mediadiv').html('<video id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</video>');
+        this.mediaDiv = '<video id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</video>';
     	}
     	else if(this.record.mediatype=="AUDIO"  && !this.checkURL(this.record.fullresImage)) {
-        alert('b');
     		if(this.record.thumbnail) {
-          alert('i');
-    			$('#mediadiv').html('<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio></div>');
+          this.mediaDiv = '<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio></div>';
         }
         else {
-          alert('ii');
-    			$('#mediadiv').html('<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio>');
+          this.mediaDiv = '<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio>';
         }
       }
     }

@@ -45,7 +45,7 @@
             <div class="img" with.bind="record">
               <img show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
               <!-- Here goes the media, besides images -->
-              <div id="mediadiv"></div>
+              <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
             </div>
             <!-- metadata-->
             <div class="wrap">
