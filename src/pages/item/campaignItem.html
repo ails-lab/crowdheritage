@@ -85,24 +85,30 @@
                   <div repeat.for="dcfield of record.dcfields">
                     <li>
                       <div class="lbl">${dcfield.label.toUpperCase()}</div>
-                      <div class="val">${dcfield.value[0]}</div>
+                      <div class="val" innerhtml.bind=" dcfield.label=='created' ? dcfield.value[0].free : dcfield.value[0]"></div>
                     </li>
                   </div>
                 </ul>
                 <!-- more-->
+                <!-- HIDE
                 <div class="loadmore"><a href="#">LOAD MORE</a></div>
+                -->
               </div>
             </div>
           </div>
 
           <!-- right-->
           <div class="right" if.bind="!loadCamp && !loadRec">
-            <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"></compose>
+            <compose view-model="widgets/tagitem/tagitem"
+                     if.bind="hasMotivation('Tagging')">
+            </compose>
             <compose view-model="widgets/tagcolor/tagcolor"
                      if.bind="hasMotivation('ColorTagging')"
                      model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
-            <compose view-model="widgets/taggeo/taggeo" if.bind="hasMotivation('GeoTagging')"></compose>
+            <compose view-model="widgets/taggeo/taggeo"
+                     if.bind="hasMotivation('GeoTagging')">
+            </compose>
           </div>
         </div>
       </div>
