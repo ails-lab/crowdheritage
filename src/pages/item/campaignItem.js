@@ -95,10 +95,7 @@ export class CampaignItem {
               this.records.push(record);
             }
           }
-          if (!this.record) {
-            this.record = this.records.shift();
-            this.showMedia();
-          }
+          this.showMedia();
           this.loadRec = false;
         }
         })
@@ -150,7 +147,6 @@ export class CampaignItem {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
-    //console.log(routeData);
 
     this.loadCamp = true;
     if ( routeData.campaign ) {
@@ -179,6 +175,7 @@ export class CampaignItem {
           this.loadRecordFromBatch(routeData);
         }
         else {
+          this.record = routeData.records[0];
           this.randomRecords();
         }
       }
@@ -190,7 +187,6 @@ export class CampaignItem {
   			.then(data => {
   				this.record = new Record(data);
   				this.loadRec = false;
-          this.showMedia();
           this.randomRecords();
   			}).catch(error => {
   				// If the recordId is wrong, redirect to campaign summary page
