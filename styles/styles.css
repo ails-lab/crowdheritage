@@ -1367,6 +1367,7 @@ body main section.tagging .left .metadata ul.meta li {
 }
 body main section.tagging .left .metadata ul.meta li.yellow .val {
   color: #ffbb00;
+  word-wrap: break-word;
 }
 body main section.tagging .left .metadata ul.meta li .lbl {
   color: #888;
@@ -1377,11 +1378,13 @@ body main section.tagging .left .metadata ul.meta li .lbl {
 body main section.tagging .left .metadata ul.meta li .val {
   color: #000;
   font-size: 1.4rem;
+  word-wrap: break-word;
 }
 body main section.tagging .left .metadata ul.meta li .val small {
   font-size: 1.5rem;
   margin-left: 10px;
   color: #909090;
+  word-wrap: break-word;
 }
 body main section.tagging .left .metadata .loadmore {
   text-align: center;
