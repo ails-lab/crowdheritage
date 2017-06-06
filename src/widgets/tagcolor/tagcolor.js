@@ -89,7 +89,7 @@ export class Tagcolor {
           this.suggestedAnnotation = res.results[0];
         });
 
-      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation);
+      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username);
 
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
 

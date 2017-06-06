@@ -163,10 +163,10 @@ export class AnnotationServices {
 		});
 	}
 
-	async annotateRecord(recid, term) {
+	async annotateRecord(recid, term, camp) {
 		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
 		let target = { recordId: recid};
-		let annotation = { generator: 'WITH Manual Annotator', generated: new Date().toISOString(), confidence: 0.0, motivation: 'Tagging', body: body, target: target };
+		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: 'Tagging', body: body, target: target };
 
 		return this.http.fetch('/record/annotation', {
 			method: 'POST',
