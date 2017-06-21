@@ -122,7 +122,8 @@ export class Tagcolor {
     }
 
     if (annoType == 'approved') {
-      this.annotationServices.approve(annoId);
+      //this.annotationServices.approve(annoId);
+      this.annotationServices.approveObj(annoId, this.campaign.username);
       $(`#up_${annoId}`).addClass("active");
       this.annotations[index].approvedBy.push(this.userServices.current.dbId);
       this.annotations[index].approvedByMe = true;
@@ -146,7 +147,8 @@ export class Tagcolor {
     }
 
     if (annoType == 'rejected') {
-      this.annotationServices.reject(annoId);
+      //this.annotationServices.reject(annoId);
+      this.annotationServices.rejectObj(annoId, this.campaign.username);
       $(`#down_${annoId}`).addClass("active");
       this.annotations[index].rejectedBy.push(this.userServices.current.dbId);
       this.annotations[index].rejectedByMe = true;
@@ -172,7 +174,8 @@ export class Tagcolor {
 
   async unscore(annoId, annoType, index) {
     if (annoType == 'approved') {
-      this.annotationServices.unscore(annoId);
+      //this.annotationServices.unscore(annoId);
+      this.annotationServices.unscoreObj(annoId);
       $(`#up_${annoId}`).removeClass("active");
       let i = this.annotations[index].approvedBy.indexOf(this.userServices.current.dbId);
       if (i > -1) {
@@ -189,7 +192,8 @@ export class Tagcolor {
     }
 
     if (annoType == 'rejected') {
-      this.annotationServices.unscore(annoId);
+      //this.annotationServices.unscore(annoId);
+      this.annotationServices.unscoreObj(annoId);
       $(`#down_${annoId}`).removeClass("active");
       let i = this.annotations[index].rejectedBy.indexOf(this.userServices.current.dbId);
       if (i > -1) {

@@ -69,14 +69,48 @@ export class AnnotationServices {
 		}).then(checkStatus);
 	}
 
+	approveObj(id, camp) {
+		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
+
+		return this.http.fetch(`/annotation/${id}/approveObj`, {
+			method: 'POST',
+			body: JSON.stringify(annotation),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(checkStatus).then((response) => {
+			response.json();
+		});
+	}
+
 	reject(id) {
 		return this.http.fetch(`/annotation/${id}/reject`, {
 			method: 'GET'
 		}).then(checkStatus);
 	}
 
+	rejectObj(id, camp) {
+		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
+
+		return this.http.fetch(`/annotation/${id}/rejectObj`, {
+			method: 'POST',
+			body: JSON.stringify(annotation),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(checkStatus).then((response) => {
+			response.json();
+		});
+	}
+
 	unscore(id) {
 		return this.http.fetch(`/annotation/${id}/unscore`, {
+			method: 'GET'
+		}).then(checkStatus);
+	}
+
+	unscoreObj(id) {
+		return this.http.fetch(`/annotation/${id}/unscoreObj`, {
 			method: 'GET'
 		}).then(checkStatus);
 	}

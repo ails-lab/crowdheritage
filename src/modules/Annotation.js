@@ -36,13 +36,23 @@ export class Annotation {
     if (data.score) {
       if (data.score.approvedBy) {
         this.approvedBy = data.score.approvedBy;
-        this.approvedByMe = this.approvedBy.includes(userId);
+        for (let i in this.approvedBy) {
+          if (this.approvedBy[i].withCreator == userId) {
+            this.approvedByMe = true;
+            break;
+          }
+        }
         this.score = this.score + data.score.approvedBy.length;
       }
       if (data.score.rejectedBy) {
         this.rejectedBy = data.score.rejectedBy;
         if (!this.approvedByMe) {
-          this.rejectedByMe = this.rejectedBy.includes(userId);;
+          for (let i in this.rejectedBy) {
+            if (this.rejectedBy[i].withCreator == userId) {
+              this.rejectedByMe = true;
+              break;
+            }
+          }
         }
         this.score = this.score - data.score.rejectedBy.length;
       }
