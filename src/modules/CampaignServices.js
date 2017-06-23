@@ -54,13 +54,13 @@ export class CampaignServices {
   incUserPoints(campaignId, userId, annoType) {
     return this.http.fetch(`/campaign/incUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {
       method: 'GET'
-    }).then((response) => response.json());
+    }).then(checkStatus);
   }
 
   decUserPoints(campaignId, userId, annoType) {
     return this.http.fetch(`/campaign/decUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {
       method: 'GET'
-    }).then((response) => response.json());
+    }).then(checkStatus);
   }
 
 }

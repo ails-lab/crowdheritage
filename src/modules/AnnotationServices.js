@@ -78,9 +78,7 @@ export class AnnotationServices {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(checkStatus).then((response) => {
-			response.json();
-		});
+		}).then(response => annotation);
 	}
 
 	reject(id) {
@@ -98,9 +96,7 @@ export class AnnotationServices {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(checkStatus).then((response) => {
-			response.json();
-		});
+		}).then(response => annotation);
 	}
 
 	unscore(id) {
