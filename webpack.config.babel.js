@@ -74,7 +74,7 @@ const coreBundles = {
 }
 
 module.exports = {
-        entry: {
+		entry: {
             'app': [], // <-- this array will be filled by the aurelia-webpack-plugin
             'aurelia': Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'))
         },
@@ -83,11 +83,14 @@ module.exports = {
             filename: '[name].bundle.js'
         },
         module: {
-            rules: [
+           rules: [
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
+                    options: {
+                        ignore: '/node_modules/'        
+                      },
                     query: {
                         presets: [
                             [ 'es2015', {
@@ -96,7 +99,7 @@ module.exports = {
                             }],
                             'stage-1'
                         ],
-                        plugins: ['transform-decorators-legacy']
+                        plugins: ['transform-runtime','transform-decorators-legacy']
                     }
                 },
                 {
@@ -115,6 +118,7 @@ module.exports = {
                     test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)$/,
                     use: 'url-loader'
                 }
+               			
             ]
         },
         plugins: [
@@ -122,7 +126,7 @@ module.exports = {
                 regeneratorRuntime: 'regenerator-runtime', // to support await/async syntax
                 Promise: 'bluebird', // because Edge browser has slow native Promise object
                 $: 'jquery', // because 'bootstrap' by Twitter depends on this
-                jQuery: 'jquery', // just an alias
+                jQuery: 'jquery'
             }),
             new HtmlWebpackPlugin({
                 template: 'index.html'
@@ -181,6 +185,13 @@ let config = generateConfig(
     output: {
       path: outDir
     },
+    resolve: {
+        alias: {
+	    	 'masonry': 'masonry-layout',
+	         'isotope': 'isotope-layout'
+	    	
+	    }
+    },
     node: {
       fs: "empty"
     }
@@ -222,3 +233,5 @@ let config = generateConfig(
 )
 
 module.exports = stripMetadata(config)
+
+

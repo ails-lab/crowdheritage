@@ -14,7 +14,7 @@
  */
 
 
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
@@ -23,10 +23,14 @@ import { CollectionServices } from '../../modules/CollectionServices.js';
 import { Record } from '../../modules/Record.js';
 import { RecordServices } from '../../modules/RecordServices.js';
 import { UserServices } from '../../modules/UserServices';
+import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay} from '../../modules/utils/Plugin.js';
 
 let COUNT = 2;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router)
+let instance = null;
+
+
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router,TaskQueue)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -34,7 +38,10 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router) {
+  constructor(campaignServices, collectionServices, userServices, recordServices, router,taskQueue) {
+	if (instance) {
+			return instance;
+		}
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
@@ -42,7 +49,8 @@ export class CampaignSummary {
     this.router = router;
     this.records = [];
     this.recId = "";
-
+	this.thisVM=this;
+	this.taskQueue=taskQueue;
     this.campaign = 0;
     this.collections = [];
     this.collectionsCount = 0;
@@ -57,6 +65,9 @@ export class CampaignSummary {
     this.userRank = 0;
     this.userBadgeName = "";
     this.points = [];
+    if (!instance) {
+		instance = this;
+	}
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
@@ -64,6 +75,24 @@ export class CampaignSummary {
 
   attached() {
     $('.accountmenu').removeClass('active');
+    if(!this.initgrid){
+	    this.taskQueue.queueTask(() => {
+		    initAureliaIsotope(this.grid);
+		});
+
+		if(this.records.length>0){
+
+			this.taskQueue.queueTask(() => {
+				aureliaIsoImagesLoaded(this.grid, $('.isoload'),this.thisVM);
+				initTooltip();
+			});
+		}
+		this.initgrid=true;
+	}
+	else{
+	        isoRelay();
+			$( '[data-grid="isotope" ]' ).find('.entry').removeClass('isoload');
+	}
   }
 
   async activate(params, route) {
@@ -155,15 +184,24 @@ export class CampaignSummary {
 
   getCampaignCollections(colIds, offset, count) {
     this.loading = true;
+    var self=this;
     this.collectionServices.getMultipleCollections(colIds, offset, count)
       .then( response => {
         this.currentCount = this.currentCount + count;
         if (this.currentCount >= this.collectionsCount) {
           this.more = false;
         }
-        for (let i in response) {
+        
+        if(response.length>0){
+        	for (let i in response) {
+                self.collections.push(new Collection(response[i]));
+              }
+			self.taskQueue.queueTask(() => {
+				aureliaIsoImagesLoaded(self.grid, $('.isoload'),self.thisVM);
+			});}
+       /* for (let i in response) {
           this.collections.push(new Collection(response[i]));
-        }
+        }*/
       });
     this.loading = false;
   }

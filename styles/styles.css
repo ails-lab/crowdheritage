@@ -4,6 +4,9 @@
   width: 288.75px;
   height: 288.75px
 }
+.isoload{
+   visibility:hidden;
+}
 a {
   outline: none;
 }
