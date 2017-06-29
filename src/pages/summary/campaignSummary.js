@@ -25,7 +25,7 @@ import { RecordServices } from '../../modules/RecordServices.js';
 import { UserServices } from '../../modules/UserServices';
 import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay} from '../../modules/utils/Plugin.js';
 
-let COUNT = 2;
+
 
 let instance = null;
 
@@ -57,7 +57,7 @@ export class CampaignSummary {
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
-
+    this.count=2;
     this.userTags = 0;
     this.userRecords = 0;
     this.userPoints = 0;
@@ -70,6 +70,26 @@ export class CampaignSummary {
 	}
   }
 
+  
+  resetInstance() {
+	    this.records = [];
+	    this.recId = "";
+	    this.campaign = 0;
+	    this.collections = [];
+	    this.collectionsCount = 0;
+	    this.currentCount = 0;
+	    this.loading = false;
+	    this.more = true;
+        this.count=2;
+	    this.userTags = 0;
+	    this.userRecords = 0;
+	    this.userPoints = 0;
+	    this.userBadge = 0;
+	    this.userRank = 0;
+	    this.userBadgeName = "";
+	    this.points = [];
+	}
+  
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
 
@@ -80,7 +100,7 @@ export class CampaignSummary {
 		    initAureliaIsotope(this.grid);
 		});
 
-		if(this.records.length>0){
+		if(this.collections.length>0){
 
 			this.taskQueue.queueTask(() => {
 				aureliaIsoImagesLoaded(this.grid, $('.isoload'),this.thisVM);
@@ -88,6 +108,7 @@ export class CampaignSummary {
 			});
 		}
 		this.initgrid=true;
+		return;
 	}
 	else{
 	        isoRelay();
@@ -95,23 +116,25 @@ export class CampaignSummary {
 	}
   }
 
-  async activate(params, route) {
-    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
-      await this.userServices.reloadCurrentUser();
-    }
-
+   activate(params, route) {
     if ( route.campaign ) {
-      this.campaign = route.campaign;
-      this.getUserPoints();
-      if (this.userServices.isAuthenticated()) {
-        this.getUserRank(this.userServices.current.dbId);
-      }
-      route.navModel.setTitle(this.campaign.title);
-      this.collectionsCount = this.campaign.targetCollections.length;
-      this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
-      this.getUserStats();
+     if(this.campaign!=route.campaign){	
+    	 
+    	  this.resetInstance();
+	      this.campaign = route.campaign;
+	      this.getUserPoints();
+	      if (this.userServices.isAuthenticated()) {
+	        this.getUserRank(this.userServices.current.dbId);
+	      }
+	      route.navModel.setTitle(this.campaign.title);
+	      this.collectionsCount = this.campaign.targetCollections.length;
+	      this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
+	      this.getUserStats();
+     }
+     else{console.log("returning");return;}
     }
     else {
+      this.resetInstance();	
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
@@ -121,7 +144,7 @@ export class CampaignSummary {
           }
           route.navModel.setTitle(this.campaign.title);
           this.collectionsCount = this.campaign.targetCollections.length;
-          this.getCampaignCollections(this.campaign.targetCollections, 0, COUNT);
+          this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
           this.getUserStats();
       });
     }
@@ -262,7 +285,7 @@ export class CampaignSummary {
   }
 
   loadMore() {
-    this.getCampaignCollections(this.campaign.targetCollections, this.currentCount, COUNT);
+    this.getCampaignCollections(this.campaign.targetCollections, this.currentCount, this.count);
   }
 
   toggleMenu() {

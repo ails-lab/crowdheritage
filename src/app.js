@@ -24,6 +24,17 @@ export class App {
     this.dialogService = dialogService;
     this.userServices = userServices;
   }
+  
+  activate() {
+		
+		if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+			return Promise.all([
+				this.userServices.reloadCurrentUser()
+			]);
+		}
+
+		
+	}
 
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
