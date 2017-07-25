@@ -36,7 +36,11 @@
     "server:dev:hmr": "npm run server:dev -- --hot",
     "server:prod": "http-server dist --cors",
     "webpack": "cross-env BABEL_ENV=node ./node_modules/.bin/webpack",
-    "webpack-dev-server": "cross-env BABEL_ENV=node ./node_modules/.bin/webpack-dev-server"
+    "webpack-dev-server": "cross-env BABEL_ENV=node ./node_modules/.bin/webpack-dev-server",
+    "deploy:staging": "shipit staging deploy",
+    "deploy:prod": "shipit production deploy",
+    "deploy:prod:rollback": "shipit production rollback",
+    "deploy:staging:rollback": "shipit staging rollback"
   },
   "repository": {
     "type": "git",
@@ -139,6 +143,9 @@
     "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "html-loader": "^0.4.4"
+    "html-loader": "^0.4.4",
+    "shipit-cli": "^1.4.1",
+    "shipit-deploy": "^2.2.0",
+    "shipit-npm": "^0.2.0"
   }
 }
