@@ -24,16 +24,18 @@
 
           <!-- account-->
           <div class="account" if.bind="isAuthenticated">
-            <!-- link--><a href="#" data-target="#accountmenu">
+            <!-- link-->
+            <a href="javascript:void(0)" data-toggle="collapse" data-target="#accountmenu">
               <!-- label-->
               <div class="lbl" innerhtml.bind="getName(user)"></div>
               <!-- thumbnail-->
               <div class="thumb">
                 <!-- img( src="/img/img-profile.png" class=page === "index" ? "hidden" : "" )-->
                 <img src.bind="getProfileImage(user)" />
-              </div></a>
+              </div>
+            </a>
             <!-- account menu-->
-            <ul id="accountmenu" class="accountmenu">
+            <ul id="accountmenu" class="accountmenu collapse">
               <li><a href="#">Profile</a></li>
               <li><a href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
