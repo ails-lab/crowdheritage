@@ -113,12 +113,12 @@
           <!-- desc-->
           <div class="desc">
             <h1>
-              Learn more about <br>crowdsourcing campaign
+              Learn more about our <br>crowdsourcing campaigns
             </h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+            <p>Join WITHcrowd and start contributing to our crowdsourcing campaigns.</p>
           </div>
           <!-- register-->
-          <div class="register">
+          <div class="register" if.bind="!isAuthenticated">
             <!-- wrap-->
             <div class="wrap">
               <!-- img--><img src="/img/img-learnmore-2.png">
@@ -126,6 +126,20 @@
               <div class="text">
                 <h1>Want to create your own?</h1>
                 <p>Register now and start creating your own crowdsourcing projects.</p><a route-href="route: register" class="regbtn">REGISTER</a>
+              </div>
+            </div>
+          </div>
+          <!-- register-->
+          <div class="register" if.bind="isAuthenticated">
+            <!-- wrap-->
+            <div class="wrap">
+              <!-- img--><img src="/img/img-learnmore-2.png">
+              <!-- text-->
+              <div class="text">
+                <h1>Want to create your own campaigns?</h1>
+                <p>Learn more about WITH:</br>
+                Choose collections for annotating and lauch your own customizable crowdsourcing campaign.</p>
+                <a href="http://withculture.eu" class="regbtn">WITH</a>
               </div>
             </div>
           </div>
