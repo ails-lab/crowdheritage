@@ -25,7 +25,7 @@
           <!-- account-->
           <div class="account" if.bind="isAuthenticated">
             <!-- link-->
-            <a href="javascript:void(0)" data-toggle="collapse" data-target="#accountmenu">
+            <a href="javascript:void(0)" data-target="#accountmenu" click.delegate="toggleNavMenu()">
               <!-- label-->
               <div class="lbl" innerhtml.bind="getName(user)"></div>
               <!-- thumbnail-->
@@ -35,8 +35,8 @@
               </div>
             </a>
             <!-- account menu-->
-            <ul id="accountmenu" class="accountmenu collapse">
-              <li><a href="#">Profile</a></li>
+            <ul id="accountmenu" class="accountmenu">
+              <li><a href="javascript:void(0)">Profile</a></li>
               <li><a href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
           </div>
