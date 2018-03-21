@@ -36,7 +36,13 @@ export async function configure(aurelia) {
 			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
 			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
 		})
-    .plugin('aurelia-dialog')
+    .plugin('aurelia-dialog', config => {
+        config.useDefaults();
+        config.settings.lock = true;
+        config.settings.overlayDismiss = true;
+        config.settings.startingZIndex = 5;
+        config.settings.keyboard = true;
+      })
     .plugin('aurelia-authentication', (baseConfig) => {
 			baseConfig.configure(config);
 		});

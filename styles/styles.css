@@ -2730,6 +2730,22 @@ button:hover .email_huge {
 ai-dialog-open {
 	background-color: rgba(255, 255, 255, 0.95);
 }
+
+ai-dialog {
+  display: table;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 5px;
+  min-width: 300px;
+  margin: auto;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
+  background: white;
+}
+
 .externalLogin .footer {
 	font-weight: 500;
 	padding: 15px;

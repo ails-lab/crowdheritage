@@ -51,6 +51,8 @@ export class CampaignIndex {
     $('.accountmenu').removeClass('active');
   }
 
+  get isAuthenticated() { return this.userServices.isAuthenticated(); }
+
   activate(params) {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();

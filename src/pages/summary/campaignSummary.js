@@ -70,7 +70,7 @@ export class CampaignSummary {
 	}
   }
 
-  
+
   resetInstance() {
 	    this.records = [];
 	    this.recId = "";
@@ -89,7 +89,7 @@ export class CampaignSummary {
 	    this.userBadgeName = "";
 	    this.points = [];
 	}
-  
+
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
 
@@ -118,8 +118,8 @@ export class CampaignSummary {
 
    activate(params, route) {
     if ( route.campaign ) {
-     if(this.campaign!=route.campaign){	
-    	 
+     if(this.campaign!=route.campaign){
+
     	  this.resetInstance();
 	      this.campaign = route.campaign;
 	      this.getUserPoints();
@@ -134,7 +134,7 @@ export class CampaignSummary {
      else{console.log("returning");return;}
     }
     else {
-      this.resetInstance();	
+      this.resetInstance();
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
           this.campaign = new Campaign(result);
@@ -214,7 +214,7 @@ export class CampaignSummary {
         if (this.currentCount >= this.collectionsCount) {
           this.more = false;
         }
-        
+
         if(response.length>0){
         	for (let i in response) {
                 self.collections.push(new Collection(response[i]));
