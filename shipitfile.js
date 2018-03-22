@@ -23,7 +23,7 @@ module.exports = function(shipit) {
 		},
 		staging: {
 			servers: 'deploy@ipa.image.ntua.gr',
-			deployTo: '/data/withcrowd',
+			deployTo: '/data/withfrontend',
 			branch: 'master'
 		},
 		production: {

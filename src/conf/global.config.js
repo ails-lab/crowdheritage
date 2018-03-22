@@ -18,12 +18,12 @@
 var settings = {
 	space: 'espace',
 	auth: {
-		google: '1044656195366-3phnddit5ulv2nln8tgsar72uh122ue5.apps.googleusercontent.com',
+		google: '',
 		facebook: '132619063927809'
 	},
 	baseUrl: 'http://ipa.image.ntua.gr:9060', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
-	googlekey: 'AIzaSyAmjlcD5b4pw1ta150hV1jMKgI2QI-Ig60',
+	googlekey: '',
 	isoSettings: {
 		// page
 		page: 'default',
@@ -44,7 +44,7 @@ var settings = {
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9060';
+	settings.baseUrl = 'http://localhost:9060';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
 	settings.baseUrl = 'http://ipa.image.ntua.gr:9060';
