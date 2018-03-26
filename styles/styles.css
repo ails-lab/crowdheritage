@@ -838,13 +838,26 @@ body main section.campaignstats .left .maps .heading::after {
   bottom: -20px;
 }
 body main section.campaignstats .left .graphs {
-  width: 65%;
+  width: 550px;
   background-color: #00d19e;
   position: absolute;
   height: 150px;
   right: 0;
   bottom: -100px;
 }
+
+body main section.campaignstats .left .graphs canvas {
+  width: 550px;
+  height: 150px;
+}
+
+body main section.campaignstats .left .graphs .contributions {
+  font-family: "Dosis";
+  color: #666;
+  font-size: 1.4rem;
+  margin-top: 10px;
+}
+
 body main section.campaignstats .right {
   width: 35%;
   float: left;

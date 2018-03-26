@@ -16,7 +16,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href=""> <img src="/img/ic-arrow-left-black.png">RETURN TO CAMPAIGN LIST</a></li>
+            <li><a href="">RETURN TO CAMPAIGN LIST <img src="/img/ic-arrow-right-black.png"> </a></li>
           </ul>
         </nav>
         <!-- progress-->
@@ -189,22 +189,25 @@
       </div>
     </section>
 
-    <!-- campaign stats-->
-    <section class="campaignstats">
-      <!-- conty-->
-      <div class="container">
-        <!-- maps-->
-        <div class="left">
+		<!-- campaign stats-->
+      <section class="campaignstats">
+        <!-- conty-->
+        <div class="container">
           <!-- maps-->
-          <div class="maps">
-            <div id="maps" class="mapswrap"></div>
-            <!-- heading-->
-            <div class="heading">Location of Active Volunteers</div>
+          <div class="left">
+            <!-- maps-->
+            <div class="maps">
+              <div id="bigmaps" class="mapswrap"></div>
+              <!-- heading-->
+              <div class="heading">Location of Active Volunteers</div>
+            </div>
+            <!-- graphs-->
+            <div class="graphs">
+              <canvas id="mychart" height="150" width="550"></canvas>
+              <div class="contributions">DAILY CONTRIBUTIONS</div>
+            </div>
           </div>
-          <!-- graphs-->
-          <div class="graphs"></div>
-        </div>
-        <div class="right">
+          <div class="right">
           <!-- leaderboard-->
           <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
         </div>
