@@ -788,6 +788,7 @@ body main section.collections .loadmore a:hover {
 }
 body main section.campaignstats {
   padding: 0 0 0px 0;
+	min-height: 525px;
 }
 body main section.campaignstats:before,
 body main section.campaignstats:after {
@@ -2198,7 +2199,10 @@ body footer .container .right li a:hover {
     color: #fff;
     border-color: #000;
   }
-  body main section.campaigninfo .container {
+	body main section.campaigninfo {
+		min-height: 495px;
+	}
+	body main section.campaigninfo .container {
     width: 750px;
   }
   body main section.campaigninfo .container .left {

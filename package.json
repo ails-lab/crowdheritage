@@ -62,6 +62,7 @@
     "aurelia-event-aggregator": "^1.0.0",
     "aurelia-fetch-client": "^1.0.1",
     "aurelia-framework": "^1.0.7",
+    "aurelia-google-maps": "^2.2.1",
     "aurelia-history-browser": "^1.0.0",
     "aurelia-loader-webpack": "^1.0.3",
     "aurelia-logging-console": "^1.0.0",
