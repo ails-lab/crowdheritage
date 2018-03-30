@@ -38,7 +38,7 @@ export async function configure(aurelia) {
 		})
 		.plugin('aurelia-google-maps', config => {
             config.options({
-                apiKey: 'false', // use `false` to disable the key
+                apiKey: 'AIzaSyCE-H7wvtVwIt-0w92HpwHnIZppb7u2J_c', // use `false` to disable the key
                 apiLibraries: '', //get optional libraries like drawing, geometry, ... - comma seperated list
                 options: { panControl: true, panControlOptions: { position: 9 } }, //add google.maps.MapOptions on construct (https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions)
                 language:'' | 'en', // default: uses browser configuration (recommended). Set this parameter to set another language (https://developers.google.com/maps/documentation/javascript/localization)

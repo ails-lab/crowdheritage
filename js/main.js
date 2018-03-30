@@ -26,14 +26,14 @@ EUBlogUI = function( custom ){
 		initIsotope();
 
 		// init map
-		initMaps();
-		initBigMaps();
+		// initMaps();
+		// initBigMaps();
 
 		// init mobile menu
 		initMobileMenu();
 
 		// init chart
-		initChart();
+		// initChart();
 	};
 
 	// maethod to initiate isotope

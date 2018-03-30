@@ -203,10 +203,7 @@
               <div class="heading">Location of Active Volunteers</div>
             </div>
             <!-- graphs-->
-            <div class="graphs">
-              <canvas id="mychart" height="150" width="550"></canvas>
-              <div class="contributions">DAILY CONTRIBUTIONS</div>
-            </div>
+						<compose view-model="widgets/graph/graph" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
           </div>
           <div class="right">
           <!-- leaderboard-->
