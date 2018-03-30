@@ -20,6 +20,7 @@ import { UserServices } from '../../modules/UserServices';
 import { Campaign } from '../../modules/Campaign.js';
 import { CampaignServices } from '../../modules/CampaignServices.js';
 import settings from '../../conf/global.config.js';
+import Chart from 'chart.js';
 
 let COUNT = 5;
 
