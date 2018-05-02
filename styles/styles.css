@@ -3769,3 +3769,24 @@ body div[role='main'] section.registernow .action {
 #mediadiv {
   text-align: center;
 }
+/*tagging autocomplete*/
+.tag-item .searchbox ul.suggestions {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background: white;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  z-index: 5;
+}
+.tag-item .searchbox ul.suggestions li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.tag-item .searchbox ul.suggestions li:last-child {
+  border-bottom: 3px solid #00d19e;
+}
+.tag-item .searchbox ul.suggestions li:hover {
+  background: #ffbb00;
+}
