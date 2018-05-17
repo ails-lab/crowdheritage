@@ -314,6 +314,25 @@ body main section.banner.mini.detail .collectioninfo li.count .next:hover {
   color: #ffbb00;
   border-color: #fff;
 }
+body main section.tagging .wraps .right .next-item-alternative-link .next {
+  float: left;
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #ffbb00;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #ffbb00;
+  padding: 4px 15px 3px 15px;
+}
+body main section.tagging .wraps .right .next-item-alternative-link .next:hover {
+  border-color: #ffbb00;
+  text-decoration: none;
+  background-color: #ffbb00;
+  color: #fff;
+}
 body main section.banner .container {
   position: relative;
   height: 100%;

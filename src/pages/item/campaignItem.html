@@ -109,6 +109,9 @@
             <compose view-model="widgets/taggeo/taggeo"
                      if.bind="hasMotivation('GeoTagging')">
             </compose>
+            <div class="wrap next-item-alternative-link">
+              <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
+            </div>
           </div>
         </div>
       </div>
