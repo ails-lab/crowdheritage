@@ -47,7 +47,7 @@ if (window.location.hostname === 'localhost') {
 	settings.baseUrl = 'http://localhost:9060';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9060';
+	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
 } else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
 	settings.auth.facebook='394384180936771';
    settings.baseUrl = 'http://api.withculture.eu';
