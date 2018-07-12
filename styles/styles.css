@@ -2727,6 +2727,11 @@ button:hover .email_huge {
 	align-items: center;
 }
 /* Popup Login */
+ai-dialog-overlay.active {
+  background-color: black;
+  opacity: .5;
+}
+
 ai-dialog-open {
 	background-color: rgba(255, 255, 255, 0.95);
 }
