@@ -57,6 +57,15 @@ export class NavBar {
 		});
 	}
 
+  toggleNavMenu() {
+    if ($('.accountmenu').hasClass('active')) {
+      $('.accountmenu').removeClass('active');
+    }
+    else {
+      $('.accountmenu').addClass('active');
+    }
+  }
+
   logout(redirectUri) {
 		this.userServices.logout(redirectUri);
 	}

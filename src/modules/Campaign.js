@@ -45,4 +45,6 @@ export class Campaign {
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
   }
+  
+
 }

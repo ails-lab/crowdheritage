@@ -24,17 +24,19 @@
 
           <!-- account-->
           <div class="account" if.bind="isAuthenticated">
-            <!-- link--><a href="#" data-target="#accountmenu">
+            <!-- link-->
+            <a href="javascript:void(0)" data-target="#accountmenu" click.delegate="toggleNavMenu()">
               <!-- label-->
               <div class="lbl" innerhtml.bind="getName(user)"></div>
               <!-- thumbnail-->
               <div class="thumb">
                 <!-- img( src="/img/img-profile.png" class=page === "index" ? "hidden" : "" )-->
                 <img src.bind="getProfileImage(user)" />
-              </div></a>
+              </div>
+            </a>
             <!-- account menu-->
             <ul id="accountmenu" class="accountmenu">
-              <li><a href="#">Profile</a></li>
+              <li><a href="javascript:void(0)">Profile</a></li>
               <li><a href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
           </div>
@@ -42,7 +44,7 @@
           <!-- main-->
           <ul class="main">
             <li><a href="">HOME</a></li>
-            <li><a href="http://withculture.eu">WITH</a></li>
+            <li><a href="http://withculture.eu" target="_blank">WITH</a></li>
             <li><a route-href="route: about">ABOUT</a></li>
           </ul>
         </nav>

@@ -55,6 +55,7 @@ const coreBundles = {
     'aurelia-history',
     'aurelia-history-browser',
     'aurelia-loader',
+		'aurelia-google-maps',
     'aurelia-loader-webpack',
     'aurelia-logging',
     'aurelia-logging-console',
@@ -89,7 +90,7 @@ module.exports = {
                     exclude: /node_modules/,
                     loader: 'babel-loader',
                     options: {
-                        ignore: '/node_modules/'        
+                        ignore: '/node_modules/'
                       },
                     query: {
                         presets: [
@@ -118,7 +119,7 @@ module.exports = {
                     test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)$/,
                     use: 'url-loader'
                 }
-               			
+
             ]
         },
         plugins: [
@@ -189,7 +190,7 @@ let config = generateConfig(
         alias: {
 	    	 'masonry': 'masonry-layout',
 	         'isotope': 'isotope-layout'
-	    	
+
 	    }
     },
     node: {
@@ -233,5 +234,3 @@ let config = generateConfig(
 )
 
 module.exports = stripMetadata(config)
-
-

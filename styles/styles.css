@@ -314,6 +314,25 @@ body main section.banner.mini.detail .collectioninfo li.count .next:hover {
   color: #ffbb00;
   border-color: #fff;
 }
+body main section.tagging .wraps .right .next-item-alternative-link .next {
+  float: left;
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #ffbb00;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #ffbb00;
+  padding: 4px 15px 3px 15px;
+}
+body main section.tagging .wraps .right .next-item-alternative-link .next:hover {
+  border-color: #ffbb00;
+  text-decoration: none;
+  background-color: #ffbb00;
+  color: #fff;
+}
 body main section.banner .container {
   position: relative;
   height: 100%;
@@ -788,6 +807,7 @@ body main section.collections .loadmore a:hover {
 }
 body main section.campaignstats {
   padding: 0 0 0px 0;
+	min-height: 525px;
 }
 body main section.campaignstats:before,
 body main section.campaignstats:after {
@@ -838,13 +858,26 @@ body main section.campaignstats .left .maps .heading::after {
   bottom: -20px;
 }
 body main section.campaignstats .left .graphs {
-  width: 65%;
+  width: 550px;
   background-color: #00d19e;
   position: absolute;
   height: 150px;
   right: 0;
   bottom: -100px;
 }
+
+body main section.campaignstats .left .graphs canvas {
+  width: 550px;
+  height: 150px;
+}
+
+body main section.campaignstats .left .graphs .contributions {
+  font-family: "Dosis";
+  color: #666;
+  font-size: 1.4rem;
+  margin-top: 10px;
+}
+
 body main section.campaignstats .right {
   width: 35%;
   float: left;
@@ -2185,7 +2218,10 @@ body footer .container .right li a:hover {
     color: #fff;
     border-color: #000;
   }
-  body main section.campaigninfo .container {
+	body main section.campaigninfo {
+		min-height: 495px;
+	}
+	body main section.campaigninfo .container {
     width: 750px;
   }
   body main section.campaigninfo .container .left {
@@ -2735,6 +2771,22 @@ ai-dialog-overlay.active {
 ai-dialog-open {
 	background-color: rgba(255, 255, 255, 0.95);
 }
+
+ai-dialog {
+  display: table;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 5px;
+  min-width: 300px;
+  margin: auto;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
+  background: white;
+}
+
 .externalLogin .footer {
 	font-weight: 500;
 	padding: 15px;
@@ -3740,4 +3792,25 @@ body div[role='main'] section.registernow .action {
 
 #mediadiv {
   text-align: center;
+}
+/*tagging autocomplete*/
+.tag-item .searchbox ul.suggestions {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background: white;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  z-index: 5;
+}
+.tag-item .searchbox ul.suggestions li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.tag-item .searchbox ul.suggestions li:last-child {
+  border-bottom: 3px solid #00d19e;
+}
+.tag-item .searchbox ul.suggestions li:hover {
+  background: #ffbb00;
 }

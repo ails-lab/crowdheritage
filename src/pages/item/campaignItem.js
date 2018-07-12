@@ -55,6 +55,9 @@ export class CampaignItem {
   }
 
   nextItem(camp, col, records, offset) {
+    // clear previous media
+    this.mediaDiv = '';
+
     // Random record retrieval
     if (col == 0) {
       let item = this.router.routes.find(x => x.name === 'item');
