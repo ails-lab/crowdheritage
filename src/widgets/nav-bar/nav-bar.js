@@ -21,6 +21,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import { Notification } from '../../modules/Notification.js';
 import settings from '../../conf/global.config.js';
+import {initMobileMenu} from '../../modules/utils/Plugin.js';
 
 @inject(UserServices, Router, EventAggregator, DialogService)
 export class NavBar {
@@ -34,6 +35,10 @@ export class NavBar {
 		this.ea = eventAggregator;
 		this.dialogService = dialogService;
 	}
+  
+  attached(){
+	  initMobileMenu();
+  }
 
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
