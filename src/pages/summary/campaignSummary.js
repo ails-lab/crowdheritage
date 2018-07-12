@@ -23,7 +23,7 @@ import { CollectionServices } from '../../modules/CollectionServices.js';
 import { Record } from '../../modules/Record.js';
 import { RecordServices } from '../../modules/RecordServices.js';
 import { UserServices } from '../../modules/UserServices';
-import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay} from '../../modules/utils/Plugin.js';
+import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay,setMap} from '../../modules/utils/Plugin.js';
 
 
 
@@ -108,15 +108,20 @@ export class CampaignSummary {
 			});
 		}
 		this.initgrid=true;
-		return;
+		
 	}
 	else{
 	        isoRelay();
 			$( '[data-grid="isotope" ]' ).find('.entry').removeClass('isoload');
 	}
+    this.taskQueue.queueTask(() => {
+         setMap();
+         
+    });
   }
 
    activate(params, route) {
+    
     if ( route.campaign ) {
      if(this.campaign!=route.campaign){	
     	 
