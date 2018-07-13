@@ -3,67 +3,56 @@
     "webpack": {
       "plugins": [
         "transform-decorators-legacy",
-        "transform-class-properties"
+        "transform-class-properties",
+        "css-modules-transform"
       ],
       "presets": [
-        [
-          "env",
-          {
-            "targets": {
+       "env", {
+        "targets": {
               "browsers": [
                 "last 2 versions",
                 "not ie <= 11"
               ]
             },
-            "loose": true,
-            "modules": false,
-            "whitelist": [
-              "transform-es2015-literals",
-              "transform-es2015-template-literals"
-            ],
-            "useBuiltIns": true
-          }
-        ]
+        "loose": true,
+        "modules": false,
+        "useBuiltIns": true
+      }
       ]
     },
     "e2e": {
       "plugins": [
         "transform-decorators-legacy",
-        "transform-class-properties"
+        "transform-class-properties",
+        "css-modules-transform"
       ],
       "presets": [
-        [
-          "env",
-          {
-            "targets": {
+        "env", {
+        "targets": {
               "browsers": [
                 "last 2 versions",
                 "not ie <= 11"
               ]
             },
-            "loose": true,
-            "modules": "commonjs",
-            "whitelist": [
-              "transform-es2015-literals",
-              "transform-es2015-template-literals"
-            ],
-            "useBuiltIns": true
-          }
-        ]
+        "loose": true,
+        "modules": false,
+        "useBuiltIns": true
+      }
       ]
     },
     "node": {
       "presets": [
-        [
-          "env",
-          {
-            "targets": {
-              "node": 4
+        "env", {
+        "targets": {
+              "browsers": [
+                "last 2 versions",
+                "not ie <= 11"
+              ]
             },
-            "loose": true,
-            "modules": "commonjs"
-          }
-        ]
+        "loose": true,
+        "modules": false,
+        "useBuiltIns": true
+      }
       ]
     }
   }

@@ -15,11 +15,11 @@
 
 
 import { inject } from 'aurelia-dependency-injection';
-import { User } from '../../modules/User';
-import { UserServices } from '../../modules/UserServices';
-import { Campaign } from '../../modules/Campaign.js';
-import { CampaignServices } from '../../modules/CampaignServices.js';
-import settings from '../../conf/global.config.js';
+import { User } from 'User';
+import { UserServices } from 'UserServices';
+import { Campaign } from 'Campaign.js';
+import { CampaignServices } from 'CampaignServices.js';
+import settings from 'global.config.js';
 
 let COUNT = 5;
 

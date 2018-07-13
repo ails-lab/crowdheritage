@@ -15,7 +15,7 @@
 
 
 import { inject } from 'aurelia-framework';
-import { UserServices } from '../../modules/UserServices.js';
+import { UserServices } from 'UserServices.js';
 //import { SpaceServices } from '../../modules/SpaceServices.js';
 
 @inject(UserServices, Element)//, SpaceServices)

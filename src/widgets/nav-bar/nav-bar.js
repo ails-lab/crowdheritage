@@ -15,13 +15,13 @@
 
 
 import { bindable, inject } from 'aurelia-framework';
-import { UserServices } from '../../modules/UserServices.js';
+import { UserServices } from 'UserServices.js';
 import { Router } from 'aurelia-router';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
-import { Notification } from '../../modules/Notification.js';
-import settings from '../../conf/global.config.js';
-import {initMobileMenu} from '../../modules/utils/Plugin.js';
+import { Notification } from 'Notification.js';
+import settings from 'global.config.js';
+import {initMobileMenu} from 'utils/Plugin.js';
 
 @inject(UserServices, Router, EventAggregator, DialogService)
 export class NavBar {
@@ -47,7 +47,7 @@ export class NavBar {
   // UI Functions
   loginPopup() {
 		this.dialogService.open({
-			viewModel: 'widgets/logindialog/logindialog.js'
+			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog.js')
 		}).then((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');

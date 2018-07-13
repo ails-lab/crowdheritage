@@ -14,9 +14,15 @@
  */
 
 
-import { inject } from 'aurelia-framework';
+
+
+import { inject,PLATFORM } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { UserServices } from './modules/UserServices.js';
+
+import less from 'less';
+
+import './../styles/styles.less';
 
 @inject(DialogService, UserServices)
 export class App {
@@ -42,7 +48,7 @@ export class App {
   // UI Functions
   loginPopup() {
 		this.dialogService.open({
-			viewModel: 'widgets/logindialog/logindialog.js'
+			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog.js')
 		}).then((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');
@@ -58,14 +64,14 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ['', ':gname?'],        name: 'index',    moduleId: './pages/index/campaignIndex',     nav: true,  title: 'WITHcrowd' },
-      { route: ':gname/:cname',        name: 'summary',  moduleId: './pages/summary/campaignSummary', nav: false, title: '' },
-      { route: ':gname/:cname/:recid', name: 'item',     moduleId: './pages/item/campaignItem',       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
-      { route: 'register',             name: 'register', moduleId: './pages/register/register',       nav: false, title: 'Register | WITHcrowd' },
-      { route: 'about',                name: 'about',    moduleId: './pages/about/about',             nav: true,  title: 'About | WITHcrowd' },
-      { route: 'privacy',              name: 'privacy',  moduleId: './pages/privacy/privacy',         nav: false, title: 'Privacy Policy | WITHcrowd' },
-			{ route: 'terms',                name: 'terms',    moduleId: './pages/terms/terms',             nav: false, title: 'Terms and Conditions | WITHcrowd' },
-			{ route: 'feedback',             name: 'feedback', moduleId: './pages/feedback/feedback',       nav: false, title: 'Feedback & Contact | WITHcrowd' }
+      { route: ['', ':gname?'],        name: 'index',    moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
+      { route: ':gname/:cname',        name: 'summary',  moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
+      { route: ':gname/:cname/:recid', name: 'item',     moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
+      { route: 'register',             name: 'register', moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | WITHcrowd' },
+      { route: 'about',                name: 'about',    moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | WITHcrowd' },
+      { route: 'privacy',              name: 'privacy',  moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | WITHcrowd' },
+			{ route: 'terms',                name: 'terms',    moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | WITHcrowd' },
+			{ route: 'feedback',             name: 'feedback', moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | WITHcrowd' }
     ]);
 
     this.router = router;

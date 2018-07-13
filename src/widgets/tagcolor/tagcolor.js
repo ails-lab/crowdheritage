@@ -15,12 +15,12 @@
 
 
 import { inject } from 'aurelia-dependency-injection';
-import { Annotation } from '../../modules/Annotation';
-import { UserServices } from '../../modules/UserServices';
-import { RecordServices } from '../../modules/RecordServices';
-import { CampaignServices } from '../../modules/CampaignServices.js';
-import { AnnotationServices } from '../../modules/AnnotationServices.js';
-import { ThesaurusServices } from '../../modules/ThesaurusServices.js';
+import { Annotation } from 'Annotation';
+import { UserServices } from 'UserServices';
+import { RecordServices } from 'RecordServices';
+import { CampaignServices } from 'CampaignServices.js';
+import { AnnotationServices } from 'AnnotationServices.js';
+import { ThesaurusServices } from 'ThesaurusServices.js';
 
 @inject(UserServices, RecordServices, CampaignServices, AnnotationServices, ThesaurusServices)
 export class Tagcolor {

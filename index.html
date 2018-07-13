@@ -2,11 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title><%- htmlWebpackPlugin.options.metadata.title %></title>
+    <title><%- htmlWebpackPlugin.options.title %></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="VIEW">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
     <!-- icons-->
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/ico" href="favicon.ico">
@@ -16,10 +15,11 @@
     <!-- imported CSS are concatenated and added automatically -->
     <!-- script-->
     <script src="js/vendor/modernizr/modernizr.js"></script>
+    <base href="<% htmlWebpackPlugin.options.baseUrl %>">
   </head>
 
   <body aurelia-app="main">
-    <% if (htmlWebpackPlugin.options.metadata.ENV === 'development') { %>
+    <% if (htmlWebpackPlugin.options.ENV === 'development') { %>
     <!-- Webpack Dev Server reload -->
     <script src="/webpack-dev-server.js"></script>
     <% } %>

@@ -16,7 +16,7 @@
 
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { UserServices } from '../../modules/UserServices';
+import { UserServices } from 'UserServices';
 
 @inject(UserServices, Router)
 export class Register {

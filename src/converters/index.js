@@ -14,22 +14,13 @@
  */
 
 
-import { inject } from 'aurelia-framework';
-import { UserServices } from 'UserServices.js';
+import { PLATFORM, FrameworkConfiguration}from "aurelia-framework";
 
-@inject(UserServices)
-export class Terms {
-
-	constructor(userServices) {
-		this.userServices = userServices;
-	}
-
-	get isAuthenticated() { return this.userServices.isAuthenticated(); }
-
-  activate() {
-    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
-      this.userServices.reloadCurrentUser();
-    }
-  }
-  
+export function configure(aurelia) {
+	aurelia.globalResources(PLATFORM.moduleName('./campaigncounter'));
+	aurelia.globalResources(PLATFORM.moduleName('./index-format'));
+	aurelia.globalResources(PLATFORM.moduleName('./date-format'));
+	
 }
+
+

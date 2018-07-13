@@ -15,11 +15,11 @@
 
 
 import { inject } from 'aurelia-framework';
-import { Campaign } from '../../modules/Campaign.js';
-import { CampaignServices } from '../../modules/CampaignServices.js';
-import { UserServices } from '../../modules/UserServices.js';
-import { Record } from '../../modules/Record.js';
-import { RecordServices } from '../../modules/RecordServices.js';
+import { Campaign } from 'Campaign.js';
+import { CampaignServices } from 'CampaignServices.js';
+import { UserServices } from 'UserServices.js';
+import { Record } from 'Record.js';
+import { RecordServices } from 'RecordServices.js';
 import { Router } from 'aurelia-router';
 
 let COUNT = 2;

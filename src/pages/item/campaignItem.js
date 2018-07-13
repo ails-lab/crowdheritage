@@ -16,13 +16,13 @@
 
 import { inject } from 'aurelia-framework';
 import { Router, activationStrategy } from 'aurelia-router';
-import { Record } from '../../modules/Record.js';
-import { Campaign } from '../../modules/Campaign.js';
-import { Collection } from '../../modules/Collection.js';
-import { UserServices } from '../../modules/UserServices';
-import { RecordServices } from '../../modules/RecordServices.js';
-import { CampaignServices } from '../../modules/CampaignServices.js';
-import { CollectionServices } from '../../modules/CollectionServices.js';
+import { Record } from 'Record.js';
+import { Campaign } from 'Campaign.js';
+import { Collection } from 'Collection.js';
+import { UserServices } from 'UserServices';
+import { RecordServices } from 'RecordServices.js';
+import { CampaignServices } from 'CampaignServices.js';
+import { CollectionServices } from 'CollectionServices.js';
 
 let COUNT = 10;
 

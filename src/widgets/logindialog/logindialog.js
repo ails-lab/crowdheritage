@@ -16,7 +16,7 @@
 
 import { inject, LogManager } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
-import { UserServices } from '../../modules/UserServices.js';
+import { UserServices } from 'UserServices.js';
 import { Router } from 'aurelia-router';
 
 let logger = LogManager.getLogger('logindialog.js');

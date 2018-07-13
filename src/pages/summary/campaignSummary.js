@@ -16,14 +16,14 @@
 
 import { inject, TaskQueue } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { Campaign } from '../../modules/Campaign.js';
-import { CampaignServices } from '../../modules/CampaignServices.js';
-import { Collection } from '../../modules/Collection.js';
-import { CollectionServices } from '../../modules/CollectionServices.js';
-import { Record } from '../../modules/Record.js';
-import { RecordServices } from '../../modules/RecordServices.js';
-import { UserServices } from '../../modules/UserServices';
-import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay,setMap} from '../../modules/utils/Plugin.js';
+import { Campaign } from 'Campaign.js';
+import { CampaignServices } from 'CampaignServices.js';
+import { Collection } from 'Collection.js';
+import { CollectionServices } from 'CollectionServices.js';
+import { Record } from 'Record.js';
+import { RecordServices } from 'RecordServices.js';
+import { UserServices } from 'UserServices';
+import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay,setMap} from 'utils/Plugin.js';
 
 
 

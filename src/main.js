@@ -15,28 +15,30 @@
 
 
 // we want font-awesome to load as soon as possible to show the fa-spinner
+
+import  {AnimatorVelocity}  from 'aurelia-animator-velocity';
+import { LogManager, PLATFORM } from 'aurelia-framework';
+
+import 'bootstrap';
 import config from './conf/auth.config.js';
 
-import '../styles/styles.css';
-import 'font-awesome/css/font-awesome.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap';
+//import * as Bluebird from 'bluebird';
+//Bluebird.config({ warnings: false });
 
 // comment out if you don't want a Promise polyfill (remove also from webpack.common.js)
-import * as Bluebird from 'bluebird';
-Bluebird.config({ warnings: false });
+
 
 export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .plugin('aurelia-animator-velocity', (instance) => {
+    .plugin(PLATFORM.moduleName('aurelia-animator-velocity'), (instance) => {
 			instance.options.duration = 200;
 			instance.options.easing = 'linear';
 			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
 			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
 		})
-		.plugin('aurelia-google-maps', config => {
+		.plugin(PLATFORM.moduleName('aurelia-google-maps'), config => {
             config.options({
                 apiKey: 'AIzaSyCE-H7wvtVwIt-0w92HpwHnIZppb7u2J_c', // use `false` to disable the key
                 apiLibraries: '', //get optional libraries like drawing, geometry, ... - comma seperated list
@@ -51,17 +53,19 @@ export async function configure(aurelia) {
               }
           });
     })
-    .plugin('aurelia-dialog', config => {
+     .plugin(PLATFORM.moduleName('aurelia-dialog'), config => {
         config.useDefaults();
         config.settings.lock = true;
         config.settings.overlayDismiss = true;
         config.settings.startingZIndex = 5;
         config.settings.keyboard = true;
       })
-    .plugin('aurelia-authentication', (baseConfig) => {
+    .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
 			baseConfig.configure(config);
-		});
-
+		})
+    .feature(PLATFORM.moduleName('converters/index'))	;// All ValueConverters are registered here
+   
+	
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');
   // if the css animator is enabled, add swap-order="after" to all router-view elements
@@ -69,8 +73,11 @@ export async function configure(aurelia) {
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin('aurelia-html-import-template-loader')
 
-  await aurelia.start();
-  aurelia.setRoot('app');
+ // await aurelia.start();
+ // aurelia.setRoot('app');
+  
+  aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app'),document.body));
+	
 
   // if you would like your website to work offline (Service Worker),
   // install and enable the @easy-webpack/config-offline package in webpack.config.js and uncomment the following code:

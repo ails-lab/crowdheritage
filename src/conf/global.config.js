@@ -44,7 +44,8 @@ var settings = {
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
-	settings.baseUrl = 'http://localhost:9060';
+	//settings.baseUrl = 'http://localhost:9060';
+	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
 	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
