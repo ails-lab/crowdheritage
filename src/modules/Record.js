@@ -15,8 +15,8 @@
 
 
 /* eslint-disable */
-import settings from '../conf/global.config.js';
-import { JsonUtils } from './JsonUtils.js';
+import settings from 'global.config.js';
+import { JsonUtils } from 'JsonUtils.js';
 
 export class Record {
 

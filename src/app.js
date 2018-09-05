@@ -64,7 +64,7 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ['', ':gname?'],        name: 'index',    moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
+      { route: [ ':gname?'],    href: 'index',    name: 'index',    moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
       { route: ':gname/:cname',        name: 'summary',  moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
       { route: ':gname/:cname/:recid', name: 'item',     moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
       { route: 'register',             name: 'register', moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | WITHcrowd' },

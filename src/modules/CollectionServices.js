@@ -16,9 +16,9 @@
 
 import { inject } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
-import fetchConfig from '../conf/fetch.config.js';
-import { checkStatus } from '../conf/fetch.config.js';
-import { UserServices } from './UserServices.js';
+import fetchConfig from 'fetch.config.js';
+import { checkStatus } from 'fetch.config.js';
+import { UserServices } from 'UserServices.js';
 
 @inject(HttpClient, UserServices)
 export class CollectionServices {

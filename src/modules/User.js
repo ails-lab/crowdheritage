@@ -14,7 +14,7 @@
  */
 
 
-import settings from '../conf/global.config.js';
+import settings from 'global.config.js';
 
 export class User {
 

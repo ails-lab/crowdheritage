@@ -17,8 +17,8 @@
 /* eslint-disable */
 import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
-import fetchConfig from '../conf/fetch.config.js';
-import { checkStatus } from '../conf/fetch.config.js';
+import fetchConfig from 'fetch.config.js';
+import { checkStatus } from 'fetch.config.js';
 
 @inject(HttpClient)
 export class ThesaurusServices {

@@ -16,9 +16,9 @@
 
 import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
-import { UserServices } from './UserServices.js';
-import fetchConfig from '../conf/fetch.config.js';
-import { checkStatus } from '../conf/fetch.config.js';
+import { UserServices } from 'UserServices.js';
+import fetchConfig from 'fetch.config.js';
+import { checkStatus } from 'fetch.config.js';
 
 import 'isomorphic-fetch';
 

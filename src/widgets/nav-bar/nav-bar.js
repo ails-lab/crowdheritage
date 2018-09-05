@@ -22,6 +22,7 @@ import { DialogService } from 'aurelia-dialog';
 import { Notification } from 'Notification.js';
 import settings from 'global.config.js';
 import {initMobileMenu} from 'utils/Plugin.js';
+import { PLATFORM } from 'aurelia-pal';
 
 @inject(UserServices, Router, EventAggregator, DialogService)
 export class NavBar {
@@ -47,7 +48,7 @@ export class NavBar {
   // UI Functions
   loginPopup() {
 		this.dialogService.open({
-			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog.js')
+			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
 		}).then((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');

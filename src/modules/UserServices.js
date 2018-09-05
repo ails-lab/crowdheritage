@@ -17,11 +17,11 @@
 import { inject } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
 import { AuthService } from 'aurelia-authentication';
-import fetchConfig from '../conf/fetch.config.js';
-import { checkStatus } from '../conf/fetch.config.js';
-import { User } from './User.js';
-import { Record } from './Record.js';
-import { Notification } from './Notification.js';
+import fetchConfig from 'fetch.config.js';
+import { checkStatus } from 'fetch.config.js';
+import { User } from 'User.js';
+import { Record } from 'Record.js';
+import { Notification } from 'Notification.js';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 import 'isomorphic-fetch';
