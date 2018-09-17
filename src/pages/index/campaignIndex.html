@@ -1,5 +1,5 @@
 <template>
- 
+
   <main>
     <!-- banner-->
     <section class="banner">
@@ -52,13 +52,13 @@
             <!-- no--><span class="no">${($index+1) | indexFormat}</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToCamp(camp)"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+              <!-- wrap--><a route-href="route: summary; params.bind: {cname: camp.username, gname: camp.spacename}"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
                 <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a href="javascript:void(0)" click.delegate="goToCamp(camp)">
+              <!-- title--><a a route-href="route: summary; params.bind: {cname: camp.username, gname: camp.spacename}">
                 <h1>${camp.title}</h1></a>
               <!-- desc-->
               <p>${camp.description}</p>
