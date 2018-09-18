@@ -48,7 +48,7 @@ export class App {
   // UI Functions
   loginPopup() {
 		this.dialogService.open({
-			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog.js')
+			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
 		}).then((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');
