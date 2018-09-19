@@ -21,21 +21,42 @@ import { RecordServices } from 'RecordServices';
 import { CampaignServices } from 'CampaignServices.js';
 import { AnnotationServices } from 'AnnotationServices.js';
 import { ThesaurusServices } from 'ThesaurusServices.js';
+import { bindable } from 'aurelia-framework';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(UserServices, RecordServices, CampaignServices, AnnotationServices, ThesaurusServices)
+
+
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup')
 export class Tagitem {
+	
+  @bindable  prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, annotationServices, thesaurusServices) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices,loginPopup) {
+	this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
-
+    this.placeholderText = "Start typing a term then select from the options";
+    	   
     this.annotations = [];
     this.suggestedAnnotation = {};
+    this.suggestionsLoading = false;
+    this.suggestedAnnotations =  [];
+	this.selectedAnnotation = null;
+	this.lg=loginPopup;
+	
+	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
+	
   }
 
+  detached(){
+		
+		this.evsubscr1.dispose();
+		
+	}
+  
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
@@ -49,8 +70,89 @@ export class Tagitem {
     else {
       await this.getRecordAnnotations(this.recId);
     }
+    
   }
+  
+  async reloadAnnotations(){
+	  this.annotations = [];
+	  await this.getRecordAnnotations(this.recId);
+  }
+  
+  
+  prefixChanged() {
+	    
+		//	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
+				if (this.prefix === '' || this.selectedAnnotation != null) {
+					this.suggestedAnnotations = [];
+					return;
+				}
+				this.selectedAnnotation = null;
+				this.getSuggestedAnnotations(this.prefix);
+		}
+  
+  async getSuggestedAnnotations(prefix) {
+		this.lastRequest = prefix;
+		this.suggestionsLoading = true;
+		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
+		this.selectedAnnotation = null;
+		
+		let self = this;
+		await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId)
+		 .then((res) => {
+			 if (res.request === self.lastRequest) {
+					//this.suggestedAnnotations = res.results.slice(0, 20);
+					self.suggestedAnnotations = res.results;
 
+					if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
+						self.selectedAnnotation = self.suggestedAnnotations[0];
+					}
+					self.suggestionsLoading = false;
+				}
+		 });
+	}
+
+  
+  selectSuggestedAnnotation(index) {
+	   if(this.userServices.isAuthenticated()==false){
+		   this.lg.call();
+	   }else{
+		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+			  return obj.id === index
+		});
+		let lb=this.selectedAnnotation.label;
+		let existscheck=this.annotations.find(obj => {
+			  return obj.label === lb
+		});
+		if(existscheck!=null){
+			this.prefix = "";
+			this.selectedAnnotation = null;
+			this.suggestedAnnotations = [];
+			toastr.error('Tag already exists');
+			
+			return;
+		}
+		this.suggestedAnnotations = [];
+		this.errors = this.selectedAnnotation == null;
+		if (!this.errors) {
+			let self = this;
+			this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation)
+			.then(() => {
+				toastr.success('Annotation added.');
+				self.ea.publish('annotations-created', self.record);
+				this.prefix = "";
+				this.selectedAnnotation = null;
+			}).catch((error) => {
+				toastr.error('An error has occured');
+			});
+		}
+	}
+  }
+  
+  
+
+  
+  get suggestionsActive() { return this.suggestedAnnotations.length !== 0; }
+  
   async annotate(label) {
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
@@ -82,6 +184,10 @@ export class Tagitem {
   }
 
   deleteAnnotation(id, index) {
+	if(this.userServices.isAuthenticated()==false){
+		   this.lg.call();
+		   return;
+	   } 
     this.annotationServices.delete(id)
       .then( () => {
         this.annotations.splice(index, 1);
@@ -96,6 +202,10 @@ export class Tagitem {
   }
 
   async score(annoId, annoType, index) {
+	  if(this.userServices.isAuthenticated()==false){
+		   this.lg.call();
+		   return;
+	   }  
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
@@ -164,6 +274,10 @@ export class Tagitem {
   }
 
   async unscore(annoId, annoType, index) {
+	  if(this.userServices.isAuthenticated()==false){
+		   this.lg.call();
+		   return;
+	   }   
     if (annoType == 'approved') {
       //this.annotationServices.unscore(annoId);
       this.annotationServices.unscoreObj(annoId)

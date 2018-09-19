@@ -59,11 +59,11 @@ export class NavBar {
 	}
 
   toggleNavMenu() {
-    if ($('.accountmenu').hasClass('active')) {
-      $('.accountmenu').removeClass('active');
+    if ($('#accountmenu').hasClass('active')) {
+      $('#accountmenu').removeClass('active');
     }
     else {
-      $('.accountmenu').addClass('active');
+      $('#accountmenu').addClass('active');
     }
   }
 

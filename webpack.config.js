@@ -127,6 +127,7 @@ module.exports =  ({production, server, extractCss, coverage} = {}) => ({
                       //Promise: 'bluebird', // because Edge browser has slow native Promise object
                       $: 'jquery', // because 'bootstrap' by Twitter depends on this
                       jQuery: 'jquery',
+                      toastr: 'toastr',
                       'window.jQuery': 'jquery'
                   }),
                   new webpack.DefinePlugin({

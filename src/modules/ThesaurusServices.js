@@ -38,5 +38,13 @@ export class ThesaurusServices {
       return response.json();
     });
   }
+  
+  async getCampaignSuggestions(word, campaignId ) {
+		return this.http.fetch(`/thesaurus/suggestions?word=${word}&campaignId=${campaignId}`, {
+	      method: 'GET'
+	    }).then(checkStatus).then((response) => {
+	      return response.json();
+	    });
+	  }
 
 }

@@ -35,7 +35,6 @@ export class CampaignItem {
     this.recordServices = recordServices;
     this.userServices = userServices;
     this.router = router;
-
     this.campaign = 0;
     this.collection = 0;
     this.collectionTitle = "";

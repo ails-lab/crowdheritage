@@ -3807,7 +3807,7 @@ body div[role='main'] section.registernow .action {
   position: absolute;
   left: 20px;
   right: 20px;
-  z-index: 5;
+  z-index: 2;
 }
 .tag-item .searchbox ul.suggestions li {
   padding: 5px 10px;

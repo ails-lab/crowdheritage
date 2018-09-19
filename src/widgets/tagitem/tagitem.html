@@ -6,19 +6,57 @@
       <div class="heading green">TAGS</div>
       <!-- info-->
       <div class="infobar">Tag items that you see on the image, you can validate it first by checking on the thesaurus before adding the tag.</div>
-      <!-- searchbox-->
-      <div class="searchbox">
-        <input type="text" placeholder="Type and hit enter" class="input-tag"><a href="" target="_blank" class="link">THESAURUS	</a>
-        <ul class="suggestions"></ul>
-        <img src="/img/ic-enter.png" class="enter">
-      </div>
+      
+       <div  class="searchbox">
+            							
+            		<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:1000" input.delegate="prefixChanged($event.target.value) & debounce:1000"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+            		
+                          <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
+                            <ul class="suggestions">
+ 								<li repeat.for="item of suggestedAnnotations" id="${$index}" click.delegate="selectSuggestedAnnotation(item.id)">${item.label}</li>
+                            </ul>
+                          </div>
+                        </div>
+      
+      
+      
       <!-- taglist-->
       <ul class="taglist">
         <li repeat.for="ann of annotations">
           <div class="text">${ann.label}</div>
           <ul class="action">
-            <li class="up ${ann.approvedByMe ? 'active' : ''}"><a click.delegate="loginPopup()"><span class="thumbs-icon up"></span><span class="count">${ann.approvedBy.length}</span></a></li>
-            <li class="down"><a href="#"><span class="count"></span><span class="thumbs-icon down"></span></a></li>
+            
+            <li class="up ${ann.approvedByMe ? 'active' : ''}" id=up_${ann.dbId}>
+              <!-- User logged -->
+              <a href="javascript:void(0)" click.delegate="score(ann.dbId, 'approved', $index)" if.bind="!ann.approvedByMe">
+                <span class="thumbs-icon up"></span>
+                <span class="count">${ann.approvedBy.length}</span>
+              </a>
+              <a href="javascript:void(0)" click.delegate="unscore(ann.dbId, 'approved', $index)" if.bind="ann.approvedByMe">
+                <span class="thumbs-icon up"></span>
+                <span class="count">${ann.approvedBy.length}</span>
+              </a>
+              
+            </li>
+            
+              <li class="down ${ann.rejectedByMe ? 'active' : ''}" id=down_${ann.dbId}>
+              <!-- User logged -->
+              <a href="javascript:void(0)" click.delegate="score(ann.dbId, 'rejected', $index)" if.bind="!ann.rejectedByMe">
+                <span class="count">${ann.rejectedBy.length}</span>
+                <span class="thumbs-icon down"></span>
+              </a>
+              <a href="javascript:void(0)" click.delegate="unscore(ann.dbId, 'rejected', $index)" if.bind="ann.rejectedByMe">
+                <span class="count">${ann.rejectedBy.length}</span>
+                <span class="thumbs-icon down"></span>
+              </a>
+              
+            </li>
+            <li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==0 && ann.rejectedBy.length==0">
+              <!-- User logged -->
+              <a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index)">
+                <img src="/img/ic-delete.png">
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

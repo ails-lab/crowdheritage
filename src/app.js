@@ -16,7 +16,7 @@
 
 
 
-import { inject,PLATFORM } from 'aurelia-framework';
+import { inject,Container,PLATFORM } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { UserServices } from './modules/UserServices.js';
 
@@ -24,11 +24,12 @@ import less from 'less';
 
 import './../styles/styles.less';
 
-@inject(DialogService, UserServices)
+@inject(DialogService, UserServices, Container)
 export class App {
-  constructor(dialogService, userServices) {
+  constructor(dialogService, userServices,container) {
     this.dialogService = dialogService;
     this.userServices = userServices;
+    container.registerInstance('loginPopup', this.loginPopup.bind(this));
   }
   
   activate() {
