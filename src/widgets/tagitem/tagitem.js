@@ -24,8 +24,6 @@ import { ThesaurusServices } from 'ThesaurusServices.js';
 import { bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
-
-
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup')
 export class Tagitem {
 
@@ -53,7 +51,6 @@ export class Tagitem {
       ["/img/color/img-white.png", "White"],
       ["/img/color/img-transparant.png", "Transparent"]
     ];
-		this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
@@ -65,11 +62,11 @@ export class Tagitem {
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
-	this.selectedAnnotation = null;
-	this.lg=loginPopup;
+		this.selectedAnnotation = null;
+		this.lg=loginPopup;
 
-	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
-
+		this.ea = eventAggregator;
+		this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
   }
 
   detached(){
@@ -99,7 +96,6 @@ export class Tagitem {
 
 
   prefixChanged() {
-
 		//	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
 				if (this.prefix === '' || this.selectedAnnotation != null) {
 					this.suggestedAnnotations = [];
@@ -147,7 +143,6 @@ export class Tagitem {
 			this.selectedAnnotation = null;
 			this.suggestedAnnotations = [];
 			toastr.error('Tag already exists');
-
 			return;
 		}
 		this.suggestedAnnotations = [];
@@ -167,12 +162,13 @@ export class Tagitem {
 	}
   }
 
-
-
-
   get suggestionsActive() { return this.suggestedAnnotations.length !== 0; }
 
   async annotate(label) {
+		if(this.userServices.isAuthenticated()==false) {
+			this.lg.call();
+			return;
+		}
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
@@ -220,11 +216,18 @@ export class Tagitem {
 			});
   }
 
+	async validate(annoId, annoType, index, approvedByMe, rejectedByMe) {
+		if (this.userServices.isAuthenticated()==false) {
+		  this.lg.call();
+			return;
+	  }
+		if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe))
+			this.unscore(annoId, annoType, index);
+		else
+			this.score(annoId, annoType, index);
+	}
+
   async score(annoId, annoType, index) {
-	  if(this.userServices.isAuthenticated()==false){
-		   this.lg.call();
-		   return;
-	   }
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
@@ -293,10 +296,6 @@ export class Tagitem {
   }
 
   async unscore(annoId, annoType, index) {
-	  if(this.userServices.isAuthenticated()==false){
-		   this.lg.call();
-		   return;
-	   }
     if (annoType == 'approved') {
       //this.annotationServices.unscore(annoId);
       this.annotationServices.unscoreObj(annoId)
