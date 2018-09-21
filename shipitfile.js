@@ -8,8 +8,8 @@ module.exports = function(shipit) {
 
 	shipit.initConfig({
 		default: {
-			workspace: '/tmp/withcrowd-git',
-			dirToCopy: '/tmp/withcrowd-git/dist',
+			workspace: '/home/mariaral/git/withcrowd',
+			dirToCopy: '/home/mariaral/git/withcrowd/dist',
 			repositoryUrl: 'git@git.image.ece.ntua.gr:mariaral/withcrowd.git',
 			ignores: ['.git', 'node_modules'],
 			rsync: ['--del'],
@@ -28,7 +28,7 @@ module.exports = function(shipit) {
 		},
 		production: {
 			servers: 'deploy@playmobil.image.ntua.gr',
-			deployTo: '/data/withcrowd',
+			deployTo: '/data/withcrowd/frontend',
 			branch: 'master'
 		}
 	});

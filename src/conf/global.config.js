@@ -14,54 +14,46 @@
  */
 
 
-/*eslint-disable no-var*/
+/* eslint-disable no-var */
 var settings = {
-	space: 'espace',
-	auth: {
-		google: '',
-		facebook: '132619063927809'
-	},
-	baseUrl: 'http://ipa.image.ntua.gr:9060', //backend goes here
-	apiUrl: '/assets/developers-lite.html',
-	googlekey: '',
-	isoSettings: {
-		// page
-		page: 'default',
+  space: 'espace',
+  auth: {
+    google: '',
+    facebook: '132619063927809'
+  },
+  baseUrl: 'http://ipa.image.ntua.gr:9030', //backend goes here
+  apiUrl: '/assets/developers-lite.html',
+  googlekey: '',
+  isoSettings: {
+    // page
+    page: 'default',
 
-		// masonry
-		mSelector: '.grid',
-		mItem: '.item',
-		mSizer: '.sizer',
+    // masonry
+    mSelector: '.grid',
+    mItem: '.item',
+    mSizer: '.sizer',
 
-		// mobile menu
-		mobileSelector: '.mobilemenu',
-		mobileMenu: '.main .menu',
-		transDuration: 0
-	},
-	logLevel: 1		// Error: 1, Warn: 2, Info: 3, Debug: 4
+    // mobile menu
+    mobileSelector: '.mobilemenu',
+    mobileMenu: '.main .menu',
+    transDuration: 0
+  },
+  logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
 };
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
-	settings.auth.facebook = '133438360512546';
-	//settings.baseUrl = 'http://localhost:9060';
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
-	settings.logLevel = 4; // Debug
-} else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
-} else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
-	settings.auth.facebook='394384180936771';
-   settings.baseUrl = 'http://api.withculture.eu';
-} else if (window.location.hostname === 'judaica.withculture.eu') {
-	settings.space = 'judaica';
-	settings.baseUrl = 'http://api.withculture.eu';
-} else if (window.location.hostname === 'with.image.ntua.gr' || window.location.hostname === 'with.image.ece.ntua.gr') {
-	settings.baseUrl = 'http://api.withculture.eu';
-}else if (window.location.hostname === 'espaceportal.eu' || window.location.hostname === 'www.espaceportal.eu') {
-	settings.auth.facebook = '132619063927809';
-	settings.baseUrl = 'http://api.espaceportal.eu';
+  settings.auth.facebook = '133438360512546';
+  //settings.baseUrl = 'http://localhost:9060';
+  settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
+  settings.logLevel = 4; // Debug
+} else if (window.location.hostname === 'withcrowd.eu' || window.location.hostname === 'www.withcrowd.eu') { // Staging
+  settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
+} else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') { // Production
+  settings.auth.facebook = '394384180936771';
+  settings.baseUrl = 'https://api.withculture.eu';
 } else {
-	console.log(`${window.location.hostname}`);
+  console.log(`${window.location.hostname}`);
 }
 
 export default settings;

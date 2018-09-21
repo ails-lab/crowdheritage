@@ -28,35 +28,54 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup')
 export class Tagitem {
-	
+
   @bindable  prefix = '';
 
   constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices,loginPopup) {
-	this.ea = eventAggregator;
+		this.colorSet = [
+      ["/img/color/img-black.png", "Black"],
+      ["/img/color/img-gray.png", "Grey"],
+      ["/img/color/img-metallic.png", "Metallic"],
+      ["/img/color/img-silver.png", "Silver"],
+      ["/img/color/img-bronze.png", "Bronze"],
+      ["/img/color/img-brown.png", "Brown"],
+      ["/img/color/img-copper.png", "Copper"],
+      ["/img/color/img-red.png", "Red"],
+      ["/img/color/img-orange.png", "Orange"],
+      ["/img/color/img-beige.png", "Beige"],
+      ["/img/color/img-gold.png", "Gold"],
+      ["/img/color/img-yellow.png", "Yellow"],
+      ["/img/color/img-green.png", "Green"],
+      ["/img/color/img-blue.png", "Blue"],
+      ["/img/color/img-purple.png", "Purple"],
+      ["/img/color/img-pink.png", "Pink"],
+      ["/img/color/img-multicolored.png", "Multicoloured", "big"],
+      ["/img/color/img-white.png", "White"],
+      ["/img/color/img-transparant.png", "Transparent"]
+    ];
+		this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
     this.placeholderText = "Start typing a term then select from the options";
-    	   
+
     this.annotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
 	this.selectedAnnotation = null;
 	this.lg=loginPopup;
-	
+
 	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
-	
+
   }
 
   detached(){
-		
 		this.evsubscr1.dispose();
-		
 	}
-  
+
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
@@ -70,17 +89,17 @@ export class Tagitem {
     else {
       await this.getRecordAnnotations(this.recId);
     }
-    
+
   }
-  
+
   async reloadAnnotations(){
 	  this.annotations = [];
 	  await this.getRecordAnnotations(this.recId);
   }
-  
-  
+
+
   prefixChanged() {
-	    
+
 		//	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
 				if (this.prefix === '' || this.selectedAnnotation != null) {
 					this.suggestedAnnotations = [];
@@ -89,13 +108,13 @@ export class Tagitem {
 				this.selectedAnnotation = null;
 				this.getSuggestedAnnotations(this.prefix);
 		}
-  
+
   async getSuggestedAnnotations(prefix) {
 		this.lastRequest = prefix;
 		this.suggestionsLoading = true;
 		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
 		this.selectedAnnotation = null;
-		
+
 		let self = this;
 		await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId)
 		 .then((res) => {
@@ -111,7 +130,7 @@ export class Tagitem {
 		 });
 	}
 
-  
+
   selectSuggestedAnnotation(index) {
 	   if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
@@ -128,7 +147,7 @@ export class Tagitem {
 			this.selectedAnnotation = null;
 			this.suggestedAnnotations = [];
 			toastr.error('Tag already exists');
-			
+
 			return;
 		}
 		this.suggestedAnnotations = [];
@@ -147,12 +166,12 @@ export class Tagitem {
 		}
 	}
   }
-  
-  
 
-  
+
+
+
   get suggestionsActive() { return this.suggestedAnnotations.length !== 0; }
-  
+
   async annotate(label) {
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
@@ -187,7 +206,7 @@ export class Tagitem {
 	if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
-	   } 
+	   }
     this.annotationServices.delete(id)
       .then( () => {
         this.annotations.splice(index, 1);
@@ -205,7 +224,7 @@ export class Tagitem {
 	  if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
-	   }  
+	   }
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
@@ -277,7 +296,7 @@ export class Tagitem {
 	  if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
-	   }   
+	   }
     if (annoType == 'approved') {
       //this.annotationServices.unscore(annoId);
       this.annotationServices.unscoreObj(annoId)
@@ -344,6 +363,19 @@ export class Tagitem {
       return b.score - a.score;
     });
   }
+
+	getColor(label) {
+		var index = this.colorSet.findIndex( element => {
+			return element[1] == label;
+		});
+
+		if (index == -1) {
+			return '/img/assets/images/no_image.jpg';
+		}
+		else {
+			return this.colorSet[index][0];
+		}
+	}
 
   annotationExists(label) {
     for (var i in this.annotations) {
