@@ -19,13 +19,13 @@
         <li repeat.for="ann of annotations">
         	<div class="text">${ann.label}</div>
         	<ul class="action">
-          	<li class.bind="ann.approvedByMe ? 'up active' : 'up'}">
+          	<li class.bind="ann.approvedByMe ? 'up active' : 'up'">
             	<a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe)">
               	<span class="thumbs-icon up"></span>
               	<span class="count">${ann.approvedBy.length}</span>
             	</a>
           	</li>
-          	<li class="ann.rejectedByMe ? 'down active' : 'down'}">
+          	<li class="ann.rejectedByMe ? 'down active' : 'down'">
             	<a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe)">
               	<span class="count">${ann.rejectedBy.length}</span>
               	<span class="thumbs-icon down"></span>
