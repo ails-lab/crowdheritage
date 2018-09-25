@@ -14,7 +14,7 @@
  */
 
 
-/*eslint-disable no-var*/
+/* eslint-disable no-var */
 var settings = {
 	space: 'espace',
 	auth: {
@@ -26,25 +26,24 @@ var settings = {
 	googlekey: '',
 	isoSettings: {
 		// page
-		page: 'default',
+    page: 'default',
 
-		// masonry
-		mSelector: '.grid',
-		mItem: '.item',
-		mSizer: '.sizer',
+    // masonry
+    mSelector: '.grid',
+    mItem: '.item',
+    mSizer: '.sizer',
 
-		// mobile menu
-		mobileSelector: '.mobilemenu',
-		mobileMenu: '.main .menu',
-		transDuration: 0
-	},
-	logLevel: 1		// Error: 1, Warn: 2, Info: 3, Debug: 4
+    // mobile menu
+    mobileSelector: '.mobilemenu',
+    mobileMenu: '.main .menu',
+    transDuration: 0
+  },
+  logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
 };
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
-	//settings.baseUrl = 'http://localhost:9060';
 	settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
@@ -61,7 +60,7 @@ if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '132619063927809';
 	settings.baseUrl = 'http://api.espaceportal.eu';
 } else {
-	console.log(`${window.location.hostname}`);
+  console.log(`${window.location.hostname}`);
 }
 
 export default settings;
