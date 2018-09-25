@@ -38,7 +38,7 @@ export async function configure(aurelia) {
 			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
 			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
 		})
-		.plugin(PLATFORM.moduleName('aurelia-google-maps'), config => {
+		/*.plugin(PLATFORM.moduleName('aurelia-google-maps'), config => {
             config.options({
                 apiKey: 'AIzaSyCE-H7wvtVwIt-0w92HpwHnIZppb7u2J_c', // use `false` to disable the key
                 apiLibraries: '', //get optional libraries like drawing, geometry, ... - comma seperated list
@@ -52,7 +52,13 @@ export async function configure(aurelia) {
                     imageExtension: 'png',
               }
           });
-    })
+    })*/
+      .plugin(PLATFORM.moduleName('google-maps-api'), config => {
+          config.options({
+              apiKey: 'AIzaSyD4SpqL2DlfdiKJquVUmPnxPqFu56hChK8'
+              
+          })
+      })
      .plugin(PLATFORM.moduleName('aurelia-dialog'), config => {
         config.useDefaults();
         config.settings.lock = true;

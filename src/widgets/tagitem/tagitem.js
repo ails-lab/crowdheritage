@@ -48,14 +48,25 @@ export class Tagitem {
 	this.lg=loginPopup;
 	
 	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
+	this.handleBodyClick = e => {
+        console.log(e.target.id);
+        if(e.target.id!="annotationInput"){
+        	this.suggestedAnnotations =  [];
+        	 this.suggestionsLoading = false;
+        }
+    };
 	
   }
 
-  detached(){
-		
-		this.evsubscr1.dispose();
-		
-	}
+ 
+  attached() {
+      document.addEventListener('click', this.handleBodyClick);
+  }
+
+  detached() {
+	  this.evsubscr1.dispose();
+      document.removeEventListener('click', this.handleBodyClick);
+  }   
   
   async activate(params) {
     this.campaign = params.campaign;

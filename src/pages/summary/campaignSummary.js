@@ -115,7 +115,7 @@ export class CampaignSummary {
 			$( '[data-grid="isotope" ]' ).find('.entry').removeClass('isoload');
 	}
     this.taskQueue.queueTask(() => {
-         setMap();
+        // setMap();
          
     });
   }

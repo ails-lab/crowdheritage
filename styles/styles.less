@@ -3799,7 +3799,7 @@ body div[role='main'] section.registernow .action {
   text-align: center;
 }
 /*tagging autocomplete*/
-.tag-item .searchbox ul.suggestions {
+.searchbox ul.suggestions {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -3807,15 +3807,18 @@ body div[role='main'] section.registernow .action {
   position: absolute;
   left: 20px;
   right: 20px;
+  height:250px;
   z-index: 2;
+  overflow-y:scroll;
 }
-.tag-item .searchbox ul.suggestions li {
+.searchbox ul.suggestions li {
   padding: 5px 10px;
   cursor: pointer;
+  border-bottom: 1px solid #00d19e;
 }
-.tag-item .searchbox ul.suggestions li:last-child {
-  border-bottom: 3px solid #00d19e;
+.searchbox ul.suggestions li:last-child {
+  border-bottom: 2px solid #00d19e;
 }
-.tag-item .searchbox ul.suggestions li:hover {
+.searchbox ul.suggestions li:hover {
   background: #ffbb00;
 }

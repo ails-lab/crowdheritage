@@ -21,7 +21,7 @@ var settings = {
 		google: '',
 		facebook: '132619063927809'
 	},
-	baseUrl: 'http://ipa.image.ntua.gr:9060', //backend goes here
+	baseUrl: 'https://api.withcrowd.eu', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
 	isoSettings: {
@@ -45,7 +45,7 @@ var settings = {
 if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
 	//settings.baseUrl = 'http://localhost:9060';
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
+	settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
 	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
