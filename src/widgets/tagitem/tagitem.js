@@ -51,6 +51,7 @@ export class Tagitem {
 			["/img/color/img-white.png", "White"],
 			["/img/color/img-transparant.png", "Transparent"]
 		];
+		this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
@@ -63,7 +64,7 @@ export class Tagitem {
     this.suggestedAnnotations =  [];
 	this.selectedAnnotation = null;
 	this.lg=loginPopup;
-	
+
 	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
 	this.handleBodyClick = e => {
         console.log(e.target.id);
@@ -72,11 +73,11 @@ export class Tagitem {
         	 this.suggestionsLoading = false;
         }
     };
-	
+
   }
 
 
- 
+
   attached() {
       document.addEventListener('click', this.handleBodyClick);
   }
@@ -84,8 +85,8 @@ export class Tagitem {
   detached() {
 	  this.evsubscr1.dispose();
       document.removeEventListener('click', this.handleBodyClick);
-  }   
-  
+  }
+
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
