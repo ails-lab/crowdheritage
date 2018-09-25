@@ -10,7 +10,7 @@
       <!-- color action-->
       <ul class="coloraction">
         <li class.bind="color[2]" repeat.for="color of colorSet">
-          <a href="javascript:void(0)" click.delegate="annotate(color[1])">
+          <a href="javascript:void(0)" click.delegate="annotateColor(color[1])">
             <img src.bind="color[0]">
             <div class="action">
               <div class="colorname" innerhtml.bind="color[1]"></div>

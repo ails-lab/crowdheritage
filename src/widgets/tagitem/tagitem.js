@@ -170,7 +170,7 @@ export class Tagitem {
     return this.suggestedAnnotations.length !== 0;
   }
 
-  async annotate(label) {
+  async annotateColor(label) {
     if (this.userServices.isAuthenticated() == false) {
       this.lg.call();
       return;
