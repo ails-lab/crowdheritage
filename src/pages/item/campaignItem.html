@@ -108,7 +108,8 @@
                      model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
             <compose view-model="widgets/taggeo/taggeo"
-                     if.bind="hasMotivation('GeoTagging')">
+                     if.bind="hasMotivation('GeoTagging')"
+                     model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
             <div class="wrap next-item-alternative-link">
               <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
