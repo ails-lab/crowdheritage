@@ -238,7 +238,7 @@ export class CampaignSummary {
     let item = this.router.routes.find(x => x.name === 'item');
     item.campaign = camp;
     item.offset = offset;
-
+    this.records=[];
     // Get 2 random records to start annotating
     if (col == 0) {
       this.loading = true;
