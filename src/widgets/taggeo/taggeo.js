@@ -145,7 +145,7 @@ export class Taggeo {
 		this.errors = this.selectedAnnotation == null;
 		if (!this.errors) {
 			let self = this;
-			this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation)
+			this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation,this.campaign.username)
 			.then(() => {
 				toastr.success('Annotation added.');
 				self.ea.publish('annotations-created', self.record);
@@ -336,7 +336,7 @@ export class Taggeo {
   }
 
   async getRecordAnnotations(id) {
-    await this.recordServices.getAnnotations(this.recId, "GeoTagging")
+    await this.recordServices.getAnnotations(this.recId, "Tagging")
       .then( response => {
         for (var i=0; i<response.length; i++) {
           if (!this.userServices.current) {

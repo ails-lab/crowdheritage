@@ -154,7 +154,7 @@ export class Tagitem {
       this.errors = this.selectedAnnotation == null;
       if (!this.errors) {
         let self = this;
-        this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation).then(() => {
+        this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation,this.campaign.username).then(() => {
           toastr.success('Annotation added.');
           self.ea.publish('annotations-created', self.record);
           this.prefix = "";
