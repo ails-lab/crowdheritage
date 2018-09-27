@@ -46,5 +46,14 @@ export class ThesaurusServices {
 	      return response.json();
 	    });
 	  }
+  
+  async getGeonameSuggestions(prefix ) {
+	  
+	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
+	      method: 'GET'
+	    }).then((response) => {
+	      return response.json();
+	    });
+	  }
 
 }
