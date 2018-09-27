@@ -209,6 +209,25 @@ export class AnnotationServices {
 		});
 	}
 
+	
+	async annotateGeoRecord(recid, geoid, camp) {
+		let body = {uri: geoid };
+		let target = { recordId: recid};
+		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: 'GeoTagging', body: body, target: target };
+
+		return this.http.fetch('/record/annotation', {
+			method: 'POST',
+			body: JSON.stringify(annotation),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(checkStatus).then((response) => {
+			response.json();
+		});
+	}
+	
+	
+	
 	annotateCollection(colid, term) {
 		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
 		let annotation = { generator: 'WITH Manual Annotator', generated: new Date().toISOString(), confidence: 0.0, motivation: 'Tagging', body: body };

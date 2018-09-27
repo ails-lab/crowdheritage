@@ -31,9 +31,10 @@ function fetchConfigDevelopment(config) {
 	config
 		.withBaseUrl(settings.baseUrl)
 		.withDefaults({
-			credentials: 'include',
+			//credentials: 'include',
 			headers: {
 				'Accept': 'application/json'
+				//'Access-Control-Allow-Origin':'https://localhost:8080'
 			}
 		// })
 		// .withInterceptor({

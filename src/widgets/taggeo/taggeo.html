@@ -18,7 +18,7 @@
             		
                           <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
                             <ul class="suggestions">
- 								<li repeat.for="item of suggestedAnnotations" id="${$index}" click.delegate="selectSuggestedAnnotation(item.id)">${item.label}</li>
+ 								<li repeat.for="item of suggestedAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
                             </ul>
                           </div>
                         </div>
