@@ -28,7 +28,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup')
 export class Taggeo {
-	
+
   @bindable  prefix = '';
 
   constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices,loginPopup) {
@@ -39,14 +39,14 @@ export class Taggeo {
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
     this.placeholderText = "Start typing a place then select from the options";
-    	   
+
     this.annotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
 	this.selectedAnnotation = null;
 	this.lg=loginPopup;
-	
+
 	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
 	this.handleBodyClick = e => {
         console.log(e.target.id);
@@ -55,10 +55,10 @@ export class Taggeo {
         	 this.suggestionsLoading = false;
         }
     };
-	
+
   }
 
- 
+
   attached() {
       document.addEventListener('click', this.handleBodyClick);
   }
@@ -66,8 +66,8 @@ export class Taggeo {
   detached() {
 	  this.evsubscr1.dispose();
       document.removeEventListener('click', this.handleBodyClick);
-  }   
-  
+  }
+
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
@@ -77,22 +77,22 @@ export class Taggeo {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
       await this.getRecordAnnotations(this.recId);
-      
+
     }
     else {
       await this.getRecordAnnotations(this.recId);
     }
- 
+
   }
-  
+
   async reloadAnnotations(){
 	  this.annotations = [];
 	  await this.getRecordAnnotations(this.recId);
   }
-  
-  
+
+
   prefixChanged() {
-	    
+
 				if (this.prefix === '' || this.selectedAnnotation != null) {
 					this.suggestedAnnotations = [];
 					return;
@@ -100,22 +100,22 @@ export class Taggeo {
 				this.selectedAnnotation = null;
 				this.getGeoAnnotations(this.prefix);
 		}
-  
-  
+
+
   async getGeoAnnotations(prefix) {
 		this.lastRequest = prefix;
 		this.suggestionsLoading = true;
 		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
 		this.selectedAnnotation = null;
-		
+
 		let self = this;
-		
+
 		await this.thesaurusServices.getGeonameSuggestions(prefix)
 		 .then((res) => {
 		    	self.getGeoSuggestions( res);
 		    });
-		  
-		
+
+
 	}
 
   getGeoSuggestions(jData) {
@@ -133,16 +133,16 @@ export class Taggeo {
 			self.selectedAnnotation = self.suggestedAnnotations[0];
 		}*/
 	   this.suggestionsLoading = false;
-	  
+
 	}
 
-  
+
   async getSuggestedAnnotations(prefix) {
 		this.lastRequest = prefix;
 		this.suggestionsLoading = true;
 		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
 		this.selectedAnnotation = null;
-		
+
 		let self = this;
 		await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId)
 		 .then((res) => {
@@ -157,7 +157,7 @@ export class Taggeo {
 		 });
 	}
 
-  
+
   selectGeoAnnotation(geoid) {
 	   if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
@@ -173,15 +173,15 @@ export class Taggeo {
 			this.selectedAnnotation = null;
 			this.suggestedAnnotations = [];
 			toastr.error('Geotag already exists');
-			
+
 			return;
 		}
-		
+
 		this.suggestedAnnotations = [];
 		this.errors = this.selectedAnnotation == null;
 		if (!this.errors) {
 			let self = this;
-			this.annotationServices.annotateGeoRecord(this.recId, this.geoid,this.campaign.username)
+			this.annotationServices.annotateGeoRecord(this.recId, geoid, this.campaign.username)
 			.then(() => {
 				toastr.success('Annotation added.');
 				self.ea.publish('annotations-created', self.record);
@@ -195,11 +195,11 @@ export class Taggeo {
 		}
 	}
  }
-  
- 
-  
+
+
+
   get suggestionsActive() { return this.suggestedAnnotations.length !== 0; }
-  
+
  /* async annotate(label) {
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
@@ -218,9 +218,9 @@ export class Taggeo {
 
       // Clear and reload the annotations array
       this.annotations.splice(0, this.annotations.length);
-      
-      
-      
+
+
+
       await this.getRecordAnnotations(this.recId);
     }
     else if (!this.annotations[answer.index].approvedByMe) {
@@ -228,12 +228,12 @@ export class Taggeo {
     }
   }
 */
-  
+
   deleteAnnotation(id, index) {
 	if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
-	   } 
+	   }
     this.annotationServices.delete(id)
       .then( () => {
         this.annotations.splice(index, 1);
@@ -251,7 +251,7 @@ export class Taggeo {
 	  if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
-	   }  
+	   }
     if (!this.hasContributed()) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
@@ -323,7 +323,7 @@ export class Taggeo {
 	  if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
-	   }   
+	   }
     if (annoType == 'approved') {
       //this.annotationServices.unscore(annoId);
       this.annotationServices.unscoreObj(annoId)
@@ -383,7 +383,7 @@ export class Taggeo {
           }
         }
     });
-	  
+
 	//this.annotations=["Amsterdam","Milan"];
 
     // Sort the annotations in descending
@@ -412,4 +412,3 @@ export class Taggeo {
   }
 
 }
-
