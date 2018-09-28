@@ -38,6 +38,28 @@ function fetchConfigDevelopment(config) {
 		});
 }
 
+
+export function fetchConfigGeo(config) {
+	config
+		.withBaseUrl(settings.baseUrl)
+		.withDefaults({
+			headers: {
+				'Accept': 'application/json'
+			}
+		});
+	
+}
+
+
+export function reset(config){
+	
+	if (window.location.hostname === 'localhost') {
+		fetchConfigDevelopment(config);
+	} else {
+		fetchConfigProduction(config);
+	}
+}
+
 function fetchConfigProduction(config) {
 	config
 		.withBaseUrl(settings.baseUrl)
@@ -51,9 +73,12 @@ function fetchConfigProduction(config) {
 
 let config;
 
+
 if (window.location.hostname === 'localhost') {
 	config = fetchConfigDevelopment;
 } else {
 	config = fetchConfigProduction;
 }
 export default config;
+
+

@@ -18,7 +18,7 @@
 import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import fetchConfig from 'fetch.config.js';
-import { checkStatus } from 'fetch.config.js';
+import { checkStatus, fetchConfigGeo, reset } from 'fetch.config.js';
 
 @inject(HttpClient)
 export class ThesaurusServices {
@@ -47,12 +47,15 @@ export class ThesaurusServices {
 	    });
 	  }
   
-  async getGeonameSuggestions(prefix,httpc ) {
-	  
-	  return httpc.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
+  async getGeonameSuggestions(prefix ) {
+	  this.http.configure(
+	        fetchConfigGeo);
+	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
 	      method: 'GET'
 	    }).then((response) => {
+	      this.http.configure(reset);	
 	      return response.json();
+	      
 	    });
 	  }
 

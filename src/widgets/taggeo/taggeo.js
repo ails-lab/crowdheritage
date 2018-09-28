@@ -23,10 +23,8 @@ import { AnnotationServices } from 'AnnotationServices.js';
 import { ThesaurusServices } from 'ThesaurusServices.js';
 import { bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { HttpClient } from 'aurelia-fetch-client';
-import settings from 'global.config.js';
 
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup',HttpClient)
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup')
 export class Taggeo {
 
   @bindable  prefix = '';
@@ -39,7 +37,6 @@ export class Taggeo {
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
     this.placeholderText = "Start typing a place then select from the options";
-    this.httpC = httpClient;
     
     this.annotations = [];
     this.suggestedAnnotation = {};
@@ -72,12 +69,7 @@ export class Taggeo {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
-    this.httpC.configure(config => {
-        config.withBaseUrl(settings.baseUrl)
-    		.withDefaults({
-    			headers: {
-    				'Accept': 'application/json'
-    			}})});
+   
     this.annotations.splice(0, this.annotations.length);
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
@@ -116,10 +108,7 @@ export class Taggeo {
 
 		let self = this;
 		
-		
-		
-		
-		await this.thesaurusServices.getGeonameSuggestions(prefix,this.httpC)
+		await this.thesaurusServices.getGeonameSuggestions(prefix)
 		 .then((res) => {
 		    	self.getGeoSuggestions( res);
 		    });
@@ -382,7 +371,7 @@ export class Taggeo {
   }
 
   async getRecordAnnotations(id) {
-    await this.recordServices.getAnnotations(this.recId, "Tagging")
+    await this.recordServices.getAnnotations(this.recId, "GeoTagging")
       .then( response => {
         for (var i=0; i<response.length; i++) {
           if (!this.userServices.current) {

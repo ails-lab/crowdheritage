@@ -80,6 +80,8 @@ export class CampaignIndex {
   }
 
   activeCampaigns(groupName, sortBy) {
+	this.campaigns = [];  
+	    
     this.loading = true;
     this.campaignServices.getActiveCampaigns( {group: groupName, sortBy: sortBy, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
