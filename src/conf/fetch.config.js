@@ -31,21 +31,10 @@ function fetchConfigDevelopment(config) {
 	config
 		.withBaseUrl(settings.baseUrl)
 		.withDefaults({
-			//credentials: 'include',
+			credentials: 'include',
 			headers: {
 				'Accept': 'application/json'
-				//'Access-Control-Allow-Origin':'https://localhost:8080'
 			}
-		// })
-		// .withInterceptor({
-		// 	request(request) {
-		// 		console.log(`Requesting ${request.method} ${request.url}`);
-		// 		return request; // you can return a modified Request, or you can short-circuit the request by returning a Response
-		// 	},
-		// 	response(response) {
-		// 		console.log(`Received ${response.status} ${response.url}`);
-		// 		return response; // you can return a modified Response
-		// 	}
 		});
 }
 

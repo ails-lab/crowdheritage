@@ -23,15 +23,15 @@ import { AnnotationServices } from 'AnnotationServices.js';
 import { ThesaurusServices } from 'ThesaurusServices.js';
 import { bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import { HttpClient } from 'aurelia-fetch-client';
+import settings from 'global.config.js';
 
-
-
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup')
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices,'loginPopup',HttpClient)
 export class Taggeo {
 
   @bindable  prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices,loginPopup) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices,loginPopup,httpClient) {
 	this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
@@ -39,7 +39,8 @@ export class Taggeo {
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
     this.placeholderText = "Start typing a place then select from the options";
-
+    this.httpC = httpClient;
+    
     this.annotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
@@ -71,7 +72,12 @@ export class Taggeo {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
-
+    this.httpC.configure(config => {
+        config.withBaseUrl(settings.baseUrl)
+    		.withDefaults({
+    			headers: {
+    				'Accept': 'application/json'
+    			}})});
     this.annotations.splice(0, this.annotations.length);
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
@@ -109,12 +115,16 @@ export class Taggeo {
 		this.selectedAnnotation = null;
 
 		let self = this;
-
-		await this.thesaurusServices.getGeonameSuggestions(prefix)
+		
+		
+		
+		
+		await this.thesaurusServices.getGeonameSuggestions(prefix,this.httpC)
 		 .then((res) => {
 		    	self.getGeoSuggestions( res);
 		    });
-
+		
+		 
 
 	}
 

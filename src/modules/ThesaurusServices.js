@@ -47,9 +47,9 @@ export class ThesaurusServices {
 	    });
 	  }
   
-  async getGeonameSuggestions(prefix ) {
+  async getGeonameSuggestions(prefix,httpc ) {
 	  
-	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
+	  return httpc.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
 	      method: 'GET'
 	    }).then((response) => {
 	      return response.json();
