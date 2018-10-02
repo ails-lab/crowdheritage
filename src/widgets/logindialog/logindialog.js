@@ -68,4 +68,9 @@ export class LoginDialog {
 		this.controller.cancel();
 		this.router.navigateToRoute('register');
 	}
+
+	attached() {
+    $('.accountmenu').removeClass('active');
+  }
+
 }
