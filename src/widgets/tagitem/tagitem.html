@@ -24,7 +24,7 @@
               	<span class="thumbs-icon up"></span><span class="count">${ann.approvedBy.length}</span>
             	</a>
           	</li>
-          	<li class="ann.rejectedByMe ? 'down active' : 'down'">
+          	<li class.bind="ann.rejectedByMe ? 'down active' : 'down'">
             	<a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe)">
               	<span class="count">${ann.rejectedBy.length}</span><span class="thumbs-icon down"></span>
             	</a>
