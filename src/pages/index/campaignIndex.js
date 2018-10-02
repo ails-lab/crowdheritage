@@ -22,7 +22,7 @@ import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { Router } from 'aurelia-router';
 
-let COUNT = 2;
+let COUNT = 4;
 
 @inject(CampaignServices, UserServices, RecordServices, Router)
 export class CampaignIndex {
@@ -80,8 +80,8 @@ export class CampaignIndex {
   }
 
   activeCampaigns(groupName, sortBy) {
-	this.campaigns = [];  
-	    
+	this.campaigns = [];
+
     this.loading = true;
     this.campaignServices.getActiveCampaigns( {group: groupName, sortBy: sortBy, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
