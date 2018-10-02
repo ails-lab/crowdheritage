@@ -57,7 +57,7 @@ export class CampaignSummary {
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
-    this.count=2;
+    this.count=4;
     this.userTags = 0;
     this.userRecords = 0;
     this.userPoints = 0;
@@ -80,7 +80,7 @@ export class CampaignSummary {
 	    this.currentCount = 0;
 	    this.loading = false;
 	    this.more = true;
-        this.count=2;
+      this.count=4;
 	    this.userTags = 0;
 	    this.userRecords = 0;
 	    this.userPoints = 0;
@@ -108,7 +108,7 @@ export class CampaignSummary {
 			});
 		}
 		this.initgrid=true;
-		
+
 	}
 	else{
 	        isoRelay();
@@ -116,12 +116,12 @@ export class CampaignSummary {
 	}
     this.taskQueue.queueTask(() => {
         // setMap();
-         
+
     });
   }
 
    activate(params, route) {
-    
+
     if ( route.campaign ) {
      if(this.campaign!=route.campaign){
 
