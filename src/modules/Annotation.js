@@ -27,7 +27,14 @@ export class Annotation {
         break;
       }
     }
-
+    if(data.motivation){
+    	this.motivation=data.motivation;
+    }else{this.motivation="";}
+    if(this.motivation=="GeoTagging" && data.body){
+    	this.countryName=data.body.countryName;
+    	this.coordinates=data.body.coordinates;
+    	this.uri=data.body.uri;
+    }
     this.approvedBy = [];
     this.approvedByMe = false;
     this.rejectedBy = [];

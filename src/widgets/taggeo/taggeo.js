@@ -165,7 +165,8 @@ export class Taggeo {
 			  return obj.geonameId === geoid
 		});
 		let existscheck=this.annotations.find(obj => {
-			  return obj.uri.indexOf(geoid)!=-1
+			  console.log(obj);
+			  return (obj.uri &&  obj.uri.indexOf(geoid)!=-1)
 		});
 		if(existscheck!=null){
 			this.prefix = "";
@@ -184,9 +185,8 @@ export class Taggeo {
 			.then(() => {
 				toastr.success('Annotation added.');
 				self.ea.publish('annotations-created', self.record);
-				self.ea.publish('geotag-created');
-			     console.log("PUBLISH GEOTAG EVENT");
-				this.prefix = "";
+				self.ea.publish('geotag-created', this.selectedAnnotation);
+			 	this.prefix = "";
 				this.selectedAnnotation = null;
 			}).catch((error) => {
 				toastr.error('An error has occured');
@@ -199,43 +199,20 @@ export class Taggeo {
 
   get suggestionsActive() { return this.suggestedAnnotations.length !== 0; }
 
- /* async annotate(label) {
-    if (!this.hasContributed()) {
-      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-    }
-
-    var answer = this.annotationExists(label);
-
-    if (!answer) {
-      if (this.userServices.isAuthenticated() && this.userServices.current === null) {
-        await this.userServices.reloadCurrentUser();
-      }
-
-     await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username);
-
-      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-
-      // Clear and reload the annotations array
-      this.annotations.splice(0, this.annotations.length);
-
-
-
-      await this.getRecordAnnotations(this.recId);
-    }
-    else if (!this.annotations[answer.index].approvedByMe) {
-      this.score(answer.id, 'approved', answer.index);
-    }
-  }
-*/
+ 
 
   deleteAnnotation(id, index) {
 	if(this.userServices.isAuthenticated()==false){
 		   this.lg.call();
 		   return;
 	   }
+	var lt=this.annotations[index];
+	
     this.annotationServices.delete(id)
       .then( () => {
         this.annotations.splice(index, 1);
+        this.ea.publish('geotag-removed', lt.coordinates);
+	 	
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
         if (!this.hasContributed()) {
           this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
