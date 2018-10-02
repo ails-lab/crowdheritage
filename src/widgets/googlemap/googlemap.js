@@ -31,8 +31,8 @@ export class Googlemap{
      var geocoder, map;
      this.data=[];
      this.markers=[];
-     this.evgeotag = this.ea.subscribe('geotag-created', () => { this.codeLocations()});
- 	
+     this.evgeotag = this.ea.subscribe('geotag-created', (place) => { this.codeLocation(place)});
+     this.remgeotag = this.ea.subscribe('geotag-removed', (coordinates) => { this.codeLocations()});
   }
 
   activate(model) {
@@ -48,7 +48,6 @@ export class Googlemap{
 			 styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"weight":"2.00"}]},{"featureType":"all","elementType":"geometry.stroke","stylers":[{"color":"#9c9c9c"}]},{"featureType":"all","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#eeeeee"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#7b7b7b"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#c8d7d4"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#070707"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]}],
 			 
           });
-          this.geocoder = new this.maps.Geocoder();
           this.codeLocations();
     });
   }
@@ -57,23 +56,38 @@ export class Googlemap{
 	  var self=this;
 	  self.clearMarkers();
 	  for (var i = 0; i < this.data.length; i++) {
-      	  var address = this.data[i];
-      	  
-         this.geocoder.geocode({ 'address': address }, function(results, status) {
-          if (status === "OK") {
-         // map.setCenter(results[0].geometry.location);
-          var marker = new self.maps.Marker({
-              map: self.map,
-              position: results[0].geometry.location
-          });
-          self.markers.push(marker);
-        } else {
-          console.log("Geocode unsuccessful for:"+address);
-        }
-      });
-         
+      	 if(this.data[i].coordinates){
+	      	 var address = {lat: this.data[i].coordinates.latitude, lng: this.data[i].coordinates.longitude};
+	          var marker = new self.maps.Marker({
+	              map: self.map,
+	              position: address
+	          });
+	           self.markers.push(marker);
+	       
+	      
+          
+      	 } 
     }
   }
+  
+  
+  codeLocation(place) {
+	     
+	  	 if(place.lat){
+	      	 var coords = {lat: parseFloat(place.lat), lng: parseFloat(place.lng)};
+	          var marker = new this.maps.Marker({
+	              map: this.map,
+	              position: coords
+	          });
+	           this.markers.push(marker);
+	           this.map.setCenter(coords);
+      	 } 
+    
+  }
+  
+
+
+  
   
   clearMarkers(){
 	  for (var i = 0; i < this.markers.length; i++) {
