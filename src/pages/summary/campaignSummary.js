@@ -122,22 +122,8 @@ export class CampaignSummary {
 
    activate(params, route) {
 
-    if ( route.campaign ) {
-     if(this.campaign!=route.campaign){
-
-    	  this.resetInstance();
-	      this.campaign = route.campaign;
-	      this.getUserPoints();
-	      if (this.userServices.isAuthenticated()) {
-	        this.getUserRank(this.userServices.current.dbId);
-	      }
-	      route.navModel.setTitle(this.campaign.title);
-	      this.collectionsCount = this.campaign.targetCollections.length;
-	      this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
-	      this.getUserStats();
-     }
-     else{console.log("returning");return;}
-    }
+   
+    if( this.campaign && this.campaign.username==params.cname && this.campaign.spacename==params.gname){return;}
     else {
       this.resetInstance();
       this.campaignServices.getCampaignByName(params.cname)
