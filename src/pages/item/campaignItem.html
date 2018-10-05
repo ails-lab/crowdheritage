@@ -53,7 +53,8 @@
                 <!-- label-->
                 <div class="heading">ITEM METADATA</div>
                 <!-- info-->
-                <ul class="meta">
+								<div class="show-more-parent">
+                <ul class="meta show-more-target">
                   <li if.bind="record.description">
                     <div class="lbl">DESCRIPTION</div>
                     <div class="val">${record.description}</div>
@@ -89,6 +90,8 @@
                     </li>
                   </div>
                 </ul>
+								<i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>
+							</div>
                 <!-- more-->
                 <!-- HIDE
                 <div class="loadmore"><a href="#">LOAD MORE</a></div>

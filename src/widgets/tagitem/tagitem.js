@@ -23,6 +23,7 @@ import {AnnotationServices} from 'AnnotationServices.js';
 import {ThesaurusServices} from 'ThesaurusServices.js';
 import {bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import { toggleMore } from 'utils/Plugin.js';
 
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup')
 export class Tagitem {
@@ -80,6 +81,7 @@ export class Tagitem {
 
   attached() {
       document.addEventListener('click', this.handleBodyClick);
+			toggleMore(".taglist");
   }
 
   detached() {

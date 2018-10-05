@@ -23,6 +23,7 @@ import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { CollectionServices } from 'CollectionServices.js';
+import { toggleMore } from 'utils/Plugin.js';
 
 let COUNT = 10;
 
@@ -85,6 +86,10 @@ export class CampaignItem {
     }
   }
 
+	toggleLoadMore(container) {
+		toggleMore(container);
+	}
+
   randomRecords() {
     this.loadRec = true;
     this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT+1)
@@ -143,6 +148,7 @@ export class CampaignItem {
 
   attached() {
     $('.accountmenu').removeClass('active');
+		toggleMore(".meta");
   }
 
   activate(params, routeData) {

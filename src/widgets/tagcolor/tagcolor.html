@@ -21,7 +21,8 @@
       <!-- searchbox-->
       <div class="colorbox">Vote submitted colors by other users.</div>
       <!-- taglist-->
-      <ul class="taglist color">
+			<div class="show-more-parent">
+      <ul class="taglist color show-more-target">
         <li repeat.for="ann of annotations">
           <div class="thumbs"><img src.bind="getColor(ann.label)"></div>
           <div class="selected">${ann.label}</div>
@@ -44,6 +45,8 @@
           </ul>
         </li>
       </ul>
+			<i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+		</div>
     </div>
   </div>
 </template>

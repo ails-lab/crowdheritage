@@ -900,6 +900,31 @@ body main section.campaignstats .right .leaderboard .heading {
   margin-bottom: 5px;
   font-family: "Dosis";
 }
+.show-more-parent {
+	position: relative;
+	.show-more-target {
+		overflow-y: hidden;
+		transition: all 300ms ease;
+	}
+	i.show-more {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%) translateY(80%);
+		background: #ffbb00;
+		color: #fff;
+		padding: 5px;
+		border-radius: 50px;
+		cursor: pointer;
+		font-size: 18px;
+		&.black {
+			background: #000;
+		}
+		&.green {
+			background: #00d19e;
+		}
+	}
+}
 body main section.campaignstats .right .leaderboard ul.leaderlist {
   margin: 0;
   padding: 30px 0 0 0;
@@ -957,6 +982,9 @@ body main section.campaignstats .right .leaderboard ul.leaderlist li span.points
   font-size: 1.2rem;
   font-family: "Dosis";
   color: #ffbb00;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li:last-child {
+	margin: 0;
 }
 body main section.campaignstats .right .leaderboard .loadmore {
   text-align: center;
