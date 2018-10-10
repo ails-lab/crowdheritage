@@ -137,34 +137,38 @@ export class Tagitem {
   selectSuggestedAnnotation(index) {
     if (this.userServices.isAuthenticated() == false) {
       this.lg.call();
-    } else {
-      this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
-        return obj.id === index
-      });
-      let lb = this.selectedAnnotation.label;
-      let existscheck = this.annotations.find(obj => {
-        return obj.label === lb
-      });
-      if (existscheck != null) {
+			return;
+		}
+		if (!this.hasContributed()) {
+      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+    }
+    this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+      return obj.id === index
+    });
+    let lb = this.selectedAnnotation.label;
+    let existscheck = this.annotations.find(obj => {
+      return obj.label === lb
+    });
+    if (existscheck != null) {
+      this.prefix = "";
+      this.selectedAnnotation = null;
+      this.suggestedAnnotations = [];
+      toastr.error('Tag already exists');
+      return;
+    }
+    this.suggestedAnnotations = [];
+    this.errors = this.selectedAnnotation == null;
+		this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+    if (!this.errors) {
+      let self = this;
+      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation,this.campaign.username).then(() => {
+        toastr.success('Annotation added.');
+        self.ea.publish('annotations-created', self.record);
         this.prefix = "";
         this.selectedAnnotation = null;
-        this.suggestedAnnotations = [];
-        toastr.error('Tag already exists');
-        return;
-      }
-      this.suggestedAnnotations = [];
-      this.errors = this.selectedAnnotation == null;
-      if (!this.errors) {
-        let self = this;
-        this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation,this.campaign.username).then(() => {
-          toastr.success('Annotation added.');
-          self.ea.publish('annotations-created', self.record);
-          this.prefix = "";
-          this.selectedAnnotation = null;
-        }).catch((error) => {
-          toastr.error('An error has occured');
-        });
-      }
+      }).catch((error) => {
+        toastr.error('An error has occured');
+      });
     }
   }
 
