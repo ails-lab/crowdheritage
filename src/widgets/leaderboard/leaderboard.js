@@ -20,6 +20,7 @@ import { UserServices } from 'UserServices';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import settings from 'global.config.js';
+import { toggleMore } from 'utils/Plugin.js';
 
 let COUNT = 5;
 
@@ -44,6 +45,10 @@ export class Leaderboard {
     if (this.campaign.userPoints) {
       this.getTopUsers();
     }
+  }
+
+	attached() {
+		toggleMore(".leaderlist");
   }
 
   async getTopUsers() {

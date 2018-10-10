@@ -63,21 +63,18 @@ export class Tagitem {
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
-	this.selectedAnnotation = null;
-	this.lg=loginPopup;
+		this.selectedAnnotation = null;
+		this.lg=loginPopup;
 
-	this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
-	this.handleBodyClick = e => {
-        console.log(e.target.id);
-        if(e.target.id!="annotationInput"){
-        	this.suggestedAnnotations =  [];
-        	 this.suggestionsLoading = false;
-        }
+		this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
+		this.handleBodyClick = e => {
+      console.log(e.target.id);
+      if(e.target.id!="annotationInput"){
+      	this.suggestedAnnotations =  [];
+      	 this.suggestionsLoading = false;
+      }
     };
-
   }
-
-
 
   attached() {
       document.addEventListener('click', this.handleBodyClick);
@@ -86,7 +83,7 @@ export class Tagitem {
 
   detached() {
 	  this.evsubscr1.dispose();
-      document.removeEventListener('click', this.handleBodyClick);
+    document.removeEventListener('click', this.handleBodyClick);
   }
 
   async activate(params) {
@@ -113,8 +110,39 @@ export class Tagitem {
       return;
     }
     this.selectedAnnotation = null;
-    this.getSuggestedAnnotations(this.prefix);
+		if (this.campaign.motivation == 'GeoTagging') {
+			this.getGeoAnnotations(this.prefix);
+		} else {
+			this.getSuggestedAnnotations(this.prefix);
+		}
   }
+
+	async getGeoAnnotations(prefix) {
+		this.lastRequest = prefix;
+		this.suggestionsLoading = true;
+		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
+		this.selectedAnnotation = null;
+		let self = this;
+		await this.thesaurusServices.getGeonameSuggestions(prefix)
+		.then((res) => {
+    	self.getGeoSuggestions( res);
+  	});
+	}
+
+	getGeoSuggestions(jData) {
+		if (jData == null) {
+			// There was a problem parsing search results
+			alert("nothing found");
+			return;
+		}
+		var html = '';
+		var geonames = jData.geonames;
+		this.suggestedAnnotations = geonames;
+ 		/*if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
+		self.selectedAnnotation = self.suggestedAnnotations[0];
+		}*/
+		this.suggestionsLoading = false;
+	}
 
   async getSuggestedAnnotations(prefix) {
     this.lastRequest = prefix;
@@ -133,6 +161,46 @@ export class Tagitem {
       }
     });
   }
+
+	selectGeoAnnotation(geoid) {
+	  if(this.userServices.isAuthenticated()==false){
+		  this.lg.call();
+			return;
+		}
+		if (!this.hasContributed()) {
+      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+    }
+		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+			return obj.geonameId === geoid
+		});
+		let existscheck=this.annotations.find(obj => {
+			console.log(obj);
+			return (obj.uri &&  obj.uri.indexOf(geoid)!=-1)
+		});
+		if(existscheck!=null){
+			this.prefix = "";
+			this.selectedAnnotation = null;
+			this.suggestedAnnotations = [];
+			toastr.error('Geotag already exists');
+			return;
+		}
+		this.suggestedAnnotations = [];
+		this.errors = this.selectedAnnotation == null;
+		this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+		if (!this.errors) {
+			let self = this;
+			this.annotationServices.annotateGeoRecord(this.recId, geoid, this.campaign.username)
+			.then(() => {
+				toastr.success('Annotation added.');
+				self.ea.publish('annotations-created', self.record);
+				self.ea.publish('geotag-created', this.selectedAnnotation);
+			 	this.prefix = "";
+				this.selectedAnnotation = null;
+			}).catch((error) => {
+				toastr.error('An error has occured');
+			});
+		}
+ 	}
 
   selectSuggestedAnnotation(index) {
     if (this.userServices.isAuthenticated() == false) {
@@ -207,8 +275,11 @@ export class Tagitem {
       this.lg.call();
       return;
     }
+		var lt=this.annotations[index];
     this.annotationServices.delete(id).then(() => {
       this.annotations.splice(index, 1);
+			if (this.campaign.motivation == 'GeoTagging')
+				this.ea.publish('geotag-removed', lt.coordinates);
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
       if (!this.hasContributed()) {
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
@@ -334,7 +405,8 @@ export class Tagitem {
   }
 
   async getRecordAnnotations(id) {
-    await this.recordServices.getAnnotations(this.recId, "Tagging").then(response => {
+		let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
+    await this.recordServices.getAnnotations(this.recId, motivation).then(response => {
       for (var i = 0; i < response.length; i++) {
         if (!this.userServices.current) {
           this.annotations.push(new Annotation(response[i], ""));

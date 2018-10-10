@@ -111,7 +111,8 @@
                      if.bind="hasMotivation('ColorTagging')"
                      model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
-            <compose view-model="widgets/taggeo/taggeo"
+            <compose view="widgets/taggeo/taggeo.html"
+										 view-model="widgets/tagitem/tagitem"
                      if.bind="hasMotivation('GeoTagging')"
                      model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>

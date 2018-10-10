@@ -227,23 +227,30 @@ export function initMobileMenu(){
 };
 
 export function toggleMore(container) {
+	const $closedHeight = 200;
+	const $minDiff = 200;
 	var $element = $(container);
 	var $toggle = $element.parent().find(".show-more");
 	if ($element.hasClass("closed")) {
 		// must open
 		$element.css("height", "auto");
 		$height = $element.height();
-		$element.css("height", "200px");
+		$element.css("height", $closedHeight + "px");
 		$element.css("height", $height + "px");
 		$toggle.removeClass("fa-chevron-down").addClass("fa-chevron-up");
+		$element.toggleClass("closed");
 	} else {
 		// must close
 		var $height = $element.height();
-		$element.css("height", $height + "px");
-		$element.css("height", "200px");
-		$toggle.removeClass("fa-chevron-up").addClass("fa-chevron-down");
+		if ($height - $closedHeight >= $minDiff) {
+			$element.css("height", $height + "px");
+			$element.css("height", $closedHeight + "px");
+			$toggle.removeClass("fa-chevron-up").addClass("fa-chevron-down");
+			$element.toggleClass("closed");
+		} else {
+			$toggle.remove();
+		}
 	}
-	$element.toggleClass("closed");
 }
 
 // Method to initialize isotope
