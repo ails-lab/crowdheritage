@@ -122,7 +122,7 @@ export class CampaignSummary {
 
    activate(params, route) {
 
-   
+
     if( this.campaign && this.campaign.username==params.cname && this.campaign.spacename==params.gname){return;}
     else {
       this.resetInstance();
@@ -154,6 +154,7 @@ export class CampaignSummary {
 
       if (this.userPoints < this.campaign.badges.bronze) {
         this.userBadge = '/img/badges.png';
+				this.userBadgeName = 'rookie';
       }
       else if (this.userPoints < this.campaign.badges.silver) {
         this.userBadge = '/img/badge-bronze.png';
