@@ -33,6 +33,8 @@ export class Googlemap{
      this.markers=[];
      this.evgeotag = this.ea.subscribe('geotag-created', (place) => { this.codeLocation(place)});
      this.remgeotag = this.ea.subscribe('geotag-removed', (coordinates) => { this.codeLocations()});
+     this.image = 'https://akhrisna.github.io/WITHCROWD/img/ic-marker-full.png';
+	 
   }
 
   activate(model) {
@@ -60,7 +62,10 @@ export class Googlemap{
 	      	 var address = {lat: this.data[i].coordinates.latitude, lng: this.data[i].coordinates.longitude};
 	          var marker = new self.maps.Marker({
 	              map: self.map,
-	              position: address
+	              icon: self.image,
+	              position: address,
+	              animation: google.maps.Animation.DROP,
+	              label: this.data[i].label
 	          });
 	           self.markers.push(marker);
 	       
@@ -77,7 +82,11 @@ export class Googlemap{
 	      	 var coords = {lat: parseFloat(place.lat), lng: parseFloat(place.lng)};
 	          var marker = new this.maps.Marker({
 	              map: this.map,
-	              position: coords
+	              position: coords,
+	              icon: this.image,
+	              position: address,
+	              animation: google.maps.Animation.DROP,
+	              label: this.data[i].label
 	          });
 	           this.markers.push(marker);
 	           this.map.setCenter(coords);
