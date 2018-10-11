@@ -7,7 +7,7 @@
       <!-- info-->
       <div class="infobar">Tag items that you see on the image, you can validate it first by checking on the thesaurus before adding the tag.</div>
 			<div  class="searchbox">
-    		<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:1000" input.delegate="prefixChanged($event.target.value) & debounce:1000"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+    		<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged($event.target.value) & debounce:1000"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
 						<li repeat.for="item of suggestedAnnotations" id="${$index}" click.delegate="selectSuggestedAnnotation(item.id)">${item.label}</li>
