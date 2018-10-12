@@ -87,7 +87,7 @@ export class Googlemap{
 	              position: coords,
 	              icon: this.image,
 	              animation: google.maps.Animation.DROP,
-	              title: this.data[i].label,
+	              title:place.name,
 	              label: {text: this.amount, color: "white", fontSize: '11px'}
 	          });
 	           this.markers.push(marker);
