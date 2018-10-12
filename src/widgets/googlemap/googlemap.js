@@ -86,7 +86,6 @@ export class Googlemap{
 	              map: this.map,
 	              position: coords,
 	              icon: this.image,
-	              position: address,
 	              animation: google.maps.Animation.DROP,
 	              title: this.data[i].label,
 	              label: {text: this.amount, color: "white", fontSize: '11px'}
