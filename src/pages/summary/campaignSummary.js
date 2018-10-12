@@ -80,7 +80,7 @@ export class CampaignSummary {
 	    this.currentCount = 0;
 	    this.loading = false;
 	    this.more = true;
-      this.count=4;
+        this.count=4;
 	    this.userTags = 0;
 	    this.userRecords = 0;
 	    this.userPoints = 0;
@@ -89,6 +89,7 @@ export class CampaignSummary {
 	    this.userBadgeName = "";
 	    this.points = [];
 	}
+  
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
@@ -121,10 +122,7 @@ export class CampaignSummary {
   }
 
    activate(params, route) {
-
-
-    if( this.campaign && this.campaign.username==params.cname && this.campaign.spacename==params.gname){return;}
-    else {
+   
       this.resetInstance();
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
@@ -138,7 +136,7 @@ export class CampaignSummary {
           this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
           this.getUserStats();
       });
-    }
+    
   }
 
   getUserStats() {
