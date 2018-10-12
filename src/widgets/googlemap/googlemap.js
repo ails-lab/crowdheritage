@@ -33,7 +33,7 @@ export class Googlemap{
      this.markers=[];
      this.evgeotag = this.ea.subscribe('geotag-created', (place) => { this.codeLocation(place)});
      this.remgeotag = this.ea.subscribe('geotag-removed', (coordinates) => { this.codeLocations()});
-     this.image = 'https://akhrisna.github.io/WITHCROWD/img/ic-marker-full.png';
+     this.image = '../../img/ic-marker.png';
 	 
   }
 
@@ -65,7 +65,9 @@ export class Googlemap{
 	              icon: self.image,
 	              position: address,
 	              animation: google.maps.Animation.DROP,
-	              label: this.data[i].label
+	              title: this.data[i].label,
+	              label: {text: this.amount, color: "white", fontSize: '11px'}
+	              
 	          });
 	           self.markers.push(marker);
 	       
@@ -86,7 +88,8 @@ export class Googlemap{
 	              icon: this.image,
 	              position: address,
 	              animation: google.maps.Animation.DROP,
-	              label: this.data[i].label
+	              title: this.data[i].label,
+	              label: {text: this.amount, color: "white", fontSize: '11px'}
 	          });
 	           this.markers.push(marker);
 	           this.map.setCenter(coords);
