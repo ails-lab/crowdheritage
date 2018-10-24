@@ -1,0 +1,166 @@
+<template>
+
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <!-- lbl-->
+        <div class="bannertext">
+          <div class="line">
+            <div class="wrap"><span>My Profile</span></div>
+          </div>
+        </div>
+        <!-- bg-->
+        <div class="bgwrap" style="background-image: img/bg-banner.png;"></div>
+      </div>
+    </section>
+    <!-- user info-->
+    <section class="userprofile">
+      <div class="container">
+        <!-- left-->
+        <div class="left">
+
+          <!-- wrap-->
+          <div class="wrap">
+            <div class="badges">
+							<img src.bind="user.originalProfileImage">
+							<ul class="actions">
+								<li class="action-edit"><i class="fa fa-cloud-upload"></i></li>
+							</ul>
+						</div>
+            <!-- user stat-->
+            <div class="info">
+              <!-- text-->
+              <h1>${user.firstName} ${user.lastName}</h1>
+							<p>${user.gender} (in case you didn't notice)</p>
+							<h2>About</h2>
+							<p>${user.about}</p>
+							<h2>Contact information</h2>
+							<p>${user.email}</p>
+							<ul class="actions">
+								<li class="action-edit"><i class="fa fa-cog"></i></li>
+							</ul>
+            </div>
+          </div>
+
+        </div>
+				<!-- right-->
+				<div class="right">
+					<!-- wrap-->
+					<div class="wrap">
+						<div class="heading"><span>ACHIEVEMENTS</span></div>
+						<!-- stats-->
+						<ul class="stats">
+							<li>
+								<div class="lbl">TAGS</div>
+								<div class="val">5</div>
+							</li>
+							<li>
+								<div class="lbl">ITEMS</div>
+								<div class="val">2</div>
+							</li>
+							<li>
+								<div class="lbl">BADGE</div>
+								<div class="val">GOLD</div>
+							</li>
+							<li>
+								<div class="lbl">CAMPAIGN RANK</div>
+								<div class="val">10</div>
+							</li>
+							<li>
+								<div class="lbl">POINTS</div>
+								<div class="val">20</div>
+							</li>
+						</ul>
+						<!-- description-->
+						<div class="desc">
+							Contribute more and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
+						</div>
+					</div>
+				</div>
+      </div>
+    </section>
+    <!-- collection list-->
+    <section class="collections">
+      <div class="container">
+        <!-- top section-->
+        <div class="topsection">
+          <!-- label-->
+          <div class="sectionlabel">
+            <div class="bold">COLLECTIONS</div><span>SELECT TO CONTRIBUTE</span>
+          </div>
+          <!-- filter-->
+          <!-- <div class="sort">
+            <div class="lbl">SORT BY </div>
+            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">ALPHABETICAL</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
+              <ul aria-labelledby="sorting" class="dropdown-menu">
+              <li> <a href="#">ALPHABETICAL</a></li>
+              <li> <a href="#">DATE</a></li>
+            </ul>
+          </div> -->
+        </div>
+        <!-- campaign reel-->
+        <div class="campaignlist">
+          <!-- entry-->
+          <div class="entries isotoped" data-grid="isotope" ref="grid" >
+            <!-- item-->
+            <div class="sizer"></div>
+            <!-- entry-->
+
+            <div class="entry ${'isoload' & oneTime} ${col.dbId}" repeat.for="col of collections">
+              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToItem(campaign, col, [], 0)">
+                <!-- thumb-->
+                <div class="thumbs">
+                  <!-- img--><img src.bind="col.backgroundImage" class="isoimage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+                  <!-- action-->
+                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
+                </div>
+                <!-- detail-->
+                <div class="detail">
+                  <!-- count-->
+                  <div class="count">
+
+                    ${col.entryCount}<span>ITEMS</span>
+                  </div>
+                  <!-- title-->
+                  <div class="desc">
+                    <div class="title">${col.title}</div>
+                    <div class="owner">By ${col.creatorName}</div>
+                  </div>
+                </div></a>
+            </div>
+
+          </div>
+          <!-- more-->
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
+            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- campaign stats-->
+    <section class="campaignstats">
+      <!-- conty-->
+      <div class="container">
+        <!-- maps-->
+        <div class="left">
+          <!-- maps-->
+          <div class="maps">
+            <div id="maps" class="mapswrap">
+            <compose view-model="widgets/googlemap/googlemap"></compose>
+            </div>
+            <!-- heading-->
+            <div class="heading">Location of Active Volunteers</div>
+          </div>
+          <!-- graphs-->
+         <compose view-model="widgets/graph/graph" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
+        </div>
+        <!-- <div class="right">
+          <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
+        </div> -->
+      </div>
+    </section>
+  </main>
+</template>

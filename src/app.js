@@ -31,16 +31,16 @@ export class App {
     this.userServices = userServices;
     container.registerInstance('loginPopup', this.loginPopup.bind(this));
   }
-  
+
   activate() {
-		
+
 		if (this.userServices.isAuthenticated() && this.userServices.current === null) {
 			return Promise.all([
 				this.userServices.reloadCurrentUser()
 			]);
 		}
 
-		
+
 	}
 
   // Properties
@@ -72,6 +72,7 @@ export class App {
       { route: 'about',                name: 'about',    moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | WITHcrowd' },
       { route: 'privacy',              name: 'privacy',  moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | WITHcrowd' },
 			{ route: 'terms',                name: 'terms',    moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | WITHcrowd' },
+			{ route: 'user/:uname',					 name: 'user', 		 moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				 nav: false, title: 'User Profile'},
 			{ route: 'feedback',             name: 'feedback', moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | WITHcrowd' }
     ]);
 

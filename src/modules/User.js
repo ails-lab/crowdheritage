@@ -48,6 +48,12 @@ export class User {
 		}
 		return '/img/assets/images/user.png';
 	}
+	get originalProfileImage() {
+		if (this.avatar && this.avatar.Original) {
+			return `${settings.baseUrl}${this.avatar.Original}`;
+		}
+		return '/img/assets/images/user.png';
+	}
 	get hasFacebook() { return this.facebookId !== null; }
 	get hasGoogle() { return this.googlekId !== null; }
 
