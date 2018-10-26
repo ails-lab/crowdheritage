@@ -1,0 +1,75 @@
+// import bootstrap variables, grid and mixins
+@import "../js/vendor/bootstrap/less/variables.less";
+@import "../js/vendor/bootstrap/less/mixins.less";
+
+//----- anchors ------//
+a {
+	outline: none;
+
+	// focus
+	&:focus {
+		outline: none;
+		outline: 0;
+	}
+}
+
+
+//----- buttons ------//
+.btn-action() {
+	font-family: @headings-font-family;
+	display: block;
+	border: 2px solid #dedede;
+	color: #000;
+	font-size: 1.4rem;
+	padding: 7px 15px 6px 15px;
+	.transition( all @transition-timing );
+
+	// hover
+	&:hover {
+		background-color: #000;
+		color: #fff;
+		border-color: #000;
+		text-decoration: none;
+	}
+}
+
+
+
+//------ font ------//
+
+
+//------ sectionn label ------//
+.sectionlabel {
+	font-family: @headings-font-family;
+	padding-bottom: 20px;
+	border-bottom: 2px solid #dedede;
+	position: relative;
+
+	// previous
+	&::before {
+		content: "";
+		background-color: #dedede;
+		width: 600px;
+		height: 2px;
+		position: absolute;
+		right: 100px;
+		display: inline-block;
+		bottom: -2px;
+	}
+
+	// bold
+	.bold {
+		background-color: #000;
+		display: inline-block;
+		color: #fff;
+		padding: 1px 8px 0 8px;
+		position: relative;
+		left: -8px;
+		margin-bottom: 5px;
+	}
+
+	// span
+	span {
+		display: block;
+	}
+}

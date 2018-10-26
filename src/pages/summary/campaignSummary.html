@@ -154,8 +154,8 @@
             <div class="entry ${'isoload' & oneTime} ${col.dbId}" repeat.for="col of collections">
               <!-- wrap--><a href="javascript:void(0)" click.delegate="goToItem(campaign, col, [], 0)">
                 <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src.bind="col.backgroundImage" class="isoimage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+                <div class="thumbs thumbs-count-${col.absMedia.length}">
+                  <!-- img--><img repeat.for="med of col.absMedia" src.bind="med" class="isoimage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                   <!-- action-->
                   <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
                 </div>

@@ -49,8 +49,8 @@ export class CampaignSummary {
     this.router = router;
     this.records = [];
     this.recId = "";
-	this.thisVM=this;
-	this.taskQueue=taskQueue;
+		this.thisVM=this;
+		this.taskQueue=taskQueue;
     this.campaign = 0;
     this.collections = [];
     this.collectionsCount = 0;
@@ -66,30 +66,29 @@ export class CampaignSummary {
     this.userBadgeName = "";
     this.points = [];
     if (!instance) {
-		instance = this;
-	}
+			instance = this;
+		}
   }
 
-
-  resetInstance() {
-	    this.records = [];
-	    this.recId = "";
-	    this.campaign = 0;
-	    this.collections = [];
-	    this.collectionsCount = 0;
-	    this.currentCount = 0;
-	    this.loading = false;
-	    this.more = true;
-        this.count=4;
-	    this.userTags = 0;
-	    this.userRecords = 0;
-	    this.userPoints = 0;
-	    this.userBadge = 0;
-	    this.userRank = 0;
-	    this.userBadgeName = "";
-	    this.points = [];
+	resetInstance() {
+    this.records = [];
+    this.recId = "";
+    this.campaign = 0;
+    this.collections = [];
+    this.collectionsCount = 0;
+    this.currentCount = 0;
+    this.loading = false;
+    this.more = true;
+    this.count=4;
+    this.userTags = 0;
+    this.userRecords = 0;
+    this.userPoints = 0;
+    this.userBadge = 0;
+    this.userRank = 0;
+    this.userBadgeName = "";
+    this.points = [];
 	}
-  
+
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
@@ -122,7 +121,7 @@ export class CampaignSummary {
   }
 
    activate(params, route) {
-   
+
       this.resetInstance();
       this.campaignServices.getCampaignByName(params.cname)
         .then( (result) => {
@@ -136,7 +135,7 @@ export class CampaignSummary {
           this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
           this.getUserStats();
       });
-    
+
   }
 
   getUserStats() {

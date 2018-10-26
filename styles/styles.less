@@ -1,7 +1,11 @@
-
+@import url('https://fonts.googleapis.com/css?family=Dosis:500,600,700|Rubik:400,400i,700,700i|PT+Sans:400,400i,700,700i.css');
 @import './../js/vendor/font-awesome/css/font-awesome.min.css';
 @import './../js/vendor/bootstrap/css/bootstrap.css';
 @import './../js/vendor/slick.js/slick/slick.css';
+@import '../js/vendor/bootstrap/less/mixins.less';
+@import "../js/vendor/bootstrap/less/variables.less";
+// custom settings
+@import "custom.inc.less";
 @import "~toastr/build/toastr.css";
 
 .centered-and-cropped {
@@ -658,158 +662,170 @@ body main section.campaigns .loadmore a:hover {
   text-decoration: none;
 }
 body main section.collections {
-  padding: 60px 0 60px 0;
+	padding: 60px 0 60px 0;
+	.clearfix;
+
+	// container
+	> .container {
+		padding-right: 0;
+	}
+
+	// reel
+	.campaignlist {
+
+		// entries
+		.entries {
+			margin: 0px -30px 0 -30px;
+			.clearfix;
+
+			// sizer
+			.sizer {
+				display: none;
+			}
+
+			// entry
+			.sizer, .entry {
+				width: 33.333%;
+				padding: 0 30px 0 30px;
+				margin-bottom: 35px;
+
+				// thumbs
+				.thumbs {
+					width: 100%;
+					position: relative;
+
+					// img
+					img {
+						width: 100%;
+					}
+
+					// action
+					.action {
+						width: 100%;
+						height: 100%;
+						background: rgba(255,186,9,0.5);
+						position: absolute;
+						top: 0;
+						left: 0;
+						text-align: center;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						color: #fff;
+						font-family: @headings-font-family;
+						.opacity( 0 );
+						.transition( all @transition-timing );
+
+						// plus
+						.plus {
+							font-size: 2.5rem;
+							position: relative;
+							top: -4px;
+							margin-right: 5px;
+						}
+					}
+
+					// before
+					&::before {
+						content: "";
+						position: absolute;
+						border: 2px solid #fff;
+						z-index: 1;
+						left: 30px;
+						right: 30px;
+						top: 30px;
+						bottom: 30px;
+					}
+				}
+
+				// details
+				.detail {
+					.clearfix;
+					padding: 25px 0 25px 0;
+
+					// count
+					.count {
+						font-family: @headings-font-family;
+						font-size: 3.5rem;
+						width: 25%;
+						float: left;
+						line-height: 0.8em;
+						text-align: center;
+						padding: 5px 0 0 0;
+						color: #000;
+
+						// span
+						span {
+							font-size: 1.2rem;
+							text-align: center;
+							display: block;
+							color: #838383;
+						}
+					}
+
+					// desc
+					.desc {
+						width: 75%;
+						float: left;
+						line-height: 1.7em;
+						font-size: 1.4rem;
+						color: #000;
+						.owner {
+							color: #838383;
+						}
+					}
+				}
+
+				// anchor
+				a {
+
+					// hover
+					&:hover {
+
+						// thumbs
+						.thumbs {
+							.action {
+								.opacity( 1 );
+							}
+						}
+					}
+				}
+			}
+
+			.entry .thumbs {
+				img {
+					height: 275px;
+				}
+				&.thumbs-count-1 {
+					width: 100%;
+
+				}
+				&.thumbs-count-2 {}
+				&.thumbs-count-3 {
+					display: flex;
+					img {
+						width: 100%/3;
+					}
+				}
+				&.thumbs-count-4 {}
+				&.thumbs-count-5 {}
+			}
+		}
+
+		// more
+		.loadmore {
+			text-align: center;
+
+			// anchor
+			a {
+				.btn-action();
+				margin: 0 auto;
+				display: inline-block;
+			}
+		}
+	}
 }
-body main section.collections:before,
-body main section.collections:after {
-  content: " ";
-  display: table;
-}
-body main section.collections:after {
-  clear: both;
-}
-body main section.collections > .container {
-  padding-right: 0;
-}
-body main section.collections .campaignlist .entries {
-  margin: 0px -30px 0 -30px;
-}
-body main section.collections .campaignlist .entries:before,
-body main section.collections .campaignlist .entries:after {
-  content: " ";
-  display: table;
-}
-body main section.collections .campaignlist .entries:after {
-  clear: both;
-}
-body main section.collections .campaignlist .entries .sizer {
-  display: none;
-}
-body main section.collections .campaignlist .entries .sizer,
-body main section.collections .campaignlist .entries .entry {
-  width: 33.333%;
-  padding: 0 30px 0 30px;
-  margin-bottom: 35px;
-}
-body main section.collections .campaignlist .entries .sizer .thumbs,
-body main section.collections .campaignlist .entries .entry .thumbs {
-  width: 100%;
-  position: relative;
-}
-body main section.collections .campaignlist .entries .sizer .thumbs img,
-body main section.collections .campaignlist .entries .entry .thumbs img {
-  width: 100%;
-}
-body main section.collections .campaignlist .entries .sizer .thumbs .action,
-body main section.collections .campaignlist .entries .entry .thumbs .action {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 186, 9, 0.5);
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-family: "Dosis";
-  opacity: 0;
-  filter: alpha(opacity=0);
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
-body main section.collections .campaignlist .entries .sizer .thumbs .action .plus,
-body main section.collections .campaignlist .entries .entry .thumbs .action .plus {
-  font-size: 2.5rem;
-  position: relative;
-  top: -4px;
-  margin-right: 5px;
-}
-body main section.collections .campaignlist .entries .sizer .thumbs::before,
-body main section.collections .campaignlist .entries .entry .thumbs::before {
-  content: "";
-  position: absolute;
-  border: 2px solid #fff;
-  z-index: 1;
-  left: 30px;
-  right: 30px;
-  top: 30px;
-  bottom: 30px;
-}
-body main section.collections .campaignlist .entries .sizer .detail,
-body main section.collections .campaignlist .entries .entry .detail {
-  padding: 25px 0 25px 0;
-}
-body main section.collections .campaignlist .entries .sizer .detail:before,
-body main section.collections .campaignlist .entries .entry .detail:before,
-body main section.collections .campaignlist .entries .sizer .detail:after,
-body main section.collections .campaignlist .entries .entry .detail:after {
-  content: " ";
-  display: table;
-}
-body main section.collections .campaignlist .entries .sizer .detail:after,
-body main section.collections .campaignlist .entries .entry .detail:after {
-  clear: both;
-}
-body main section.collections .campaignlist .entries .sizer .detail .count,
-body main section.collections .campaignlist .entries .entry .detail .count {
-  font-family: "Dosis";
-  font-size: 3.5rem;
-  width: 25%;
-  float: left;
-  line-height: 0.8em;
-  text-align: center;
-  padding: 5px 0 0 0;
-  color: #000;
-}
-body main section.collections .campaignlist .entries .sizer .detail .count span,
-body main section.collections .campaignlist .entries .entry .detail .count span {
-  font-size: 1.2rem;
-  text-align: center;
-  display: block;
-  color: #838383;
-}
-body main section.collections .campaignlist .entries .sizer .detail .desc,
-body main section.collections .campaignlist .entries .entry .detail .desc {
-  width: 75%;
-  float: left;
-  line-height: 1.7em;
-  font-size: 1.4rem;
-  color: #000;
-}
-body main section.collections .campaignlist .entries .sizer .detail .desc .owner,
-body main section.collections .campaignlist .entries .entry .detail .desc .owner {
-  color: #838383;
-}
-body main section.collections .campaignlist .entries .sizer a:hover .thumbs .action,
-body main section.collections .campaignlist .entries .entry a:hover .thumbs .action {
-  opacity: 1;
-  filter: alpha(opacity=100);
-}
-body main section.collections .loadmore {
-  text-align: center;
-}
-body main section.collections .loadmore a {
-  font-family: "Dosis";
-  display: block;
-  border: 2px solid #dedede;
-  color: #000;
-  font-size: 1.4rem;
-  padding: 7px 15px 6px 15px;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  margin: 0 auto;
-  display: inline-block;
-}
-body main section.collections .loadmore a:hover {
-  background-color: #000;
-  color: #fff;
-  border-color: #000;
-  text-decoration: none;
-}
+
 body main section.campaignstats {
   padding: 0 0 0px 0;
 	min-height: 525px;
@@ -1522,7 +1538,7 @@ body main section.userprofile {
 					line-height: 4rem;
 					small {
 						font-size: 1.5rem;
-						margin-left: 1000000px;
+						margin-left: 10px;
 						color: #909090;
 					}
 				}
@@ -2206,6 +2222,7 @@ body main section.tagging .right .heading.yellow {
   background-color: #ffbb00;
 }
 body footer {
+	display: none;
   padding: 60px 0px 60px 0px;
 }
 body footer .container:before,

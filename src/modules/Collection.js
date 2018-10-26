@@ -42,12 +42,19 @@ export class Collection {
 		}
 		this.thumbnail = null;
 		this.media = [];
+		this.absMedia = [];
 		if (data.media) {
 			this.thumbnail = data.media && data.media[0] && data.media[0].Thumbnail ? data.media[0].Thumbnail.withUrl : null;
 			for (let i = 1; i < data.media.length; i++) {
 				let img = data.media[i];
 				if (img.Thumbnail.withUrl !== '') {
 					this.media.push(img);
+				}
+			}
+			for (let i = 0; i < Math.min(data.media.length, 5); i++) {
+				let img = data.media[i];
+				if (img.Thumbnail.withUrl !== '') {
+					this.absMedia.push(this.getAbsUrl(img.Thumbnail.withUrl));
 				}
 			}
 		}
@@ -101,6 +108,16 @@ export class Collection {
 		this.modifiedAt = data.administrative.lastModified;
 		this.createdAt = data.administrative.created;
 		this.data = data;
+	}
+
+	getAbsUrl(med) {
+		if (med) {
+			if (med.startsWith('http')) {
+				return `${med}`;
+			}
+			return `${settings.baseUrl}${med}`;
+		}
+		return '/img/assets/ui/ic-noimage.png';
 	}
 
 	get itemCountString() {
