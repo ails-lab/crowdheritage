@@ -793,22 +793,28 @@ body main section.collections {
 			}
 
 			.entry .thumbs {
-				img {
-					height: 275px;
-				}
-				&.thumbs-count-1 {
-					width: 100%;
-
-				}
-				&.thumbs-count-2 {}
-				&.thumbs-count-3 {
-					display: flex;
+				max-height: 250px;
+				overflow: hidden;
+				.thumbs-images {
+					column-count: 3;
+					column-gap: 0;
+					line-height: 0;
 					img {
-						width: 100%/3;
+						width: 100%;
+						height: auto;
+					}
+					&.thumbs-count-1 {
+						column-count: 1;
+					}
+					&.thumbs-count-2 {
+						column-count: 2;
+					}
+					&.thumbs-count-3,
+					&.thumbs-count-4,
+					&.thumbs-count-5 {
+						column-count: 2;
 					}
 				}
-				&.thumbs-count-4 {}
-				&.thumbs-count-5 {}
 			}
 		}
 

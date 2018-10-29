@@ -25,10 +25,7 @@ import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay,setMap} from 'utils/Plugin.js';
 
-
-
 let instance = null;
-
 
 @inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router,TaskQueue)
 export class CampaignSummary {
