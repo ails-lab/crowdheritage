@@ -130,6 +130,7 @@ export function isoRelay(){
 export function aureliaIsoImagesLoaded(container, $items,parent) {
    logger.info('plugin.js / aureliaIsoImagesLoaded');
    let $container = $(container);
+	 console.info($container);
 
 	let iso = $container.data('isotope');
 	if(!iso){

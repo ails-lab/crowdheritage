@@ -30,14 +30,14 @@ export class CollectionServices {
 	}
 
 	// Collection retrieval
-	getCollection(id) {
+	async getCollection(id) {
 		return this.http.fetch('/collection/' + id, {
 			method: 'GET'
 		}).then((response) => response.json());
 	}
 
 	// Records retrieval
-	getRecords(id, offset, count) {
+	async getRecords(id, offset, count) {
 		// return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count, {
 		return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count + '&locale=ALL', {
 			method: 'GET'

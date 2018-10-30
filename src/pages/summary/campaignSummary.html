@@ -133,15 +133,6 @@
           <div class="sectionlabel">
             <div class="bold">COLLECTIONS</div><span>SELECT TO CONTRIBUTE</span>
           </div>
-          <!-- filter-->
-          <!-- <div class="sort">
-            <div class="lbl">SORT BY </div>
-            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">ALPHABETICAL</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
-              <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li> <a href="#">ALPHABETICAL</a></li>
-              <li> <a href="#">DATE</a></li>
-            </ul>
-          </div> -->
         </div>
         <!-- campaign reel-->
         <div class="campaignlist">
@@ -152,8 +143,10 @@
             <!-- entry-->
 
             <div class="entry ${'isoload' & oneTime} ${col.dbId}" repeat.for="col of collections">
-              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToItem(campaign, col, [], 0)">
-                <!-- thumb-->
+              <!-- wrap-->
+							<!-- <a href="javascript:void(0)" click.delegate="goToCollection(campaign, col)"> -->
+							<a route-href="route: collection; params.bind: { cname: campaign.username, gname: campaign.spacename, colid: col.dbId }">
+								<!-- thumb-->
 								<div class="thumbs">
 									<div class="thumbs-images thumbs-count-${col.absMedia.length}">
 										<img repeat.for="med of col.absMedia" src.bind="med" class="isoimage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />

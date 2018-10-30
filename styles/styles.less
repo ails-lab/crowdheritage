@@ -664,41 +664,33 @@ body main section.campaigns .loadmore a:hover {
 body main section.collections {
 	padding: 60px 0 60px 0;
 	.clearfix;
-
 	// container
 	> .container {
 		padding-right: 0;
 	}
-
 	// reel
 	.campaignlist {
-
 		// entries
 		.entries {
 			margin: 0px -30px 0 -30px;
 			.clearfix;
-
 			// sizer
 			.sizer {
 				display: none;
 			}
-
 			// entry
 			.sizer, .entry {
 				width: 33.333%;
 				padding: 0 30px 0 30px;
 				margin-bottom: 35px;
-
 				// thumbs
 				.thumbs {
 					width: 100%;
 					position: relative;
-
 					// img
 					img {
 						width: 100%;
 					}
-
 					// action
 					.action {
 						width: 100%;
@@ -715,7 +707,6 @@ body main section.collections {
 						font-family: @headings-font-family;
 						.opacity( 0 );
 						.transition( all @transition-timing );
-
 						// plus
 						.plus {
 							font-size: 2.5rem;
@@ -724,7 +715,6 @@ body main section.collections {
 							margin-right: 5px;
 						}
 					}
-
 					// before
 					&::before {
 						content: "";
@@ -737,12 +727,10 @@ body main section.collections {
 						bottom: 30px;
 					}
 				}
-
 				// details
 				.detail {
 					.clearfix;
 					padding: 25px 0 25px 0;
-
 					// count
 					.count {
 						font-family: @headings-font-family;
@@ -753,7 +741,6 @@ body main section.collections {
 						text-align: center;
 						padding: 5px 0 0 0;
 						color: #000;
-
 						// span
 						span {
 							font-size: 1.2rem;
@@ -762,7 +749,6 @@ body main section.collections {
 							color: #838383;
 						}
 					}
-
 					// desc
 					.desc {
 						width: 75%;
@@ -775,13 +761,10 @@ body main section.collections {
 						}
 					}
 				}
-
 				// anchor
 				a {
-
 					// hover
 					&:hover {
-
 						// thumbs
 						.thumbs {
 							.action {
@@ -791,7 +774,6 @@ body main section.collections {
 					}
 				}
 			}
-
 			.entry .thumbs {
 				max-height: 250px;
 				overflow: hidden;
@@ -817,16 +799,30 @@ body main section.collections {
 				}
 			}
 		}
-
 		// more
 		.loadmore {
 			text-align: center;
-
 			// anchor
 			a {
 				.btn-action();
 				margin: 0 auto;
 				display: inline-block;
+			}
+		}
+	}
+	&.collection-item-list {
+		.campaignlist .entries .entry {
+			width: auto;
+			padding: 0;
+			margin: 0;
+			.thumbs {
+				overflow: auto;
+				max-height: none;
+				height: 250px;
+				img {
+					height: 250px;
+					width: auto;
+				}
 			}
 		}
 	}

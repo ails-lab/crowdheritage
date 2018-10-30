@@ -67,7 +67,9 @@ export class App {
     config.map([
       { route: [ ':gname?'],    href: 'index',    name: 'index',    moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
       { route: ':gname/:cname',        name: 'summary',  moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
-      { route: ':gname/:cname/:recid', name: 'item',     moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
+			{ route: ':gname/:cname/'+
+									'collection/:colid', name: 'collection',moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: 'Collection | WITHcrowd'},
+			{ route: ':gname/:cname/:recid', name: 'item',     moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
       { route: 'register',             name: 'register', moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | WITHcrowd' },
       { route: 'about',                name: 'about',    moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | WITHcrowd' },
       { route: 'privacy',              name: 'privacy',  moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | WITHcrowd' },
