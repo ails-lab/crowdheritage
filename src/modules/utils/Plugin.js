@@ -103,13 +103,10 @@ export function initAureliaIsotope(container) {
 			percentPosition: true
 		}
 	});
-
 }
 
 export function isoRelay(){
-
 	if( $( '[data-grid="isotope" ]' ).length > 0 ) {
-
 		$( '[data-grid="isotope" ]' ).isotope({
 			itemSelector: settings.mItem,
 			transitionDuration: settings.transDuration,
@@ -118,14 +115,11 @@ export function isoRelay(){
 				percentPosition: true
 			}
 		}).imagesLoaded( function() {
-		    // trigger again after images have loaded
+			// trigger again after images have loaded
 			$( '[data-grid="isotope" ]' ).isotope('layout');
-
 		  });
-
+	}
 }
-}
-
 
 export function aureliaIsoImagesLoaded(container, $items,parent) {
    logger.info('plugin.js / aureliaIsoImagesLoaded');

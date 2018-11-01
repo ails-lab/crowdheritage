@@ -91,10 +91,11 @@ export class CollectionSummary {
 	get user() { return this.userServices.current; }
 
   attached() {
-  $('.accountmenu').removeClass('active');
-  isoRelay();
-  $('[data-grid="isotope" ]').find('.entry').removeClass('isoload');
-}
+	  $('.accountmenu').removeClass('active');
+		// initAureliaIsotope('.campaignlist .entries');
+	  // isoRelay();
+	  // $('[data-grid="isotope" ]').find('.entry').removeClass('isoload');
+	}
 
 	async getCollectionRecords(offset, count) {
 		this.loading = true;
@@ -107,7 +108,7 @@ export class CollectionSummary {
 			}
 			if (response.records.length > 0) {
 				this.taskQueue.queueTask(() => {
-					aureliaIsoImagesLoaded(this.grid, $('.isoload'),this.thisVM);
+					// aureliaIsoImagesLoaded(this.grid, $('.isoload'),this.thisVM);
 				});
 			}
 			this.loading = false;
@@ -127,30 +128,11 @@ export class CollectionSummary {
 
   goToItem(record) {
     let item = this.router.routes.find(x => x.name === 'item');
-    item.campaign = thins.campaign;
-    item.offset = 0;
-    this.records=[];
-    // Get the first 2 records from the given collection
-    this.loading = true;
-    this.collectionServices.getRecords(this.collection.dbId, 0, 2)
-      .then(response => {
-        if (response.records.length>0) {
-          for (let i in response.records) {
-            let result = response.records[i];
-            if (result !== null) {
-              let record = new Record(result);
-              this.records.push(record);
-            }
-          }
-          this.loading = false;
-          item.collection = collection;
-          item.records = this.records;
-          this.router.navigateToRoute('item', {cname: campaign.username, gname: campaign.spacename, recid: this.records[0].dbId});
-        }
-      }).catch(error => {
-        this.loading = false;
-        console.log(error.message);
-      });
+    item.campaign = this.campaign;
+    item.offset = this.records.indexOf(record);
+		//TODO pass the subarray of items as well
+    item.collection= this.collection;
+		this.router.navigateToRoute('item', {cname: this.cname, gname: this.gname, recid: this.records[item.offset].dbId});
   }
 
   async loadMore() {

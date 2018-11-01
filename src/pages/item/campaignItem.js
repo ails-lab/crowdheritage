@@ -36,63 +36,67 @@ export class CampaignItem {
     this.recordServices = recordServices;
     this.userServices = userServices;
     this.router = router;
+
     this.campaign = 0;
+		this.hasCollection = false;
+		//If there is a collection
     this.collection = 0;
-    this.collectionTitle = "";
+    this.collectionTitle = '';
     this.collectionCount = 0;
-    this.currentCount = "";
+    // this.currentCount = "";
+		//All the collection items have been retrieved
+		this.allItemsInBuffer = false;
+		this.offset = 0;
+
+		this.record = 0;
+		this.records = [];
 
     this.loadCamp = false;
     this.loadRec = false;
-    this.more = true;
-    this.hasCollection = false;
-
-    this.record = 0;
-    this.records = [];
-    this.offset = 0;
+    // this.more = true;
 
     this.mediaDiv = '';
   }
 
-  nextItem(camp, col, records, offset) {
+  nextItem() {
     // clear previous media
     this.mediaDiv = '';
 
-    // Random record retrieval
-    if (col == 0) {
-      let item = this.router.routes.find(x => x.name === 'item');
-      item.campaign = camp;
-      item.records = records;
-      this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
-    }
-
-    // Record retrieval from specific collection
-    else {
-      // Collection has remaining records
-      if (offset < this.collectionCount) {
-        let item = this.router.routes.find(x => x.name === 'item');
-        item.campaign = camp;
-        item.collection = col;
-        item.records = records;
-        item.offset = offset;
-        this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: item.records[0].dbId});
-      }
-      // If the collection ran out of records, go back to campaign summary page
-      else {
-        let summary = this.router.routes.find(x => x.name === 'summary');
-        summary.campaign = camp;
-        this.router.navigateToRoute('summary', {cname: camp.username, gname: camp.spacename});
-      }
-    }
+	  let item = this.router.routes.find(x => x.name === 'item');
+	  item.campaign = this.campaign;
+		item.collection = this.collection;
+	  item.records = this.records;
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, gname: this.campaign.spacename, recid: this.records[this.offset].dbId});
   }
 
 	toggleLoadMore(container) {
 		toggleMore(container);
 	}
 
-  randomRecords() {
-    this.loadRec = true;
-    this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT+1)
+	getNextCollectionRecords(count) {
+		alert(this.records);
+		this.collectionServices.getRecords(this.collection.dbId, this.offset, count)
+			.then(response => {
+				if (response.records.length > 0) {
+					for (let i in response.records) {
+						let result = response.records[i];
+						if (result !== null) {
+							let record = new Record(result);
+							this.records.push(record);
+						}
+					}
+					if (response.records.length < count)
+						this.allItemsInBuffer = true;
+					this.offset += response.records.length;
+				}
+			}).catch(error => {
+				this.loadRec = false;
+				console.error(error.message);
+			});
+	}
+
+  getRandomCampaignRecords(count) {
+    this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, count)
       .then(response => {
         if (response.length>0) {
           for (let i in response) {
@@ -102,15 +106,35 @@ export class CampaignItem {
               this.records.push(record);
             }
           }
-          this.showMedia();
-          this.loadRec = false;
         }
-        })
-      .catch(error => {
-        this.loadRec = false;
+      }).catch(error => {
+				this.loadRec = false;
         console.log(error.message);
       });
+		alert(this.records);
   }
+
+	//Load next record from batch and fill the buffer
+	loadRecord() {
+		this.loadRec = true;
+		console.info(this.records);
+		console.info(this.records.length);
+		//Fill the buffer
+		if(!this.allItemsInBuffer) {
+			//Get random records form the campaign
+			if (this.records.length < 10) {
+				if (this.hasCollection)
+					this.getNextCollectionRecords(10);
+				else
+					this.getRandomCampaignRecords(10).then(response => { });
+			}
+		}
+		console.info(this.records.length);
+		this.record = this.records.shift();
+		console.info(this.records.shift());
+		this.loadRec = false;
+		this.showMedia();
+	}
 
   loadRecordFromBatch(routeData) {
     this.loadRec = true;
@@ -142,7 +166,7 @@ export class CampaignItem {
         }
       }).catch(error => {
         this.loadRec = false;
-        console.log(error.message);
+        console.error(error.message);
       });
   }
 
@@ -152,61 +176,37 @@ export class CampaignItem {
   }
 
   activate(params, routeData) {
+		console.info(routeData);
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
-
-    this.loadCamp = true;
-    if ( routeData.campaign ) {
+		//Load Campaign
+		this.loadCamp = true;
+		if (routeData.campaign) {
       this.campaign = routeData.campaign;
       this.loadCamp = false;
-      // Record retrieval from collection
-      if ( routeData.collection ) {
-        this.collection = routeData.collection;
-        this.collectionTitle = this.collection.title;
-        this.collectionCount = this.collection.entryCount;
-        this.hasCollection = true;
-        // If the current record-batch still has items
-        // get the next record from the batch
-        if ( routeData.records.length > 1 ) {
-          this.loadRecordFromBatch(routeData);
-        }
-        // If the current record-batch ran out of items
-        // make a call and get the next batch of records
-        else {
-          this.fetchRecordBatch(routeData);
-        }
-      }
-      // Random record retrieval
-      else {
-        if ( routeData.records.length > 1 ) {
-          this.loadRecordFromBatch(routeData);
-        }
-        else {
-          this.record = routeData.records[0];
-          this.randomRecords();
-        }
-      }
-    }
-
-    else {
-      this.loadRec = true;
-      this.recordServices.getRecord(params.recid)
-  			.then(data => {
-  				this.record = new Record(data);
-  				this.loadRec = false;
-          this.randomRecords();
-  			}).catch(error => {
-  				// If the recordId is wrong, redirect to campaign summary page
-          this.router.navigateToRoute('summary', {cname: params.cname, gname: params.gname});
-  			});
-
-      this.campaignServices.getCampaignByName(params.cname)
-        .then( (result) => {
-          this.campaign = new Campaign(result);
-          this.loadCamp = false;
-      });
-    }
+		} else {
+			this.campaignServices.getCampaignByName(params.cname)
+				.then( (result) => {
+					this.campaign = new Campaign(result);
+					this.loadCamp = false;
+			});
+		}
+		//Load Collection (if any)
+		if (routeData.collection) {
+			this.collection = routeData.collection;
+      this.collectionTitle = this.collection.title;
+      this.collectionCount = this.collection.entryCount;
+      this.hasCollection = true;
+			this.offset = (routeData.offset) ? routeData.offset : 0;
+		} else {
+			this.hasCollection = false;
+		}
+		//Load the record
+		if (routeData.records)
+			this.records = routeData.records;
+		console.info(this.records.length);
+		this.loadRecord();
   }
 
   hasMotivation(name) {

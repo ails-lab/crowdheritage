@@ -23,11 +23,11 @@ import { CollectionServices } from 'CollectionServices.js';
 import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
-import {initAureliaIsotope, aureliaIsoImagesLoaded,isotopeClear,isoRelay,setMap} from 'utils/Plugin.js';
+import { setMap } from 'utils/Plugin.js';
 
 let instance = null;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router,TaskQueue)
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -35,7 +35,7 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router,taskQueue) {
+  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue) {
 	if (instance) {
 			return instance;
 		}
@@ -92,29 +92,6 @@ export class CampaignSummary {
 
   attached() {
     $('.accountmenu').removeClass('active');
-    if(!this.initgrid){
-	    this.taskQueue.queueTask(() => {
-		    initAureliaIsotope(this.grid);
-		});
-
-		if(this.collections.length>0){
-
-			this.taskQueue.queueTask(() => {
-				aureliaIsoImagesLoaded(this.grid, $('.isoload'),this.thisVM);
-				initTooltip();
-			});
-		}
-		this.initgrid=true;
-
-	}
-	else{
-	        isoRelay();
-			$( '[data-grid="isotope" ]' ).find('.entry').removeClass('isoload');
-	}
-    this.taskQueue.queueTask(() => {
-        // setMap();
-
-    });
   }
 
    activate(params, route) {
@@ -199,18 +176,12 @@ export class CampaignSummary {
         if (this.currentCount >= this.collectionsCount) {
           this.more = false;
         }
-
         if(response.length>0){
         	for (let i in response) {
-                self.collections.push(new Collection(response[i]));
-              }
-			self.taskQueue.queueTask(() => {
-				aureliaIsoImagesLoaded(self.grid, $('.isoload'),self.thisVM);
-			});}
-       /* for (let i in response) {
-          this.collections.push(new Collection(response[i]));
-        }*/
-      });
+            self.collections.push(new Collection(response[i]));
+          }
+				}
+			});
     this.loading = false;
   }
 

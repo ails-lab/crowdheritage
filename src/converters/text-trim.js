@@ -14,11 +14,10 @@
  */
 
 
-import { PLATFORM, FrameworkConfiguration}from "aurelia-framework";
-
-export function configure(aurelia) {
-	aurelia.globalResources(PLATFORM.moduleName('./campaigncounter'));
-	aurelia.globalResources(PLATFORM.moduleName('./index-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./date-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./text-trim'));
+export class TextTrimValueConverter {
+  toView(value, max) {
+		if (value.length <= max)
+			return value;
+    return value.substring(0, max) + '...';
+  }
 }

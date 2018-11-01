@@ -169,8 +169,7 @@ export class Record {
 
 		}
 
-		// this.fullresLogic();
-
+		this.fullresLogic();
 
 		this.loc = location.href.replace(location.hash, '') + '#/item/' + this.dbId;
 

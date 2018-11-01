@@ -137,14 +137,12 @@
         <!-- campaign reel-->
         <div class="campaignlist">
           <!-- entry-->
-          <div class="entries isotoped" data-grid="isotope" ref="grid" >
+          <div class="entries row" ref="grid" >
             <!-- item-->
-            <div class="sizer"></div>
             <!-- entry-->
 
-            <div class="entry ${'isoload' & oneTime} ${col.dbId}" repeat.for="col of collections">
+            <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
               <!-- wrap-->
-							<!-- <a href="javascript:void(0)" click.delegate="goToCollection(campaign, col)"> -->
 							<a route-href="route: collection; params.bind: { cname: campaign.username, gname: campaign.spacename, colid: col.dbId }">
 								<!-- thumb-->
 								<div class="thumbs">
