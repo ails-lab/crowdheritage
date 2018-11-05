@@ -27,33 +27,8 @@
         <div class="bgwrap" style="background-image: url('${collection.backgroundImage}');"></div>
       </div>
     </section>
-
-    <section class="collections collection-item-list">
-      <div class="container">
-        <!-- campaign reel-->
-        <div class="campaignlist">
-          <!-- entry-->
-          <div class="entries row" ref="grid">
-            <!-- item-->
-            <div class="sizer"></div>
-            <!-- entry-->
-
-            <div class="entry ${record.dbId} col-md-3" repeat.for="record of records">
-              <a href="javascript:void(0)" click.delegate="goToItem(record)">
-								<div class="thumbs">
-									<img src.bind="record.Thumbnail" class="isoimage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-									<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">12 tags</div></div>
-								</div>
-							</a>
-            </div>
-
-          </div>
-          <div class="loadmore">
-            <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
-            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
-          </div>
-        </div>
-      </div>
-    </section>
+		<compose view-model="widgets/multiple-items/multiple-items"
+						 model.bind="{'cname': cname, 'gname': gname, 'collection': collection, 'router': router}">
+		</compose>
   </main>
 </template>

@@ -38,7 +38,6 @@ export class CollectionServices {
 
 	// Records retrieval
 	async getRecords(id, offset, count) {
-		// return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count, {
 		return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count + '&locale=ALL', {
 			method: 'GET'
 		}).then((response) => response.json());
