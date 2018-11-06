@@ -22,7 +22,7 @@
           <li class="title">${collectionTitle}</li>
           <li class="count">
             <div class="info" show.bind="hasCollection">item ${offset + 1} out of ${collectionCount}</div>
-            <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
+            <a show.bind="!lastItem" class="next" href="javascript:void(0)" click.delegate="nextItem()">NEXT ITEM</a>
           </li>
         </ul>
         <!-- bg-->

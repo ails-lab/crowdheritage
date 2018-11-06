@@ -50,7 +50,6 @@ export class Record {
 		if (data.descriptiveData.description && data.descriptiveData.description.default) {
 			this.description = data.descriptiveData.description.default.join("</br>");
 		}
-
 		if (data.descriptiveData.description) {
 			//data.descriptiveData.description = data.descriptiveData.description.default.join("</br>");
 			this.alldescription = data.descriptiveData.description;
@@ -68,9 +67,8 @@ export class Record {
 
 				}
 			}
-			this.annotations = data.annotationIds ? data.annotationIds : [];
 		}
-
+		this.annotations = data.annotationIds ? data.annotationIds : [];
 
 		if (data.descriptiveData.creator) {
 			this.creator = data.descriptiveData.creator;
