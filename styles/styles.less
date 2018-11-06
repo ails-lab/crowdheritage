@@ -2584,6 +2584,42 @@ body footer .container .right li a:hover {
     margin-top: 0;
   }
 }
+body {
+	main {
+		section.tagging {
+			.wraps {
+				.container {
+					.right {
+						.tag-color {
+							.coloraction {
+								@tagcolorheight: 50px;
+								display: flex;
+								flex-wrap: wrap;
+								&:after {
+									content: '';
+									display: block;
+									width: 1px;
+									height: @tagcolorheight;
+									flex-grow: 9999999;
+								}
+								li {
+									float: none;
+									width: auto!important;
+									height: auto;
+									flex-grow: 1;
+									img {
+										object-fit: cover;
+										height: @tagcolorheight;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
 @media (min-width: 992px) {
 	body main section.campaigninfo > .container {
 		display: flex;
