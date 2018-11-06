@@ -32,25 +32,25 @@ export class Tagitem {
 
   constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup) {
 		this.colorSet = [
-			["/img/color/img-black.png", "Black"],
-			["/img/color/img-gray.png", "Grey"],
-			["/img/color/img-metallic.png", "Metallic"],
-			["/img/color/img-silver.png", "Silver"],
-			["/img/color/img-bronze.png", "Bronze"],
-			["/img/color/img-brown.png", "Brown"],
-			["/img/color/img-copper.png", "Copper"],
-			["/img/color/img-red.png", "Red"],
-			["/img/color/img-orange.png", "Orange"],
-			["/img/color/img-beige.png", "Beige"],
-			["/img/color/img-gold.png", "Gold"],
-			["/img/color/img-yellow.png", "Yellow"],
-			["/img/color/img-green.png", "Green"],
-			["/img/color/img-blue.png", "Blue"],
-			["/img/color/img-purple.png", "Purple"],
-			["/img/color/img-pink.png", "Pink"],
-			["/img/color/img-multicolored.png", "Multicoloured", "big"],
-			["/img/color/img-white.png", "White"],
-			["/img/color/img-transparant.png", "Transparent"]
+			["/img/color/black.png", "Black"],
+			["/img/color/gray.png", "Grey"],
+			["/img/color/metallic.jpg", "Metallic"],
+			["/img/color/silver.png", "Silver"],
+			["/img/color/bronze.png", "Bronze"],
+			["/img/color/brown.png", "Brown"],
+			["/img/color/copper.png", "Copper"],
+			["/img/color/red.png", "Red"],
+			["/img/color/orange.png", "Orange"],
+			["/img/color/beige.png", "Beige"],
+			["/img/color/gold.png", "Gold"],
+			["/img/color/yellow.png", "Yellow"],
+			["/img/color/green.png", "Green"],
+			["/img/color/blue.png", "Blue"],
+			["/img/color/purple.png", "Purple"],
+			["/img/color/pink.png", "Pink"],
+			["/img/color/multicolored.png", "Multicoloured"],
+			["/img/color/white.png", "White"],
+			["/img/color/transparent.png", "Transparent"]
 		];
 		this.ea = eventAggregator;
     this.userServices = userServices;
