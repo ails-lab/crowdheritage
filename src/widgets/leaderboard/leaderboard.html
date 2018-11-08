@@ -6,6 +6,7 @@
 		<div class="show-more-parent">
 	    <ul class="leaderlist show-more-target">
 	      <li repeat.for="user of topUsers">
+					<a route-href="route: user; params.bind: { uname: user[0].username }">
 	        <span class="no">${$index+1}</span>
 	        <span class="thumbs"><img src.bind="getProfileImage(user[0])"></span>
 	        <span class="details">
@@ -16,14 +17,10 @@
 	          ${user[1]}
 	          <div class="lbl">POINTS</div>
 	        </span>
+				</a>
 	      </li>
 	    </ul>
 			<i class="show-more fa fa-chevron-down" title="Load more"></i>
 		</div>
-    <!-- more-->
-    <!-- <div class="loadmore">
-      <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
-      <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
-    </div> -->
   </div>
 </template>
