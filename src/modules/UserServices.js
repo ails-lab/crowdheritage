@@ -148,6 +148,12 @@ export class UserServices {
 		}).then((response) => response.json());
 	}
 
+	getUserByUsername(username) {
+		return this.http.fetch('/user/byUsername?username=' + username, {
+			method: 'GET'
+		}).then((response) => response.json());
+	}
+
 	getToken() {
 		return this.http.fetch('/user/token', {
 			method: 'GET'
@@ -219,6 +225,12 @@ export class UserServices {
 
 		// Update counter
 		this.current.count.myOrganizations -= 1;
+	}
+
+	getUserAnnotations(userId, offset = 0, count = 20) {
+		return this.http.fetch(`/user/annotations?userId=${userId}&offset=${offset}&count=${count}`, {
+			method: 'GET'
+		}).then((response) => response.json());
 	}
 
 }

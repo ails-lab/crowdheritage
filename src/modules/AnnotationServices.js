@@ -209,7 +209,7 @@ export class AnnotationServices {
 		});
 	}
 
-	
+
 	async annotateGeoRecord(recid, geoid, camp) {
 		let body = {uri: geoid };
 		let target = { recordId: recid};
@@ -225,9 +225,9 @@ export class AnnotationServices {
 			response.json();
 		});
 	}
-	
-	
-	
+
+
+
 	annotateCollection(colid, term) {
 		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
 		let annotation = { generator: 'WITH Manual Annotator', generated: new Date().toISOString(), confidence: 0.0, motivation: 'Tagging', body: body };

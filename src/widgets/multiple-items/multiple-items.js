@@ -25,10 +25,11 @@ let instance = null;
 @inject(CollectionServices, UserServices)
 export class MultipleItems {
 
-	get isAuthenticated() { return this.userServices.isAuthenticated(); }
-	get user() { return this.userServices.current; }
+	get smallerClass() { return this.collection ? '' : 'smaller' }
+	get more() { return this.records.length < this.totalCount }
+	get offset() { return this.records.length }
 
-  constructor(collectionServices, userServices, recordServices) {
+  constructor(collectionServices, userServices) {
 		if (instance) {
 			return instance;
 		}
@@ -43,21 +44,29 @@ export class MultipleItems {
 	resetInstance() {
     this.records = [];
     this.collection = null;
-    this.currentCount = 0;
+		this.user = null;
     this.loading = false;
-    this.more = true;
+    this.totalCount = 0;
     this.count = 20;
 	}
 
-	async getCollectionRecords(offset, count) {
-		this.loading = true;
-		let response = await this.collectionServices.getRecords(this.collection.dbId, offset, count);
-		this.currentCount = this.currentCount + count;
-		for (let i in response.records) {
-			let recordData = response.records[i];
+	fillRecordArray(records) {
+		for (let i in records) {
+			let recordData = records[i];
 			if (recordData !== null) {
 				this.records.push(new Record(recordData));
 			}
+		}
+	}
+
+	async getRecords() {
+		this.loading = true;
+		if (this.collection) {
+			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count);
+			this.fillRecordArray(response.records);
+		} else if (this.user) {
+			let response = await this.userServices.getUserAnnotations(this.user.dbId, this.offset, this.count);
+			this.fillRecordArray(response.records);
 		}
 		this.loading = false;
 	}
@@ -69,14 +78,16 @@ export class MultipleItems {
 		this.router = params.router;
 	 	if (params.collection) {
 	 		this.collection = params.collection;
-		} else if (params.colid) {
-			this.collectionId = params.colid;
-		 	let collectionData = await this.collectionServices.getCollection(this.collectionId);
-		 	this.collection = new Collection(collectionData);
+			this.totalCount = this.collection.entryCount;
+		} else if (params.user) {
+			this.user = params.user;
+			this.totalCount = params.totalCount;
 		}
-		if (this.collection) {
-			await this.getCollectionRecords(0, 20);
+		if (params.records) {
+			this.records = params.records;
+			return;
 		}
+		this.getRecords();
 	}
 
   goToItem(record) {
@@ -90,9 +101,7 @@ export class MultipleItems {
   }
 
   async loadMore() {
-		if (this.collection) {
-    	await this.getCollectionRecords(this.currentCount, this.count);
-		}
+		this.getRecords();
   }
 
 }

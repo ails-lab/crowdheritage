@@ -14,12 +14,11 @@
  */
 
 
-import { PLATFORM, FrameworkConfiguration}from "aurelia-framework";
-
-export function configure(aurelia) {
-	aurelia.globalResources(PLATFORM.moduleName('./campaigncounter'));
-	aurelia.globalResources(PLATFORM.moduleName('./index-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./date-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./text-trim'));
-	aurelia.globalResources(PLATFORM.moduleName('./plural-format'));
+export class PluralFormatValueConverter {
+  toView(value) {
+		let res = value.split(' ');
+		let count = res[0];
+		let item = res[1];
+		return count == 1 ? value : value + 's';
+  }
 }

@@ -870,6 +870,25 @@ body main section.collections {
 				}
 			}
 		}
+		&.smaller {
+			.campaignlist .entries {
+				&::after {
+					height: 150px;
+				}
+				.entry .thumbs {
+					height: 150px;
+					img {
+						height: 150px;
+					}
+					.action .plus {
+						display: none;
+						&.small {
+							display: block;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

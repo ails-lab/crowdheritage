@@ -4,19 +4,16 @@
     <!-- new banner-->
     <section class="banner mini">
       <div class="container">
-        <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="wrap"><span>My Profile</span></div>
+            <div class="wrap"><span>${user.fullName}</span></div>
           </div>
         </div>
-				<!-- progress-->
         <div class="progress">
-          <div role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;" class="progress-bar">
-            <div class="labl">10%</div>
+          <div role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;" class="progress-bar">
+            <div class="labl">${progress}%</div>
           </div>
         </div>
-        <!-- bg-->
         <div class="bgwrap" style="background-image: img/bg-banner.png;"></div>
       </div>
     </section>
@@ -37,7 +34,9 @@
             <!-- user stat-->
             <div class="info">
               <!-- text-->
-              <h1>${user.firstName} ${user.lastName}</h1>
+							<h2>Name</h2>
+              <h1>${user.fullName}</h1>
+							<h2>Gender</h2>
 							<p>${user.gender}</p>
 							<h2>Contact information</h2>
 							<p>${user.email}</p>
@@ -60,25 +59,34 @@
 							<li>
 								<div class="lbl">PROGRESS</div>
 								<div class="val">
-									10%<small>20/200</small>
+									${progress}%
+									<!-- <small>${points}/500</small> -->
 								</div>
 							</li>
 							<li>
 								<div class="lbl">POINTS</div>
-								<div class="val">20</div>
+								<div class="val">${points}</div>
 							</li>
 							<li>
-								<div class="lbl">TAGS</div>
-								<div class="val">5</div>
+								<div class="lbl">INSERTED TAGS</div>
+								<div class="val">${created}</div>
+							</li>
+							<li>
+								<div class="lbl">UPVOTES</div>
+								<div class="val">${approved}</div>
+							</li>
+							<li>
+								<div class="lbl">DOWNVOTES</div>
+								<div class="val">${rejected}</div>
 							</li>
 							<li>
 								<div class="lbl">ITEMS</div>
-								<div class="val">2</div>
+								<div class="val">${annotatedRecordsCount}</div>
 							</li>
-							<li>
+							<!-- <li>
 								<div class="lbl">CAMPAIGNS</div>
 								<div class="val">2</div>
-							</li>
+							</li> -->
 						</ul>
 						<!-- description-->
 						<div class="desc">
@@ -88,100 +96,10 @@
 				</div>
       </div>
     </section>
-    <!-- collection list-->
-		<div class="container">
-  <div class="row">
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-  </div>
-</div>
-    <section class="collections">
-      <div class="container">
-        <!-- top section-->
-        <div class="topsection">
-          <!-- label-->
-          <div class="sectionlabel">
-            <div class="bold">COLLECTIONS</div><span>SELECT TO CONTRIBUTE</span>
-          </div>
-          <!-- filter-->
-          <!-- <div class="sort">
-            <div class="lbl">SORT BY </div>
-            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">ALPHABETICAL</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
-              <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li> <a href="#">ALPHABETICAL</a></li>
-              <li> <a href="#">DATE</a></li>
-            </ul>
-          </div> -->
-        </div>
-        <!-- campaign reel-->
-        <div class="campaignlist">
-          <!-- entry-->
-          <div class="entries isotoped" data-grid="isotope" ref="grid" >
-            <!-- item-->
-            <div class="sizer"></div>
-            <!-- entry-->
 
-            <div class="entry ${'isoload' & oneTime} ${col.dbId}" repeat.for="col of collections">
-              <!-- wrap--><a href="javascript:void(0)" click.delegate="goToItem(campaign, col, [], 0)">
-                <!-- thumb-->
-                <div class="thumbs">
-                  <!-- img--><img src.bind="col.backgroundImage" class="isoimage" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-                  <!-- action-->
-                  <div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
-                </div>
-                <!-- detail-->
-                <div class="detail">
-                  <!-- count-->
-                  <div class="count">
+		<compose view-model="widgets/multiple-items/multiple-items"
+						 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router}">
+		</compose>
 
-                    ${col.entryCount}<span>ITEMS</span>
-                  </div>
-                  <!-- title-->
-                  <div class="desc">
-                    <div class="title">${col.title}</div>
-                    <div class="owner">By ${col.creatorName}</div>
-                  </div>
-                </div></a>
-            </div>
-
-          </div>
-          <!-- more-->
-          <div class="loadmore">
-            <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
-            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- campaign stats-->
-    <section class="campaignstats">
-      <!-- conty-->
-      <div class="container">
-        <!-- maps-->
-        <div class="left">
-          <!-- maps-->
-          <div class="maps">
-            <div id="maps" class="mapswrap">
-            <compose view-model="widgets/googlemap/googlemap"></compose>
-            </div>
-            <!-- heading-->
-            <div class="heading">Location of Active Volunteers</div>
-          </div>
-          <!-- graphs-->
-         <compose view-model="widgets/graph/graph" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
-        </div>
-        <!-- <div class="right">
-          <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
-        </div> -->
-      </div>
-    </section>
   </main>
 </template>
