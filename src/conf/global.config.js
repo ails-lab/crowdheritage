@@ -24,20 +24,6 @@ var settings = {
 	baseUrl: 'https://api.withcrowd.eu', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
-	isoSettings: {
-		// page
-    page: 'default',
-
-    // masonry
-    mSelector: '.grid',
-    mItem: '.item',
-    mSizer: '.sizer',
-
-    // mobile menu
-    mobileSelector: '.mobilemenu',
-    mobileMenu: '.main .menu',
-    transDuration: 0
-  },
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
 };
 

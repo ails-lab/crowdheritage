@@ -22,9 +22,6 @@ EUBlogUI = function( custom ){
 	// this
 	this.init = function(){
 
-		// init isotope
-		initIsotope();
-
 		// init map
 		// initMaps();
 		// initBigMaps();
@@ -34,27 +31,6 @@ EUBlogUI = function( custom ){
 
 		// init chart
 		// initChart();
-	};
-
-	// maethod to initiate isotope
-	var initIsotope = function(){
-
-		// load
-		$( window ).on( 'load', function(){
-
-			// check
-			if( $( '.isotoped' ).length > 0 ) {
-
-				// init
-				$( '.isotoped' ).isotope({
-
-					// options
-					columnWidth		: '.sizer',
-					itemSelector	: '.entry',
-					percentPosition	: true
-				});
-			}
-		});
 	};
 
 	// method to init maps
