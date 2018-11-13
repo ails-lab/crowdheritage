@@ -97,9 +97,19 @@
       </div>
     </section>
 
-		<compose view-model="widgets/multiple-items/multiple-items"
-						 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router}">
-		</compose>
+		<section class="collections collection-item-list smaller">
+			<div class="container">
+				<div class="topsection">
+          <!-- label-->
+          <div class="sectionlabel">
+            <div class="bold">CONTRIBUTIONS</div><span> ${annotatedRecordsCount} ANNOTATED ITEMS</span>
+          </div>
+				</div>
+				<compose view-model="widgets/multiple-items/multiple-items"
+								 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router}">
+				</compose>
+			</div>
+		</section>
 
   </main>
 </template>

@@ -27,8 +27,12 @@
         <div class="bgwrap" style="background-image: url('${collection.backgroundImage}');"></div>
       </div>
     </section>
+		<section class="collections collection-item-list">
+			<div class="container">
 		<compose view-model="widgets/multiple-items/multiple-items"
 						 model.bind="{'cname': cname, 'gname': gname, 'collection': collection, 'router': router}">
 		</compose>
+	</div>
+</section>
   </main>
 </template>
