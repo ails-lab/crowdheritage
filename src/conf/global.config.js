@@ -32,8 +32,8 @@ if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
 	settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.logLevel = 4; // Debug
-} else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
+} else if (window.location.hostname === 'https://withcrowd.eu') {	// Override for staging
+	settings.baseUrl = 'https://api.withcrowd.eu';
 } else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
 	settings.auth.facebook='394384180936771';
    settings.baseUrl = 'http://api.withculture.eu';
