@@ -21,7 +21,7 @@ var settings = {
 		google: '',
 		facebook: '132619063927809'
 	},
-	baseUrl: 'https://api.withcrowd.eu', //backend goes here
+	baseUrl: 'https://api.withculture.eu', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
