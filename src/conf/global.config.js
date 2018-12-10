@@ -32,7 +32,7 @@ if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
 	settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.logLevel = 4; // Debug
-} else if (window.location.hostname === 'https://withcrowd.eu') {	// Override for staging
+} else if (window.location.hostname === 'withcrowd.eu') {	// Override for staging
 	settings.baseUrl = 'https://api.withcrowd.eu';
 } else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
 	settings.auth.facebook='394384180936771';
