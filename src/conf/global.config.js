@@ -21,7 +21,7 @@ var settings = {
 		google: '',
 		facebook: '132619063927809'
 	},
-	baseUrl: 'https://api.withcrowd.eu', //backend goes here
+	baseUrl: 'https://api.withculture.eu', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
@@ -32,8 +32,8 @@ if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
 	settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.logLevel = 4; // Debug
-} else if (window.location.hostname === 'ipa.image.ntua.gr') {	// Override for staging
-	settings.baseUrl = 'http://ipa.image.ntua.gr:9030';
+} else if (window.location.hostname === 'withcrowd.eu') {	// Override for staging
+	settings.baseUrl = 'https://api.withcrowd.eu';
 } else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
 	settings.auth.facebook='394384180936771';
    settings.baseUrl = 'http://api.withculture.eu';
