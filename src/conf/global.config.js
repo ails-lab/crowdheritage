@@ -34,6 +34,8 @@ if (window.location.hostname === 'localhost') {
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'withcrowd.eu') {	// Override for staging
 	settings.baseUrl = 'https://api.withcrowd.eu';
+} else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
+	settings.baseUrl = 'https://api.withculture.eu';
 } else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
 	settings.auth.facebook='394384180936771';
    settings.baseUrl = 'http://api.withculture.eu';
