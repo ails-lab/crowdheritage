@@ -206,7 +206,7 @@ export class CampaignSummary {
             this.loading = false;
             item.collection = 0;
             item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: this.records[0].dbId});
+            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
           }
           })
         .catch(error => {
@@ -231,7 +231,7 @@ export class CampaignSummary {
             this.loading = false;
             item.collection = col;
             item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: this.records[0].dbId});
+            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
           }
         }).catch(error => {
           this.loading = false;

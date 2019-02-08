@@ -65,17 +65,17 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: [ ':gname?'],    href: 'index',    name: 'index',    moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
-      { route: ':gname/:cname',        name: 'summary',  moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
-			{ route: ':gname/:cname/'+
-									'collection/:colid', name: 'collection',moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: 'Collection | WITHcrowd'},
-			{ route: ':gname/:cname/:recid', name: 'item',     moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
-      { route: 'register',             name: 'register', moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | WITHcrowd' },
-      { route: 'about',                name: 'about',    moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | WITHcrowd' },
-      { route: 'privacy',              name: 'privacy',  moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | WITHcrowd' },
-			{ route: 'terms',                name: 'terms',    moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | WITHcrowd' },
-			{ route: 'user/:uname',					 name: 'user', 		 moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				 nav: false, title: 'User Profile'},
-			{ route: 'feedback',             name: 'feedback', moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | WITHcrowd' }
+      { route: '', href: 'index',   		name: 'index',    	moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
+      { route: ':cname',								name: 'summary',  	moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
+			{ route: ':cname/'+
+									'collection/:colid', 	name: 'collection',moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: 'Collection | WITHcrowd'},
+			{ route: ':cname/:recid', 	name: 'item',     	moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
+      { route: 'register',             	name: 'register', 	moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | WITHcrowd' },
+      { route: 'about',                	name: 'about',    	moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | WITHcrowd' },
+      { route: 'privacy',              	name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | WITHcrowd' },
+			{ route: 'terms',                	name: 'terms',    	moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | WITHcrowd' },
+			{ route: 'user/:uname',					 	name: 'user',			moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				 nav: false, title: 'User Profile'},
+			{ route: 'feedback',             	name: 'feedback',	moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | WITHcrowd' }
     ]);
 
     this.router = router;
@@ -84,7 +84,7 @@ export class App {
   goToCamp(camp) {
     let summary = this.router.routes.find(x => x.name === 'summary');
     summary.campaign = camp;
-    this.router.navigateToRoute('summary', {cname: camp.username, gname: camp.spacename});
+    this.router.navigateToRoute('summary', {cname: camp.username});
   }
 
 }

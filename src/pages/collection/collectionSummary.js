@@ -46,7 +46,6 @@ export class CollectionSummary {
 
 	async activate(params, route) {
 		this.cname = params.cname;
-		this.gname = params.gname;
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		this.collection = new Collection(collectionData);
