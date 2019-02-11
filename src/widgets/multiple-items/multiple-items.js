@@ -74,7 +74,6 @@ export class MultipleItems {
 	async activate(params, route) {
 		this.resetInstance();
 	 	this.cname = params.cname;
-	 	this.gname = params.gname;
 		this.router = params.router;
 	 	if (params.collection) {
 	 		this.collection = params.collection;
@@ -97,7 +96,7 @@ export class MultipleItems {
 		//TODO pass the subarray of items as well
     item.collection= this.collection;
 		item.records = [];
-		this.router.navigateToRoute('item', {cname: this.cname, gname: this.gname, recid: this.records[item.offset].dbId});
+		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId});
   }
 
   async loadMore() {

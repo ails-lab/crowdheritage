@@ -52,13 +52,13 @@
             <!-- no--><span class="no">${($index+1) | indexFormat}</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a route-href="route: summary; params.bind: {cname: camp.username, gname: camp.spacename}"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+              <!-- wrap--><a route-href="route: summary; params.bind: {cname: camp.username}"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
                 <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a a route-href="route: summary; params.bind: {cname: camp.username, gname: camp.spacename}">
+              <!-- title--><a a route-href="route: summary; params.bind: {cname: camp.username}">
                 <h1>${camp.title}</h1></a>
               <!-- desc-->
               <p>${camp.description}</p>

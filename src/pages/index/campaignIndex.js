@@ -57,26 +57,11 @@ export class CampaignIndex {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
-
-    if (!params.gname) {
-      this.campaignServices.getCampaignsCount("")
-        .then( result => {
-          this.campaignsCount = result;
-        });
-      this.activeCampaigns("", this.sortBy);
-    }
-    else {
-      this.groupName = params.gname;
-      this.campaignServices.getCampaignsCount(params.gname)
-        .then( result => {
-          this.campaignsCount = result;
-          // If no campaigns found on this space, redirect to showing all campaigns
-          if (result == 0) {
-            this.router.navigateToRoute('index');
-          }
-        });
-      this.activeCampaigns(params.gname, this.sortBy);
-    }
+    this.campaignServices.getCampaignsCount("")
+      .then( result => {
+        this.campaignsCount = result;
+      });
+    this.activeCampaigns("", this.sortBy);
   }
 
   activeCampaigns(groupName, sortBy) {
@@ -134,7 +119,7 @@ export class CampaignIndex {
           }
           this.loading = false;
           item.records = recs;
-          this.router.navigateToRoute('item', {cname: camp.username, gname: camp.spacename, recid: recs[0].dbId});
+          this.router.navigateToRoute('item', {cname: camp.username, recid: recs[0].dbId});
         }
         })
       .catch(error => {

@@ -67,7 +67,7 @@ export class CampaignItem {
 		item.collection = this.collection;
 	  item.records = this.records;
 		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, gname: this.campaign.spacename, recid: this.records[0].dbId});
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId});
   }
 
 	fillRecordArray(recordDataArray) {
@@ -128,7 +128,7 @@ export class CampaignItem {
 		}
 	}
 
-  activate(params, routeData) {
+  async activate(params, routeData) {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -138,11 +138,9 @@ export class CampaignItem {
       this.campaign = routeData.campaign;
       this.loadCamp = false;
 		} else {
-			this.campaignServices.getCampaignByName(params.cname)
-				.then( (result) => {
-					this.campaign = new Campaign(result);
-					this.loadCamp = false;
-			});
+			let result = await this.campaignServices.getCampaignByName(params.cname);
+			this.campaign = new Campaign(result);
+			this.loadCamp = false;
 		}
 		//Load Collection (if any)
 		if (routeData.collection) {

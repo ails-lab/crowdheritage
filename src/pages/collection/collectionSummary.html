@@ -14,7 +14,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a route-href="route: summary; params.bind: { cname: cname, gname: gname }">RETURN TO CAMPAIGN<img src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a route-href="route: summary; params.bind: { cname: cname }">RETURN TO CAMPAIGN<img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
         <!-- progress-->
@@ -30,7 +30,7 @@
 		<section class="collections collection-item-list">
 			<div class="container">
 		<compose view-model="widgets/multiple-items/multiple-items"
-						 model.bind="{'cname': cname, 'gname': gname, 'collection': collection, 'router': router}">
+						 model.bind="{'cname': cname, 'collection': collection, 'router': router}">
 		</compose>
 	</div>
 </section>
