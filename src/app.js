@@ -65,17 +65,17 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: '', href: 'index',   		name: 'index',    	moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'WITHcrowd' },
+      { route: '', href: 'index',   		name: 'index',    	moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'CrowdHeritage' },
       { route: ':cname',								name: 'summary',  	moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
 			{ route: ':cname/'+
-									'collection/:colid', 	name: 'collection',moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: 'Collection | WITHcrowd'},
-			{ route: ':cname/:recid', 	name: 'item',     	moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | WITHcrowd', activationStrategy: 'replace' },
-      { route: 'register',             	name: 'register', 	moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | WITHcrowd' },
-      { route: 'about',                	name: 'about',    	moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | WITHcrowd' },
-      { route: 'privacy',              	name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | WITHcrowd' },
-			{ route: 'terms',                	name: 'terms',    	moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | WITHcrowd' },
+									'collection/:colid', 	name: 'collection',moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: 'Collection | CrowdHeritage'},
+			{ route: ':cname/:recid', 	name: 'item',     	moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | CrowdHeritage', activationStrategy: 'replace' },
+      { route: 'register',             	name: 'register', 	moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | CrowdHeritage' },
+      { route: 'about',                	name: 'about',    	moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | CrowdHeritage' },
+      { route: 'privacy',              	name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | CrowdHeritage' },
+			{ route: 'terms',                	name: 'terms',    	moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | CrowdHeritage' },
 			{ route: 'user/:uname',					 	name: 'user',			moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				 nav: false, title: 'User Profile'},
-			{ route: 'feedback',             	name: 'feedback',	moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | WITHcrowd' }
+			{ route: 'feedback',             	name: 'feedback',	moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | CrowdHeritage' }
     ]);
 
     this.router = router;
