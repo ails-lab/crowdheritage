@@ -10,7 +10,7 @@
     		<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged($event.target.value) & debounce:1000"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
-						<li repeat.for="item of suggestedAnnotations" id="${$index}"><span click.delegate="selectSuggestedAnnotation(item.id)">${item.label}</span><a class="fa fa-link" href= ${item.uri} target=_blank></a></li>
+						<li repeat.for="item of suggestedAnnotations" id="${$index}"><span click.delegate="selectSuggestedAnnotation(item.id)">${item.label}</span><a if.bind="item.lang">${item.lang}</a><a style="padding-right:10px" class="fa fa-link" href= ${item.uri} target=_blank></a></li>
           </ul>
         </div>
       </div>
