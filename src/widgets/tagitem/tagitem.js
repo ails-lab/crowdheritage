@@ -60,6 +60,7 @@ export class Tagitem {
     this.thesaurusServices = thesaurusServices;
     this.placeholderText = "Start typing a term then select from the options";
     this.annotations = [];
+    this.geoannotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
@@ -459,6 +460,17 @@ export class Tagitem {
       this.annotations.sort(function(a, b) {
         return b.score - a.score;
       });
+
+      // Split the the tags from the geotags
+      this.geoannotations = [];
+      for (var i in this.annotations) {
+        if (this.annotations[i].motivation == 'GeoTagging') {
+          if (i>-1) {
+            this.geoannotations.push(this.annotations[i]);
+            this.annotations.splice(i,1);
+          }
+        }
+      }
     }
     // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
   }
