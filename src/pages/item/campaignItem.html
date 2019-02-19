@@ -54,36 +54,36 @@
                 <div class="heading">ITEM METADATA</div>
                 <!-- info-->
 								<div class="show-more-parent">
-                <ul class="meta show-more-target">
-                  <li if.bind="record.description">
+                <ul class="meta show-more-target row">
+                  <li class="col-sm-6" if.bind="record.description">
                     <div class="lbl">DESCRIPTION</div>
                     <div class="val">${record.description}</div>
                   </li>
-                  <li if.bind="record.dataProvider">
+                  <li class="col-sm-6" if.bind="record.dataProvider">
                     <div class="lbl">PROVIDER</div>
                     <div class="val">${record.dataProvider}</div>
                   </li>
-                  <li if.bind="record.creator">
+                  <li class="col-sm-6" if.bind="record.creator">
                     <div class="lbl">CREATOR</div>
                     <div class="val">${record.creator}</div>
                   </li>
-                  <li if.bind="record.rights">
+                  <li class="col-sm-6" if.bind="record.rights">
                     <div class="lbl">RIGHTS</div>
                     <div class="val">${record.rights}</div>
                   </li>
-                  <li if.bind="record.mediatype">
+                  <li class="col-sm-6" if.bind="record.mediatype">
                     <div class="lbl">MEDIA TYPE</div>
                     <div class="val">${record.mediatype}</div>
                   </li>
-                  <li if.bind="record.dbId">
+                  <li class="col-sm-6" if.bind="record.dbId">
                     <div class="lbl">ITEM URL</div>
                     <div class="val"><a href.bind="record.loc">${record.loc}</a></div>
                   </li>
-                  <li if.bind="record.source">
+                  <li class="col-sm-6" if.bind="record.source">
                     <div class="lbl">RECORD SOURCE</div>
                     <div class="val">${record.source}</div>
                   </li>
-                  <div repeat.for="dcfield of record.dcfields">
+                  <div class="col-sm-6" repeat.for="dcfield of record.dcfields">
                     <li>
                       <div class="lbl">${dcfield.label.toUpperCase()}</div>
                       <div class="val" innerhtml.bind=" dcfield.label=='created' ? dcfield.value[0].free : dcfield.value[0]"></div>

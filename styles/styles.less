@@ -1668,7 +1668,7 @@ body main section.tagging .left .metadata .heading {
   transform-origin: left top 0;
 }
 body main section.tagging .left .metadata ul.meta {
-  margin: 0;
+  margin: 0 -15px;
   padding: 0;
 }
 body main section.tagging .left .metadata ul.meta:before,
@@ -2110,6 +2110,32 @@ body main section.tagging .right .tag-color .taglist > li ul.action li .count {
   display: inline-block;
   text-align: center;
   font-family: "Dosis";
+}
+body main section.tagging .right {
+  .tag-item,
+  .tag-geo,
+  .tag-color {
+    .taglist > li ul.action li {
+      .fa-thumbs-o-up,
+      .fa-thumbs-o-down {
+        color: #999;
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      &.up.active,
+      &.up a:hover {
+        .fa-thumbs-o-up {
+          color: #00ac83;
+        }
+      }
+      &.down.active,
+      &.down a:hover {
+        .fa-thumbs-o-down {
+          color: #ce5e5e;
+        }
+      }
+    }
+  }
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon,
@@ -2611,26 +2637,30 @@ body {
 					.right {
 						.tag-color {
 							.coloraction {
-								@tagcolorheight: 50px;
+								@tagcolorsize: 60px;
 								display: flex;
 								flex-wrap: wrap;
-								&:after {
-									content: '';
-									display: block;
-									width: 1px;
-									height: @tagcolorheight;
-									flex-grow: 9999999;
-								}
+								// &:after {
+								// 	content: '';
+								// 	display: block;
+								// 	width: 1px;
+								// 	height: @tagcolorsize;
+								// 	flex-grow: 9999999;
+								// }
 								li {
 									float: none;
-									width: auto!important;
 									height: auto;
-									flex-grow: 1;
+									flex-basis: @tagcolorsize;
+                  flex-grow: 1;
 									img {
 										object-fit: cover;
-										height: @tagcolorheight;
 									}
 								}
+                li.width-helper {
+                  // hack for last row items
+                  height: 0;
+                  margin: 0;
+                }
 							}
 						}
 					}
