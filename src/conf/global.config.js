@@ -30,7 +30,7 @@ var settings = {
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
-	settings.baseUrl = 'https://api.withcrowd.eu';
+	settings.baseUrl = 'https://api.withculture.eu';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'withcrowd.eu') {	// Override for staging
 	settings.baseUrl = 'https://api.withcrowd.eu';

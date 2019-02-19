@@ -44,7 +44,7 @@ export class Campaign {
     this.userPoints = data.contributorsPoints;
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
+    this.vocabularies = data.vocabularies;
   }
-  
 
 }
