@@ -160,6 +160,10 @@ export class CampaignItem {
     return !!this.campaign.motivation.includes(name);
   }
 
+	toggleLoadMore(container) {
+		toggleMore(container);
+	}
+
   showMedia() {
     if (this.record.source_uri && !this.checkURL(this.record.source_uri) && this.record.source_uri.indexOf('archives_items_') > -1) {
     	var id = this.record.source_uri.split("_")[2];
