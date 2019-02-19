@@ -122,14 +122,14 @@ export class Tagitem {
     await this.getRecordAnnotations(this.recId);
   }
 
-  prefixChanged() {
+  prefixChanged(geo=false) {
     //	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
     if (this.prefix === '' || this.selectedAnnotation != null) {
       this.suggestedAnnotations = [];
       return;
     }
     this.selectedAnnotation = null;
-		if (this.campaign.motivation == 'GeoTagging') {
+		if (geo || this.campaign.motivation == 'GeoTagging') {
 			this.getGeoAnnotations(this.prefix);
 		} else {
 			this.getSuggestedAnnotations(this.prefix);

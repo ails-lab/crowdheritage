@@ -12,7 +12,7 @@
       </div>
       <!-- searchbox-->
       <div  class="searchbox">
-      	<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged($event.target.value) & debounce:1000"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+      	<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
  						<li repeat.for="item of suggestedAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
