@@ -65,6 +65,7 @@ export class Tagitem {
     this.suggestedAnnotations =  [];
 		this.selectedAnnotation = null;
 		this.lg=loginPopup;
+		this.uriRedirect = false;
 
 		this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
 		this.handleBodyClick = e => {
@@ -221,6 +222,11 @@ export class Tagitem {
  	}
 
   selectSuggestedAnnotation(index) {
+		if (this.uriRedirect) {
+			this.uriRedirect = false;
+			this.prefixChanged();
+			return;
+		}
     if (this.userServices.isAuthenticated() == false) {
       this.lg.call();
 			return;
@@ -485,5 +491,10 @@ export class Tagitem {
     }
     return false;
   }
+
+	goToURI(uri) {
+		this.uriRedirect = true;
+		window.open(uri);
+	}
 
 }
