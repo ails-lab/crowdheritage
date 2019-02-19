@@ -116,6 +116,11 @@
                      if.bind="hasMotivation('GeoTagging')"
                      model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
+            <compose view="widgets/tagpoll/tagpoll.html"
+										 view-model="widgets/tagitem/tagitem"
+                     if.bind="hasMotivation('Polling')"
+                     model.bind="{'campaign': campaign, 'recId': record.dbId, 'colTitle': collectionTitle}">
+            </compose>
             <div class="wrap next-item-alternative-link">
               <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
             </div>

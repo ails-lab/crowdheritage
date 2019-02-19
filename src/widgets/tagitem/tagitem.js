@@ -89,11 +89,29 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
+    this.colTitle = params.colTitle;
     this.annotations.splice(0, this.annotations.length);
+    // SOS!!! - CHANGE THIS AFTER THE DEMO!
+    /*
+    if (!!this.colTitle) {
+      this.pollTitle = this.colTitle;
+    }
+    else {
+      this.pollTitle = "Mozart";
+    }
+    */
+    this.pollTitle = "Mozart";
+    // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
+      if (this.campaign.motivation == 'Polling') {
+        await this.annotateLabel(this.pollTitle);
+      }
       await this.getRecordAnnotations(this.recId);
     } else {
+      if (this.campaign.motivation == 'Polling') {
+        await this.annotateLabel(this.pollTitle);
+      }
       await this.getRecordAnnotations(this.recId);
     }
   }
@@ -244,7 +262,7 @@ export class Tagitem {
     return this.suggestedAnnotations.length !== 0;
   }
 
-  async annotateColor(label) {
+  async annotateLabel(label) {
     if (this.userServices.isAuthenticated() == false) {
       this.lg.call();
       return;
@@ -257,7 +275,7 @@ export class Tagitem {
       if (this.userServices.isAuthenticated() && this.userServices.current === null) {
         await this.userServices.reloadCurrentUser();
       }
-      await this.thesaurusServices.getSuggestions(label, ["fashion"]).then(res => {
+      await this.thesaurusServices.getSuggestions(label, this.campaign.vocabularies).then(res => {
         this.suggestedAnnotation = res.results[0];
       });
       await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username);
@@ -405,21 +423,38 @@ export class Tagitem {
   }
 
   async getRecordAnnotations(id) {
-		let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
-    await this.recordServices.getAnnotations(this.recId, motivation).then(response => {
-      for (var i = 0; i < response.length; i++) {
-        if (!this.userServices.current) {
-          this.annotations.push(new Annotation(response[i], ""));
-        } else {
-          this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
+    let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
+    // SOS!!! - CHANGE THIS AFTER THE DEMO!
+    if (motivation == 'Polling') {
+      await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].annotators[0].generator == ('WITHcrowd '+(this.campaign.username))) {
+            if (!this.userServices.current) {
+              this.annotations.push(new Annotation(response[i], ""));
+            } else {
+              this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
+            }
+          }
         }
-      }
-    });
-    // Sort the annotations in descending
-    // order based on their score
-    this.annotations.sort(function(a, b) {
-      return b.score - a.score;
-    });
+      });
+    }
+    else {
+      await this.recordServices.getAnnotations(this.recId, motivation).then(response => {
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.annotations.push(new Annotation(response[i], ""));
+          } else {
+            this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
+        }
+      });
+      // Sort the annotations in descending
+      // order based on their score
+      this.annotations.sort(function(a, b) {
+        return b.score - a.score;
+      });
+    }
+    // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
   }
 
   getColor(label) {
