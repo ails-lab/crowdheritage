@@ -96,7 +96,18 @@ export class CampaignItem {
     this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT)
       .then(response => {
 				this.fillRecordArray(response);
-				this.loadRecordFromBatch();
+        if (this.recId == this.records[0].dbId) {
+				  this.loadRecordFromBatch();
+        } else {
+          this.recordServices.getRecord(this.recId)
+            .then(response => {
+              this.records.unshift(new Record(response));
+              this.loadRecordFromBatch();
+            }).catch(error => {
+      				this.loadRec = false;
+              console.log(error.message);
+            });
+        }
       }).catch(error => {
 				this.loadRec = false;
         console.log(error.message);
@@ -153,6 +164,7 @@ export class CampaignItem {
 		if (routeData.records) {
 			this.records = routeData.records;
 		}
+    this.recId = params.recid;
 		this.loadNextRecord();
   }
 

@@ -58,7 +58,7 @@ export class CampaignSummary {
 			let userData = await this.userServices.getUserByUsername(params.uname);
 			this.user = new User(userData);
 		}
-		route.navModel.setTitle(this.user.firstName + ' ' + this.user.lastName + " | WITHcrowd");
+		route.navModel.setTitle(this.user.firstName + ' ' + this.user.lastName + " | CrowdHeritage");
 		let contributions = await this.userServices.getUserAnnotations(this.user.dbId);
 		this.points = contributions.annotationCount;
 		this.created = contributions.createdCount;
