@@ -79,9 +79,9 @@ const aureliaModules = Object.keys(project.dependencies).filter(dep => dep.start
 module.exports =  ({production, server, extractCss, coverage} = {}) => ({
 		entry: {
             //'app': [], // <-- this array will be filled by the aurelia-webpack-plugin
-            'main': [ 
+            'main': [
       		       'aurelia-bootstrapper'
-      		      
+
       		     ]
             //'aurelia': Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'))
         },
@@ -96,7 +96,7 @@ module.exports =  ({production, server, extractCss, coverage} = {}) => ({
         output: {
             	path: outDir,
         		publicPath: baseUrl,
-        		filename: '[name].js',    
+        		filename: '[name].js',
             	chunkFilename: '[name].js'
         },
         devServer: {
@@ -181,7 +181,7 @@ module.exports =  ({production, server, extractCss, coverage} = {}) => ({
       		                  }
       		              }
       		          }
-      		          
+
       		      }
       		      })
       		      )
@@ -192,7 +192,7 @@ module.exports =  ({production, server, extractCss, coverage} = {}) => ({
 					    enforce: 'pre',
 					    test: /\.json?$/,
 					    loader: 'json-loader'
-					},  
+					},
                /* {
                     test: /\.js$/,
                     exclude: /node_modules/,
@@ -238,7 +238,7 @@ module.exports =  ({production, server, extractCss, coverage} = {}) => ({
         	      },
         	      { test: /\.html$/i, loader: 'html-loader' },
                   {
-          	    	  test: /\.js$/i, loader: 'babel-loader', 
+          	    	  test: /\.js$/i, loader: 'babel-loader',
           	    	  exclude: nodeModulesDir,
           	          query: {
                       	  presets:['env'],
@@ -260,10 +260,9 @@ module.exports =  ({production, server, extractCss, coverage} = {}) => ({
       net: 'empty',
 		tls: 'empty'
     }
-  
+
   });
 
-  
-  
-//  aurelia({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
 
+
+//  aurelia({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
