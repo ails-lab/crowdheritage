@@ -623,7 +623,7 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
-    if (this.hasMotivation('Tagging')) {
+    if (this.hasMotivation('Tagging') || this.hasMotivation('ColorTagging')) {
       await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
         this.annotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -639,6 +639,8 @@ export class Tagitem {
       this.annotations.sort(function(a, b) {
         return b.score - a.score;
       });
+
+      this.colorannotations = this.annotations;
     }
     // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
   }
