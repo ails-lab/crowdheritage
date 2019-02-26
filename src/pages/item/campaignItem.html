@@ -102,6 +102,11 @@
 
           <!-- right-->
           <div class="right" if.bind="!loadCamp && !loadRec">
+            <div class="fullscreen-button">
+              <div class="wrap">
+                <a href="javascript:void(0)" click.delegate="toggleFullscreen()"><span class="exit">Exit </span>Fullscreen <i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
+              </div>
+            </div>
             <compose view-model="widgets/tagitem/tagitem"
                      if.bind="hasMotivation('Tagging')"
 										 model.bind="{'campaign': campaign, 'recId': record.dbId}">

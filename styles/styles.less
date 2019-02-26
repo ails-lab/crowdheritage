@@ -4187,3 +4187,61 @@ body div[role='main'] section.registernow .action {
 .searchbox ul.suggestions li:hover {
   background: #ffbb00;
 }
+// fullscreen editor
+.fullscreen-button {
+  .wrap {
+    position: relative;
+    a {
+      position: absolute;
+      right: 0;
+      font-family: "Dosis";
+      display: block;
+      border: 2px solid #333;
+      font-size: 1.4rem;
+      padding: 7px 15px 6px 15px;
+      -webkit-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s;
+      color: #333;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      &:hover,
+      &:active,
+      &:focus {
+        text-decoration: none;
+      }
+      .exit { display: none; }
+      i {
+        margin-left: 3px;
+      }
+    }
+  }
+}
+body.fullscreen {
+  height: 100%;
+  nav-bar { display: none; }
+  section.banner.mini.detail { display: none; }
+  .page-host, main { height: 100%; }
+  section.tagging {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .wraps {
+      height: 1px;
+      flex-grow: 1;
+      & > .container {
+        height: 100%;
+        .left, .right {
+          height: 100%;
+          overflow-y: auto;
+        }
+      }
+    }
+  }
+  .fullscreen-button .wrap a {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    .exit { display: initial; }
+  }
+}
