@@ -4217,6 +4217,7 @@ body div[role='main'] section.registernow .action {
     }
   }
 }
+.fullscreen-navigation { display: none; }
 body.fullscreen {
   height: 100%;
   nav-bar { display: none; }
@@ -4243,5 +4244,27 @@ body.fullscreen {
     top: 10px;
     right: 10px;
     .exit { display: initial; }
+  }
+  .next-item-alternative-link { display: none; }
+  .fullscreen-navigation {
+    display: block;
+    .previous, .next {
+      display: block;
+      padding: 3px 10px;
+      font-size: 1.2em;
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffbb00;
+      color: #fff;
+      &:hover,
+      &:active,
+      &:focus {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+    .previous { left: 0; }
+    .next { right: 0; }
   }
 }
