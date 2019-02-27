@@ -2666,22 +2666,22 @@ body {
 						}
 					}
 				}
-			}
-		}
-	}
+      }
+    }
+  }
 }
 @media (min-width: 992px) {
-	body main section.campaigninfo > .container {
-		display: flex;
-		.left > .wrap {
-			height: 100%;
-			display: flex;
-			align-items: stretch;
-			.userstat {
-				height: 100%;
-			}
-		}
-	}
+  body main section.campaigninfo > .container {
+    display: flex;
+    .left > .wrap {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+      .userstat {
+        height: 100%;
+      }
+    }
+  }
 }
 /* Medium devices (tablet portrait, 767px) */
 @media (max-width: 768px) {
@@ -2885,51 +2885,23 @@ body {
   body main section.campaignstats .container .right .leaderboard {
     padding: 30px 0 0 0;
   }
-  body main section.tagging .collection {
-    display: block;
+  body main section.tagging {
+    padding: 20px 0 0 0;
   }
   body main section.tagging .title {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    font-size: 1.7rem;
   }
   body main section.tagging .wraps {
     position: relative;
   }
-  body main section.tagging .wraps .container {
-    width: 100%;
-    padding: 0 15px 0 15px;
-  }
-  body main section.tagging .wraps .container .left {
-    width: 100%;
-    float: none;
-  }
-  body main section.tagging .wraps .container .left .wrap {
-    width: 100%;
-    float: none;
-  }
-  body main section.tagging .wraps .container .left .metadata {
-    padding: 30px;
-  }
-  body main section.tagging .wraps .container .right {
-    width: 100%;
-    float: none;
-    margin-top: 30px;
-  }
   body main section.tagging .wraps .container .right .wrap {
     width: 100%;
-    float: none;
-    padding-left: 0px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
-  body main section.tagging .wraps .container .right .tag-item {
-    margin-bottom: 30px;
-  }
-  body main section.tagging .wraps .container .right .tag-geo {
-    margin-bottom: 0px;
-  }
-  body main section.tagging .wraps .container .right .tag-color .coloraction li {
-    width: 20%;
-  }
-  body main section.tagging .wraps .container .right .tag-color .coloraction li.big {
-    width: 40%;
+  body main section.tagging .collection {
+    display: block;
   }
   body footer .container .left,
   body footer .container .right {
@@ -2944,7 +2916,6 @@ body {
   body footer .container .right {
     margin-top: 20px;
   }
-
   body div[role='main'].about .selectioncontent .content .left .thumbs {
     max-width: 100%;
   }
@@ -3011,6 +2982,47 @@ body {
   }
   body div[role='main'] .selection {
     display: none;
+  }
+  body main section.tagging .wraps {
+    position: relative;
+  }
+  body main section.tagging .wraps .container {
+    width: 100%;
+    padding: 0 15px 0 15px;
+  }
+  body main section.tagging .wraps .container .left {
+    width: 100%;
+    float: none;
+  }
+  body main section.tagging .wraps .container .left .wrap {
+    width: 100%;
+    float: none;
+  }
+  body main section.tagging .wraps .container .left .metadata {
+    padding: 30px;
+  }
+  body main section.tagging .wraps .container .right {
+    width: 100%;
+    float: none;
+    margin-top: 30px;
+  }
+  body main section.tagging .wraps .container .right .wrap {
+    width: 100%;
+    float: none;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  body main section.tagging .wraps .container .right .tag-item {
+    margin-bottom: 30px;
+  }
+  body main section.tagging .wraps .container .right .tag-geo {
+    margin-bottom: 0px;
+  }
+  body main section.tagging .wraps .container .right .tag-color .coloraction li {
+    width: 20%;
+  }
+  body main section.tagging .wraps .container .right .tag-color .coloraction li.big {
+    width: 40%;
   }
 }
 
@@ -4216,6 +4228,17 @@ body div[role='main'] section.registernow .action {
         margin-left: 3px;
       }
     }
+  }
+}
+@media (max-width: 768px) {
+  .fullscreen-button .wrap a {
+    right: 30px;
+    padding: 0 10px;
+  }
+}
+@media (max-width: 480px) {
+  .fullscreen-button .wrap a {
+    right: 0;
   }
 }
 .fullscreen-navigation { display: none; }
