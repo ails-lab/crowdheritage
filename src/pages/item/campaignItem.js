@@ -59,6 +59,10 @@ export class CampaignItem {
 		return this.offset == (this.collectionCount - 1);
 	}
 
+	previous() {
+		history.go(-1);
+	}
+
   nextItem() {
     // clear previous media
     this.mediaDiv = '';
