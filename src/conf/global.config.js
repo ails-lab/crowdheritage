@@ -33,7 +33,7 @@ if (window.location.hostname === 'localhost') {
 	settings.baseUrl = 'https://api.withculture.eu';
 	settings.logLevel = 4; // Debug
 } else if (window.location.hostname === 'withcrowd.eu') {	// Override for staging
-	settings.baseUrl = 'https://api.withcrowd.eu';
+	settings.baseUrl = 'https://api.withcuture.eu';
 } else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
 	settings.baseUrl = 'https://api.withculture.eu';
 } else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
