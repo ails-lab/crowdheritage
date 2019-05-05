@@ -59,8 +59,19 @@ export class CampaignItem {
 		return this.offset == (this.collectionCount - 1);
 	}
 
-	previous() {
-		history.go(-1);
+	previousItem() {
+    // clear previous media
+    this.mediaDiv = '';
+	  let item = this.router.routes.find(x => x.name === 'item');
+	  item.campaign = this.campaign;
+		item.collection = this.collection;
+	  item.records = this.records;
+    item.previous = this.previous;
+    this.records.unshift(this.record);
+	  this.records.unshift(this.previous.shift());
+    item.records = this.records;
+		item.offset = this.offset + 1;
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId});
 	}
 
   nextItem() {
@@ -69,6 +80,8 @@ export class CampaignItem {
 	  let item = this.router.routes.find(x => x.name === 'item');
 	  item.campaign = this.campaign;
 		item.collection = this.collection;
+    this.previous.unshift(this.record);
+    item.previous = this.previous;
 	  item.records = this.records;
 		item.offset = this.offset + 1;
 	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId});
@@ -218,6 +231,7 @@ export class CampaignItem {
 		this.record = this.records.shift();
 		this.loadRec = false;
 		this.showMedia();
+    // console.info(this.record);
 	}
 
 	loadNextRecord() {
@@ -260,6 +274,13 @@ export class CampaignItem {
 			this.records = routeData.records;
 		}
     this.recId = params.recid;
+    if (routeData.previous) {
+      this.previous = routeData.previous;
+    } else {
+      this.previous =[];
+    }
+    console.info(this.previous);
+    console.info(this.records);
 		this.loadNextRecord();
   }
 

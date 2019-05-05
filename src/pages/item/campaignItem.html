@@ -75,10 +75,10 @@
                     <div class="lbl">MEDIA TYPE</div>
                     <div class="val">${record.mediatype}</div>
                   </li>
-                  <li class="col-sm-6" if.bind="record.dbId">
+                  <!-- <li class="col-sm-6" if.bind="record.dbId">
                     <div class="lbl">ITEM URL</div>
                     <div class="val"><a href.bind="record.loc">${record.loc}</a></div>
-                  </li>
+                  </li> -->
                   <li class="col-sm-6" if.bind="record.source">
                     <div class="lbl">RECORD SOURCE</div>
                     <div class="val">${record.source}</div>
@@ -130,7 +130,7 @@
               <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
             </div>
             <div class="fullscreen-navigation">
-              <a class="previous" href="javascript:void(0)" click.delegate="previous()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+              <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)" click.delegate="previousItem()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
               <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
             </div>
           </div>
