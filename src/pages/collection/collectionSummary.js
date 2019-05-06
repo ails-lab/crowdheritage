@@ -19,6 +19,7 @@ import { Router } from 'aurelia-router';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { UserServices } from 'UserServices';
+//import settings from 'global.config.js';
 
 let instance = null;
 
@@ -49,6 +50,8 @@ export class CollectionSummary {
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		this.collection = new Collection(collectionData);
+    //route.navModel.setTitle(this.collection.title[0]+' | '+settings.project);
+    route.navModel.setTitle('Collection | '+this.collection.title[0]);
 	}
 
 }

@@ -14,11 +14,10 @@
  */
 
 
-
-
 import { inject,Container,PLATFORM } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { UserServices } from './modules/UserServices.js';
+import settings from 'global.config.js';
 
 import less from 'less';
 
@@ -27,6 +26,17 @@ import './../styles/styles.less';
 @inject(DialogService, UserServices, Container)
 export class App {
   constructor(dialogService, userServices,container) {
+
+    // Select the favicon according to the project
+    var link = document.createElement('link');
+    link.rel = "icon";
+    link.type = "image/ico";
+    link.href = "favicon1.ico";
+    if (settings.project == "CrowdHeritage") {
+      link.href = "favicon2.ico";
+    }
+    document.head.appendChild(link);
+
     this.dialogService = dialogService;
     this.userServices = userServices;
     container.registerInstance('loginPopup', this.loginPopup.bind(this));
@@ -65,17 +75,17 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: '', href: 'index',   		name: 'index',    	moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),     nav: true,  title: 'CrowdHeritage' },
-      { route: ':cname',								name: 'summary',  	moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'), nav: false, title: '' },
+      { route: '', href: 'index',     name: 'index',    	moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
+      { route: ':cname',							name: 'summary',  	moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
 			{ route: ':cname/'+
-									'collection/:colid', 	name: 'collection',moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: 'Collection | CrowdHeritage'},
-			{ route: ':cname/:recid', 	name: 'item',     	moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),       nav: false, title: 'Annotate | CrowdHeritage', activationStrategy: 'replace' },
-      { route: 'register',             	name: 'register', 	moduleId: PLATFORM.moduleName('./pages/register/register'),       nav: false, title: 'Register | CrowdHeritage' },
-      { route: 'about',                	name: 'about',    	moduleId: PLATFORM.moduleName('./pages/about/about'),             nav: true,  title: 'About | CrowdHeritage' },
-      { route: 'privacy',              	name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),         nav: false, title: 'Privacy Policy | CrowdHeritage' },
-			{ route: 'terms',                	name: 'terms',    	moduleId: PLATFORM.moduleName('./pages/terms/terms'),             nav: false, title: 'Terms and Conditions | CrowdHeritage' },
-			{ route: 'user/:uname',					 	name: 'user',			moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				 nav: false, title: 'User Profile'},
-			{ route: 'feedback',             	name: 'feedback',	moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),       nav: false, title: 'Feedback & Contact | CrowdHeritage' }
+							  'collection/:colid', 	name: 'collection', moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
+			{ route: ':cname/:recid',       name: 'item',     	moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
+      { route: 'register',            name: 'register', 	moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
+      { route: 'about',               name: 'about',    	moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
+      { route: 'privacy',             name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
+			{ route: 'terms',               name: 'terms',    	moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
+			{ route: 'user/:uname',					name: 'user',			  moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				     nav: false, title: ''},
+			{ route: 'feedback',            name: 'feedback',	  moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project}
     ]);
 
     this.router = router;

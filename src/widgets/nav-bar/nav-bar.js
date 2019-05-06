@@ -35,8 +35,14 @@ export class NavBar {
 		this.locked = false;
 		this.ea = eventAggregator;
 		this.dialogService = dialogService;
+
+    this.project = settings.project;
+    this.logo = "/img/ic-logo1.png";
+    if (this.project == 'CrowdHeritage') {
+      this.logo = '/img/ic-logo2.png';
+    }
 	}
-  
+
   attached(){
 	  initMobileMenu();
   }
