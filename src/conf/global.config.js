@@ -16,6 +16,7 @@
 
 /* eslint-disable no-var */
 var settings = {
+	project: 'withcrowd',
 	space: 'espace',
 	auth: {
 		google: '',
@@ -32,22 +33,31 @@ if (window.location.hostname === 'localhost') {
 	settings.auth.facebook = '133438360512546';
 	settings.baseUrl = 'https://api.withculture.eu';
 	settings.logLevel = 4; // Debug
-} else if (window.location.hostname === 'withcrowd.eu') {	// Override for staging
+}
+// Override for staging
+else if (window.location.hostname === 'withcrowd.eu') {
 	settings.baseUrl = 'https://api.withculture.eu';
-} else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
+}
+else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
 	settings.baseUrl = 'https://api.withculture.eu';
-} else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
+	settings.project = 'crowdheritage';
+}
+else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
 	settings.auth.facebook='394384180936771';
-   settings.baseUrl = 'http://api.withculture.eu';
-} else if (window.location.hostname === 'judaica.withculture.eu') {
+	settings.baseUrl = 'http://api.withculture.eu';
+}
+else if (window.location.hostname === 'judaica.withculture.eu') {
 	settings.space = 'judaica';
 	settings.baseUrl = 'http://api.withculture.eu';
-} else if (window.location.hostname === 'with.image.ntua.gr' || window.location.hostname === 'with.image.ece.ntua.gr') {
+}
+else if (window.location.hostname === 'with.image.ntua.gr' || window.location.hostname === 'with.image.ece.ntua.gr') {
 	settings.baseUrl = 'http://api.withculture.eu';
-}else if (window.location.hostname === 'espaceportal.eu' || window.location.hostname === 'www.espaceportal.eu') {
+}
+else if (window.location.hostname === 'espaceportal.eu' || window.location.hostname === 'www.espaceportal.eu') {
 	settings.auth.facebook = '132619063927809';
 	settings.baseUrl = 'http://api.espaceportal.eu';
-} else {
+}
+else {
   console.log(`${window.location.hostname}`);
 }
 

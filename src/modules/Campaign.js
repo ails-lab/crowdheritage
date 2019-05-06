@@ -24,6 +24,7 @@ export class Campaign {
     this.title = data.campaignTitle;
     this.description = data.description;
     this.banner = data.campaignBanner;
+    this.project = data.project;
     if (this.banner) {
 			if (!this.banner.startsWith('http')) {
 				this.banner=`${settings.baseUrl}${this.banner}`;}

@@ -27,8 +27,8 @@ export class CampaignServices {
     this.http = http;
   }
 
-  getCampaignsCount(group) {
-    return this.http.fetch(`/campaign/count?group=${group}`, {
+  getCampaignsCount(group, project) {
+    return this.http.fetch(`/campaign/count?group=${group}&project=${project}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
@@ -45,8 +45,8 @@ export class CampaignServices {
 		}).then((response) => response.json());
   }
 
-  getActiveCampaigns( {group = '', sortBy= "", offset = 0, count = 0} = {} ) {
-    return this.http.fetch(`/campaign/activeCampaigns?group=${group}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
+  getActiveCampaigns( {group = '', project = "withcrowd", sortBy= "", offset = 0, count = 0} = {} ) {
+    return this.http.fetch(`/campaign/activeCampaigns?group=${group}&project=${project}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }

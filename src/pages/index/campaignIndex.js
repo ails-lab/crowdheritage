@@ -21,6 +21,7 @@ import { UserServices } from 'UserServices.js';
 import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { Router } from 'aurelia-router';
+import settings from 'global.config.js';
 
 let COUNT = 7;
 
@@ -37,6 +38,8 @@ export class CampaignIndex {
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.router = router;
+
+    this.project = settings.project;
 
     this.campaigns = [];
     this.campaignsCount = 0;
@@ -57,7 +60,7 @@ export class CampaignIndex {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
-    this.campaignServices.getCampaignsCount("")
+    this.campaignServices.getCampaignsCount("", this.project)
       .then( result => {
         this.campaignsCount = result;
       });
@@ -65,10 +68,10 @@ export class CampaignIndex {
   }
 
   activeCampaigns(groupName, sortBy) {
-	this.campaigns = [];
+	  this.campaigns = [];
 
     this.loading = true;
-    this.campaignServices.getActiveCampaigns( {group: groupName, sortBy: sortBy, offset: 0, count: COUNT} )
+    this.campaignServices.getActiveCampaigns( {group: groupName, project: this.project, sortBy: sortBy, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;
@@ -87,7 +90,7 @@ export class CampaignIndex {
 
   loadMore() {
     this.loading = true;
-    this.campaignServices.getActiveCampaigns( {group: this.groupName, sortBy: this.sortBy, offset: this.currentCount, count: COUNT} )
+    this.campaignServices.getActiveCampaigns( {group: this.groupName, project: this.project, sortBy: this.sortBy, offset: this.currentCount, count: COUNT} )
       .then( (resultsArray) => {
         this.fillCampaignArray((this.campaigns), resultsArray);
         this.currentCount = this.currentCount + resultsArray.length;
