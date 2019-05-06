@@ -14,13 +14,15 @@
  */
 
 
-import { PLATFORM, FrameworkConfiguration}from "aurelia-framework";
-
-export function configure(aurelia) {
-	aurelia.globalResources(PLATFORM.moduleName('./campaigncounter'));
-	aurelia.globalResources(PLATFORM.moduleName('./index-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./date-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./text-trim'));
-	aurelia.globalResources(PLATFORM.moduleName('./plural-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./campaign-trim'));
+export class CampaignUsernameTrimValueConverter {
+  toView(value) {
+		if (value == undefined)
+			return "campaign";
+		if (value.length <= 11)
+			return value;
+		value = value.split('-')[0];
+		if (value.length <= 11)
+			return value;
+    return value.substring(0, 11);
+  }
 }

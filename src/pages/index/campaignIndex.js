@@ -22,7 +22,7 @@ import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { Router } from 'aurelia-router';
 
-let COUNT = 4;
+let COUNT = 7;
 
 @inject(CampaignServices, UserServices, RecordServices, Router)
 export class CampaignIndex {

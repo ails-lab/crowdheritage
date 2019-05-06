@@ -8,6 +8,12 @@
 @import "custom.inc.less";
 @import "~toastr/build/toastr.css";
 
+// Green
+@main-color: #4F7979;
+//Yellow
+@secondary-color: #CAB284;
+@third-color: #CA8484;
+
 .centered-and-cropped {
   object-fit: cover;
   width: 288.75px;
@@ -77,7 +83,7 @@ body header .wrap::before {
   content: "";
   right: 0;
   height: 70px;
-  background: #00d19e;
+  background: @main-color;
   z-index: -1;
   top: 0;
 }
@@ -142,7 +148,7 @@ body header .wrap .container nav .account {
 }
 body header .wrap .container nav .account a {
   display: inline-block;
-  background: #00d19e;
+  background: @main-color;
   font-size: 1.6rem;
 }
 body header .wrap .container nav .account a:before,
@@ -174,14 +180,14 @@ body header .wrap .container nav .account a .thumb img {
   height: 100%;
 }
 body header .wrap .container nav .account a:hover .lbl {
-  background-color: #00b88b;
+  background-color: #2F4949;
 }
 body header .wrap .container nav .account .accountmenu {
   position: absolute;
   top: 70px;
   width: 250px;
   right: 0;
-  background-color: #00d19e;
+  background-color: @main-color;
   margin: 0;
   display: none;
   padding: 0;
@@ -200,14 +206,14 @@ body header .wrap .container nav .account .accountmenu li a {
   color: #fff;
   font-size: 1.5rem;
   padding: 8px 20px 8px 20px;
-  background-color: #00d19e;
+  background-color: @main-color;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 body header .wrap .container nav .account .accountmenu li a:hover {
   text-decoration: none;
-  background-color: #00b88b;
+  background-color: #2F4949;
 }
 body main section.banner {
   height: 350px;
@@ -235,7 +241,7 @@ body main section.banner.mini .container .progress {
 }
 body main section.banner.mini .container .progress .progress-bar {
   box-shadow: none;
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   position: relative;
 }
 body main section.banner.mini .container .progress .progress-bar .labl {
@@ -245,7 +251,7 @@ body main section.banner.mini .container .progress .progress-bar .labl {
   display: inline-block;
   padding: 1px 0px 1px 0px;
   width: 50px;
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   z-index: 5;
   color: #fff;
   font-family: "Dosis";
@@ -255,7 +261,7 @@ body main section.banner.mini .container .progress .progress-bar .labl::after {
   height: 0;
   border-style: solid;
   border-width: 6px 5px 0 5px;
-  border-color: #ffb701 transparent transparent transparent;
+  border-color: @secondary-color transparent transparent transparent;
   content: "";
   display: block;
   position: absolute;
@@ -271,7 +277,7 @@ body main section.banner.mini.detail .collectioninfo {
   right: 0;
   left: 15px;
   position: absolute;
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   color: #fff;
   margin: 0;
   padding: 0;
@@ -283,7 +289,7 @@ body main section.banner.mini.detail .collectioninfo li {
 body main section.banner.mini.detail .collectioninfo li.title {
   float: left;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-family: "Dosis";
   padding: 17px 0 0 30px;
 }
@@ -320,26 +326,26 @@ body main section.banner.mini.detail .collectioninfo li.count .next:hover {
 }
 body main section.banner.mini.detail .collectioninfo li.count .next:hover {
   background-color: #fff;
-  color: #ffbb00;
+  color: @secondary-color;
   border-color: #fff;
 }
 body main section.tagging .wraps .right .next-item-alternative-link .next {
   float: left;
   font-family: "Dosis";
   display: block;
-  border: 2px solid #ffbb00;
+  border: 2px solid @secondary-color;
   font-size: 1.4rem;
   padding: 7px 15px 6px 15px;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
-  color: #ffbb00;
+  color: @secondary-color;
   padding: 4px 15px 3px 15px;
 }
 body main section.tagging .wraps .right .next-item-alternative-link .next:hover {
-  border-color: #ffbb00;
+  border-color: @secondary-color;
   text-decoration: none;
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   color: #fff;
 }
 body main section.banner .container {
@@ -353,7 +359,7 @@ body main section.banner .container .bannertext .line {
   margin-bottom: 10px;
 }
 body main section.banner .container .bannertext .line .lbl span {
-  background-color: #00d19e;
+  background-color: @main-color;
   display: inline-block;
   font-family: "Dosis";
   color: #fff;
@@ -380,7 +386,7 @@ body main section.banner .container .bannertext .line .wrap span::after {
   display: block;
   position: absolute;
   z-index: -1;
-  background-color: #00d19e;
+  background-color: @secondary-color;
   top: 5px;
   left: 5px;
   opacity: 0.5;
@@ -412,7 +418,7 @@ body main section.banner .container nav.vertical ul li {
   display: inline-block;
   list-style: none;
   margin-right: 30px;
-  color: #00d19e;
+  color: @main-color;
 }
 body main section.banner .container nav.vertical ul li a {
   color: #000;
@@ -472,14 +478,14 @@ body main section.campaigns .list .campaign:after {
   clear: both;
 }
 body main section.campaigns .list .campaign:hover span.no {
-  color: #00d19e;
+  color: @main-color;
 }
 body main section.campaigns .list .campaign:hover .thumbs a .action {
   opacity: 1;
   filter: alpha(opacity=100);
 }
 body main section.campaigns .list .campaign:hover .details a h1 {
-  color: #00d19e;
+  color: @main-color;
 }
 body main section.campaigns .list .campaign span.no {
   width: 10%;
@@ -488,10 +494,11 @@ body main section.campaigns .list .campaign span.no {
   font-family: "Dosis";
   color: #d6d6d6;
   display: block;
-  line-height: 4.0rem;
+  // line-height: 4.0rem;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+	writing-mode: sideways-lr;
 }
 body main section.campaigns .list .campaign .thumbs {
   width: 25%;
@@ -508,7 +515,7 @@ body main section.campaigns .list .campaign .thumbs a img {
 body main section.campaigns .list .campaign .thumbs a .action {
   width: 100%;
   height: 100%;
-  background: rgba(255, 186, 9, 0.5);
+  background: rgba(@secondary-color, 0.5);
   position: absolute;
   top: 0;
   left: 0;
@@ -534,7 +541,7 @@ body main section.campaigns .list .campaign .thumbs a::after {
   top: 5px;
   left: 5px;
   z-index: -1;
-  background-color: #00d19e;
+  background-color: @secondary-color;
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
@@ -583,15 +590,15 @@ body main section.campaigns .list .campaign .details .progress-line .progress {
   background-color: #e7e7e7;
 }
 body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar {
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   box-shadow: none;
 }
 body main section.campaigns .list .campaign .details .progress-line .target {
   width: 13%;
   float: left;
   font-family: "Dosis";
-  font-size: 1.4rem;
-  color: #ffbb00;
+  font-size: 1.7rem;
+  color: @secondary-color;
   text-align: right;
 }
 body main section.campaigns .list .campaign .details ul.stats {
@@ -941,13 +948,13 @@ body main section.campaignstats .left .maps .heading::after {
   width: 400px;
   height: 2px;
   content: "";
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   display: block;
   bottom: -20px;
 }
 body main section.campaignstats .left .graphs {
   width: 550px;
-  background-color: #00d19e;
+  background-color: @main-color;
   position: absolute;
   height: 150px;
   right: 0;
@@ -1016,7 +1023,7 @@ body main section.campaignstats .right .leaderboard .heading {
 		bottom: 0;
 		left: 50%;
 		transform: translateX(-50%) translateY(80%);
-		background: #ffbb00;
+		background: @secondary-color;
 		color: #fff;
 		padding: 5px;
 		border-radius: 50px;
@@ -1027,7 +1034,7 @@ body main section.campaignstats .right .leaderboard .heading {
 			background: #000;
 		}
 		&.green {
-			background: #00d19e;
+			background: @main-color;
 		}
 	}
 }
@@ -1087,7 +1094,7 @@ body main section.campaignstats .right .leaderboard ul.leaderlist li span.points
 body main section.campaignstats .right .leaderboard ul.leaderlist li span.points .lbl {
   font-size: 1.2rem;
   font-family: "Dosis";
-  color: #ffbb00;
+  color: @secondary-color;
 }
 body main section.campaignstats .right .leaderboard ul.leaderlist li:last-child {
 	margin: 0;
@@ -1140,7 +1147,7 @@ body main .topsection .sort .lbl {
 }
 body main .topsection .sort a {
   display: inline-block;
-  color: #00d19e;
+  color: @main-color;
   -webkit-transition: color 0.3s;
   -o-transition: color 0.3s;
   transition: color 0.3s;
@@ -1174,7 +1181,7 @@ body main .topsection .sort .dropdown-menu li a {
   background-color: #f2f2f2;
 }
 body main .topsection .sort .dropdown-menu li a:hover {
-  background-color: #00d19e;
+  background-color: @main-color;
   color: #fff;
 }
 body main section.learnmore {
@@ -1222,7 +1229,7 @@ body main section.learnmore .right .desc h1::after {
   width: 350px;
   height: 2px;
   bottom: -20px;
-  background-color: #ffbb00;
+  background-color: @secondary-color;
 }
 body main section.learnmore .right .desc p {
   margin-bottom: 0;
@@ -1230,7 +1237,7 @@ body main section.learnmore .right .desc p {
 body main section.learnmore .right .register {
   width: 100%;
   height: 220px;
-  background: #00d19e;
+  background: @main-color;
 }
 body main section.learnmore .right .register .wrap {
   width: 585px;
@@ -1275,7 +1282,7 @@ body main section.learnmore .right .register .wrap .text a.regbtn:hover {
 }
 body main section.learnmore .right .register .wrap .text a.regbtn:hover {
   background-color: #fff;
-  color: #00d19e;
+  color: @main-color;
   border-color: #fff;
 }
 body main section.userprofile,
@@ -1442,7 +1449,7 @@ body main section.campaigninfo {
 			right: 0;
 			bottom: 0;
 			position: absolute;
-			background-color: #00d19e;
+			background-color: @main-color;
 			a {
 				font-family: "Dosis";
 				display: block;
@@ -1458,7 +1465,7 @@ body main section.campaigninfo {
 				display: inline-block;
 				&:hover {
 					background-color: #fff;
-					color: #00d19e;
+					color: @main-color;
 					border-color: #fff;
 					text-decoration: none;
 				}
@@ -1643,7 +1650,7 @@ body main section.tagging .title::before {
   width: 2px;
   position: absolute;
   content: "";
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   left: -24px;
   top: 9px;
 }
@@ -1690,7 +1697,7 @@ body main section.tagging .left .metadata ul.meta li {
   float: left;
 }
 body main section.tagging .left .metadata ul.meta li.yellow .val {
-  color: #ffbb00;
+  color: @secondary-color;
   word-wrap: break-word;
 }
 body main section.tagging .left .metadata ul.meta li .lbl {
@@ -1767,7 +1774,7 @@ body main section.tagging .right .tag-color .infobar {
 body main section.tagging .right .tag-item .colorbox,
 body main section.tagging .right .tag-geo .colorbox,
 body main section.tagging .right .tag-color .colorbox {
-  background-color: #00d19e;
+  background-color: @main-color;
   margin-top: 20px;
   padding: 20px;
   position: relative;
@@ -1825,7 +1832,7 @@ body main section.tagging .right .tag-geo .coloraction li a .action .colorname,
 body main section.tagging .right .tag-color .coloraction li a .action .colorname {
   position: absolute;
   top: -36px;
-  background-color: #00d19e;
+  background-color: @main-color;
   display: block;
   padding: 1px 8px 2px 8px;
   color: #fff;
@@ -1847,7 +1854,7 @@ body main section.tagging .right .tag-color .coloraction li a .action .colorname
   height: 0;
   border-style: solid;
   border-width: 6px 8px 0 8px;
-  border-color: #00d19e transparent transparent transparent;
+  border-color: @main-color transparent transparent transparent;
   position: absolute;
   bottom: -5px;
   left: 50%;
@@ -1876,7 +1883,7 @@ body main section.tagging .right .tag-color .coloraction li.big a .colorname {
 body main section.tagging .right .tag-item .searchbox,
 body main section.tagging .right .tag-geo .searchbox,
 body main section.tagging .right .tag-color .searchbox {
-  background-color: #00d19e;
+  background-color: @main-color;
   margin-top: 15px;
   padding: 20px;
   position: relative;
@@ -1913,7 +1920,7 @@ body main section.tagging .right .tag-geo .searchbox .link,
 body main section.tagging .right .tag-color .searchbox .link {
   position: absolute;
   font-size: 1.0rem;
-  color: #00d19e;
+  color: @main-color;
   background: #fff;
   border-radius: 2px;
   text-align: center;
@@ -1944,7 +1951,7 @@ body main section.tagging .right .tag-color .searchbox .enter {
 body main section.tagging .right .tag-item .geobox,
 body main section.tagging .right .tag-geo .geobox,
 body main section.tagging .right .tag-color .geobox {
-  background-color: #ffbb00;
+  background-color: @secondary-color;
   color: #fff;
   font-family: "Dosis";
   padding: 20px;
@@ -1999,7 +2006,7 @@ body main section.tagging .right .tag-color .geobox .locations li a {
   top: 0;
   left: 0;
   background-color: #fff;
-  color: #ffbb00;
+  color: @secondary-color;
   text-align: center;
   padding-top: 4px;
   opacity: 0;
@@ -2311,10 +2318,10 @@ body main section.tagging .right .heading {
   font-family: "Dosis";
 }
 body main section.tagging .right .heading.green {
-  background-color: #00d19e;
+  background-color: @main-color;
 }
 body main section.tagging .right .heading.yellow {
-  background-color: #ffbb00;
+  background-color: @secondary-color;
 }
 body footer {
   padding: 60px 0px 60px 0px;
@@ -2521,7 +2528,7 @@ body footer .container .right li a:hover {
   body main section.learnmore .right .register .wrap .text h1 {
     font-size: 1.6rem;
     font-weight: bold;
-    color: #ffbb00;
+    color: @secondary-color;
   }
   body main section.learnmore .right .register .wrap .text a.regbtn {
     color: inherit;
@@ -2558,8 +2565,8 @@ body footer .container .right li a:hover {
     padding: 10px 0 0 0;
   }
   body main section.campaigninfo .container .right .contribute a {
-    border-color: #00d19e;
-    color: #00d19e;
+    border-color: @main-color;
+    color: @main-color;
   }
   body main section.collections .campaignlist .entries .sizer,
   body main section.collections .campaignlist .entries .entry {
@@ -2742,7 +2749,7 @@ body {
     height: 100%;
     left: -5px;
     top: 5px;
-    background-color: #00d19e;
+    background-color: @main-color;
     content: "";
     display: block;
     opacity: 0.5;
@@ -3467,7 +3474,7 @@ body div[role='main'] section.entrance .btn-green:hover {
   color: white;
 }
 body div[role='main'] section.entrance .btn-green:hover {
-  background-color: #00d19e;
+  background-color: @main-color;
 }
 body div[role='main'] section.entrance .section-header {
   color: #4f7979;
@@ -4188,17 +4195,17 @@ body div[role='main'] section.registernow .action {
 .searchbox ul.suggestions li {
   padding: 5px 10px;
   cursor: pointer;
-  border-bottom: 1px solid #00d19e;
+  border-bottom: 1px solid @main-color;
 	a {
 		position: relative;
 		float: right;
 	}
 }
 .searchbox ul.suggestions li:last-child {
-  border-bottom: 2px solid #00d19e;
+  border-bottom: 2px solid @main-color;
 }
 .searchbox ul.suggestions li:hover {
-  background: #ffbb00;
+  background: @secondary-color;
 }
 // fullscreen editor
 .fullscreen-button {
@@ -4280,7 +4287,7 @@ body.fullscreen {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      background: #ffbb00;
+      background: @secondary-color;
       color: #fff;
       &:hover,
       &:active,

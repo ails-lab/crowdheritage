@@ -49,7 +49,7 @@
         <div class="list">
           <!-- campaign-->
           <div class="campaign" repeat.for="camp of campaigns">
-            <!-- no--><span class="no">${($index+1) | indexFormat}</span>
+            <!-- no--><span class="no">${camp.username | campaignUsernameTrim }</span>
             <!-- thumbs-->
             <div class="thumbs">
               <!-- wrap--><a route-href="route: summary; params.bind: {cname: camp.username}"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
@@ -102,37 +102,28 @@
     </section>
 
     <!-- learn more-->
-    <section class="learnmore">
+    <!-- <section class="learnmore">
       <div class="container">
-        <!-- left-->
         <div class="left"><img src="/img/img-learnmore-1.png"></div>
-        <!-- right-->
         <div class="right">
-          <!-- desc-->
           <div class="desc">
             <h1>
               Learn more about our <br>crowdsourcing campaigns
             </h1>
             <p>Organize immersive crowdsouring campaigns with engaging game mechanics and let the crowd solve complex problems at scales and rates that no one individual can! Enable public participation in collecting, describing, categorising or curating your photographs, manuscripts or sound, as an expression of democratic participation and engagement in heritage!</p>
           </div>
-          <!-- register-->
           <div class="register" if.bind="!isAuthenticated">
-            <!-- wrap-->
             <div class="wrap">
-              <!-- img--><img src="/img/img-learnmore-2.png">
-              <!-- text-->
+              <img src="/img/img-learnmore-2.png">
               <div class="text">
                 <h1>Want to create your own?</h1>
                 <p>Register now and start creating your own crowdsourcing projects.</p><a route-href="route: register" class="regbtn">REGISTER</a>
               </div>
             </div>
           </div>
-          <!-- register-->
           <div class="register" if.bind="isAuthenticated">
-            <!-- wrap-->
             <div class="wrap">
-              <!-- img--><img src="/img/img-learnmore-2.png">
-              <!-- text-->
+              <img src="/img/img-learnmore-2.png">
               <div class="text">
                 <h1>Want to create your own campaigns?</h1>
                 <p>Learn more about WITH:</br>
@@ -143,7 +134,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
   </main>
 </template>
