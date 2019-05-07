@@ -18,22 +18,27 @@ import { inject,Container,PLATFORM } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { UserServices } from './modules/UserServices.js';
 import settings from 'global.config.js';
-
 import less from 'less';
 
-import './../styles/styles.less';
+// The styles.less import is now obsolete
+// We import it, through the color-set.less files
+//import './../styles/styles.less';
 
 @inject(DialogService, UserServices, Container)
 export class App {
   constructor(dialogService, userServices,container) {
 
-    // Select the favicon according to the project
+    // Select the favicon and the color-set, according to the project
     var link = document.createElement('link');
     link.rel = "icon";
     link.type = "image/ico";
-    link.href = "favicon1.ico";
-    if (settings.project == "CrowdHeritage") {
+    if (settings.project == "WITHcrowd") {
+      link.href = "favicon1.ico";
+      System.import('./../styles/withcrowd.less');
+    }
+    else if (settings.project == "CrowdHeritage") {
       link.href = "favicon2.ico";
+      System.import('./../styles/crowdheritage.less');
     }
     document.head.appendChild(link);
 
