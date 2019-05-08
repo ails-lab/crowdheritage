@@ -20,7 +20,7 @@ var settings = {
 	space: 'espace',
 	auth: {
 		google: '',
-		facebook: '132619063927809'
+		facebook: '' //localhost
 	},
 	baseUrl: 'https://api.withculture.eu', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
@@ -30,33 +30,18 @@ var settings = {
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
-	settings.auth.facebook = '133438360512546';
-	settings.baseUrl = 'https://api.withculture.eu';
+	//settings.baseUrl = 'https://api.withculture.eu';
+	settings.baseUrl = 'http://localhost:9060';
 	settings.logLevel = 4; // Debug
-	//settings.project = 'CrowdHeritage';
+	settings.project = 'CrowdHeritage';
 }
 // Override for staging
 else if (window.location.hostname === 'withcrowd.eu') {
-	settings.baseUrl = 'https://api.withculture.eu';
+	settings.auth.facebook='';
 }
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
-	settings.baseUrl = 'https://api.withculture.eu';
+	settings.auth.facebook='';
 	settings.project = 'CrowdHeritage';
-}
-else if (window.location.hostname === 'withculture.eu' || window.location.hostname === 'www.withculture.eu') {
-	settings.auth.facebook='394384180936771';
-	settings.baseUrl = 'http://api.withculture.eu';
-}
-else if (window.location.hostname === 'judaica.withculture.eu') {
-	settings.space = 'judaica';
-	settings.baseUrl = 'http://api.withculture.eu';
-}
-else if (window.location.hostname === 'with.image.ntua.gr' || window.location.hostname === 'with.image.ece.ntua.gr') {
-	settings.baseUrl = 'http://api.withculture.eu';
-}
-else if (window.location.hostname === 'espaceportal.eu' || window.location.hostname === 'www.espaceportal.eu') {
-	settings.auth.facebook = '132619063927809';
-	settings.baseUrl = 'http://api.espaceportal.eu';
 }
 else {
   console.log(`${window.location.hostname}`);
