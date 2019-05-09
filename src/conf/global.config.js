@@ -30,10 +30,9 @@ var settings = {
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
-	//settings.baseUrl = 'https://api.withculture.eu';
-	settings.baseUrl = 'http://localhost:9060';
+	//settings.baseUrl = 'http://localhost:9060';
+	//settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; // Debug
-	settings.project = 'CrowdHeritage';
 }
 // Override for staging
 else if (window.location.hostname === 'withcrowd.eu') {
