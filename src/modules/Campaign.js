@@ -24,11 +24,13 @@ export class Campaign {
     this.title = data.title;
     this.description = data.description;
     this.banner = data.banner;
-    this.project = data.project;
     if (this.banner) {
-			if (!this.banner.startsWith('http')) {
-				this.banner=`${settings.baseUrl}${this.banner}`;}
-		}
+      if (!this.banner.startsWith('http')) {
+        this.banner=`${settings.baseUrl}${this.banner}`;}
+      }
+    this.logo = data.logo;
+    this.project = data.project;
+    this.creator = data.creator;
     this.space = data.space;
     this.spacename = data.spacename;
     this.startDate = data.startDate;
