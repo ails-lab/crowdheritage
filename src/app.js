@@ -87,7 +87,8 @@ export class App {
 			{ route: ':cname/:recid',       name: 'item',     	moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
       { route: 'register',            name: 'register', 	moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
       { route: 'about',               name: 'about',    	moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
-      { route: 'privacy',             name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
+			{ route: 'partners',            name: 'partners',    	moduleId: PLATFORM.moduleName('./pages/partners/partners'),          nav: true,  title: 'Partners | '+settings.project},
+			{ route: 'privacy',             name: 'privacy',  	moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
 			{ route: 'terms',               name: 'terms',    	moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
 			{ route: 'user/:uname',					name: 'user',			  moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				     nav: false, title: ''},
 			{ route: 'feedback',            name: 'feedback',	  moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project}
