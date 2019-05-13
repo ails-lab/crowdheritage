@@ -45,11 +45,37 @@ export class CampaignServices {
 		}).then((response) => response.json());
   }
 
-  getActiveCampaigns( {group = '', project = "withcrowd", sortBy= "", offset = 0, count = 0} = {} ) {
+  deleteCampaign(id) {
+    return this.http.fetch(`/campaign/${id}`, {
+			method: 'DELETE'
+		}).then(checkStatus);
+  }
+
+	editCampaign(campaign) {
+    return this.http.fetch(`/campaign/${campaign.dbId}`, {
+			method: 'PUT',
+			body: json(campaign)
+		}).then((response) => response.json());
+  }
+
+  getActiveCampaigns( {group = '', project = "WITHcrowd", sortBy= "", offset = 0, count = 0} = {} ) {
     return this.http.fetch(`/campaign/activeCampaigns?group=${group}&project=${project}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
+
+  getUserCampaigns(userId, offset = 0, count = 0) {
+    return this.http.fetch(`/campaign/userCampaigns?userId=${userId}&offset=${offset}&count=${count}`, {
+			method: 'GET'
+		}).then((response) => response.json());
+  }
+
+  newCampaign(campaign) {
+		return this.http.fetch('/campaign/createCampaign', {
+			method: 'POST',
+			body: json(campaign)
+		}).then(checkStatus).then((response) => response.json());
+	}
 
   incUserPoints(campaignId, userId, annoType) {
     return this.http.fetch(`/campaign/incUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {

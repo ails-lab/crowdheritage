@@ -21,19 +21,21 @@ export class Campaign {
   constructor(data) {
     this.dbId = data.dbId;
     this.username = data.username;
-    this.title = data.campaignTitle;
+    this.title = data.title;
     this.description = data.description;
-    this.banner = data.campaignBanner;
-    this.project = data.project;
+    this.banner = data.banner;
     if (this.banner) {
-			if (!this.banner.startsWith('http')) {
-				this.banner=`${settings.baseUrl}${this.banner}`;}
-		}
+      if (!this.banner.startsWith('http')) {
+        this.banner=`${settings.baseUrl}${this.banner}`;}
+      }
+    this.logo = data.logo;
+    this.project = data.project;
+    this.creator = data.creator;
     this.space = data.space;
     this.spacename = data.spacename;
     this.startDate = data.startDate;
     this.endDate = data.endDate;
-    this.motivation = data.campaignMotivation;
+    this.motivation = data.motivation;
     this.purpose = data.purpose;
     this.target = data.annotationTarget;
     this.created = data.annotationCurrent.created;
