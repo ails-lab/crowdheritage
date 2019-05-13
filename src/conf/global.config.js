@@ -31,7 +31,7 @@ var settings = {
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	//settings.baseUrl = 'http://localhost:9060';
-	//settings.project = 'CrowdHeritage';
+	settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; // Debug
 }
 // Override for staging
