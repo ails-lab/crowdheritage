@@ -1,0 +1,9 @@
+{
+  "home" : "HOMEZ",
+  "about" : "ABOUTZ",
+  "sign-in" : "SIGN IN",
+  "profile" : "Profile",
+  "sign-out" : "Sign Out",
+  "left-footer" : "You have questions?<br>Contact us at <a>with-dev@image.ntua.gr</a>",
+  "right-footer" : "<img style='vertical-align: top;' src='/img/assets/img/espace/euflag.jpg' height='60px'><li><strong>Co-financed by the Connecting Europe<br>Facility of the European Union</strong></li>"
+}

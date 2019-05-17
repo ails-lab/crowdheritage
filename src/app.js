@@ -14,9 +14,10 @@
  */
 
 
-import { inject,Container,PLATFORM } from 'aurelia-framework';
+import { inject, Container, PLATFORM } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { UserServices } from './modules/UserServices.js';
+import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 import less from 'less';
 
@@ -24,9 +25,19 @@ import less from 'less';
 // We import it, through the color-set.less files
 //import './../styles/styles.less';
 
-@inject(DialogService, UserServices, Container)
+@inject(DialogService, UserServices, Container, I18N)
 export class App {
-  constructor(dialogService, userServices,container) {
+
+  constructor(dialogService, userServices, container, i18n) {
+    // Load the desired locale
+    this.i18n = i18n;
+    this.i18n
+        .setLocale('en')
+        .then( () => {
+      // locale is loaded
+    });
+    console.log("Let's get this party started!!");
+    console.log(this.i18n.getLocale());
 
     // Select the favicon and the color-set, according to the project
     var link = document.createElement('link');
@@ -37,6 +48,7 @@ export class App {
       System.import('./../styles/withcrowd.less');
     }
     else if (settings.project == "CrowdHeritage") {
+      link.type = "image/png";
       link.href = "favicon2.ico";
       System.import('./../styles/crowdheritage.less');
     }
