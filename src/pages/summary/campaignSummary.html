@@ -102,19 +102,20 @@
               <!-- stats-->
               <ul class="stats">
                 <li>
-                  <div class="lbl">PROGRESS</div>
-                  <div class="val">
-
-                    ${campaign.percentage}%<small>${campaign.totalCurrent}/${campaign.target}</small>
-                  </div>
-                </li>
-                <li>
+                  <div class="lbl">START DATE</div>
+                  <div class="val">${campaign.startDate | dateFormat}</div>
+                  <br/>
                   <div class="lbl">CONTRIBUTORS</div>
                   <div class="val">${campaign.contributorsCount}</div>
                 </li>
                 <li>
                   <div class="lbl">END DATE</div>
                   <div class="val">${campaign.endDate | dateFormat}</div>
+                  <br/>
+                  <div class="lbl">PROGRESS</div>
+                  <div class="val">
+                    ${campaign.percentage}%<small>${campaign.totalCurrent}/${campaign.target}</small>
+                  </div>
                 </li>
               </ul>
             </div>

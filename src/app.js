@@ -37,6 +37,7 @@ export class App {
       System.import('./../styles/withcrowd.less');
     }
     else if (settings.project == "CrowdHeritage") {
+      link.type = "image/png";
       link.href = "favicon2.ico";
       System.import('./../styles/crowdheritage.less');
     }

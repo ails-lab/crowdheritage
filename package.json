@@ -61,6 +61,7 @@
     "aurelia-google-maps": "^2.2.1",
     "aurelia-history": "^1.1.0",
     "aurelia-history-browser": "^1.2.0",
+    "aurelia-i18n": "^3.0.0-beta.7",
     "aurelia-loader-webpack": "^2.1.0",
     "aurelia-logging-console": "^1.0.0",
     "aurelia-pal-browser": "^1.8.0",
@@ -83,6 +84,7 @@
     "google-maps-api": "^2.0.1",
     "html-minifier": "^3.5.18",
     "html-minifier-loader": "^1.4.1",
+    "i18next-xhr-backend": "^2.0.1",
     "imagesloaded": "^4.1.4",
     "imports-loader": "^0.7.1",
     "isomorphic-fetch": "^2.2.1",
@@ -99,6 +101,8 @@
     "webpack": "^4.16.0"
   },
   "devDependencies": {
+    "@types/i18next": "^12.1.0",
+    "@types/i18next-xhr-backend": "^1.4.2",
     "aurelia-protractor-plugin": "^1.0.6",
     "aurelia-tools": "^1.0.0",
     "aurelia-webpack-plugin": "^3.0.0-rc.1",
