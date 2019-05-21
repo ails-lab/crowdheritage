@@ -20,7 +20,7 @@
 					<span>Google</span>
 				</button>
 
-				<div class="footer" t="[html]app:login-message">Don't have an account? <a href="javascript:void(0)" click.delegate="register()">Joining is quick and easy</a>.</div>
+				<div class="footer" t="[prepend]app:login-message-left"><a t="app:login-message-right" href="javascript:void(0)" click.delegate="register()">Joining is quick and easy</a>.</div>
 			</div>
 			<div class="emailLogin">
 				<form class="form">
@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-link" click.delegate="scrollDownEmail()">Login with Facebook or Google</span></button>
+						<button type="button" class="btn btn-link" click.delegate="scrollDownEmail()"><span t="app:login-message-alt" >Login with Facebook or Google</span></button>
 					</div>
 				</form>
 			</div>

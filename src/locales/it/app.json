@@ -1,11 +1,11 @@
 {
-  "home" : "++HOME",
-  "about" : "++ABOUT",
-  "sign-in" : "++SIGN IN",
-  "profile" : "++Profile",
-  "sign-out" : "++Sign Out",
-  "left-footer" : "++You have questions?<br>Contact us at <a>with-dev@image.ntua.gr</a>",
-  "right-footer" : "++<strong>Co-financed by the Connecting Europe<br>Facility of the European Union</strong>",
-  "login-header" : "++Sign in to WITH",
-  "login-message" : "++Don't have an account? <a href='javascript:void(0)' click.delegate='register()'>Joining is quick and easy</a>."
+  "home" : "~~CASA",
+  "about" : "~~ABOUT",
+  "sign-in" : "~~SIGN IN",
+  "profile" : "~~Profile",
+  "sign-out" : "~~Sign Out",
+  "left-footer" : "~~You have questions?<br>Contact us at <a>with-dev@image.ntua.gr</a>",
+  "right-footer" : "~~<strong>Co-financed by the Connecting Europe<br>Facility of the European Union</strong>",
+  "login-header" : "~~Sign in to WITH",
+  "login-message" : "~~Don't have an account? <a href='javascript:void(0)' click.delegate='register()'>Joining is quick and easy</a>."
 }

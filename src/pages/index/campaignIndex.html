@@ -7,16 +7,16 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="wrap"><span>CROWDSOURCING</span></div>
+            <div class="wrap"><span t="[html]index:bannertext-up">CROWDSOURCING</span></div>
           </div>
           <div class="line">
-            <div class="wrap"><span>CAMPAIGNS</span></div>
+            <div class="wrap"><span t="[html]index:bannertext-down">CAMPAIGNS</span></div>
           </div>
         </div>
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')"> <img src="/img/ic-arrow-left-black.png">CONTRIBUTE NOW</a></li>
+            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')" t="[append]index:contribute"> <img src="/img/ic-arrow-left-black.png"></a></li>
             <li>${campaignsCount | campaignCounter}</li>
           </ul>
         </nav>
@@ -27,7 +27,7 @@
     <section class="languages">
       <div class="lang">
         <!-- label-->
-        <div class="lbl">LANGUAGE : </div>
+        <div class="lbl" t="index:language">LANGUAGE : </div>
         <!-- select-->
         <a id="langselect" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
           <img src=${currentLocale.flag} width="20px" />
@@ -52,18 +52,19 @@
         <!-- top section-->
         <div class="topsection">
           <!-- label-->
-          <div class="sectionlabel">
+          <div class="sectionlabel" t="[html]index:current">
             <div class="bold">CURRENT</div><span>CROWDSOURCING CAMPAIGNS</span>
           </div>
           <!-- filter-->
           <div class="sort">
             <!-- label-->
-            <div class="lbl">SORT BY </div>
-            <!-- sort--><a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">${sortBy.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
+            <div class="lbl" t="index:sortby">SORT BY </div>
+            <!-- sort-->
+            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text" t="index:${sortBy.toLowerCase()}">${sortBy.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
             <!-- dropdown-->
             <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Alphabetical')">ALPHABETICAL</a></li>
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Date')">DATE</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Alphabetical')" t="index:alphabetical">ALPHABETICAL</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Date')" t="index:date">DATE</a></li>
             </ul>
           </div>
         </div>
@@ -75,9 +76,12 @@
             <!-- no--><span class="no">${camp.username | campaignUsernameTrim }</span>
             <!-- thumbs-->
             <div class="thumbs">
-              <!-- wrap--><a route-href="route: summary; params.bind: {cname: camp.username}"><img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+              <!-- wrap-->
+              <a route-href="route: summary; params.bind: {cname: camp.username}">
+                <img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
-                <div class="action"><span class="plus">+ </span>OPEN CAMPAIGN</div></a>
+                <div class="action" t="[append]index:opencampaign"><span class="plus">+ </span></div>
+              </a>
             </div>
             <!-- detail-->
             <div class="details">
@@ -97,20 +101,20 @@
               <!-- stats-->
               <ul class="stats">
                 <li>
-                  <div class="lbl">PROGRESS</div>
+                  <div class="lbl" t="index:progress">PROGRESS</div>
                   <div class="val">
                     ${camp.percentage}%<small>${camp.totalCurrent}/${camp.target}</small>
                   </div>
                 </li>
                 <li>
-                  <div class="lbl">CONTRIBUTORS</div>
+                  <div class="lbl" t="index:contributors">CONTRIBUTORS</div>
                   <div class="val">${camp.contributorsCount}</div>
                 </li>
                 <li>
-                  <div class="lbl">END DATE</div>
+                  <div class="lbl" t="index:enddate">END DATE</div>
                   <div class="val">${camp.endDate | dateFormat}</div>
                 </li>
-                <li class="contribute"><a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)">CONTRIBUTE NOW</a></li>
+                <li class="contribute"><a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)" t="index:contribute">CONTRIBUTE NOW</a></li>
               </ul>
             </div>
           </div>
@@ -118,7 +122,7 @@
 
         <!-- more-->
         <div class="loadmore">
-          <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
+          <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="index:loadmore">LOAD MORE</a>
           <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
         </div>
       </div>
