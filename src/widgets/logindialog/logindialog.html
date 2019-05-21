@@ -4,7 +4,7 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 
-		<h2>Sign in to WITH</h2>
+		<h2 t="app:login-header">Sign in to WITH</h2>
 
 			<div class="externalLogin">
 				<button class="facebook" type="button" click.delegate="authenticate('facebook')">
@@ -20,7 +20,7 @@
 					<span>Google</span>
 				</button>
 
-				<div class="footer">Don't have an account? <a href="javascript:void(0)" click.delegate="register()">Joining is quick and easy</a>.</div>
+				<div class="footer" t="[html]app:login-message">Don't have an account? <a href="javascript:void(0)" click.delegate="register()">Joining is quick and easy</a>.</div>
 			</div>
 			<div class="emailLogin">
 				<form class="form">

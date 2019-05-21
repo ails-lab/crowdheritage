@@ -23,7 +23,30 @@
         <div class="bgwrap"></div>
       </div>
     </section>
-    <!-- campaign list-->
+    <!-- select language-->
+    <section class="languages">
+      <div class="lang">
+        <!-- label-->
+        <div class="lbl">LANGUAGE : </div>
+        <!-- select-->
+        <a id="langselect" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+          <img src=${currentLocale.flag} width="20px" />
+          <span class="text">${currentLocale.title}</span>
+          <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
+        </a>
+        <!-- dropdown-->
+        <ul aria-labelledby="langselect" class="dropdown-menu">
+          <li repeat.for="loc of locales">
+            <a href="javascript:void(0)" click.delegate="setLocale(loc)">
+              <img src=${loc.flag} width="16px" />
+              <span css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <br/>
+    </section>
+    <!-- campaign list -->
     <section class="campaigns">
       <div class="container">
         <!-- top section-->

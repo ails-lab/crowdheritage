@@ -36,8 +36,6 @@ export class App {
         .then( () => {
       // locale is loaded
     });
-    console.log("Let's get this party started!!");
-    console.log(this.i18n.getLocale());
 
     // Select the favicon and the color-set, according to the project
     var link = document.createElement('link');

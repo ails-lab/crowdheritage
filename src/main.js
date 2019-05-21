@@ -85,7 +85,7 @@ export async function configure(aurelia) {
         attributes: aliases,
         lng : 'en',
         fallbackLng : 'en',
-        debug : false,
+        debug : true,
         ns: [
           'app',
           'about',
