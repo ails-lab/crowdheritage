@@ -160,7 +160,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       }
     }),
     new CopyWebpackPlugin([
-      { from: 'src/locales/', to: 'locales/' }, // Multilinguality
+      //{ from: 'src/locales/', to: 'locales/' }, // Multilinguality
       { from: 'img', to: 'img' },
       { from: 'js', to: 'js' },
       { from: 'styles', to: 'styles' }
