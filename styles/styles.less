@@ -1185,6 +1185,61 @@ body main .topsection .sort .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
 }
+body main section.languages .lang {
+  float: left;
+  position: relative;
+  font-family: "Dosis";
+  padding-top: 30px;
+}
+body main section.languages .lang .lbl {
+  display: inline-block;
+}
+body main section.languages .lang a {
+  display: inline-block;
+  color: @main-color;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+body main section.languages .lang a img {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+body main section.languages .lang a .arrow {
+  margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+body main section.languages .lang a:hover {
+  text-decoration: none;
+  color: #009e77;
+}
+body main section.languages .lang .dropdown-menu {
+  margin: 5px 0 0 0;
+  right: 10px;
+  padding: 0;
+  border-radius: 0;
+  border: 0px;
+  box-shadow: none;
+}
+body main section.languages .lang .dropdown-menu li {
+  display: block;
+  margin-bottom: 1px;
+}
+body main section.languages .lang .dropdown-menu li a {
+  display: block;
+  color: #555;
+  padding: 7px 10px 7px 10px;
+  background-color: #f2f2f2;
+}
+body main section.languages .lang .dropdown-menu li a img {
+  margin-right: 10px;
+}
+body main section.languages .lang .dropdown-menu li a:hover {
+  background-color: @main-color;
+  color: #fff;
+}
 body main section.learnmore {
   padding: 0px 0 0px 0;
 }
@@ -2848,6 +2903,11 @@ body {
     left: 0;
   }
   body main .topsection .sort {
+    display: block;
+    float: none;
+    padding-top: 10px;
+  }
+  body main section.languages .lang {
     display: block;
     float: none;
     padding-top: 10px;

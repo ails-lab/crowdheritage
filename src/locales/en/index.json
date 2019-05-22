@@ -1,0 +1,15 @@
+{
+  "bannertext-up" : "++CROWDSOURCING",
+  "bannertext-down" : "++CAMPAIGNS",
+  "contribute" : "++CONTRIBUTE NOW",
+  "language" : "++LANGUAGE : ",
+  "current" : "<div class=\"bold\">++CURRENT</div><span>++CROWDSOURCING CAMPAIGNS</span>",
+  "sortby" : "++SORT BY ",
+  "alphabetical" : "++ALPHABETICAL",
+  "date" : "++DATE",
+  "opencampaign" : "++OPEN CAMPAIGN",
+  "progress" : "++PROGRESS",
+  "contributors" : "++CONTRIBUTORS",
+  "enddate" : "++END DATE",
+  "loadmore" : "++LOAD MORE"
+}

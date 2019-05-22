@@ -1,0 +1,13 @@
+{
+  "home" : "++HOME",
+  "about" : "++ABOUT",
+  "sign-in" : "++SIGN IN",
+  "profile" : "++Profile",
+  "sign-out" : "++Sign Out",
+  "left-footer" : "++You have questions?<br>Contact us at <a href='mailto:with-dev@image.ntua.gr'>with-dev@image.ntua.gr</a>",
+  "right-footer" : "++<strong>Co-financed by the Connecting Europe<br>Facility of the European Union</strong>",
+  "login-header" : "++Sign in to WITH",
+  "login-message-left" : "++Don't have an account? ",
+  "login-message-right" : "++Joining is quick and easy",
+  "login-message-alt" : "++Login with Facebook or Google"
+}

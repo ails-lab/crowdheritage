@@ -21,11 +21,12 @@ import { UserServices } from 'UserServices.js';
 import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { Router } from 'aurelia-router';
+import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
 let COUNT = 7;
 
-@inject(CampaignServices, UserServices, RecordServices, Router)
+@inject(CampaignServices, UserServices, RecordServices, Router, I18N)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -33,7 +34,7 @@ export class CampaignIndex {
     }, 800);
   }
 
-  constructor(campaignServices, userServices, recordServices, router) {
+  constructor(campaignServices, userServices, recordServices, router, i18n) {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
     this.recordServices = recordServices;
@@ -48,6 +49,19 @@ export class CampaignIndex {
     this.more = true;
     this.groupName = "";
     this.sortBy = "Alphabetical";
+
+    this.i18n = i18n;
+    this.locales = [
+      { title: "English",    code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano",   code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Ελληνικά",   code: "el", flag: "/img/assets/images/flags/el.png" },
+      { title: "Français",   code: "fr", flag: "/img/assets/images/flags/fr.png" },
+      { title: "Deutsch",    code: "de", flag: "/img/assets/images/flags/de.png" },
+      { title: "Español",    code: "es", flag: "/img/assets/images/flags/es.png" },
+      { title: "Nederlands", code: "nl", flag: "/img/assets/images/flags/nl.png" }
+    ];
+    this.currentLocale = this.locales[0];
+    this.getLocale();
   }
 
   attached() {
@@ -140,12 +154,41 @@ export class CampaignIndex {
     }
   }
 
+  toggleLangMenu() {
+    if ($('.lang').hasClass('open')) {
+      $('.lang').removeClass('open');
+    }
+    else {
+      $('.lang').addClass('open');
+    }
+  }
+
   reloadCampaigns(sortBy) {
     this.campaigns.splice(0, this.campaigns.length);
     this.currentCount = 0;
     this.more = true;
     this.sortBy = sortBy;
     this.activeCampaigns(this.groupName, sortBy);
+  }
+
+  setLocale(locale) {
+    let code = locale.code
+    if (this.currentLocale.code !== code) {
+      this.i18n.setLocale(code);
+      this.currentLocale = locale;
+    }
+  }
+
+  getLocale() {
+    let code = this.i18n.getLocale();
+    this.currentLocale = this.locales[0];
+    for (let loc in this.locales) {
+      if (loc.code == code) {
+        this.currentLocale = loc;
+        break;
+      }
+    }
+    return this.currentLocale;
   }
 
 }

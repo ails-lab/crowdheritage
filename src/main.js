@@ -17,8 +17,8 @@
 // we want font-awesome to load as soon as possible to show the fa-spinner
 import { AnimatorVelocity }  from 'aurelia-animator-velocity';
 import { LogManager, PLATFORM } from 'aurelia-framework';
-//import { I18N, TCustomAttribute } from 'aurelia-i18n';
-//import Backend from 'i18next-xhr-backend';
+import { I18N, TCustomAttribute } from 'aurelia-i18n';
+import Backend from 'i18next-xhr-backend';
 import 'bootstrap';
 import config from './conf/auth.config.js';
 
@@ -70,7 +70,6 @@ export async function configure(aurelia) {
     .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
 			baseConfig.configure(config);
 		})
-    /*
     .plugin(PLATFORM.moduleName('aurelia-i18n'), instance => {
       let aliases = ['t', 'i18n'];
       // add aliases for 't' attribute
@@ -84,14 +83,26 @@ export async function configure(aurelia) {
           loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
         },
         attributes: aliases,
-        lng : 'de',
+        lng : 'en',
         fallbackLng : 'en',
-        debug : false,
-        ns: ['translation','nav'],
-        defaultNS: 'translation'
+        debug : true,
+        ns: [
+          'app',
+          'about',
+          'collection',
+          'feedback',
+          'index',
+          'item',
+          'partners',
+          'privacy',
+          'register',
+          'summary',
+          'terms',
+          'user'
+        ],
+        defaultNS: 'app'
       });
     })
-    */
     .feature(PLATFORM.moduleName('converters/index'));// All ValueConverters are registered here
 
 

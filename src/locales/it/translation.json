@@ -1,0 +1,9 @@
+// This is an example. CHANGE IT!
+{
+  "score": "Score: {{score}}",
+  "lives": "{{count}} life remaining",
+  "lives_plural": "{{count}} lives remaining",
+  "friend": "A friend",
+  "friend_male": "A boyfriend",
+  "friend_female": "A girlfriend"
+}

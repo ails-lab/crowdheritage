@@ -16,7 +16,7 @@
             <!-- link-->
             <a href="javascript:void(0)" click.delegate="loginPopup()">
               <!-- label-->
-              <div class="lbl">SIGN IN</div>
+              <div class="lbl" t="app:sign-in">SIGN IN</div>
               <!-- thumbnail-->
               <div class="thumb"></div>
             </a>
@@ -36,17 +36,17 @@
             </a>
             <!-- account menu-->
             <ul id="accountmenu" class="accountmenu">
-              <li><a route-href="route: user; params.bind: { uname: user.username }">Profile</a></li>
-              <li><a href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
+              <li><a t="app:profile" route-href="route: user; params.bind: { uname: user.username }">Profile</a></li>
+              <li><a t="app:sign-out" href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
           </div>
 
           <!-- main-->
           <ul class="main">
-            <li><a href="/">HOME</a></li>
+            <li><a t="app:home" href="/">HOME</a></li>
             <li if.bind="project=='WITHcrowd'"><a href="http://withculture.eu" target="_blank">WITH</a></li>
             <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners">PARTNERS</a></li>
-            <li><a route-href="route: about">ABOUT</a></li>
+            <li><a t="app:about" route-href="route: about">ABOUT</a></li>
           </ul>
         </nav>
       </div>
