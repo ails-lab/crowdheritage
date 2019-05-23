@@ -52,16 +52,17 @@ export class CampaignIndex {
 
     this.i18n = i18n;
     this.locales = [
-      { title: "English",    code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano",   code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Ελληνικά",   code: "el", flag: "/img/assets/images/flags/el.png" },
-      { title: "Français",   code: "fr", flag: "/img/assets/images/flags/fr.png" },
-      { title: "Deutsch",    code: "de", flag: "/img/assets/images/flags/de.png" },
-      { title: "Español",    code: "es", flag: "/img/assets/images/flags/es.png" },
-      { title: "Nederlands", code: "nl", flag: "/img/assets/images/flags/nl.png" }
+      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" }
+      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
+      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
+      //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
+      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
+      //{ title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
     ];
-    this.currentLocale = this.locales[0];
-    this.getLocale();
+    this.currentLocale;
+    this.currentLocaleCode;
   }
 
   attached() {
@@ -79,6 +80,8 @@ export class CampaignIndex {
         this.campaignsCount = result;
       });
     this.activeCampaigns("", this.sortBy);
+
+    this.getLocale();
   }
 
   activeCampaigns(groupName, sortBy) {
@@ -172,23 +175,21 @@ export class CampaignIndex {
   }
 
   setLocale(locale) {
-    let code = locale.code
-    if (this.currentLocale.code !== code) {
-      this.i18n.setLocale(code);
+    if (this.currentLocale.code !== locale.code) {
+      this.i18n.setLocale(locale.code);
       this.currentLocale = locale;
+      this.currentLocaleCode = locale.code;
     }
   }
 
   getLocale() {
-    let code = this.i18n.getLocale();
-    this.currentLocale = this.locales[0];
-    for (let loc in this.locales) {
-      if (loc.code == code) {
+    this.currentLocaleCode = this.i18n.getLocale();
+    for (let loc of this.locales) {
+      if (loc.code == this.currentLocaleCode) {
         this.currentLocale = loc;
-        break;
+        return this.currentLocale;
       }
     }
-    return this.currentLocale;
   }
 
 }

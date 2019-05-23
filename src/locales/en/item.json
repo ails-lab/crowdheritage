@@ -1,0 +1,12 @@
+{
+  "next-item" : "++NEXT ITEM",
+  "item" : "++Item",
+  "out-of" : "++out of",
+  "meta" : "++ITEM METADATA",
+  "description" : "++DESCRIPTION",
+  "provider" : "++PROVIDER",
+  "creator" : "++CREATOR",
+  "rights" : "++RIGHTS",
+  "media-type" : "++MEDIA TYPE",
+  "record-source" : "++RECORD SOURCE"
+}

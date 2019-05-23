@@ -1,0 +1,10 @@
+{
+  "bannertext-up" : "CAMPAGNE DI",
+  "bannertext-down" : "CROWDSOURCING",
+  "language" : "~~LANGUAGE : ",
+  "current" : "<div class=\"bold\">CAMPAGNA</div><span>ATTUALE</span>",
+  "sortby" : "IN ORDINE ",
+  "alphabetical" : "ALFABETICO",
+  "date" : "CRONOLOGICO",
+  "opencampaign" : "~~OPEN CAMPAIGN"
+}

@@ -7,14 +7,14 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"> <span>CAMPAIGN</span></div>
+            <div class="lbl"> <span t="app:campaign">CAMPAIGN</span></div>
             <div class="wrap"><span>${campaign.title}</span></div>
           </div>
         </div>
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="/">RETURN TO CAMPAIGN LIST <img src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a href="/" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
         <!-- progress-->
@@ -42,48 +42,48 @@
             <!-- user stat-->
             <div class="userstat" if.bind="isAuthenticated">
               <!-- text-->
-              <h1 if.bind="userPoints >= campaign.badges.bronze">Congratulations ${user.firstName}!<br/>
-                You have unlocked the ${userBadgeName} badge.</h1>
-              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0">Hello ${user.firstName}!<br/>
-                Continue contributing to earn your first badge.</h1>
-              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0">Hello ${user.firstName}!<br/>
-                Start contributing to earn your first badge.</h1>
+              <h1 if.bind="userPoints >= campaign.badges.bronze"><span t="summary:congratulations">Congratulations</span> ${user.firstName}!<br/>
+                <span t="[html]summary:badge-unlocked">You have unlocked the </span> ${userBadgeName} <span t="summary:badge-price">badge</span>.</h1>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
+                <span t="summary:badge-continue">Continue contributing to earn your first badge</span>.</h1>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
+                <span t="summary:badge-start">Start contributing to earn your first badge</span>.</h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
                 <li class="wide">
-                  <div class="lbl">TAGS</div>
+                  <div class="lbl" t="summary:tags">TAGS</div>
                   <div class="val">${userTags}</div>
                 </li>
                 <li>
-                  <div class="lbl">ITEMS</div>
+                  <div class="lbl" t="summary:items">ITEMS</div>
                   <div class="val">${userRecords}</div>
                 </li>
                 <li>
-                  <div class="lbl">BADGE</div>
+                  <div class="lbl" t="summary:badge">BADGE</div>
                   <div class="val">${userBadgeName}</div>
                 </li>
                 <li class="wide">
-                  <div class="lbl">CAMPAIGN RANK</div>
+                  <div class="lbl" t="summary:rank">CAMPAIGN RANK</div>
                   <div class="val">${userRank}</div>
                 </li>
                 <li class="wide">
-                  <div class="lbl">POINTS</div>
+                  <div class="lbl" t="summary:points">POINTS</div>
                   <div class="val">${userPoints}</div>
                 </li>
               </ul>
               <!-- description-->
-              <div class="desc">
-                Contribute more and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
+              <div class="desc" t="[prepend]summary:description-left">
+                <a href="javascript:void(0)" click.delegate="scrollTo('#maps')" t="summary:description-right">below</a>.
               </div>
             </div>
             <!-- user stat-->
             <div class="userstat" if.bind="!isAuthenticated">
               <!-- text-->
-              <h1>Get involved!<br/>
+              <h1 t="[html]summary:badge-involved">Get involved!<br/>
                 Join CrowdHeritage and start contributing to our crowdsourcing campaigns.</h1>
               <!-- description-->
-              <div class="desc">
-                Start annotating and unlock new badges. <br/>You can find the general statistics regarding the campaign <a href="javascript:void(0)" click.delegate="scrollTo('#maps')">below.</a>
+              <div class="desc" t="[prepend]summary:description-left">
+                <a href="javascript:void(0)" click.delegate="scrollTo('#maps')" t="summary:description-right">below</a>.
               </div>
             </div>
           </div>
@@ -96,23 +96,23 @@
             <!-- tet-->
             <div class="text">
               <!-- heading-->
-              <div class="heading"> <span>GOAL</span></div>
+              <div class="heading"> <span t="summary:goal">GOAL</span></div>
               <!-- desc-->
               <p>${campaign.description}</p>
               <!-- stats-->
               <ul class="stats">
                 <li>
-                  <div class="lbl">START DATE</div>
+                  <div class="lbl" t="app:startdate">START DATE</div>
                   <div class="val">${campaign.startDate | dateFormat}</div>
                   <br/>
-                  <div class="lbl">CONTRIBUTORS</div>
+                  <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
                   <div class="val">${campaign.contributorsCount}</div>
                 </li>
                 <li>
-                  <div class="lbl">END DATE</div>
+                  <div class="lbl" t="app:enddate">END DATE</div>
                   <div class="val">${campaign.endDate | dateFormat}</div>
                   <br/>
-                  <div class="lbl">PROGRESS</div>
+                  <div class="lbl" t="app:progress">PROGRESS</div>
                   <div class="val">
                     ${campaign.percentage}%<small>${campaign.totalCurrent}/${campaign.target}</small>
                   </div>
@@ -121,7 +121,7 @@
             </div>
           </div>
           <!-- contribute-->
-          <div class="contribute"><a href="javascript:void(0)" click.delegate="goToItem(campaign, 0, records, 0)">CONTRIBUTE TO CAMPAIGN</a></div>
+          <div class="contribute"><a href="javascript:void(0)" click.delegate="goToItem(campaign, 0, records, 0)" t="summary:contribute-campaign">CONTRIBUTE TO CAMPAIGN</a></div>
         </div>
       </div>
     </section>
@@ -132,7 +132,7 @@
         <div class="topsection">
           <!-- label-->
           <div class="sectionlabel">
-            <div class="bold">COLLECTIONS</div><span>SELECT TO CONTRIBUTE</span>
+            <div class="bold" t="summary:collections">COLLECTIONS</div><span t="summary:select-contribute">SELECT TO CONTRIBUTE</span>
           </div>
         </div>
         <!-- campaign reel-->
@@ -150,18 +150,18 @@
 									<div class="thumbs-images thumbs-count-${col.absMedia.length}">
 										<img repeat.for="med of col.absMedia" src.bind="med" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
 									</div>
-									<div class="action"><span class="plus">+ </span>CONTRIBUTE NOW</div>
+									<div class="action" t="[append]app:contribute"><span class="plus">+ </span></div>
 								</div>
                 <!-- detail-->
                 <div class="detail">
                   <!-- count-->
                   <div class="count">
-                    ${col.entryCount}<span>ITEMS</span>
+                    ${col.entryCount}<span t="summary:items">ITEMS</span>
                   </div>
                   <!-- title-->
                   <div class="desc">
                     <div class="title">${col.title}</div>
-                    <div class="owner">By ${col.creatorName}</div>
+                    <div class="owner"><span t="summary:by">By</span> ${col.creatorName}</div>
                   </div>
                 </div></a>
             </div>
@@ -169,7 +169,7 @@
           </div>
           <!-- more-->
           <div class="loadmore">
-            <a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
             <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
           </div>
         </div>
@@ -188,7 +188,7 @@
             <compose view-model="widgets/googlemap/googlemap"></compose>
             </div>
             <!-- heading-->
-            <div class="heading">Location of Active Volunteers</div>
+            <div class="heading" t="summary:location">Location of Active Volunteers</div>
           </div>
           <!-- graphs-->
          <compose view-model="widgets/graph/graph" model.bind="{ 'campaign': campaign, 'points': points}"></compose>

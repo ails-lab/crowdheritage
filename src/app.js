@@ -31,11 +31,11 @@ export class App {
   constructor(dialogService, userServices, container, i18n) {
     // Load the desired locale
     this.i18n = i18n;
-    this.i18n
+    /*this.i18n
         .setLocale('en')
         .then( () => {
       // locale is loaded
-    });
+    });*/
 
     // Select the favicon and the color-set, according to the project
     var link = document.createElement('link');

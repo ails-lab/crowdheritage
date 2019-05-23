@@ -6,23 +6,22 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"><span>CAMPAIGN</span></div>
+            <div class="lbl"><span t="app:campaign">CAMPAIGN</span></div>
             <div class="wrap"><span>${campaign.title}</span></div>
           </div>
         </div>
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="javascript:void(0)" click.delegate="goToCamp(campaign)">
-                RETURN TO CAMPAIGN PAGE<img src="/img/ic-arrow-right-black.png" class="space"></a></li>
+            <li><a href="javascript:void(0)" click.delegate="goToCamp(campaign)" t="[prepend]app:return-campaign"><img src="/img/ic-arrow-right-black.png" class="space"></a></li>
           </ul>
         </nav>
         <!-- progress-->
         <ul class="collectioninfo">
           <li class="title">${collectionTitle}</li>
           <li class="count">
-            <div class="info" show.bind="hasCollection">item ${offset + 1} out of ${collectionCount}</div>
-            <a show.bind="!lastItem" class="next" href="javascript:void(0)" click.delegate="nextItem()">NEXT ITEM</a>
+            <div class="info" show.bind="hasCollection"><span t="item:item">Item</span> ${offset + 1} <span t="item:out-of">out of</span> ${collectionCount}</div>
+            <a show.bind="!lastItem" class="next" href="javascript:void(0)" click.delegate="nextItem()" t="item:next-item">NEXT ITEM</a>
           </li>
         </ul>
         <!-- bg-->
@@ -30,7 +29,7 @@
       </div>
     </section>
     <!-- tagging-->
-    <section class="tagging">
+    <section id="tagging" class="tagging">
       <!-- title-->
       <div class="container" show.bind="!loadRec">
         <div class="title">${record.title}</div>
@@ -51,28 +50,28 @@
             <div class="wrap">
               <div class="metadata">
                 <!-- label-->
-                <div class="heading">ITEM METADATA</div>
+                <div class="heading" t="item:meta">ITEM METADATA</div>
                 <!-- info-->
 								<div class="show-more-parent">
                 <ul class="meta show-more-target row">
                   <li class="col-sm-6" if.bind="record.description">
-                    <div class="lbl">DESCRIPTION</div>
+                    <div class="lbl" t="item:description">DESCRIPTION</div>
                     <div class="val">${record.description}</div>
                   </li>
                   <li class="col-sm-6" if.bind="record.dataProvider">
-                    <div class="lbl">PROVIDER</div>
+                    <div class="lbl" t="item:provider">PROVIDER</div>
                     <div class="val">${record.dataProvider}</div>
                   </li>
                   <li class="col-sm-6" if.bind="record.creator">
-                    <div class="lbl">CREATOR</div>
+                    <div class="lbl" t="item:creator">CREATOR</div>
                     <div class="val">${record.creator}</div>
                   </li>
                   <li class="col-sm-6" if.bind="record.rights">
-                    <div class="lbl">RIGHTS</div>
+                    <div class="lbl" t="item:rights">RIGHTS</div>
                     <div class="val">${record.rights}</div>
                   </li>
                   <li class="col-sm-6" if.bind="record.mediatype">
-                    <div class="lbl">MEDIA TYPE</div>
+                    <div class="lbl" t="item:media-type">MEDIA TYPE</div>
                     <div class="val">${record.mediatype}</div>
                   </li>
                   <!-- <li class="col-sm-6" if.bind="record.dbId">
@@ -80,7 +79,7 @@
                     <div class="val"><a href.bind="record.loc">${record.loc}</a></div>
                   </li> -->
                   <li class="col-sm-6" if.bind="record.source">
-                    <div class="lbl">RECORD SOURCE</div>
+                    <div class="lbl" t="item:record-source">RECORD SOURCE</div>
                     <div class="val">${record.source}</div>
                   </li>
                   <div class="col-sm-6" repeat.for="dcfield of record.dcfields">

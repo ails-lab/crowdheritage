@@ -16,7 +16,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')" t="[append]index:contribute"> <img src="/img/ic-arrow-left-black.png"></a></li>
+            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')" t="[append]app:contribute"> <img src="/img/ic-arrow-left-black.png"></a></li>
             <li>${campaignsCount | campaignCounter}</li>
           </ul>
         </nav>
@@ -101,20 +101,20 @@
               <!-- stats-->
               <ul class="stats">
                 <li>
-                  <div class="lbl" t="index:progress">PROGRESS</div>
+                  <div class="lbl" t="app:progress">PROGRESS</div>
                   <div class="val">
                     ${camp.percentage}%<small>${camp.totalCurrent}/${camp.target}</small>
                   </div>
                 </li>
                 <li>
-                  <div class="lbl" t="index:contributors">CONTRIBUTORS</div>
+                  <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
                   <div class="val">${camp.contributorsCount}</div>
                 </li>
                 <li>
-                  <div class="lbl" t="index:enddate">END DATE</div>
+                  <div class="lbl" t="app:enddate">END DATE</div>
                   <div class="val">${camp.endDate | dateFormat}</div>
                 </li>
-                <li class="contribute"><a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)" t="index:contribute">CONTRIBUTE NOW</a></li>
+                <li class="contribute"><a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)" t="app:contribute">CONTRIBUTE NOW</a></li>
               </ul>
             </div>
           </div>
@@ -122,7 +122,7 @@
 
         <!-- more-->
         <div class="loadmore">
-          <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="index:loadmore">LOAD MORE</a>
+          <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
           <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
         </div>
       </div>

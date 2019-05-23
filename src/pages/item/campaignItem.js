@@ -30,6 +30,12 @@ let COUNT = 10;
 @inject(UserServices, RecordServices, CampaignServices, CollectionServices, Router)
 export class CampaignItem {
 
+  scrollTo(anchor) {
+    $('html, body').animate({
+      scrollTop: $(anchor).offset().top
+    }, 0);
+  }
+
   constructor(userServices, recordServices, campaignServices, collectionServices, router) {
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
@@ -279,13 +285,17 @@ export class CampaignItem {
     } else {
       this.previous =[];
     }
-    console.info(this.previous);
-    console.info(this.records);
+    //console.info(this.previous);
+    //console.info(this.records);
 		this.loadNextRecord();
   }
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
+  }
+
+  get hasCollection() {
+    return (this.collectionTitle.length>0);
   }
 
 	toggleLoadMore(container) {
