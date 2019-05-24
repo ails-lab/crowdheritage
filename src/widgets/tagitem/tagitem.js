@@ -23,42 +23,46 @@ import {AnnotationServices} from 'AnnotationServices.js';
 import {ThesaurusServices} from 'ThesaurusServices.js';
 import {bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import { toggleMore } from 'utils/Plugin.js';
+import {toggleMore} from 'utils/Plugin.js';
+import {I18N} from 'aurelia-i18n';
 
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup')
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N)
 export class Tagitem {
 
   @bindable prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n) {
+    this.i18n = i18n;
+
 		this.colorSet = [
-			["/img/color/black.png", "Black"],
-			["/img/color/gray.png", "Grey"],
-			["/img/color/metallic.jpg", "Metallic"],
-			["/img/color/silver.png", "Silver"],
-			["/img/color/bronze.png", "Bronze"],
-			["/img/color/brown.png", "Brown"],
-			["/img/color/copper.png", "Copper"],
-			["/img/color/red.png", "Red"],
-			["/img/color/orange.png", "Orange"],
-			["/img/color/beige.png", "Beige"],
-			["/img/color/gold.png", "Gold"],
-			["/img/color/yellow.png", "Yellow"],
-			["/img/color/green.png", "Green"],
-			["/img/color/blue.png", "Blue"],
-			["/img/color/purple.png", "Purple"],
-			["/img/color/pink.png", "Pink"],
-			["/img/color/multicolored.png", "Multicoloured"],
-			["/img/color/white.png", "White"],
-			["/img/color/transparent.png", "Transparent"]
+      ["/img/color/black.png",        "Black",         this.i18n.tr('item:color:Black')],
+      ["/img/color/gray.png",         "Grey",          this.i18n.tr('item:color:Grey')],
+      //["/img/color/metallic.jpg",     "Metallic",      this.i18n.tr('item:color:Metallic')],
+      ["/img/color/silver.png",       "Silver",        this.i18n.tr('item:color:Silver')],
+      ["/img/color/bronze.png",       "Bronze",        this.i18n.tr('item:color:Bronze')],
+      ["/img/color/brown.png",        "Brown",         this.i18n.tr('item:color:Brown')],
+      ["/img/color/copper.png",       "Copper",        this.i18n.tr('item:color:Copper')],
+      ["/img/color/red.png",          "Red",           this.i18n.tr('item:color:Red')],
+      ["/img/color/orange.png",       "Orange",        this.i18n.tr('item:color:Orange')],
+      ["/img/color/beige.png",        "Beige",         this.i18n.tr('item:color:Beige')],
+      ["/img/color/gold.png",         "Gold",          this.i18n.tr('item:color:Gold')],
+      ["/img/color/yellow.png",       "Yellow",        this.i18n.tr('item:color:Yellow')],
+      ["/img/color/green.png",        "Green",         this.i18n.tr('item:color:Green')],
+      ["/img/color/blue.png",         "Blue",          this.i18n.tr('item:color:Blue')],
+      ["/img/color/purple.png",       "Purple",        this.i18n.tr('item:color:Purple')],
+      ["/img/color/pink.png",         "Pink",          this.i18n.tr('item:color:Pink')],
+      ["/img/color/multicolored.png", "Multicoloured", this.i18n.tr('item:color:Multicoloured')],
+      ["/img/color/white.png",        "White",         this.i18n.tr('item:color:White')],
+      ["/img/color/transparent.png",  "Transparent",   this.i18n.tr('item:color:Transparent')]
 		];
+
 		this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
-    this.placeholderText = "Start typing a term then select from the options";
+    this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
@@ -109,16 +113,14 @@ export class Tagitem {
     // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
-      if (this.hasMotivation('Polling')) {
-        await this.annotateLabel(this.pollTitle);
-      }
-      await this.getRecordAnnotations(this.recId);
-    } else {
-      if (this.hasMotivation('Polling')) {
-        await this.annotateLabel(this.pollTitle);
-      }
-      await this.getRecordAnnotations(this.recId);
     }
+    else if (this.userServices.isAuthenticated() && this.userServices.current != null) {
+      await this.getRecordAnnotations(this.recId);
+      if (this.hasMotivation('Polling') && !this.hasContributed()) {
+        await this.annotateLabel(this.pollTitle);
+      }
+    }
+    await this.getRecordAnnotations(this.recId);
   }
 
   async reloadAnnotations() {
@@ -654,6 +656,10 @@ export class Tagitem {
     } else {
       return this.colorSet[index][0];
     }
+  }
+
+  getColorLabel(label) {
+    return this.i18n.tr('item:color:'+label);
   }
 
   annotationExists(label) {

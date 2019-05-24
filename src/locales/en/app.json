@@ -22,5 +22,6 @@
   "loadmore" : "++LOAD MORE",
 
   "collection" : "++COLLECTION",
-  "return-campaign" : "++RETURN TO CAMPAIGN"
+  "return-campaign" : "++RETURN TO CAMPAIGN",
+  "tags" : "++TAGS"
 }

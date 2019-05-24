@@ -3,9 +3,9 @@
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
-      <div class="heading green">TAGS</div>
+      <div class="heading green" t="app:tags">TAGS</div>
       <!-- info-->
-      <div class="infobar">Tag items that you see on the image, you can validate it first by checking on the thesaurus before adding the tag.</div>
+      <div class="infobar" t="item:tag-info">Tag items that you see on the image, you can validate it first by checking on the thesaurus before adding the tag.</div>
 			<div  class="searchbox">
     		<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged() & debounce:500"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">

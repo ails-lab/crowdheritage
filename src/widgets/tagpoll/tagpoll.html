@@ -3,15 +3,15 @@
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
-      <div class="heading green">POLL</div>
+      <div class="heading green" t="item:poll">POLL</div>
       <!-- info-->
-      <div class="infobar">Can you identify the collection's subject inside this image?</div>
+      <div class="infobar" t="item:poll-info">Can you identify the collection's subject inside this image?</div>
 			<div class="searchbox">${pollTitle}</div>
       <!-- taglist-->
 			<div class="show-more-parent">
       <ul class="taglist show-more-target">
         <li>
-        	<div class="text">Yes</div>
+        	<div class="text" t="item:yes">Yes</div>
         	<ul class="action">
           	<li class.bind="annotations[0].approvedByMe ? 'up active' : 'up'">
             	<a href="javascript:void(0)" click.delegate="validate(annotations[0].dbId, 'approved', 0, annotations[0].approvedByMe, annotations[0].rejectedByMe, 'tag')">
@@ -21,7 +21,7 @@
           </ul>
       	</li>
         <li>
-        	<div class="text">No</div>
+        	<div class="text" t="item:no">No</div>
         	<ul class="action">
           	<li class.bind="annotations[0].rejectedByMe ? 'down active' : 'down'">
             	<a href="javascript:void(0)" click.delegate="validate(annotations[0].dbId, 'rejected', 0, annotations[0].approvedByMe, annotations[0].rejectedByMe, 'tag')">

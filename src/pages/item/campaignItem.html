@@ -93,7 +93,7 @@
 							</div>
                 <!-- more-->
                 <!-- HIDE
-                <div class="loadmore"><a href="#">LOAD MORE</a></div>
+                <div class="loadmore"><a href="#" t="app:loadmore">LOAD MORE</a></div>
                 -->
               </div>
             </div>
@@ -103,7 +103,7 @@
           <div class="right" if.bind="!loadCamp && !loadRec">
             <div class="fullscreen-button">
               <div class="wrap">
-                <a href="javascript:void(0)" click.delegate="toggleFullscreen()"><span class="exit">Exit </span>Fullscreen <i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
+                <a href="javascript:void(0)" click.delegate="toggleFullscreen()"><span class="exit" t="item:exit">Exit </span><span t="item:fullscreen">Fullscreen</span> <i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
               </div>
             </div>
             <compose view-model="widgets/tagitem/tagitem"
@@ -126,7 +126,7 @@
                      model.bind="{'campaign': campaign, 'recId': record.dbId, 'colTitle': collectionTitle}">
             </compose>
             <div class="wrap next-item-alternative-link">
-              <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)">NEXT ITEM</a>
+              <a class="next" href="javascript:void(0)" click.delegate="nextItem(campaign, collection, records, offset+1)" t="item:next-item">NEXT ITEM</a>
             </div>
             <div class="fullscreen-navigation">
               <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)" click.delegate="previousItem()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>

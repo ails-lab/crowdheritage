@@ -3,9 +3,9 @@
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
-      <div class="heading green">COLOR TAGGING</div>
+      <div class="heading green" t="item:color-tagging">COLOR TAGGING</div>
       <!-- info-->
-      <div class="infobar">Select colors that you see on the left picture. <br/>You can also validate other colors that has been submitted for this item by voting them.</div>
+      <div class="infobar" t="[html]item:color-info">Select colors that you see on the left picture. <br/>You can also validate other colors that has been submitted for this item by voting them.</div>
 
       <!-- color action-->
       <ul class="coloraction">
@@ -13,7 +13,7 @@
           <a href="javascript:void(0)" click.delegate="annotateLabel(color[1])">
             <img src.bind="color[0]">
             <div class="action">
-              <div class="colorname" innerhtml.bind="color[1]"></div>
+              <div class="colorname" innerhtml.bind="color[2]"></div>
             </div>
           </a>
         </li>
@@ -21,13 +21,13 @@
         <li class="width-helper" repeat.for="i of 20"></li>
       </ul>
       <!-- searchbox-->
-      <div class="colorbox">Vote submitted colors by other users.</div>
+      <div class="colorbox" t="item:votes">Vote submitted colors by other users.</div>
       <!-- taglist-->
 			<div class="show-more-parent">
       <ul class="taglist color show-more-target">
         <li repeat.for="ann of colorannotations">
           <div class="thumbs"><img src.bind="getColor(ann.label)"></div>
-          <div class="selected">${ann.label}</div>
+          <div class="selected" innerhtml.bind="getColorLabel(ann.label)"></div>
           <ul class="action">
             <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
               <a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'color')">
