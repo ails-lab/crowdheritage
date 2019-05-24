@@ -109,16 +109,14 @@ export class Tagitem {
     // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
-      if (this.hasMotivation('Polling')) {
-        await this.annotateLabel(this.pollTitle);
-      }
-      await this.getRecordAnnotations(this.recId);
-    } else {
-      if (this.hasMotivation('Polling')) {
-        await this.annotateLabel(this.pollTitle);
-      }
-      await this.getRecordAnnotations(this.recId);
     }
+    else if (this.userServices.isAuthenticated() && this.userServices.current != null) {
+      await this.getRecordAnnotations(this.recId);
+      if (this.hasMotivation('Polling') && !this.hasContributed()) {
+        await this.annotateLabel(this.pollTitle);
+      }
+    }
+    await this.getRecordAnnotations(this.recId);
   }
 
   async reloadAnnotations() {
