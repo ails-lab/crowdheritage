@@ -1,0 +1,16 @@
+{
+  "header" : "++About CrowdHeritage",
+  "intro" : "<p><strong>++CrowdHeritage is a European project supported by European Union under the framework of the CEF Telecom program - Generic Services.</strong></p><p><strong>It is implemented by a consortium of 5 European partners:</strong><ul><li>National Technical University of Athens (NTUA), coordinator of the project</li><li>Europeana Fashion International Association (EFIA)</li><li>French Ministry of Culture</li><li>Michael Culture Association</li><li>Europeana Foundation</li></ul></p><p><strong>The initiative is based on the</strong> standalone online platform for enriching metadata of selected cultural items, developed by NTUA.</p><p><strong>The platform is aiming to develop</strong> the users experience thanks to participative annotations, depending on the type of content, missing metadata, and validate existing annotations in a user-friendly way.</p><p>You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br>You’re a student, a professional from Educational or Cultural communities?<br>You’re curious and want to discover European Cultural Heritage?<br><strong>Join our CrowdHeritage campaigns!</strong></p><p>Through the online platform of data collections, you can get access to several collections of cultural content from various Institutions in Europe. According to each campaign, you are invited to contribute by tagging and adding annotations or select colours or images.</p>",
+  "discover" : "++Discover",
+  "discoverCap" : "++DISCOVER",
+  "contribute" : "++Contribute",
+  "contributeCap" : "++CONTRIBUTE",
+  "rewards" : "++Get rewards",
+  "rewardsCap" : "++GET REWARDS",
+  "discover-text" : "++Discover digital artifacts and collections from museums, archives, libraries and galleries in Europe about Fashion, Music, Sport, Cities and landscape.",
+  "contribute-text" : "++Contribute to our 5 participative annotation campaigns and join the communities of CrowdHeritage contributors. &bull; You can participate to one or several campaigns. &bull; Each campaign has a specific contributive specificity and timeline and will stay open 1-2 months.",
+  "rewards-text" : "++&bull; Start and you will unlock badges!<br/> &bull; The best contributors will get some prizes!",
+  "footer-involved" : "++Get involved: it’s easy!",
+  "footer-sign" : "++Sign in on the Platform and begin!",
+  "footer-register" : "++Register now"
+}
