@@ -58,14 +58,11 @@ export class App {
   }
 
   activate() {
-
 		if (this.userServices.isAuthenticated() && this.userServices.current === null) {
 			return Promise.all([
 				this.userServices.reloadCurrentUser()
 			]);
 		}
-
-
 	}
 
   // Properties
