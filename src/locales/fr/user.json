@@ -1,0 +1,13 @@
+{
+  "name" : "##Name",
+  "gender" : "##Gender",
+  "contact" : "##Contact Information",
+  "about" : "##About",
+  "inserted" : "##INSERTED TAGS",
+  "upvotes" : "##UPVOTES",
+  "downvotes" : "##DOWNVOTES",
+  "items" : "##ITEMS",
+  "contribute" : "##Contribute more and unlock the next badge.",
+  "contributions" : "##CONTRIBUTIONS",
+  "annotated" : "##ANNOTATED ITEMS"
+}
