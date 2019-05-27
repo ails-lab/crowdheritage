@@ -23,5 +23,10 @@
 
   "collection" : "++COLLECTION",
   "return-campaign" : "++RETURN TO CAMPAIGN",
-  "tags" : "++TAGS"
+  "tags" : "++TAGS",
+  "points" : "++POINTS",
+
+  "footer-involved" : "++Get involved: it’s easy!",
+  "footer-sign" : "++Sign in on the Platform and begin!",
+  "footer-register" : "++Register now"
 }
