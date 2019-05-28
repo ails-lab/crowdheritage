@@ -26,6 +26,7 @@ export class Register {
 		this.userServices = userServices;
     this.router = router;
 		this.i18n = i18n;
+		this.loc;
 
 		// Initialization
 		this.email = '';
@@ -44,7 +45,10 @@ export class Register {
 		this.errors = {};
 	}
 
-  activate() {
+  activate(params) {
+		this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
     if (this.userServices.isAuthenticated()) {
       this.router.navigateToRoute('index');
     }

@@ -45,7 +45,7 @@
 						</div>
 						<div class="input-group ack">
 							<input type="checkbox" id="ack" value.bind="acceptTerms" />
-							<label for="ack" t="[prepend]register:accept"><a route-href="route: terms" t="register:terms"> Terms of Use agreement</a>.</label>
+							<label for="ack" t="[prepend]register:accept"><a route-href="route: terms; params.bind: {lang: loc}" t="register:terms"> Terms of Use agreement</a>.</label>
 						</div>
 						<div class="button-group">
 							<button class="btn-green" type="submit" t="register:button">Register</button>

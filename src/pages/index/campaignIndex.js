@@ -72,6 +72,14 @@ export class CampaignIndex {
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
   activate(params) {
+    // If no language is specified, redirect to the English page by default
+    if (params.lang == undefined) {
+      this.router.navigate("en");
+    }
+    // Set the page locale
+    this.i18n.setLocale(params.lang);
+    this.getLocale();
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -80,8 +88,6 @@ export class CampaignIndex {
         this.campaignsCount = result;
       });
     this.activeCampaigns("", this.sortBy);
-
-    this.getLocale();
   }
 
   activeCampaigns(groupName, sortBy) {
@@ -139,7 +145,7 @@ export class CampaignIndex {
           }
           this.loading = false;
           item.records = recs;
-          this.router.navigateToRoute('item', {cname: camp.username, recid: recs[0].dbId});
+          this.router.navigateToRoute('item', {cname: camp.username, lang: this.currentLocaleCode, recid: recs[0].dbId});
         }
         })
       .catch(error => {
@@ -172,14 +178,6 @@ export class CampaignIndex {
     this.more = true;
     this.sortBy = sortBy;
     this.activeCampaigns(this.groupName, sortBy);
-  }
-
-  setLocale(locale) {
-    if (this.currentLocale.code !== locale.code) {
-      this.i18n.setLocale(locale.code);
-      this.currentLocale = locale;
-      this.currentLocaleCode = locale.code;
-    }
   }
 
   getLocale() {

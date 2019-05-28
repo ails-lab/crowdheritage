@@ -37,7 +37,7 @@
         <!-- dropdown-->
         <ul aria-labelledby="langselect" class="dropdown-menu">
           <li repeat.for="loc of locales">
-            <a href="javascript:void(0)" click.delegate="setLocale(loc)">
+            <a route-href="route: index; params.bind: {lang: loc.code}">
               <img src=${loc.flag} width="16px" />
               <span css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
             </a>
@@ -77,7 +77,7 @@
             <!-- thumbs-->
             <div class="thumbs">
               <!-- wrap-->
-              <a route-href="route: summary; params.bind: {cname: camp.username}">
+              <a route-href="route: summary; params.bind: {cname: camp.username, lang: currentLocaleCode}">
                 <img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
                 <div class="action" t="[append]index:opencampaign"><span class="plus">+ </span></div>
@@ -85,8 +85,10 @@
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a a route-href="route: summary; params.bind: {cname: camp.username}">
-                <h1>${camp.title}</h1></a>
+              <!-- title-->
+              <a a route-href="route: summary; params.bind: {cname: camp.username, lang: currentLocaleCode}">
+                <h1>${camp.title}</h1>
+              </a>
               <!-- desc-->
               <p>${camp.description}</p>
               <!-- progress-->

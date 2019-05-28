@@ -5,7 +5,9 @@
 
       <div class="container">
         <!-- logo-->
-        <div class="logo"><a href="/" title="Home"><img src="${logo}" alt="Logo"></a></div>
+        <div class="logo">
+          <a route-href="route: index; params.bind: {lang: currentLocale}" title="Home"><img src="${logo}" alt="Logo"></a>
+        </div>
         <!-- mobile menu-->
         <div class="mobilemenu"><a href="#" title="MENU" data-target="#mobilenav"><img src="/img/ic-menu.png"></a></div>
         <!-- nav-->
@@ -36,17 +38,17 @@
             </a>
             <!-- account menu-->
             <ul id="accountmenu" class="accountmenu">
-              <li><a t="app:profile" route-href="route: user; params.bind: { uname: user.username }">Profile</a></li>
+              <li><a t="app:profile" route-href="route: user; params.bind: { uname: user.username, lang: currentLocale }">Profile</a></li>
               <li><a t="app:sign-out" href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
           </div>
 
           <!-- main-->
           <ul class="main">
-            <li><a t="app:home" href="/">HOME</a></li>
+            <li><a t="app:home" route-href="route: index; params.bind: {lang: currentLocale}">HOME</a></li>
             <li if.bind="project=='WITHcrowd'"><a href="http://withculture.eu" target="_blank">WITH</a></li>
-            <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners" t="app:partners">PARTNERS</a></li>
-            <li><a t="app:about" route-href="route: about">ABOUT</a></li>
+            <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners; params.bind: {lang: currentLocale}" t="app:partners">PARTNERS</a></li>
+            <li><a t="app:about" route-href="route: about; params.bind: {lang: currentLocale}">ABOUT</a></li>
           </ul>
         </nav>
       </div>

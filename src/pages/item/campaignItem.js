@@ -332,4 +332,10 @@ export class CampaignItem {
 		return false;
 	}
 
+  goToCamp(camp, loc) {
+    let summary = this.router.routes.find(x => x.name === 'summary');
+    summary.campaign = camp;
+    this.router.navigateToRoute('summary', {cname: camp.username, lang: loc});
+  }
+
 }

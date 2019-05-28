@@ -85,11 +85,10 @@ export async function configure(aurelia) {
         attributes: aliases,
         lng : 'en',
         fallbackLng : 'en',
-        debug : true,
+        debug : false,
         ns: [
           'app',
           'about',
-          'collection',
           'feedback',
           'index',
           'item',
@@ -122,7 +121,7 @@ export async function configure(aurelia) {
   // if you would like your website to work offline (Service Worker),
   // install and enable the @easy-webpack/config-offline package in webpack.config.js and uncomment the following code:
   /*
-  const offline = await System.import('offline-plugin/runtime');
+  const offline = await import('offline-plugin/runtime');
   offline.install();
   */
 }

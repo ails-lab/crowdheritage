@@ -16,17 +16,24 @@
 
 import { inject } from 'aurelia-framework';
 import { UserServices } from 'UserServices.js';
+import { I18N } from 'aurelia-i18n';
 
-@inject(UserServices)
+@inject(UserServices, I18N)
 export class Privacy {
 
-  constructor(userServices) {
+  constructor(userServices, i18n) {
     this.userServices = userServices;
+    this.i18n = i18n;
+
+		this.loc;
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
-  activate() {
+  activate(params) {
+    this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }

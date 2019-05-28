@@ -50,6 +50,7 @@ export class NavBar {
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
+  get currentLocale() { return window.location.href.split('/')[3]; }
 
   // UI Functions
   loginPopup() {
