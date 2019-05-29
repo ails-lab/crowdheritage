@@ -42,12 +42,12 @@ export class App {
     link.rel = "icon";
     link.type = "image/ico";
     if (settings.project == "WITHcrowd") {
-      link.href = "favicon1.ico";
+      link.href = "/favicon1.ico";
       import('./../styles/withcrowd.less');
     }
     else if (settings.project == "CrowdHeritage") {
       link.type = "image/png";
-      link.href = "favicon2.ico";
+      link.href = "/favicon2.ico";
       import('./../styles/crowdheritage.less');
     }
     document.head.appendChild(link);
