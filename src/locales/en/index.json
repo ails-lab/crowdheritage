@@ -1,10 +1,10 @@
 {
-  "bannertext-up" : "++CROWDSOURCING",
+  "bannertext-up"   : "++CROWDSOURCING",
   "bannertext-down" : "++CAMPAIGNS",
-  "language" : "++LANGUAGE : ",
-  "current" : "<div class=\"bold\">++CURRENT</div><span>++CROWDSOURCING CAMPAIGNS</span>",
-  "sortby" : "++SORT BY ",
-  "alphabetical" : "++ALPHABETICAL",
-  "date" : "++DATE",
-  "opencampaign" : "++OPEN CAMPAIGN"
+  "language"        : "++LANGUAGE : ",
+  "current"         : "<div class=\"bold\">++CURRENT</div><span>++CROWDSOURCING CAMPAIGNS</span>",
+  "sortby"          : "++SORT BY ",
+  "alphabetical"    : "++ALPHABETICAL",
+  "date"            : "++DATE",
+  "opencampaign"    : "++OPEN CAMPAIGN"
 }
