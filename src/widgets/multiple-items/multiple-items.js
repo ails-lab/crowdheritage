@@ -29,6 +29,8 @@ export class MultipleItems {
 	get smallerClass() { return this.collection ? '' : 'smaller' }
 	get more() { return this.records.length < this.totalCount }
 	get offset() { return this.records.length }
+	get byUser() { return !!this.user}
+	get byCollection() { return !!this.collection}
 
   constructor(collectionServices, userServices, i18n) {
 		if (instance) {
@@ -68,7 +70,8 @@ export class MultipleItems {
 		if (this.collection) {
 			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count);
 			this.fillRecordArray(response.records);
-		} else if (this.user) {
+		}
+		else if (this.user) {
 			let response = await this.userServices.getUserAnnotations(this.user.dbId, this.offset, this.count);
 			this.fillRecordArray(response.records);
 		}
@@ -77,21 +80,25 @@ export class MultipleItems {
 
 	async activate(params, route) {
 		this.resetInstance();
-
 		this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
-
 	 	this.cname = params.cname;
 		this.router = params.router;
+
 	 	if (params.collection) {
 	 		this.collection = params.collection;
 			this.totalCount = this.collection.entryCount;
-		} else if (params.user) {
+		}
+		else if (params.user) {
 			this.user = params.user;
 			this.totalCount = params.totalCount;
 		}
+
 		if (params.records) {
+			this.loading = true;
 			this.records = params.records;
+			this.fillRecordArray(params.records);
+			this.loading = false;
 			return;
 		}
 		this.getRecords();
@@ -106,6 +113,23 @@ export class MultipleItems {
 		item.records = [];
 		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc});
   }
+
+	goToAnnotatedItem(record) {
+		let annotations = record.data.annotations;
+		for (var i in annotations) {
+			let annotators = annotations[i].annotators;
+			for (var j in annotators) {
+				if (annotators[j].withCreator == this.user.dbId) {
+					let item = this.router.routes.find(x => x.name === 'item');
+					let cname = annotators[j].generator.split(' ')[1];
+					let recid = record.dbId;
+					let uname = this.user.username;
+
+					this.router.navigateToRoute('item', {cname: cname, recid: recid, lang: this.loc});
+				}
+			}
+		}
+	}
 
   async loadMore() {
 		this.getRecords();
