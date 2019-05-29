@@ -19,22 +19,25 @@ import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { Record } from 'Record.js';
 import { UserServices } from 'UserServices';
+import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices)
+@inject(CollectionServices, UserServices, I18N)
 export class MultipleItems {
 
 	get smallerClass() { return this.collection ? '' : 'smaller' }
 	get more() { return this.records.length < this.totalCount }
 	get offset() { return this.records.length }
 
-  constructor(collectionServices, userServices) {
+  constructor(collectionServices, userServices, i18n) {
 		if (instance) {
 			return instance;
 		}
     this.collectionServices = collectionServices;
     this.userServices = userServices;
+		this.i18n = i18n;
+		this.loc;
 		this.resetInstance();
     if (!instance) {
 			instance = this;
@@ -47,7 +50,8 @@ export class MultipleItems {
 		this.user = null;
     this.loading = false;
     this.totalCount = 0;
-    this.count = 20;
+    this.count = 24;
+		this.loc = window.location.href.split('/')[3];
 	}
 
 	fillRecordArray(records) {
@@ -73,6 +77,10 @@ export class MultipleItems {
 
 	async activate(params, route) {
 		this.resetInstance();
+
+		this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
 	 	this.cname = params.cname;
 		this.router = params.router;
 	 	if (params.collection) {
@@ -96,7 +104,7 @@ export class MultipleItems {
 		//TODO pass the subarray of items as well
     item.collection= this.collection;
 		item.records = [];
-		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId});
+		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc});
   }
 
   async loadMore() {

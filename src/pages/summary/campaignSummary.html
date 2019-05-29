@@ -14,7 +14,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="/" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a route-href="route: index; params.bind: {lang: loc}" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
         <!-- progress-->
@@ -144,7 +144,7 @@
 
             <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
               <!-- wrap-->
-							<a route-href="route: collection; params.bind: { cname: campaign.username, colid: col.dbId }">
+							<a route-href="route: collection; params.bind: { cname: campaign.username, colid: col.dbId, lang: loc }">
 								<!-- thumb-->
 								<div class="thumbs">
 									<div class="thumbs-images thumbs-count-${col.absMedia.length}">

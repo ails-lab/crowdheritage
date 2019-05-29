@@ -51,6 +51,8 @@ export class Leaderboard {
 		toggleMore(".leaderlist");
   }
 
+  get currentLocale() { return window.location.href.split('/')[3]; }
+
   async getTopUsers() {
     let lim = 0;
     if (this.offset+COUNT > this.campaign.contributorsCount) {

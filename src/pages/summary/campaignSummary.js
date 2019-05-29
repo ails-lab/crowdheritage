@@ -24,10 +24,11 @@ import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { setMap } from 'utils/Plugin.js';
+import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue)
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -35,19 +36,20 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue) {
-	if (instance) {
-			return instance;
-		}
+  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n) {
+    if (instance) {
+      return instance;
+    }
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.router = router;
+    this.taskQueue=taskQueue;
+    this.i18n = i18n;
     this.records = [];
     this.recId = "";
-		this.thisVM=this;
-		this.taskQueue=taskQueue;
+    this.thisVM=this;
     this.campaign = 0;
     this.collections = [];
     this.collectionsCount = 0;
@@ -62,9 +64,10 @@ export class CampaignSummary {
     this.userRank = 0;
     this.userBadgeName = "";
     this.points = [];
+    this.loc;
     if (!instance) {
-			instance = this;
-		}
+    	instance = this;
+    }
   }
 
 	resetInstance() {
@@ -84,6 +87,7 @@ export class CampaignSummary {
     this.userRank = 0;
     this.userBadgeName = "";
     this.points = [];
+    this.loc = window.location.href.split('/')[3];
 	}
 
 
@@ -96,6 +100,9 @@ export class CampaignSummary {
 
   activate(params, route) {
     this.resetInstance();
+    this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
         this.campaign = new Campaign(result);
@@ -205,7 +212,7 @@ export class CampaignSummary {
             this.loading = false;
             item.collection = 0;
             item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
+            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId, lang:this.loc});
           }
           })
         .catch(error => {
@@ -230,7 +237,7 @@ export class CampaignSummary {
             this.loading = false;
             item.collection = col;
             item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
+            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId, lang: this.loc});
           }
         }).catch(error => {
           this.loading = false;

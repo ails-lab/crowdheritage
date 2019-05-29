@@ -6,7 +6,7 @@
 		<div class="show-more-parent">
 	    <ul class="leaderlist show-more-target">
 	      <li repeat.for="user of topUsers">
-					<a route-href="route: user; params.bind: { uname: user[0].username }">
+					<a route-href="route: user; params.bind: { uname: user[0].username, lang: currentLocale }">
 	        <span class="no">${$index+1}</span>
 	        <span class="thumbs"><img src.bind="getProfileImage(user[0])"></span>
 	        <span class="details">
