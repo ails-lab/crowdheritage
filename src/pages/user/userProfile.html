@@ -63,6 +63,10 @@
 									<!-- <small>${points}/500</small> -->
 								</div>
 							</li>
+              <li>
+                <div class="lbl" t="user:items">ITEMS</div>
+                <div class="val">${annotatedRecordsCount}</div>
+              </li>
 							<li>
 								<div class="lbl" t="app:points">POINTS</div>
 								<div class="val">${points}</div>
@@ -78,10 +82,6 @@
 							<li>
 								<div class="lbl" t="user:downvotes">DOWNVOTES</div>
 								<div class="val">${rejected}</div>
-							</li>
-							<li>
-								<div class="lbl" t="user:items">ITEMS</div>
-								<div class="val">${annotatedRecordsCount}</div>
 							</li>
 							<!-- <li>
 								<div class="lbl">CAMPAIGNS</div>
@@ -104,7 +104,7 @@
           </div>
 				</div>
 				<compose view-model="widgets/multiple-items/multiple-items"
-								 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router}">
+								 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router, 'lang': loc}">
 				</compose>
 			</div>
 		</section>
