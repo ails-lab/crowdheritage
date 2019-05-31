@@ -185,7 +185,7 @@ body header .wrap .container nav .account a:hover .lbl {
 body header .wrap .container nav .account .accountmenu {
   position: absolute;
   top: 70px;
-  width: 250px;
+  width: 225px;
   right: 0;
   background-color: @main-color;
   margin: 0;
@@ -1185,58 +1185,63 @@ body main .topsection .sort .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
 }
-body main section.languages .lang {
+section.languages .lang {
   float: left;
   position: relative;
   font-family: "Dosis";
-  padding-top: 30px;
+  bottom: 2px;
+  right: -12px;
+  //padding-top: 30px;
 }
-body main section.languages .lang .lbl {
+section.languages .lang .lbl {
   display: inline-block;
 }
-body main section.languages .lang a {
+section.languages .lang a {
   display: inline-block;
   color: @main-color;
   -webkit-transition: color 0.3s;
   -o-transition: color 0.3s;
   transition: color 0.3s;
+  text-decoration: none;
 }
-body main section.languages .lang a img {
-  margin-left: 10px;
-  margin-right: 5px;
+section.languages .lang a .flag img {
+   width: 20px;
+  //margin-left: 10px;
+  //margin-right: 5px;
 }
-body main section.languages .lang a .arrow {
+section.languages .lang a .arrow {
   margin-left: 10px;
   display: inline-block;
   position: relative;
   top: -1px;
 }
-body main section.languages .lang a:hover {
+section.languages .lang a:hover {
   text-decoration: none;
   color: #009e77;
 }
-body main section.languages .lang .dropdown-menu {
-  margin: 5px 0 0 0;
+section.languages .lang .dropdown-menu {
+  margin: 24px 0 0 -98px;
   right: 10px;
   padding: 0;
   border-radius: 0;
   border: 0px;
   box-shadow: none;
 }
-body main section.languages .lang .dropdown-menu li {
+section.languages .lang .dropdown-menu li {
   display: block;
+  width: 159px;
   margin-bottom: 1px;
 }
-body main section.languages .lang .dropdown-menu li a {
+section.languages .lang .dropdown-menu li a {
   display: block;
   color: #555;
-  padding: 7px 10px 7px 10px;
+  //padding: 7px 10px 7px 10px;
   background-color: #f2f2f2;
 }
-body main section.languages .lang .dropdown-menu li a img {
+section.languages .lang .dropdown-menu li a img {
   margin-right: 10px;
 }
-body main section.languages .lang .dropdown-menu li a:hover {
+section.languages .lang .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
 }
@@ -2908,7 +2913,7 @@ body {
     float: none;
     padding-top: 10px;
   }
-  body main section.languages .lang {
+  section.languages .lang {
     display: block;
     float: none;
     padding-top: 10px;
