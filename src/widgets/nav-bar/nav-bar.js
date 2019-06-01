@@ -130,6 +130,9 @@ export class NavBar {
         return this.currentLocale;
       }
     }
+    // If the language paremeter is not a valid one redirect to English home page
+    let index = this.router.routes.find(x => x.name === 'index');
+    this.router.navigateToRoute('index', {lang: 'en'});
   }
 
   changeLang(loc) {

@@ -269,9 +269,16 @@ export class CampaignItem {
 		if (routeData.campaign) {
       this.campaign = routeData.campaign;
       this.loadCamp = false;
-		} else {
-			let result = await this.campaignServices.getCampaignByName(params.cname);
-			this.campaign = new Campaign(result);
+		}
+    else {
+			let result = await this.campaignServices.getCampaignByName(params.cname)
+        .then(response => {
+          this.campaign = new Campaign(response);
+        })
+        .catch(error => {
+          let index = this.router.routes.find(x => x.name === 'index');
+          this.router.navigateToRoute('index', {lang: 'en'});
+        });
 			this.loadCamp = false;
 		}
 		//Load Collection (if any)
