@@ -9,29 +9,29 @@
 			<div class="searchbox">${pollTitle}</div>
       <!-- taglist-->
 			<div class="show-more-parent">
-      <ul class="taglist show-more-target">
-        <li>
-        	<div class="text">Yes</div>
-        	<ul class="action">
-          	<li class.bind="annotations[0].approvedByMe ? 'up active' : 'up'">
-            	<a href="javascript:void(0)" click.delegate="validate(annotations[0].dbId, 'approved', 0, annotations[0].approvedByMe, annotations[0].rejectedByMe, 'tag')">
-              	<span class="count">${annotations[0].approvedBy.length}</span><span class="thumbs-icon up"></span>
-            	</a>
-          	</li>
-          </ul>
-      	</li>
-        <li>
-        	<div class="text">No</div>
-        	<ul class="action">
-          	<li class.bind="annotations[0].rejectedByMe ? 'down active' : 'down'">
-            	<a href="javascript:void(0)" click.delegate="validate(annotations[0].dbId, 'rejected', 0, annotations[0].approvedByMe, annotations[0].rejectedByMe, 'tag')">
-              	<span class="count">${annotations[0].rejectedBy.length}</span><span class="thumbs-icon down"></span>
-            	</a>
-						</li>
-        	</ul>
-      	</li>
-    	</ul>
-		</div>
+        <ul class="taglist show-more-target">
+          <li>
+          	<div class="text">Yes</div>
+          	<ul class="action">
+            	<li class.bind="pollannotations[0].approvedByMe ? 'up active' : 'up'">
+              	<a href="javascript:void(0)" click.delegate="validate(pollannotations[0].dbId, 'approved', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
+                	<span class="count">${pollannotations[0].approvedBy.length}</span><span class="thumbs-icon up"></span>
+              	</a>
+            	</li>
+            </ul>
+        	</li>
+          <li>
+          	<div class="text">No</div>
+          	<ul class="action">
+            	<li class.bind="pollannotations[0].rejectedByMe ? 'down active' : 'down'">
+              	<a href="javascript:void(0)" click.delegate="validate(pollannotations[0].dbId, 'rejected', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
+                	<span class="count">${pollannotations[0].rejectedBy.length}</span><span class="thumbs-icon down"></span>
+              	</a>
+  						</li>
+          	</ul>
+        	</li>
+      	</ul>
+		  </div>
     </div>
   </div>
 </template>

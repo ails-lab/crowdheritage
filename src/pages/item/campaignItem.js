@@ -279,8 +279,8 @@ export class CampaignItem {
     } else {
       this.previous =[];
     }
-    console.info(this.previous);
-    console.info(this.records);
+    //console.info(this.previous);
+    //console.info(this.records);
 		this.loadNextRecord();
   }
 
