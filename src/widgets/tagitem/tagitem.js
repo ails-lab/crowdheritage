@@ -680,24 +680,26 @@ export class Tagitem {
     /* DELETE THIS AFTER THE TESTING
     //let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
     */
-    //if (this.hasMotivation('Polling')) {
-    if (true) {
+    if (this.hasMotivation('Polling')) {
       await this.recordServices.getAnnotations(this.recId, 'Polling').then(response => {
         for (var i = 0; i < response.length; i++) {
-          console.log(settings.project);
-          if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
+          //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
             if (!this.userServices.current) {
               this.pollannotations.push(new Annotation(response[i], ""));
             } else {
               this.pollannotations.push(new Annotation(response[i], this.userServices.current.dbId));
             }
-            this.pollTitle = this.pollannotations[0].label;
-          }
+          //}
+        }
+        if (this.pollannotations.length > 0) {
+          this.pollTitle = this.pollannotations[0].label;
+        }
+        else {
+          toastr.error('There are no annotations for this record.');
         }
       });
     }
-    //if (this.hasMotivation('GeoTagging')) {
-    if (true) {
+    if (this.hasMotivation('GeoTagging')) {
       await this.recordServices.getAnnotations(this.recId, 'GeoTagging').then(response => {
         this.geoannotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -713,8 +715,7 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
-    //if (this.hasMotivation('Tagging')) {
-    if (true) {
+    if (this.hasMotivation('Tagging')) {
       await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
         this.annotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -730,8 +731,7 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
-    //if (this.hasMotivation('ColorTagging')) {
-    if (true) {
+    if (this.hasMotivation('ColorTagging')) {
       await this.recordServices.getAnnotations(this.recId, 'ColorTagging').then(response => {
         this.colorannotations = [];
         for (var i = 0; i < response.length; i++) {
