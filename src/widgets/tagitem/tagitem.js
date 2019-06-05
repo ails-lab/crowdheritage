@@ -105,15 +105,15 @@ export class Tagitem {
       await this.userServices.reloadCurrentUser();
     }
     await this.getRecordAnnotations(this.recId);
-    //DELETE THIS AFTER THE TESTING
-    console.log("tags");
-    console.log(this.annotations);
-    console.log("geotags");
-    console.log(this.geoannotations);
-    console.log("colortags");
-    console.log(this.colorannotations);
-    console.log("polltags");
-    console.log(this.pollannotations);
+    // DELETE THIS AFTER THE TESTING
+    // console.log("tags");
+    // console.log(this.annotations);
+    // console.log("geotags");
+    // console.log(this.geoannotations);
+    // console.log("colortags");
+    // console.log(this.colorannotations);
+    // console.log("polltags");
+    // console.log(this.pollannotations);
   }
 
   async reloadAnnotations() {
@@ -184,8 +184,15 @@ export class Tagitem {
   }
 
 	selectGeoAnnotation(geoid) {
+    // If the campaign is inactive do NOT geoannotate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
 	  if(this.userServices.isAuthenticated()==false){
-		  this.lg.call();
+      toastr.error('You must log in before starting contributing.');
+      this.lg.call();
 			return;
 		}
 
@@ -226,12 +233,18 @@ export class Tagitem {
  	}
 
   selectSuggestedAnnotation(index) {
-		if (this.uriRedirect) {
+    // If the campaign is inactive do NOT validate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+    if (this.uriRedirect) {
 			this.uriRedirect = false;
 			this.prefixChanged();
 			return;
 		}
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
 			return;
 		}
@@ -275,7 +288,14 @@ export class Tagitem {
   }
 
   async annotateLabel(label) {
+    // If the campaign is inactive do NOT annotate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
@@ -304,6 +324,7 @@ export class Tagitem {
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
@@ -332,15 +353,23 @@ export class Tagitem {
   }
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
+    // If the campaign is inactive do NOT validate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
+
     if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe))
       this.unscore(annoId, annoType, index, mot);
     else
       this.score(annoId, annoType, index, mot);
-    }
+  }
 
   async score(annoId, annoType, index, mot) {
     if (!this.hasContributed()) {

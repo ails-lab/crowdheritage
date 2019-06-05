@@ -47,7 +47,7 @@ export class MultipleItems {
 		this.user = null;
     this.loading = false;
     this.totalCount = 0;
-    this.count = 20;
+    this.count = 24;
 	}
 
 	fillRecordArray(records) {
