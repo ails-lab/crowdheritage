@@ -32,18 +32,33 @@
           <div class="sectionlabel">
             <div class="bold">CURRENT</div><span>CROWDSOURCING CAMPAIGNS</span>
           </div>
-          <!-- filter-->
-          <div class="sort">
-            <!-- label-->
+          <!-- Sort - Filter-->
+          <!-- <div class="sort">
+            <!-- label--
             <div class="lbl">SORT BY </div>
-            <!-- sort--><a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">${sortBy.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
-            <!-- dropdown-->
+            <!-- sort--
+            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">${sortBy.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
+            <!-- dropdown--
             <ul aria-labelledby="sorting" class="dropdown-menu">
               <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Alphabetical')">ALPHABETICAL</a></li>
               <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Date')">DATE</a></li>
             </ul>
+          </div> -->
+          <!-- State - Filter-->
+          <div class="sort">
+            <!-- label-->
+            <div class="lbl">SHOW CAMPAIGNS : </div>
+            <!-- sort-->
+            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">${state.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
+            <!-- dropdown-->
+            <ul aria-labelledby="sorting" class="dropdown-menu">
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('active')">ACTIVE</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('inactive')">INACTIVE</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('all')">ALL</a></li>
+            </ul>
           </div>
         </div>
+        <br /><br />
 
         <!-- list-->
         <div class="list">
@@ -58,8 +73,11 @@
             </div>
             <!-- detail-->
             <div class="details">
-              <!-- title--><a a route-href="route: summary; params.bind: {cname: camp.username}">
-                <h1>${camp.title}</h1></a>
+              <!-- title-->
+              <a a route-href="route: summary; params.bind: {cname: camp.username}">
+                <h1 if.bind="camp.active">${camp.title} <img align="right" title="Active Campaign" src="/img/status-active.png"></h1>
+                <h1 if.bind="!camp.active">${camp.title} <img align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
+              </a>
               <!-- desc-->
               <p>${camp.description}</p>
               <!-- progress-->
