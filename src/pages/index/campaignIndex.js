@@ -132,7 +132,7 @@ export class CampaignIndex {
       });
   }
 
-  toggleMenu() {
+  toggleSortMenu() {
     if ($('.sort').hasClass('open')) {
       $('.sort').removeClass('open');
     }
@@ -141,11 +141,20 @@ export class CampaignIndex {
     }
   }
 
-  reloadCampaigns(state) {
+  toggleStateMenu() {
+    if ($('.state').hasClass('open')) {
+      $('.state').removeClass('open');
+    }
+    else {
+      $('.state').addClass('open');
+    }
+  }
+
+  reloadCampaigns(state, sortBy) {
     this.campaigns.splice(0, this.campaigns.length);
     this.currentCount = 0;
     this.more = true;
-    //this.sortBy = sortBy;
+    this.sortBy = sortBy;
     this.state = state;
     this.campaignServices.getCampaignsCount("", this.project, this.state)
       .then( result => {

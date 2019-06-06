@@ -52,7 +52,7 @@ a:focus {
   padding: 1px 8px 0 8px;
   position: relative;
   left: -8px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 .sectionlabel span {
   display: block;
@@ -1137,12 +1137,62 @@ body main .topsection:after {
 body main .topsection .sectionlabel {
   float: left;
 }
-body main .topsection .sort {
+body main .topsection .sectionlabel .state {
   float: right;
   position: relative;
   font-family: "Dosis";
   padding-top: 0px;
-  //padding-top: 30px;
+  text-decoration: none;
+}
+body main .topsection .sectionlabel .state .lbl {
+  display: inline-block;
+}
+body main .topsection .sectionlabel .state a {
+  display: inline-block;
+  color: #fff;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+body main .topsection .sectionlabel .state a .arrow {
+  margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+body main .topsection .sectionlabel .state a:hover {
+  text-decoration: none;
+  color: #fff !important;
+}
+body main .topsection .sectionlabel .state .dropdown-menu {
+  margin: 5px 0 0 0;
+  left: -8px;
+  padding: 0;
+  border-radius: 0;
+  border: 0px;
+  box-shadow: none;
+  min-width: 114px;
+}
+body main .topsection .sectionlabel .state .dropdown-menu li {
+  display: block;
+  margin-bottom: 1px;
+  //width: 80px;
+}
+body main .topsection .sectionlabel .state .dropdown-menu li a {
+  display: block;
+  color: #555;
+  padding: 5px 10px 5px 10px;
+  background-color: #f2f2f2;
+}
+body main .topsection .sectionlabel .state .dropdown-menu li a:hover {
+  background-color: @main-color;
+  color: #fff;
+}
+body main .topsection .sort {
+  float: right;
+  position: relative;
+  font-family: "Dosis";
+  padding-top: 30px;
 }
 body main .topsection .sort .lbl {
   display: inline-block;
@@ -2847,6 +2897,11 @@ body {
   }
   body main .topsection .sectionlabel .bold {
     left: 0;
+  }
+  body main .topsection .sectionlabel .state {
+    display: block;
+    float: none;
+    padding-top: 10px;
   }
   body main .topsection .sort {
     display: block;

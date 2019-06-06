@@ -30,31 +30,34 @@
         <div class="topsection">
           <!-- label-->
           <div class="sectionlabel">
-            <div class="bold">CURRENT</div><span>CROWDSOURCING CAMPAIGNS</span>
+            <div class="bold">
+              <!-- State - Filter-->
+              <div class="state">
+                <a id="sorting" href="javascript:void(0)" click.delegate="toggleStateMenu()" data-toggle="dropdown">
+                  <span class="text">${state.toUpperCase()}
+                    <span class="arrow"><img width="11px" src="/img/ic-arrow-down-white.png"></span>
+                  </span>
+                </a>
+                <!-- dropdown-->
+                <ul aria-labelledby="sorting" class="dropdown-menu">
+                  <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('active', sortBy)">ACTIVE</a></li>
+                  <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('inactive', sortBy)">INACTIVE</a></li>
+                  <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('all', sortBy)">ALL</a></li>
+                </ul>
+              </div>
+            </div>
+            <span>CROWDSOURCING CAMPAIGNS</span>
           </div>
           <!-- Sort - Filter-->
-          <!-- <div class="sort">
-            <!-- label--
-            <div class="lbl">SORT BY </div>
-            <!-- sort--
-            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">${sortBy.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
-            <!-- dropdown--
-            <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Alphabetical')">ALPHABETICAL</a></li>
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('Date')">DATE</a></li>
-            </ul>
-          </div> -->
-          <!-- State - Filter-->
           <div class="sort">
             <!-- label-->
-            <div class="lbl">SHOW CAMPAIGNS : </div>
+            <div class="lbl">SORT BY </div>
             <!-- sort-->
-            <a id="sorting" href="javascript:void(0)" click.delegate="toggleMenu()" data-toggle="dropdown"><span class="text">${state.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
+            <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown"><span class="text">${sortBy.toUpperCase()}</span><span class="arrow"><img src="/img/ic-arrow-down-green.png"></span></a>
             <!-- dropdown-->
             <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('active')">ACTIVE</a></li>
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('inactive')">INACTIVE</a></li>
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('all')">ALL</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Alphabetical')">ALPHABETICAL</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Date')">DATE</a></li>
             </ul>
           </div>
         </div>
@@ -75,8 +78,8 @@
             <div class="details">
               <!-- title-->
               <a a route-href="route: summary; params.bind: {cname: camp.username}">
-                <h1 if.bind="camp.active">${camp.title} <img align="right" title="Active Campaign" src="/img/status-active.png"></h1>
-                <h1 if.bind="!camp.active">${camp.title} <img align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
+                <h1 if.bind="camp.active">${camp.title} <img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"></h1>
+                <h1 if.bind="!camp.active">${camp.title} <img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
               </a>
               <!-- desc-->
               <p>${camp.description}</p>
@@ -105,7 +108,9 @@
                   <div class="lbl">END DATE</div>
                   <div class="val">${camp.endDate | dateFormat}</div>
                 </li>
-                <li class="contribute"><a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)">CONTRIBUTE NOW</a></li>
+                <li class="contribute" if.bind="camp.active">
+                  <a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)">CONTRIBUTE NOW</a>
+                </li>
               </ul>
             </div>
           </div>
