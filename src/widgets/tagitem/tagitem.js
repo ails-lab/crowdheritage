@@ -32,25 +32,24 @@ export class Tagitem {
 
   constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup) {
 		this.colorSet = [
-			["/img/color/black.png", "Black"],
-			["/img/color/gray.png", "Grey"],
-			["/img/color/metallic.jpg", "Metallic"],
-			["/img/color/silver.png", "Silver"],
-			["/img/color/bronze.png", "Bronze"],
-			["/img/color/brown.png", "Brown"],
-			["/img/color/copper.png", "Copper"],
-			["/img/color/red.png", "Red"],
-			["/img/color/orange.png", "Orange"],
-			["/img/color/beige.png", "Beige"],
-			["/img/color/gold.png", "Gold"],
-			["/img/color/yellow.png", "Yellow"],
-			["/img/color/green.png", "Green"],
-			["/img/color/blue.png", "Blue"],
-			["/img/color/purple.png", "Purple"],
-			["/img/color/pink.png", "Pink"],
-			["/img/color/multicolored.png", "Multicoloured"],
-			["/img/color/white.png", "White"],
-			["/img/color/transparent.png", "Transparent"]
+			["Black", "background-color: black"],
+			["Grey", "background-color: grey"],
+			["Silver", "background-color: silver"],
+			["Bronze", "background-color: #CD7F32"],
+			["Brown","background-color: brown" ],
+			["Copper", "background-color: #B87333"],
+			["Red", "background-color: red"],
+			["Orange", "background-color: orange"],
+			["Beige", "background-color: beige"],
+			["Gold", "background-color: gold"],
+			["Yellow", "background-color: yellow"],
+			["Green", "background-color: green"],
+			["Blue", "background-color: blue"],
+			["Purple", "background-color: purple"],
+			["Pink", "background-color: pink"],
+			["White", "background-color: white"],
+			["Transparent", ""],
+			["Multicoloured", "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)"]
 		];
 		this.ea = eventAggregator;
     this.userServices = userServices;

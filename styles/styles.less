@@ -2648,30 +2648,29 @@ body {
 					.right {
 						.tag-color {
 							.coloraction {
-								@tagcolorsize: 60px;
+								@tagcolorsize: 87px;
 								display: flex;
 								flex-wrap: wrap;
-								// &:after {
-								// 	content: '';
-								// 	display: block;
-								// 	width: 1px;
-								// 	height: @tagcolorsize;
-								// 	flex-grow: 9999999;
-								// }
-								li {
-									float: none;
-									height: auto;
+								.color {
+									cursor: pointer;
+									margin: 1px;
+									width: @tagcolorsize;
+									height: @tagcolorsize;
+  								box-shadow: 0 0 20px #424242;
+  								color: white;
+									padding: 1px;
+  								transition: transform .2s;
 									flex-basis: @tagcolorsize;
-                  flex-grow: 1;
-									img {
-										object-fit: cover;
-									}
+									&:hover {
+    								transform: scale(1.5);
+  								}
 								}
-                li.width-helper {
-                  // hack for last row items
-                  height: 0;
-                  margin: 0;
-                }
+								.name {
+  								text-align: center;
+									text-shadow: 1px 1px 2px #424242;
+  								font-size: 1.2em;
+									overflow-wrap: break-word;
+								}
 							}
 						}
 					}
