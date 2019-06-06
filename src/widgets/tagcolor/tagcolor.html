@@ -22,12 +22,12 @@
         <li class="width-helper" repeat.for="i of 20"></li>
       </div>
       <!-- searchbox-->
-      <div class="colorbox">Vote submitted colors by other users.</div>
+      <div if.bind="colorannotations.length>0" class="colorbox">Vote submitted colors by other users.</div>
       <!-- taglist-->
 			<div class="show-more-parent">
       <ul class="taglist color show-more-target">
         <li repeat.for="ann of colorannotations">
-          <div class="thumbs"><img src.bind="getColor(ann.label)"></div>
+          <div class="thumbs" style.bind="getStyle(ann.label)"></div>
           <div class="selected">${ann.label}</div>
           <ul class="action">
             <li class.bind="ann.approvedByMe ? 'up active' : 'up'">

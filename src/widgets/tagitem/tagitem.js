@@ -769,6 +769,17 @@ export class Tagitem {
     }
   }
 
+	getStyle(label) {
+    var index = this.colorSet.findIndex(element => {
+      return element[0] == label;
+    });
+    if (index == -1) {
+      return '';
+    } else {
+      return this.colorSet[index][1];
+    }
+  }
+
   annotationExists(label) {
     for (var i in this.colorannotations) {
       if (this.colorannotations[i].label == label) {
