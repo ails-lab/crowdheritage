@@ -24,6 +24,7 @@ import {ThesaurusServices} from 'ThesaurusServices.js';
 import {bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
+import settings from 'global.config.js';
 
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup')
 export class Tagitem {
@@ -61,6 +62,7 @@ export class Tagitem {
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
+    this.pollannotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
@@ -95,33 +97,29 @@ export class Tagitem {
     this.annotations.splice(0, this.annotations.length);
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
-    // SOS!!! - CHANGE THIS AFTER THE DEMO!
-    /*
-    if (!!this.colTitle) {
-      this.pollTitle = this.colTitle;
-    }
-    else {
-      this.pollTitle = "Mozart";
-    }
-    */
-    this.pollTitle = "Mozart";
-    // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
+    this.pollannotations.splice(0, this.pollannotations.length);;
+    this.pollTitle = "";
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
     }
-    else if (this.userServices.isAuthenticated() && this.userServices.current != null) {
-      await this.getRecordAnnotations(this.recId);
-      if (this.hasMotivation('Polling') && !this.hasContributed()) {
-        await this.annotateLabel(this.pollTitle);
-      }
-    }
     await this.getRecordAnnotations(this.recId);
+    // DELETE THIS AFTER THE TESTING
+    // console.log("tags");
+    // console.log(this.annotations);
+    // console.log("geotags");
+    // console.log(this.geoannotations);
+    // console.log("colortags");
+    // console.log(this.colorannotations);
+    // console.log("polltags");
+    // console.log(this.pollannotations);
   }
 
   async reloadAnnotations() {
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
+    this.pollannotations = [];
     await this.getRecordAnnotations(this.recId);
   }
 
@@ -185,8 +183,15 @@ export class Tagitem {
   }
 
 	selectGeoAnnotation(geoid) {
+    // If the campaign is inactive do NOT geoannotate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
 	  if(this.userServices.isAuthenticated()==false){
-		  this.lg.call();
+      toastr.error('You must log in before starting contributing.');
+      this.lg.call();
 			return;
 		}
 
@@ -227,12 +232,18 @@ export class Tagitem {
  	}
 
   selectSuggestedAnnotation(index) {
-		if (this.uriRedirect) {
+    // If the campaign is inactive do NOT validate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+    if (this.uriRedirect) {
 			this.uriRedirect = false;
 			this.prefixChanged();
 			return;
 		}
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
 			return;
 		}
@@ -256,7 +267,7 @@ export class Tagitem {
 
     if (!this.errors) {
       let self = this;
-      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation,this.campaign.username).then(() => {
+      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging').then(() => {
         toastr.success('Annotation added.');
         self.ea.publish('annotations-created', self.record);
         if (!this.hasContributed()) {
@@ -276,7 +287,14 @@ export class Tagitem {
   }
 
   async annotateLabel(label) {
+    // If the campaign is inactive do NOT annotate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
@@ -291,7 +309,7 @@ export class Tagitem {
       await this.thesaurusServices.getSuggestions(label, this.campaign.vocabularies).then(res => {
         this.suggestedAnnotation = res.results[0];
       });
-      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username);
+      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging');
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
       // Clear and reload the colorannotations array
       this.colorannotations.splice(0, this.colorannotations.length);
@@ -301,11 +319,11 @@ export class Tagitem {
     }
   }
 
-  // mot has 3 potential values :
-  // tag, geo, color
+  // mot has 3 potential values : [tag, geo, color]
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
@@ -334,15 +352,23 @@ export class Tagitem {
   }
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
+    // If the campaign is inactive do NOT validate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
+
     if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe))
       this.unscore(annoId, annoType, index, mot);
     else
       this.score(annoId, annoType, index, mot);
-    }
+  }
 
   async score(annoId, annoType, index, mot) {
     if (!this.hasContributed()) {
@@ -361,6 +387,9 @@ export class Tagitem {
         }
         else if (mot == 'color') {
           this.colorannotations[index].approvedBy.push(response);
+        }
+        else if (mot == 'poll') {
+          this.pollannotations[index].approvedBy.push(response);
         }
       }).catch(error => {
         console.log(error.message);
@@ -423,6 +452,25 @@ export class Tagitem {
         }
       }
     }
+    else if (mot == 'poll') {
+      this.pollannotations[index].approvedByMe = true;
+      if (this.pollannotations[index].rejectedByMe) {
+        var i = this.pollannotations[index].rejectedBy.map(function(e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.pollannotations[index].rejectedBy.splice(i, 1);
+        }
+        this.pollannotations[index].rejectedByMe = false;
+      } else {
+        if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+          await this.userServices.reloadCurrentUser();
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+        } else {
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+        }
+      }
+    }
 
     if (annoType == 'rejected') {
       //this.annotationServices.reject(annoId);
@@ -436,6 +484,9 @@ export class Tagitem {
         }
         else if (mot == 'color') {
           this.colorannotations[index].rejectedBy.push(response);
+        }
+        else if (mot == 'poll') {
+          this.pollannotations[index].rejectedBy.push(response);
         }
       }).catch(error => {
         console.log(error.message);
@@ -497,6 +548,25 @@ export class Tagitem {
           }
         }
       }
+      else if (mot == 'poll') {
+        this.pollannotations[index].rejectedByMe = true;
+        if (this.pollannotations[index].approvedByMe) {
+          var i = this.pollannotations[index].approvedBy.map(function(e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.pollannotations[index].approvedBy.splice(i, 1);
+          }
+          this.pollannotations[index].approvedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
     }
   }
 
@@ -533,6 +603,16 @@ export class Tagitem {
         }
         this.colorannotations[index].approvedByMe = false;
       }
+      else if (mot == 'poll') {
+        var i = this.pollannotations[index].approvedBy.map(function(e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.pollannotations[index].approvedBy.splice(i, 1);
+        }
+        this.pollannotations[index].approvedByMe = false;
+      }
+
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
@@ -573,6 +653,16 @@ export class Tagitem {
         }
         this.colorannotations[index].rejectedByMe = false;
       }
+      else if (mot == 'poll') {
+        var i = this.pollannotations[index].rejectedBy.map(function(e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.pollannotations[index].rejectedBy.splice(i, 1);
+        }
+        this.pollannotations[index].rejectedByMe = false;
+      }
+
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
@@ -586,20 +676,25 @@ export class Tagitem {
   }
 
   async getRecordAnnotations(id) {
-    let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
-
-    // SOS!!! - CHANGE THIS AFTER THE DEMO!
-
+    /* DELETE THIS AFTER THE TESTING
+    //let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
+    */
     if (this.hasMotivation('Polling')) {
-      await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
+      await this.recordServices.getAnnotations(this.recId, 'Polling').then(response => {
         for (var i = 0; i < response.length; i++) {
-          if (response[i].annotators[0].generator == ('WITHcrowd '+(this.campaign.username))) {
+          //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
             if (!this.userServices.current) {
-              this.annotations.push(new Annotation(response[i], ""));
+              this.pollannotations.push(new Annotation(response[i], ""));
             } else {
-              this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
+              this.pollannotations.push(new Annotation(response[i], this.userServices.current.dbId));
             }
-          }
+          //}
+        }
+        if (this.pollannotations.length > 0) {
+          this.pollTitle = this.pollannotations[0].label;
+        }
+        else {
+          toastr.error('There are no annotations for this record.');
         }
       });
     }
@@ -614,13 +709,12 @@ export class Tagitem {
           }
         }
       });
-      // Sort the annotations in descending
-      // order based on their score
+      // Sort the annotations in descending order, based on their score
       this.geoannotations.sort(function(a, b) {
         return b.score - a.score;
       });
     }
-    if (this.hasMotivation('Tagging') || this.hasMotivation('ColorTagging')) {
+    if (this.hasMotivation('Tagging')) {
       await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
         this.annotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -631,15 +725,27 @@ export class Tagitem {
           }
         }
       });
-      // Sort the annotations in descending
-      // order based on their score
+      // Sort the annotations in descending order, based on their score
       this.annotations.sort(function(a, b) {
         return b.score - a.score;
       });
-
-      this.colorannotations = this.annotations;
     }
-    // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
+    if (this.hasMotivation('ColorTagging')) {
+      await this.recordServices.getAnnotations(this.recId, 'ColorTagging').then(response => {
+        this.colorannotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.colorannotations.push(new Annotation(response[i], ""));
+          } else {
+            this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.colorannotations.sort(function(a, b) {
+        return b.score - a.score;
+      });
+    }
   }
 
   getColor(label) {
@@ -675,6 +781,11 @@ export class Tagitem {
     }
     for (var i in this.colorannotations) {
       if (this.colorannotations[i].createdByMe || this.colorannotations[i].approvedByMe || this.colorannotations[i].rejectedByMe) {
+        return true;
+      }
+    }
+    for (var i in this.pollannotations) {
+      if (this.pollannotations[i].createdByMe || this.pollannotations[i].approvedByMe || this.pollannotations[i].rejectedByMe) {
         return true;
       }
     }
