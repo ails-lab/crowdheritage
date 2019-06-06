@@ -94,7 +94,11 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
-    this.colTitle = params.colTitle;
+    try {
+      this.colTitle = params.colTitle[0].split(' (')[0];
+    } catch (e) {
+      this.colTitle = "";
+    }
     this.annotations.splice(0, this.annotations.length);
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
@@ -452,23 +456,23 @@ export class Tagitem {
           }
         }
       }
-    }
-    else if (mot == 'poll') {
-      this.pollannotations[index].approvedByMe = true;
-      if (this.pollannotations[index].rejectedByMe) {
-        var i = this.pollannotations[index].rejectedBy.map(function(e) {
-          return e.withCreator;
-        }).indexOf(this.userServices.current.dbId);
-        if (i > -1) {
-          this.pollannotations[index].rejectedBy.splice(i, 1);
-        }
-        this.pollannotations[index].rejectedByMe = false;
-      } else {
-        if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
-          await this.userServices.reloadCurrentUser();
-          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+      else if (mot == 'poll') {
+        this.pollannotations[index].approvedByMe = true;
+        if (this.pollannotations[index].rejectedByMe) {
+          var i = this.pollannotations[index].rejectedBy.map(function(e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.pollannotations[index].rejectedBy.splice(i, 1);
+          }
+          this.pollannotations[index].rejectedByMe = false;
         } else {
-          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
         }
       }
     }
@@ -677,19 +681,25 @@ export class Tagitem {
   }
 
   async getRecordAnnotations(id) {
-    /* DELETE THIS AFTER THE TESTING
-    //let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
-    */
     if (this.hasMotivation('Polling')) {
       await this.recordServices.getAnnotations(this.recId, 'Polling').then(response => {
         for (var i = 0; i < response.length; i++) {
           //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
-            if (!this.userServices.current) {
-              this.pollannotations.push(new Annotation(response[i], ""));
-            } else {
-              this.pollannotations.push(new Annotation(response[i], this.userServices.current.dbId));
-            }
+          if (!this.userServices.current) {
+            this.pollannotations.push(new Annotation(response[i], ""));
+          } else {
+            this.pollannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
           //}
+        }
+        // Bring first the annotation associated with the spedific collection
+        for (var i in this.pollannotations) {
+          if (this.pollannotations[i].label == this.colTitle) {
+            let temp = this.pollannotations[0];
+            this.pollannotations[0] = this.pollannotations[i];
+            this.pollannotations[i] = temp;
+            break;
+          }
         }
         if (this.pollannotations.length > 0) {
           this.pollTitle = this.pollannotations[0].label;
