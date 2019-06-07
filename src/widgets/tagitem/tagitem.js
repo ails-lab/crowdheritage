@@ -50,7 +50,7 @@ export class Tagitem {
 			["Bronze", "background-image: url(/img/color/bronze.jpg)"],
 			["Gold", "background-image: url(/img/color/gold.jpg)"],
 			["Transparent", ""],
-			["Multicoloured", "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)"]
+			["Multicolor", "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)"]
 		];
 		this.ea = eventAggregator;
     this.userServices = userServices;
