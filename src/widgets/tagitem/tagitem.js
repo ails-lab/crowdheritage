@@ -45,7 +45,7 @@ export class Tagitem {
 			["Purple", "background-color: purple"],
 			["Pink", "background-color: pink"],
 			["White", "background-color: white"],
-			["Copper", "background-color: #B87333"],
+			["Copper", "background-image: url(/img/color/copper.jpg)"],
 			["Silver", "background-image: url(/img/color/silver.jpg)"],
 			["Bronze", "background-image: url(/img/color/bronze.jpg)"],
 			["Gold", "background-image: url(/img/color/gold.jpg)"],
