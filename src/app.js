@@ -108,8 +108,19 @@ export class App {
 
 class PostCompleteStep {
   run(routingContext, next) {
+    try {
+      if ( (routingContext.config.campaign.motivation) && (routingContext.config.campaign.motivation.includes('ColorTagging')) ) {
+        var scrollPoint = document.getElementById("scrollPoint");
+        scrollPoint.scrollIntoView();
+      }
+      else {
+        window.scrollTo(0,0);
+      }
+    }
+    catch (e) {
       window.scrollTo(0,0);
+    }
 
-      return next();
+    return next();
   }
 }

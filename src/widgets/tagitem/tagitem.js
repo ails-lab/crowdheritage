@@ -23,8 +23,9 @@ import {AnnotationServices} from 'AnnotationServices.js';
 import {ThesaurusServices} from 'ThesaurusServices.js';
 import {bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {toggleMore} from 'utils/Plugin.js';
+import { toggleMore } from 'utils/Plugin.js';
 import {I18N} from 'aurelia-i18n';
+import settings from 'global.config.js';
 
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N)
 export class Tagitem {
@@ -35,25 +36,24 @@ export class Tagitem {
     this.i18n = i18n;
 
 		this.colorSet = [
-      ["/img/color/black.png",        "Black",         this.i18n.tr('item:color:Black')],
-      ["/img/color/gray.png",         "Grey",          this.i18n.tr('item:color:Grey')],
-      //["/img/color/metallic.jpg",     "Metallic",      this.i18n.tr('item:color:Metallic')],
-      ["/img/color/silver.png",       "Silver",        this.i18n.tr('item:color:Silver')],
-      ["/img/color/bronze.png",       "Bronze",        this.i18n.tr('item:color:Bronze')],
-      ["/img/color/brown.png",        "Brown",         this.i18n.tr('item:color:Brown')],
-      ["/img/color/copper.png",       "Copper",        this.i18n.tr('item:color:Copper')],
-      ["/img/color/red.png",          "Red",           this.i18n.tr('item:color:Red')],
-      ["/img/color/orange.png",       "Orange",        this.i18n.tr('item:color:Orange')],
-      ["/img/color/beige.png",        "Beige",         this.i18n.tr('item:color:Beige')],
-      ["/img/color/gold.png",         "Gold",          this.i18n.tr('item:color:Gold')],
-      ["/img/color/yellow.png",       "Yellow",        this.i18n.tr('item:color:Yellow')],
-      ["/img/color/green.png",        "Green",         this.i18n.tr('item:color:Green')],
-      ["/img/color/blue.png",         "Blue",          this.i18n.tr('item:color:Blue')],
-      ["/img/color/purple.png",       "Purple",        this.i18n.tr('item:color:Purple')],
-      ["/img/color/pink.png",         "Pink",          this.i18n.tr('item:color:Pink')],
-      ["/img/color/multicolored.png", "Multicoloured", this.i18n.tr('item:color:Multicoloured')],
-      ["/img/color/white.png",        "White",         this.i18n.tr('item:color:White')],
-      ["/img/color/transparent.png",  "Transparent",   this.i18n.tr('item:color:Transparent')]
+			["Black",       "background-color: #111111", "color: #111111; filter: brightness(500%);"],
+			["Grey",        "background-color: #AAAAAA","color: #AAAAAA; filter: brightness(60%);"],
+			["Brown",       "background-color: brown", "color:brown; filter: brightness(60%);"],
+			["Red",         "background-color: #FF4136","color: #FF4136; filter: brightness(60%);"],
+			["Orange",      "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
+			["Beige",       "background-color: beige", "color: beige; filter: brightness(60%);"],
+			["Yellow",      "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
+			["Green",       "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
+			["Blue",        "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
+			["Purple",      "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
+			["Pink",        "background-color: pink", "color: pink; filter: brightness(60%);"],
+			["White",       "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
+			["Copper",      "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
+			["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
+			["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);" ],
+			["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
+			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"],
+			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"]
 		];
 
 		this.ea = eventAggregator;
@@ -66,6 +66,7 @@ export class Tagitem {
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
+    this.pollannotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
@@ -96,37 +97,37 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
-    this.colTitle = params.colTitle;
+    try {
+      this.colTitle = params.colTitle[0].split(' (')[0];
+    } catch (e) {
+      this.colTitle = "";
+    }
     this.annotations.splice(0, this.annotations.length);
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
-    // SOS!!! - CHANGE THIS AFTER THE DEMO!
-    /*
-    if (!!this.colTitle) {
-      this.pollTitle = this.colTitle;
-    }
-    else {
-      this.pollTitle = "Mozart";
-    }
-    */
-    this.pollTitle = "Mozart";
-    // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
+    this.pollannotations.splice(0, this.pollannotations.length);;
+    this.pollTitle = "";
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
     }
-    else if (this.userServices.isAuthenticated() && this.userServices.current != null) {
-      await this.getRecordAnnotations(this.recId);
-      if (this.hasMotivation('Polling') && !this.hasContributed()) {
-        await this.annotateLabel(this.pollTitle);
-      }
-    }
     await this.getRecordAnnotations(this.recId);
+    // DELETE THIS AFTER THE TESTING
+    // console.log("tags");
+    // console.log(this.annotations);
+    // console.log("geotags");
+    // console.log(this.geoannotations);
+    // console.log("colortags");
+    // console.log(this.colorannotations);
+    // console.log("polltags");
+    // console.log(this.pollannotations);
   }
 
   async reloadAnnotations() {
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
+    this.pollannotations = [];
     await this.getRecordAnnotations(this.recId);
   }
 
@@ -190,8 +191,15 @@ export class Tagitem {
   }
 
 	selectGeoAnnotation(geoid) {
+    // If the campaign is inactive do NOT geoannotate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
 	  if(this.userServices.isAuthenticated()==false){
-		  this.lg.call();
+      toastr.error('You must log in before starting contributing.');
+      this.lg.call();
 			return;
 		}
 
@@ -232,12 +240,18 @@ export class Tagitem {
  	}
 
   selectSuggestedAnnotation(index) {
-		if (this.uriRedirect) {
+    // If the campaign is inactive do NOT validate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+    if (this.uriRedirect) {
 			this.uriRedirect = false;
 			this.prefixChanged();
 			return;
 		}
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
 			return;
 		}
@@ -261,7 +275,7 @@ export class Tagitem {
 
     if (!this.errors) {
       let self = this;
-      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation,this.campaign.username).then(() => {
+      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging').then(() => {
         toastr.success('Annotation added.');
         self.ea.publish('annotations-created', self.record);
         if (!this.hasContributed()) {
@@ -281,7 +295,14 @@ export class Tagitem {
   }
 
   async annotateLabel(label) {
+    // If the campaign is inactive do NOT annotate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
@@ -296,7 +317,7 @@ export class Tagitem {
       await this.thesaurusServices.getSuggestions(label, this.campaign.vocabularies).then(res => {
         this.suggestedAnnotation = res.results[0];
       });
-      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username);
+      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging');
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
       // Clear and reload the colorannotations array
       this.colorannotations.splice(0, this.colorannotations.length);
@@ -306,11 +327,11 @@ export class Tagitem {
     }
   }
 
-  // mot has 3 potential values :
-  // tag, geo, color
+  // mot has 3 potential values : [tag, geo, color]
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
@@ -339,15 +360,23 @@ export class Tagitem {
   }
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
+    // If the campaign is inactive do NOT validate
+    if (!this.campaign.active) {
+      toastr.error('The campaign is NOT active.');
+      return;
+    }
+
     if (this.userServices.isAuthenticated() == false) {
+      toastr.error('You must log in before starting contributing.');
       this.lg.call();
       return;
     }
+
     if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe))
       this.unscore(annoId, annoType, index, mot);
     else
       this.score(annoId, annoType, index, mot);
-    }
+  }
 
   async score(annoId, annoType, index, mot) {
     if (!this.hasContributed()) {
@@ -366,6 +395,9 @@ export class Tagitem {
         }
         else if (mot == 'color') {
           this.colorannotations[index].approvedBy.push(response);
+        }
+        else if (mot == 'poll') {
+          this.pollannotations[index].approvedBy.push(response);
         }
       }).catch(error => {
         console.log(error.message);
@@ -427,6 +459,25 @@ export class Tagitem {
           }
         }
       }
+      else if (mot == 'poll') {
+        this.pollannotations[index].approvedByMe = true;
+        if (this.pollannotations[index].rejectedByMe) {
+          var i = this.pollannotations[index].rejectedBy.map(function(e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.pollannotations[index].rejectedBy.splice(i, 1);
+          }
+          this.pollannotations[index].rejectedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
     }
 
     if (annoType == 'rejected') {
@@ -441,6 +492,9 @@ export class Tagitem {
         }
         else if (mot == 'color') {
           this.colorannotations[index].rejectedBy.push(response);
+        }
+        else if (mot == 'poll') {
+          this.pollannotations[index].rejectedBy.push(response);
         }
       }).catch(error => {
         console.log(error.message);
@@ -502,6 +556,25 @@ export class Tagitem {
           }
         }
       }
+      else if (mot == 'poll') {
+        this.pollannotations[index].rejectedByMe = true;
+        if (this.pollannotations[index].approvedByMe) {
+          var i = this.pollannotations[index].approvedBy.map(function(e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.pollannotations[index].approvedBy.splice(i, 1);
+          }
+          this.pollannotations[index].approvedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
     }
   }
 
@@ -538,6 +611,16 @@ export class Tagitem {
         }
         this.colorannotations[index].approvedByMe = false;
       }
+      else if (mot == 'poll') {
+        var i = this.pollannotations[index].approvedBy.map(function(e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.pollannotations[index].approvedBy.splice(i, 1);
+        }
+        this.pollannotations[index].approvedByMe = false;
+      }
+
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
@@ -578,6 +661,16 @@ export class Tagitem {
         }
         this.colorannotations[index].rejectedByMe = false;
       }
+      else if (mot == 'poll') {
+        var i = this.pollannotations[index].rejectedBy.map(function(e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.pollannotations[index].rejectedBy.splice(i, 1);
+        }
+        this.pollannotations[index].rejectedByMe = false;
+      }
+
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
@@ -591,20 +684,31 @@ export class Tagitem {
   }
 
   async getRecordAnnotations(id) {
-    let motivation = (this.campaign.motivation == 'ColorTagging') ? 'Tagging' : this.campaign.motivation;
-
-    // SOS!!! - CHANGE THIS AFTER THE DEMO!
-
     if (this.hasMotivation('Polling')) {
-      await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
+      await this.recordServices.getAnnotations(this.recId, 'Polling').then(response => {
         for (var i = 0; i < response.length; i++) {
-          if (response[i].annotators[0].generator == ('WITHcrowd '+(this.campaign.username))) {
-            if (!this.userServices.current) {
-              this.annotations.push(new Annotation(response[i], ""));
-            } else {
-              this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
-            }
+          //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
+          if (!this.userServices.current) {
+            this.pollannotations.push(new Annotation(response[i], ""));
+          } else {
+            this.pollannotations.push(new Annotation(response[i], this.userServices.current.dbId));
           }
+          //}
+        }
+        // Bring first the annotation associated with the spedific collection
+        for (var i in this.pollannotations) {
+          if (this.pollannotations[i].label == this.colTitle) {
+            let temp = this.pollannotations[0];
+            this.pollannotations[0] = this.pollannotations[i];
+            this.pollannotations[i] = temp;
+            break;
+          }
+        }
+        if (this.pollannotations.length > 0) {
+          this.pollTitle = this.pollannotations[0].label;
+        }
+        else {
+          toastr.error('There are no annotations for this record.');
         }
       });
     }
@@ -619,13 +723,12 @@ export class Tagitem {
           }
         }
       });
-      // Sort the annotations in descending
-      // order based on their score
+      // Sort the annotations in descending order, based on their score
       this.geoannotations.sort(function(a, b) {
         return b.score - a.score;
       });
     }
-    if (this.hasMotivation('Tagging') || this.hasMotivation('ColorTagging')) {
+    if (this.hasMotivation('Tagging')) {
       await this.recordServices.getAnnotations(this.recId, 'Tagging').then(response => {
         this.annotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -636,15 +739,27 @@ export class Tagitem {
           }
         }
       });
-      // Sort the annotations in descending
-      // order based on their score
+      // Sort the annotations in descending order, based on their score
       this.annotations.sort(function(a, b) {
         return b.score - a.score;
       });
-
-      this.colorannotations = this.annotations;
     }
-    // SOS!!! - CHANGE THIS ^ AFTER THE DEMO!
+    if (this.hasMotivation('ColorTagging')) {
+      await this.recordServices.getAnnotations(this.recId, 'ColorTagging').then(response => {
+        this.colorannotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.colorannotations.push(new Annotation(response[i], ""));
+          } else {
+            this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.colorannotations.sort(function(a, b) {
+        return b.score - a.score;
+      });
+    }
   }
 
   getColor(label) {
@@ -658,8 +773,15 @@ export class Tagitem {
     }
   }
 
-  getColorLabel(label) {
-    return this.i18n.tr('item:color:'+label);
+	getStyle(label) {
+    var index = this.colorSet.findIndex(element => {
+      return element[0] == label;
+    });
+    if (index == -1) {
+      return '';
+    } else {
+      return this.colorSet[index][1];
+    }
   }
 
   annotationExists(label) {
@@ -684,6 +806,11 @@ export class Tagitem {
     }
     for (var i in this.colorannotations) {
       if (this.colorannotations[i].createdByMe || this.colorannotations[i].approvedByMe || this.colorannotations[i].rejectedByMe) {
+        return true;
+      }
+    }
+    for (var i in this.pollannotations) {
+      if (this.pollannotations[i].createdByMe || this.pollannotations[i].approvedByMe || this.pollannotations[i].rejectedByMe) {
         return true;
       }
     }

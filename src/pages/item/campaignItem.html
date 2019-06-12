@@ -32,7 +32,7 @@
     <section id="tagging" class="tagging">
       <!-- title-->
       <div class="container" show.bind="!loadRec">
-        <div class="title">${record.title}</div>
+        <div id="scrollPoint" class="title">${record.title}</div>
       </div>
       <!-- wraps-->
       <div class="wraps">
@@ -48,54 +48,21 @@
             </div>
             <!-- metadata-->
             <div class="wrap">
-              <div class="metadata">
-                <!-- label-->
-                <div class="heading" t="item:meta">ITEM METADATA</div>
-                <!-- info-->
-								<div class="show-more-parent">
-                <ul class="meta show-more-target row">
-                  <li class="col-sm-6" if.bind="record.description">
-                    <div class="lbl" t="item:description">DESCRIPTION</div>
-                    <div class="val">${record.description}</div>
-                  </li>
-                  <li class="col-sm-6" if.bind="record.dataProvider">
-                    <div class="lbl" t="item:provider">PROVIDER</div>
-                    <div class="val">${record.dataProvider}</div>
-                  </li>
-                  <li class="col-sm-6" if.bind="record.creator">
-                    <div class="lbl" t="item:creator">CREATOR</div>
-                    <div class="val">${record.creator}</div>
-                  </li>
-                  <li class="col-sm-6" if.bind="record.rights">
-                    <div class="lbl" t="item:rights">RIGHTS</div>
-                    <div class="val">${record.rights}</div>
-                  </li>
-                  <li class="col-sm-6" if.bind="record.mediatype">
-                    <div class="lbl" t="item:media-type">MEDIA TYPE</div>
-                    <div class="val">${record.mediatype}</div>
-                  </li>
-                  <!-- <li class="col-sm-6" if.bind="record.dbId">
-                    <div class="lbl">ITEM URL</div>
-                    <div class="val"><a href.bind="record.loc">${record.loc}</a></div>
-                  </li> -->
-                  <li class="col-sm-6" if.bind="record.source">
-                    <div class="lbl" t="item:record-source">RECORD SOURCE</div>
-                    <div class="val">${record.source}</div>
-                  </li>
-                  <div class="col-sm-6" repeat.for="dcfield of record.dcfields">
-                    <li>
-                      <div class="lbl">${dcfield.label.toUpperCase()}</div>
-                      <div class="val" innerhtml.bind=" dcfield.label=='created' ? dcfield.value[0].free : dcfield.value[0]"></div>
-                    </li>
-                  </div>
-                </ul>
-								<i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>
-							</div>
-                <!-- more-->
-                <!-- HIDE
-                <div class="loadmore"><a href="#" t="app:loadmore">LOAD MORE</a></div>
-                -->
-              </div>
+              <compose if.bind="(campaign.username!='colours-catwalk') && (campaign.username!='garment-type')"
+                       view="widgets/metadata/meta-default.html"
+  										 view-model="widgets/metadata/metadata"
+                       model.bind="{'record': record}">
+              </compose>
+              <compose if.bind="campaign.username == 'colours-catwalk'"
+                       view="widgets/metadata/meta-colours.html"
+  										 view-model="widgets/metadata/metadata"
+                       model.bind="{'record': record}">
+              </compose>
+              <compose if.bind="campaign.username == 'garment-type'"
+                       view="widgets/metadata/meta-garment.html"
+  										 view-model="widgets/metadata/metadata"
+                       model.bind="{'record': record}">
+              </compose>
             </div>
           </div>
 

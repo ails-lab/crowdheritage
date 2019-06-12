@@ -48,6 +48,11 @@ export class Campaign {
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
     this.vocabularies = data.vocabularies;
+
+    var today = new Date();
+    var start = new Date(this.startDate);
+    var end = new Date(this.endDate);
+    this.active = ( (today>start) && (today<end) );
   }
 
 }

@@ -18,6 +18,7 @@ import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import fetchConfig from 'fetch.config.js';
 import { checkStatus } from 'fetch.config.js';
+import settings from 'global.config.js';
 
 @inject(HttpClient)
 export class AnnotationServices {
@@ -70,7 +71,7 @@ export class AnnotationServices {
 	}
 
 	approveObj(id, camp) {
-		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
+		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
 
 		return this.http.fetch(`/annotation/${id}/approveObj`, {
 			method: 'POST',
@@ -88,7 +89,7 @@ export class AnnotationServices {
 	}
 
 	rejectObj(id, camp) {
-		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
+		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
 
 		return this.http.fetch(`/annotation/${id}/rejectObj`, {
 			method: 'POST',
@@ -193,10 +194,10 @@ export class AnnotationServices {
 		});
 	}
 
-	async annotateRecord(recid, term, camp) {
+	async annotateRecord(recid, term, camp, mot) {
 		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
 		let target = { recordId: recid};
-		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: 'Tagging', body: body, target: target };
+		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: mot, body: body, target: target };
 
 		return this.http.fetch('/record/annotation', {
 			method: 'POST',
@@ -213,7 +214,7 @@ export class AnnotationServices {
 	async annotateGeoRecord(recid, geoid, camp) {
 		let body = {uri: geoid };
 		let target = { recordId: recid};
-		let annotation = { generator: 'WITHcrowd '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: 'GeoTagging', body: body, target: target };
+		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: 'GeoTagging', body: body, target: target };
 
 		return this.http.fetch('/record/annotation', {
 			method: 'POST',
