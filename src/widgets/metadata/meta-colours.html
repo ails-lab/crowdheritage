@@ -1,36 +1,36 @@
 <template>
   <div class="metadata">
     <!-- label-->
-    <div class="heading">ITEM METADATA</div>
+    <div class="heading" t="item:meta">ITEM METADATA</div>
     <!-- info-->
     <div class="show-more-parent">
       <ul class="meta show-more-target row">
         <li class="col-sm-6" if.bind="record.data">
-          <div class="lbl">PLACE</div>
+          <div class="lbl" t="item:place">PLACE</div>
           <div class="val">${place}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data">
-          <div class="lbl">CREATION DATE</div>
+          <div class="lbl" t="item:creation-date">CREATION DATE</div>
           <div class="val">${date}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data">
-          <div class="lbl">CREATOR</div>
+          <div class="lbl" t="item:creator">CREATOR</div>
           <div class="val">${record.data.descriptiveData.dccreator.default[0].split(' (')[0]}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data">
-          <div class="lbl">PHOTOGRAPHER</div>
+          <div class="lbl" t="item:photographer">PHOTOGRAPHER</div>
           <div class="val">${record.data.descriptiveData.dccreator.default[1].split(' (')[0]}</div>
         </li>
         <li class="col-sm-6">
-          <div class="lbl">RIGHTS STATEMENT</div>
+          <div class="lbl" t="item:rights-stat">RIGHTS STATEMENT</div>
           <div class="val"><img src="/img/assets/img/eu_free_access.jpg"></div>
         </li>
         <li class="col-sm-6">
-          <div class="lbl">CONTENT PROVIDER</div>
+          <div class="lbl" t="item:content-prov">CONTENT PROVIDER</div>
           <div class="val"><img src="/img/assets/img/logo-catwalk.png"></div>
         </li>
         <li class="col-sm-2" if.bind="record.source_uri">
-          <div class="val">See it in <a href.bind="record.source_uri" target="_blank">Europeana</a></div>
+          <div class="val" t="[prepend]item:see-it"><a href.bind="record.source_uri" target="_blank" t="item:europeana">Europeana</a></div>
         </li>
       </ul>
       <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>

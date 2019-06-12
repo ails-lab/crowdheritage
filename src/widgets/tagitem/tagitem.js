@@ -193,12 +193,12 @@ export class Tagitem {
 	selectGeoAnnotation(geoid) {
     // If the campaign is inactive do NOT geoannotate
     if (!this.campaign.active) {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
 
 	  if(this.userServices.isAuthenticated()==false){
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
 			return;
 		}
@@ -214,7 +214,7 @@ export class Tagitem {
 			this.prefix = "";
 			this.selectedAnnotation = null;
 			this.suggestedAnnotations = [];
-			toastr.error('Geotag already exists');
+      toastr.error(this.i18n.tr('item:toastr-geo'));
 			return;
 		}
 		this.suggestedAnnotations = [];
@@ -234,7 +234,7 @@ export class Tagitem {
 			 	this.prefix = "";
 				this.selectedAnnotation = null;
 			}).catch((error) => {
-				toastr.error('An error has occured');
+				toastr.error(this.i18n.tr('item:toastr-error'));
 			});
 		}
  	}
@@ -242,7 +242,7 @@ export class Tagitem {
   selectSuggestedAnnotation(index) {
     // If the campaign is inactive do NOT validate
     if (!this.campaign.active) {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
     if (this.uriRedirect) {
@@ -251,7 +251,7 @@ export class Tagitem {
 			return;
 		}
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
 			return;
 		}
@@ -267,7 +267,7 @@ export class Tagitem {
       this.prefix = "";
       this.selectedAnnotation = null;
       this.suggestedAnnotations = [];
-      toastr.error('Tag already exists');
+      toastr.error(this.i18n.tr('item:toastr-existing'));
       return;
     }
     this.suggestedAnnotations = [];
@@ -285,7 +285,7 @@ export class Tagitem {
         this.prefix = "";
         this.selectedAnnotation = null;
       }).catch((error) => {
-        toastr.error('An error has occured');
+        toastr.error(this.i18n.tr('item:toastr-error'));
       });
     }
   }
@@ -297,12 +297,12 @@ export class Tagitem {
   async annotateLabel(label) {
     // If the campaign is inactive do NOT annotate
     if (!this.campaign.active) {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
 
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
@@ -331,7 +331,7 @@ export class Tagitem {
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
@@ -362,12 +362,12 @@ export class Tagitem {
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
     if (!this.campaign.active) {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
 
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
@@ -708,7 +708,7 @@ export class Tagitem {
           this.pollTitle = this.pollannotations[0].label;
         }
         else {
-          toastr.error('There are no annotations for this record.');
+          toastr.error(this.i18n.tr('item:toastr-empty'));
         }
       });
     }
@@ -760,6 +760,10 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+  }
+
+  getColorLabel(label) {
+    return this.i18n.tr('item:color:'+label);
   }
 
   getColor(label) {

@@ -130,19 +130,19 @@ export class CampaignSummary {
 
       if (this.userPoints < this.campaign.badges.bronze) {
         this.userBadge = '/img/badges.png';
-				this.userBadgeName = 'rookie';
+				this.userBadgeName = 'Rookie';
       }
       else if (this.userPoints < this.campaign.badges.silver) {
         this.userBadge = '/img/badge-bronze.png';
-        this.userBadgeName = 'bronze';
+        this.userBadgeName = 'Bronze';
       }
       else if (this.userPoints < this.campaign.badges.gold) {
         this.userBadge = '/img/badge-silver.png';
-        this.userBadgeName = 'silver';
+        this.userBadgeName = 'Silver';
       }
       else {
         this.userBadge = '/img/badge-gold.png';
-        this.userBadgeName = 'gold';
+        this.userBadgeName = 'Gold';
       }
     }
   }

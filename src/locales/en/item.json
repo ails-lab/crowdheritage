@@ -30,6 +30,15 @@
   "rights"          : "++RIGHTS",
   "media-type"      : "++MEDIA TYPE",
   "record-source"   : "++RECORD SOURCE",
+  "place"           : "++PLACE",
+  "creation-date"   : "++CREATION DATE",
+  "photographer"    : "++PHOTOGRAPHER",
+  "rights-stat"     : "++RIGHTS STATEMENT",
+  "content-prov"    : "++CONTENT PROVIDER",
+  "technique"       : "++TECHNIQUE (FORMAT)",
+  "material"        : "++MATERIAL (MEDIUM)",
+  "see-it"          : "++See it in ",
+  "europeana"       : "++Europeana",
   "exit"            : "++EXIT",
   "fullscreen"      : "++FULLSCREEN",
   "color-tagging"   : "++COLOR TAGGING",
@@ -42,5 +51,11 @@
   "yes"             : "++Yes",
   "no"              : "++No",
   "geotagging"      : "++GEOTAGGING",
-  "geotagging-info" : "++Drop pins to countries or locations in the map that represents the picture."
+  "geotagging-info" : "++Drop pins to countries or locations in the map that represents the picture.",
+  "toastr-inactive" : "++The campaign is NOT active",
+  "toastr-login"    : "++You must log in before starting contributing",
+  "toastr-existing" : "++Tag already exists",
+  "toastr-error"    : "++An error has occured",
+  "toastr-empty"    : "++There are no annotations for this record",
+  "toastr-geo"      : "++Geotag already exists"
 }

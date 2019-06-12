@@ -28,7 +28,7 @@
       <ul class="taglist color show-more-target">
         <li repeat.for="ann of colorannotations">
           <div class="thumbs" style.bind="getStyle(ann.label)"></div>
-          <div class="selected">${ann.label}</div>
+          <div class="selected" innerhtml.bind="getColorLabel(ann.label)"></div>
           <ul class="action">
             <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
               <a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'color')">

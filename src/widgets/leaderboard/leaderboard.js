@@ -22,7 +22,7 @@ import { CampaignServices } from 'CampaignServices.js';
 import settings from 'global.config.js';
 import { toggleMore } from 'utils/Plugin.js';
 
-let COUNT = 5;
+let COUNT = 6;
 
 @inject(CampaignServices, UserServices)
 export class Leaderboard {
