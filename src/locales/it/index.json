@@ -1,10 +1,12 @@
 {
-  "bannertext-up" : "CAMPAGNE DI",
+  "bannertext-up"   : "CAMPAGNE DI",
   "bannertext-down" : "CROWDSOURCING",
-  "language" : "~~LANGUAGE : ",
-  "current" : "<div class=\"bold\">CAMPAGNA</div><span>ATTUALE</span>",
-  "sortby" : "IN ORDINE ",
-  "alphabetical" : "ALFABETICO",
-  "date" : "CRONOLOGICO",
-  "opencampaign" : "~~OPEN CAMPAIGN"
+  "current"         : "~~CROWDSOURCING CAMPAIGNS",
+  "sortby"          : "IN ORDINE ",
+  "alphabetical"    : "ALFABETICO",
+  "date"            : "CRONOLOGICO",
+  "active"          : "~~ACTIVE",
+  "inactive"        : "~~INACTIVE",
+  "all"             : "~~ALL",
+  "opencampaign"    : "~~OPEN CAMPAIGN"
 }
