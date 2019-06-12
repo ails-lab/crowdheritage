@@ -43,7 +43,6 @@ export class Metadata {
     this.record = params.record;
 
     if (this.record.data) {
-      console.log(this.record);
 
       if ( !('content' in this.record.data) ) {
         await this.recordServices.getRecord(this.record.dbId)
@@ -74,7 +73,6 @@ export class Metadata {
 
       else {
         let content = JSON.parse(this.record.data.content['JSONLD-EDM'])['@graph'];
-        console.log(this.record.data.content['JSONLD-EDM']);
         for (let i in content) {
           if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
             this.place = content[i]['skos:altLabel'];
