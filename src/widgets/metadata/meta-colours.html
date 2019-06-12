@@ -7,11 +7,11 @@
       <ul class="meta show-more-target row">
         <li class="col-sm-6" if.bind="record.data">
           <div class="lbl">PLACE</div>
-          <div class="val">${record.data.descriptiveData.dctermsspatial.default[0]}</div>
+          <div class="val">${place}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data">
           <div class="lbl">CREATION DATE</div>
-          <div class="val">${record.title.split(', ')[1].split(' ')[1]}</div>
+          <div class="val">${date}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data">
           <div class="lbl">CREATOR</div>

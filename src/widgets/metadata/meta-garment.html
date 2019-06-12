@@ -9,29 +9,29 @@
           <div class="lbl">DESCRIPTION</div>
           <div class="val">${record.description}</div>
         </li>
-        <li class="col-sm-6" if.bind="record.data">
+        <li class="col-sm-6" if.bind="record.data.descriptiveData.dccreator">
           <div class="lbl">CREATOR</div>
-          <div class="val">${record.data.descriptiveData.dccreator.default[0].split(' (')[0]}</div>
+          <div class="val">${record.data.descriptiveData.dccreator.default[0]}</div>
         </li>
-        <li class="col-sm-6" if.bind="record.data">
+        <li class="col-sm-6" if.bind="date.length>0">
           <div class="lbl">CREATION DATE</div>
-          <div class="val">IN PROGRESS</div>
+          <div class="val">${date}</div>
         </li>
-        <li class="col-sm-6" if.bind="record.data">
+        <li class="col-sm-6" if.bind="format.length>0">
           <div class="lbl">TECHNIQUE (FORMAT)</div>
-          <div class="val">IN PROGRESS</div>
+          <div class="val"><a href.bind="formatUri" target="_blank">${format}</a></div>
         </li>
-        <li class="col-sm-6" if.bind="record.data">
+        <li class="col-sm-6" if.bind="medium.length>0">
           <div class="lbl">MATERIAL (MEDIUM)</div>
-          <div class="val">IN PROGRESS</div>
+          <div class="val"><a href.bind="mediumUri" target="_blank">${medium}</a></div>
         </li>
         <div class="col-sm-6" repeat.for="dcfield of record.dcfields">
           <li if.bind="dcfield.label=='rights'">
             <div class="lbl">RIGHTS STATEMENT</div>
-            <div class="val" innerhtml.bind="dcfield.value[0]"></div>
+            <div class="val"><a href.bind="record.rights" target="_blank">${dcfield.value[0]}</a></div>
           </li>
         </div>
-        <li class="col-sm-6">
+        <li class="col-sm-6" if.bind="record.dataProvider">
           <div class="lbl">CONTENT PROVIDER</div>
           <div class="val">${record.dataProvider}</div>
         </li>
