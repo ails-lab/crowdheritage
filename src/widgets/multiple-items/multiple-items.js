@@ -40,6 +40,8 @@ export class MultipleItems {
     this.userServices = userServices;
 		this.i18n = i18n;
 		this.loc;
+		this.sortBy = "Ascending";
+		this.state = "hide";
 		this.resetInstance();
     if (!instance) {
 			instance = this;
@@ -60,7 +62,12 @@ export class MultipleItems {
 		for (let i in records) {
 			let recordData = records[i];
 			if (recordData !== null) {
-				this.records.push(new Record(recordData));
+				if (this.state == 'show') {
+					this.records.push(new Record(recordData));
+				}
+				else if ( (this.state == 'hide') && !this.hasContributed(recordData) ) {
+					this.records.push(new Record(recordData));
+				}
 			}
 		}
 	}
@@ -111,6 +118,12 @@ export class MultipleItems {
 		//TODO pass the subarray of items as well
     item.collection= this.collection;
 		item.records = [];
+		if (this.state == "hide") {
+			item.hideMine = true;
+		}
+		else {
+			item.hideMine = false;
+		}
 		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc});
   }
 
@@ -134,5 +147,58 @@ export class MultipleItems {
   async loadMore() {
 		this.getRecords();
   }
+
+	toggleSortMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
+  }
+
+	toggleStateMenu() {
+    if ($('.state').hasClass('open')) {
+      $('.state').removeClass('open');
+    }
+    else {
+      $('.state').addClass('open');
+    }
+  }
+
+  reloadCollection(state, sortBy) {
+    this.records.splice(0, this.records.length);
+    this.currentCount = 0;
+    this.sortBy = sortBy;
+    this.state = state;
+		this.getRecords();
+  }
+
+	hasContributed(record) {
+		let annotations = record.annotations;
+		for (var i in annotations) {
+			let annotators = annotations[i].annotators;
+			for (var j in annotators) {
+				if (annotators[j].withCreator == this.userServices.current.dbId) {
+					return true;
+				}
+			}
+			if (record.score && record.score.approvedBy) {
+				for (var j in score.approvedBy) {
+					if (score.approvedBy[j].withCreator == this.userServices.current.dbId) {
+						return true;
+					}
+				}
+			}
+			if (record.score && record.score.rejectedBy) {
+				for (var j in score.rejectedBy) {
+					if (score.rejectedBy[j].withCreator == this.userServices.current.dbId) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 }

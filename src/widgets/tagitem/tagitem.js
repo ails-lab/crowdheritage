@@ -112,15 +112,6 @@ export class Tagitem {
       await this.userServices.reloadCurrentUser();
     }
     await this.getRecordAnnotations(this.recId);
-    // DELETE THIS AFTER THE TESTING
-    // console.log("tags");
-    // console.log(this.annotations);
-    // console.log("geotags");
-    // console.log(this.geoannotations);
-    // console.log("colortags");
-    // console.log(this.colorannotations);
-    // console.log("polltags");
-    // console.log(this.pollannotations);
   }
 
   async reloadAnnotations() {
