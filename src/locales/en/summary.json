@@ -1,0 +1,23 @@
+{
+  "return-list"         : "++RETURN TO CAMPAIGN LIST ",
+  "congratulations"     : "++Congratulations",
+  "hello"               : "++Hello",
+  "badge-price"         : "++badge",
+  "badge-unlocked"      : "++You have unlocked the",
+  "badge-continue"      : "++Continue contributing to earn your first badge",
+  "badge-start"         : "++Start contributing to earn your first badge",
+  "badge-involved"      : "++Get involved!<br/>Join CrowdHeritage and start contributing to our crowdsourcing campaigns.",
+  "items"               : "++ITEMS",
+  "badge"               : "++BADGE",
+  "rank"                : "++CAMPAIGN RANK",
+  "description-left"    : "++Contribute more and unlock new badges. <br/>You can find the general statistics regarding the campaign ",
+  "description-right"   : "++below",
+  "goal"                : "++GOAL",
+  "contribute-campaign" : "++CONTRIBUTE TO CAMPAIGN",
+  "collections"         : "++COLLECTIONS",
+  "select-contribute"   : "++SELECT TO CONTRIBUTE",
+  "by"                  : "++By",
+  "location"            : "++Location of Active Volunteers",
+  "leaderboard"         : "++CAMPAIGN LEADERBOARD",
+  "daily"               : "++DAILY CONTRIBUTIONS"
+}

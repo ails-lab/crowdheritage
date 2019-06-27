@@ -7,22 +7,22 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"> <span>COLLECTION</span></div>
+            <div class="lbl"> <span t="app:collection">COLLECTION</span></div>
             <div class="wrap"><span>${collection.title}</span></div>
           </div>
         </div>
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a route-href="route: summary; params.bind: { cname: cname }">RETURN TO CAMPAIGN<img src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a route-href="route: summary; params.bind: { cname: cname, lang: loc }" t="[prepend]app:return-campaign"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
         <!-- progress-->
-        <div class="progress">
+        <!-- <div class="progress">
           <div role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;" class="progress-bar">
             <div class="labl">10%</div>
           </div>
-        </div>
+        </div> -->
         <!-- bg-->
         <div class="bgwrap" style="background-image: url('${collection.backgroundImage}');"></div>
       </div>
@@ -30,7 +30,7 @@
 		<section class="collections collection-item-list">
 			<div class="container">
 		<compose view-model="widgets/multiple-items/multiple-items"
-						 model.bind="{'cname': cname, 'collection': collection, 'router': router}">
+						 model.bind="{'cname': cname, 'collection': collection, 'router': router, 'lang': loc}">
 		</compose>
 	</div>
 </section>

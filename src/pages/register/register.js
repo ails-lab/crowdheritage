@@ -17,13 +17,16 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserServices } from 'UserServices';
+import { I18N } from 'aurelia-i18n';
 
-@inject(UserServices, Router)
+@inject(UserServices, Router, I18N)
 export class Register {
 
-	constructor(userServices, router) {
+	constructor(userServices, router, i18n) {
 		this.userServices = userServices;
     this.router = router;
+		this.i18n = i18n;
+		this.loc;
 
 		// Initialization
 		this.email = '';
@@ -35,14 +38,17 @@ export class Register {
 		this.gender = '';
 		this.usingEmail = true;
 		this.genders = [
-			{ value: 'male', name: 'Male' },
-			{ value: 'female', name: 'Female' },
-			{ value: 'unspecified', name: 'Unspecified' }
+			{ value: 'male',        name: this.i18n.tr('register:male') },
+			{ value: 'female',      name: this.i18n.tr('register:female') },
+			{ value: 'unspecified', name: this.i18n.tr('register:unspecified') }
 		];
 		this.errors = {};
 	}
 
-  activate() {
+  activate(params) {
+		this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
     if (this.userServices.isAuthenticated()) {
       this.router.navigateToRoute('index');
     }

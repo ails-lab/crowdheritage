@@ -185,7 +185,7 @@ body header .wrap .container nav .account a:hover .lbl {
 body header .wrap .container nav .account .accountmenu {
   position: absolute;
   top: 70px;
-  width: 250px;
+  width: 225px;
   right: 0;
   background-color: @main-color;
   margin: 0;
@@ -1236,6 +1236,68 @@ body main .topsection .sort .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
 }
+section.languages .lang {
+  float: left;
+  position: relative;
+  font-family: "Dosis";
+  bottom: 2px;
+  right: -12px;
+  //padding-top: 30px;
+}
+section.languages .lang .lbl {
+  display: inline-block;
+}
+section.languages .lang a {
+  display: inline-block;
+  color: @main-color;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+section.languages .lang a .flag img {
+   width: 20px;
+  //margin-left: 10px;
+  //margin-right: 5px;
+}
+section.languages .lang a .arrow {
+  margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+section.languages .lang a:hover {
+  text-decoration: none;
+  color: #009e77;
+}
+section.languages .lang .dropdown-menu {
+  margin: 24px 0 0 -98px;
+  right: 10px;
+  padding: 0;
+  border-radius: 0;
+  border: 0px;
+  box-shadow: none;
+}
+section.languages .lang .dropdown-menu li {
+  display: block;
+  width: 159px;
+  margin-bottom: 1px;
+  padding-left: 1px;
+  padding-top: 1px;
+}
+section.languages .lang .dropdown-menu li a {
+  display: block;
+  //color: @main-color !important;
+  //padding: 7px 10px 7px 10px;
+  background-color: #f2f2f2;
+}
+section.languages .lang .dropdown-menu li a img {
+  margin-right: 10px;
+}
+section.languages .lang .dropdown-menu li a:hover {
+  background-color: @main-color;
+  color: #fff !important;
+}
 body main section.learnmore {
   padding: 0px 0 0px 0;
 }
@@ -1537,6 +1599,7 @@ body main section.userprofile {
 				img {
 					width: 100%;
 					object-fit: cover;
+          max-height: 390px;
 				}
 			}
 			.info {
@@ -2905,6 +2968,11 @@ body {
     padding-top: 10px;
   }
   body main .topsection .sort {
+    display: block;
+    float: none;
+    padding-top: 10px;
+  }
+  section.languages .lang {
     display: block;
     float: none;
     padding-top: 10px;

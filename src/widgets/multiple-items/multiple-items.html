@@ -5,20 +5,27 @@
 		<div class="entries row" ref="grid">
 			<!-- item-->
 			<div class="sizer"></div>
-			<!-- entry-->
-
-			<div class="entry ${record.dbId} col-md-3" repeat.for="record of records">
-				<a href="javascript:void(0)" click.delegate="goToItem(record)">
-					<div class="thumbs">
-						<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-						<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
-					</div>
-				</a>
-			</div>
-
+				<!-- Item Grid for User -->
+				<div if.bind="byUser" class="entry ${record.dbId} col-md-3" repeat.for="record of records">
+					<a href="javascript:void(0)" click.delegate="goToAnnotatedItem(record)">
+						<div class="thumbs">
+							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
+						</div>
+					</a>
+				</div>
+				<!-- Item Grid for Collection -->
+				<div if.bind="byCollection" class="entry ${record.dbId} col-md-3" repeat.for="record of records">
+					<a href="javascript:void(0)" click.delegate="goToItem(record)">
+						<div class="thumbs">
+							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
+						</div>
+					</a>
+				</div>
 		</div>
 		<div class="loadmore">
-			<a href="#" show.bind="!loading && more" click.delegate="loadMore()">LOAD MORE</a>
+			<a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
 			<div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
 		</div>
 	</div>

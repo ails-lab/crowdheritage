@@ -19,18 +19,23 @@ import { Router } from 'aurelia-router';
 import { UserServices } from 'UserServices';
 import { User } from 'User.js';
 import { Record } from 'Record.js'
+import { I18N } from 'aurelia-i18n';
+import settings from 'global.config.js';
 
-@inject(UserServices, Router,'loginPopup')
-export class CampaignSummary {
+@inject(UserServices, Router, I18N, 'loginPopup')
+export class UserProfile {
 
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get currentUser() { return this.userServices.current; }
-	get progress() { return this.points/500 }
+	get progress() { return (100*this.points/500) }
+	get barLevel() { return ( this.progress<=100 ? this.progress : 100 ) }
 
-  constructor(userServices, router, loginPopup) {
+  constructor(userServices, router, i18n, loginPopup) {
   	this.userServices = userServices;
 		this.router = router;
 		this.lg = loginPopup;
+		this.project = settings.project;
+		this.i18n = i18n;
 
 		this.myProfile = false; // Is this my profile or another user's profile?
 		this.user = null; // The owner of the profile
@@ -41,6 +46,8 @@ export class CampaignSummary {
 		this.rejected = 0;
 		this.annotatedRecordsCount = 0;
 		this.records = [];
+
+		this.loc;
   }
 
   attached() {
@@ -48,17 +55,23 @@ export class CampaignSummary {
   }
 
   async activate(params, route) {
+		this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
 		if (this.userServices.isAuthenticated() && this.userServices.current === null) {
     	this.userServices.reloadCurrentUser();
     }
+
 		if (this.currentUser && (params.uname == this.currentUser.username)) {
 				this.myProfile = true;
 				this.user = this.currentUser;
-		} else {
+		}
+		else {
 			let userData = await this.userServices.getUserByUsername(params.uname);
 			this.user = new User(userData);
 		}
-		route.navModel.setTitle(this.user.firstName + ' ' + this.user.lastName + " | CrowdHeritage");
+
+		route.navModel.setTitle(this.user.fullName + " | " + this.project);
 		let contributions = await this.userServices.getUserAnnotations(this.user.dbId);
 		this.points = contributions.annotationCount;
 		this.created = contributions.createdCount;
