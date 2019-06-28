@@ -42,6 +42,7 @@ export class MultipleItems {
 		this.loc;
 		this.sortBy = "Ascending";
 		this.state = "hide";
+		this.hiddenCount = 0;
 		this.resetInstance();
     if (!instance) {
 			instance = this;
@@ -62,11 +63,14 @@ export class MultipleItems {
 		for (let i in records) {
 			let recordData = records[i];
 			if (recordData !== null) {
-				if (this.state == 'show') {
+				if ( (this.state == 'show') || ((this.state == 'hide') && !this.userServices.isAuthenticated()) ) {
 					this.records.push(new Record(recordData));
 				}
-				else if ( (this.state == 'hide') && !this.hasContributed(recordData) ) {
+				else if ( (this.state == 'hide') && this.userServices.isAuthenticated() && !this.hasContributed(recordData) ) {
 					this.records.push(new Record(recordData));
+				}
+				else {
+					this.hiddenCount = this.hiddenCount + 1;
 				}
 			}
 		}
@@ -75,7 +79,7 @@ export class MultipleItems {
 	async getRecords() {
 		this.loading = true;
 		if (this.collection) {
-			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count);
+			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset+this.hiddenCount, this.count);
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
@@ -87,6 +91,7 @@ export class MultipleItems {
 
 	async activate(params, route) {
 		this.resetInstance();
+		this.hiddenCount = 0;
 		this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
 	 	this.cname = params.cname;
@@ -167,11 +172,16 @@ export class MultipleItems {
   }
 
   reloadCollection(state, sortBy) {
-    this.records.splice(0, this.records.length);
-    this.currentCount = 0;
-    this.sortBy = sortBy;
-    this.state = state;
-		this.getRecords();
+		if ( (state==this.state) && (sortBy==this.sortBy) ) {
+			return;
+		}
+		else {
+			this.records.splice(0, this.records.length);
+			this.hiddenCount = 0;
+			this.sortBy = sortBy;
+			this.state = state;
+			this.getRecords();
+		}
   }
 
 	hasContributed(record) {
