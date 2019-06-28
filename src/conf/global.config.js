@@ -30,7 +30,7 @@ var settings = {
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
-	settings.baseUrl = 'https://api.withculture.eu';
+	settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; // Debug
 }
@@ -39,6 +39,7 @@ else if (window.location.hostname === 'withcrowd.eu') {
 	settings.auth.facebook='';
 }
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
+    settings.baseUrl = 'https://api.withcrowd.eu';
 	settings.auth.facebook='';
 	settings.project = 'CrowdHeritage';
 }
