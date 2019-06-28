@@ -174,16 +174,21 @@ export class CampaignIndex {
   }
 
   reloadCampaigns(state, sortBy) {
-    this.campaigns.splice(0, this.campaigns.length);
-    this.currentCount = 0;
-    this.more = true;
-    this.sortBy = sortBy;
-    this.state = state;
-    this.campaignServices.getCampaignsCount("", this.project, this.state)
-      .then( result => {
-        this.campaignsCount = result;
-        this.getCampaigns(this.groupName, this.sortBy, this.state);
-      });
+    if ( (state==this.state) && (sortBy==this.sortBy) ) {
+			return;
+		}
+		else {
+      this.campaigns.splice(0, this.campaigns.length);
+      this.currentCount = 0;
+      this.more = true;
+      this.sortBy = sortBy;
+      this.state = state;
+      this.campaignServices.getCampaignsCount("", this.project, this.state)
+        .then( result => {
+          this.campaignsCount = result;
+          this.getCampaigns(this.groupName, this.sortBy, this.state);
+        });
+      }
   }
 
   getLocale() {

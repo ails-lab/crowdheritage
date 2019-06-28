@@ -26,7 +26,7 @@ import { CollectionServices } from 'CollectionServices.js';
 import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 
-let COUNT = 10;
+let COUNT = 20;
 
 @inject(UserServices, RecordServices, CampaignServices, CollectionServices, Router, I18N)
 export class CampaignItem {
