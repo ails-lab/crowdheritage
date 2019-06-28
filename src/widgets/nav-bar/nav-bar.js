@@ -23,14 +23,13 @@ import { Notification } from 'Notification.js';
 import settings from 'global.config.js';
 import {initMobileMenu} from 'utils/Plugin.js';
 import { PLATFORM } from 'aurelia-pal';
-import { I18N } from 'aurelia-i18n';
 
-@inject(UserServices, Router, EventAggregator, DialogService, I18N)
+@inject(UserServices, Router, EventAggregator, DialogService)
 export class NavBar {
 
   @bindable router = null;
 
-  constructor(userServices, router, eventAggregator, dialogService, i18n) {
+  constructor(userServices, router, eventAggregator, dialogService) {
 		this.userServices = userServices;
 		this.router = router;
 		this.locked = false;
@@ -42,20 +41,6 @@ export class NavBar {
     if (this.project == 'CrowdHeritage') {
       this.logo = '/img/ic-logo2.png';
     }
-
-    this.i18n = i18n;
-    this.locales = [
-      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" }
-      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
-      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
-      //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
-      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
-      //{ title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
-    ];
-    this.currentLocale;
-    this.currentLocaleCode;
 	}
 
   attached(){
@@ -65,7 +50,6 @@ export class NavBar {
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
-  get locale() { return window.location.href.split('/')[3]; }
 
   // UI Functions
   loginPopup() {
@@ -86,15 +70,6 @@ export class NavBar {
     }
     else {
       $('#accountmenu').addClass('active');
-    }
-  }
-
-  toggleLangMenu() {
-    if ($('.lang').hasClass('open')) {
-      $('.lang').removeClass('open');
-    }
-    else {
-      $('.lang').addClass('open');
     }
   }
 
@@ -122,34 +97,7 @@ export class NavBar {
     }
   }
 
-  getLocale() {
-    this.currentLocaleCode = this.locale;
-    for (let loc of this.locales) {
-      if (loc.code == this.currentLocaleCode) {
-        this.currentLocale = loc;
-        return this.currentLocale;
-      }
-    }
-    // If the language paremeter is not a valid one redirect to English home page
-    let index = this.router.routes.find(x => x.name === 'index');
-    this.router.navigateToRoute('index', {lang: 'en'});
-  }
-
-  changeLang(loc) {
-    let url = window.location.href.split('/');
-    if (url[3] == loc) {
-      return;
-    }
-    else {
-      url[3] = loc;
-      window.location.href = url.join('/');
-    }
-  }
-
   activate() {
-    this.i18n.setLocale(this.locale);
-    this.getLocale();
-
     // Socket initialization
 		let domainUrl = `${settings.baseUrl}`.replace('http://', '');
 

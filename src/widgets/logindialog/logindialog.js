@@ -30,8 +30,6 @@ export class LoginDialog {
 		this.router = router;
 	}
 
-	get currentLocale() { return window.location.href.split('/')[3]; }
-
 	// Interface functions
 	scrollEmail() {
 		$('.externalLogin').slideUp();
@@ -68,8 +66,7 @@ export class LoginDialog {
 
 	register() {
 		this.controller.cancel();
-		let loc = window.location.href.split('/')[3];
-		this.router.navigate(loc+'/register');
+		this.router.navigateToRoute('register');
 	}
 
 	attached() {

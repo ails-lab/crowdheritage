@@ -10,8 +10,8 @@
           </div>
         </div>
         <div class="progress">
-          <div role="progressbar" aria-valuenow="${barLevel}" aria-valuemin="0" aria-valuemax="100" style="width: ${barLevel}%;" class="progress-bar">
-            <div class="labl">${barLevel}%</div>
+          <div role="progressbar" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%;" class="progress-bar">
+            <div class="labl">${progress}%</div>
           </div>
         </div>
         <div class="bgwrap" style="background-image: img/bg-banner.png;"></div>
@@ -34,13 +34,13 @@
             <!-- user stat-->
             <div class="info">
               <!-- text-->
-							<h2 t="user:name">Name</h2>
+							<h2>Name</h2>
               <h1>${user.fullName}</h1>
-							<h2 t="user:gender">Gender</h2>
+							<h2>Gender</h2>
 							<p>${user.gender}</p>
-							<h2 t="user:contact">Contact information</h2>
+							<h2>Contact information</h2>
 							<p>${user.email}</p>
-							<h2 t="user:about">About</h2>
+							<h2>About</h2>
 							<p>${user.about}</p>
 							<ul class="actions">
 								<li class="action-edit"><i class="fa fa-cog"></i></li>
@@ -57,31 +57,31 @@
 						<!-- stats-->
 						<ul class="stats">
 							<li>
-								<div class="lbl" t="app:progress">PROGRESS</div>
+								<div class="lbl">PROGRESS</div>
 								<div class="val">
 									${progress}%
 									<!-- <small>${points}/500</small> -->
 								</div>
 							</li>
-              <li>
-                <div class="lbl" t="user:items">ITEMS</div>
-                <div class="val">${annotatedRecordsCount}</div>
-              </li>
 							<li>
-								<div class="lbl" t="app:points">POINTS</div>
+								<div class="lbl">POINTS</div>
 								<div class="val">${points}</div>
 							</li>
 							<li>
-								<div class="lbl" t="user:inserted">INSERTED TAGS</div>
+								<div class="lbl">INSERTED TAGS</div>
 								<div class="val">${created}</div>
 							</li>
 							<li>
-								<div class="lbl" t="user:upvotes">UPVOTES</div>
+								<div class="lbl">UPVOTES</div>
 								<div class="val">${approved}</div>
 							</li>
 							<li>
-								<div class="lbl" t="user:downvotes">DOWNVOTES</div>
+								<div class="lbl">DOWNVOTES</div>
 								<div class="val">${rejected}</div>
+							</li>
+							<li>
+								<div class="lbl">ITEMS</div>
+								<div class="val">${annotatedRecordsCount}</div>
 							</li>
 							<!-- <li>
 								<div class="lbl">CAMPAIGNS</div>
@@ -89,7 +89,9 @@
 							</li> -->
 						</ul>
 						<!-- description-->
-						<div class="desc" t="user:contribute">Contribute more and unlock the next badge.</div>
+						<div class="desc">
+							Contribute more and unlock the next badge.
+						</div>
 					</div>
 				</div>
       </div>
@@ -100,11 +102,11 @@
 				<div class="topsection">
           <!-- label-->
           <div class="sectionlabel">
-            <div class="bold" t="user:contributions">CONTRIBUTIONS</div><span t="[append]user:annotated"> ${annotatedRecordsCount} </span>
+            <div class="bold">CONTRIBUTIONS</div><span> ${annotatedRecordsCount} ANNOTATED ITEMS</span>
           </div>
 				</div>
 				<compose view-model="widgets/multiple-items/multiple-items"
-								 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router, 'lang': loc}">
+								 model.bind="{'user': user, 'totalCount': annotatedRecordsCount, 'router': router}">
 				</compose>
 			</div>
 		</section>

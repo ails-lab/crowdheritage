@@ -19,24 +19,20 @@ import { Router } from 'aurelia-router';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { UserServices } from 'UserServices';
-import { I18N } from 'aurelia-i18n';
 //import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, Router, I18N)
+@inject(CollectionServices, UserServices, Router)
 export class CollectionSummary {
 
-  constructor(collectionServices, userServices, router, i18n) {
+  constructor(collectionServices, userServices, router) {
 		if (instance) {
 			return instance;
 		}
 	  this.collectionServices = collectionServices;
 	  this.userServices = userServices;
 	  this.router = router;
-    this.i18n = i18n;
-
-    this.loc;
 	  if (!instance) {
 			instance = this;
 		}
@@ -50,9 +46,6 @@ export class CollectionSummary {
 	}
 
 	async activate(params, route) {
-    this.loc = params.lang;
-		this.i18n.setLocale(params.lang);
-
 		this.cname = params.cname;
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);

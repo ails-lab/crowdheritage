@@ -17,8 +17,8 @@
 // we want font-awesome to load as soon as possible to show the fa-spinner
 import { AnimatorVelocity }  from 'aurelia-animator-velocity';
 import { LogManager, PLATFORM } from 'aurelia-framework';
-import { I18N, TCustomAttribute } from 'aurelia-i18n';
-import Backend from 'i18next-xhr-backend';
+//import { I18N, TCustomAttribute } from 'aurelia-i18n';
+//import Backend from 'i18next-xhr-backend';
 import 'bootstrap';
 import config from './conf/auth.config.js';
 
@@ -70,6 +70,7 @@ export async function configure(aurelia) {
     .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
 			baseConfig.configure(config);
 		})
+    /*
     .plugin(PLATFORM.moduleName('aurelia-i18n'), instance => {
       let aliases = ['t', 'i18n'];
       // add aliases for 't' attribute
@@ -80,28 +81,17 @@ export async function configure(aurelia) {
       // make sure to return the promise of the setup method, in order to guarantee proper loading
       return instance.setup({
         backend: {                                  // <-- configure backend settings
-          loadPath: '/src/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+          loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
         },
         attributes: aliases,
-        lng : 'en',
+        lng : 'de',
         fallbackLng : 'en',
         debug : false,
-        ns: [
-          'app',
-          'about',
-          'feedback',
-          'index',
-          'item',
-          'partners',
-          'privacy',
-          'register',
-          'summary',
-          'terms',
-          'user'
-        ],
-        defaultNS: 'app'
+        ns: ['translation','nav'],
+        defaultNS: 'translation'
       });
     })
+    */
     .feature(PLATFORM.moduleName('converters/index'));// All ValueConverters are registered here
 
 
@@ -121,7 +111,7 @@ export async function configure(aurelia) {
   // if you would like your website to work offline (Service Worker),
   // install and enable the @easy-webpack/config-offline package in webpack.config.js and uncomment the following code:
   /*
-  const offline = await import('offline-plugin/runtime');
+  const offline = await System.import('offline-plugin/runtime');
   offline.install();
   */
 }

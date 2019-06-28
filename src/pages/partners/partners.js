@@ -16,20 +16,20 @@
 
 import { inject } from 'aurelia-framework';
 import { UserServices } from 'UserServices.js';
-import { I18N } from 'aurelia-i18n';
+//import { SpaceServices } from '../../modules/SpaceServices.js';
 
-@inject(UserServices, Element, I18N)
-export class Partners {
+@inject(UserServices, Element)//, SpaceServices)
+export class About {
 
-	constructor(userServices, element, i18n) {
+	constructor(userServices, element, spaceServices) {
 		this.userServices = userServices;
 		this.element = element;
-		this.i18n = i18n;
-
-		this.loc;
+		//this.spaceServices = spaceServices;
+		this.isWith = true;
 	}
 
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
+	//get space() { return this.spaceServices.active; }
 
 	scrollTo(anchor) {
 		$('html, body').animate({
@@ -38,11 +38,11 @@ export class Partners {
 	}
 
 	activate(params) {
-		this.loc = params.lang;
-		this.i18n.setLocale(params.lang);
-
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
+
+		this.isWith = typeof(params.name) === 'undefined';
+		// TODO: Check for changed space
 	}
 }
