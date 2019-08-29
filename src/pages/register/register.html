@@ -37,12 +37,12 @@
 								<span class="help-block has-error" if.bind="errors.lastName">${errors.lastName}</span>
 							</div>
 						</div>
-						<div class="input-group">
+						<!-- <div class="input-group">
 							<select id="gender" value.bind="gender" placeholder="Select your gender...">
 								<option value="" default selected>Select your gender...</option>
 								<option repeat.for="option of genders" value.bind="option">${option.name}</option>
 							</select>
-						</div>
+						</div> -->
 						<div class="input-group ack">
 							<input type="checkbox" id="ack" value.bind="acceptTerms" />
 							<label for="ack">I acknowledge the I have read and accept the <a href="#/terms"> Terms of Use agreement</a>.</label>

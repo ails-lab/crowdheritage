@@ -52,7 +52,16 @@ export class Campaign {
     var today = new Date();
     var start = new Date(this.startDate);
     var end = new Date(this.endDate);
-    this.active = ( (today>start) && (today<end) );
+    this.status = 'void';
+    if ( (today>start) && (today<end) ) {
+      this.status = 'active';
+    }
+    else if ( (today>start) && (today>end) ) {
+      this.status = 'inactive';
+    }
+    else if ( (today<start) && (today<end) ) {
+      this.status = 'upcoming';
+    }
   }
 
 }
