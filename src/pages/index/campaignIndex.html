@@ -90,7 +90,7 @@
                 <!-- bar-->
                 <div class="progress">
                   <div role="progressbar" aria-valuenow="${camp.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${camp.percentage}%;" class="progress-bar">
-									<div class="labl">10%</div>
+									<div class="labl">${camp.percentage}%</div>
 									</div>
 								</div>
                 <!-- target-->
@@ -98,15 +98,19 @@
               </div>
               <!-- stats-->
               <ul class="stats">
-                <li>
+                <!-- <li>
                   <div class="lbl">PROGRESS</div>
                   <div class="val">
                     ${camp.percentage}%<small>${camp.totalCurrent}/${camp.target}</small>
                   </div>
-                </li>
+                </li> -->
                 <li>
                   <div class="lbl">CONTRIBUTORS</div>
                   <div class="val">${camp.contributorsCount}</div>
+                </li>
+                <li>
+                  <div class="lbl">START DATE</div>
+                  <div class="val">${camp.startDate | dateFormat}</div>
                 </li>
                 <li>
                   <div class="lbl">END DATE</div>

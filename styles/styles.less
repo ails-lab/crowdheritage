@@ -573,6 +573,9 @@ body main section.campaigns .list .campaign .details a h1 {
 body main section.campaigns .list .campaign .details a:hover {
   text-decoration: none;
 }
+body main section.campaigns .list .campaign .details .progress-line {
+  padding-top: 25px;
+}
 body main section.campaigns .list .campaign .details .progress-line:before,
 body main section.campaigns .list .campaign .details .progress-line:after {
   content: " ";
@@ -589,14 +592,38 @@ body main section.campaigns .list .campaign .details .progress-line .progress {
   border-radius: 0;
   margin-top: 9px;
   background-color: #e7e7e7;
+  overflow: inherit;
 }
 body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar {
   background-color: @secondary-color;
   box-shadow: none;
+  position: relative;
 }
-.labl {
-	display: none;	
-}
+body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar .labl {
+    position: absolute;
+    right: -25px;
+    top: -40px;
+    display: inline-block;
+    padding: 1px 0px 1px 0px;
+    width: 50px;
+    background-color: @secondary-color;
+    z-index: 9999999;
+    color: #fff;
+    font-family: "Dosis";
+  }
+  body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar .labl::after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 5px 0 5px;
+    border-color: @secondary-color transparent transparent transparent;
+    content: "";
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -5px;
+    bottom: -5px;
+  }
 body main section.campaigns .list .campaign .details .progress-line .target {
   width: 13%;
   float: left;
