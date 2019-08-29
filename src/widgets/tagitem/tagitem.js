@@ -188,7 +188,7 @@ export class Tagitem {
 
 	selectGeoAnnotation(geoid) {
     // If the campaign is inactive do NOT geoannotate
-    if (!this.campaign.active) {
+    if (this.campaign.status == 'inactive') {
       toastr.error('The campaign is NOT active.');
       return;
     }
@@ -237,7 +237,7 @@ export class Tagitem {
 
   selectSuggestedAnnotation(index) {
     // If the campaign is inactive do NOT validate
-    if (!this.campaign.active) {
+    if (this.campaign.status == 'inactive') {
       toastr.error('The campaign is NOT active.');
       return;
     }
@@ -292,7 +292,7 @@ export class Tagitem {
 
   async annotateLabel(label) {
     // If the campaign is inactive do NOT annotate
-    if (!this.campaign.active) {
+    if (this.campaign.status == 'inactive') {
       toastr.error('The campaign is NOT active.');
       return;
     }
@@ -357,7 +357,7 @@ export class Tagitem {
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
-    if (!this.campaign.active) {
+    if (this.campaign.status == 'inactive') {
       toastr.error('The campaign is NOT active.');
       return;
     }
