@@ -30,7 +30,7 @@ export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
       scrollTop: $(anchor).offset().top
-    }, 800);
+    }, 1200);
   }
 
   constructor(campaignServices, userServices, recordServices, router) {
