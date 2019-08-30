@@ -17,11 +17,13 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserServices } from 'UserServices';
+import { DialogController } from 'aurelia-dialog';
 
-@inject(UserServices, Router)
+@inject(DialogController, UserServices, Router)
 export class Register {
 
-	constructor(userServices, router) {
+	constructor(controller, userServices, router) {
+		this.controller = controller;
 		this.userServices = userServices;
     this.router = router;
 
@@ -63,7 +65,14 @@ export class Register {
 					this.userServices.login({	// A login is required to set all the variables right
 						email: this.email,
 						password: this.password
+					}, {}, 0).then((response) => {
+						this.controller.ok();
+						this.router.navigateToRoute('index');
+					}).catch((error) => {
+						this.error = error;
+						logger.error(error);
 					});
+					this.router.navigateToRoute('index');
 				});
 			} else {
 				response.json().then((data) => {
@@ -73,5 +82,6 @@ export class Register {
 		}).catch((error) => {
 			console.log(error);
 		});
+		this.router.navigateToRoute('index');
 	}
 }
