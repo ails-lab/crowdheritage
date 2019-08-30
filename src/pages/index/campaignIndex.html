@@ -105,16 +105,18 @@
                   </div>
                 </li> -->
                 <li>
-                  <div class="lbl">CONTRIBUTORS</div>
-                  <div class="val">${camp.contributorsCount}</div>
-                </li>
-                <li>
                   <div class="lbl">START DATE</div>
                   <div class="val">${camp.startDate | dateFormat}</div>
                 </li>
+                <li></li>
                 <li>
                   <div class="lbl">END DATE</div>
                   <div class="val">${camp.endDate | dateFormat}</div>
+                </li>
+                <li></li>
+                <li>
+                  <div class="lbl">CONTRIBUTORS</div>
+                  <div class="val">${camp.contributorsCount}</div>
                 </li>
                 <li class="contribute" if.bind="camp.status != 'inactive'">
                   <a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)">CONTRIBUTE NOW</a>
@@ -132,8 +134,8 @@
       </div>
     </section>
 
-    <!-- learn more-->
-    <section class="learnmore">
+    <!-- learn more (CrowdHeritage) -->
+    <section class="learnmore" if.bind="project=='CrowdHeritage'">
       <div class="container">
         <div class="left"><img src="/img/assets/img/content/background-space.png"></div>
         <div class="right">
@@ -142,17 +144,54 @@
               Learn more about CrowdHeritage
             </h1>
             <p>
-              You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?
-You’re a student, a professional from Educational or Cultural communities?
-You’re curious and want to discover European Cultural Heritage?
-Join our CrowdHeritage campaigns! <br>
-You have questions?
-Contact us at <a>with-dev@image.ntua.gr</a><br>
-<a  route-href="terms">Terms & conditions</a>
+              You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br/>
+              You’re a student, a professional from Educational or Cultural communities?<br/>
+              You’re curious and want to discover European Cultural Heritage?<br/>
+              Join our CrowdHeritage campaigns!<br/>
+              <br/>
+              You have questions?<br/>
+              Contact us at <a>with-dev@image.ntua.gr</a><br/>
+              <br/>
+              <a route-href="terms">Terms & conditions</a> of CrowdHeritage.
             </p>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- learn more (WITHcrowd) -->
+    <section class="learnmore" if.bind="project=='WITHcrowd'">
+     <div class="container">
+       <div class="left"><img src="/img/img-learnmore-1.png"></div>
+       <div class="right">
+         <div class="desc">
+           <h1>
+             Learn more about our <br>crowdsourcing campaigns
+           </h1>
+           <p>Organize immersive crowdsouring campaigns with engaging game mechanics and let the crowd solve complex problems at scales and rates that no one individual can! Enable public participation in collecting, describing, categorising or curating your photographs, manuscripts or sound, as an expression of democratic participation and engagement in heritage!</p>
+         </div>
+         <div class="register" if.bind="!isAuthenticated">
+           <div class="wrap">
+             <img src="/img/img-learnmore-2.png">
+             <div class="text">
+               <h1>Want to create your own?</h1>
+               <p>Register now and start creating your own crowdsourcing projects.</p><a route-href="route: register" class="regbtn">REGISTER</a>
+             </div>
+           </div>
+         </div>
+         <div class="register" if.bind="isAuthenticated">
+           <div class="wrap">
+             <img src="/img/img-learnmore-2.png">
+             <div class="text">
+               <h1>Want to create your own campaigns?</h1>
+               <p>Learn more about WITH:<br/>
+               Choose collections for annotating and lauch your own customizable crowdsourcing campaign.</p>
+               <a href="http://withculture.eu" target="_blank" class="regbtn">WITH</a>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
     </section>
 
   </main>
