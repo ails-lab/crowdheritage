@@ -7,6 +7,10 @@
   "date"            : "##DATE",
   "active"          : "##ACTIVE",
   "inactive"        : "##INACTIVE",
+  "upcoming"        : "##UPCOMING",
   "all"             : "##ALL",
-  "opencampaign"    : "##OPEN CAMPAIGN"
+  "opencampaign"    : "##OPEN CAMPAIGN",
+  "learn-info-1"    : "##Learn more about CrowdHeritage",
+  "learn-info-2"    : "##You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br/>You’re a student, a professional from Educational or Cultural communities?<br/>You’re curious and want to discover European Cultural Heritage?<br/>Join our CrowdHeritage campaigns!<br/><br/>You have questions? Contact us at <a>with-dev@image.ntua.gr</a>",
+  "learn-info-3"    : "##Terms & conditions of CrowdHeritage."
 }

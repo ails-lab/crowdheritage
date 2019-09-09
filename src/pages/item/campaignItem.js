@@ -351,4 +351,21 @@ export class CampaignItem {
     this.router.navigateToRoute('summary', {cname: camp.username, lang: this.loc});
   }
 
+  openModal(imgSrc) {
+    var modal = document.getElementById("myModal");
+    var img = document.getElementById("recImg");
+    var modalImg = document.getElementById("modalImg");
+    var banner = document.getElementById("banner");
+    modal.style.display = "block";
+    banner.style.display = "none";
+    modalImg.src = imgSrc;
+  }
+
+  closeModal() {
+    var modal = document.getElementById('myModal');
+    var banner = document.getElementById("banner");
+    banner.style.display = "block";
+    modal.style.display = "none";
+  }
+
 }

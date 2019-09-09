@@ -100,6 +100,7 @@ export class NavBar {
 
   logout(redirectUri) {
 		this.userServices.logout(redirectUri);
+    location.reload();
 	}
 
   getProfileImage(user) {

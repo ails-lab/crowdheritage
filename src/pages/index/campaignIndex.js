@@ -31,7 +31,7 @@ export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
       scrollTop: $(anchor).offset().top
-    }, 800);
+    }, 1200);
   }
 
   constructor(campaignServices, userServices, recordServices, router, i18n) {
@@ -49,7 +49,7 @@ export class CampaignIndex {
     this.more = true;
     this.groupName = "";
     this.sortBy = "Alphabetical";
-    this.state = "active";
+    this.state = "all";
 
     this.i18n = i18n;
     this.locales = [

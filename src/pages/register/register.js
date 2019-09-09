@@ -18,11 +18,13 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
+import { DialogController } from 'aurelia-dialog';
 
-@inject(UserServices, Router, I18N)
+@inject(DialogController, UserServices, Router, I18N)
 export class Register {
 
-	constructor(userServices, router, i18n) {
+	constructor(controller, userServices, router, i18n) {
+		this.controller = controller;
 		this.userServices = userServices;
     this.router = router;
 		this.i18n = i18n;
@@ -69,7 +71,14 @@ export class Register {
 					this.userServices.login({	// A login is required to set all the variables right
 						email: this.email,
 						password: this.password
+					}, {}, 0).then((response) => {
+						this.controller.ok();
+						this.router.navigateToRoute('index');
+					}).catch((error) => {
+						this.error = error;
+						logger.error(error);
 					});
+					this.router.navigateToRoute('index');
 				});
 			} else {
 				response.json().then((data) => {
@@ -79,5 +88,6 @@ export class Register {
 		}).catch((error) => {
 			console.log(error);
 		});
+		this.router.navigateToRoute('index');
 	}
 }

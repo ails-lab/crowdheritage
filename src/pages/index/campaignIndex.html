@@ -16,7 +16,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a href="javascript:void(0)" click.delegate="scrollTo('#sorting')" t="[append]app:contribute"> <img src="/img/ic-arrow-left-black.png"></a></li>
+            <li><a href="javascript:void(0)" click.delegate="scrollTo('#learn')" t="[append]app:learnmore"> <img src="/img/ic-arrow-left-black.png"></a></li>
             <li>${campaignsCount | campaignCounter}</li>
           </ul>
         </nav>
@@ -40,9 +40,10 @@
                 </a>
                 <!-- dropdown-->
                 <ul aria-labelledby="sorting" class="dropdown-menu">
-                  <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('active', sortBy)" t="index:active">ACTIVE</a></li>
-                  <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('inactive', sortBy)" t="index:inactive">INACTIVE</a></li>
-                  <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns('all', sortBy)" t="index:all">ALL</a></li>
+                  <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('all', sortBy)" t="index:all">ALL</a></li>
+                  <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('inactive', sortBy)" t="index:inactive"><img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"> INACTIVE</a></li>
+                  <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('active', sortBy)" t="index:active"><img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"> ACTIVE</a></li>
+                  <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('upcoming', sortBy)" t="index:upcoming"><img width="20px" align="right" title="Upcoming Campaign" src="/img/status-upcoming.png"> UPCOMING</a></li>
                 </ul>
               </div>
             </div>
@@ -84,8 +85,9 @@
             <div class="details">
               <!-- title-->
               <a a route-href="route: summary; params.bind: {cname: camp.username, lang: currentLocaleCode}">
-                <h1 if.bind="camp.active">${camp.title} <img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"></h1>
-                <h1 if.bind="!camp.active">${camp.title} <img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
+                <h1 if.bind="camp.status == 'active'">${camp.title} <img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"></h1>
+                <h1 if.bind="camp.status == 'inactive'">${camp.title} <img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
+                <h1 if.bind="camp.status == 'upcoming'">${camp.title} <img width="20px" align="right" title="Upcoming Campaign" src="/img/status-upcoming.png"></h1>
               </a>
               <!-- desc-->
               <p>${camp.description}</p>
@@ -93,28 +95,34 @@
               <div class="progress-line">
                 <!-- bar-->
                 <div class="progress">
-                  <div role="progressbar" aria-valuenow="${camp.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${camp.percentage}%;" class="progress-bar"></div>
+                  <div role="progressbar" aria-valuenow="${camp.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${camp.percentage}%;" class="progress-bar">
+                    <div class="labl">${camp.percentage}%</div>
+                  </div>
                 </div>
                 <!-- target-->
                 <div class="target">${camp.totalCurrent} / ${camp.target}</div>
               </div>
               <!-- stats-->
               <ul class="stats">
-                <li>
+                <!-- <li>
                   <div class="lbl" t="app:progress">PROGRESS</div>
                   <div class="val">
                     ${camp.percentage}%<small>${camp.totalCurrent}/${camp.target}</small>
                   </div>
-                </li>
+                </li> -->
                 <li>
-                  <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
-                  <div class="val">${camp.contributorsCount}</div>
+                  <div class="lbl" t="app:startdate">START DATE</div>
+                  <div class="val">${camp.startDate | dateFormat}</div>
                 </li>
                 <li>
                   <div class="lbl" t="app:enddate">END DATE</div>
                   <div class="val">${camp.endDate | dateFormat}</div>
                 </li>
-                <li class="contribute" if.bind="camp.active">
+                <li>
+                  <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
+                  <div class="val">${camp.contributorsCount}</div>
+                </li>
+                <li class="contribute" if.bind="camp.status != 'inactive'">
                   <a href="javascript:void(0)" click.delegate="goToRandomItem(camp, 0, [], 0)" t="app:contribute">CONTRIBUTE NOW</a>
                 </li>
               </ul>
@@ -131,7 +139,7 @@
     </section>
 
     <!-- learn more-->
-    <!-- <section class="learnmore">
+    <!-- <section class="learnmore" if.bind="project=='WITHcrowd'">
       <div class="container">
         <div class="left"><img src="/img/img-learnmore-1.png"></div>
         <div class="right">
@@ -164,6 +172,34 @@
         </div>
       </div>
     </section> -->
+
+    <!-- learn more -->
+    <section id="learn" class="learnmore">
+      <div class="container" if.bind="project=='CrowdHeritage'">
+        <div class="left"><img src="/img/assets/img/content/background-space.png"></div>
+        <div class="right">
+          <div class="desc">
+            <h1 t="index:learn-info-1">
+              Learn more about CrowdHeritage
+            </h1>
+            <p>
+              <span t="[html]index:learn-info-2">
+                You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br/>
+                You’re a student, a professional from Educational or Cultural communities?<br/>
+                You’re curious and want to discover European Cultural Heritage?<br/>
+                Join our CrowdHeritage campaigns!
+                <br/>
+  							<br/>
+                You have questions?
+                Contact us at <a>with-dev@image.ntua.gr</a>
+              </span>
+              <br/>
+              <a route-href="terms; params.bind: {lang: currentLocaleCode}" t="index:learn-info-3">Terms & conditions of CrowdHeritage.</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
 </template>

@@ -24,11 +24,10 @@ import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { setMap } from 'utils/Plugin.js';
-import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N)
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -36,20 +35,19 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n) {
-    if (instance) {
-      return instance;
-    }
+  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue) {
+	if (instance) {
+			return instance;
+		}
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.router = router;
-    this.taskQueue=taskQueue;
-    this.i18n = i18n;
     this.records = [];
     this.recId = "";
-    this.thisVM=this;
+		this.thisVM=this;
+		this.taskQueue=taskQueue;
     this.campaign = 0;
     this.collections = [];
     this.collectionsCount = 0;
@@ -64,10 +62,9 @@ export class CampaignSummary {
     this.userRank = 0;
     this.userBadgeName = "";
     this.points = [];
-    this.loc;
     if (!instance) {
-    	instance = this;
-    }
+			instance = this;
+		}
   }
 
 	resetInstance() {
@@ -87,7 +84,6 @@ export class CampaignSummary {
     this.userRank = 0;
     this.userBadgeName = "";
     this.points = [];
-    this.loc = window.location.href.split('/')[3];
 	}
 
 
@@ -98,11 +94,8 @@ export class CampaignSummary {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params, route) {
+   activate(params, route) {
     this.resetInstance();
-    this.loc = params.lang;
-		this.i18n.setLocale(params.lang);
-
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
         this.campaign = new Campaign(result);
@@ -115,6 +108,7 @@ export class CampaignSummary {
         this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
         this.getUserStats();
     });
+
   }
 
   getUserStats() {
@@ -130,19 +124,19 @@ export class CampaignSummary {
 
       if (this.userPoints < this.campaign.badges.bronze) {
         this.userBadge = '/img/badges.png';
-				this.userBadgeName = 'Rookie';
+				this.userBadgeName = 'rookie';
       }
       else if (this.userPoints < this.campaign.badges.silver) {
         this.userBadge = '/img/badge-bronze.png';
-        this.userBadgeName = 'Bronze';
+        this.userBadgeName = 'bronze';
       }
       else if (this.userPoints < this.campaign.badges.gold) {
         this.userBadge = '/img/badge-silver.png';
-        this.userBadgeName = 'Silver';
+        this.userBadgeName = 'silver';
       }
       else {
         this.userBadge = '/img/badge-gold.png';
-        this.userBadgeName = 'Gold';
+        this.userBadgeName = 'gold';
       }
     }
   }
@@ -212,7 +206,7 @@ export class CampaignSummary {
             this.loading = false;
             item.collection = 0;
             item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId, lang:this.loc});
+            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
           }
           })
         .catch(error => {
@@ -237,7 +231,7 @@ export class CampaignSummary {
             this.loading = false;
             item.collection = col;
             item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId, lang: this.loc});
+            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
           }
         }).catch(error => {
           this.loading = false;

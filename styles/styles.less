@@ -573,6 +573,9 @@ body main section.campaigns .list .campaign .details a h1 {
 body main section.campaigns .list .campaign .details a:hover {
   text-decoration: none;
 }
+body main section.campaigns .list .campaign .details .progress-line {
+  padding-top: 25px;
+}
 body main section.campaigns .list .campaign .details .progress-line:before,
 body main section.campaigns .list .campaign .details .progress-line:after {
   content: " ";
@@ -584,16 +587,43 @@ body main section.campaigns .list .campaign .details .progress-line:after {
 body main section.campaigns .list .campaign .details .progress-line .progress {
   width: 87%;
   float: left;
-  height: 3px;
+  height: 10px;
   box-shadow: none;
   border-radius: 0;
   margin-top: 9px;
   background-color: #e7e7e7;
+  overflow: inherit;
 }
 body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar {
   background-color: @secondary-color;
   box-shadow: none;
+  position: relative;
 }
+body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar .labl {
+    position: absolute;
+    right: -25px;
+    top: -40px;
+    display: inline-block;
+    padding: 1px 0px 1px 0px;
+    width: 50px;
+    background-color: @secondary-color;
+    z-index: 9999999;
+    color: #fff;
+    font-family: "Dosis";
+  }
+  body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar .labl::after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 5px 0 5px;
+    border-color: @secondary-color transparent transparent transparent;
+    content: "";
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -5px;
+    bottom: -5px;
+  }
 body main section.campaigns .list .campaign .details .progress-line .target {
   width: 13%;
   float: left;
@@ -1326,7 +1356,7 @@ body main section.learnmore .right {
 }
 body main section.learnmore .right .desc {
   width: 585px;
-  padding: 40px 0 50px 70px;
+  padding: 0px 0 50px 70px;
 }
 body main section.learnmore .right .desc h1 {
   font-size: 2.0rem;
@@ -1776,8 +1806,53 @@ body main section.tagging .left {
   width: 50%;
   float: left;
 }
-body main section.tagging .left .img img {
+body main section.tagging .left .img {
   width: 100%;
+  text-align: center;
+}
+body main section.tagging .left .img #recImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+body main section.tagging .left .img #recImg:hover {
+  opacity: 0.7;
+}
+body main section.tagging .left .img .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+body main section.tagging .left .img .modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+body main section.tagging .left .img .modal-content {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+body main section.tagging .left .img .modal #modalImg:hover {
+  cursor: pointer;
+}
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  body main section.tagging .left .img .modal-content {
+    width: 100%;
+  }
 }
 body main section.tagging .left .metadata {
   background-color: #f2f2f2;

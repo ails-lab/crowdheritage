@@ -20,6 +20,7 @@
   "startdate"           : "++START DATE",
   "enddate"             : "++END DATE",
   "loadmore"            : "++LOAD MORE",
+  "learnmore"           : "++LEARN MORE",
 
   "collection"          : "++COLLECTION",
   "return-campaign"     : "++RETURN TO CAMPAIGN",

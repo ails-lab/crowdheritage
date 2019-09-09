@@ -50,6 +50,7 @@ export class LoginDialog {
 			password: this.password
 		}, {}, 0).then((response) => {	// Do not redirect
 			this.controller.ok();
+			location.reload();
 		}).catch((error) => {
 			this.error = error;
 			logger.error(error);
