@@ -39,6 +39,7 @@ export class CampaignSummary {
 	if (instance) {
 			return instance;
 		}
+    this.loc = window.location.href.split('/')[3];
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
@@ -94,7 +95,7 @@ export class CampaignSummary {
     $('.accountmenu').removeClass('active');
   }
 
-   activate(params, route) {
+  activate(params, route) {
     this.resetInstance();
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
@@ -108,7 +109,6 @@ export class CampaignSummary {
         this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
         this.getUserStats();
     });
-
   }
 
   getUserStats() {

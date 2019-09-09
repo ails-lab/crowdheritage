@@ -41,7 +41,7 @@ export class MultipleItems {
 		this.i18n = i18n;
 		this.loc;
 		this.sortBy = "Ascending";
-		this.state = "hide";
+		this.state = "show";
 		this.hiddenCount = 0;
 		this.resetInstance();
     if (!instance) {
