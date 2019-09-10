@@ -1,7 +1,7 @@
 <template>
   <main>
     <!-- new banner-->
-    <section class="banner mini detail">
+    <section class="banner mini detail" id="banner">
       <div class="container">
         <!-- lbl-->
         <div class="bannertext">
@@ -43,7 +43,13 @@
           <div class="left" show.bind="!loadRec">
             <!-- img-->
             <div class="img" with.bind="record">
-              <img show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+              <!-- Trigger the modal element -->
+              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal(record.myfullimg)" />
+              <!-- The modal element -->
+              <div id="myModal" class="modal">
+                <!-- Modal Content - Image) -->
+                <img class="modal-content" id="modalImg" click.delegate="closeModal()">
+              </div>
               <!-- Here goes the media, besides images -->
               <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
             </div>

@@ -22,7 +22,7 @@ var settings = {
 		google: '',
 		facebook: '' //localhost
 	},
-	baseUrl: 'https://api.withcrowd.eu', //backend goes here
+	baseUrl: 'https://api.withculture.eu', //backend goes here
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
@@ -30,7 +30,7 @@ var settings = {
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
-	settings.baseUrl = 'https://api.withcrowd.eu';  // DB for testing
+	//settings.baseUrl = 'https://api.withcrowd.eu';  // DB for testing
 	//settings.baseUrl = 'https://localhost:9060';  // Local backend for testing
 	settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; // Debug
