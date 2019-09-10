@@ -21,11 +21,12 @@ import { UserServices } from 'UserServices.js';
 import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { Router } from 'aurelia-router';
+import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
 let COUNT = 7;
 
-@inject(CampaignServices, UserServices, RecordServices, Router)
+@inject(CampaignServices, UserServices, RecordServices, Router, I18N)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -33,7 +34,7 @@ export class CampaignIndex {
     }, 1200);
   }
 
-  constructor(campaignServices, userServices, recordServices, router) {
+  constructor(campaignServices, userServices, recordServices, router, i18n) {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
     this.recordServices = recordServices;
@@ -49,6 +50,20 @@ export class CampaignIndex {
     this.groupName = "";
     this.sortBy = "Alphabetical";
     this.state = "all";
+
+    this.i18n = i18n;
+    this.locales = [
+      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" }
+      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
+      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
+      //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
+      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
+      //{ title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
+    ];
+    this.currentLocale;
+    this.currentLocaleCode;
   }
 
   attached() {
@@ -58,6 +73,14 @@ export class CampaignIndex {
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
   activate(params) {
+    // If no language is specified, redirect to the English page by default
+    if (params.lang == undefined) {
+      this.router.navigate("en");
+    }
+    // Set the page locale
+    this.i18n.setLocale(params.lang);
+    this.getLocale();
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -85,6 +108,29 @@ export class CampaignIndex {
 
   fillCampaignArray(campaignArray, results) {
 		for (let item of results) {
+      // Set the campaign title, based on the selected language
+      if (typeof(item.title) == 'object') {
+        for (var lang in item.title) {
+          if (lang == this.currentLocaleCode) {
+            item.title = item.title[lang];
+          }
+        }
+        if (typeof(item.title) == 'object') {
+          item.title = item.title['en'];
+        }
+      }
+      // Set the campaign description, based on the selected language
+      if (typeof(item.description) == 'object') {
+        for (var lang in item.description) {
+          if (lang == this.currentLocaleCode) {
+            item.description = item.description[lang];
+          }
+        }
+        if (typeof(item.description) == 'object') {
+          item.description = item.description['en'];
+        }
+      }
+
 			campaignArray.push(new Campaign(item));
 		}
   }
@@ -123,7 +169,7 @@ export class CampaignIndex {
           }
           this.loading = false;
           item.records = recs;
-          this.router.navigateToRoute('item', {cname: camp.username, recid: recs[0].dbId});
+          this.router.navigateToRoute('item', {cname: camp.username, lang: this.currentLocaleCode, recid: recs[0].dbId});
         }
         })
       .catch(error => {
@@ -165,6 +211,16 @@ export class CampaignIndex {
           this.campaignsCount = result;
           this.getCampaigns(this.groupName, this.sortBy, this.state);
         });
+      }
+  }
+
+  getLocale() {
+    this.currentLocaleCode = this.i18n.getLocale();
+    for (let loc of this.locales) {
+      if (loc.code == this.currentLocaleCode) {
+        this.currentLocale = loc;
+        return this.currentLocale;
+      }
     }
   }
 

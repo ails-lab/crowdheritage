@@ -24,19 +24,28 @@ import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { toggleMore } from 'utils/Plugin.js';
+import { I18N } from 'aurelia-i18n';
 
-let COUNT = 10;
+let COUNT = 20;
 
-@inject(UserServices, RecordServices, CampaignServices, CollectionServices, Router)
+@inject(UserServices, RecordServices, CampaignServices, CollectionServices, Router, I18N)
 export class CampaignItem {
 
-  constructor(userServices, recordServices, campaignServices, collectionServices, router) {
+  scrollTo(anchor) {
+    $('html, body').animate({
+      scrollTop: $(anchor).offset().top
+    }, 0);
+  }
+
+  constructor(userServices, recordServices, campaignServices, collectionServices, router, i18n) {
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.recordServices = recordServices;
     this.userServices = userServices;
     this.router = router;
+    this.i18n = i18n;
 
+    this.loc;
     this.campaign = null;
 		//If there is a collection
     this.collection = null;
@@ -71,7 +80,7 @@ export class CampaignItem {
 	  this.records.unshift(this.previous.shift());
     item.records = this.records;
 		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId});
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
 	}
 
   nextItem() {
@@ -84,7 +93,7 @@ export class CampaignItem {
     item.previous = this.previous;
 	  item.records = this.records;
 		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId});
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
   }
 
 	fillRecordArray(recordDataArray) {
@@ -249,6 +258,9 @@ export class CampaignItem {
 	}
 
   async activate(params, routeData) {
+    this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -257,9 +269,39 @@ export class CampaignItem {
 		if (routeData.campaign) {
       this.campaign = routeData.campaign;
       this.loadCamp = false;
-		} else {
-			let result = await this.campaignServices.getCampaignByName(params.cname);
-			this.campaign = new Campaign(result);
+		}
+    else {
+			let result = await this.campaignServices.getCampaignByName(params.cname)
+        .then(response => {
+          // Set the campaign title, based on the selected language
+          if (typeof(response.title) == 'object') {
+            for (var lang in response.title) {
+              if (lang == this.loc) {
+                response.title = response.title[lang];
+              }
+            }
+            if (typeof(response.title) == 'object') {
+              response.title = response.title['en'];
+            }
+          }
+          // Set the campaign description, based on the selected language
+          if (typeof(response.description) == 'object') {
+            for (var lang in response.description) {
+              if (lang == this.loc) {
+                response.description = response.description[lang];
+              }
+            }
+            if (typeof(response.description) == 'object') {
+              response.description = response.description['en'];
+            }
+          }
+
+          this.campaign = new Campaign(response);
+        })
+        .catch(error => {
+          let index = this.router.routes.find(x => x.name === 'index');
+          this.router.navigateToRoute('index', {lang: 'en'});
+        });
 			this.loadCamp = false;
 		}
 		//Load Collection (if any)
@@ -286,6 +328,10 @@ export class CampaignItem {
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
+  }
+
+  get hasCollection() {
+    return (this.collectionTitle.length>0);
   }
 
 	toggleLoadMore(container) {
@@ -321,6 +367,12 @@ export class CampaignItem {
     }
 		return false;
 	}
+
+  goToCamp(camp) {
+    let summary = this.router.routes.find(x => x.name === 'summary');
+    summary.campaign = camp;
+    this.router.navigateToRoute('summary', {cname: camp.username, lang: this.loc});
+  }
 
   openModal(imgSrc) {
     var modal = document.getElementById("myModal");

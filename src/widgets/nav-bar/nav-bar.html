@@ -5,7 +5,9 @@
 
       <div class="container">
         <!-- logo-->
-        <div class="logo"><a href="/" title="Home"><img src="${logo}" alt="Logo"></a></div>
+        <div class="logo">
+          <a route-href="route: index; params.bind: {lang: locale}" title="Home"><img src="${logo}" alt="Logo"></a>
+        </div>
         <!-- mobile menu-->
         <div class="mobilemenu"><a href="#" title="MENU" data-target="#mobilenav"><img src="/img/ic-menu.png"></a></div>
         <!-- nav-->
@@ -16,7 +18,7 @@
             <!-- link-->
             <a href="javascript:void(0)" click.delegate="loginPopup()">
               <!-- label-->
-              <div class="lbl">SIGN IN</div>
+              <div class="lbl" t="app:sign-in">SIGN IN</div>
               <!-- thumbnail-->
               <div class="thumb"></div>
             </a>
@@ -36,17 +38,41 @@
             </a>
             <!-- account menu-->
             <ul id="accountmenu" class="accountmenu">
-              <li><a route-href="route: user; params.bind: { uname: user.username }">Profile</a></li>
-              <li><a href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
+              <li><a t="app:profile" route-href="route: user; params.bind: { uname: user.username, lang: locale }">Profile</a></li>
+              <li><a t="app:sign-out" href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
           </div>
 
           <!-- main-->
           <ul class="main">
-            <li><a href="/">HOME</a></li>
+            <li><a t="app:home" route-href="route: index; params.bind: {lang: locale}">HOME</a></li>
             <li if.bind="project=='WITHcrowd'"><a href="http://withculture.eu" target="_blank">WITH</a></li>
-            <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners">PARTNERS</a></li>
-            <li><a route-href="route: about">ABOUT</a></li>
+            <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners; params.bind: {lang: locale}" t="app:partners">PARTNERS</a></li>
+            <li><a t="app:about" route-href="route: about; params.bind: {lang: locale}">ABOUT</a></li>
+
+            <li>
+              <!-- select language-->
+              <section class="languages">
+                <div class="lang">
+                  <!-- select-->
+                  <a id="langselect" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+                    <span class="flag"><img src=${getLocale().flag} /></span>
+                    <span class="arrow"><img src="/img/ic-arrow-down-black.png"></span>
+                  </a>
+                  <!-- dropdown-->
+                  <ul aria-labelledby="langselect" class="dropdown-menu">
+                    <li repeat.for="loc of locales">
+                      <a href="javascript:void(0)" click.delegate="changeLang(loc.code)">
+                        <img src=${loc.flag} width="16px" />
+                        <span css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <br/>
+              </section>
+            </li>
+
           </ul>
         </nav>
       </div>

@@ -4,13 +4,13 @@
 		<section class="pagehero static">
 			<div class="container">
 				<!-- label-->
-				<h1 class="lbl">Privacy Policy</h1>
+				<h1 class="lbl" t="privacy:header">Privacy Policy</h1>
 				<!-- shortcur-->
 				<ul class="shortcut">
 					<!-- <li><a href="faq.html" title="Frequently Asked Question">FAQ</a></li> -->
-					<li><a route-href="route: terms;" title="Terms of use">Terms of use</a></li>
-					<li class="active"><a route-href="route: privacy;" title="Privacy Policy">Privacy Policy</a></li>
-					<li><a route-href="route: feedback;" title="Feedback">Feedback &amp; Contact</a></li>
+					<li><a route-href="route: terms; params.bind: {lang:loc}" title="Terms of use" t="terms:menu-terms">Terms of use</a></li>
+					<li class="active"><a route-href="route: privacy; params.bind: {lang:loc}" title="Privacy Policy" t="terms:menu-privacy">Privacy Policy</a></li>
+					<li><a route-href="route: feedback; params.bind: {lang:loc}" title="Feedback" t="[html]terms:menu-feedback">Feedback &amp; Contact</a></li>
 				</ul>
 			</div>
 		</section>
@@ -18,7 +18,7 @@
 		<!-- static page-->
 		<div class="static">
 			<section class="generaltext">
-				<div class="container">
+				<div class="container"  t="[html]privacy:text">
 					<h2>Privacy Policy</h2>
 
 					<hr />
@@ -28,7 +28,6 @@
 					<p>2. Except in exceptional circumstances as outlined in the general terms and conditions of use of this website and as allowed by law NTUA will not supply your personal data to third parties without obtaining your express consent.  The personal data that you supply shall only be used in connection with your use of this website and content.</p>
 
 					<p>3. NTUA does not collect names, addresses, telephone numbers or other personal data, unless this information is provided voluntarily by visitors to this website and in connection with your use of the content on this site. Your personal data are not visible on the website.</p>
-
 				</div>
 			</section>
 		</div>

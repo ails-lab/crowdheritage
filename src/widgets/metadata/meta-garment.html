@@ -1,42 +1,42 @@
 <template>
   <div class="metadata">
     <!-- label-->
-    <div class="heading">ITEM METADATA</div>
+    <div class="heading" t="item:meta">ITEM METADATA</div>
     <!-- info-->
     <div class="show-more-parent">
       <ul class="meta show-more-target row">
         <li class="col-sm-6" if.bind="record.description">
-          <div class="lbl">DESCRIPTION</div>
+          <div class="lbl" t="item:description">DESCRIPTION</div>
           <div class="val">${record.description}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data.descriptiveData.dccreator">
-          <div class="lbl">CREATOR</div>
+          <div class="lbl" t="item:creator">CREATOR</div>
           <div innerHtml.bind="record.data.descriptiveData.dccreator.default[0]" class="val"></div>
         </li>
         <li class="col-sm-6" if.bind="date.length>0">
-          <div class="lbl">CREATION DATE</div>
+          <div class="lbl" t="item:creation-date">CREATION DATE</div>
           <div class="val">${date}</div>
         </li>
         <li class="col-sm-6" if.bind="format.length>0">
-          <div class="lbl">TECHNIQUE (FORMAT)</div>
+          <div class="lbl" t="item:technique">TECHNIQUE (FORMAT)</div>
           <div class="val"><a href.bind="formatUri" target="_blank">${format}</a></div>
         </li>
         <li class="col-sm-6" if.bind="medium.length>0">
-          <div class="lbl">MATERIAL (MEDIUM)</div>
+          <div class="lbl" t="item:material">MATERIAL (MEDIUM)</div>
           <div class="val"><a href.bind="mediumUri" target="_blank">${medium}</a></div>
         </li>
         <div class="col-sm-6" repeat.for="dcfield of record.dcfields">
           <li if.bind="dcfield.label=='rights'">
-            <div class="lbl">RIGHTS STATEMENT</div>
+            <div class="lbl" t="item:rights-stat">RIGHTS STATEMENT</div>
             <div class="val"><a href.bind="record.rights" target="_blank">${dcfield.value[0]}</a></div>
           </li>
         </div>
         <li class="col-sm-6" if.bind="record.dataProvider">
-          <div class="lbl">CONTENT PROVIDER</div>
+          <div class="lbl" t="item:content-prov">CONTENT PROVIDER</div>
           <div class="val">${record.dataProvider}</div>
         </li>
         <li class="col-sm-2" if.bind="record.source_uri">
-          <div class="val">See it in <a href.bind="record.source_uri" target="_blank">Europeana</a></div>
+          <div class="val" t="[prepend]item:see-it"><a href.bind="record.source_uri" target="_blank" t="item:europeana">Europeana</a></div>
         </li>
       </ul>
       <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>

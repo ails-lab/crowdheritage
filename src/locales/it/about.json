@@ -1,0 +1,13 @@
+{
+  "header"          : "Informazioni su CrowdHeritage",
+  "intro"           : "<p> <strong> CrowdHeritage è un progetto europeo supportato dall'Unione Europea nell'ambito del programma CEF Telecom program - Generic Services. </strong> </p> <p> <strong> È implementato da un consorzio di 5 Partner europei: </strong> <ul> <li> Università tecnica nazionale di Atene (NTUA), coordinatore del progetto </li> <li> Europeana Fashion International Association (EFIA) </li> <li> Ministero francese di Cultura </li> <li> Associazione Michael Culture </li> <li> Fondazione Europeana </li> </ul> </p> <p> <strong> L'iniziativa si basa sul </strong> standalone online piattaforma per arricchire i metadati di elementi culturali selezionati, sviluppata da NTUA. </p> <p> <strong> La piattaforma mira a sviluppare </strong> l'esperienza degli utenti grazie alle annotazioni partecipative, a seconda del tipo di contenuto, dei metadati mancanti e convalida le annotazioni esistenti in modo intuitivo. </p> <p> Sei un appassionato di moda, cultura, arte, patrimonio, sport, musica, paesaggio? <br> Sei uno studente, un professionista di Educativo o C comunità ulturali? <br> Sei curioso e vuoi scoprire il patrimonio culturale europeo? <br> <strong> Partecipa alle nostre campagne CrowdHeritage! </strong> </p> <p> Attraverso la piattaforma online di raccolte di dati, puoi accedere a diverse raccolte di contenuti culturali di varie istituzioni in Europa. In base a ciascuna campagna, sei invitato a contribuire taggando e aggiungendo annotazioni o selezionando colori o immagini. </p> ",
+	"discover"        : "Scoprire",
+  "discoverCap"     : "SCOPRIRE",
+  "contribute"      : "Contribuire",
+  "contributeCap"   : "CONTRIBUIRE",
+  "rewards"         : "Ottieni premi",
+  "rewardsCap"      : "OTTIENI PREMI",
+  "discover-text"   : "Scopri manufatti e collezioni digitali di musei, archivi, biblioteche e gallerie in Europa su moda, musica, sport, città e paesaggio.",
+  "contribute-text" : "Contribuisci alle nostre 5 campagne di annotazione partecipativa e unisciti alle comunità dei collaboratori di CrowdHeritage. &bull; Puoi partecipare a una o più campagne. &bull; Ogni campagna ha una specificità e una tempistica contributive specifiche e rimarrà aperta 1-2 mesi.",
+  "rewards-text"    : "&bull; Inizia e sbloccherai i badge! <br/>&bull; I migliori partecipanti riceveranno dei premi!"
+}

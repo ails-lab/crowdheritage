@@ -24,41 +24,45 @@ import {ThesaurusServices} from 'ThesaurusServices.js';
 import {bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
+import {I18N} from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup')
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N)
 export class Tagitem {
 
   @bindable prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n) {
+    this.i18n = i18n;
+
 		this.colorSet = [
-			["Black", "background-color: #111111", "color: #111111; filter: brightness(500%);"],
-			["Grey", "background-color: #AAAAAA","color: #AAAAAA; filter: brightness(60%);"],
-			["Brown","background-color: brown", "color:brown; filter: brightness(60%);"],
-			["Red", "background-color: #FF4136","color: #FF4136; filter: brightness(60%);"],
-			["Orange", "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
-			["Beige", "background-color: beige", "color: beige; filter: brightness(60%);"],
-			["Yellow", "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
-			["Green", "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
-			["Blue", "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
-			["Purple", "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
-			["Pink", "background-color: pink", "color: pink; filter: brightness(60%);"],
-			["White", "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
-			["Copper", "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
-			["Silver", "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
-			["Bronze", "background-image: url(/img/color/bronze.jpg)","color: #cd7f32; filter: brightness(50%);" ],
-			["Gold", "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
+			["Black",       "background-color: #111111", "color: #111111; filter: brightness(500%);"],
+			["Grey",        "background-color: #AAAAAA","color: #AAAAAA; filter: brightness(60%);"],
+			["Brown",       "background-color: brown", "color:brown; filter: brightness(60%);"],
+			["Red",         "background-color: #FF4136","color: #FF4136; filter: brightness(60%);"],
+			["Orange",      "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
+			["Beige",       "background-color: beige", "color: beige; filter: brightness(60%);"],
+			["Yellow",      "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
+			["Green",       "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
+			["Blue",        "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
+			["Purple",      "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
+			["Pink",        "background-color: pink", "color: pink; filter: brightness(60%);"],
+			["White",       "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
+			["Copper",      "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
+			["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
+			["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);" ],
+			["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
 			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"],
-			["Multicolor", "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"]
+			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"]
 		];
+
 		this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
-    this.placeholderText = "Start typing a term then select from the options";
+    this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
@@ -108,15 +112,6 @@ export class Tagitem {
       await this.userServices.reloadCurrentUser();
     }
     await this.getRecordAnnotations(this.recId);
-    // DELETE THIS AFTER THE TESTING
-    // console.log("tags");
-    // console.log(this.annotations);
-    // console.log("geotags");
-    // console.log(this.geoannotations);
-    // console.log("colortags");
-    // console.log(this.colorannotations);
-    // console.log("polltags");
-    // console.log(this.pollannotations);
   }
 
   async reloadAnnotations() {
@@ -189,12 +184,12 @@ export class Tagitem {
 	selectGeoAnnotation(geoid) {
     // If the campaign is inactive do NOT geoannotate
     if (this.campaign.status == 'inactive') {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
 
 	  if(this.userServices.isAuthenticated()==false){
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
 			return;
 		}
@@ -202,7 +197,7 @@ export class Tagitem {
 		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
 			return obj.geonameId === geoid
 		});
-		let existscheck=this.geoannotations.find(obj => {
+		let existscheck = this.geoannotations.find(obj => {
 			console.log(obj);
 			return (obj.uri &&  obj.uri.indexOf(geoid)!=-1)
 		});
@@ -210,7 +205,7 @@ export class Tagitem {
 			this.prefix = "";
 			this.selectedAnnotation = null;
 			this.suggestedAnnotations = [];
-			toastr.error('Geotag already exists');
+      toastr.error(this.i18n.tr('item:toastr-geo'));
 			return;
 		}
 		this.suggestedAnnotations = [];
@@ -230,7 +225,7 @@ export class Tagitem {
 			 	this.prefix = "";
 				this.selectedAnnotation = null;
 			}).catch((error) => {
-				toastr.error('An error has occured');
+				toastr.error(this.i18n.tr('item:toastr-error'));
 			});
 		}
  	}
@@ -238,7 +233,7 @@ export class Tagitem {
   selectSuggestedAnnotation(index) {
     // If the campaign is inactive do NOT validate
     if (this.campaign.status == 'inactive') {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
     if (this.uriRedirect) {
@@ -247,7 +242,7 @@ export class Tagitem {
 			return;
 		}
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
 			return;
 		}
@@ -257,13 +252,13 @@ export class Tagitem {
     });
     let lb = this.selectedAnnotation.label;
     let existscheck = this.annotations.find(obj => {
-      return obj.label === lb
+      return obj.label.toLowerCase() === lb.toLowerCase();
     });
     if (existscheck != null) {
       this.prefix = "";
       this.selectedAnnotation = null;
       this.suggestedAnnotations = [];
-      toastr.error('Tag already exists');
+      toastr.error(this.i18n.tr('item:toastr-existing'));
       return;
     }
     this.suggestedAnnotations = [];
@@ -281,7 +276,7 @@ export class Tagitem {
         this.prefix = "";
         this.selectedAnnotation = null;
       }).catch((error) => {
-        toastr.error('An error has occured');
+        toastr.error(this.i18n.tr('item:toastr-error'));
       });
     }
   }
@@ -293,12 +288,12 @@ export class Tagitem {
   async annotateLabel(label) {
     // If the campaign is inactive do NOT annotate
     if (this.campaign.status == 'inactive') {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
 
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
@@ -318,8 +313,11 @@ export class Tagitem {
       // Clear and reload the colorannotations array
       this.colorannotations.splice(0, this.colorannotations.length);
       await this.getRecordAnnotations(this.recId);
-    } else if (!this.colorannotations[answer.index].approvedByMe) {
-      this.score(answer.id, 'approved', answer.index);
+      // Try to annotate again, in order to also upvote the new annotation
+      await this.annotateLabel(label);
+    }
+    else if (!this.colorannotations[answer.index].approvedByMe) {
+      await this.score(answer.id, 'approved', answer.index, 'color');
     }
   }
 
@@ -327,7 +325,7 @@ export class Tagitem {
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
@@ -358,12 +356,12 @@ export class Tagitem {
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
     if (this.campaign.status == 'inactive') {
-      toastr.error('The campaign is NOT active.');
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
 
     if (this.userServices.isAuthenticated() == false) {
-      toastr.error('You must log in before starting contributing.');
+      toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
@@ -704,7 +702,7 @@ export class Tagitem {
           this.pollTitle = this.pollannotations[0].label;
         }
         else {
-          toastr.error('There are no annotations for this record.');
+          toastr.error(this.i18n.tr('item:toastr-empty'));
         }
       });
     }
@@ -744,6 +742,10 @@ export class Tagitem {
       await this.recordServices.getAnnotations(this.recId, 'ColorTagging').then(response => {
         this.colorannotations = [];
         for (var i = 0; i < response.length; i++) {
+          if (response[i].body.label.en && response[i].body.label.en=="gray") {
+            response[i].body.label.en = ["grey"];
+            response[i].body.label.default = ["grey"];
+          }
           if (!this.userServices.current) {
             this.colorannotations.push(new Annotation(response[i], ""));
           } else {
@@ -756,6 +758,10 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+  }
+
+  getColorLabel(label) {
+    return this.i18n.tr('item:color:'+label);
   }
 
   getColor(label) {

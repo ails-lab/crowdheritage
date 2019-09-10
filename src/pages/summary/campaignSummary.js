@@ -39,6 +39,7 @@ export class CampaignSummary {
 	if (instance) {
 			return instance;
 		}
+    this.loc = window.location.href.split('/')[3];
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
@@ -94,10 +95,33 @@ export class CampaignSummary {
     $('.accountmenu').removeClass('active');
   }
 
-   activate(params, route) {
+  activate(params, route) {
     this.resetInstance();
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
+        // Set the campaign title, based on the selected language
+        if (typeof(result.title) == 'object') {
+          for (var lang in result.title) {
+            if (lang == this.loc) {
+              result.title = result.title[lang];
+            }
+          }
+          if (typeof(result.title) == 'object') {
+            result.title = result.title['en'];
+          }
+        }
+        // Set the campaign description, based on the selected language
+        if (typeof(result.description) == 'object') {
+          for (var lang in result.description) {
+            if (lang == this.loc) {
+              result.description = result.description[lang];
+            }
+          }
+          if (typeof(result.description) == 'object') {
+            result.description = result.description['en'];
+          }
+        }
+
         this.campaign = new Campaign(result);
         this.getUserPoints();
         if (this.userServices.isAuthenticated()) {
@@ -108,7 +132,6 @@ export class CampaignSummary {
         this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
         this.getUserStats();
     });
-
   }
 
   getUserStats() {

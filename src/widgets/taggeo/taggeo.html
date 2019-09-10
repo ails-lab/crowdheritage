@@ -3,15 +3,15 @@
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
-      <div class="heading yellow">GEOTAGGING</div>
+      <div class="heading yellow" t="item:geotagging">GEOTAGGING</div>
       <!-- info-->
-      <div class="infobar">Drop pins to countries or locations in the map that represents the picture.</div>
+      <div class="infobar" t="item:geotagging-info">Drop pins to countries or locations in the map that represents the picture.</div>
       <!-- maps-->
       <div class="geomap">
         <compose view-model="widgets/googlemap/googlemap" model.bind="geoannotations"></compose>
       </div>
       <!-- searchbox-->
-      <div  class="searchbox" if.bind="campaign.status!='inactive' && userServices.isAuthenticated()">
+      <div class="searchbox" if.bind="campaign.status!='inactive' && userServices.isAuthenticated()">
       	<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">

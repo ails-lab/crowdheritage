@@ -4,13 +4,12 @@
 		<section class="pagehero about">
           <div class="container">
             <!-- label-->
-            <h1 class="lbl">About CrowdHeritage</h1>
+            <h1 class="lbl" t="about:header">About CrowdHeritage</h1>
           </div>
         </section>
 
 		<section class="generaltext">
-
-			<div class="container">
+			<div class="container" t="[html]about:intro">
 				<p><strong>CrowdHeritage is a European project supported by European Union under the framework of the CEF Telecom program - Generic Services.</strong></p>
 				<p>
 					<strong>It is implemented by a consortium of 5 European partners:</strong>
@@ -25,10 +24,10 @@
 				<p><strong>The initiative is based on the</strong> standalone online platform for enriching metadata of selected cultural items, developed by NTUA.</p>
 				<p><strong>The platform is aiming to develop</strong> the users experience thanks to participative annotations, depending on the type of content, missing metadata, and validate existing annotations in a user-friendly way.</p>
 				<p>You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br>
-You’re a student, a professional from Educational or Cultural communities?<br>
-You’re curious and want to discover European Cultural Heritage?<br>
-<strong>Join our CrowdHeritage campaigns!</strong>
-</p>
+					You’re a student, a professional from Educational or Cultural communities?<br>
+					You’re curious and want to discover European Cultural Heritage?<br>
+					<strong>Join our CrowdHeritage campaigns!</strong>
+				</p>
 				<p>Through the online platform of data collections, you can get access to several collections of cultural content from various Institutions in Europe. According to each campaign, you are invited to contribute by tagging and adding annotations or select colours or images.</p>
 			</div>
 		</section>
@@ -42,7 +41,7 @@ You’re curious and want to discover European Cultural Heritage?<br>
 						<div class="select-idle">
 							<a href="javascript:void(0)" title="Discover" click.delegate="scrollTo('#discover')">
 								<img src="../../../img/assets/img/ui/ic-discover.png" class="icon" />
-								<div class="select-heading">Discover</div>
+								<div class="select-heading" t="about:discover">Discover</div>
 							</a>
 						</div>
 					</li>
@@ -52,7 +51,7 @@ You’re curious and want to discover European Cultural Heritage?<br>
 						<div class="select-idle">
 							<a href="javascript:void(0)" title="Contribute" click.delegate="scrollTo('#annotate')">
 								<img src="../../../img/assets/img/ui/icon-4.png" class="icon" />
-								<div class="select-heading">Contribute</div>
+								<div class="select-heading" t="about:contribute">Contribute</div>
 							</a>
 						</div>
 					</li>
@@ -62,7 +61,7 @@ You’re curious and want to discover European Cultural Heritage?<br>
 						<div class="select-idle">
 							<a href="javascript:void(0)" title="Get rewards" click.delegate="scrollTo('#participate')">
 								<img src="../../../img/assets/img/ui/icon-6.png" class="icon" />
-								<div class="select-heading">Get rewards</div>
+								<div class="select-heading" t="about:rewards">Get rewards</div>
 							</a>
 						</div>
 					</li>
@@ -76,8 +75,8 @@ You’re curious and want to discover European Cultural Heritage?<br>
 				<div id="discover" class="content">
 					<div class="pads">
 						<div class="left">
-							<h1>DISCOVER</h1>
-							<p>Discover digital artifacts and collections from museums, archives, libraries and galleries in Europe about Fashion, Music, Sport, Cities and landscape.</p>
+							<h1 t="about:discoverCap">DISCOVER</h1>
+							<p t="[html]about:discover-text">Discover digital artifacts and collections from museums, archives, libraries and galleries in Europe about Fashion, Music, Sport, Cities and landscape.</p>
 						</div>
 						<div class="right"><img src="../../../img/assets/img/content/featured-2.png" class="thumbwide"></div>
 					</div>
@@ -87,8 +86,8 @@ You’re curious and want to discover European Cultural Heritage?<br>
 					<div class="pads">
 						<div class="left"><img src="../../../img/assets/img/content/img-annotate.png" class="thumbs"></div>
 						<div class="right">
-							<h1>CONTRIBUTE</h1>
-							<p>Contribute to our 5 participative annotation campaigns and join the communities of CrowdHeritage contributors. &bull; You can participate to one or several campaigns. &bull; Each campaign has a specific contributive specificity and timeline and will stay open 1-2 months.</p>
+							<h1 t="about:contributeCap">CONTRIBUTE</h1>
+							<p t="[html]about:contribute-text">Contribute to our 5 participative annotation campaigns and join the communities of CrowdHeritage contributors. &bull; You can participate to one or several campaigns. &bull; Each campaign has a specific contributive specificity and timeline and will stay open 1-2 months.</p>
 						</div>
 					</div>
 				</div>
@@ -96,8 +95,8 @@ You’re curious and want to discover European Cultural Heritage?<br>
 				<div id="participate" class="content">
 					<div class="pads">
 						<div class="left">
-							<h1>GET REWARDS</h1>
-							<p>Start and you will unlock badges! &bull; The best contributors will get some prizes!</p>
+							<h1 t="about:rewardsCap">GET REWARDS</h1>
+							<p t="[html]about:rewards-text">&bull; Start and you will unlock badges!<br/> &bull; The best contributors will get some prizes!</p>
 						</div>
 						<div class="right"><img src="../../../img/assets/img/content/badges-full.png" class="thumbs"></div>
 					</div>
@@ -107,11 +106,11 @@ You’re curious and want to discover European Cultural Heritage?<br>
 
 		<section class="registernow" if.bind="!isAuthenticated">
 			<div class="container">
-				<h1>Get involved: it’s easy!</h1>
-				<div class="desc"> Sign in on the Platform and begin!</div>
-				<a route-href="route: register" class="action">Register now</a>
+				<h1 t="app:footer-involved">Get involved: it’s easy!</h1>
+				<div class="desc" t="app:footer-sign"> Sign in on the Platform and begin!</div>
+				<a route-href="route: register; params.bind: {lang:loc}" class="action" t="app:footer-register">Register now</a>
 			</div>
-        </section>
+    </section>
 
 	</div>
 

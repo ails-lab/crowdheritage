@@ -1,0 +1,16 @@
+{
+  "bannertext-up"   : "CAMPAGNE DI",
+  "bannertext-down" : "CROWDSOURCING",
+  "current"         : "CAMPAGNE DI CROWDSOURCING",
+  "sortby"          : "IN ORDINE ",
+  "alphabetical"    : "ALFABETICO",
+  "date"            : "CRONOLOGICO",
+  "active"          : "ATTIVE",
+  "inactive"        : "INATTIVE",
+  "upcoming"        : "PROSSIME",
+  "all"             : "TUTTE",
+  "opencampaign"    : "APRI LA CAMPAGNA",
+  "learn-info-1"    : "Ulteriori informazioni su CrowdHeritage",
+  "learn-info-2"    : "Sei un appassionato di moda, cultura, arte, patrimonio, sport, musica, paesaggio? <br/> Sei uno studente, un professionista delle comunità educative o culturali? <br/> Sei curioso e vuoi scoprire l'Europa Patrimonio culturale? <br/> Partecipa alle nostre campagne CrowdHeritage! <br/> <br/> Hai domande? Contattaci a <a> with-dev@image.ntua.gr </a>",
+  "learn-info-3"    : "Termini e condizioni di CrowdHeritage."
+}
