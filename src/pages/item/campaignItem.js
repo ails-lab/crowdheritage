@@ -276,7 +276,7 @@ export class CampaignItem {
           // Set the campaign title, based on the selected language
           if (typeof(response.title) == 'object') {
             for (var lang in response.title) {
-              if (lang == this.currentLocaleCode) {
+              if (lang == this.loc) {
                 response.title = response.title[lang];
               }
             }
@@ -287,7 +287,7 @@ export class CampaignItem {
           // Set the campaign description, based on the selected language
           if (typeof(response.description) == 'object') {
             for (var lang in response.description) {
-              if (lang == this.currentLocaleCode) {
+              if (lang == this.loc) {
                 response.description = response.description[lang];
               }
             }
@@ -295,7 +295,7 @@ export class CampaignItem {
               response.description = response.description['en'];
             }
           }
-          
+
           this.campaign = new Campaign(response);
         })
         .catch(error => {

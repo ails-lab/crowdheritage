@@ -739,6 +739,10 @@ export class Tagitem {
       await this.recordServices.getAnnotations(this.recId, 'ColorTagging').then(response => {
         this.colorannotations = [];
         for (var i = 0; i < response.length; i++) {
+          if (response[i].body.label.en && response[i].body.label.en=="gray") {
+            response[i].body.label.en = ["grey"];
+            response[i].body.label.default = ["grey"];
+          }
           if (!this.userServices.current) {
             this.colorannotations.push(new Annotation(response[i], ""));
           } else {
