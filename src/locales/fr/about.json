@@ -1,13 +1,13 @@
 {
-  "header"          : "##About CrowdHeritage",
-  "intro"           : "<p><strong>##CrowdHeritage is a European project supported by European Union under the framework of the CEF Telecom program - Generic Services.</strong></p><p><strong>It is implemented by a consortium of 5 European partners:</strong><ul><li>National Technical University of Athens (NTUA), coordinator of the project</li><li>Europeana Fashion International Association (EFIA)</li><li>French Ministry of Culture</li><li>Michael Culture Association</li><li>Europeana Foundation</li></ul></p><p><strong>The initiative is based on the</strong> standalone online platform for enriching metadata of selected cultural items, developed by NTUA.</p><p><strong>The platform is aiming to develop</strong> the users experience thanks to participative annotations, depending on the type of content, missing metadata, and validate existing annotations in a user-friendly way.</p><p>You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br>You’re a student, a professional from Educational or Cultural communities?<br>You’re curious and want to discover European Cultural Heritage?<br><strong>Join our CrowdHeritage campaigns!</strong></p><p>Through the online platform of data collections, you can get access to several collections of cultural content from various Institutions in Europe. According to each campaign, you are invited to contribute by tagging and adding annotations or select colours or images.</p>",
-  "discover"        : "##Discover",
-  "discoverCap"     : "##DISCOVER",
-  "contribute"      : "##Contribute",
-  "contributeCap"   : "##CONTRIBUTE",
-  "rewards"         : "##Get rewards",
-  "rewardsCap"      : "##GET REWARDS",
-  "discover-text"   : "##Discover digital artifacts and collections from museums, archives, libraries and galleries in Europe about Fashion, Music, Sport, Cities and landscape.",
-  "contribute-text" : "##Contribute to our 5 participative annotation campaigns and join the communities of CrowdHeritage contributors. &bull; You can participate to one or several campaigns. &bull; Each campaign has a specific contributive specificity and timeline and will stay open 1-2 months.",
-  "rewards-text"    : "##&bull; Start and you will unlock badges!<br/> &bull; The best contributors will get some prizes!"
+  "header"          : "À propos de CrowdHeritage",
+  "intro"           : "<p> <strong> CrowdHeritage est un projet européen soutenu par l'Union européenne dans le cadre du programme CEF Telecom program - Generic Services. </strong> </p> <p> <strong> Il est mis en œuvre par un consortium de 5 Partenaires européens: </strong> <ul> <li> Université technique nationale d’Athènes (NTUA), coordinateur du projet </li> <li> Association européenne de la mode européenne (EFIA) </li> <li> Ministère français de la Culture Culture </li> <li> Association culturelle Michael </li> <li> Fondation Europeana </li> </ul> </p> <p> <strong> L'initiative est basée sur la version autonome </strong> en ligne plate-forme pour enrichir les métadonnées de certains éléments culturels, développée par NTUA. </p> <p> <strong> La plate-forme vise à développer </strong> l'expérience des utilisateurs grâce à des annotations participatives, en fonction du type de contenu, métadonnées manquantes. et validez les annotations existantes de manière conviviale. </p> <p> Vous êtes un amoureux de la mode, de la culture, de l'art, du patrimoine, du sport, de la musique, des paysages? <br> Vous êtes un étudiant, un professionnel de Educatif ou C Vous êtes curieux et vous voulez découvrir le patrimoine culturel européen? <br> <strong> Rejoignez nos campagnes CrowdHeritage! </strong> </p> <p> Grâce à la plateforme en ligne de collecte de données, avoir accès à plusieurs collections de contenus culturels provenant de diverses institutions en Europe. En fonction de chaque campagne, vous êtes invité à contribuer en marquant et en ajoutant des annotations ou en sélectionnant des couleurs ou des images. </p> ",
+	"discover"        : "Découvrir",
+  "discoverCap"     : "DÉCOUVRIR",
+  "contribute"      : "Contribuer",
+  "contributeCap"   : "CONTRIBUER",
+  "rewards"         : "Obtenir des récompenses",
+  "rewardsCap"      : "OBTENIR DES RÉCOMPENSES",
+  "discover-text"   : "Découvrez des artefacts numériques et des collections de musées, d'archives, de bibliothèques et de galeries en Europe sur la mode, la musique, le sport, les villes et les paysages.",
+  "contribute-text" : "Contribuez à nos 5 campagnes d'annotation participative et rejoignez les communautés de contributeurs de CrowdHeritage. &bull; Vous pouvez participer à une ou plusieurs campagnes. &bull; Chaque campagne a une spécificité et une chronologie contributives spécifiques et restera ouverte 1 à 2 mois.",
+  "rewards-text"    : "&bull; Commencez et vous débloquerez des badges! <br/> &bull; Les meilleurs contributeurs recevront des prix!"
 }
