@@ -102,7 +102,7 @@ export class CampaignSummary {
         // Set the campaign title, based on the selected language
         if (typeof(result.title) == 'object') {
           for (var lang in result.title) {
-            if (lang == this.currentLocaleCode) {
+            if (lang == this.loc) {
               result.title = result.title[lang];
             }
           }
@@ -113,7 +113,7 @@ export class CampaignSummary {
         // Set the campaign description, based on the selected language
         if (typeof(result.description) == 'object') {
           for (var lang in result.description) {
-            if (lang == this.currentLocaleCode) {
+            if (lang == this.loc) {
               result.description = result.description[lang];
             }
           }

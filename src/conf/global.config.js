@@ -31,7 +31,7 @@ var settings = {
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	//settings.baseUrl = 'https://api.withcrowd.eu';  // Backend with test-DB
-	//settings.baseUrl = 'https://localhost:9060';    // Local backend for testing
+	settings.baseUrl = 'http://localhost:9060';    // Local backend for testing
 	settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; // Debug
 }
