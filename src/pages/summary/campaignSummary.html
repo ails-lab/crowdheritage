@@ -36,9 +36,15 @@
           <!-- wrap-->
           <div class="wrap">
             <!-- badge-->
-            <div class="badges" if.bind="isAuthenticated"><img src.bind="userBadge"></div>
+            <div class="badges" if.bind="isAuthenticated">
+							<img src.bind="userBadge">
+							<p innerHtml.bind="userBadgeText"></p>
+						</div>
             <!-- badge-->
-            <div class="badges" if.bind="!isAuthenticated"><img src="/img/badges.png"></div>
+            <div class="badges" if.bind="!isAuthenticated">
+							<img src="/img/badges.png">
+							<p innerHtml.bind="campaign.prizes.rookie"></p>
+						</div>
             <!-- user stat-->
             <div class="userstat" if.bind="isAuthenticated">
               <!-- text-->
@@ -181,18 +187,15 @@
       <!-- conty-->
       <div class="container">
         <!-- maps-->
-        <div class="left">
-          <!-- maps-->
+        <!-- <div class="left">
           <div class="maps">
             <div id="maps" class="mapswrap">
             <compose view-model="widgets/googlemap/googlemap"></compose>
             </div>
-            <!-- heading-->
             <div class="heading">Location of Active Volunteers</div>
           </div>
-          <!-- graphs-->
          <compose view-model="widgets/graph/graph" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
-        </div>
+        </div> -->
         <div class="right">
           <!-- leaderboard-->
           <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>

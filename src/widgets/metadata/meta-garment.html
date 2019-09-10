@@ -11,7 +11,7 @@
         </li>
         <li class="col-sm-6" if.bind="record.data.descriptiveData.dccreator">
           <div class="lbl">CREATOR</div>
-          <div class="val">${record.data.descriptiveData.dccreator.default[0]}</div>
+          <div innerHtml.bind="record.data.descriptiveData.dccreator.default[0]" class="val"></div>
         </li>
         <li class="col-sm-6" if.bind="date.length>0">
           <div class="lbl">CREATION DATE</div>

@@ -7,7 +7,7 @@
 	    <ul class="leaderlist show-more-target">
 	      <li repeat.for="user of topUsers">
 					<a route-href="route: user; params.bind: { uname: user[0].username }">
-	        <span class="no">${$index+1}</span>
+	        <!-- <span class="no">${$index+1}</span> -->
 	        <span class="thumbs"><img src.bind="getProfileImage(user[0])"></span>
 	        <span class="details">
 	          <div class="name" innerhtml.bind="getName(user[0])"></div>
@@ -18,6 +18,17 @@
 	          <div class="lbl">POINTS</div>
 	        </span>
 				</a>
+				<span class="no">
+					<span class="fa-stack">
+    			<!-- The icon that will wrap the number -->
+    			<span class="fa fa-star fa-stack-2x"></span>
+    			<!-- a strong element with the custom content, in this case a number -->
+    			<strong class="fa-stack-1x">
+        	${$index+1}
+    			</strong>
+					</span>
+					<!-- <span class="fa-stack"> ${$index+1}</span> -->
+				</span>
 	      </li>
 	    </ul>
 			<i class="show-more fa fa-chevron-down" title="Load more"></i>

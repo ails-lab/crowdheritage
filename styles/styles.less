@@ -228,7 +228,7 @@ body main section.banner.mini .container .bannertext {
   padding-top: 80px;
 }
 body main section.banner.mini .container .progress {
-  height: 5px;
+  height: 10px;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 0;
   box-shadow: none;
@@ -933,7 +933,6 @@ body main section.collections {
 
 body main section.campaignstats {
   padding: 0 0 0px 0;
-	min-height: 525px;
 }
 body main section.campaignstats:before,
 body main section.campaignstats:after {
@@ -1005,12 +1004,11 @@ body main section.campaignstats .left .graphs .contributions {
 }
 
 body main section.campaignstats .right {
-  width: 35%;
   float: left;
+	width: 100%;
 }
 body main section.campaignstats .right .leaderboard {
-  padding: 75px 0px 30px 30px;
-  width: 57%;
+  padding: 30px 0px 30px 30px;
 }
 body main section.campaignstats .right .leaderboard .heading {
   background-color: #000;
@@ -1020,6 +1018,7 @@ body main section.campaignstats .right .leaderboard .heading {
   position: relative;
   margin-bottom: 5px;
   font-family: "Dosis";
+	margin-left: 345px;
 }
 .show-more-parent {
 	position: relative;
@@ -1072,11 +1071,22 @@ body main section.campaignstats .right .leaderboard .heading {
 body main section.campaignstats .right .leaderboard ul.leaderlist {
   margin: 0;
   padding: 30px 0 0 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	 justify-content: center;
+	 align-items: center;
+	 align-content: center;
 }
 body main section.campaignstats .right .leaderboard ul.leaderlist li {
   list-style: none;
-  display: block;
-  margin-bottom: 10px;
+	padding: 20px;
+	display: block;
+}
+body main section.campaignstats .right .leaderboard ul.leaderlist li a {
+	display: flex;
+	padding: 10px 20px;
+	background-color: #f2f2f2;
 }
 body main section.campaignstats .right .leaderboard ul.leaderlist li:before,
 body main section.campaignstats .right .leaderboard ul.leaderlist li:after {
@@ -1088,9 +1098,10 @@ body main section.campaignstats .right .leaderboard ul.leaderlist li:after {
 }
 body main section.campaignstats .right .leaderboard ul.leaderlist li span.no {
   float: left;
-  width: 10%;
+  width: 100%;
   padding-top: 13px;
   font-family: "Dosis";
+	text-align: center;
 }
 body main section.campaignstats .right .leaderboard ul.leaderlist li span.thumbs {
   float: left;
@@ -1405,6 +1416,12 @@ body main section.campaigninfo {
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				flex-direction: column;
+				p {
+					font-size: 1.4rem;
+    			margin-top: 20px;
+					text-align: left;
+				}
 			}
 			.userstat {
 				width: 58%;
