@@ -1,13 +1,13 @@
 {
-  "name"          : "~~Name",
-  "gender"        : "~~Gender",
-  "contact"       : "~~Contact Information",
-  "about"         : "~~About",
-  "inserted"      : "~~INSERTED TAGS",
-  "upvotes"       : "~~UPVOTES",
-  "downvotes"     : "~~DOWNVOTES",
-  "items"         : "~~ITEMS",
-  "contribute"    : "~~Contribute more and unlock the next badge.",
-  "contributions" : "~~CONTRIBUTIONS",
-  "annotated"     : "~~ANNOTATED ITEMS"
+  "name" : "Nome",
+  "gender": "Genere",
+  "contact": "Informazioni sui contatti",
+  "about": "Di",
+  "inserted": "ETICHETTE INSERITE",
+  "upvotes": "upvotes",
+  "downvotes": "downvotes",
+  "items": "ELEMENTI",
+  "contribute": "Contribuisci di più e sblocca il badge successivo.",
+  "contributions": "CONTRIBUTI",
+  "annotated": "ARTICOLI ANNOTATI"
 }
