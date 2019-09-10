@@ -197,7 +197,7 @@ export class Tagitem {
 		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
 			return obj.geonameId === geoid
 		});
-		let existscheck=this.geoannotations.find(obj => {
+		let existscheck = this.geoannotations.find(obj => {
 			console.log(obj);
 			return (obj.uri &&  obj.uri.indexOf(geoid)!=-1)
 		});
@@ -252,7 +252,7 @@ export class Tagitem {
     });
     let lb = this.selectedAnnotation.label;
     let existscheck = this.annotations.find(obj => {
-      return obj.label === lb
+      return obj.label.toLowerCase() === lb.toLowerCase();
     });
     if (existscheck != null) {
       this.prefix = "";
@@ -313,8 +313,11 @@ export class Tagitem {
       // Clear and reload the colorannotations array
       this.colorannotations.splice(0, this.colorannotations.length);
       await this.getRecordAnnotations(this.recId);
-    } else if (!this.colorannotations[answer.index].approvedByMe) {
-      this.score(answer.id, 'approved', answer.index);
+      // Try to annotate again, in order to also upvote the new annotation
+      await this.annotateLabel(label);
+    }
+    else if (!this.colorannotations[answer.index].approvedByMe) {
+      await this.score(answer.id, 'approved', answer.index, 'color');
     }
   }
 
