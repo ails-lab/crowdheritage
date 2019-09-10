@@ -273,6 +273,29 @@ export class CampaignItem {
     else {
 			let result = await this.campaignServices.getCampaignByName(params.cname)
         .then(response => {
+          // Set the campaign title, based on the selected language
+          if (typeof(response.title) == 'object') {
+            for (var lang in response.title) {
+              if (lang == this.currentLocaleCode) {
+                response.title = response.title[lang];
+              }
+            }
+            if (typeof(response.title) == 'object') {
+              response.title = response.title['en'];
+            }
+          }
+          // Set the campaign description, based on the selected language
+          if (typeof(response.description) == 'object') {
+            for (var lang in response.description) {
+              if (lang == this.currentLocaleCode) {
+                response.description = response.description[lang];
+              }
+            }
+            if (typeof(response.description) == 'object') {
+              response.description = response.description['en'];
+            }
+          }
+          
           this.campaign = new Campaign(response);
         })
         .catch(error => {

@@ -99,6 +99,29 @@ export class CampaignSummary {
     this.resetInstance();
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
+        // Set the campaign title, based on the selected language
+        if (typeof(result.title) == 'object') {
+          for (var lang in result.title) {
+            if (lang == this.currentLocaleCode) {
+              result.title = result.title[lang];
+            }
+          }
+          if (typeof(result.title) == 'object') {
+            result.title = result.title['en'];
+          }
+        }
+        // Set the campaign description, based on the selected language
+        if (typeof(result.description) == 'object') {
+          for (var lang in result.description) {
+            if (lang == this.currentLocaleCode) {
+              result.description = result.description[lang];
+            }
+          }
+          if (typeof(result.description) == 'object') {
+            result.description = result.description['en'];
+          }
+        }
+
         this.campaign = new Campaign(result);
         this.getUserPoints();
         if (this.userServices.isAuthenticated()) {

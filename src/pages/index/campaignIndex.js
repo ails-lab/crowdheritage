@@ -108,6 +108,29 @@ export class CampaignIndex {
 
   fillCampaignArray(campaignArray, results) {
 		for (let item of results) {
+      // Set the campaign title, based on the selected language
+      if (typeof(item.title) == 'object') {
+        for (var lang in item.title) {
+          if (lang == this.currentLocaleCode) {
+            item.title = item.title[lang];
+          }
+        }
+        if (typeof(item.title) == 'object') {
+          item.title = item.title['en'];
+        }
+      }
+      // Set the campaign description, based on the selected language
+      if (typeof(item.description) == 'object') {
+        for (var lang in item.description) {
+          if (lang == this.currentLocaleCode) {
+            item.description = item.description[lang];
+          }
+        }
+        if (typeof(item.description) == 'object') {
+          item.description = item.description['en'];
+        }
+      }
+
 			campaignArray.push(new Campaign(item));
 		}
   }
