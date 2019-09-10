@@ -314,7 +314,7 @@ export class Tagitem {
       this.colorannotations.splice(0, this.colorannotations.length);
       await this.getRecordAnnotations(this.recId);
       // Try to annotate again, in order to also upvote the new annotation
-      await this.annotateLabel(label);
+      // await this.annotateLabel(label);
     }
     else if (!this.colorannotations[answer.index].approvedByMe) {
       await this.score(answer.id, 'approved', answer.index, 'color');
@@ -776,6 +776,7 @@ export class Tagitem {
   }
 
 	getStyle(label) {
+		label = (label === 'Multicoloured') ? 'Multicolor' : label;
     var index = this.colorSet.findIndex(element => {
       return element[0] == label;
     });
