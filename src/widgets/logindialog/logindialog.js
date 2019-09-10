@@ -49,9 +49,15 @@ export class LoginDialog {
 			email: this.email,
 			password: this.password
 		}, {}, 0).then((response) => {	// Do not redirect
-			this.controller.ok();
-			location.reload();
-		}).catch((error) => {
+			if (response === "Invalid email/username or password") {
+				this.password = "";
+				toastr.error("Invalid email/username or password");
+			}
+			else {
+				location.reload();
+				this.controller.ok();
+			}
+		}).catch((error) => {z
 			this.error = error;
 			logger.error(error);
 		});
