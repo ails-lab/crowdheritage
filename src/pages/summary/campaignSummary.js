@@ -36,10 +36,11 @@ export class CampaignSummary {
   }
 
   constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue) {
-	if (instance) {
+    if (instance) {
 			return instance;
 		}
     this.loc = window.location.href.split('/')[3];
+
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
@@ -145,93 +146,89 @@ export class CampaignSummary {
                           this.campaign.userPoints[id].rejected;
       }
 
-      // // Old badge awards based on points, now obsolete
-      // if (this.userPoints < this.campaign.badges.bronze) {
-      //   this.userBadge = '/img/badges.png';
-			// 	this.userBadgeName = 'rookie';
-			// 	this.userBadgeText = this.campaign.prizes.rookie;
-      // }
-      // else if (this.userPoints < this.campaign.badges.silver) {
-      //   this.userBadge = '/img/badge-bronze.png';
-      //   this.userBadgeName = 'bronze';
-			// 	this.userBadgeText = this.campaign.prizes.bronze;
-      // }
-      // else if (this.userPoints < this.campaign.badges.gold) {
-      //   this.userBadge = '/img/badge-silver.png';
-      //   this.userBadgeName = 'silver';
-			// 	this.userBadgeText = this.campaign.prizes.silver;
-      // }
-      // else {
-      //   this.userBadge = '/img/badge-gold.png';
-      //   this.userBadgeName = 'gold';
-			// 	this.userBadgeText = this.campaign.prizes.gold;
-      // }
-
-      // New badge awards based on RANK
-      console.log(this.userRank);
-      if (this.userRank == '1') {
-        this.userBadge = '/img/badge-gold.png';
-        this.userBadgeName = 'gold';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.gold) == 'object') {
-          for (var lang in this.campaign.prizes.gold) {
-            if (lang == this.loc) {
-              this.campaign.prizes.gold = this.campaign.prizes.gold[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.gold) == 'object') {
-            this.campaign.prizes.gold = this.campaign.prizes.gold['en'];
-          }
-        }
-        this.userBadgeText = this.campaign.prizes.gold;
+      // Badge awards based on POINTS
+      this.userBadgeText = '';
+      if (this.userPoints < this.campaign.badges.bronze) {
+        this.userBadge = '/img/badges.png';
+				this.userBadgeName = 'Rookie';
       }
-      else if (this.userRank == '2') {
-        this.userBadge = '/img/badge-silver.png';
-        this.userBadgeName = 'silver';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.silver) == 'object') {
-          for (var lang in this.campaign.prizes.silver) {
-            if (lang == this.loc) {
-              this.campaign.prizes.silver = this.campaign.prizes.silver[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.silver) == 'object') {
-            this.campaign.prizes.silver = this.campaign.prizes.silver['en'];
-          }
-        }
-        this.userBadgeText = this.campaign.prizes.silver;
-      }
-      else if (this.userRank == '3') {
+      else if (this.userPoints < this.campaign.badges.silver) {
         this.userBadge = '/img/badge-bronze.png';
-        this.userBadgeName = 'bronze';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.bronze) == 'object') {
-          for (var lang in this.campaign.prizes.bronze) {
-            if (lang == this.loc) {
-              this.campaign.prizes.bronze = this.campaign.prizes.bronze[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.bronze) == 'object') {
-            this.campaign.prizes.bronze = this.campaign.prizes.bronze['en'];
-          }
-        }
-        this.userBadgeText = this.campaign.prizes.bronze;
+        this.userBadgeName = 'Bronze';
+      }
+      else if (this.userPoints < this.campaign.badges.gold) {
+        this.userBadge = '/img/badge-silver.png';
+        this.userBadgeName = 'Silver';
       }
       else {
-        this.userBadge = '/img/badges.png';
-				this.userBadgeName = 'rookie';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.rookie) == 'object') {
-          for (var lang in this.campaign.prizes.rookie) {
-            if (lang == this.loc) {
-              this.campaign.prizes.rookie = this.campaign.prizes.rookie[lang];
+        this.userBadge = '/img/badge-gold.png';
+        this.userBadgeName = 'Gold';
+      }
+
+      // Badge awards based on RANK (only on colors campaign)
+      let checkPrizes = (typeof(this.campaign.prizes.gold) == 'object') && (typeof(this.campaign.prizes.silver) == 'object') &&
+                        (typeof(this.campaign.prizes.rookie) == 'object') && (typeof(this.campaign.prizes.rookie) == 'object');
+      if ( (this.campaign.username == 'colours-catwalk') && checkPrizes ) {
+        if (this.userRank == '1') {
+          this.userBadge = '/img/badge-gold.png';
+          this.userBadgeName = 'Gold';
+          if (typeof(this.campaign.prizes.gold) == 'object') {
+            for (var lang in this.campaign.prizes.gold) {
+              if (lang == this.loc) {
+                this.campaign.prizes.gold = this.campaign.prizes.gold[lang];
+              }
+            }
+            if (typeof(this.campaign.prizes.gold) == 'object') {
+              this.campaign.prizes.gold = this.campaign.prizes.gold['en'];
             }
           }
-          if (typeof(this.campaign.prizes.rookie) == 'object') {
-            this.campaign.prizes.rookie = this.campaign.prizes.rookie['en'];
-          }
+          this.userBadgeText = this.campaign.prizes.gold;
         }
-				this.userBadgeText = this.campaign.prizes.rookie;
+        else if (this.userRank == '2') {
+          this.userBadge = '/img/badge-silver.png';
+          this.userBadgeName = 'Silver';
+          if (typeof(this.campaign.prizes.silver) == 'object') {
+            for (var lang in this.campaign.prizes.silver) {
+              if (lang == this.loc) {
+                this.campaign.prizes.silver = this.campaign.prizes.silver[lang];
+              }
+            }
+            if (typeof(this.campaign.prizes.silver) == 'object') {
+              this.campaign.prizes.silver = this.campaign.prizes.silver['en'];
+            }
+          }
+          this.userBadgeText = this.campaign.prizes.silver;
+        }
+        else if (this.userRank == '3') {
+          this.userBadge = '/img/badge-bronze.png';
+          this.userBadgeName = 'Bronze';
+          if (typeof(this.campaign.prizes.bronze) == 'object') {
+            for (var lang in this.campaign.prizes.bronze) {
+              if (lang == this.loc) {
+                this.campaign.prizes.bronze = this.campaign.prizes.bronze[lang];
+              }
+            }
+            if (typeof(this.campaign.prizes.bronze) == 'object') {
+              this.campaign.prizes.bronze = this.campaign.prizes.bronze['en'];
+            }
+          }
+          this.userBadgeText = this.campaign.prizes.bronze;
+        }
+        else {
+          this.userBadge = '/img/badges.png';
+          this.userBadgeName = 'Rookie';
+          if (typeof(this.campaign.prizes.rookie) == 'object') {
+            for (var lang in this.campaign.prizes.rookie) {
+              if (lang == this.loc) {
+                this.campaign.prizes.rookie = this.campaign.prizes.rookie[lang];
+              }
+            }
+            if (typeof(this.campaign.prizes.rookie) == 'object') {
+              this.campaign.prizes.rookie = this.campaign.prizes.rookie['en'];
+            }
+          }
+          this.userBadgeText = this.campaign.prizes.rookie;
+        }
       }
     }
   }
