@@ -47,14 +47,13 @@
 						</div>
             <!-- user stat-->
             <div class="userstat" if.bind="isAuthenticated">
-              <div if.bind="campaign.username != 'colours-catwalk'">
-                <h1 if.bind="userPoints >= campaign.badges.bronze"><span t="summary:congratulations">Congratulations</span> ${user.firstName}!<br/>
-                  <span t="[html]summary:badge-unlocked">You have unlocked the </span> ${userBadgeName} <span t="summary:badge-price">badge</span>.</h1>
-                <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
-                  <span t="summary:badge-continue">Continue contributing to earn your first badge</span>.</h1>
-                <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
-                  <span t="summary:badge-start">Start contributing to earn your first badge</span>.</h1>
-              </div>
+              <!-- text-->
+              <h1 if.bind="userPoints >= campaign.badges.bronze"><span t="summary:congratulations">Congratulations</span> ${user.firstName}!<br/>
+                <span t="[html]summary:badge-unlocked">You have unlocked the </span> ${userBadgeName} <span t="summary:badge-price">badge</span>.</h1>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
+                <span t="summary:badge-continue">Continue contributing to earn your first badge</span>.</h1>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
+                <span t="summary:badge-start">Start contributing to earn your first badge</span>.</h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
                 <li class="wide">
@@ -79,7 +78,7 @@
                 </li>
               </ul>
               <!-- description-->
-              <div class="desc" t="[prepend]summary:description-left" if.bind="campaign.username != 'colours-catwalk'">
+              <div class="desc" t="[prepend]summary:description-left">
                 <a href="javascript:void(0)" click.delegate="scrollTo('#maps')" t="summary:description-right">below</a>.
               </div>
             </div>
