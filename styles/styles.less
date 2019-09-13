@@ -302,6 +302,33 @@ body main section.banner.mini.detail .collectioninfo li.count .info {
   font-family: "Dosis";
   margin: 18px 20px 0 0;
 }
+body main section.banner.mini.detail .collectioninfo li.count .previous {
+  float: right;
+  font-family: "Dosis";
+  display: block;
+  border: 2px solid #dedede;
+  color: #000;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #fff;
+  border-color: #fff;
+  padding: 4px 15px 3px 15px;
+  margin: 13px 20px 0 0;
+}
+body main section.banner.mini.detail .collectioninfo li.count .previous:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+  text-decoration: none;
+}
+body main section.banner.mini.detail .collectioninfo li.count .previous:hover {
+  background-color: #fff;
+  color: @secondary-color;
+  border-color: #fff;
+}
 body main section.banner.mini.detail .collectioninfo li.count .next {
   float: right;
   font-family: "Dosis";
@@ -329,8 +356,27 @@ body main section.banner.mini.detail .collectioninfo li.count .next:hover {
   color: @secondary-color;
   border-color: #fff;
 }
-body main section.tagging .wraps .right .next-item-alternative-link .next {
+body main section.tagging .wraps .right .next-item-alternative-link .previous {
   float: left;
+  font-family: "Dosis";
+  display: inline;
+  border: 2px solid @secondary-color;
+  font-size: 1.4rem;
+  padding: 7px 15px 6px 15px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  color: @secondary-color;
+  padding: 4px 15px 3px 15px;
+}
+body main section.tagging .wraps .right .next-item-alternative-link .previous:hover {
+  border-color: @secondary-color;
+  text-decoration: none;
+  background-color: @secondary-color;
+  color: #fff;
+}
+body main section.tagging .wraps .right .next-item-alternative-link .next {
+  float: right;
   font-family: "Dosis";
   display: block;
   border: 2px solid @secondary-color;

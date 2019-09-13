@@ -20,8 +20,9 @@
         <ul class="collectioninfo">
           <li class="title">${collectionTitle}</li>
           <li class="count">
-            <div class="info" show.bind="hasCollection"><span t="item:item">Item</span> ${offset + 1} <span t="item:out-of">out of</span> ${collectionCount}</div>
             <a show.bind="!lastItem" class="next" href="javascript:void(0)" click.delegate="nextItem()" t="item:next-item">NEXT ITEM</a>
+            <!-- <div class="info" show.bind="hasCollection"><span t="item:item">Item</span> ${offset + 1} <span t="item:out-of">out of</span> ${collectionCount}</div> -->
+            <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)" click.delegate="previousItem()" t="item:previous-item">PREVIOUS ITEM</a>
           </li>
         </ul>
         <!-- bg-->
@@ -49,7 +50,7 @@
                 <!-- Modal Content - Image) -->
                 <img class="modal-content" id="modalImg" click.delegate="closeModal()">
               </div>
-              
+
               <!-- Here goes the media, besides images -->
               <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
             </div>
@@ -100,6 +101,7 @@
                      model.bind="{'campaign': campaign, 'recId': record.dbId, 'colTitle': collectionTitle}">
             </compose>
             <div class="wrap next-item-alternative-link">
+              <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)" click.delegate="previousItem()" t="item:previous-item">PREVIOUS ITEM</a>
               <a class="next" href="javascript:void(0)" click.delegate="nextItem()" t="item:next-item">NEXT ITEM</a>
             </div>
             <div class="fullscreen-navigation">
