@@ -62,6 +62,7 @@ export class CampaignSummary {
     this.userBadge = 0;
     this.userRank = 0;
     this.userBadgeName = "";
+    this.userBadgeText = "";
     this.points = [];
     if (!instance) {
 			instance = this;
@@ -84,6 +85,7 @@ export class CampaignSummary {
     this.userBadge = 0;
     this.userRank = 0;
     this.userBadgeName = "";
+    this.userBadgeText = "";
     this.points = [];
 	}
 
