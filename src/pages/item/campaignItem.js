@@ -374,6 +374,10 @@ export class CampaignItem {
     this.router.navigateToRoute('summary', {cname: camp.username, lang: this.loc});
   }
 
+  returnToCollection() {
+    this.router.navigateToRoute('collection', {lang: this.loc, cname: this.campaign.username, colid: this.collection.dbId});
+  }
+
   openModal(imgSrc) {
     var modal = document.getElementById("myModal");
     var img = document.getElementById("recImg");
