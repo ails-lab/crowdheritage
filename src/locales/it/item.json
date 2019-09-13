@@ -21,7 +21,8 @@
     "White": "Bianca",
     "Transparent": "Trasparente"
   },
-  "next-item": "Articolo successivo",
+  "next-item": "ARTICOLO SUCCESSIVO",
+  "previous-item" : "ARTICOLO PRECEDENTE",
   "item": "Articolo",
   "out-of": "fuori da",
   "meta": "ARTICOLO METADATA",

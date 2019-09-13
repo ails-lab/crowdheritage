@@ -22,6 +22,7 @@
     "Transparent": "Transparent"
   },
   "next-item": "PROCHAIN ARTICLE",
+  "previous-item" : "ARTICLE PRÉCÉDENT",
   "item": "Article",
   "out-of": "hors de",
   "meta": "ARTICLE METADATA",
