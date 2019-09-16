@@ -295,6 +295,16 @@ export class CampaignItem {
               response.description = response.description['en'];
             }
           }
+					  if (typeof(response.instructions) == 'object') {
+            for (var lang in response.instructions) {
+              if (lang == this.loc) {
+                response.instructions = response.instructions[lang];
+              }
+            }
+            if (typeof(response.instructions) == 'object') {
+              response.instructions = response.instructions['en'];
+            }
+          }
 
           this.campaign = new Campaign(response);
         })

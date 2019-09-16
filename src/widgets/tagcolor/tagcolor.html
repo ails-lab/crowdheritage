@@ -5,8 +5,7 @@
       <!-- heading-->
       <div class="heading green" t="item:color-tagging">COLOR TAGGING</div>
       <!-- info-->
-      <div class="infobar" t="[html]item:color-info">Select colors that you see on the left picture. <br/>You can also validate other colors that has been submitted for this item by voting them.</div>
-
+				<div class="infobar">${campaign.instructions}</div>
       <!-- color action-->
       <div class="coloraction">
         <section class="color" style.bind="color[1]" repeat.for="color of colorSet" click.delegate="annotateLabel(color[0])">

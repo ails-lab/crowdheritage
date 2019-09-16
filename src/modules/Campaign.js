@@ -48,6 +48,7 @@ export class Campaign {
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
 		this.prizes = data.prizes;
+		this.instructions = data.instructions;
     this.vocabularies = data.vocabularies;
 
     var today = new Date();
