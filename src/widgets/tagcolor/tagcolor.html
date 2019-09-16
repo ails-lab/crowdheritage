@@ -5,7 +5,7 @@
       <!-- heading-->
       <div class="heading green" t="item:color-tagging">COLOR TAGGING</div>
       <!-- info-->
-				<div class="infobar">${campaign.instructions}</div>
+				<div class="infobar" innerhtml.bind="campaign.instructions"></div>
       <!-- color action-->
       <div class="coloraction">
         <section class="color" style.bind="color[1]" repeat.for="color of colorSet" click.delegate="annotateLabel(color[0])">
