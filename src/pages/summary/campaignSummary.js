@@ -101,28 +101,14 @@ export class CampaignSummary {
     this.resetInstance();
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
-        // Set the campaign title, based on the selected language
-        if (typeof(result.title) == 'object') {
-          for (var lang in result.title) {
-            if (lang == this.loc) {
-              result.title = result.title[lang];
-            }
-          }
-          if (typeof(result.title) == 'object') {
-            result.title = result.title['en'];
-          }
-        }
-        // Set the campaign description, based on the selected language
-        if (typeof(result.description) == 'object') {
-          for (var lang in result.description) {
-            if (lang == this.loc) {
-              result.description = result.description[lang];
-            }
-          }
-          if (typeof(result.description) == 'object') {
-            result.description = result.description['en'];
-          }
-        }
+        // Based on the selected language, set the campaign {title, description, instructions, prizes}
+        result.title = ( result.title[this.loc] ? result.title[this.loc] : result.title['en'] );
+        result.description = ( result.description[this.loc] ? result.description[this.loc] : result.description['en'] );
+        result.instructions = ( result.instructions[this.loc] ? result.instructions[this.loc] : result.instructions['en'] );
+        result.prizes.gold = ( result.prizes.gold[this.loc] ? result.prizes.gold[this.loc] : result.prizes.gold['en'] );
+        result.prizes.silver = ( result.prizes.silver[this.loc] ? result.prizes.silver[this.loc] : result.prizes.silver['en'] );
+        result.prizes.bronze = ( result.prizes.bronze[this.loc] ? result.prizes.bronze[this.loc] : result.prizes.bronze['en'] );
+        result.prizes.rookie = ( result.prizes.rookie[this.loc] ? result.prizes.rookie[this.loc] : result.prizes.rookie['en'] );
 
         this.campaign = new Campaign(result);
         this.getUserPoints();
@@ -149,89 +135,29 @@ export class CampaignSummary {
 
       // // Old badge awards based on points, now obsolete
       // if (this.userPoints < this.campaign.badges.bronze) {
-      //   this.userBadge = '/img/badges.png';
-			// 	this.userBadgeName = 'rookie';
-			// 	this.userBadgeText = this.campaign.prizes.rookie;
-      // }
       // else if (this.userPoints < this.campaign.badges.silver) {
-      //   this.userBadge = '/img/badge-bronze.png';
-      //   this.userBadgeName = 'bronze';
-			// 	this.userBadgeText = this.campaign.prizes.bronze;
-      // }
       // else if (this.userPoints < this.campaign.badges.gold) {
-      //   this.userBadge = '/img/badge-silver.png';
-      //   this.userBadgeName = 'silver';
-			// 	this.userBadgeText = this.campaign.prizes.silver;
-      // }
       // else {
-      //   this.userBadge = '/img/badge-gold.png';
-      //   this.userBadgeName = 'gold';
-			// 	this.userBadgeText = this.campaign.prizes.gold;
-      // }
 
       // New badge awards based on RANK
       if (this.userRank == '1') {
         this.userBadge = '/img/badge-gold.png';
         this.userBadgeName = 'gold';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.gold) == 'object') {
-          for (var lang in this.campaign.prizes.gold) {
-            if (lang == this.loc) {
-              this.campaign.prizes.gold = this.campaign.prizes.gold[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.gold) == 'object') {
-            this.campaign.prizes.gold = this.campaign.prizes.gold['en'];
-          }
-        }
         this.userBadgeText = this.campaign.prizes.gold;
       }
       else if (this.userRank == '2') {
         this.userBadge = '/img/badge-silver.png';
         this.userBadgeName = 'silver';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.silver) == 'object') {
-          for (var lang in this.campaign.prizes.silver) {
-            if (lang == this.loc) {
-              this.campaign.prizes.silver = this.campaign.prizes.silver[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.silver) == 'object') {
-            this.campaign.prizes.silver = this.campaign.prizes.silver['en'];
-          }
-        }
         this.userBadgeText = this.campaign.prizes.silver;
       }
       else if (this.userRank == '3') {
         this.userBadge = '/img/badge-bronze.png';
         this.userBadgeName = 'bronze';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.bronze) == 'object') {
-          for (var lang in this.campaign.prizes.bronze) {
-            if (lang == this.loc) {
-              this.campaign.prizes.bronze = this.campaign.prizes.bronze[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.bronze) == 'object') {
-            this.campaign.prizes.bronze = this.campaign.prizes.bronze['en'];
-          }
-        }
         this.userBadgeText = this.campaign.prizes.bronze;
       }
       else {
         this.userBadge = '/img/badges.png';
 				this.userBadgeName = 'rookie';
-        // Set the badge text, based on the selected language
-        if (typeof(this.campaign.prizes.rookie) == 'object') {
-          for (var lang in this.campaign.prizes.rookie) {
-            if (lang == this.loc) {
-              this.campaign.prizes.rookie = this.campaign.prizes.rookie[lang];
-            }
-          }
-          if (typeof(this.campaign.prizes.rookie) == 'object') {
-            this.campaign.prizes.rookie = this.campaign.prizes.rookie['en'];
-          }
-        }
 				this.userBadgeText = this.campaign.prizes.rookie;
       }
     }
