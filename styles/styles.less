@@ -994,8 +994,7 @@ body main section.collections {
 }
 
 body main section.campaignstats {
-  padding: 0 0 0px 0;
-	min-height: 525px;
+
 }
 body main section.campaignstats:before,
 body main section.campaignstats:after {
@@ -1008,6 +1007,8 @@ body main section.campaignstats:after {
 body main section.campaignstats .container {
   width: 100%;
   padding: 0px;
+	display: flex;
+	justify-content: center;
 }
 body main section.campaignstats .left {
   width: 65%;
@@ -1065,131 +1066,65 @@ body main section.campaignstats .left .graphs .contributions {
   font-size: 1.4rem;
   margin-top: 10px;
 }
-
 body main section.campaignstats .right {
-  width: 35%;
-  float: right;
 }
 body main section.campaignstats .right .leaderboard {
-  padding: 75px 0px 30px 30px;
-  width: 57%;
+  display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	max-height: 300px;
+	align-items: center;
 }
-body main section.campaignstats .right .leaderboard .heading {
+body main section.campaignstats .right .heading {
   background-color: #000;
   display: inline-block;
   color: #fff;
   padding: 1px 8px 0 8px;
   position: relative;
-  margin-bottom: 5px;
-  font-family: "Dosis";
-}
-.show-more-parent {
-	position: relative;
-	.show-more-target {
-		position: relative;
-		overflow-y: hidden;
-    transition: all 300ms ease;
-    padding-left: 30px!important;
-		margin-left: -30px!important;
-    padding-right: 30px!important;
-    margin-right: -30px!important;
-		&::after {
-			content: ''!important;
-			display: block!important;
-			position: absolute!important;
-			left: 0;
-			right: 30px;
-			bottom: 0;
-			height: 0;
-			z-index: 10;
-			background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(242,242,242,1) 100%);
-			background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(242,242,242,1) 100%);
-			background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(242,242,242,1) 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#f2f2f2',GradientType=0 );
-		}
-		&.closed::after {
-			height: 100px;
-		}
-	}
-	i.show-more {
-		position: absolute;
-		bottom: 0;
-		left: 50%;
-		transform: translateX(-50%) translateY(80%);
-		background: @secondary-color;
-		color: #fff;
-		padding: 5px;
-		border-radius: 50px;
-		cursor: pointer;
-		font-size: 18px;
-		z-index: 15;
-		&.black {
-			background: #000;
-		}
-		&.green {
-			background: @main-color;
-		}
-	}
-}
-body main section.campaignstats .right .leaderboard ul.leaderlist {
-  margin: 0;
-  padding: 30px 0 0 0;
-}
-body main section.campaignstats .right .leaderboard ul.leaderlist li {
-  list-style: none;
-  display: block;
   margin-bottom: 10px;
-}
-body main section.campaignstats .right .leaderboard ul.leaderlist li:before,
-body main section.campaignstats .right .leaderboard ul.leaderlist li:after {
-  content: " ";
-  display: table;
-}
-body main section.campaignstats .right .leaderboard ul.leaderlist li:after {
-  clear: both;
-}
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.no {
-  float: left;
-  width: 10%;
-  padding-top: 13px;
   font-family: "Dosis";
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.thumbs {
-  float: left;
-  width: 18%;
+body main section.campaignstats .right .leaderboard div.user {
+		outline: 1px solid @main-color;
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.thumbs img {
+body main section.campaignstats .right .leaderboard div a {
+	display:flex;
+	align-items: center;
+}
+body main section.campaignstats .right .leaderboard div div {
+	margin: auto;
+	padding: 5px 0px;
+}
+body main section.campaignstats .right .leaderboard div div.no {
+	padding-left: 5px;
+  width: 20px;
+  font-family: "Dosis";
+}
+body main section.campaignstats .right .leaderboard div div.thumbs {
+  width: 60px;
+}
+body main section.campaignstats .right .leaderboard div div.thumbs img {
   width: 50px;
   border-radius: 25px;
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.details {
-  float: left;
-  width: 56%;
-  padding-left: 20px;
-  padding-top: 9px;
+body main section.campaignstats .right .leaderboard div div.details {
+  width: 150px;
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.details .name {
+body main section.campaignstats .right .leaderboard div div.details .name {
   font-size: 1.4rem;
   line-height: 16px;
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.details .location {
-  font-size: 1.2rem;
-  font-family: "Dosis";
-  color: #999;
+body main section.campaignstats .right .leaderboard div div.points {
+  width: 100px;
+	height: min-content;
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.points {
-  float: right;
-  width: 16%;
-  line-height: 17px;
-  text-align: right;
-  padding-top: 9px;
-}
-body main section.campaignstats .right .leaderboard ul.leaderlist li span.points .lbl {
+body main section.campaignstats .right .leaderboard div div.points .lbl {
   font-size: 1.2rem;
+	line-height: 16px;
   font-family: "Dosis";
   color: @secondary-color;
 }
-body main section.campaignstats .right .leaderboard ul.leaderlist li:last-child {
+body main section.campaignstats .right .leaderboard div:last-child {
 	margin: 0;
 }
 body main section.campaignstats .right .leaderboard .loadmore {

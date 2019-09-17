@@ -1,26 +1,20 @@
 <template>
-  <div class="leaderboard">
-    <!-- heading-->
-    <div class="heading" t="summary:leaderboard">CAMPAIGN LEADERBOARD</div>
-    <!-- list-->
-		<div class="show-more-parent">
-	    <ul class="leaderlist show-more-target">
-	      <li repeat.for="user of topUsers">
-					<a route-href="route: user; params.bind: { uname: user[0].username, lang: currentLocale }">
-	        <span class="no">${$index+1}</span>
-	        <span class="thumbs"><img src.bind="getProfileImage(user[0])"></span>
-	        <span class="details">
-	          <div class="name" innerhtml.bind="getName(user[0])"></div>
-	          <!--div class="location">GREECE</div-->
-	        </span>
-	        <span class="points">
-	          ${user[1]}
-	          <div class="lbl" t="app:points">POINTS</div>
-	        </span>
-				</a>
-	      </li>
-	    </ul>
-			<i class="show-more fa fa-chevron-down" title="Load more"></i>
+	<!-- heading-->
+	<div class="heading" t="summary:leaderboard">CAMPAIGN LEADERBOARD</div>
+	<div class="leaderboard">
+		<!-- list-->
+		<div class="user" repeat.for="user of topUsers">
+			<a route-href="route: user; params.bind: { uname: user[0].username, lang: currentLocale }">
+				<div class="no">${$index+1}</div>
+				<div class="thumbs"><img src.bind="getProfileImage(user[0])"></div>
+				<div class="details">
+					<div class="name" innerhtml.bind="getName(user[0])"></div>
+				</div>
+				<div class="points">
+					${user[1]}
+					<span class="lbl" t="app:points">POINTS</span>
+				</div>
+			</a>
 		</div>
-  </div>
+	</div>
 </template>
