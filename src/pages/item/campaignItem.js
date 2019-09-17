@@ -144,6 +144,14 @@ export class CampaignItem {
     $('.accountmenu').removeClass('active');
 		toggleMore(".meta");
 
+    //var scrollPoint = document.getElementById("scrollPoint");
+    //scrollPoint.scrollIntoView( {behavior: 'smooth'} );
+    window.scrollTo({
+      top: 300,
+      left: 0,
+      behavior: 'smooth'
+    });
+
     document.addEventListener("fullscreenchange", function () {
       var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
       (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
@@ -273,38 +281,14 @@ export class CampaignItem {
     else {
 			let result = await this.campaignServices.getCampaignByName(params.cname)
         .then(response => {
-          // Set the campaign title, based on the selected language
-          if (typeof(response.title) == 'object') {
-            for (var lang in response.title) {
-              if (lang == this.loc) {
-                response.title = response.title[lang];
-              }
-            }
-            if (typeof(response.title) == 'object') {
-              response.title = response.title['en'];
-            }
-          }
-          // Set the campaign description, based on the selected language
-          if (typeof(response.description) == 'object') {
-            for (var lang in response.description) {
-              if (lang == this.loc) {
-                response.description = response.description[lang];
-              }
-            }
-            if (typeof(response.description) == 'object') {
-              response.description = response.description['en'];
-            }
-          }
-					  if (typeof(response.instructions) == 'object') {
-            for (var lang in response.instructions) {
-              if (lang == this.loc) {
-                response.instructions = response.instructions[lang];
-              }
-            }
-            if (typeof(response.instructions) == 'object') {
-              response.instructions = response.instructions['en'];
-            }
-          }
+          // Based on the selected language, set the campaign {title, description, instructions, prizes}
+          response.title = ( response.title[this.loc] ? response.title[this.loc] : response.title['en'] );
+          response.description = ( response.description[this.loc] ? response.description[this.loc] : response.description['en'] );
+          response.instructions = ( response.instructions[this.loc] ? response.instructions[this.loc] : response.instructions['en'] );
+          response.prizes.gold = ( response.prizes.gold[this.loc] ? response.prizes.gold[this.loc] : response.prizes.gold['en'] );
+          response.prizes.silver = ( response.prizes.silver[this.loc] ? response.prizes.silver[this.loc] : response.prizes.silver['en'] );
+          response.prizes.bronze = ( response.prizes.bronze[this.loc] ? response.prizes.bronze[this.loc] : response.prizes.bronze['en'] );
+          response.prizes.rookie = ( response.prizes.rookie[this.loc] ? response.prizes.rookie[this.loc] : response.prizes.rookie['en'] );
 
           this.campaign = new Campaign(response);
         })

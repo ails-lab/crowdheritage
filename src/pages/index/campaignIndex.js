@@ -108,28 +108,14 @@ export class CampaignIndex {
 
   fillCampaignArray(campaignArray, results) {
 		for (let item of results) {
-      // Set the campaign title, based on the selected language
-      if (typeof(item.title) == 'object') {
-        for (var lang in item.title) {
-          if (lang == this.currentLocaleCode) {
-            item.title = item.title[lang];
-          }
-        }
-        if (typeof(item.title) == 'object') {
-          item.title = item.title['en'];
-        }
-      }
-      // Set the campaign description, based on the selected language
-      if (typeof(item.description) == 'object') {
-        for (var lang in item.description) {
-          if (lang == this.currentLocaleCode) {
-            item.description = item.description[lang];
-          }
-        }
-        if (typeof(item.description) == 'object') {
-          item.description = item.description['en'];
-        }
-      }
+      // Based on the selected language, set the campaign {title, description, instructions, prizes}
+      item.title = ( item.title[this.currentLocaleCode] ? item.title[this.currentLocaleCode] : item.title['en'] );
+      item.description = ( item.description[this.currentLocaleCode] ? item.description[this.currentLocaleCode] : item.description['en'] );
+      item.instructions = ( item.instructions[this.currentLocaleCode] ? item.instructions[this.currentLocaleCode] : item.instructions['en'] );
+      item.prizes.gold = ( item.prizes.gold[this.currentLocaleCode] ? item.prizes.gold[this.currentLocaleCode] : item.prizes.gold['en'] );
+      item.prizes.silver = ( item.prizes.silver[this.currentLocaleCode] ? item.prizes.silver[this.currentLocaleCode] : item.prizes.silver['en'] );
+      item.prizes.bronze = ( item.prizes.bronze[this.currentLocaleCode] ? item.prizes.bronze[this.currentLocaleCode] : item.prizes.bronze['en'] );
+      item.prizes.rookie = ( item.prizes.rookie[this.currentLocaleCode] ? item.prizes.rookie[this.currentLocaleCode] : item.prizes.rookie['en'] );
 
 			campaignArray.push(new Campaign(item));
 		}
