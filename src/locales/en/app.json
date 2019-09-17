@@ -24,6 +24,7 @@
 
   "collection"          : "COLLECTION",
   "return-campaign"     : "RETURN TO CAMPAIGN",
+  "return-collection"   : "RETURN TO COLLECTION",
   "tags"                : "TAGS",
   "points"              : "POINTS",
   "annotated"           : "MY ANNOTATED ITEMS",
