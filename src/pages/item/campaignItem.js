@@ -144,6 +144,14 @@ export class CampaignItem {
     $('.accountmenu').removeClass('active');
 		toggleMore(".meta");
 
+    //var scrollPoint = document.getElementById("scrollPoint");
+    //scrollPoint.scrollIntoView( {behavior: 'smooth'} );
+    window.scrollTo({
+      top: 300,
+      left: 0,
+      behavior: 'smooth'
+    });
+
     document.addEventListener("fullscreenchange", function () {
       var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
       (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
