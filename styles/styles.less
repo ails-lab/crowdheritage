@@ -511,6 +511,27 @@ body main section.banner .bgwrap {
   background-image: url('../img/assets/img/content/bg-search-space.png');
   background-size: cover;
 }
+body main section.campaigns-intro {
+  padding: 40px 0 20px 0;
+}
+body main section.campaigns-intro:before,
+body main section.campaigns-intro:after {
+  content: " ";
+  display: table;
+}
+body main section.campaigns-intro:after {
+  clear: both;
+}
+body main section.campaigns-intro > .container {
+  padding-right: 0;
+}
+body main section.campaigns-intro .description{
+	font-size: 1.8rem;
+  display: block;
+  width: 50%;
+  text-align: justify;
+  float: left;
+}
 body main section.campaigns {
   padding: 40px 0 60px 0;
 }
@@ -524,10 +545,6 @@ body main section.campaigns:after {
 }
 body main section.campaigns > .container {
   padding-right: 0;
-}
-body main .description{
-	font-size: 2.0rem;
-	padding-bottom: 30px;
 }
 body main section.campaigns .list .campaign {
   margin-bottom: 55px;
