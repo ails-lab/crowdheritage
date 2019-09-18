@@ -1009,10 +1009,7 @@ body main section.campaignstats:after {
   clear: both;
 }
 body main section.campaignstats .container {
-  width: 100%;
   padding: 0px;
-	display: flex;
-	justify-content: left;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -1078,6 +1075,8 @@ body main section.campaignstats .left .graphs .contributions {
   margin-top: 10px;
 }
 body main section.campaignstats .right {
+	display: flex;
+	flex-direction: column;
 }
 body main section.campaignstats .right .leaderboard {
   display: flex;
@@ -1087,13 +1086,15 @@ body main section.campaignstats .right .leaderboard {
 	align-items: center;
   margin-top: 25px;
 }
+body main section.campaignstats .right .sectionlabel{
+	float: left;
+}
 body main section.campaignstats .right .heading {
   background-color: #000;
   display: inline-block;
   color: #fff;
   padding: 1px 8px 0 8px;
   position: relative;
-  margin-bottom: 10px;
   font-family: "Dosis";
 }
 body main section.campaignstats .right .leaderboard div.user {
