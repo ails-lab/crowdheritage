@@ -770,6 +770,10 @@ body main section.collections {
 	}
 	// reel
 	.campaignlist {
+    // loadmore
+    .loadmore {
+      margin-bottom: 70px;
+    }
 		// entries
 		.entries {
 			margin: 0px -30px 0 -30px;
@@ -1008,7 +1012,14 @@ body main section.campaignstats .container {
   width: 100%;
   padding: 0px;
 	display: flex;
-	justify-content: center;
+	justify-content: left;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 body main section.campaignstats .left {
   width: 65%;
@@ -1074,6 +1085,7 @@ body main section.campaignstats .right .leaderboard {
 	flex-wrap: wrap;
 	max-height: 300px;
 	align-items: center;
+  margin-top: 25px;
 }
 body main section.campaignstats .right .heading {
   background-color: #000;
@@ -1085,11 +1097,43 @@ body main section.campaignstats .right .heading {
   font-family: "Dosis";
 }
 body main section.campaignstats .right .leaderboard div.user {
-		outline: 1px solid @main-color;
+  margin: 0px 70px 0px 0px;
 }
 body main section.campaignstats .right .leaderboard div a {
 	display:flex;
 	align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0.30em;
+  &::before,
+  &::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transform-origin: center;
+  }
+  &::before {
+    border-top: 0.1em solid @main-color;
+    border-bottom: 0.1em solid @main-color;
+    transform: scale3d(0,1,1);
+  }
+  &::after {
+    border-left: 0.1em solid @main-color;
+    border-right: 0.1em solid @main-color;
+    transform: scale3d(1,0,1);
+  }
+  &:hover::before,
+  &:hover::after {
+    transform: scale3d(1,1,1);
+    transition: transform 500ms;
+  }
+}
+body main section.campaignstats .right .leaderboard div a:hover {
+  text-decoration: none;
 }
 body main section.campaignstats .right .leaderboard div div {
 	margin: auto;
