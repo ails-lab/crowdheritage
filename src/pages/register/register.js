@@ -39,12 +39,17 @@ export class Register {
 		this.password2 = '';
 		this.gender = '';
 		this.usingEmail = true;
+		this.acceptTerms = false;
 		this.genders = [
 			{ value: 'male',        name: this.i18n.tr('register:male') },
 			{ value: 'female',      name: this.i18n.tr('register:female') },
 			{ value: 'unspecified', name: this.i18n.tr('register:unspecified') }
 		];
 		this.errors = {};
+	}
+
+	get canRegister() {
+		return this.acceptTerms;
 	}
 
   activate(params) {
@@ -83,11 +88,12 @@ export class Register {
 			} else {
 				response.json().then((data) => {
 					this.errors = data.error;
+
+					toastr.error(Object.values(this.errors).map(function(e) {return e + '<br>'}));
 				});
 			}
 		}).catch((error) => {
 			console.log(error);
 		});
-		this.router.navigateToRoute('index');
 	}
 }

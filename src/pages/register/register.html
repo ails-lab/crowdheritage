@@ -37,24 +37,16 @@
 								<span class="help-block has-error" if.bind="errors.lastName">${errors.lastName}</span>
 							</div>
 						</div>
-						<!-- <div class="input-group">
-							<select t="[placeholder]register:select-gender" id="gender" value.bind="gender" placeholder="Select your gender...">
-								<option t="register:select-gender" value="" default selected>Select your gender...</option>
-								<option repeat.for="option of genders" value.bind="option">${option.name}</option>
-							</select>
-						</div> -->
 						<div class="input-group ack">
-							<input type="checkbox" id="ack" value.bind="acceptTerms" />
+							<input type="checkbox" id="ack" checked.bind="acceptTerms" />
 							<label for="ack" t="[prepend]register:accept"><a route-href="route: terms; params.bind: {lang: loc}" t="register:terms"> Terms of Use agreement</a>.</label>
 						</div>
 						<div class="button-group">
-							<button class="btn-green" type="submit" t="register:button">Register</button>
+							<button disabled.bind="!canRegister" class="btn-green" type="submit" t="register:button">Register</button>
 						</div>
 					</form>
 				</div>
 			</section>
 		</div>
 	</div>
-
-
 </template>
