@@ -2,15 +2,15 @@
   "header"        : "Registrati con il tuo indirizzo email",
   "email": "E-mail",
   "username": "Nome utente",
-  "password": "Parola d'ordine",
+  "password": "Password",
   "repeat": "Ripeti la password",
-  "firstname": "nome di battesimo",
+  "firstname": "Nome",
   "lastname": "Cognome",
-  "select-gender": "Seleziona il tuo genere ...",
-  "male": "Maschio",
-  "female": "Femmina",
-  "unspecified": "imprecisato",
-  "accept": "Dichiaro di aver letto e accetto il",
+  "select-gender": "Seleziona il tuo genere...",
+  "male": "Uomo",
+  "female": "Donna",
+  "unspecified": "Non precisato",
+  "accept": "Dichiaro di aver letto e accetto",
   "terms": "Accordo sui termini di utilizzo",
-  "button": "Registrare"
+  "button": "Registrazione"
 }

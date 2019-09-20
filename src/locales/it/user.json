@@ -1,13 +1,13 @@
 {
-  "name" : "Nome",
-  "gender": "Genere",
-  "contact": "Informazioni sui contatti",
-  "about": "Di",
-  "inserted": "ETICHETTE INSERITE",
-  "upvotes": "upvotes",
-  "downvotes": "downvotes",
-  "items": "ELEMENTI",
-  "contribute": "Contribuisci di più e sblocca il badge successivo.",
-  "contributions": "CONTRIBUTI",
-  "annotated": "ARTICOLI ANNOTATI"
+  "name"          : "Nome",
+  "gender"        : "Genere",
+  "contact"       : "Informazioni di contatto",
+  "about"         : "Informazioni",
+  "inserted"      : "Tag inseritie",
+  "upvotes"       : "APPROVATI",
+  "downvotes"     : "BOCCIATI",
+  "items"         : "RISORSE",
+  "contribute"    : "Contribuisci di più e ottieni un nuovo gettone.",
+  "contributions" : "CONTRIBUTI",
+  "annotated"     : "RISORSE ANNOTATE"
 }
