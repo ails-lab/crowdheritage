@@ -52,8 +52,8 @@ export class Tagitem {
 			["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
 			["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);" ],
 			["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
-			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"],
-			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"]
+			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
+			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
 		];
 
 		this.ea = eventAggregator;
@@ -286,6 +286,9 @@ export class Tagitem {
   }
 
   async annotateLabel(label) {
+		if (label === 'Multicolor') {
+			label = 'Multicoloured';
+		}
     // If the campaign is inactive do NOT annotate
     if (this.campaign.status == 'inactive') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
@@ -314,7 +317,7 @@ export class Tagitem {
       this.colorannotations.splice(0, this.colorannotations.length);
       await this.getRecordAnnotations(this.recId);
       // Try to annotate again, in order to also upvote the new annotation
-      // await this.annotateLabel(label);
+      await this.annotateLabel(label);
     }
     else if (!this.colorannotations[answer.index].approvedByMe) {
       await this.score(answer.id, 'approved', answer.index, 'color');
@@ -329,7 +332,7 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-
+		this.unscore(id, 'approved', index, mot);
     this.annotationServices.delete(id).then(() => {
       if (mot == 'tag') {
         this.annotations.splice(index, 1);
