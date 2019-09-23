@@ -40,9 +40,7 @@ export class MultipleItems {
     this.userServices = userServices;
 		this.i18n = i18n;
 		this.loc;
-		this.sortBy = "Ascending";
-		this.state = "show";
-		this.hiddenCount = 0;
+		this.state = "hide";
 		this.resetInstance();
     if (!instance) {
 			instance = this;
@@ -63,15 +61,7 @@ export class MultipleItems {
 		for (let i in records) {
 			let recordData = records[i];
 			if (recordData !== null) {
-				if ( (this.state == 'show') || ((this.state == 'hide') && !this.userServices.isAuthenticated()) ) {
 					this.records.push(new Record(recordData));
-				}
-				else if ( (this.state == 'hide') && this.userServices.isAuthenticated() && !this.hasContributed(recordData) ) {
-					this.records.push(new Record(recordData));
-				}
-				else {
-					this.hiddenCount = this.hiddenCount + 1;
-				}
 			}
 		}
 	}
@@ -79,7 +69,7 @@ export class MultipleItems {
 	async getRecords() {
 		this.loading = true;
 		if (this.collection) {
-			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset+this.hiddenCount, this.count);
+			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
@@ -123,12 +113,6 @@ export class MultipleItems {
 		//TODO pass the subarray of items as well
     item.collection= this.collection;
 		item.records = [];
-		if (this.state == "hide") {
-			item.hideMine = true;
-		}
-		else {
-			item.hideMine = false;
-		}
 		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc});
   }
 
@@ -153,15 +137,6 @@ export class MultipleItems {
 		this.getRecords();
   }
 
-	toggleSortMenu() {
-    if ($('.sort').hasClass('open')) {
-      $('.sort').removeClass('open');
-    }
-    else {
-      $('.sort').addClass('open');
-    }
-  }
-
 	toggleStateMenu() {
     if ($('.state').hasClass('open')) {
       $('.state').removeClass('open');
@@ -171,17 +146,9 @@ export class MultipleItems {
     }
   }
 
-  reloadCollection(state, sortBy) {
-		if ( (state==this.state) && (sortBy==this.sortBy) ) {
-			return;
-		}
-		else {
-			this.records.splice(0, this.records.length);
-			this.hiddenCount = 0;
-			this.sortBy = sortBy;
-			this.state = state;
-			this.getRecords();
-		}
+  reloadCollection(hide) {
+		this.records.splice(0, this.records.length);
+		this.getRecords();
   }
 
 	hasContributed(record) {

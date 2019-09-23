@@ -15,31 +15,12 @@
 						</a>
 						<!-- dropdown-->
 						<ul aria-labelledby="sorting" class="dropdown-menu">
-							<!-- <li> <a href="javascript:void(0)" click.delegate="reloadCollection('hide', sortBy)" t="app:hide">HIDE</a></li> -->
-							<!-- <li> <a href="javascript:void(0)" click.delegate="reloadCollection('show', sortBy)" t="app:show">SHOW</a></li> -->
-							<li> <a href="javascript:void(0)" t="app:hide">HIDE</a></li>
-							<li> <a href="javascript:void(0)" t="app:show">SHOW</a></li>
+							<li> <a href="javascript:void(0)" click.delegate="reloadCollection('true')" t="app:hide">HIDE</a></li>
+							<li> <a href="javascript:void(0)" click.delegate="reloadCollection('false')" t="app:show">SHOW</a></li>
 						</ul>
 					</div>
 				</div>
 				<span t="app:annotated">MY ANNOTATED ITEMS</span>
-			</div>
-			<!-- Sort - Filter-->
-			<div class="sort">
-				<!-- label-->
-				<div class="lbl" t="app:sortbytags">SORT BY TAGS : </div>
-				<!-- sort-->
-				<a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
-					<span class="text" t="app:${sortBy.toLowerCase()}">${sortBy.toUpperCase()}</span>
-					<span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
-				</a>
-				<!-- dropdown-->
-				<ul aria-labelledby="sorting" class="dropdown-menu">
-					<!-- <li> <a href="javascript:void(0)" click.delegate="reloadCollection(state, 'Ascending')" t="app:ascending">ASCENDING</a></li> -->
-					<!-- <li> <a href="javascript:void(0)" click.delegate="reloadCollection(state, 'Descending')" t="app:descending">DESCENDING</a></li> -->
-					<li> <a href="javascript:void(0)" t="app:ascending">ASCENDING</a></li>
-					<li> <a href="javascript:void(0)" t="app:descending">DESCENDING</a></li>
-				</ul>
 			</div>
 		</div>
 		<!-- entry-->
