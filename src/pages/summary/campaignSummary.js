@@ -23,11 +23,12 @@ import { CollectionServices } from 'CollectionServices.js';
 import { Record } from 'Record.js';
 import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
+import { I18N } from 'aurelia-i18n';
 import { setMap } from 'utils/Plugin.js';
 
 let instance = null;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue)
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -35,7 +36,7 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue) {
+  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n) {
 	if (instance) {
 			return instance;
 		}
@@ -45,6 +46,7 @@ export class CampaignSummary {
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.router = router;
+    this.i18n = i18n;
     this.records = [];
     this.recId = "";
 		this.thisVM=this;
@@ -92,12 +94,16 @@ export class CampaignSummary {
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get user() { return this.userServices.current; }
+  get locale() { return window.location.href.split('/')[3]; }
 
   attached() {
     $('.accountmenu').removeClass('active');
   }
 
   activate(params, route) {
+    if (this.i18n.getLocale() != this.locale) {
+      this.i18n.setLocale(this.locale);
+    }
     this.resetInstance();
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
