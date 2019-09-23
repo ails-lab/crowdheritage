@@ -51,14 +51,14 @@
           <div class="sectionlabel">
             <div class="bold">
               <!-- State - Filter-->
-              <div class="state">
-                <a id="sorting" href="javascript:void(0)" click.delegate="toggleStateMenu()" data-toggle="dropdown">
+              <div id="state-menu" class="state">
+                <a id="states" href="javascript:void(0)" click.delegate="toggleStateMenu()" data-toggle="dropdown">
                   <span class="text" t="[prepend]index:${state.toLowerCase()}">
                     <span class="arrow"><img width="11px" src="/img/ic-arrow-down-white.png"></span>
                   </span>
                 </a>
                 <!-- dropdown-->
-                <ul aria-labelledby="sorting" class="dropdown-menu">
+                <ul aria-labelledby="states" class="dropdown-menu">
                   <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('all', sortBy)" t="index:all">ALL</a></li>
                   <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('inactive', sortBy)" t="index:inactive"><img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"> INACTIVE</a></li>
                   <li><a href="javascript:void(0)" click.delegate="reloadCampaigns('active', sortBy)" t="index:active"><img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"> ACTIVE</a></li>

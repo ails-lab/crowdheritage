@@ -174,12 +174,7 @@ export class CampaignIndex {
   }
 
   toggleStateMenu() {
-    if ($('.state').hasClass('open')) {
-      $('.state').removeClass('open');
-    }
-    else {
-      $('.state').addClass('open');
-    }
+    document.getElementById("state-menu").classList.toggle("open");
   }
 
   reloadCampaigns(state, sortBy) {
