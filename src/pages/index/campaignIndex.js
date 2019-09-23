@@ -52,18 +52,7 @@ export class CampaignIndex {
     this.state = "all";
 
     this.i18n = i18n;
-    this.locales = [
-      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" }
-      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
-      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
-      //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
-      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
-      //{ title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
-    ];
-    this.currentLocale;
-    this.currentLocaleCode;
+    this.currentLocaleCode = this.i18n.getLocale();
   }
 
   attached() {
@@ -79,7 +68,7 @@ export class CampaignIndex {
     }
     // Set the page locale
     this.i18n.setLocale(params.lang);
-    this.getLocale();
+    this.currentLocaleCode = this.i18n.getLocale();
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
@@ -174,12 +163,7 @@ export class CampaignIndex {
   }
 
   toggleStateMenu() {
-    if ($('.state').hasClass('open')) {
-      $('.state').removeClass('open');
-    }
-    else {
-      $('.state').addClass('open');
-    }
+    document.getElementById("state-menu").classList.toggle("open");
   }
 
   reloadCampaigns(state, sortBy) {
@@ -198,16 +182,6 @@ export class CampaignIndex {
           this.getCampaigns(this.groupName, this.sortBy, this.state);
         });
       }
-  }
-
-  getLocale() {
-    this.currentLocaleCode = this.i18n.getLocale();
-    for (let loc of this.locales) {
-      if (loc.code == this.currentLocaleCode) {
-        this.currentLocale = loc;
-        return this.currentLocale;
-      }
-    }
   }
 
 }
