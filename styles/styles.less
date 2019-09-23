@@ -1872,17 +1872,18 @@ body main section.tagging .left {
 body main section.tagging .left .img {
   width: 100%;
   text-align: center;
+  overflow: hidden;
 }
 body main section.tagging .left .img img {
   width: 100%;
 }
 body main section.tagging .left .img #recImg {
-  border-radius: 5px;
-  cursor: pointer;
   transition: 0.3s;
+  cursor: pointer;
 }
 body main section.tagging .left .img #recImg:hover {
-  opacity: 0.7;
+  opacity: 0.9;
+  cursor: zoom-in;
 }
 body main section.tagging .left .img .modal {
   display: none; /* Hidden by default */
@@ -1912,12 +1913,13 @@ body main section.tagging .left .img .modal-content {
   to {transform:scale(1)}
 }
 body main section.tagging .left .img .modal #modalImg:hover {
-  cursor: pointer;
+  cursor: zoom-out;
 }
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
   body main section.tagging .left .img .modal-content {
     width: 100%;
+    overflow: hidden;
   }
 }
 body main section.tagging .left .metadata {
@@ -2513,6 +2515,7 @@ body main section.tagging .right .tag-item .taglist.color > li,
 body main section.tagging .right .tag-geo .taglist.color > li,
 body main section.tagging .right .tag-color .taglist.color > li {
   padding: 0;
+  cursor: default;
 }
 body main section.tagging .right .tag-item .taglist.color > li:before,
 body main section.tagging .right .tag-geo .taglist.color > li:before,
