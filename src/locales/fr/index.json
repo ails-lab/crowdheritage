@@ -1,6 +1,7 @@
 {
   "bannertext-up"   : "CAMPAGNES DE",
   "bannertext-down" : "CROWDSOURCING",
+  "intro-text"      : "QU'EST-CE QUE LE CROWDHERITAGE",
 	"description"			:	"Crowdheritage est une plate-forme ouverte où les institutions du patrimoine culturel peuvent partager les métadonnées de leurs collections qui ont besoin d’une correction ou d’un enrichissement, et tout le monde peut contribuer à les améliorer. Les institutions culturelles exploiteront la sagesse et le pouvoir de la foule pour rendre leurs collections numériques plus faciles à découvrir et les contributeurs obtiendront leur part de gloire et une certaine gratitude! Commencez à rejoindre une campagne maintenant ou <a href='mailto:crowdheritage@image.ntua.gr'> contactez-nous </a> si vous souhaitez configurer la vôtre.",
   "current"         : "CAMPAGNES DE CROWDSOURCING",
   "sortby"          : "TRIER PAR ",
