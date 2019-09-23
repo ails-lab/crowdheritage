@@ -64,8 +64,9 @@ export class LoginDialog {
 	}
 
 	authenticate(provider) {
-		this.userServices.authenticate(provider, '#/' + this.router.currentInstruction.fragment)
+		this.userServices.authenticate(provider, this.router.currentInstruction.fragment)
 			.then((response) => {
+				location.reload();
 				this.controller.ok();
 			})
 			.catch((error) => {
