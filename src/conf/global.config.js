@@ -42,7 +42,7 @@ else if (window.location.hostname === 'withcrowd.eu') {
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
 	settings.auth.facebook='';
 	settings.project = 'CrowdHeritage';
-	seetings.baseUrl: 'https://api.crowdheritage.eu';
+	seetings.baseUrl = 'https://api.crowdheritage.eu';
 }
 else {
   console.log(`${window.location.hostname}`);
