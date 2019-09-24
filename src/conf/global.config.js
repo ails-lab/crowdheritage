@@ -22,7 +22,7 @@ var settings = {
 		google: '',
 		facebook: '' //localhost
 	},
-	baseUrl: 'https://api.withculture.eu', // Production backend
+	baseUrl: 'https://api.crowdheritage.eu', // Production backend
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
