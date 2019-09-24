@@ -22,7 +22,7 @@ var settings = {
 		google: '',
 		facebook: '' //localhost
 	},
-	baseUrl: 'https://api.withculture.eu', // Production backend
+	baseUrl: 'https://api.crowdheritage.eu', // Production backend
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
@@ -42,7 +42,7 @@ else if (window.location.hostname === 'withcrowd.eu') {
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
 	settings.auth.facebook='';
 	settings.project = 'CrowdHeritage';
-	seetings.baseUrl = 'https://api.crowdheritage.eu';
+	settings.baseUrl = 'https://api.crowdheritage.eu';
 }
 else {
   console.log(`${window.location.hostname}`);
