@@ -1,16 +1,16 @@
 {
-  "header"        : "Inscrivez-vous avec votre adresse email",
+  "header" : "Utilisez votre adresse email pour vous inscrire",
   "email": "Email",
   "username": "Nom d'utilisateur",
-  "password": "Mot de passe",
-  "repeat": "Répéter le mot de passe",
+  "password": "Choisissez un mot de passe",
+  "repeat": "Confirmez votre mot de passe",
   "firstname": "Prénom",
-  "lastname": "Nom de famille",
-  "select-gender": "Sélectionnez votre sexe ...",
-  "male": "Mâle",
-  "female": "Femelle",
+  "lastname": "Nom",
+  "select-gender": "Sexe",
+  "male": "Homme",
+  "female": "Femme",
   "unspecified": "Non spécifié",
   "accept": "Je reconnais avoir lu et accepté les",
   "terms": "Conditions d'utilisation",
-  "button": "registre"
+  "button": "S'inscrire"
 }

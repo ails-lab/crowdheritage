@@ -1,13 +1,13 @@
 {
-  "name": "prénom",
-  "gender": "Le sexe",
-  "contact": "Informations de contact",
+  "name": "Nom",
+  "gender": "Sexe",
+  "contact": "Informations du contact",
   "about": "À propos",
-  "inserted": "TAGS INSÉRÉS",
-  "upvotes": "UPVOTES",
-  "downvotes": "DOWNVOTES",
-  "items": "ARTICLES",
-  "contribute": "Contribuez plus et déverrouillez le prochain badge.",
+  "inserted": "ANNOTATIONS",
+  "upvotes": "VOTES POSITIFS",
+  "downvotes": "VOTES NÉGATIFS",
+  "items": "IMAGES",
+  "contribute": "Contribuez davantage pour déverrouiller le prochain badge.",
   "contributions": "CONTRIBUTIONS",
   "annotated": "ARTICLES ANNOTÉS"
 }

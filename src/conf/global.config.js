@@ -30,8 +30,8 @@ var settings = {
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
-	//settings.baseUrl = 'https://api.withcrowd.eu';  // Backend with test-DB
-	//settings.baseUrl = 'http://localhost:9060';    // Local backend for testing
+	// settings.baseUrl = 'https://api.withcrowd.eu';  // Backend with test-DB
+	// settings.baseUrl = 'http://localhost:9060';    // Local backend for testing
 	settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; // Debug
 }
@@ -42,6 +42,7 @@ else if (window.location.hostname === 'withcrowd.eu') {
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
 	settings.auth.facebook='';
 	settings.project = 'CrowdHeritage';
+	baseUrl: 'https://api.crowdheritage.eu'
 }
 else {
   console.log(`${window.location.hostname}`);
