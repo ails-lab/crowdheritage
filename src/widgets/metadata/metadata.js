@@ -41,57 +41,62 @@ export class Metadata {
 
   async activate(params) {
     this.record = params.record;
+    try {
+      if (this.record.data) {
 
-    if (this.record.data) {
+        if ( !('content' in this.record.data) ) {
+          await this.recordServices.getRecord(this.record.dbId)
+            .then( response => {
+              //this.record = response;
+              let content = JSON.parse(response.content['JSONLD-EDM'])['@graph'];
+              for (let i in content) {
+                if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
+                  this.place = content[i]['skos:altLabel'];
+                }
+                if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['edm:year']) ) {
+                  this.date = content[i]['edm:year'];
+                }
+                if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
+                  this.formatUri = content[i]['dc:format'][0]['@id'];
+                  this.format = content[i]['dc:format'][1]['@value'].split(' ')[1];
+                }
+                if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
+                  this.mediumUri = content[i]['dcterms:medium'][1]['@id'];
+                  this.medium = content[i]['dcterms:medium'][0]['@value'].split(' ')[1];
+                }
+              }
+            })
+            .catch(error => {
+              console.log(error.message);
+            });
+        }
 
-      if ( !('content' in this.record.data) ) {
-        await this.recordServices.getRecord(this.record.dbId)
-          .then( response => {
-            //this.record = response;
-            let content = JSON.parse(response.content['JSONLD-EDM'])['@graph'];
-            for (let i in content) {
-              if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
-                this.place = content[i]['skos:altLabel'];
-              }
-              if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['edm:year']) ) {
-                this.date = content[i]['edm:year'];
-              }
-              if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
-                this.formatUri = content[i]['dc:format'][0]['@id'];
-                this.format = content[i]['dc:format'][1]['@value'].split(' ')[1];
-              }
-              if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
-                this.mediumUri = content[i]['dcterms:medium'][1]['@id'];
-                this.medium = content[i]['dcterms:medium'][0]['@value'].split(' ')[1];
-              }
+        else {
+          let content = JSON.parse(this.record.data.content['JSONLD-EDM'])['@graph'];
+          for (let i in content) {
+            if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
+              this.place = content[i]['skos:altLabel'];
             }
-          })
-          .catch(error => {
-            console.log(error.message);
-          });
-      }
-
-      else {
-        let content = JSON.parse(this.record.data.content['JSONLD-EDM'])['@graph'];
-        for (let i in content) {
-          if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
-            this.place = content[i]['skos:altLabel'];
-          }
-          if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['edm:year']) ) {
-            this.date = content[i]['edm:year'];
-          }
-          if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
-            this.formatUri = content[i]['dc:format'][0]['@id'];
-            this.format = content[i]['dc:format'][1]['@value'].split(' ')[1];
-          }
-          if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
-            this.mediumUri = content[i]['dcterms:medium'][1]['@id'];
-            this.medium = content[i]['dcterms:medium'][0]['@value'].split(' ')[1];
+            if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['edm:year']) ) {
+              this.date = content[i]['edm:year'];
+            }
+            if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
+              this.formatUri = content[i]['dc:format'][0]['@id'];
+              this.format = content[i]['dc:format'][1]['@value'].split(' ')[1];
+            }
+            if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
+              this.mediumUri = content[i]['dcterms:medium'][1]['@id'];
+              this.medium = content[i]['dcterms:medium'][0]['@value'].split(' ')[1];
+            }
           }
         }
-      }
 
+      }
     }
+    catch (err) {
+      console.log(err);
+    }
+
   }
 
   toggleLoadMore(container) {
