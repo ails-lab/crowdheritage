@@ -62,6 +62,7 @@ export class CampaignItem {
     // this.more = true;
 
     this.mediaDiv = '';
+		this.hideOrShowMine = 'hide';
   }
 
 	get lastItem() {
@@ -107,7 +108,7 @@ export class CampaignItem {
 	}
 
 	loadNextCollectionRecords() {
-		this.collectionServices.getRecords(this.collection.dbId, this.batchOffset, COUNT)
+		this.collectionServices.getRecords(this.collection.dbId, this.batchOffset, COUNT, this.hideOrShowMine)
 		.then( response => {
 			this.fillRecordArray(response.records);
 			this.batchOffset += response.records.length;
@@ -315,6 +316,9 @@ export class CampaignItem {
     } else {
       this.previous =[];
     }
+		if (routeData.hideOrShowMine) {
+			this.hideOrShowMine =  routeData.hideOrShowMine;
+		}
     //console.info(this.previous);
     //console.info(this.records);
 		this.loadNextRecord();
