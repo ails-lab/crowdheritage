@@ -197,17 +197,18 @@ export class Tagitem {
 		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
 			return obj.geonameId === geoid
 		});
-		let existscheck = this.geoannotations.find(obj => {
-			console.log(obj);
-			return (obj.uri &&  obj.uri.indexOf(geoid)!=-1)
-		});
-		if(existscheck!=null){
-			this.prefix = "";
-			this.selectedAnnotation = null;
-			this.suggestedAnnotations = [];
-      toastr.error(this.i18n.tr('item:toastr-geo'));
-			return;
-		}
+		for (var [i, ann] of this.geoannotations.entries()) {
+      if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
+        this.prefix = "";
+        this.selectedAnnotation = null;
+        this.suggestedAnnotations = [];
+        toastr.error(this.i18n.tr('item:toastr-geo'));
+        if (!ann.approvedByMe) {
+          this.score(ann.dbId, 'approved', i, 'geo');
+        }
+        return;
+      }
+    }
 		this.suggestedAnnotations = [];
 		this.errors = this.selectedAnnotation == null;
 
@@ -218,10 +219,19 @@ export class Tagitem {
 				toastr.success('Annotation added.');
 				self.ea.publish('annotations-created', self.record);
 				self.ea.publish('geotag-created', this.selectedAnnotation);
-        if (!this.hasContributed('all')) {
-          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-        }
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        this.getRecordAnnotations('').then( () => {
+          if (!this.hasContributed('all')) {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+          }
+          for (var [i, ann] of this.geoannotations.entries()) {
+            if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
+              this.score(ann.dbId, 'approved', i, 'tag');
+              break;
+            }
+          }
+        });
 			 	this.prefix = "";
 				this.selectedAnnotation = null;
 			}).catch((error) => {
@@ -279,9 +289,9 @@ export class Tagitem {
             this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
           }
           for (var [i, ann] of this.annotations.entries()) {
-            console.log(ann.label.toLowerCase);
             if (ann.label.toLowerCase() === lb.toLowerCase()) {
               this.score(ann.dbId, 'approved', i, 'tag');
+              break;
             }
           }
         });
@@ -846,10 +856,6 @@ export class Tagitem {
       }
     }
 
-    console.log("tag", tagFlag, this.annotations);
-    console.log("geo", geoFlag, this.geoannotations);
-    console.log("color", colorFlag, this.colorannotations);
-    console.log("poll", pollFlag, this.pollannotations);
     if (mot == "tag") {
       return tagFlag;
     }
