@@ -251,15 +251,17 @@ export class Tagitem {
       return obj.id === index
     });
     let lb = this.selectedAnnotation.label;
-    let existscheck = this.annotations.find(obj => {
-      return obj.label.toLowerCase() === lb.toLowerCase();
-    });
-    if (existscheck != null) {
-      this.prefix = "";
-      this.selectedAnnotation = null;
-      this.suggestedAnnotations = [];
-      toastr.error(this.i18n.tr('item:toastr-existing'));
-      return;
+    for (var [i, ann] of this.annotations.entries()) {
+      if (ann.label.toLowerCase() === lb.toLowerCase()) {
+        this.prefix = "";
+        this.selectedAnnotation = null;
+        this.suggestedAnnotations = [];
+        toastr.error(this.i18n.tr('item:toastr-existing'));
+        if (!ann.approvedByMe) {
+          this.score(ann.dbId, 'approved', i, 'tag');
+        }
+        return;
+      }
     }
     this.suggestedAnnotations = [];
     this.errors = this.selectedAnnotation == null;
@@ -273,6 +275,16 @@ export class Tagitem {
           this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
         }
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        var lb = this.selectedAnnotation.label;
+        this.getRecordAnnotations('').then( () => {
+          for (var [i, ann] of this.annotations.entries()) {
+            console.log(ann.label.toLowerCase);
+            if (ann.label.toLowerCase() === lb.toLowerCase()) {
+              this.score(ann.dbId, 'approved', i, 'tag');
+            }
+          }
+        });
         this.prefix = "";
         this.selectedAnnotation = null;
       }).catch((error) => {
@@ -332,8 +344,12 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-		this.unscore(id, 'approved', index, mot);
+
     this.annotationServices.delete(id).then(() => {
+      // Since on annotating, the user automatically also upvotes the annotation,
+      // when deleting an annotation, you should also remove the point from upvoting
+  		this.unscore(id, 'approved', index, mot);
+
       if (mot == 'tag') {
         this.annotations.splice(index, 1);
       }
