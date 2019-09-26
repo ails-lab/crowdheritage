@@ -227,7 +227,7 @@ export class Tagitem {
           }
           for (var [i, ann] of this.geoannotations.entries()) {
             if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
-              this.score(ann.dbId, 'approved', i, 'tag');
+              this.score(ann.dbId, 'approved', i, 'geo');
               break;
             }
           }
@@ -374,7 +374,7 @@ export class Tagitem {
       }
 
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-      if (!this.hasContributed(mot)) {
+      if (!this.hasContributed('all')) {
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
       }
     }).catch(error => {
@@ -701,7 +701,7 @@ export class Tagitem {
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
       }
     }
-    if (!this.hasContributed(mot)) {
+    if (!this.hasContributed('all')) {
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
   }
