@@ -21,16 +21,22 @@
         	<div class="text">${ann.label}</div>
         	<ul class="action">
           	<li class.bind="ann.approvedByMe ? 'up active' : 'up'">
-            	<a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
+            	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
+              	<i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+            	</a>
+              <a if.bind="ann.createdByMe">
               	<i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
             	</a>
           	</li>
           	<li class.bind="ann.rejectedByMe ? 'down active' : 'down'">
-            	<a href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
+            	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
+              	<span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
+            	</a>
+              <a if.bind="ann.createdByMe">
               	<span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
             	</a>
 						</li>
-          	<li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==0 && ann.rejectedBy.length==0">
+          	<li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0">
             	<a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'tag')">
               	<img src="/img/ic-delete.png">
             	</a>

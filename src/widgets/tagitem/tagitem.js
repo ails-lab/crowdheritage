@@ -197,17 +197,18 @@ export class Tagitem {
 		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
 			return obj.geonameId === geoid
 		});
-		let existscheck = this.geoannotations.find(obj => {
-			console.log(obj);
-			return (obj.uri &&  obj.uri.indexOf(geoid)!=-1)
-		});
-		if(existscheck!=null){
-			this.prefix = "";
-			this.selectedAnnotation = null;
-			this.suggestedAnnotations = [];
-      toastr.error(this.i18n.tr('item:toastr-geo'));
-			return;
-		}
+		for (var [i, ann] of this.geoannotations.entries()) {
+      if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
+        this.prefix = "";
+        this.selectedAnnotation = null;
+        this.suggestedAnnotations = [];
+        toastr.error(this.i18n.tr('item:toastr-geo'));
+        if (!ann.approvedByMe) {
+          this.score(ann.dbId, 'approved', i, 'geo');
+        }
+        return;
+      }
+    }
 		this.suggestedAnnotations = [];
 		this.errors = this.selectedAnnotation == null;
 
@@ -218,10 +219,19 @@ export class Tagitem {
 				toastr.success('Annotation added.');
 				self.ea.publish('annotations-created', self.record);
 				self.ea.publish('geotag-created', this.selectedAnnotation);
-        if (!this.hasContributed()) {
-          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-        }
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        this.getRecordAnnotations('').then( () => {
+          if (!this.hasContributed('all')) {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+          }
+          for (var [i, ann] of this.geoannotations.entries()) {
+            if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
+              this.score(ann.dbId, 'approved', i, 'geo');
+              break;
+            }
+          }
+        });
 			 	this.prefix = "";
 				this.selectedAnnotation = null;
 			}).catch((error) => {
@@ -251,15 +261,17 @@ export class Tagitem {
       return obj.id === index
     });
     let lb = this.selectedAnnotation.label;
-    let existscheck = this.annotations.find(obj => {
-      return obj.label.toLowerCase() === lb.toLowerCase();
-    });
-    if (existscheck != null) {
-      this.prefix = "";
-      this.selectedAnnotation = null;
-      this.suggestedAnnotations = [];
-      toastr.error(this.i18n.tr('item:toastr-existing'));
-      return;
+    for (var [i, ann] of this.annotations.entries()) {
+      if (ann.label.toLowerCase() === lb.toLowerCase()) {
+        this.prefix = "";
+        this.selectedAnnotation = null;
+        this.suggestedAnnotations = [];
+        toastr.error(this.i18n.tr('item:toastr-existing'));
+        if (!ann.approvedByMe) {
+          this.score(ann.dbId, 'approved', i, 'tag');
+        }
+        return;
+      }
     }
     this.suggestedAnnotations = [];
     this.errors = this.selectedAnnotation == null;
@@ -269,10 +281,20 @@ export class Tagitem {
       this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging').then(() => {
         toastr.success('Annotation added.');
         self.ea.publish('annotations-created', self.record);
-        if (!this.hasContributed()) {
-          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-        }
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        var lb = this.selectedAnnotation.label;
+        this.getRecordAnnotations('').then( () => {
+          if (!this.hasContributed('all')) {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+          }
+          for (var [i, ann] of this.annotations.entries()) {
+            if (ann.label.toLowerCase() === lb.toLowerCase()) {
+              this.score(ann.dbId, 'approved', i, 'tag');
+              break;
+            }
+          }
+        });
         this.prefix = "";
         this.selectedAnnotation = null;
       }).catch((error) => {
@@ -300,7 +322,7 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-    if (!this.hasContributed()) {
+    if (!this.hasContributed('all')) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
     var answer = this.annotationExists(label);
@@ -332,8 +354,12 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-		this.unscore(id, 'approved', index, mot);
+
     this.annotationServices.delete(id).then(() => {
+      // Since on annotating, the user automatically also upvotes the annotation,
+      // when deleting an annotation, you should also remove the point from upvoting
+  		this.unscore(id, 'approved', index, mot);
+
       if (mot == 'tag') {
         this.annotations.splice(index, 1);
       }
@@ -348,7 +374,7 @@ export class Tagitem {
       }
 
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-      if (!this.hasContributed()) {
+      if (!this.hasContributed('all')) {
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
       }
     }).catch(error => {
@@ -376,7 +402,7 @@ export class Tagitem {
   }
 
   async score(annoId, annoType, index, mot) {
-    if (!this.hasContributed()) {
+    if (!this.hasContributed('all')) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
 
@@ -675,7 +701,7 @@ export class Tagitem {
         this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
       }
     }
-    if (!this.hasContributed()) {
+    if (!this.hasContributed('all')) {
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
     }
   }
@@ -799,28 +825,52 @@ export class Tagitem {
     return null;
   }
 
-  hasContributed() {
+  hasContributed(mot) {
+    var tagFlag = false;
+    var geoFlag = false;
+    var colorFlag = false;
+    var pollFlag = false;
+
     for (var i in this.annotations) {
       if (this.annotations[i].createdByMe || this.annotations[i].approvedByMe || this.annotations[i].rejectedByMe) {
-        return true;
+        tagFlag = true;
+        break;
       }
     }
     for (var i in this.geoannotations) {
       if (this.geoannotations[i].createdByMe || this.geoannotations[i].approvedByMe || this.geoannotations[i].rejectedByMe) {
-        return true;
+        geoFlag = true;
+        break;
       }
     }
     for (var i in this.colorannotations) {
       if (this.colorannotations[i].createdByMe || this.colorannotations[i].approvedByMe || this.colorannotations[i].rejectedByMe) {
-        return true;
+        colorFlag = true;
+        break;
       }
     }
     for (var i in this.pollannotations) {
       if (this.pollannotations[i].createdByMe || this.pollannotations[i].approvedByMe || this.pollannotations[i].rejectedByMe) {
-        return true;
+        pollFlag = true;
+        break;
       }
     }
-    return false;
+
+    if (mot == "tag") {
+      return tagFlag;
+    }
+    else if (mot == "geo") {
+      return geoFlag;
+    }
+    else if (mot == "color") {
+      return colorFlag;
+    }
+    else if (mot == "poll") {
+      return pollFlag;
+    }
+    else {
+      return tagFlag || geoFlag || colorFlag || pollFlag;
+    }
   }
 
   hasMotivation(name) {
