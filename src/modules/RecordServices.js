@@ -95,10 +95,10 @@ export class RecordServices {
 
 	// collectionids is an array of objectids strings
 	// count is how many you want
-	getRandomRecordsFromCollections( collectionIds, count ) {
+	getRandomRecordsFromCollections( collectionIds, count, hideMine='hide') {
 		var collectionList = collectionIds.join(",");
 
-		return this.http.fetch('/record/randomRecordsFromCollections?collectionIds=' + collectionList + '&count=' + count, {
+		return this.http.fetch('/record/randomRecordsFromCollections?collectionIds=' + collectionList + '&count=' + count + '&hideMyAnnotated=' + (hideMine === 'hide'), {
 			method: 'GET'
 		}).then(checkStatus).then((response) => {
 			return response.json();

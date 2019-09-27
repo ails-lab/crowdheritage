@@ -38,7 +38,7 @@ export class CollectionServices {
 
 	// Records retrieval
 	async getRecords(id, offset, count, hideMine) {
-		return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count + '&locale=ALL' + '&hideMine=' + (hideMine === 'hide'), {
+		return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count + '&locale=ALL' + '&hideMyAnnotated=' + (hideMine === 'hide'), {
 			method: 'GET'
 		}).then((response) => response.json());
 	}

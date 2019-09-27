@@ -113,6 +113,7 @@ export class MultipleItems {
 		//TODO pass the subarray of items as well
     item.collection= this.collection;
 		item.records = [];
+		item.hideOrShowMine = this.state;
 		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc});
   }
 
@@ -146,7 +147,8 @@ export class MultipleItems {
     }
   }
 
-  reloadCollection(hide) {
+  reloadCollection(state) {
+		this.state = state;
 		this.records.splice(0, this.records.length);
 		this.getRecords();
   }
