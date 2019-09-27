@@ -57,7 +57,7 @@ export class CampaignSummary {
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
-    this.count=4;
+    this.count=6;
     this.userTags = 0;
     this.userRecords = 0;
     this.userPoints = 0;
@@ -80,7 +80,7 @@ export class CampaignSummary {
     this.currentCount = 0;
     this.loading = false;
     this.more = true;
-    this.count=4;
+    this.count=6;
     this.userTags = 0;
     this.userRecords = 0;
     this.userPoints = 0;
