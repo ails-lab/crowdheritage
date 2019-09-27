@@ -49,7 +49,7 @@
   "tag-info"        : "Identifiez les éléments que vous voyez sur l'image ; Sélectionnez les termes dans le thésaurus ou ajoutez les s'ils sont nouveaux.",
   "tag-search-text" : "Commencez à écrire un mot puis sélectionnez-le dans la liste.",
   "poll"            : "SONDAGE",
-  "poll-info"       : "Pouvez-vous identifier le sujet principal de cette image ?",
+  "poll-info"       : "Pouvez-vous identifier le sujet principal de cette image?",
   "yes"             : "Oui",
   "no"              : "Non",
   "geotagging"      : "GEOLOCALISATION",

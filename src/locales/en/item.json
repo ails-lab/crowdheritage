@@ -49,7 +49,7 @@
   "tag-info"        : "Tag items that you see on the image, you can validate it first by checking on the thesaurus before adding the tag.",
   "tag-search-text" : "Start typing a term then select from the list",
   "poll"            : "POLL",
-  "poll-info"       : "Can you identify the collection's subject inside this image?",
+  "poll-info"       : "Is the following composer depicted in the photograph?",
   "yes"             : "Yes",
   "no"              : "No",
   "geotagging"      : "GEOTAGGING",
