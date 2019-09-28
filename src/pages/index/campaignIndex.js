@@ -86,13 +86,15 @@ export class CampaignIndex {
     this.loading = true;
     this.campaignServices.getCampaigns( {group: groupName, project: this.project, state: state, sortBy: sortBy, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
-        this.fillCampaignArray((this.campaigns), resultsArray);
-        this.currentCount = this.currentCount + resultsArray.length;
-        if (this.currentCount >= this.campaignsCount) {
-          this.more = false;
+        if (this.loading) {
+          this.fillCampaignArray((this.campaigns), resultsArray);
+          this.currentCount = this.currentCount + resultsArray.length;
+          if (this.currentCount >= this.campaignsCount) {
+            this.more = false;
+          }
+          this.loading = false;
         }
       });
-    this.loading = false;
   }
 
   fillCampaignArray(campaignArray, results) {

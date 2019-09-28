@@ -89,7 +89,13 @@
         <!-- list-->
         <div class="list">
           <!-- campaign-->
-          <div class="campaign" repeat.for="camp of campaigns">
+          <div show.bind="loading" class="campaign">
+            <center>
+              <img src="/img/assets/img/loader.gif" alt="Loading campaigns">
+              <p>Loading Crowdsouring Campaigns</p>
+            </center>
+          </div>
+          <div show.bind="!loading" class="campaign" repeat.for="camp of campaigns">
             <!-- no--><span class="no">${camp.username | campaignUsernameTrim }</span>
             <!-- thumbs-->
             <div class="thumbs">
