@@ -327,6 +327,13 @@ export class Tagitem {
     }
     var answer = this.annotationExists(label);
     if (!answer) {
+      // While waiting for the annotation to go through, change the cursor to 'wait'
+      document.body.style.cursor = 'wait';
+      let clrs = document.getElementsByClassName("color");
+      for (let clr of clrs) {
+        clr.style.cursor = 'wait';
+      }
+
       if (this.userServices.isAuthenticated() && this.userServices.current === null) {
         await this.userServices.reloadCurrentUser();
       }
@@ -343,6 +350,13 @@ export class Tagitem {
     }
     else if (!this.colorannotations[answer.index].approvedByMe) {
       await this.score(answer.id, 'approved', answer.index, 'color');
+    }
+
+    // When the annotation is finished, change the cursor back to 'default'
+    document.body.style.cursor = 'default';
+    let clrs = document.getElementsByClassName("color");
+    for (let clr of clrs) {
+      clr.style.cursor = 'default';
     }
   }
 
