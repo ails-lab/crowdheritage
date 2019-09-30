@@ -22,7 +22,7 @@ import { CampaignServices } from 'CampaignServices.js';
 import settings from 'global.config.js';
 import { toggleMore } from 'utils/Plugin.js';
 
-let COUNT = 6;
+let COUNT = 12;
 
 @inject(CampaignServices, UserServices)
 export class Leaderboard {
@@ -75,7 +75,9 @@ export class Leaderboard {
   async getUserData(userId, points) {
     let data = await this.userServices.getUser(userId);
     let user = new User(data);
-    this.topUsers.push([user, points]);
+    if (points > 0) {
+      this.topUsers.push([user, points]);
+    }
   }
 
   loadMore() {
