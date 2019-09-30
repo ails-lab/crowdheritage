@@ -1,6 +1,7 @@
 {
-  "bannertext-up"   : "CONTRIBUEZ AU PATRIMOINE",
-  "bannertext-down" : "CULTUREL EUROPÉEN !",
+  "bannertext-up"   : "CONTRIBUONS À NOTRE",
+  "bannertext-down" : "CULTURE !",
+	"intro-text"      : "QU'EST-CE QUE CROWDHERITAGE",
 	"description"	:	"CrowdHeritage est une plateforme ouverte où les institutions du patrimoine culturel peuvent partager les métadonnées de leurs collections qui ont besoin de corrections ou d’améliorations afin que tout le monde puisse contribuer à leur enrichissement. Expert ou novice, vous êtes invités ensemble à participer à ces campagnes de <i>crowdsourcing</i> (production participative), en mettant vos connaissances à disposition de la découverte de grandes collections patrimoniales européennes. Les plus motivés d’entre vous pourrons recevoir des cadeaux ! Rejoignez une campagne dès maintenant ou <a href='mailto:crowdheritage@image.ntua.gr'> contactez-nous </a> si vous souhaitez monter la vôtre.",
   "current"         : "CAMPAGNES DE CROWDSOURCING",
   "sortby"          : "TRIER PAR ",

@@ -20,10 +20,11 @@
   "startdate"           : "DATA DI AVVIO",
   "enddate"             : "DATA DI FINE",
   "loadmore"            : "ANNOTA ANCORA",
-  "learnmore"           : "IMPARA DI PIU'",
+  "learnmore"           : "PER SAPERNE DI PIU'",
 
   "collection"          : "COLLEZIONE",
   "return-campaign"     : "TORNA ALLA CAMPAGNA",
+  "return-collection"   : "TORNA ALLA COLLEZIONE",
   "tags"                : "TAG",
   "points"              : "PUNTI",
   "annotated"           : "I MIEI DATI ANNOTATI",

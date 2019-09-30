@@ -1,5 +1,5 @@
 {
-  "header"        : "Registrati con il tuo indirizzo email",
+  "header" : "Registrati con il tuo indirizzo email",
   "email": "E-mail",
   "username": "Nome utente",
   "password": "Password",
@@ -10,7 +10,7 @@
   "male": "Uomo",
   "female": "Donna",
   "unspecified": "Non precisato",
-  "accept": "Dichiaro di aver letto e accetto",
+  "accept": "Dichiaro di aver letto e accetto l'",
   "terms": "Accordo sui termini di utilizzo",
   "button": "Registrazione"
 }
