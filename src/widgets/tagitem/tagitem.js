@@ -27,12 +27,12 @@ import { toggleMore } from 'utils/Plugin.js';
 import {I18N} from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N)
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N, 'isTesterUser')
 export class Tagitem {
 
   @bindable prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n, isTesterUser) {
     this.i18n = i18n;
 
 		this.colorSet = [
@@ -62,6 +62,8 @@ export class Tagitem {
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
+    this.isTesterUser = isTesterUser();
+
     this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.annotations = [];
     this.geoannotations = [];
@@ -183,7 +185,7 @@ export class Tagitem {
 
 	selectGeoAnnotation(geoid) {
     // If the campaign is inactive do NOT geoannotate
-    if (this.campaign.status == 'inactive') {
+    if (this.campaign.status != 'active' && !this.isTesterUser) {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
@@ -242,7 +244,7 @@ export class Tagitem {
 
   selectSuggestedAnnotation(index) {
     // If the campaign is inactive do NOT validate
-    if (this.campaign.status == 'inactive') {
+    if (this.campaign.status != 'active' && !this.isTesterUser) {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
@@ -312,7 +314,7 @@ export class Tagitem {
 			label = 'Multicoloured';
 		}
     // If the campaign is inactive do NOT annotate
-    if (this.campaign.status == 'inactive') {
+    if (this.campaign.status != 'active' && !this.isTesterUser) {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
@@ -398,7 +400,7 @@ export class Tagitem {
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
-    if (this.campaign.status == 'inactive') {
+    if (this.campaign.status != 'active' && !this.isTesterUser) {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }

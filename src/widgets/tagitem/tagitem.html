@@ -6,7 +6,7 @@
       <div class="heading green" t="app:tags">TAGS</div>
       <!-- info-->
       <div class="infobar">${campaign.instructions}</div>
-			<div class="searchbox" if.bind="camp.status != 'inactive' && userServices.isAuthenticated()">
+			<div class="searchbox" if.bind="(isTesterUser || camp.status == 'active') && userServices.isAuthenticated()">
     		<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:150" input.delegate="prefixChanged() & debounce:150"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">

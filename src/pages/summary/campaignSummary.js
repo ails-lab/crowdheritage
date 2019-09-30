@@ -28,7 +28,7 @@ import { setMap } from 'utils/Plugin.js';
 
 let instance = null;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N)
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N, 'isTesterUser')
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -36,39 +36,41 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n) {
-	if (instance) {
-			return instance;
-		}
-    this.loc = window.location.href.split('/')[3];
-    this.campaignServices = campaignServices;
-    this.collectionServices = collectionServices;
-    this.userServices = userServices;
-    this.recordServices = recordServices;
-    this.router = router;
-    this.i18n = i18n;
-    this.records = [];
-    this.recId = "";
-		this.thisVM=this;
-		this.taskQueue=taskQueue;
-    this.campaign = 0;
-    this.collections = [];
-    this.collectionsCount = 0;
-    this.currentCount = 0;
-    this.loading = false;
-    this.more = true;
-    this.count=6;
-    this.userTags = 0;
-    this.userRecords = 0;
-    this.userPoints = 0;
-    this.userBadge = 0;
-    this.userRank = 0;
-    this.userBadgeName = "";
-    this.userBadgeText = "";
-    this.points = [];
-    if (!instance) {
-			instance = this;
-		}
+  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n, isTesterUser) {
+  	if (instance) {
+  			return instance;
+  		}
+      this.loc = window.location.href.split('/')[3];
+      this.campaignServices = campaignServices;
+      this.collectionServices = collectionServices;
+      this.userServices = userServices;
+      this.recordServices = recordServices;
+      this.router = router;
+      this.i18n = i18n;
+      this.isTesterUser = isTesterUser();
+      
+      this.records = [];
+      this.recId = "";
+  		this.thisVM=this;
+  		this.taskQueue=taskQueue;
+      this.campaign = 0;
+      this.collections = [];
+      this.collectionsCount = 0;
+      this.currentCount = 0;
+      this.loading = false;
+      this.more = true;
+      this.count=6;
+      this.userTags = 0;
+      this.userRecords = 0;
+      this.userPoints = 0;
+      this.userBadge = 0;
+      this.userRank = 0;
+      this.userBadgeName = "";
+      this.userBadgeText = "";
+      this.points = [];
+      if (!instance) {
+  			instance = this;
+  		}
   }
 
 	resetInstance() {

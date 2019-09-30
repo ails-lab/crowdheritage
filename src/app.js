@@ -55,6 +55,7 @@ export class App {
     this.dialogService = dialogService;
     this.userServices = userServices;
     container.registerInstance('loginPopup', this.loginPopup.bind(this));
+    container.registerInstance('isTesterUser', this.isTesterUser.bind(this));
   }
 
   activate() {
@@ -80,6 +81,22 @@ export class App {
 			}
 		});
 	}
+
+  isTesterUser() {
+    if (this.userServices.isAuthenticated() && this.userServices.current === null) {
+      this.userServices.reloadCurrentUser();
+    } else if (!this.userServices.isAuthenticated()) {
+      return false;
+    }
+    var testerUsers = [
+    ];
+    if (testerUsers.includes(this.userServices.current.dbId)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   configureRouter(config, router) {
     config.title = '';

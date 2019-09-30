@@ -26,7 +26,7 @@ import settings from 'global.config.js';
 
 let COUNT = 7;
 
-@inject(CampaignServices, UserServices, RecordServices, Router, I18N)
+@inject(CampaignServices, UserServices, RecordServices, Router, I18N, 'isTesterUser')
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -34,11 +34,12 @@ export class CampaignIndex {
     }, 1200);
   }
 
-  constructor(campaignServices, userServices, recordServices, router, i18n) {
+  constructor(campaignServices, userServices, recordServices, router, i18n, isTesterUser) {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.router = router;
+    this.isTesterUser = isTesterUser();
 
     this.project = settings.project;
 

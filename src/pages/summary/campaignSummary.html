@@ -127,7 +127,9 @@
             </div>
           </div>
           <!-- contribute-->
-          <div class="contribute"><a href="javascript:void(0)" click.delegate="goToItem(campaign, 0, records, 0)" t="summary:contribute-campaign">CONTRIBUTE TO CAMPAIGN</a></div>
+          <div class="contribute">
+            <a if.bind="isTesterUser || camp.status == 'active'" href="javascript:void(0)" click.delegate="goToItem(campaign, 0, records, 0)" t="summary:contribute-campaign">CONTRIBUTE TO CAMPAIGN</a>
+          </div>
         </div>
       </div>
     </section>
@@ -156,7 +158,8 @@
 									<div class="thumbs-images thumbs-count-${col.absMedia.length}">
 										<img repeat.for="med of col.absMedia" src.bind="med" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
 									</div>
-									<div class="action" t="[append]app:contribute"><span class="plus">+ </span></div>
+									<div if.bind="isTesterUser || camp.status == 'active'" class="action" t="[append]app:contribute"><span class="plus">+ </span></div>
+                  <div if.bind="!(isTesterUser || camp.status == 'active')" class="action"></div>
 								</div>
                 <!-- detail-->
                 <div class="detail">
