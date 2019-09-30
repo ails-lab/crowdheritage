@@ -1102,6 +1102,54 @@ body main section.campaignstats .right {
 	display: flex;
 	flex-direction: column;
 }
+.show-more-parent {
+	position: relative;
+	.show-more-target {
+		position: relative;
+		overflow-y: hidden;
+    transition: all 300ms ease;
+    padding-left: 30px!important;
+		margin-left: -30px!important;
+    padding-right: 30px!important;
+    margin-right: -30px!important;
+		&::after {
+			content: ''!important;
+			display: block!important;
+			position: absolute!important;
+			left: 0;
+			right: 30px;
+			bottom: 0;
+			height: 0;
+			z-index: 10;
+			background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(242,242,242,1) 100%);
+			background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(242,242,242,1) 100%);
+			background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(242,242,242,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#f2f2f2',GradientType=0 );
+		}
+		&.closed::after {
+			height: 100px;
+		}
+	}
+	i.show-more {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%) translateY(80%);
+		background: @main-color;
+		color: #fff;
+		padding: 5px;
+		border-radius: 50px;
+		cursor: pointer;
+		font-size: 18px;
+		z-index: 15;
+		&.black {
+			background: #000;
+		}
+		&.green {
+			background: @main-color;
+		}
+	}
+}
 body main section.campaignstats .right .leaderboard {
   display: flex;
 	flex-direction: column;
