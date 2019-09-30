@@ -4651,3 +4651,79 @@ body.fullscreen {
     .next { right: 0; }
   }
 }
+@font-face {
+  font-family: 'Genericons';
+  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot');
+  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.woff') format('woff'),
+     url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+[class*="genericon"] {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1;
+  font-family: 'Genericons';
+  text-decoration: inherit;
+  font-weight: normal;
+  font-style: normal;
+  vertical-align: top;
+}
+a .social-button {
+  float: right;
+  align-self: flex-end;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+  width: 176px;
+  height: 30px;
+  padding-right: 12px;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.8;
+  text-align: left;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #d0d0d0;
+  -webkit-transition: background-color 0.175s ease-in-out;
+  -moz-transition: background-color 0.175s ease-in-out;
+	-o-transition: background-color 0.175s ease-in-out;
+	transition: background-color 0.175s ease-in-out;
+}
+a .social-button.twitter {
+  background-color: #00a9f1;
+}
+a .social-button.twitter .text {
+  display: inline-flex;
+  vertical-align: top;
+  margin-top: 3px;
+}
+a .social-button.twitter:before {
+  display: inline-block;
+  font-family: "Genericons";
+  content: "\f202";
+  width: 34px;
+	height: 30px;
+  font-size: 16px;
+  font-size: 1.6rem;
+  padding-left: 10px;
+  margin-right: 12px;
+  background-color: #0085be;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+
+}
+a:hover .social-button.twitter {
+  background-color: #0085be;
+}
