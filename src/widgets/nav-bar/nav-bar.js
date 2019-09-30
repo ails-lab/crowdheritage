@@ -100,7 +100,8 @@ export class NavBar {
 
   logout(redirectUri) {
 		this.userServices.logout(redirectUri);
-    location.reload();
+    // location.reload();
+    this.router.navigateToRoute('index', {lang: this.currentLocaleCode});
 	}
 
   getProfileImage(user) {
