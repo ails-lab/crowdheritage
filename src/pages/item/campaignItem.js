@@ -23,12 +23,13 @@ import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { CollectionServices } from 'CollectionServices.js';
+import { EventAggregator } from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 
 let COUNT = 20;
 
-@inject(UserServices, RecordServices, CampaignServices, CollectionServices, Router, I18N)
+@inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
 export class CampaignItem {
 
   scrollTo(anchor) {
@@ -37,11 +38,12 @@ export class CampaignItem {
     }, 0);
   }
 
-  constructor(userServices, recordServices, campaignServices, collectionServices, router, i18n) {
+  constructor(userServices, recordServices, campaignServices, collectionServices, eventAggregator, router, i18n) {
+    this.userServices = userServices;
+    this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
-    this.recordServices = recordServices;
-    this.userServices = userServices;
+    this.ea = eventAggregator;
     this.router = router;
     this.i18n = i18n;
 
@@ -63,6 +65,10 @@ export class CampaignItem {
 
     this.mediaDiv = '';
 		this.hideOrShowMine = 'hide';
+
+    this.pollSubscriber = this.ea.subscribe("pollAnnotationAdded", () => {
+      this.nextItem();
+    });
   }
 
 	get lastItem() {
@@ -212,6 +218,12 @@ export class CampaignItem {
         $("body").removeClass("fullscreen");
       }
     }, false);
+  }
+
+  detached() {
+    if (this.pollSubscriber) {
+      this.pollSubscriber.dispose();
+    }
   }
 
   toggleFullscreen(){

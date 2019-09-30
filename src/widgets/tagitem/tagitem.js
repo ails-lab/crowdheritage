@@ -410,9 +410,13 @@ export class Tagitem {
     }
 
     if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe))
-      this.unscore(annoId, annoType, index, mot);
+      await this.unscore(annoId, annoType, index, mot);
     else
-      this.score(annoId, annoType, index, mot);
+      await this.score(annoId, annoType, index, mot);
+
+    if (mot == 'poll') {
+      this.ea.publish('pollAnnotationAdded');
+    }
   }
 
   async score(annoId, annoType, index, mot) {
