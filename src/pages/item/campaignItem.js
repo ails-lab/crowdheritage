@@ -153,11 +153,24 @@ export class CampaignItem {
 
     //var scrollPoint = document.getElementById("scrollPoint");
     //scrollPoint.scrollIntoView( {behavior: 'smooth'} );
-    window.scrollTo({
-      top: 300,
-      left: 0,
-      behavior: 'smooth'
-    });
+    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null)
+                      || (document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
+                      || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
+                      || (document.msFullscreenElement && document.msFullscreenElement !== null);
+    if (isInFullScreen) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+    else {
+      window.scrollTo({
+        top: 300,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
 
     document.addEventListener("fullscreenchange", function () {
       var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
