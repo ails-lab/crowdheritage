@@ -14,31 +14,46 @@
  */
 
 
-import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
+import { inject, LogManager, NewInstance } from 'aurelia-framework';
+import { ValidationController, ValidationRules } from 'aurelia-validation';
 import { UserServices } from 'UserServices';
+import { MediaServices } from 'MediaServices.js';
+import { Router } from 'aurelia-router';
 import { User } from 'User.js';
 import { Record } from 'Record.js'
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-@inject(UserServices, Router, I18N, 'loginPopup')
+let logger = LogManager.getLogger('UserProfile.js');
+
+@inject(UserServices, MediaServices, Router, I18N, 'loginPopup', NewInstance.of(ValidationController))
 export class UserProfile {
 
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
 	get currentUser() { return this.userServices.current; }
 	get progress() { return (100*this.points/500) }
 	get barLevel() { return ( this.progress<=100 ? this.progress : 100 ) }
+	get hasErrors() { return !!this.errors.length; }
 
-  constructor(userServices, router, i18n, loginPopup) {
+  constructor(userServices, mediaServices, router, i18n, loginPopup, validationController) {
   	this.userServices = userServices;
+		this.mediaServices = mediaServices;
+		this.validationController = validationController;
 		this.router = router;
 		this.lg = loginPopup;
 		this.project = settings.project;
 		this.i18n = i18n;
+		this.errors = [];
+		this.user = this.userServices.current.clone(); // The owner of the profile
+		ValidationRules
+			.ensure('firstName').required()
+			.ensure('lastName').required()
+			.ensure('username').required()
+			.ensure('email').required().email()
+			.on(this.user);
 
 		this.myProfile = false; // Is this my profile or another user's profile?
-		this.user = null; // The owner of the profile
+		this.loc;
 		// Contributions
 		this.points = 0;
 		this.created = 0;
@@ -46,8 +61,6 @@ export class UserProfile {
 		this.rejected = 0;
 		this.annotatedRecordsCount = 0;
 		this.records = [];
-
-		this.loc;
   }
 
   attached() {
@@ -55,6 +68,7 @@ export class UserProfile {
   }
 
   async activate(params, route) {
+		$('.accountmenu').removeClass('active');
 		this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
 
@@ -79,5 +93,50 @@ export class UserProfile {
 		this.rejected = contributions.rejectedCount;
 		this.annotatedRecordsCount = contributions.annotatedRecordsCount;
   }
+
+	// This weird syntax is necessary to be able to access *this*
+	uploadImage = () => {
+		let input = document.getElementById('imageupload');
+		let data = new FormData();
+		data.append('file', input.files[0]);
+
+		this.mediaServices.upload(data).then((response) => {
+			this.user.avatar = MediaServices.toObject(response);
+			// Update the profile in the DB and reload the page
+			this.updateProfile();
+			location.reload();
+		}).catch((error) => {
+			logger.error(error);
+			toastr.danger('Error uploading the file!');
+		});
+	}
+
+	loadFromFile() {
+		$('#imageupload').trigger('click');
+	}
+
+	updateProfile() {
+		this.validationController.validate().then(v => {
+			console.log(v);
+			if (v.valid) {
+				this.userServices.update({
+					dbId: this.user.id,
+					firstName: this.user.firstName,
+					lastName: this.user.lastName,
+					about: this.user.about,
+					avatar: this.user.avatar
+				})
+				.then((response) => {
+					logger.debug('Profile Updated!');
+				})
+				.catch((error) => {
+					logger.error(error);
+				});
+			}
+			else {
+				this.errors = this.validationController.errors;
+			}
+		});
+	}
 
 }

@@ -20,6 +20,7 @@ import { LogManager, PLATFORM } from 'aurelia-framework';
 import { I18N, TCustomAttribute } from 'aurelia-i18n';
 import Backend from 'i18next-xhr-backend';
 import 'bootstrap';
+import 'aurelia-validation';
 import config from './conf/auth.config.js';
 
 //import * as Bluebird from 'bluebird';
@@ -70,6 +71,7 @@ export async function configure(aurelia) {
     .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
 			baseConfig.configure(config);
 		})
+    .plugin(PLATFORM.moduleName('aurelia-validation'))
     .plugin(PLATFORM.moduleName('aurelia-i18n'), instance => {
       let aliases = ['t', 'i18n'];
       // add aliases for 't' attribute
