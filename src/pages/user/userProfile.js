@@ -44,16 +44,10 @@ export class UserProfile {
 		this.project = settings.project;
 		this.i18n = i18n;
 		this.errors = [];
-		this.user = this.userServices.current.clone(); // The owner of the profile
-		ValidationRules
-			.ensure('firstName').required()
-			.ensure('lastName').required()
-			.ensure('username').required()
-			.ensure('email').required().email()
-			.on(this.user);
 
 		this.myProfile = false; // Is this my profile or another user's profile?
-		this.loc;
+		this.user = null;       // The owner of the profile
+		this.loc;								// Current locale
 		// Contributions
 		this.points = 0;
 		this.created = 0;
@@ -102,9 +96,8 @@ export class UserProfile {
 
 		this.mediaServices.upload(data).then((response) => {
 			this.user.avatar = MediaServices.toObject(response);
-			// Update the profile in the DB and reload the page
-			this.updateProfile();
-			location.reload();
+			// Show the cancel/save buttons
+			$('.button-group').removeClass('hiddenfile');
 		}).catch((error) => {
 			logger.error(error);
 			toastr.danger('Error uploading the file!');
@@ -115,7 +108,21 @@ export class UserProfile {
 		$('#imageupload').trigger('click');
 	}
 
+	deleteAvatar() {
+		logger.debug('Delete Avatar');
+		this.user.avatar = null;
+		// Show the cancel/save buttons
+		$('.button-group').removeClass('hiddenfile');
+	}
+
 	updateProfile() {
+		ValidationRules
+			.ensure('firstName').required()
+			.ensure('lastName').required()
+			.ensure('username').required()
+			.ensure('email').required().email()
+			.on(this.user);
+
 		this.validationController.validate().then(v => {
 			console.log(v);
 			if (v.valid) {
@@ -128,6 +135,7 @@ export class UserProfile {
 				})
 				.then((response) => {
 					logger.debug('Profile Updated!');
+					location.reload();
 				})
 				.catch((error) => {
 					logger.error(error);
@@ -137,6 +145,15 @@ export class UserProfile {
 				this.errors = this.validationController.errors;
 			}
 		});
+	}
+
+	resetChanges() {
+		// Reset values
+		this.userServices.reloadCurrentUser().then( () => {
+			this.user = this.currentUser;
+		});
+		// Hide the cancel/save buttons
+		$('.button-group').addClass('hiddenfile');
 	}
 
 }

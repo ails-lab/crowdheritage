@@ -1759,22 +1759,34 @@ body main section.userprofile {
 				// display: none;
 				position: absolute;
 				opacity: 0;
-				top: 10px;
+				top: 15px;
 				right: 15px;
+        padding-left: 0px;
 				list-style: none;
 				-webkit-transition: opacity 150ms ease;
 				-moz-transition: opacity 150ms ease;
 				-ms-transition: opacity 150ms ease;
 				-o-transition: opacity 150ms ease;
 				transition: opacity 150ms ease;
+        // justify-content: center;
 				li {
+          float: right;
 					cursor: pointer;
-					i {
-						font-size: 2.5rem;
-						padding: 5px;
-						// text-shadow: 0 0 5px #FFFFFF;
-					}
+          a {
+            display: inline-flex;
+            text-align: center;
+            text-decoration: none;
+            i {
+              font-size: 2.5rem;
+              padding: 5px;
+              // text-shadow: 0 0 5px #FFFFFF;
+            }
+          }
 				}
+        li.action-delete {
+          float: left;
+          margin-right: 172px;
+        }
 			}
 			:hover > ul.actions {
 				// display: block;
@@ -3936,6 +3948,20 @@ body div[role='main'] section.entrance .input-group.ack label a {
 body div[role='main'] section.entrance .input-group.ack label a:hover,
 body div[role='main'] section.entrance .input-group.ack label a:focus {
   color: #4f7979;
+}
+section.userprofile div.left div.button-group {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+section.userprofile div.left div.button-group a {
+  color: @main-color;
+  font-weight: bold;
+}
+section.userprofile div.left div.button-group button {
+  margin: 10px;
+  background-color: @main-color;
+  color: white;
 }
 body div[role='main'] section.entrance .button-group {
   text-align: right;

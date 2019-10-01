@@ -28,8 +28,13 @@
             <div class="badges">
 							<img src.bind="user.originalProfileImage">
 							<ul class="actions">
-								<li class="action-edit">
-                  <a if.bind="myProfile" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Local image" click.delegate="loadFromFile()">
+                <li class="action-delete">
+                  <a if.bind="myProfile && user.originalProfileImage!='/img/assets/images/user.png'" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Delete profile picture" click.delegate="deleteAvatar()">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </li>
+                <li class="action-edit">
+                  <a if.bind="myProfile" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Upload local image" click.delegate="loadFromFile()">
                     <i class="fa fa-cloud-upload"></i>
                   </a>
                 </li>
@@ -44,15 +49,20 @@
 							<p>${user.gender}</p> -->
 							<h2 t="user:contact">Contact information</h2>
 							<p>${user.email}</p>
-							<h2 if.bind="user.about > ''" t="user:about">About</h2>
-							<p if.bind="user.about > ''" >${user.about}</p>
+							<h2 if.bind="user.about" t="user:about">About</h2>
+							<p if.bind="user.about" >${user.about}</p>
 
 							<ul class="actions">
 								<!-- <li class="action-edit"><i class="fa fa-cog"></i></li> -->
 							</ul>
+
               <div class="hiddenfile">
   							<input type="file" id="imageupload" name="image" onchange.bind="uploadImage" accept=".png,.jpg,.jpeg,.gif" />
   						</div>
+            </div>
+            <div class="button-group hiddenfile">
+              <a href="javascript:void(0)" class="btn-green-o cancel" click.delegate="resetChanges()">Cancel</a>
+              <button class="btn-green" click.delegate="updateProfile()" disabled.bind="hasErrors">Save Profile</button>
             </div>
           </div>
 
