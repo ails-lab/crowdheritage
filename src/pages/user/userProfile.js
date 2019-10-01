@@ -135,7 +135,11 @@ export class UserProfile {
 				})
 				.then((response) => {
 					logger.debug('Profile Updated!');
-					location.reload();
+					this.userServices.reloadCurrentUser().then( () => {
+						this.user = this.currentUser;
+						// Hide the cancel/save buttons
+						$('.button-group').addClass('hiddenfile');
+					});
 				})
 				.catch((error) => {
 					logger.error(error);
