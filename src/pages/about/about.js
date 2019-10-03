@@ -17,6 +17,7 @@
 import { inject } from 'aurelia-framework';
 import { UserServices } from 'UserServices.js';
 import { I18N } from 'aurelia-i18n';
+import settings from 'global.config.js';
 //import { SpaceServices } from '../../modules/SpaceServices.js';
 
 @inject(UserServices, Element, I18N)//, SpaceServices)
@@ -26,6 +27,7 @@ export class About {
 		this.userServices = userServices;
 		this.element = element;
 		this.i18n = i18n;
+		this.project = settings.project;
 		//this.spaceServices = spaceServices;
 
 		this.loc;

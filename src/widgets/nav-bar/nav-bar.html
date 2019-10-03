@@ -7,7 +7,7 @@
         <!-- logo-->
         <div class="logo">
           <a route-href="route: index; params.bind: {lang: locale}" title="Home"><img src="${logo}" alt="Logo"></a>
-          <span class="logoLabel">beta</span>
+          <span if.bind="project == 'CrowdHeritage'" class="logoLabel">beta</span>
         </div>
         <!-- mobile menu-->
         <div class="mobilemenu"><a href="#" title="MENU" data-target="#mobilenav"><img src="/img/ic-menu.png"></a></div>

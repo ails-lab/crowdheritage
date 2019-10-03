@@ -4,11 +4,12 @@
 		<section class="pagehero about">
           <div class="container">
             <!-- label-->
-            <h1 class="lbl" t="about:header">About CrowdHeritage</h1>
+            <h1 if.bind="project=='CrowdHeritage'" class="lbl" t="about:header">About CrowdHeritage</h1>
+						<h1 if.bind="project=='WITHcrowd'" class="lbl">About</h1>
           </div>
         </section>
 
-		<section class="generaltext">
+		<section class="generaltext" if.bind="project=='CrowdHeritage'">
 			<div class="container" t="[html]about:intro">
 				<p><strong>CrowdHeritage is a European project supported by European Union under the framework of the CEF Telecom program - Generic Services.</strong></p>
 				<p>

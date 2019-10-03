@@ -9,7 +9,7 @@
   </div>
 
   <footer>
-    <div class="container">
+    <div class="container" if.bind="project=='CrowdHeritage'">
       <!-- ul-->
       <ul class="left">
         <!-- <li t="[html]app:left-footer">You have questions?<br>Contact us at <a>with-dev@image.ntua.gr</a></li> -->
@@ -31,5 +31,24 @@
         </li>
       </ul>
     </div>
+
+    <div class="container" if.bind="project=='WITHcrowd'">
+      <!-- ul-->
+      <ul class="left">
+        <li><a route-href="route: index; params.bind: {lang: locale}">Home</a></li>
+        <li><a route-href="route: about; params.bind: {lang: locale}">About</a></li>
+        <li if.bind="!isAuthenticated"><a href="javascript:void(0)" click.delegate="loginPopup()">Sign in</a></li>
+        <li if.bind="!isAuthenticated"><a route-href="route: register; params.bind: {lang: locale}">Sign up</a></li>
+        <li>|</li>
+        <li><a href="https://withculture.eu" target="_blank">WITHculture</a></li>
+        <li><a href="https://crowdheritage.eu" target="_blank">CrowdHeritage</a></li>
+      </ul>
+      <!-- ul-->
+      <ul class="right">
+        <li>&copy; Withcrowd 2017 by NTUA</li>
+        <li><a route-href="route: privacy; params.bind: {lang: locale}">Privacy Policy</a></li>
+      </ul>
+    </div>
   </footer>
+
 </template>

@@ -29,6 +29,7 @@ import less from 'less';
 export class App {
 
   constructor(dialogService, userServices, container, i18n) {
+    this.project = settings.project;
     // Load the desired locale
     this.i18n = i18n;
     /*this.i18n
@@ -68,6 +69,7 @@ export class App {
 
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
+  get locale() { return window.location.href.split('/')[3]; }
 
   // UI Functions
   loginPopup() {

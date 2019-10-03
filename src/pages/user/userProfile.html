@@ -9,11 +9,11 @@
             <div class="wrap"><span>${user.fullName}</span></div>
           </div>
         </div>
-        <div class="progress">
+        <!-- <div class="progress">
           <div role="progressbar" aria-valuenow="${barLevel}" aria-valuemin="0" aria-valuemax="100" style="width: ${barLevel}%;" class="progress-bar">
             <div class="labl">${barLevel}%</div>
           </div>
-        </div>
+        </div> -->
         <div class="bgwrap" style="background-image: img/bg-banner.png;"></div>
       </div>
     </section>
@@ -85,21 +85,13 @@
 						<div class="heading"><img src="/img/badges.png"></div>
 						<!-- stats-->
 						<ul class="stats">
-							<li>
+							<!-- <li>
 								<div class="lbl" t="app:progress">PROGRESS</div>
 								<div class="val">
 									${progress}%
-									<!-- <small>${points}/500</small> -->
+									<small>${points}/500</small>
 								</div>
-							</li>
-              <li>
-                <div class="lbl" t="user:items">ITEMS</div>
-                <div class="val">${annotatedRecordsCount}</div>
-              </li>
-							<li>
-								<div class="lbl" t="app:points">POINTS</div>
-								<div class="val">${points}</div>
-							</li>
+							</li> -->
 							<li>
 								<div class="lbl" t="user:inserted">INSERTED TAGS</div>
 								<div class="val">${created}</div>
@@ -112,13 +104,21 @@
 								<div class="lbl" t="user:downvotes">DOWNVOTES</div>
 								<div class="val">${rejected}</div>
 							</li>
+              <li>
+                <div class="lbl" t="user:items">ITEMS</div>
+                <div class="val">${annotatedRecordsCount}</div>
+              </li>
+              <li>
+                <strong><div class="lbl" t="app:points">POINTS</div></strong>
+                <div class="val">${points}</div>
+              </li>
 							<!-- <li>
 								<div class="lbl">CAMPAIGNS</div>
 								<div class="val">2</div>
 							</li> -->
 						</ul>
 						<!-- description-->
-						<div class="desc" t="user:contribute">Contribute more and unlock the next badge.</div>
+						<!-- <div class="desc" t="user:contribute">Contribute more and unlock the next badge.</div> -->
 					</div>
 				</div>
       </div>
