@@ -1777,7 +1777,8 @@ body main section.userprofile {
             text-align: center;
             text-decoration: none;
             i {
-              font-size: 2.5rem;
+              color: @main-color;
+              font-size: 2.0rem;
               padding: 5px;
               // text-shadow: 0 0 5px #FFFFFF;
             }
@@ -3962,6 +3963,17 @@ section.userprofile div.left div.button-group button {
   margin: 10px;
   background-color: @main-color;
   color: white;
+}
+section.userprofile div.left div.info div.form-group {
+  margin: 0px;
+}
+section.userprofile div.left div.info div.form-group input {
+  width: 110%;
+  padding: 5px;
+}
+section.userprofile div.left div.info div.form-group input:hover,
+section.userprofile div.left div.info div.form-group input:focus {
+  padding-left: 10px;
 }
 body div[role='main'] section.entrance .button-group {
   text-align: right;

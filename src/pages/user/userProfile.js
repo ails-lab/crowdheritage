@@ -45,6 +45,10 @@ export class UserProfile {
 		this.i18n = i18n;
 		this.errors = [];
 
+		this.newFirstName = "";
+		this.newLastName = "";
+		this.newAbout = "";
+
 		this.myProfile = false; // Is this my profile or another user's profile?
 		this.user = null;       // The owner of the profile
 		this.loc;								// Current locale
@@ -78,6 +82,10 @@ export class UserProfile {
 			let userData = await this.userServices.getUserByUsername(params.uname);
 			this.user = new User(userData);
 		}
+
+		this.newFirstName = this.user.firstName;
+		this.newLastName = this.user.lastName;
+		this.newAbout = this.user.about;
 
 		route.navModel.setTitle(this.user.fullName + " | " + this.project);
 		let contributions = await this.userServices.getUserAnnotations(this.user.dbId);
@@ -115,7 +123,18 @@ export class UserProfile {
 		$('.button-group').removeClass('hiddenfile');
 	}
 
+	editUserInfo() {
+		$('.action-update').addClass('hiddenfile');
+		$('.userInfo').addClass('hiddenfile');
+		$('.form-group').removeClass('hiddenfile');
+		$('.button-group').removeClass('hiddenfile');
+	}
+
 	updateProfile() {
+		this.user.firstName = this.newFirstName;
+		this.user.lastName = this.newLastName;
+		this.user.about = this.newAbout;
+
 		ValidationRules
 			.ensure('firstName').required()
 			.ensure('lastName').required()
@@ -139,6 +158,9 @@ export class UserProfile {
 						this.user = this.currentUser;
 						// Hide the cancel/save buttons
 						$('.button-group').addClass('hiddenfile');
+						$('.action-update').removeClass('hiddenfile');
+						$('.userInfo').removeClass('hiddenfile');
+						$('.form-group').addClass('hiddenfile');
 					});
 				})
 				.catch((error) => {
@@ -155,9 +177,15 @@ export class UserProfile {
 		// Reset values
 		this.userServices.reloadCurrentUser().then( () => {
 			this.user = this.currentUser;
+			this.newFirstName = this.user.firstName;
+			this.newLastName = this.user.lastName;
+			this.newAbout = this.user.about;
 		});
 		// Hide the cancel/save buttons
 		$('.button-group').addClass('hiddenfile');
+		$('.action-update').removeClass('hiddenfile');
+		$('.userInfo').removeClass('hiddenfile');
+		$('.form-group').addClass('hiddenfile');
 	}
 
 }
