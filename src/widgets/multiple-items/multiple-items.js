@@ -148,9 +148,14 @@ export class MultipleItems {
   }
 
   reloadCollection(state) {
-		this.state = state;
-		this.records.splice(0, this.records.length);
-		this.getRecords();
+		if (state == this.state) {
+			return;
+		}
+		else {
+			this.state = state;
+			this.records.splice(0, this.records.length);
+			this.getRecords();
+		}
   }
 
 	hasContributed(record) {
@@ -181,7 +186,7 @@ export class MultipleItems {
 	}
 
 	scrollAndLoadMore() {
-		if (($("#recs").height() - window.scrollY < 600 ) && !this.loading )
+		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading )
 	 		this.getRecords();
 	}
 
