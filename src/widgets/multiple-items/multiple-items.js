@@ -186,7 +186,7 @@ export class MultipleItems {
 	}
 
 	scrollAndLoadMore() {
-		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading )
+		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
 	 		this.getRecords();
 	}
 
