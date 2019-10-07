@@ -200,7 +200,7 @@
           </div>
          <compose view-model="widgets/graph/graph" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
         </div> -->
-        <div class="right">
+        <div if.bind="points.length > 0" class="right">
           <!-- leaderboard-->
           <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
         </div>
