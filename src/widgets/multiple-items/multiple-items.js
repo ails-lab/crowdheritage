@@ -19,11 +19,12 @@ import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { Record } from 'Record.js';
 import { UserServices } from 'UserServices';
+import { CampaignServices } from 'CampaignServices';
 import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, I18N)
+@inject(CollectionServices, UserServices, CampaignServices, I18N)
 export class MultipleItems {
 
 	get smallerClass() { return this.collection ? '' : 'smaller' }
@@ -32,12 +33,13 @@ export class MultipleItems {
 	get byUser() { return !!this.user}
 	get byCollection() { return !!this.collection}
 
-  constructor(collectionServices, userServices, i18n) {
+  constructor(collectionServices, userServices, campaignServices, i18n) {
 		if (instance) {
 			return instance;
 		}
     this.collectionServices = collectionServices;
     this.userServices = userServices;
+		this.campaignServices = campaignServices;
 		this.i18n = i18n;
 		this.loc;
 		this.state = "hide";
@@ -128,7 +130,12 @@ export class MultipleItems {
 					let recid = record.dbId;
 					let uname = this.user.username;
 
-					this.router.navigateToRoute('item', {cname: cname, recid: recid, lang: this.loc});
+					this.campaignServices.getCampaignByName(cname).then( () => {
+						this.router.navigateToRoute('item', {cname: cname, recid: recid, lang: this.loc});
+					}
+					,error => {
+						toastr.error("This campaign doesn't exist anymore");
+					});
 				}
 			}
 		}

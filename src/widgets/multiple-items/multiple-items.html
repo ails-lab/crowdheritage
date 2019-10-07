@@ -32,7 +32,7 @@
 					<a href="javascript:void(0)" click.delegate="goToAnnotatedItem(record)">
 						<div class="thumbs">
 							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
+							<div class="action"><div class="plus">${record.title | textTrim:22}</div></div>
 						</div>
 					</a>
 				</div>
