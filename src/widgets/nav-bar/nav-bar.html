@@ -51,7 +51,7 @@
             <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners; params.bind: {lang: locale}" t="app:partners">PARTNERS</a></li>
             <li><a t="app:about" route-href="route: about; params.bind: {lang: locale}">ABOUT</a></li>
 
-            <li>
+            <li if.bind="project=='CrowdHeritage'">
               <!-- select language-->
               <section class="languages">
                 <div class="lang">
