@@ -33,12 +33,13 @@ if (window.location.hostname === 'localhost') {
 	// settings.baseUrl = 'https://api.withculture.eu';  // Original WITH-backend
 	// settings.baseUrl = 'https://api.withcrowd.eu';    // Backend with test-DB
 	// settings.baseUrl = 'http://localhost:9060';       // Local backend for testing
-	settings.project = 'CrowdHeritage';
+	settings.project = 'WITHcrowd';
 	settings.logLevel = 4; // Debug
 }
 // Override for staging
 else if (window.location.hostname === 'withcrowd.eu') {
 	settings.auth.facebook='';
+	settings.baseUrl = 'https://api.withcrowd.eu';
 }
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
 	settings.auth.facebook='';
