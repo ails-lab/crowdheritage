@@ -126,7 +126,7 @@ export class Tagitem {
 
   prefixChanged(geo=false) {
     //	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
-    if (this.prefix === '' || this.selectedAnnotation != null) {
+    if (this.prefix === '') {
       this.suggestedAnnotations = [];
       return;
     }
