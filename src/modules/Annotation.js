@@ -16,9 +16,17 @@
 
 export class Annotation {
 
-  constructor(data, userId) {
+  constructor(data, userId, lang="all") {
     this.dbId = data.dbId;
     this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
+		if (lang !== "all") {
+			if (lang === 'en' && typeof data.body.label.en !== 'undefined')
+				this.label = this.capitalizeFirstLetter(data.body.label.en[0]);
+			else if (lang === 'fr' && typeof data.body.label.fr !== 'undefined')
+				this.label = this.capitalizeFirstLetter(data.body.label.fr[0]);
+			else if (lang === 'it' && typeof data.body.label.it !== 'undefined')
+				this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
+		}
 
     this.createdByMe = false;
     for (let i in data.annotators) {

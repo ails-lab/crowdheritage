@@ -38,24 +38,24 @@ export class ThesaurusServices {
       return response.json();
     });
   }
-  
-  async getCampaignSuggestions(word, campaignId ) {
-		return this.http.fetch(`/thesaurus/suggestions?word=${word}&campaignId=${campaignId}`, {
+
+  async getCampaignSuggestions(word, campaignId, lang="all") {
+		return this.http.fetch(`/thesaurus/suggestions?word=${word}&campaignId=${campaignId}&language=${lang}`, {
 	      method: 'GET'
 	    }).then(checkStatus).then((response) => {
 	      return response.json();
 	    });
 	  }
-  
+
   async getGeonameSuggestions(prefix ) {
 	  this.http.configure(
 	        fetchConfigGeo);
 	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
 	      method: 'GET'
 	    }).then((response) => {
-	      this.http.configure(reset);	
+	      this.http.configure(reset);
 	      return response.json();
-	      
+
 	    });
 	  }
 

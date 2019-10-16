@@ -99,6 +99,7 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
+		this.loc = window.location.href.split('/')[3];
     try {
       this.colTitle = params.colTitle[0].split(' (')[0];
     } catch (e) {
@@ -165,13 +166,14 @@ export class Tagitem {
 		this.suggestionsLoading = false;
 	}
 
-  async getSuggestedAnnotations(prefix) {
+  async getSuggestedAnnotations(prefix, lang="all") {
     this.lastRequest = prefix;
     this.suggestionsLoading = true;
+		lang = typeof this.loc !== 'undefined' ? this.loc : 'all';
     this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
     this.selectedAnnotation = null;
     let self = this;
-    await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId).then((res) => {
+    await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId, lang).then((res) => {
       if (res.request === self.lastRequest) {
         //this.suggestedAnnotations = res.results.slice(0, 20);
         self.suggestedAnnotations = res.results;
@@ -778,7 +780,7 @@ export class Tagitem {
           if (!this.userServices.current) {
             this.annotations.push(new Annotation(response[i], ""));
           } else {
-            this.annotations.push(new Annotation(response[i], this.userServices.current.dbId));
+            this.annotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
           }
         }
       });
