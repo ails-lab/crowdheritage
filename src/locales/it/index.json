@@ -2,7 +2,7 @@
   "bannertext-up"   : "CONTRIBUISCI ALLA",
   "bannertext-down" : "NOSTRA CULTURA!",
   "intro-text"      : "CHE COS'È CROWDHERITAGE",
-	"description"			: "CrowdHeritage è una piattaforma aperta attraverso la quale le istituzioni culturali possono condividere i metadati delle loro collezioni, in modo da poterli migliorare o arricchire. Chiunque può contribuire al miglioramento dei metadati. Le istituzioni culturali utilizzano le conoscenze e il lavoro degli utenti per rendere più efficace la ricerca all'interno delle loro collezioni digitali. I partecipanti condividono i propri contributi e il loro sforzo viene riconosciuto e apprezzato. Contribuisci adesso a una campagna già esistente oppure <a href='mailto:crowdheritage@image.ntua.gr'>contattaci</a> se ne vuoi attivare una nuova.",
+	"description"			: "CrowdHeritage è una piattaforma aperta attraverso la quale le istituzioni culturali possono condividere i metadati delle loro collezioni, in modo da poterli migliorare o arricchire. Chiunque può contribuire al miglioramento dei metadati. Le istituzioni culturali utilizzano le conoscenze e il lavoro degli utenti per rendere più efficace la ricerca all'interno delle loro collezioni digitali. I partecipanti condividono i propri contributi e il loro sforzo viene riconosciuto e apprezzato. Contribuisci adesso a una campagna già esistente oppure <a href='mailto:crowdheritage@ails.ece.ntua.gr'>contattaci</a> se ne vuoi attivare una nuova.",
   "current"         : "CAMPAGNE DI CROWDSOURCING",
   "sortby"          : "ORDINA",
   "alphabetical"    : "ALFABETICAMENTE",
@@ -13,6 +13,6 @@
   "all"             : "TUTTE",
   "opencampaign"    : "CAMPAGNA APERTA",
   "learn-info-1"    : "Vuoi saperne di più su CrowdHeritage?",
-  "learn-info-2"    : "Ti piacciono la moda, la cultura, l'arte, il patrimonio culturale, lo sport, la musica, il paesaggio?<br/>Sei uno studente, lavori nel settore dell'istruzione o della cultura?<br/>Sei curioso e vuoi saperne di più sul patrimonio culturale europeo?<br/>Aderisci alle campagne di CrowdHeritage!<br/><br/>Hai delle domande? <a href='mailto:crowdheritage@image.ntua.gr'>Contattaci</a>",
+  "learn-info-2"    : "Ti piacciono la moda, la cultura, l'arte, il patrimonio culturale, lo sport, la musica, il paesaggio?<br/>Sei uno studente, lavori nel settore dell'istruzione o della cultura?<br/>Sei curioso e vuoi saperne di più sul patrimonio culturale europeo?<br/>Aderisci alle campagne di CrowdHeritage!<br/><br/>Hai delle domande? <a href='mailto:crowdheritage@ails.ece.ntua.gr'>Contattaci</a>",
   "learn-info-3"    : "Termini e condizioni di CrowdHeritage."
 }
