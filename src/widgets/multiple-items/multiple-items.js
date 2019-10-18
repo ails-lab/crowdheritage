@@ -72,6 +72,8 @@ export class MultipleItems {
 		this.loading = true;
 		if (this.collection) {
 			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
+			this.totalCount = response.entryCount;
+			console.info(this.totalCount);
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
