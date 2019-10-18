@@ -218,6 +218,13 @@ export class Tagitem {
 
 		if (!this.errors) {
 			let self = this;
+      if (!this.hasContributed('all')) {
+        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+          .catch( (error) => {
+            console.log("This ERROR occured : ", error);
+          });
+      }
+
 			this.annotationServices.annotateGeoRecord(this.recId, geoid, this.campaign.username)
 			.then(() => {
 				toastr.success('Annotation added.');
@@ -226,9 +233,6 @@ export class Tagitem {
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
         // After annotating, automatically upvote the new annotation
         this.getRecordAnnotations('').then( () => {
-          if (!this.hasContributed('all')) {
-            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-          }
           for (var [i, ann] of this.geoannotations.entries()) {
             if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
               this.score(ann.dbId, 'approved', i, 'geo');
@@ -282,6 +286,13 @@ export class Tagitem {
 
     if (!this.errors) {
       let self = this;
+      if (!this.hasContributed('all')) {
+        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+          .catch( (error) => {
+            console.log("This ERROR occured : ", error);
+          });
+      }
+
       this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging').then(() => {
         toastr.success('Annotation added.');
         self.ea.publish('annotations-created', self.record);
@@ -289,9 +300,6 @@ export class Tagitem {
         // After annotating, automatically upvote the new annotation
         var lb = this.selectedAnnotation.label;
         this.getRecordAnnotations('').then( () => {
-          if (!this.hasContributed('all')) {
-            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-          }
           for (var [i, ann] of this.annotations.entries()) {
             if (ann.label.toLowerCase() === lb.toLowerCase()) {
               this.score(ann.dbId, 'approved', i, 'tag');
@@ -326,9 +334,6 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-    if (!this.hasContributed('all')) {
-      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-    }
     var answer = this.annotationExists(label);
     if (!answer) {
       // While waiting for the annotation to go through, change the cursor to 'wait'
@@ -344,6 +349,12 @@ export class Tagitem {
       await this.thesaurusServices.getSuggestions(label, this.campaign.vocabularies).then(res => {
         this.suggestedAnnotation = res.results[0];
       });
+      if (!this.hasContributed('all')) {
+        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+          .catch( (error) => {
+            console.log("This ERROR occured : ", error);
+          });
+      }
       await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging');
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
       // Clear and reload the colorannotations array
@@ -373,11 +384,11 @@ export class Tagitem {
       return;
     }
 
-    this.annotationServices.delete(id).then(() => {
-      // Since on annotating, the user automatically also upvotes the annotation,
-      // when deleting an annotation, you should also remove the point from upvoting
-  		this.unscore(id, 'approved', index, mot);
+    // Since on annotating, the user automatically also upvotes the annotation,
+    // when deleting an annotation, you should also remove the point from upvoting
+    this.unscore(id, 'approved', index, mot);
 
+    this.annotationServices.delete(id).then(() => {
       if (mot == 'tag') {
         this.annotations.splice(index, 1);
       }
@@ -390,11 +401,17 @@ export class Tagitem {
       else if (mot == 'color') {
         this.colorannotations.splice(index, 1);
       }
+      this.reloadAnnotations()
+        .then( () => {
+          this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+          if (!this.hasContributed('all')) {
+            this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+              .catch( (error) => {
+                console.log("This ERROR occured : ", error);
+              });
+          }
+        });
 
-      this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-      if (!this.hasContributed('all')) {
-        this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-      }
     }).catch(error => {
       console.log(error.message);
     });
@@ -425,7 +442,10 @@ export class Tagitem {
 
   async score(annoId, annoType, index, mot) {
     if (!this.hasContributed('all')) {
-      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+        .catch( (error) => {
+          console.log("This ERROR occured : ", error);
+        });
     }
 
     if (annoType == 'approved') {
@@ -724,7 +744,10 @@ export class Tagitem {
       }
     }
     if (!this.hasContributed('all')) {
-      this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+      this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+        .catch( (error) => {
+          console.log("This ERROR occured : ", error);
+        });
     }
   }
 
