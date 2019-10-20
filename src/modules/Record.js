@@ -22,7 +22,7 @@ import {
 
 export class Record {
 
-  constructor(data) {
+  constructor(data, useFashionRepo=false) {
     this.myfullimg = this.getGlobal('/img/assets/img/loader.gif');
     this.imgworks = false;
     this.source_uri = '';
@@ -36,6 +36,7 @@ export class Record {
     this.mediaType = null;
     this.creator = '';
     this.vtype = 'IMAGE';
+    this.useFashionRepo = useFashionRepo || window.location.href.includes("garment-type");
     //this.mediatype='IMAGE';
     if (data) {
       this.mediaType = 'VIDEO';
@@ -134,10 +135,12 @@ export class Record {
 
     }
 
-    this.thumbnail = data.media && data.media[0] && data.media[0].Thumbnail && data.media[0].Thumbnail.withUrl && data.media[0].Thumbnail.withUrl.length > 0 ? data.media[0].Thumbnail.withUrl : null;
-    if (this.thumbnail) {
-      if (!this.thumbnail.startsWith('http')) {
-        this.thumbnail = `${settings.baseUrl}${this.thumbnail}`;
+    if (!this.useFashionRepo) {
+      this.thumbnail = data.media && data.media[0] && data.media[0].Thumbnail && data.media[0].Thumbnail.withUrl && data.media[0].Thumbnail.withUrl.length > 0 ? data.media[0].Thumbnail.withUrl : null;
+      if (this.thumbnail) {
+        if (!this.thumbnail.startsWith('http')) {
+          this.thumbnail = `${settings.baseUrl}${this.thumbnail}`;
+        }
       }
     }
 
@@ -162,26 +165,74 @@ export class Record {
       this.likes = data.usage.likes;
       this.collected = data.usage.collected;
     }
+    if (!this.useFashionRepo) {
+      this.fullres = data.media && data.media[0].Original && data.media[0].Original.withUrl && data.media[0].Original.withUrl.length > 0 ? data.media[0].Original.withUrl : null;
+      /*needs checking: do we search for withUrl or .url? doing both for now*/
+      if (!this.fullres || data.media[0].Original.type !== 'IMAGE') {
+        this.fullres = data.media && data.media[0].Original && data.media[0].Original.url ? data.media[0].Original.url : null;
+      }
+      this.medium = data.media && data.media[0].Medium && data.media[0].Medium.url ? data.media[0].Medium.url : null;
+      this.square = data.media && data.media[0].Square && data.media[0].Square.url ? data.media[0].Square.url : null;
+      this.tiny = data.media && data.media[0].Tiny && data.media[0].Tiny.url ? data.media[0].Tiny.url : null;
+      if (this.fullres) {
+        this.rights = JsonUtils.findResOrLit(data.media[0].Original.originalRights);
+        this.mediatype = data.media[0].Original.type;
+      } else if (this.thumbnail) {
+        this.rights = JsonUtils.findResOrLit(data.media[0].Thumbnail.originalRights);
+        this.mediatype = data.media[0].Thumbnail.type;
+      }
+      this.fullresLogic();
+    } else {
+      this.myfullimg = data.descriptiveData.isShownBy;
+      this.thumbnail = data.descriptiveData.isShownBy;
+      if (this.myfullimg.includes("repos.europeanafashion.eu"))
+        this.thumbnail = this.thumbnail + "?thumb=vertical";
+      else if (this.myfullimg.includes("shoesornoshoes.com"))
+        this.thumbnail = data.media[0].Thumbnail.url;
+      if (data.descriptiveData.isShownAt.includes("trc-leiden.nl")) {
+        if (this.myfullimg==="" || data.descriptiveData.isShownAt.includes("2003.0029")
+        || data.descriptiveData.isShownAt.includes("2003.0030")
+        || data.descriptiveData.isShownAt.includes("2007.0991")
+        || data.descriptiveData.isShownAt.includes("2013.0172")) {
+          if (data.media.length > 1 && !data.descriptiveData.isShownAt.includes("2003.0030")
+              && !data.descriptiveData.isShownAt.includes("2007.0991")
+              && !data.descriptiveData.isShownAt.includes("2013.0172")) {
+            let mediaLength = data.media.length;
+            this.myfullimg = data.media[1].Original.url;
+          } else {
+            let s = data.descriptiveData.isShownAt;
+            let t = s.substring(s.lastIndexOf("TRC")+6);
+            t = t.split(".")[0]+"/" + t;
+            //if (t.includes("1052"))
+            if (data.descriptiveData.isShownAt.includes("2003.0030"))
+                this.myfullimg = "http://www.trc-leiden.nl/collection/collection_images/normal/" +t+".JPG";
+              else if (data.descriptiveData.isShownAt.includes("2013.0172")) {
+                t = t.slice(0, -1);
+                this.myfullimg = "http://www.trc-leiden.nl/collection/collection_images/normal/" +t+"_3.JPG";
+              }
+              else
+                this.myfullimg = "http://www.trc-leiden.nl/collection/collection_images/normal/" +t+"_2.JPG";
+          }
+        } else if ((data.descriptiveData.isShownAt.includes("2014")
+          || data.descriptiveData.isShownAt.includes("2002.0017"))
+          && !data.descriptiveData.isShownAt.includes("2014.0133")
+          && !data.descriptiveData.isShownAt.includes("2014.0770")
+          && !data.descriptiveData.isShownAt.includes("2014.0779")
+          && !data.descriptiveData.isShownAt.includes("2014.0819")
+          && !data.descriptiveData.isShownAt.includes("2014.0818")
+          && !data.descriptiveData.isShownAt.includes("2014.0821")
+          && !data.descriptiveData.isShownAt.includes("2014.1060")) {
 
-    this.fullres = data.media && data.media[0].Original && data.media[0].Original.withUrl && data.media[0].Original.withUrl.length > 0 ? data.media[0].Original.withUrl : null;
-    /*needs checking: do we search for withUrl or .url? doing both for now*/
-    if (!this.fullres || data.media[0].Original.type !== 'IMAGE') {
-      this.fullres = data.media && data.media[0].Original && data.media[0].Original.url ? data.media[0].Original.url : null;
+          this.myfullimg = this.myfullimg.replace("jpg", "JPG");
+        } else if (this.myfullimg.includes("; ") && !this.myfullimg.includes("c; d; e; ")) {
+          this.myfullimg = this.myfullimg.split(";")[0] + ".jpg";
+        }
+        this.thumbnail = this.myfullimg.replace("normal", "thumb");
+      } else if (data.descriptiveData.isShownAt.includes("carmentis.kmkg-mrah.be")) {
+          this.myfullimg = data.media[0].Thumbnail.url;
+          this.thumbnail = data.media[0].Thumbnail.url;
+      }
     }
-    this.medium = data.media && data.media[0].Medium && data.media[0].Medium.url ? data.media[0].Medium.url : null;
-    this.square = data.media && data.media[0].Square && data.media[0].Square.url ? data.media[0].Square.url : null;
-    this.tiny = data.media && data.media[0].Tiny && data.media[0].Tiny.url ? data.media[0].Tiny.url : null;
-    if (this.fullres) {
-      this.rights = JsonUtils.findResOrLit(data.media[0].Original.originalRights);
-      this.mediatype = data.media[0].Original.type;
-
-    } else if (this.thumbnail) {
-      this.rights = JsonUtils.findResOrLit(data.media[0].Thumbnail.originalRights);
-      this.mediatype = data.media[0].Thumbnail.type;
-
-    }
-
-    this.fullresLogic();
 
     this.loc = location.href.replace(location.hash, '') + '#/item/' + this.dbId;
     this.facebook = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(this.loc);

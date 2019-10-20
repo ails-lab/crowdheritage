@@ -63,7 +63,7 @@ export class MultipleItems {
 		for (let i in records) {
 			let recordData = records[i];
 			if (recordData !== null) {
-					this.records.push(new Record(recordData));
+					this.records.push(new Record(recordData, this.cname==="garment-type"));
 			}
 		}
 	}
@@ -73,7 +73,6 @@ export class MultipleItems {
 		if (this.collection) {
 			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
 			this.totalCount = response.entryCount;
-			console.info(this.totalCount);
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {

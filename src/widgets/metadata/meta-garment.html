@@ -7,7 +7,7 @@
       <ul class="meta show-more-target row">
         <li class="col-sm-6" if.bind="record.description">
           <div class="lbl" t="item:description">DESCRIPTION</div>
-          <div class="val">${record.description}</div>
+          <div innerHtml.bind="record.description" class="val"></div>
         </li>
         <li class="col-sm-6" if.bind="record.data.descriptiveData.dccreator">
           <div class="lbl" t="item:creator">CREATOR</div>
