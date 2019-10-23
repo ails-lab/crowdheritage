@@ -56,26 +56,34 @@
                 <span t="summary:badge-start">Start contributing to earn your first badge</span>.</h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
-                <li class="wide">
+                <li>
                   <div class="lbl" t="app:tags">TAGS</div>
                   <div class="val">${userTags}</div>
+                </li>
+                <li>
+                  <div class="lbl" t="user:upvotes">UPVOTES</div>
+                  <div class="val">${userUpvotes}</div>
+                </li>
+                <li class="wide">
+                  <div class="lbl" t="user:downvotes">DOWNVOTES</div>
+                  <div class="val">${userDownvotes}</div>
                 </li>
                 <li>
                   <div class="lbl" t="summary:items">ITEMS</div>
                   <div class="val">${userRecords}</div>
                 </li>
                 <li>
-                  <div class="lbl" t="summary:badge">BADGE</div>
-                  <div class="val">${userBadgeName}</div>
+                  <div class="lbl" t="app:points">POINTS</div>
+                  <div class="val">${userPoints}</div>
                 </li>
                 <li class="wide">
                   <div class="lbl" t="summary:rank">CAMPAIGN RANK</div>
                   <div class="val">${userRank}</div>
                 </li>
-                <li class="wide">
-                  <div class="lbl" t="app:points">POINTS</div>
-                  <div class="val">${userPoints}</div>
-                </li>
+                <!-- <li>
+                  <div class="lbl" t="summary:badge">BADGE</div>
+                  <div class="val">${userBadgeName}</div>
+                </li> -->
               </ul>
               <!-- description-->
               <div class="desc" t="[prepend]summary:description-left">

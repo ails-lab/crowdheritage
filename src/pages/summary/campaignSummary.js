@@ -178,11 +178,11 @@ export class CampaignSummary {
     if (this.userServices.current) {
       let id = this.userServices.current.dbId;
       if (this.campaign.userPoints.hasOwnProperty(id)) {
-        this.userTags = this.campaign.userPoints[id].created;
         this.userRecords = this.campaign.userPoints[id].records;
-        this.userPoints = this.userTags +
-                          this.campaign.userPoints[id].approved +
-                          this.campaign.userPoints[id].rejected;
+        this.userTags = this.campaign.userPoints[id].created;
+        this.userUpvotes = this.campaign.userPoints[id].approved;
+        this.userDownvotes = this.campaign.userPoints[id].rejected;
+        this.userPoints = this.userTags + this.userUpvotes + this.userDownvotes;
       }
 
       // // Old badge awards based on points, now obsolete
