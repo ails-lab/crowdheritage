@@ -816,14 +816,26 @@ export class Tagitem {
       await this.recordServices.getAnnotations(this.recId, 'ColorTagging').then(response => {
         this.colorannotations = [];
         for (var i = 0; i < response.length; i++) {
-          if (response[i].body.label.en && response[i].body.label.en=="gray") {
-            response[i].body.label.en = ["grey"];
-            response[i].body.label.default = ["grey"];
+          // Filter the annotations based on the generator
+          var flag = false;
+          for (var annotator of response[i].annotators) {
+            if ( (annotator.generator == (settings.project+' '+(this.campaign.username)))
+              || (annotator.generator == 'Image Analysis') ) {
+                flag = true;
+                break;
+            }
           }
-          if (!this.userServices.current) {
-            this.colorannotations.push(new Annotation(response[i], ""));
-          } else {
-            this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          // If the criterias are met, push the annotation inside the array
+          if (flag) {
+            if (response[i].body.label.en && response[i].body.label.en=="gray") {
+              response[i].body.label.en = ["grey"];
+              response[i].body.label.default = ["grey"];
+            }
+            if (!this.userServices.current) {
+              this.colorannotations.push(new Annotation(response[i], ""));
+            } else {
+              this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+            }
           }
         }
       });
