@@ -362,7 +362,7 @@ export class CampaignItem {
     // Add meta tags in header to include og-metadata to the page
     var ogImage = document.createElement('meta');
     ogImage.setAttribute("property", "og:image");
-    ogImage.content = "/img/assets/img/content/bg-search-space.png";
+    ogImage.content = "/img/crowdheritage-banner.jpg";
     ogImage.id = "ogImage";
     document.head.appendChild(ogImage);
 
