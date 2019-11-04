@@ -60,19 +60,6 @@ export class CampaignIndex {
     $('.accountmenu').removeClass('active');
   }
 
-  detached() {
-    var ogImage = document.getElementById('ogImage');
-    var ogType = document.getElementById('ogType');
-    var ogUrl = document.getElementById('ogUrl');
-    var ogTitle = document.getElementById('ogTitle');
-    var ogDescription = document.getElementById('ogDescription');
-    ogImage.remove();
-    ogType.remove();
-    ogUrl.remove();
-    ogTitle.remove();
-    ogDescription.remove();
-  }
-
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
   activate(params) {
@@ -92,37 +79,6 @@ export class CampaignIndex {
         this.campaignsCount = result;
       });
     this.getCampaigns("", this.sortBy, this.state);
-
-    // Add meta tags in header to include og-metadata to the page
-    var ogImage = document.createElement('meta');
-    ogImage.setAttribute("property", "og:image");
-    ogImage.content = "/img/crowdheritage-banner.jpg";
-    ogImage.id = "ogImage";
-    document.head.appendChild(ogImage);
-
-    var ogType = document.createElement('meta');
-    ogType.setAttribute("property", "og:type");
-    ogType.content = "website";
-    ogType.id = "ogType";
-    document.head.appendChild(ogType);
-
-    var ogUrl = document.createElement('meta');
-    ogUrl.setAttribute("property", "og:url");
-    ogUrl.content = window.location.href;
-    ogUrl.id = "ogUrl";
-    document.head.appendChild(ogUrl);
-
-    var ogTitle = document.createElement('meta');
-    ogTitle.setAttribute("property", "og:title");
-    ogTitle.content = "CrowdHeritage";
-    ogTitle.id = "ogTitle";
-    document.head.appendChild(ogTitle);
-
-    var ogDescription = document.createElement('meta');
-    ogDescription.setAttribute("property", "og:description");
-    ogDescription.content = this.i18n.tr('index:description');
-    ogDescription.id = "ogDescription";
-    document.head.appendChild(ogDescription);
   }
 
   getCampaigns(groupName, sortBy, state) {

@@ -102,19 +102,6 @@ export class CampaignSummary {
     $('.accountmenu').removeClass('active');
   }
 
-  detached() {
-    var ogImage = document.getElementById('ogImage');
-    var ogType = document.getElementById('ogType');
-    var ogUrl = document.getElementById('ogUrl');
-    var ogTitle = document.getElementById('ogTitle');
-    var ogDescription = document.getElementById('ogDescription');
-    ogImage.remove();
-    ogType.remove();
-    ogUrl.remove();
-    ogTitle.remove();
-    ogDescription.remove();
-  }
-
   activate(params, route) {
     if (this.i18n.getLocale() != this.locale) {
       this.i18n.setLocale(this.locale);
@@ -140,37 +127,6 @@ export class CampaignSummary {
         this.collectionsCount = this.campaign.targetCollections.length;
         this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
         this.getUserStats();
-
-        // Add meta tags in header to include og-metadata to the page
-        var ogImage = document.createElement('meta');
-        ogImage.setAttribute("property", "og:image");
-        ogImage.content = this.campaign.banner;
-        ogImage.id = "ogImage";
-        document.head.appendChild(ogImage);
-
-        var ogType = document.createElement('meta');
-        ogType.setAttribute("property", "og:type");
-        ogType.content = "website";
-        ogType.id = "ogType";
-        document.head.appendChild(ogType);
-
-        var ogUrl = document.createElement('meta');
-        ogUrl.setAttribute("property", "og:url");
-        ogUrl.content = window.location.href;
-        ogUrl.id = "ogUrl";
-        document.head.appendChild(ogUrl);
-
-        var ogTitle = document.createElement('meta');
-        ogTitle.setAttribute("property", "og:title");
-        ogTitle.content = this.campaign.title;
-        ogTitle.id = "ogTitle";
-        document.head.appendChild(ogTitle);
-
-        var ogDescription = document.createElement('meta');
-        ogDescription.setAttribute("property", "og:description");
-        ogDescription.content = this.campaign.description;
-        ogDescription.id = "ogDescription";
-        document.head.appendChild(ogDescription);
     });
   }
 
