@@ -53,7 +53,7 @@
   "yes"             : "Oui",
   "no"              : "Non",
   "geotagging"      : "GEOLOCALISATION",
-  "geotagging-info" : "Sur la carte, placez un repère sur le lieu précis ou sur le pays figuré dans cette image.",
+  "geotagging-info" : "Ajoutez des informations géographiques à propos de l'image (ex : pays, lieux et points de repère).",
   "toastr-inactive" : "La campagne n’est pas active",
   "toastr-login"    : "Vous devez vous connectez avant de contribuer aux campagnes",
   "toastr-existing" : "Ce tag existe déjà",

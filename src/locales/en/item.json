@@ -53,7 +53,7 @@
   "yes"             : "Yes",
   "no"              : "No",
   "geotagging"      : "GEOTAGGING",
-  "geotagging-info" : "Drop pins to countries or locations in the map that represents the picture.",
+  "geotagging-info" : "Add geographical information about the picture (e.g. countries,locations and landmarks).",
   "toastr-inactive" : "The campaign is NOT active",
   "toastr-login"    : "You must log in before starting contributing",
   "toastr-existing" : "Tag already exists",

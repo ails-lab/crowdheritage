@@ -53,7 +53,7 @@
   "yes"             : "Sì",
   "no"              : "No",
   "geotagging"      : "GEOTAGGING",
-  "geotagging-info" : "Sposta i marcatori sui paesi o sui luoghi specifici nella mappa collegata all'immagine.",
+  "geotagging-info" : "Aggiungi le informazioni geografiche relative all'immagine (per esempio, il nome del paese, la localizzazione e gli elementi del paesaggio).",
   "toastr-inactive" : "La campagna NON è attiva",
   "toastr-login"    : "Per contribuire alla campagna, devi prima effettuare il login",
   "toastr-existing" : "Tag già esistenti",
