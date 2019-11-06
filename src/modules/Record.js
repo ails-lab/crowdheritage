@@ -38,6 +38,18 @@ export class Record {
     this.vtype = 'IMAGE';
     this.useFashionRepo = useFashionRepo || window.location.href.includes("garment-type");
     //this.mediatype='IMAGE';
+		this.replaceImages = {
+			"56ec712875fe241fb97de07c" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwww.topfoto.co.uk%2Fimageflows%2Fimagethumb%2Ff%3DEUFD001764",
+			"56efc018713f210b9b88b788" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Feuropeana.parisiennedephotographie.fr%2FSSEU%2FFiles%2F2fe40969af14704542d5c5ec9604b53667e227ac378019d0349b7937ca7bf4dd",
+			"56ec6e0d75fe241fb97dd45e" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwww.topfoto.co.uk%2Fimageflows%2Fimagethumb%2Ff%3DEUFD103357",
+			"56ec6f0075fe241fb97dd823" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwww.topfoto.co.uk%2Fimageflows%2Fimagethumb%2Ff%3DEUFD102390",
+			"56ec712875fe241fb97de07c" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwww.topfoto.co.uk%2Fimageflows%2Fimagethumb%2Ff%3DEUFD001764",
+			"56ec351e75fe241fb97d6cca" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Frepositorio.iaph.es%2Fbitstream%2F11532%2F161402%2F1%2F70_0083457.jpg",
+			"574e9d5f4c74792548e6353e" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwakefieldmuseumcollections.org.uk%2Fimages%2FD0007640.jpg",
+			"56ee3488713f2101ec4481b3" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=https%3A%2F%2Fapsida.cut.ac.cy%2Ffiles%2Foriginal%2Fbe3d59549c59a674a12ebeabda17f1b5.tif",
+			"56ef1cb975fe242ea7427afa" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwww.topfoto.co.uk%2Fimageflows%2Fimagepreview%2Ff%3DEU061811",
+			"574e9c4b4c74792548e63538" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwakefieldmuseumcollections.org.uk%2Fimages%2FD0007630.jpg",
+		};
     if (data) {
       this.mediaType = 'VIDEO';
       this.loadData(data);
@@ -166,22 +178,27 @@ export class Record {
       this.collected = data.usage.collected;
     }
     if (!this.useFashionRepo) {
-      this.fullres = data.media && data.media[0].Original && data.media[0].Original.withUrl && data.media[0].Original.withUrl.length > 0 ? data.media[0].Original.withUrl : null;
-      /*needs checking: do we search for withUrl or .url? doing both for now*/
-      if (!this.fullres || data.media[0].Original.type !== 'IMAGE') {
-        this.fullres = data.media && data.media[0].Original && data.media[0].Original.url ? data.media[0].Original.url : null;
-      }
-      this.medium = data.media && data.media[0].Medium && data.media[0].Medium.url ? data.media[0].Medium.url : null;
-      this.square = data.media && data.media[0].Square && data.media[0].Square.url ? data.media[0].Square.url : null;
-      this.tiny = data.media && data.media[0].Tiny && data.media[0].Tiny.url ? data.media[0].Tiny.url : null;
-      if (this.fullres) {
-        this.rights = JsonUtils.findResOrLit(data.media[0].Original.originalRights);
-        this.mediatype = data.media[0].Original.type;
-      } else if (this.thumbnail) {
-        this.rights = JsonUtils.findResOrLit(data.media[0].Thumbnail.originalRights);
-        this.mediatype = data.media[0].Thumbnail.type;
-      }
-      this.fullresLogic();
+			if (this.replaceImages[this.dbId] !== undefined) {
+				this.myfullimg = this.replaceImages[this.dbId];
+				this.thumbnail = this.myfullimg;
+			} else {
+      	this.fullres = data.media && data.media[0].Original && data.media[0].Original.withUrl && data.media[0].Original.withUrl.length > 0 ? data.media[0].Original.withUrl : null;
+      	/*needs checking: do we search for withUrl or .url? doing both for now*/
+      	if (!this.fullres || data.media[0].Original.type !== 'IMAGE') {
+        	this.fullres = data.media && data.media[0].Original && data.media[0].Original.url ? data.media[0].Original.url : null;
+      	}
+      	this.medium = data.media && data.media[0].Medium && data.media[0].Medium.url ? data.media[0].Medium.url : null;
+      	this.square = data.media && data.media[0].Square && data.media[0].Square.url ? data.media[0].Square.url : null;
+      	this.tiny = data.media && data.media[0].Tiny && data.media[0].Tiny.url ? data.media[0].Tiny.url : null;
+      	if (this.fullres) {
+        	this.rights = JsonUtils.findResOrLit(data.media[0].Original.originalRights);
+        	this.mediatype = data.media[0].Original.type;
+      	} else if (this.thumbnail) {
+        	this.rights = JsonUtils.findResOrLit(data.media[0].Thumbnail.originalRights);
+        	this.mediatype = data.media[0].Thumbnail.type;
+      	}
+      	this.fullresLogic();
+			}
     } else {
       this.myfullimg = data.descriptiveData.isShownBy;
       this.thumbnail = data.descriptiveData.isShownBy;
