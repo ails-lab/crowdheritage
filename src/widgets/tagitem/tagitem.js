@@ -115,6 +115,9 @@ export class Tagitem {
       await this.userServices.reloadCurrentUser();
     }
     await this.getRecordAnnotations(this.recId);
+    if (this.isTesterUser && (this.campaign.username === "instruments" || this.campaign.username === "garment-type")) {
+      toastr.error("You cannot contribute to this campaign!");
+    }
   }
 
   async reloadAnnotations() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-item">
+  <div class="tag-item" if.bind="!isTesterUser || !(campaign.username=='instruments' || campaign.username=='garment-type')">
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
