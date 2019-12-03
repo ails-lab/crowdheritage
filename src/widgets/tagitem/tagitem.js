@@ -804,7 +804,7 @@ export class Tagitem {
         this.annotations = [];
         for (var i = 0; i < response.length; i++) {
           if (!this.userServices.current) {
-            this.annotations.push(new Annotation(response[i], ""));
+            this.annotations.push(new Annotation(response[i], "", this.loc));
           } else {
             this.annotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
           }
