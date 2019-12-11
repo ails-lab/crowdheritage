@@ -1,0 +1,46 @@
+<template>
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <!-- lbl-->
+        <div class="bannertext">
+          <div class="line">
+            <div class="lbl">
+              <span>CAMPAIGN VALIDATION</span>
+            </div>
+            <div class="wrap">
+              <span>${campaign.title}</span>
+            </div>
+          </div>
+        </div>
+        <!-- vertical nav-->
+        <nav class="vertical">
+          <ul>
+            <li><a route-href="route: index; params.bind: {lang: loc}" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
+          </ul>
+        </nav>
+        <!-- bg-->
+        <div class="bgwrap" style="background-image: url('${campaign.banner}');"></div>
+      </div>
+    </section>
+
+    <!-- validation section-->
+		<section class="collections collection-item-list">
+      <div class="searchbox">
+    		<input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+        <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
+          <ul class="suggestions">
+						<li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}"><span>${item.label}</span><a if.bind="item.lang">${item.lang}</a><a style="padding-right:10px" class="fa fa-link" click.delegate="goToURI(item.uri)"></a></li>
+          </ul>
+        </div>
+      </div>
+
+			<div class="container">
+    		<compose view-model="widgets/multiple-items/multiple-items"
+    						 model.bind="{'cname': cname, 'collection': collection, 'router': router, 'lang': loc}">
+    		</compose>
+    	</div>
+    </section>
+  </main>
+</template>

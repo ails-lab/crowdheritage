@@ -108,6 +108,7 @@ export class App {
     config.map([
       { route: ':lang?', href: 'index',            name: 'index',    	 moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
       { route: ':lang/:cname',					           name: 'summary',    moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
+      { route: ':lang/:cname/validation',          name: 'validation', moduleId: PLATFORM.moduleName('./pages/validation/validation'),        nav: false, title: ''},
 			{ route: ':lang/:cname/collection/:colid',   name: 'collection', moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
 			{ route: ':lang/:cname/:recid',              name: 'item',     	 moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
       { route: ':lang/register',                   name: 'register', 	 moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
