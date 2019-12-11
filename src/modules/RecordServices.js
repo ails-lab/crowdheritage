@@ -74,6 +74,21 @@ export class RecordServices {
 		});
 	}
 
+	getAnnotatedRecordsByLabel(label, generators) {
+		let gens = '';
+		for (let gen of generators) {
+			if (gens.length > 0) {
+				gens += '&';
+			}
+			gens += 'generator=' + gen;
+		}
+		return this.http.fetch('/record/annotationLabel?label=' + label + "&" + gens, {
+			method: 'GET'
+		}).then(checkStatus).then((response) => {
+			return response.json();
+		});
+	}
+
 	// request random records from given group id
 	getRandomRecords( groupId, batchCount ) {
 		return this.http.fetch('/record/randomRecords?groupId=' + groupId + '&batchCount=' + batchCount, {
