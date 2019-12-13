@@ -26,21 +26,35 @@
     </section>
 
     <!-- validation section-->
-		<section class="collections collection-item-list">
-      <div class="searchbox">
-    		<input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+    <section class="validation">
+      <!-- Search Bar -->
+      <div class="searchbox" if.bind="!hasMotivation('ColorTagging')">
+        <input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
-						<li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}"><span>${item.label}</span><a if.bind="item.lang">${item.lang}</a><a style="padding-right:10px" class="fa fa-link" click.delegate="goToURI(item.uri)"></a></li>
+            <li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}"><span>${item.label}</span><a if.bind="item.lang">${item.lang}</a><a style="padding-right:10px" class="fa fa-link" click.delegate="goToURI(item.uri)"></a></li>
           </ul>
         </div>
       </div>
 
+      <!-- Color Palette -->
+      <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
+        <section class="color" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0])">
+          <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
+        </section>
+        <!-- hack for last row elements width -->
+        <li class="width-helper" repeat.for="i of 20"></li>
+      </div>
+    </section>
+
+    <!-- grid section-->
+		<section if.bind="loading" class="collections collection-item-list">
 			<div class="container">
     		<compose view-model="widgets/multiple-items/multiple-items"
-    						 model.bind="{'cname': cname, 'collection': collection, 'router': router, 'lang': loc}">
+    						 model.bind="{'cname': cname, 'records': records, 'router': router, 'lang': loc}">
     		</compose>
     	</div>
     </section>
+
   </main>
 </template>

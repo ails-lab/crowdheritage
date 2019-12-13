@@ -2118,6 +2118,13 @@ body main section.tagging .right .tag-color .coloraction {
   margin: 15px -1px 0 -1px;
   padding: 0;
 }
+body main section.validation .coloraction {
+  margin: 15px -1px 0 -1px;
+  padding: 0;
+  width: 800px;
+  padding: 50px;
+}
+body main section.validation .coloraction:before,
 body main section.tagging .right .tag-item .coloraction:before,
 body main section.tagging .right .tag-geo .coloraction:before,
 body main section.tagging .right .tag-color .coloraction:before,
@@ -2127,11 +2134,13 @@ body main section.tagging .right .tag-color .coloraction:after {
   content: " ";
   display: table;
 }
+body main section.validation .coloraction:after,
 body main section.tagging .right .tag-item .coloraction:after,
 body main section.tagging .right .tag-geo .coloraction:after,
 body main section.tagging .right .tag-color .coloraction:after {
   clear: both;
 }
+body main section.validation .coloraction li,
 body main section.tagging .right .tag-item .coloraction li,
 body main section.tagging .right .tag-geo .coloraction li,
 body main section.tagging .right .tag-color .coloraction li {
@@ -2141,12 +2150,14 @@ body main section.tagging .right .tag-color .coloraction li {
   padding: 0 1px 0 1px;
   margin-bottom: 2px;
 }
+body main section.validation .coloraction li a,
 body main section.tagging .right .tag-item .coloraction li a,
 body main section.tagging .right .tag-geo .coloraction li a,
 body main section.tagging .right .tag-color .coloraction li a {
   display: block;
   position: relative;
 }
+body main section.validation .coloraction li a .action,
 body main section.tagging .right .tag-item .coloraction li a .action,
 body main section.tagging .right .tag-geo .coloraction li a .action,
 body main section.tagging .right .tag-color .coloraction li a .action {
@@ -2158,6 +2169,7 @@ body main section.tagging .right .tag-color .coloraction li a .action {
   border: 1px solid #fff;
   display: none;
 }
+body main section.validation .coloraction li a .action .colorname,
 body main section.tagging .right .tag-item .coloraction li a .action .colorname,
 body main section.tagging .right .tag-geo .coloraction li a .action .colorname,
 body main section.tagging .right .tag-color .coloraction li a .action .colorname {
@@ -2176,6 +2188,7 @@ body main section.tagging .right .tag-color .coloraction li a .action .colorname
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+body main section.validation .coloraction li a .action .colorname::after,
 body main section.tagging .right .tag-item .coloraction li a .action .colorname::after,
 body main section.tagging .right .tag-geo .coloraction li a .action .colorname::after,
 body main section.tagging .right .tag-color .coloraction li a .action .colorname::after {
@@ -2191,21 +2204,25 @@ body main section.tagging .right .tag-color .coloraction li a .action .colorname
   left: 50%;
   margin-left: -8px;
 }
+body main section.validation .coloraction li a:hover .action,
 body main section.tagging .right .tag-item .coloraction li a:hover .action,
 body main section.tagging .right .tag-geo .coloraction li a:hover .action,
 body main section.tagging .right .tag-color .coloraction li a:hover .action {
   display: block;
 }
+body main section.validation .coloraction li img,
 body main section.tagging .right .tag-item .coloraction li img,
 body main section.tagging .right .tag-geo .coloraction li img,
 body main section.tagging .right .tag-color .coloraction li img {
   width: 100%;
 }
+body main section.validation .coloraction li.big,
 body main section.tagging .right .tag-item .coloraction li.big,
 body main section.tagging .right .tag-geo .coloraction li.big,
 body main section.tagging .right .tag-color .coloraction li.big {
   width: 20%;
 }
+body main section.validation .coloraction li.big a .colorname,
 body main section.tagging .right .tag-item .coloraction li.big a .colorname,
 body main section.tagging .right .tag-geo .coloraction li.big a .colorname,
 body main section.tagging .right .tag-color .coloraction li.big a .colorname {
@@ -3028,6 +3045,32 @@ body {
     }
   }
 }
+body main section.validation .coloraction {
+  @tagcolorsize: 73px;
+  display: flex;
+  flex-wrap: wrap;
+  .color {
+    cursor: pointer;
+    margin: 1px;
+    width: @tagcolorsize;
+    height: @tagcolorsize;
+    box-shadow: 0 0 20px #424242;
+    color: white;
+    // padding: 1px;
+    transition: transform .1s;
+    flex-basis: @tagcolorsize;
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+  .name {
+    text-align: center;
+    font-weight: bold;
+    // text-shadow: 1px 1px 2px #424242;
+    font-size: 1.1em;
+    // overflow-wrap: break-word;
+  }
+}
 @media (min-width: 992px) {
   body main section.campaigninfo > .container {
     display: flex;
@@ -3386,9 +3429,11 @@ body {
   body main section.tagging .wraps .container .right .tag-geo {
     margin-bottom: 0px;
   }
+  body main section.validation .coloraction li,
   body main section.tagging .wraps .container .right .tag-color .coloraction li {
     width: 20%;
   }
+  body main section.validation .coloraction li.big,
   body main section.tagging .wraps .container .right .tag-color .coloraction li.big {
     width: 40%;
   }
