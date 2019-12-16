@@ -16,6 +16,7 @@
 
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { Annotation } from 'Annotation.js';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { Record } from 'Record.js';
@@ -25,6 +26,7 @@ import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
 let instance = null;
+let COUNT = 24;
 
 @inject(CampaignServices, RecordServices, UserServices, Router, I18N)
 export class Validation {
@@ -63,11 +65,19 @@ export class Validation {
     this.project = settings.project;
 
     this.campaignItem = null;
+    this.recordIds = [];
     this.records = [];
+    this.offset = 0;
     this.label = "";
     this.generators = [];
+    this.annsToDiscard = [];
+
+    this.annotations = [];
+    this.geoannotations = [];
+    this.colorannotations = [];
+    this.pollannotations = [];
+
     this.loadCamp = false;
-    this.loadRec = false;
     this.loading = false;
   	if (!instance) {
   		instance = this;
@@ -76,6 +86,7 @@ export class Validation {
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user()            { return this.userServices.current; }
+  get more()            { return this.offset < this.recordIds.length; }
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
@@ -87,6 +98,7 @@ export class Validation {
 
   attached() {
     $('.accountmenu').removeClass('active');
+    // window.addEventListener('scroll', e => this.scrollAndLoadMore());
   }
 
 	async activate(params, route) {
@@ -94,6 +106,7 @@ export class Validation {
 		this.i18n.setLocale(params.lang);
 
 		this.cname = params.cname;
+    this.loadCamp = true;
     let result = await this.campaignServices.getCampaignByName(params.cname)
       .then(response => {
         // Based on the selected language, set the campaign {title, description, instructions, prizes}
@@ -114,24 +127,196 @@ export class Validation {
     this.loadCamp = false;
 
     route.navModel.setTitle('Validation | ' + this.campaign.title);
-
-
 	}
 
   selectLabel(label) {
+    // Clear the previously retrieved records
+    this.recordIds.splice(0, this.recordIds.length);
+    this.records.splice(0, this.records.length);
+    this.offset = 0;
+
+    // Set up the query parameters for the new RecordIds retrieval
     this.label = label.toLowerCase();
     this.generators.splice(0, this.generators.length);
     this.generators.push(this.project + " " + this.campaign.username);
     if (this.campaign.username == "colours-catwalk") {
       this.generators.push("Image Analysis");
     }
-    console.log(this.label, this.generators);
-    this.recordServices.getAnnotatedRecordsByLabel(this.label, this.generators)
+    // Retrieve the new recordIds array
+    this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators)
       .then( response => {
-        this.records = response;
-        console.log(this.records);
-        this.loading = true;
+        this.recordIds = response;
+        // Fill the record array with the first batch of records
+        this.getRecords(0);
+      })
+      .catch(error => {
+        console.error(error.message);
       });
   }
 
+	async getRecords(offset) {
+		this.loading = true;
+    // Clone the recordIds array
+    let recIds = this.recordIds.slice(0, this.recordIds.length);
+    // Keep only the next batch in the array
+    recIds.splice(0, offset);
+    recIds.splice(COUNT, recIds.length-COUNT);
+    // Retrieve the records
+    this.recordServices.getMultipleRecords(recIds)
+      .then ( results => {
+        this.offset = this.offset + COUNT;
+        this.fillRecordArray(results);
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+		this.loading = false;
+	}
+
+  fillRecordArray(records) {
+    for (let i in records) {
+      let recordData = records[i];
+      if (recordData !== null) {
+        this.records.push(new Record(recordData));
+      }
+    }
+  }
+
+  async viewRecord(record) {
+    await this.getRecordAnnotations(record.dbId);
+    console.log("RECORD",record);
+    console.log("ANNOTATIONS",this.colorannotations);
+  }
+
+  selectAnnotation(ann) {
+    // Select which annotations to discard
+    this.annsToDiscard.push(ann);
+    $('.TODO').addClass('discard');
+  }
+
+  unselectAnnotation(ann) {
+    // Undo the selection of an annotation
+    this.annsToDiscard.splice( this.annsToDiscard.indexOf(ann), 1 );
+    $('.TODO').removeClass('discard');
+  }
+
+  clearSelections() {
+    // Cancel the selections you made
+    this.annsToDiscard.splice(0, this.annsToDiscard.length);
+    $('.TODO').removeClass('discard');
+  }
+
+  discardAnnotations() {
+    // Discard the selected annotations
+  }
+
+
+
+
+
+  scrollAndLoadMore() {
+		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
+	 		this.getRecords(this.offset);
+	}
+
+  async loadMore() {
+		this.getRecords(this.offset);
+  }
+
+
+
+  async getRecordAnnotations(id) {
+    if (this.hasMotivation('Polling')) {
+      await this.recordServices.getAnnotations(id, 'Polling').then(response => {
+        for (var i = 0; i < response.length; i++) {
+          //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
+          if (!this.userServices.current) {
+            this.pollannotations.push(new Annotation(response[i], ""));
+          } else {
+            this.pollannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
+          //}
+        }
+        // Bring first the annotation associated with the spedific collection
+        for (var i in this.pollannotations) {
+          if (this.pollannotations[i].label == this.colTitle) {
+            let temp = this.pollannotations[0];
+            this.pollannotations[0] = this.pollannotations[i];
+            this.pollannotations[i] = temp;
+            break;
+          }
+        }
+        if (this.pollannotations.length > 0) {
+          this.pollTitle = this.pollannotations[0].label;
+        }
+        else {
+          toastr.error(this.i18n.tr('item:toastr-empty'));
+        }
+      });
+    }
+    if (this.hasMotivation('GeoTagging')) {
+      await this.recordServices.getAnnotations(id, 'GeoTagging').then(response => {
+        this.geoannotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.geoannotations.push(new Annotation(response[i], ""));
+          } else {
+            this.geoannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.geoannotations.sort(function(a, b) {
+        return b.score - a.score;
+      });
+    }
+    if (this.hasMotivation('Tagging')) {
+      await this.recordServices.getAnnotations(id, 'Tagging').then(response => {
+        this.annotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.annotations.push(new Annotation(response[i], "", this.loc));
+          } else {
+            this.annotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.annotations.sort(function(a, b) {
+        return b.score - a.score;
+      });
+    }
+    if (this.hasMotivation('ColorTagging')) {
+      await this.recordServices.getAnnotations(id, 'ColorTagging').then(response => {
+        this.colorannotations = [];
+        for (var i = 0; i < response.length; i++) {
+          // Filter the annotations based on the generator
+          var flag = false;
+          for (var annotator of response[i].annotators) {
+            if ( (annotator.generator == (settings.project+' '+(this.campaign.username)))
+              || (annotator.generator == 'Image Analysis') ) {
+                flag = true;
+                break;
+            }
+          }
+          // If the criterias are met, push the annotation inside the array
+          if (flag) {
+            if (response[i].body.label.en && response[i].body.label.en=="gray") {
+              response[i].body.label.en = ["grey"];
+              response[i].body.label.default = ["grey"];
+            }
+            if (!this.userServices.current) {
+              this.colorannotations.push(new Annotation(response[i], ""));
+            } else {
+              this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+            }
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.colorannotations.sort(function(a, b) {
+        return b.score - a.score;
+      });
+    }
+  }
 }
