@@ -36,7 +36,6 @@
           </ul>
         </div>
       </div>
-
       <!-- Color Palette -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
         <section class="color" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0])">
@@ -48,11 +47,29 @@
     </section>
 
     <!-- grid section-->
-		<section if.bind="loading" class="collections collection-item-list">
+		<section class="collections collection-item-list">
 			<div class="container">
-    		<compose view-model="widgets/multiple-items/multiple-items"
-    						 model.bind="{'cname': cname, 'records': records, 'router': router, 'lang': loc}">
-    		</compose>
+        <!-- campaign reel-->
+      	<div id="recs" class="campaignlist">
+      		<!-- entry-->
+      		<div class="entries row" ref="grid">
+      			<!-- item-->
+      			<div class="sizer"></div>
+      				<!-- Item Grid -->
+      				<div class="entry ${record.dbId} col-md-3" repeat.for="record of records">
+      					<a href="javascript:void(0)" click.delegate="viewRecord(record)">
+      						<div class="thumbs">
+      							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+      							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
+      						</div>
+      					</a>
+      				</div>
+      		</div>
+      		<div class="loadmore">
+      			<a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+      			<div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+      		</div>
+      	</div>
     	</div>
     </section>
 

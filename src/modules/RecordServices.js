@@ -74,7 +74,7 @@ export class RecordServices {
 		});
 	}
 
-	getAnnotatedRecordsByLabel(label, generators) {
+	getRecordIdsByAnnLabel(label, generators) {
 		let gens = '';
 		for (let gen of generators) {
 			if (gens.length > 0) {
