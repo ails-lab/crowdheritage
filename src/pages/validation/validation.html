@@ -44,6 +44,10 @@
         <!-- hack for last row elements width -->
         <li class="width-helper" repeat.for="i of 20"></li>
       </div>
+      <div class="button-group"><!-- hiddenfile -->
+        <a href="javascript:void(0)" class="btn-green-o cancel" click.delegate="clearSelections()">Cancel Selection</a>
+        <button class="btn-green" click.delegate="deleteAnnotations()" disabled.bind="hasErrors">Delete Annotations</button>
+      </div>
     </section>
 
     <!-- grid section-->
@@ -51,17 +55,28 @@
 			<div class="container">
         <!-- campaign reel-->
       	<div id="recs" class="campaignlist">
+          <div role="main">
+        		<section class="action itemview" if.bind="record">
+        			<compose view-model="widgets/quickview/quickview"  model.bind="{'cname': cname, 'record': record, 'lang': loc, 'collection':collection}"></compose>
+        		</section>
+          </div>
       		<!-- entry-->
       		<div class="entries row" ref="grid">
       			<!-- item-->
       			<div class="sizer"></div>
       				<!-- Item Grid -->
       				<div class="entry ${record.dbId} col-md-3" repeat.for="record of records">
-      					<a href="javascript:void(0)" click.delegate="viewRecord(record)">
+      					<a href="javascript:void(0)" click.delegate="selectAnnotation(record)">
       						<div class="thumbs">
       							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-      							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
+      							<div class="action">
+                      <!-- <div class="plus">${record.title | textTrim:22}</div>
+                      <div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div> -->
+                    </div>
       						</div>
+      					</a>
+                <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasColourTag()">
+                  <i class="fa fa-eye"></i>
       					</a>
       				</div>
       		</div>

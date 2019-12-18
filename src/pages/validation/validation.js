@@ -67,10 +67,12 @@ export class Validation {
     this.campaignItem = null;
     this.recordIds = [];
     this.records = [];
+    this.record = null;
+    this.annotation = null;
     this.offset = 0;
     this.label = "";
     this.generators = [];
-    this.annsToDiscard = [];
+    this.annotationsToDelete = [];
 
     this.annotations = [];
     this.geoannotations = [];
@@ -92,6 +94,22 @@ export class Validation {
     return !!this.campaign.motivation.includes(name);
   }
 
+  hasColourTag() {
+		if(this.cname==="colours-catwalk")
+		   return true;
+		else
+      return false;
+  }
+
+  containsAnnotation() {
+    for (let ann of this.annotationsToDelete) {
+      if (ann.dbId === this.annotation.dbId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   getColorLabel(label) {
     return this.i18n.tr('item:color:'+label);
   }
@@ -100,6 +118,10 @@ export class Validation {
     $('.accountmenu').removeClass('active');
     // window.addEventListener('scroll', e => this.scrollAndLoadMore());
   }
+
+  detached() {
+		this.record=null;
+	}
 
 	async activate(params, route) {
     this.loc = params.lang;
@@ -182,38 +204,82 @@ export class Validation {
     }
   }
 
-  async viewRecord(record) {
+  quickView(record){
+	  this.record=record;
+		$('.action').removeClass('active');
+		$('.action.itemview').addClass('active');
+  }
+
+  async findAnnotation(record) {
+    let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
+    let found = false;
     await this.getRecordAnnotations(record.dbId);
-    console.log("RECORD",record);
-    console.log("ANNOTATIONS",this.colorannotations);
+    if (this.hasMotivation('ColorTagging')) {
+      for (let ann of this.colorannotations) {
+        if (ann.label === camelLabel) {
+          this.annotation = ann;
+          found = true;
+        }
+      }
+    }
+    if (!found) {
+      this.annotation = null;
+    }
   }
 
-  selectAnnotation(ann) {
-    // Select which annotations to discard
-    this.annsToDiscard.push(ann);
-    $('.TODO').addClass('discard');
+  async selectAnnotation(record) {
+    await this.findAnnotation(record);
+    if (this.annotation == null) {
+      toastr.error("The annotation failed to get selected");
+      return;
+    }
+
+    if (this.containsAnnotation()) {
+      // If the annotation is already selected, unselect it, instead
+      this.unselectAnnotation(record);
+      return;
+    }
+    else {
+      // Select which annotations to discard
+      $('.'+record.dbId).addClass('discardAnnotation');
+      this.annotationsToDelete.push(this.annotation);
+    }
+    console.log("[SELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
-  unselectAnnotation(ann) {
+  unselectAnnotation(record) {
+    if (this.annotation == null) {
+      toastr.error("The annotation failed to get selected");
+      return;
+    }
     // Undo the selection of an annotation
-    this.annsToDiscard.splice( this.annsToDiscard.indexOf(ann), 1 );
-    $('.TODO').removeClass('discard');
+    for (let i in this.annotationsToDelete) {
+      if (this.annotationsToDelete[i].dbId === this.annotation.dbId) {
+        this.annotationsToDelete.splice(i, 1);
+        $('.'+record.dbId).removeClass('discardAnnotation');
+        console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+        return;
+      }
+    }
+    toastr.error("The annotation failed to get unselected");
   }
 
   clearSelections() {
     // Cancel the selections you made
-    this.annsToDiscard.splice(0, this.annsToDiscard.length);
-    $('.TODO').removeClass('discard');
+    this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
+    $('.discardAnnotation').removeClass('discardAnnotation');
+    console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
-  discardAnnotations() {
+  deleteAnnotations() {
     // Discard the selected annotations
+    this.selectLabel(this.label);
+    this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
+    console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
 
-
-
-
+  // DOES NOT WORK : IT LOADS THE SAME IMAGES
   scrollAndLoadMore() {
 		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
 	 		this.getRecords(this.offset);
