@@ -224,6 +224,35 @@ body header .wrap .container nav .account .accountmenu li a:hover {
   text-decoration: none;
   background-color: #2F4949;
 }
+
+
+
+body div[role='main'] .viewer .section-head {
+  position: relative;
+}
+body div[role='main'] section.action {
+  position: fixed;
+  width: 40%;
+  top: 0px;
+  right: -40%;
+  height: 100%;
+  overflow: auto;
+  background: white;
+  border-left: 1px solid #ccc;
+  z-index: 102;
+  padding: 35px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  outline: 0;
+}
+body div[role='main'] section.action.active {
+  right: 0;
+}
+body div[role='main'] section.action.access .action-body {
+  padding: 25px 0 0;
+}
+
 body main section.banner {
   height: 300px;
 }
@@ -1937,6 +1966,26 @@ body main section.tagging .title::before {
 body main section.tagging .wraps .container {
   padding-right: 0;
 }
+
+
+body main section.tagging .cntr {
+  width: 90%;
+  float: left;
+}
+
+body main section.tagging .cntr .img {
+  text-align: center;
+  width:100%;
+  overflow: hidden;
+      background-color: #f2f2f2;
+    padding: 10px;
+}
+
+body main section.tagging .cntr .img img {
+  max-width: 50%;
+}
+
+
 body main section.tagging .left {
   width: 50%;
   float: left;
@@ -1994,12 +2043,12 @@ body main section.tagging .left .img .modal #modalImg:hover {
     overflow: hidden;
   }
 }
-body main section.tagging .left .metadata {
+body main section.tagging .left .metadata, body main section.tagging .cntr .metadata {
   background-color: #f2f2f2;
   padding: 40px;
   position: relative;
 }
-body main section.tagging .left .metadata .heading {
+body main section.tagging .left .metadata .heading, body main section.tagging .cntr .metadata .heading {
   position: absolute;
   bottom: -24px;
   left: -35px;
@@ -2007,45 +2056,49 @@ body main section.tagging .left .metadata .heading {
   transform: rotate(-90deg);
   transform-origin: left top 0;
 }
-body main section.tagging .left .metadata ul.meta {
+body main section.tagging .left .metadata ul.meta, body main section.tagging .cntr .metadata ul.meta {
   margin: 0 -15px;
   padding: 0;
 }
 body main section.tagging .left .metadata ul.meta:before,
-body main section.tagging .left .metadata ul.meta:after {
+body main section.tagging .left .metadata ul.meta:after,
+body main section.tagging .cntr .metadata   ul:meta:before, body main section.tagging .cntr .metadata ul.meta:after {
   content: " ";
   display: table;
 }
-body main section.tagging .left .metadata ul.meta:after {
+body main section.tagging .left .metadata ul.meta:after,body main section.tagging .cntr .metadata ul.meta:after {
   clear: both;
 }
-body main section.tagging .left .metadata ul.meta li {
+body main section.tagging .left .metadata ul.meta li ,  body main section.tagging .cntr .metadata  ul.meta li{
   list-style: none;
   display: block;
   width: 50%;
   margin-bottom: 15px;
   float: left;
 }
-body main section.tagging .left .metadata ul.meta li.yellow .val {
+body main section.tagging .left .metadata ul.meta li.yellow .val, body main section.tagging .cntr .metadata ul.meta li.yellow {
   color: @secondary-color;
   word-wrap: break-word;
 }
-body main section.tagging .left .metadata ul.meta li .lbl {
+body main section.tagging .left .metadata ul.meta li .lbl, body main section.tagging .cntr .metadata ul.meta li .lbl {
   color: #888;
   font-family: "Dosis";
   font-size: 1.1rem;
   letter-spacing: 1px;
 }
-body main section.tagging .left .metadata ul.meta li .val {
+body main section.tagging .left .metadata ul.meta li .val, body main section.tagging .cntr .metadata ul.meta li .val {
   color: #000;
   font-size: 1.4rem;
   word-wrap: break-word;
 }
-body main section.tagging .left .metadata ul.meta li .val small {
+body main section.tagging .left .metadata ul.meta li .val small, body main section.tagging .cntr .metadata ul.meta li .val small {
   font-size: 1.5rem;
   margin-left: 10px;
   color: #909090;
   word-wrap: break-word;
+}
+body main section.tagging .cntr .metadata .show-more-parent i.show-more {
+  display:none;
 }
 body main section.tagging .left .metadata .loadmore {
   text-align: center;
@@ -2087,13 +2140,28 @@ body main section.tagging .right .tag-geo:before,
 body main section.tagging .right .tag-color:before,
 body main section.tagging .right .tag-item:after,
 body main section.tagging .right .tag-geo:after,
-body main section.tagging .right .tag-color:after {
+body main section.tagging .right .cntr:after {
+  content: " ";
+  display: table;
+}
+
+body main section.tagging .cntr .tag-item:before,
+body main section.tagging .cntr .tag-geo:before,
+body main section.tagging .cntr .tag-color:before,
+body main section.tagging .cntr .tag-item:after,
+body main section.tagging .cntr .tag-geo:after,
+body main section.tagging .cntr .tag-color:after {
   content: " ";
   display: table;
 }
 body main section.tagging .right .tag-item:after,
 body main section.tagging .right .tag-geo:after,
 body main section.tagging .right .tag-color:after {
+  clear: both;
+}
+body main section.tagging .cntr .tag-item:after,
+body main section.tagging .cntr .tag-geo:after,
+body main section.tagging .cntr .tag-color:after {
   clear: both;
 }
 body main section.tagging .right .tag-item .infobar,
@@ -2396,9 +2464,27 @@ body main section.tagging .right .tag-color .taglist {
   margin: 0;
   padding: 0;
 }
+body main section.tagging .cntr .tag-item .taglist,
+body main section.tagging .cntr .tag-geo .taglist,
+body main section.tagging .cntr .tag-color .taglist {
+  margin: 0;
+  padding: 0;
+}
 body main section.tagging .right .tag-item .taglist > li,
 body main section.tagging .right .tag-geo .taglist > li,
 body main section.tagging .right .tag-color .taglist > li {
+  list-style: none;
+  padding: 10px 20px 10px 20px;
+  font-family: "Dosis";
+  background-color: #f2f2f2;
+  margin-top: 1px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+body main section.tagging .cntr .tag-item .taglist > li,
+body main section.tagging .cntr .tag-geo .taglist > li,
+body main section.tagging .cntr .tag-color .taglist > li {
   list-style: none;
   padding: 10px 20px 10px 20px;
   font-family: "Dosis";
@@ -2661,7 +2747,7 @@ body main section.tagging .right .tag-color .taglist.color > li ul.action li.del
   top: 13px;
   right: 259px;
 }
-body main section.tagging .right .heading {
+body main section.tagging .right .heading,body main section.tagging .cntr .heading {
   background-color: #000;
   display: inline-block;
   color: #fff;
@@ -2670,10 +2756,11 @@ body main section.tagging .right .heading {
   margin-bottom: 15px;
   font-family: "Dosis";
 }
-body main section.tagging .right .heading.green {
+
+body main section.tagging .right .heading.green, body main section.tagging .cntr .heading.green{
   background-color: @main-color;
 }
-body main section.tagging .right .heading.yellow {
+body main section.tagging .right .heading.yellow, body main section.tagging .cntr .heading.yellow {
   background-color: @secondary-color;
 }
 body footer {

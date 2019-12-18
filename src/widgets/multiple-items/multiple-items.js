@@ -118,7 +118,20 @@ export class MultipleItems {
 		item.records = [];
 		item.hideOrShowMine = this.state;
 		this.router.navigateToRoute('item', {cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc});
+		this.record=null;
   }
+
+	quickView(record){
+		  this.record=record;
+		  
+			$('.action').removeClass('active');
+			$('.action.itemview').addClass('active');
+
+  }
+
+   detached(){
+		this.record=null;
+	}
 
 	goToAnnotatedItem(record) {
 		let annotations = record.data.annotations;
@@ -141,6 +154,12 @@ export class MultipleItems {
 			}
 		}
 	}
+
+	hasColourTag() {
+		if(this.cname==="colours-catwalk")
+		   return true;
+		else return false;
+  }
 
   async loadMore() {
 		this.getRecords();

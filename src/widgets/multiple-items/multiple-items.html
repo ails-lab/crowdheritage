@@ -24,6 +24,10 @@
 			</div>
 		</div>
 		<!-- entry-->
+		<div role="main">
+		<section class="action itemview" if.bind="record">
+			<compose view-model="widgets/quickview/quickview"  model.bind="{'cname': cname, 'record': record, 'lang': loc, 'collection':collection}"></compose>
+		</section></div>
 		<div class="entries row" ref="grid">
 			<!-- item-->
 			<div class="sizer"></div>
@@ -35,6 +39,8 @@
 							<div class="action"><div class="plus">${record.title | textTrim:22}</div></div>
 						</div>
 					</a>
+					<a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasColourTag()"><i  class="fa fa-eye"></i>
+					</a>
 				</div>
 				<!-- Item Grid for Collection -->
 				<div if.bind="byCollection" class="entry ${record.dbId} col-md-3" repeat.for="record of records">
@@ -44,6 +50,9 @@
 							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
 						</div>
 					</a>
+					<a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasColourTag()"><i  class="fa fa-eye"></i>
+					<!--<compose view-model="widgets/quickview/quickview" model.bind="{'cname': cname, 'recid': record, 'lang': loc}" ></compose>-->
+				    </a>
 				</div>
 		</div>
 		<div class="loadmore">

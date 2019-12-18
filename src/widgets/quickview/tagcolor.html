@@ -1,0 +1,38 @@
+<template>
+  <div class="right" style="width:100%">
+  <div class="tag-color">
+    <!-- infobar-->
+    <div class="wrap" style="padding-left:0px;">
+      <div class="heading green" t="item:color-tagging">COLOR TAGGING</div>
+     	<div class="show-more-parent">
+      <ul class="taglist color show-more-target">
+        <li repeat.for="ann of colorannotations">
+          <div class="thumbs" style.bind="getStyle(ann.label)"></div>
+          <div class="selected" innerhtml.bind="getColorLabel(ann.label)"></div>
+          <ul class="action">
+            <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
+              <a if.bind="!ann.createdByMe">
+                <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+              </a>
+							<a if.bind="ann.createdByMe">
+                <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+              </a>
+            </li>
+            <li class.bind="ann.rejectedByMe ? 'down active' : 'down'">
+              <a if.bind="!ann.createdByMe">
+                <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
+              </a>
+							<a if.bind="ann.createdByMe">
+								<span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
+							</a>
+            </li>
+            
+          </ul>
+        </li>
+      </ul>
+			<i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+		</div>
+    </div>
+  </div>
+  </div>
+</template>
