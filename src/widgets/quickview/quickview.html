@@ -1,73 +1,60 @@
 <template>
-		<div class="action-header">
-			
-		</div>
-		<div class="action-body">
-			<div class="group">
-				<div class="title">
-					<button type="button" class="close" click.trigger="closeTab()" title="close window">
-			<i class="fa fa-times"></i>
-		</button>
-					</div>
+  <div class="action-header">
 
-				 <section id="tagging" class="tagging">
-					<!-- title-->
-					<div  show.bind="!loadRec">
-						<div id="scrollPoint" class="title">${record.title}</div></div>
-					
-					
-					<div class="wraps">
-						
+  </div>
+  <div class="action-body">
+    <div class="group">
+      <div class="title">
+        <button type="button" class="close" click.trigger="closeTab()" title="close window">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
 
-						<!-- left-->
-						<div class="cntr" show.bind="!loadRec">
-							<!-- img-->
-							<div class="img" with.bind="record">
-							<!-- Trigger the modal element -->
-							<img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal(record.myfullimg)" />
-							<!-- The modal element -->
-							<div id="myModal" class="modal">
-								<!-- Modal Content - Image) -->
-								<img class="modal-content" id="modalImg" click.delegate="closeModal()">
-							</div>
+      <section id="tagging" class="tagging">
+        <!-- title-->
+        <div show.bind="!loadRec">
+          <div id="scrollPoint" class="title">${record.title}</div>
+        </div>
 
-							<!-- Here goes the media, besides images -->
-							<div id="mediadiv" innerhtml.bind='mediaDiv'></div>
-							</div>
-							<!-- metadata-->
-							<div class="wrap">
-							<compose if.bind="(campaign.username!='colours-catwalk') && (campaign.username!='garment-type')"
-									view="widgets/metadata/meta-music.html"
-														view-model="widgets/metadata/metadata"
-									model.bind="{'record': record}">
-							</compose>
-							<compose if.bind="campaign.username == 'colours-catwalk'"
-									view="widgets/metadata/meta-colours.html"
-														view-model="widgets/metadata/metadata"
-									model.bind="{'record': record}">
-							</compose>
-							<compose if.bind="campaign.username == 'garment-type'"
-									view="widgets/metadata/meta-garment.html"
-														view-model="widgets/metadata/metadata"
-									model.bind="{'record': record}">
-							</compose>
-							</div>
-						</div>
+        <div class="wraps">
 
-						
-						<div class="cntr" if.bind="!loadCamp && !loadRec">
-							<compose view="widgets/quickview/tagcolor.html"
-														view-model="widgets/tagitem/tagitem"
-									if.bind="hasMotivation('ColorTagging')"
-									model.bind="{'campaign': campaign, 'recId': record.dbId}">
-							</compose>
-						</div>
-					</div>
-				
-					</section>
-					
-			         <button type="button" class="close" click.trigger="closeTab()" title="close window">
-			<i class="fa fa-times"></i></button>
-			 </div>
-		</div>
+          <!-- left-->
+          <div class="cntr" show.bind="!loadRec">
+            <!-- img-->
+            <div class="img" with.bind="record">
+              <!-- Trigger the modal element -->
+              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal(record.myfullimg)" />
+              <!-- The modal element -->
+              <div id="myModal" class="modal">
+                <!-- Modal Content - Image) -->
+                <img class="modal-content" id="modalImg" click.delegate="closeModal()">
+              </div>
+
+              <!-- Here goes the media, besides images -->
+              <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
+            </div>
+            <!-- metadata-->
+            <div class="wrap">
+              <compose if.bind="(campaign.username!='colours-catwalk') && (campaign.username!='garment-type')" view="widgets/metadata/meta-music.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              </compose>
+              <compose if.bind="campaign.username == 'colours-catwalk'" view="widgets/metadata/meta-colours.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              </compose>
+              <compose if.bind="campaign.username == 'garment-type'" view="widgets/metadata/meta-garment.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              </compose>
+            </div>
+          </div>
+          <div class="cntr" if.bind="!loadCamp && !loadRec">
+						<br/>
+            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+            </compose>
+          </div>
+        </div>
+
+      </section>
+			<button class="btn-green" click.delegate="closeTab()">Close</button>
+      <!-- <button type="button" class="close" click.trigger="closeTab()" title="close window">
+        <i class="fa fa-times"></i>
+			</button> -->
+    </div>
+  </div>
 </template>

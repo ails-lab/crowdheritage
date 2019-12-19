@@ -38,13 +38,16 @@
       </div>
       <!-- Color Palette -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
-        <section class="color" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0])">
+        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0])">
           <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
         </section>
         <!-- hack for last row elements width -->
         <li class="width-helper" repeat.for="i of 20"></li>
       </div>
-      <div class="button-group"><!-- hiddenfile -->
+      <div class="validation-info hiddenfile">
+        <p>You have selected <b>${annotationsToDelete.length}</b> annotations :</p>
+      </div>
+      <div class="validation-button-group hiddenfile">
         <a href="javascript:void(0)" class="btn-green-o cancel" click.delegate="clearSelections()">Cancel Selection</a>
         <button class="btn-green" click.delegate="deleteAnnotations()" disabled.bind="hasErrors">Delete Annotations</button>
       </div>
@@ -75,7 +78,7 @@
                     </div>
       						</div>
       					</a>
-                <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasColourTag()">
+                <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasColourTag()" class="show-info">
                   <i class="fa fa-eye"></i>
       					</a>
       				</div>

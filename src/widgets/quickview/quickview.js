@@ -30,7 +30,7 @@ import { I18N } from 'aurelia-i18n';
 @inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
 export class quickview {
 
-  
+
 
   constructor(userServices, recordServices, campaignServices, collectionServices, eventAggregator, router, i18n) {
     this.userServices = userServices;
@@ -47,15 +47,15 @@ export class quickview {
     this.collection = null;
     this.collectionTitle = '';
     this.collectionCount = 0;
-	
+
 
 		this.record = 0;
-	
+
 
     this.loadCamp = false;
      this.mediaDiv = '';
-		
-    
+
+
   }
 
   attached() {
@@ -63,7 +63,7 @@ export class quickview {
 			$('.action').removeClass('active');
 			$('.action.itemview').addClass('active');}
   }
-	
+
   async activate(params, routeData) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
@@ -73,7 +73,7 @@ export class quickview {
     }
 		//Load Campaign
 		this.loadCamp = true;
-		
+
 		let result = await this.campaignServices.getCampaignByName(params.cname)
         .then(response => {
           // Based on the selected language, set the campaign {title, description, instructions, prizes}
@@ -84,11 +84,11 @@ export class quickview {
           response.prizes.silver = ( response.prizes.silver[this.loc] ? response.prizes.silver[this.loc] : response.prizes.silver['en'] );
           response.prizes.bronze = ( response.prizes.bronze[this.loc] ? response.prizes.bronze[this.loc] : response.prizes.bronze['en'] );
           response.prizes.rookie = ( response.prizes.rookie[this.loc] ? response.prizes.rookie[this.loc] : response.prizes.rookie['en'] );
-          
+
           this.campaign = new Campaign(response);
         })
         .catch(error => {
-          
+
         });
       this.loadCamp = false;
       this.record = params.record;
@@ -96,9 +96,9 @@ export class quickview {
           this.collection = params.collection;
           this.collectionTitle = this.collection.title;
           this.collectionCount = this.collection.entryCount;
-			
+
 		  }
-		
+
   }
 
   hasMotivation(name) {
@@ -143,7 +143,6 @@ export class quickview {
 		return false;
 	}
 
- 
   closeTab() {
      $('.action.itemview').removeClass('active');
 	}

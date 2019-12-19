@@ -224,9 +224,6 @@ body header .wrap .container nav .account .accountmenu li a:hover {
   text-decoration: none;
   background-color: #2F4949;
 }
-
-
-
 body div[role='main'] .viewer .section-head {
   position: relative;
 }
@@ -4825,14 +4822,40 @@ body.fullscreen {
     .next { right: 0; }
   }
 }
+section.validation div.validation-info {
+  position: relative;
+  top: -130px;
+  left: 780px;
+}
+section.validation div.validation-button-group {
+  position: relative;
+  top: -126px;
+  left: 780px;
+  .cancel {
+    margin-right: 10px;
+  }
+}
 .hiddenfile {
 	width: 0px;
 	height: 0px;
 	overflow: hidden;
 }
 .discardAnnotation {
-  // background: rgba(255, 0, 0, 0.4);
-  opacity: 0.25;
+  // background-color: rgba(255, 0, 0, 0.4);
+  opacity: 0.2;
+  border: 3px solid red;
+}
+.show-info {
+  font-size: 23pt;
+}
+.enlarge-color {
+  transform: scale(1.3);
+}
+.fa-eye {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  color: white;
 }
 @font-face {
   font-family: 'Genericons';

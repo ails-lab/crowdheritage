@@ -20,22 +20,22 @@ var settings = {
 	space: 'espace',
 	auth: {
 		google: '',
-		facebook: '' //localhost
+		facebook: ''
 	},
-	baseUrl: 'https://api.crowdheritage.eu', // Production backend
+	baseUrl: 'https://api.crowdheritage.eu',						 // Production backend
 	apiUrl: '/assets/developers-lite.html',
 	googlekey: '',
-  logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
+  logLevel: 1 																				 // Error: 1, Warn: 2, Info: 3, Debug: 4
 };
 
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
 	// settings.baseUrl = 'https://api.withculture.eu';  // Original WITH-backend
 	// settings.baseUrl = 'https://api.withcrowd.eu';    // Backend with test-DB
-	settings.baseUrl = 'http://localhost:9060';       // Local backend for testing
+	// settings.baseUrl = 'http://localhost:9060';       // Local backend for testing
 	// settings.project = 'WITHcrowd';
 	settings.project = 'CrowdHeritage';
-	settings.logLevel = 4; // Debug
+	settings.logLevel = 4; 															 // Debug
 }
 // Override for staging
 else if (window.location.hostname === 'withcrowd.eu') {

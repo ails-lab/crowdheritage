@@ -152,11 +152,18 @@ export class Validation {
 	}
 
   selectLabel(label) {
+    // If the label is the already selected label, do nothing
+    // if (this.label === label.toLowerCase()) {
+    //   return;
+    // }
+
     // Clear the previously retrieved records
     this.recordIds.splice(0, this.recordIds.length);
     this.records.splice(0, this.records.length);
     this.offset = 0;
 
+    $('.enlarge-color').removeClass('enlarge-color');
+    $('.'+label).addClass('enlarge-color');
     // Set up the query parameters for the new RecordIds retrieval
     this.label = label.toLowerCase();
     this.generators.splice(0, this.generators.length);
@@ -244,6 +251,8 @@ export class Validation {
       $('.'+record.dbId).addClass('discardAnnotation');
       this.annotationsToDelete.push(this.annotation);
     }
+    $('.validation-button-group').removeClass('hiddenfile');
+    $('.validation-info').removeClass('hiddenfile');
     console.log("[SELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
@@ -258,6 +267,10 @@ export class Validation {
         this.annotationsToDelete.splice(i, 1);
         $('.'+record.dbId).removeClass('discardAnnotation');
         console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+        if (this.annotationsToDelete.length == 0) {
+          $('.validation-button-group').addClass('hiddenfile');
+          $('.validation-info').addClass('hiddenfile');
+        }
         return;
       }
     }
@@ -268,13 +281,30 @@ export class Validation {
     // Cancel the selections you made
     this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
     $('.discardAnnotation').removeClass('discardAnnotation');
+    $('.validation-button-group').addClass('hiddenfile');
+    $('.validation-info').addClass('hiddenfile');
     console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   deleteAnnotations() {
+    if (this.annotationsToDelete.length == 0) {
+      toastr.error("You have not selected any annotations");
+      return
+    }
+
+    if (confirm('Are you sure you want to delete the selected annotations?\nThis action can not be undone!')) {
+      console.log("Deleting annotations...");
+    } else {
+      return;
+    }
+
     // Discard the selected annotations
-    this.selectLabel(this.label);
     this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
+    this.selectLabel(this.label);
+    let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
+    $('.'+camelLabel).addClass('enlarge-color');
+    $('.validation-button-group').addClass('hiddenfile');
+    $('.validation-info').addClass('hiddenfile');
     console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
