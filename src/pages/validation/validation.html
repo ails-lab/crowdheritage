@@ -54,16 +54,41 @@
     </section>
 
     <!-- grid section-->
-    <div show.bind="loading" class="campaign">
-      <center>
-        <img src="/img/assets/img/loader.gif" alt="Loading annotations">
-        <p>Loading Annotations</p>
-      </center>
-    </div>
 		<section class="collections collection-item-list">
 			<div class="container">
         <!-- campaign reel-->
       	<div id="recs" class="campaignlist">
+          <!-- top section-->
+      		<div class="topsection" if.bind="label!=''">
+      			<!-- label-->
+            <div class="sectionlabel">
+              <div class="bold">${label.toUpperCase()}</div>
+              <span if.bind="!loading">${recordIds.length}  ANNOTATED ITEMS</span>
+              <span if.bind="loading"><i class="fa fa-spinner fa-pulse"></i>  ANNOTATED ITEMS</span>
+            </div>
+            <!-- Sort - Filter-->
+            <div class="sort">
+              <!-- label-->
+              <div class="lbl" t="index:sortby">SORT BY </div>
+              <!-- sort-->
+              <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
+                <span class="text">${sortBy.toUpperCase()}</span>
+                <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
+              </a>
+              <!-- dropdown-->
+              <ul aria-labelledby="sorting" class="dropdown-menu">
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, false)">ASCENDING</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, false)">DESCENDING</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, false)">NEUTRAL</a></li>
+              </ul>
+            </div>
+      		</div>
+          <div if.bind="loading" class="campaign">
+            <center>
+              <img src="/img/assets/img/loader.gif" alt="Loading annotations">
+              <p>Loading Annotations</p>
+            </center>
+          </div>
           <div role="main">
         		<section class="action itemview" if.bind="record">
         			<compose view-model="widgets/quickview/quickview"  model.bind="{'cname': cname, 'record': record, 'lang': loc, 'collection':collection}"></compose>

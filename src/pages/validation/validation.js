@@ -73,6 +73,7 @@ export class Validation {
     this.label = "";
     this.generators = [];
     this.annotationsToDelete = [];
+    this.sortBy = "Ascending";
 
     this.annotations = [];
     this.geoannotations = [];
@@ -112,6 +113,15 @@ export class Validation {
 
   getColorLabel(label) {
     return this.i18n.tr('item:color:'+label);
+  }
+
+  toggleSortMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
   }
 
   attached() {
