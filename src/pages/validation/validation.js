@@ -157,6 +157,7 @@ export class Validation {
       return;
     }
 
+    this.loading = true;
     // Clear the previously retrieved records
     this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
     $('.validation-button-group').addClass('hiddenfile');
@@ -178,6 +179,7 @@ export class Validation {
     this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators)
       .then( response => {
         this.recordIds = response;
+        console.log("RESPONSE", response);
         // Fill the record array with the first batch of records
         this.getRecords(0);
       })
@@ -187,7 +189,6 @@ export class Validation {
   }
 
 	async getRecords(offset) {
-		this.loading = true;
     // Clone the recordIds array
     let recIds = this.recordIds.slice(0, this.recordIds.length);
     // Keep only the next batch in the array
@@ -202,7 +203,6 @@ export class Validation {
       .catch(error => {
         console.error(error.message);
       });
-		this.loading = false;
 	}
 
   fillRecordArray(records) {
@@ -212,6 +212,7 @@ export class Validation {
         this.records.push(new Record(recordData));
       }
     }
+    this.loading = false;
   }
 
   quickView(record){
@@ -315,10 +316,12 @@ export class Validation {
   // DOES NOT WORK : IT LOADS THE SAME IMAGES
   scrollAndLoadMore() {
 		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
+    this.loading = true;
 	 		this.getRecords(this.offset);
 	}
 
   async loadMore() {
+    this.loading = true;
 		this.getRecords(this.offset);
   }
 
