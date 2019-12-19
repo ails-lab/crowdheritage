@@ -151,13 +151,16 @@ export class Validation {
     route.navModel.setTitle('Validation | ' + this.campaign.title);
 	}
 
-  selectLabel(label) {
+  selectLabel(label, reload) {
     // If the label is the already selected label, do nothing
-    // if (this.label === label.toLowerCase()) {
-    //   return;
-    // }
+    if ( !reload && (this.label === label.toLowerCase()) ) {
+      return;
+    }
 
     // Clear the previously retrieved records
+    this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
+    $('.validation-button-group').addClass('hiddenfile');
+    $('.validation-info').addClass('hiddenfile');
     this.recordIds.splice(0, this.recordIds.length);
     this.records.splice(0, this.records.length);
     this.offset = 0;
@@ -300,7 +303,7 @@ export class Validation {
 
     // Discard the selected annotations
     this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
-    this.selectLabel(this.label);
+    this.selectLabel(this.label, true);
     let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
     $('.'+camelLabel).addClass('enlarge-color');
     $('.validation-button-group').addClass('hiddenfile');

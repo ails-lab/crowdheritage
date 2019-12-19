@@ -38,7 +38,7 @@
       </div>
       <!-- Color Palette -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
-        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0])">
+        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0], false)">
           <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
         </section>
         <!-- hack for last row elements width -->
