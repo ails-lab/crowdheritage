@@ -17,6 +17,7 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { Annotation } from 'Annotation.js';
+import { AnnotationServices } from 'AnnotationServices.js';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { Record } from 'Record.js';
@@ -28,10 +29,10 @@ import settings from 'global.config.js';
 let instance = null;
 let COUNT = 24;
 
-@inject(CampaignServices, RecordServices, UserServices, Router, I18N)
+@inject(AnnotationServices, CampaignServices, RecordServices, UserServices, Router, I18N)
 export class Validation {
 
-  constructor(campaignServices, recordServices, userServices, router, i18n) {
+  constructor(annotationServices, campaignServices, recordServices, userServices, router, i18n) {
   	if (instance) {
   		return instance;
   	}
@@ -55,6 +56,7 @@ export class Validation {
 			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
 			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
 		];
+    this.annotationServices = annotationServices;
   	this.campaignServices = campaignServices;
     this.recordServices = recordServices;
   	this.userServices = userServices;
@@ -320,15 +322,31 @@ export class Validation {
     }
 
     // Discard the selected annotations
-
-
-    this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
-    this.selectLabel(this.label, true);
-    let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
-    $('.'+camelLabel).addClass('enlarge-color');
-    $('.validation-button-group').addClass('hiddenfile');
-    $('.validation-info').addClass('hiddenfile');
-    console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+    for (var ann of this.annotationsToDelete) {
+      this.annotationServices.delete(ann.dbId)
+      .then( () => {
+        // Remove one point from each of the upvoters
+        for (let upvoter of ann.approvedBy) {
+          this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
+        }
+        // Remove one point from each of the annotators
+        for (let annotator of ann.createdBy) {
+          this.campaignServices.decUserPoints(this.campaign.dbId, annotator.withCreator, 'created');
+        }
+        // Refresh the view
+        this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
+        this.selectLabel(this.label, true);
+        let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
+        $('.'+camelLabel).addClass('enlarge-color');
+        $('.validation-button-group').addClass('hiddenfile');
+        $('.validation-info').addClass('hiddenfile');
+        console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+      })
+      .catch(error => {
+        console.log(error.message);
+        toastr.error("An error occured during the annotation deletion.");
+      });
+    }
   }
 
 
