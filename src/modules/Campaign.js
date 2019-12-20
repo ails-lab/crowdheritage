@@ -30,7 +30,7 @@ export class Campaign {
       }
     this.logo = data.logo;
     this.project = data.project;
-    this.creator = data.creator;
+    this.creators = data.creators;
     this.space = data.space;
     this.spacename = data.spacename;
     this.startDate = data.startDate;
