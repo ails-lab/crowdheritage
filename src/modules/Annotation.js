@@ -28,6 +28,7 @@ export class Annotation {
 				this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
 		}
 
+    this.createdBy = data.annotators;
     this.createdByMe = false;
     for (let i in data.annotators) {
       if (data.annotators[i].withCreator == userId) {
