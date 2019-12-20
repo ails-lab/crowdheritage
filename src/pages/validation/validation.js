@@ -82,6 +82,7 @@ export class Validation {
 
     this.loadCamp = false;
     this.loading = false;
+    this.deleting = false;
   	if (!instance) {
   		instance = this;
   	}
@@ -90,6 +91,10 @@ export class Validation {
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user()            { return this.userServices.current; }
   get more()            { return this.offset < this.recordIds.length; }
+
+  scrollToTop() {
+    window.scrollTo(0,0);
+  }
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
@@ -180,6 +185,9 @@ export class Validation {
     $('.'+label).addClass('enlarge-color');
     // Set up the query parameters for the new RecordIds retrieval
     this.label = label.toLowerCase();
+    if (this.label === 'multicolor') {
+      this.label = 'multicoloured';
+    }
     this.generators.splice(0, this.generators.length);
     this.generators.push(this.project + " " + this.campaign.username);
     if (this.campaign.username == "colours-catwalk") {
@@ -305,7 +313,6 @@ export class Validation {
       toastr.error("You have not selected any annotations");
       return
     }
-
     if (confirm('Are you sure you want to delete the selected annotations?\nThis action can not be undone!')) {
       console.log("Deleting annotations...");
     } else {
@@ -313,6 +320,8 @@ export class Validation {
     }
 
     // Discard the selected annotations
+
+
     this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
     this.selectLabel(this.label, true);
     let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
