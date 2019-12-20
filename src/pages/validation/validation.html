@@ -38,12 +38,16 @@
       </div>
       <!-- Color Palette -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
+        <div>
+          <p>Select a color from the Palette and view all the campaign records that have been annotated with it.</p>
+        </div>
         <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0], false)">
           <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
         </section>
         <!-- hack for last row elements width -->
         <li class="width-helper" repeat.for="i of 20"></li>
       </div>
+      <!-- Validation Information -->
       <div class="validation-info hiddenfile">
         <p>You have selected <b>${annotationsToDelete.length}</b> annotations :</p>
       </div>
@@ -109,7 +113,7 @@
                     </div>
       						</div>
       					</a>
-                <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasColourTag()" class="show-info">
+                <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasMotivation('ColorTagging')" class="show-info">
                   <i class="fa fa-eye"></i>
       					</a>
       				</div>
