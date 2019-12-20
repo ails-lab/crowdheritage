@@ -75,7 +75,7 @@ export class Validation {
     this.label = "";
     this.generators = [];
     this.annotationsToDelete = [];
-    this.sortBy = "Ascending";
+    this.sortBy = "upvoted";
 
     this.annotations = [];
     this.geoannotations = [];
@@ -168,9 +168,9 @@ export class Validation {
     route.navModel.setTitle('Validation | ' + this.campaign.title);
 	}
 
-  selectLabel(label, reload) {
+  selectLabel(label, sortBy, reload) {
     // If the label is the already selected label, do nothing
-    if ( !reload && (this.label === label.toLowerCase()) ) {
+    if ( !reload && (this.sortBy === sortBy) && (this.label === label.toLowerCase()) ) {
       return;
     }
 
@@ -190,13 +190,14 @@ export class Validation {
     if (this.label === 'multicolor') {
       this.label = 'multicoloured';
     }
+    this.sortBy = sortBy;
     this.generators.splice(0, this.generators.length);
     this.generators.push(this.project + " " + this.campaign.username);
     if (this.campaign.username == "colours-catwalk") {
       this.generators.push("Image Analysis");
     }
     // Retrieve the new recordIds array
-    this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators)
+    this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators, this.sortBy)
       .then( response => {
         this.recordIds = response;
         console.log("RESPONSE", response);
@@ -315,9 +316,10 @@ export class Validation {
       toastr.error("You have not selected any annotations");
       return
     }
-    if (confirm('Are you sure you want to delete the selected annotations?\nThis action can not be undone!')) {
+    if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
       console.log("Deleting annotations...");
-    } else {
+    }
+    else {
       return;
     }
 
@@ -335,7 +337,7 @@ export class Validation {
         }
         // Refresh the view
         this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
-        this.selectLabel(this.label, true);
+        this.selectLabel(this.label, this.sortBy, true);
         let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
         $('.'+camelLabel).addClass('enlarge-color');
         $('.validation-button-group').addClass('hiddenfile');

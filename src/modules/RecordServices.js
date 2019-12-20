@@ -74,7 +74,7 @@ export class RecordServices {
 		});
 	}
 
-	getRecordIdsByAnnLabel(label, generators) {
+	getRecordIdsByAnnLabel(label, generators, order) {
 		let gens = '';
 		for (let gen of generators) {
 			if (gens.length > 0) {
@@ -82,7 +82,7 @@ export class RecordServices {
 			}
 			gens += 'generator=' + gen;
 		}
-		return this.http.fetch('/record/annotationLabel?label=' + label + "&" + gens, {
+		return this.http.fetch('/record/annotationLabel?label=' + label + "&" + gens + "&order=" + order, {
 			method: 'GET'
 		}).then(checkStatus).then((response) => {
 			return response.json();

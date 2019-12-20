@@ -17,7 +17,7 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a route-href="route: index; params.bind: {lang: loc}" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a route-href="route: summary; params.bind: { cname: cname, lang: loc }" t="[prepend]app:return-campaign"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
         <!-- bg-->
@@ -41,7 +41,7 @@
         <div>
           <p>Select a color from the Palette and view all the campaign records that have been annotated with it.</p>
         </div>
-        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0], false)">
+        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]" click.delegate="selectLabel(color[0], 'upvoted', false)">
           <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
         </section>
         <!-- hack for last row elements width -->
@@ -81,9 +81,9 @@
               </a>
               <!-- dropdown-->
               <ul aria-labelledby="sorting" class="dropdown-menu">
-                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, false)">ASCENDING</a></li>
-                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, false)">DESCENDING</a></li>
-                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, false)">NEUTRAL</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'upvoted', false)">UPVOTED</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'downvoted', false)">DOWNVOTED</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'neutral', false)">NEUTRAL</a></li>
               </ul>
             </div>
       		</div>
