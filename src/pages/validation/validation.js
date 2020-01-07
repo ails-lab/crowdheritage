@@ -273,7 +273,8 @@ export class Validation {
     }
     else {
       // Select which annotations to discard
-      $('.'+record.dbId).addClass('discardAnnotation');
+      $('.'+record.dbId+' .thumbs').addClass('discardAnnotation');
+      $('.'+record.dbId+' .fa-trash').removeClass('hiddenfile');
       this.annotationsToDelete.push(this.annotation);
     }
     $('.validation-button-group').removeClass('hiddenfile');
@@ -290,7 +291,8 @@ export class Validation {
     for (let i in this.annotationsToDelete) {
       if (this.annotationsToDelete[i].dbId === this.annotation.dbId) {
         this.annotationsToDelete.splice(i, 1);
-        $('.'+record.dbId).removeClass('discardAnnotation');
+        $('.'+record.dbId+' .thumbs').removeClass('discardAnnotation');
+        $('.'+record.dbId+' .fa-trash').addClass('hiddenfile');
         console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
         if (this.annotationsToDelete.length == 0) {
           $('.validation-button-group').addClass('hiddenfile');
@@ -306,6 +308,7 @@ export class Validation {
     // Cancel the selections you made
     this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
     $('.discardAnnotation').removeClass('discardAnnotation');
+    $('.fa-trash').addClass('hiddenfile');
     $('.validation-button-group').addClass('hiddenfile');
     $('.validation-info').addClass('hiddenfile');
     console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);

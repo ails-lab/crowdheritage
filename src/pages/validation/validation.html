@@ -104,7 +104,7 @@
       			<div class="sizer"></div>
       				<!-- Item Grid -->
       				<div class="entry ${record.dbId} col-md-3" repeat.for="record of records">
-      					<a href="javascript:void(0)" click.delegate="selectAnnotation(record)">
+      					<a class="image-action" href="javascript:void(0)" click.delegate="selectAnnotation(record)">
       						<div class="thumbs">
       							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
       							<div class="action">
@@ -115,6 +115,9 @@
       					</a>
                 <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasMotivation('ColorTagging')" class="show-info">
                   <i class="fa fa-eye"></i>
+      					</a>
+                <a href="javascript:void(0)" click.delegate="unselectAnnotation(record)">
+                  <i class="fa fa-trash hiddenfile"></i>
       					</a>
       				</div>
       		</div>
