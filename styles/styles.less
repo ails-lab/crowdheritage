@@ -4889,6 +4889,43 @@ section.validation div.validation-button-group {
 .back-top a:focus {
   text-decoration: none;
 }
+body main section.tagging .right .heading, body main section.tagging .cntr .heading {
+  margin-bottom: 0px;
+}
+body main section.tagging .cntr .tag-color .taglist {
+  padding-top: 24px;
+  height: fit-content !important;
+}
+body main section.tagging .cntr .tag-color .taglist::before {
+  height: 30px;
+}
+.selected .tooltiptext {
+  visibility: hidden;
+  position: relative;
+  overflow-y: visible;
+  background-color: black;
+  color: @main-color;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  z-index: 1;
+  left: 0;
+  top: -30px;
+  margin-left: -60px;
+}
+.selected .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+.selected:hover .tooltiptext {
+  visibility: visible;
+}
 @font-face {
   font-family: 'Genericons';
   src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot');

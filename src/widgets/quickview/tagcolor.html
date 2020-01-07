@@ -8,7 +8,10 @@
       <ul class="taglist color show-more-target">
         <li repeat.for="ann of colorannotations">
           <div class="thumbs" style.bind="getStyle(ann.label)"></div>
-          <div class="selected" innerhtml.bind="getColorLabel(ann.label)"></div>
+          <div class="selected">
+            ${getColorLabel(ann.label)}
+            <span class="tooltiptext">Created By : <b style="color: white;">${ann.createdBy[0].username}</b></span>
+          </div>
           <ul class="action">
             <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
               <a if.bind="!ann.createdByMe">
@@ -26,7 +29,6 @@
 								<span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
 							</a>
             </li>
-            
           </ul>
         </li>
       </ul>
