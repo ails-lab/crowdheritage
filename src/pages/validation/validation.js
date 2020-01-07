@@ -200,7 +200,7 @@ export class Validation {
     this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators, this.sortBy)
       .then( response => {
         this.recordIds = response;
-        console.log("RESPONSE", response);
+        // console.log("RESPONSE", response);
         // Fill the record array with the first batch of records
         this.getRecords(0);
       })
@@ -279,7 +279,7 @@ export class Validation {
     }
     $('.validation-button-group').removeClass('hiddenfile');
     $('.validation-info').removeClass('hiddenfile');
-    console.log("[SELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+    // console.log("[SELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   unselectAnnotation(record) {
@@ -293,7 +293,7 @@ export class Validation {
         this.annotationsToDelete.splice(i, 1);
         $('.'+record.dbId+' .thumbs').removeClass('discardAnnotation');
         $('.'+record.dbId+' .fa-trash').addClass('hiddenfile');
-        console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+        // console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
         if (this.annotationsToDelete.length == 0) {
           $('.validation-button-group').addClass('hiddenfile');
           $('.validation-info').addClass('hiddenfile');
@@ -311,13 +311,17 @@ export class Validation {
     $('.fa-trash').addClass('hiddenfile');
     $('.validation-button-group').addClass('hiddenfile');
     $('.validation-info').addClass('hiddenfile');
-    console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+    // console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   deleteAnnotations() {
     if (this.annotationsToDelete.length == 0) {
       toastr.error("You have not selected any annotations");
-      return
+      return;
+    }
+    if ( !this.isAuthenticated || !this.campaign.creators.includes(this.user.id) ) {
+      toastr.error("You have no permission to perform this action");
+      return;
     }
     if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
       console.log("Deleting annotations...");
@@ -345,7 +349,7 @@ export class Validation {
         $('.'+camelLabel).addClass('enlarge-color');
         $('.validation-button-group').addClass('hiddenfile');
         $('.validation-info').addClass('hiddenfile');
-        console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+        // console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
       })
       .catch(error => {
         console.log(error.message);
