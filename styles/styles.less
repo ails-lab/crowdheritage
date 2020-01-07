@@ -1995,14 +1995,17 @@ body main section.tagging .left .img {
 body main section.tagging .left .img img {
   max-width: 100%;
 }
+body main section.tagging .cntr .img #recImg,
 body main section.tagging .left .img #recImg {
   transition: 0.3s;
   cursor: pointer;
 }
+body main section.tagging .cntr .img #recImg:hover,
 body main section.tagging .left .img #recImg:hover {
   opacity: 0.9;
   cursor: zoom-in;
 }
+body main section.tagging .cntr .img .modal,
 body main section.tagging .left .img .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -2016,12 +2019,14 @@ body main section.tagging .left .img .modal {
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
+body main section.tagging .cntr .img .modal-content,
 body main section.tagging .left .img .modal-content {
   margin: auto;
   display: block;
   width: 80%;
   max-width: 700px;
 }
+body main section.tagging .cntr .img .modal-content,
 body main section.tagging .left .img .modal-content {
   animation-name: zoom;
   animation-duration: 0.6s;
@@ -2030,11 +2035,13 @@ body main section.tagging .left .img .modal-content {
   from {transform:scale(0)}
   to {transform:scale(1)}
 }
+body main section.tagging .cntr .img .modal #modalImg:hover,
 body main section.tagging .left .img .modal #modalImg:hover {
   cursor: zoom-out;
 }
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
+  body main section.tagging .cntr .img .modal-content,
   body main section.tagging .left .img .modal-content {
     width: 100%;
     overflow: hidden;
