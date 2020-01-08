@@ -99,6 +99,17 @@ export class quickview {
     return (this.collectionTitle.length>0);
   }
 
+  getCreator(ann) {
+    return ann.createdBy[0].username;
+  }
+
+  isComputerGenerated(ann) {
+    if (ann.createdBy[0].generator == "Image Analysis")
+      return true;
+    else
+      return false;
+  }
+
 	toggleLoadMore(container) {
 		toggleMore(container);
 	}

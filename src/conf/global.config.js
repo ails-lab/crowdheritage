@@ -32,9 +32,9 @@ var settings = {
 if (window.location.hostname === 'localhost') {
 	// settings.baseUrl = 'https://api.withculture.eu';  // Original WITH-backend
 	// settings.baseUrl = 'https://api.withcrowd.eu';    // Backend with test-DB
-	settings.baseUrl = 'http://localhost:9060';       // Local backend for testing
+	// settings.baseUrl = 'http://localhost:9060';       // Local backend for testing
 	// settings.project = 'WITHcrowd';
-	// settings.project = 'CrowdHeritage';
+	settings.project = 'CrowdHeritage';
 	settings.logLevel = 4; 															 // Debug
 }
 // Override for staging
