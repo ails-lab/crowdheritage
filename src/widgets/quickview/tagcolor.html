@@ -19,8 +19,8 @@
             <li class="down" title="Downvotes">
               <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
             </li>
-            <li class="score" title="Score">
-              <i class="fa fa-line-chart"></i><span class="count">${ann.approvedBy.length-ann.rejectedBy.length}</span>
+            <li class="score" title="Score" style.bind="ann.approvedBy.length>ann.rejectedBy.length ? 'color:#00ac83;' : 'color:#ce5e5e;'">
+              <i class.bind="ann.approvedBy.length>ann.rejectedBy.length ? 'fa fa-line-chart' : 'fa fa-line-chart fa-flip-vertical'"></i><span class="count">${ann.approvedBy.length-ann.rejectedBy.length}</span>
             </li>
           </ul>
         </li>
