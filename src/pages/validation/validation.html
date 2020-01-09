@@ -76,14 +76,14 @@
               <div class="lbl" t="index:sortby">SORT BY </div>
               <!-- sort-->
               <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
-                <span class="text">${sortBy.toUpperCase()}</span>
+                <span class="text">${getSortbyLabel(sortBy)}</span>
                 <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
               </a>
               <!-- dropdown-->
               <ul aria-labelledby="sorting" class="dropdown-menu">
-                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'upvoted', false)">UPVOTED</a></li>
-                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'downvoted', false)">DOWNVOTED</a></li>
-                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'neutral', false)">NEUTRAL</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'upvoted', false)">UPVOTES</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'downvoted', false)">DOWNVOTES</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'neutral', false)">SCORE</a></li>
               </ul>
             </div>
       		</div>

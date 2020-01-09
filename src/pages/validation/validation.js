@@ -168,6 +168,17 @@ export class Validation {
     route.navModel.setTitle('Validation | ' + this.campaign.title);
 	}
 
+  getSortbyLabel(sortBy) {
+    if (sortBy == "upvoted")
+      return 'UPVOTES';
+    else if (sortBy == "downvoted")
+      return 'DOWNVOTES';
+    else if (sortBy == "neutral")
+      return 'SCORE';
+    else
+      return '-';
+  }
+
   selectLabel(label, sortBy, reload) {
     // If the label is the already selected label, do nothing
     if ( !reload && (this.sortBy === sortBy) && (this.label === label.toLowerCase()) ) {
@@ -184,7 +195,9 @@ export class Validation {
     this.offset = 0;
 
     $('.enlarge-color').removeClass('enlarge-color');
-    $('.'+label).addClass('enlarge-color');
+    let colorClass = label[0].toUpperCase() + label.slice(1,label.length);
+    colorClass = (colorClass === "Multicoloured") ? "Multicolor" : colorClass;
+    $('.'+colorClass).addClass('enlarge-color');
     // Set up the query parameters for the new RecordIds retrieval
     this.label = label.toLowerCase();
     if (this.label === 'multicolor') {
