@@ -28,11 +28,19 @@
     <!-- validation section-->
     <section class="validation">
       <!-- Search Bar -->
-      <div class="searchbox" if.bind="!hasMotivation('ColorTagging')">
-        <input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+      <div class="searchbox" if.bind="hasMotivation('Tagging')">
+        <div>
+          <p>Select from the list the desired tag, and view all the campaign records that have been annotated with it.</p>
+        </div>
+        <span>Type in the desired Tag :</span>
+        <input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
-            <li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}"><span>${item.label}</span><a if.bind="item.lang">${item.lang}</a><a style="padding-right:10px" class="fa fa-link" click.delegate="goToURI(item.uri)"></a></li>
+            <li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}">
+              <span>${item.label}</span>
+              <a if.bind="item.lang">${item.lang}</a>
+              <a style="padding-right:10px" class="fa fa-link" click.delegate="goToURI(item.uri)"></a>
+            </li>
           </ul>
         </div>
       </div>
@@ -47,6 +55,7 @@
         <!-- hack for last row elements width -->
         <li class="width-helper" repeat.for="i of 20"></li>
       </div>
+
       <!-- Validation Information -->
       <div class="validation-info hiddenfile">
         <p>You have selected <b>${annotationsToDelete.length}</b> annotations :</p>
@@ -113,7 +122,7 @@
                     </div>
       						</div>
       					</a>
-                <a href="javascript:void(0)" click.delegate="quickView(record)" if.bind="hasMotivation('ColorTagging')" class="show-info">
+                <a href="javascript:void(0)" click.delegate="quickView(record)" class="show-info">
                   <i class="fa fa-eye"></i>
       					</a>
                 <a href="javascript:void(0)" click.delegate="unselectAnnotation(record)">

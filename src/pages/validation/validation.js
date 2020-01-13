@@ -18,6 +18,7 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { Annotation } from 'Annotation.js';
 import { AnnotationServices } from 'AnnotationServices.js';
+import { ThesaurusServices } from 'ThesaurusServices.js';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { Record } from 'Record.js';
@@ -29,10 +30,10 @@ import settings from 'global.config.js';
 let instance = null;
 let COUNT = 24;
 
-@inject(AnnotationServices, CampaignServices, RecordServices, UserServices, Router, I18N)
+@inject(AnnotationServices, ThesaurusServices, CampaignServices, RecordServices, UserServices, Router, I18N)
 export class Validation {
 
-  constructor(annotationServices, campaignServices, recordServices, userServices, router, i18n) {
+  constructor(annotationServices, thesaurusServices, campaignServices, recordServices, userServices, router, i18n) {
   	if (instance) {
   		return instance;
   	}
@@ -57,6 +58,7 @@ export class Validation {
 			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
 		];
     this.annotationServices = annotationServices;
+    this.thesaurusServices = thesaurusServices;
   	this.campaignServices = campaignServices;
     this.recordServices = recordServices;
   	this.userServices = userServices;
@@ -76,11 +78,18 @@ export class Validation {
     this.generators = [];
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
+    this.placeholderText = this.i18n.tr('item:tag-search-text');
 
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
     this.pollannotations = [];
+    this.suggestedAnnotations = [];
+    this.suggestedAnnotation = {};
+    this.suggestionsLoading = false;
+    this.suggestedAnnotations =  [];
+		this.selectedAnnotation = null;
+		this.uriRedirect = false;
 
     this.loadCamp = false;
     this.loading = false;
@@ -96,6 +105,10 @@ export class Validation {
 
   scrollToTop() {
     window.scrollTo(0,0);
+  }
+
+  clearSearchField() {
+    this.prefix = '';
   }
 
   hasMotivation(name) {
@@ -259,6 +272,7 @@ export class Validation {
     let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
     let found = false;
     await this.getRecordAnnotations(record.dbId);
+
     if (this.hasMotivation('ColorTagging')) {
       for (let ann of this.colorannotations) {
         if (ann.label === camelLabel) {
@@ -267,6 +281,15 @@ export class Validation {
         }
       }
     }
+    if (this.hasMotivation('Tagging')) {
+      for (let ann of this.annotations) {
+        if (ann.label === camelLabel) {
+          this.annotation = ann;
+          found = true;
+        }
+      }
+    }
+
     if (!found) {
       this.annotation = null;
     }
@@ -385,6 +408,67 @@ export class Validation {
   }
 
 
+  /**
+    * TAGITEM WIDGET METHODS
+    */
+  prefixChanged(geo=false) {
+    //	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
+    if (this.prefix === '') {
+      this.suggestedAnnotations = [];
+      return;
+    }
+    this.selectedAnnotation = null;
+		if (geo || this.campaign.motivation == 'GeoTagging') {
+			this.getGeoAnnotations(this.prefix);
+		} else {
+			this.getSuggestedAnnotations(this.prefix);
+		}
+  }
+
+  get suggestionsActive() {
+    return this.suggestedAnnotations.length !== 0;
+  }
+
+  async getSuggestedAnnotations(prefix, lang="all") {
+    this.lastRequest = prefix;
+    this.suggestionsLoading = true;
+		lang = typeof this.loc !== 'undefined' ? this.loc : 'all';
+    this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
+    this.selectedAnnotation = null;
+    let self = this;
+    await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId, lang).then((res) => {
+      if (res.request === self.lastRequest) {
+        //this.suggestedAnnotations = res.results.slice(0, 20);
+        self.suggestedAnnotations = res.results;
+        if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
+          self.selectedAnnotation = self.suggestedAnnotations[0];
+        }
+        self.suggestionsLoading = false;
+      }
+    });
+  }
+
+  selectSuggestedAnnotation(index) {
+    if (this.uriRedirect) {
+			this.uriRedirect = false;
+			this.prefixChanged();
+			return;
+		}
+
+    this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+      return obj.id === index
+    });
+    this.suggestedAnnotations = [];
+    this.errors = this.selectedAnnotation == null;
+
+    if (!this.errors) {
+      let self = this;
+      var lb = this.selectedAnnotation.label;
+      this.prefix = lb;
+
+      this.selectLabel(lb, 'upvoted', false);
+    }
+  }
 
   async getRecordAnnotations(id) {
     if (this.hasMotivation('Polling')) {

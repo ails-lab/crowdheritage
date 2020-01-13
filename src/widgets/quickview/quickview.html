@@ -47,6 +47,8 @@
 						<br/>
             <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
+            <compose view="widgets/quickview/tagitem.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+            </compose>
           </div>
         </div>
 

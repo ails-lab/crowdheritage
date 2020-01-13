@@ -2190,10 +2190,19 @@ body main section.tagging .right .tag-color .coloraction {
   margin: 15px -1px 0 -1px;
   padding: 0;
 }
-body main section.validation .coloraction {
+body main section.validation {
   margin: 30px 0px 10px 0px;
   padding: 0px 50px 0px 50px;
   width: 800px;
+}
+body main section.validation .searchbox input {
+  width: 360px;
+  text-align: center;
+  margin-left: 5px;
+  font-style: italic;
+}
+body main section.validation .searchbox input::placeholder {
+  color: #AAA;
 }
 body main section.validation .coloraction:before,
 body main section.tagging .right .tag-item .coloraction:before,
@@ -4892,35 +4901,40 @@ section.validation div.validation-button-group {
 body main section.tagging .right .heading, body main section.tagging .cntr .heading {
   margin-bottom: 0px;
 }
+body main section.tagging .cntr .tag-item .taglist,
 body main section.tagging .cntr .tag-color .taglist {
   padding-top: 24px;
   height: fit-content !important;
+  padding-right: 0px !important;
+  .action {
+    padding-right: 3px !important;
+  }
 }
+body main section.tagging .cntr .tag-item .taglist::before,
 body main section.tagging .cntr .tag-color .taglist::before {
   height: 30px;
 }
+body main section.tagging .cntr .tag-item .taglist > li .cg-label,
 body main section.tagging .cntr .tag-color .taglist > li .cg-label {
   color: @main-color;
   margin-left: 10px;
   cursor: default;
   // font-weight: bold;
 }
-body main section.tagging .cntr .tag-color .taglist {
-  padding-right: 0px !important;
-  .action {
-    padding-right: 3px !important;
-  }
-}
+body main section.tagging .cntr .tag-item .taglist > li .up .count,
+body main section.tagging .cntr .tag-item .taglist > li .down .count,
 body main section.tagging .cntr .tag-color .taglist > li .up .count,
 body main section.tagging .cntr .tag-color .taglist > li .down .count {
   color: #999;
 }
+body main section.tagging .cntr .tag-item .taglist > li .score,
 body main section.tagging .cntr .tag-color .taglist > li .score {
   border-left: @main-color 1px solid;
   padding-left: 12px;
   margin-left: 10px;
   color: #999;
 }
+.text .tooltiptext,
 .selected .tooltiptext {
   visibility: hidden;
   position: relative;
@@ -4935,6 +4949,7 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
   top: -30px;
   margin-left: -60px;
 }
+.text .tooltiptext::after,
 .selected .tooltiptext::after {
   content: "";
   position: absolute;
@@ -4945,6 +4960,7 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
   border-style: solid;
   border-color: black transparent transparent transparent;
 }
+.text:hover .tooltiptext,
 .selected:hover .tooltiptext {
   visibility: visible;
 }

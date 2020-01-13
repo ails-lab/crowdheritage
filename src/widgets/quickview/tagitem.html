@@ -1,0 +1,32 @@
+<template>
+  <div class="right" style="width:100%">
+    <div class="tag-item">
+      <!-- infobar-->
+      <div class="wrap" style="padding-left:0px;">
+        <div class="heading green" t="app:tags">TAGS</div>
+         	<div class="show-more-parent">
+            <ul class="taglist show-more-target">
+              <li repeat.for="ann of annotations">
+                <div class="text">
+                  ${ann.label} <span class="cg-label" title="Computer-generated annotation" if.bind="isComputerGenerated(ann)">(CG)</span>
+                  <span class="tooltiptext">Created By : <b style="color: white;">${getCreator(ann)}</b></span>
+                </div>
+                <ul class="action">
+                  <li class="up" title="Upvotes">
+                    <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+                  </li>
+                  <li class="down" title="Downvotes">
+                    <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
+                  </li>
+                  <li class="score" title="Score" style.bind="ann.approvedBy.length>ann.rejectedBy.length ? 'color:#00ac83;' : 'color:#ce5e5e;'">
+                    <i class.bind="ann.approvedBy.length>ann.rejectedBy.length ? 'fa fa-line-chart' : 'fa fa-line-chart fa-flip-vertical'"></i><span class="count">${ann.approvedBy.length-ann.rejectedBy.length}</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+      			<i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+    		</div>
+      </div>
+    </div>
+  </div>
+</template>
