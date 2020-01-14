@@ -448,6 +448,33 @@ export class Validation {
     });
   }
 
+  async getGeoAnnotations(prefix) {
+		this.lastRequest = prefix;
+		this.suggestionsLoading = true;
+		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
+		this.selectedAnnotation = null;
+		let self = this;
+		await this.thesaurusServices.getGeonameSuggestions(prefix)
+		.then((res) => {
+    	self.getGeoSuggestions( res);
+  	});
+	}
+
+	getGeoSuggestions(jData) {
+		if (jData == null) {
+			// There was a problem parsing search results
+			alert("nothing found");
+			return;
+		}
+		var html = '';
+		var geonames = jData.geonames;
+		this.suggestedAnnotations = geonames;
+ 		/*if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
+		self.selectedAnnotation = self.suggestedAnnotations[0];
+		}*/
+		this.suggestionsLoading = false;
+	}
+
   selectSuggestedAnnotation(index) {
     if (this.uriRedirect) {
 			this.uriRedirect = false;
@@ -462,13 +489,32 @@ export class Validation {
     this.errors = this.selectedAnnotation == null;
 
     if (!this.errors) {
-      let self = this;
       var lb = this.selectedAnnotation.label;
       this.prefix = lb;
 
       this.selectLabel(lb, 'upvoted', false);
     }
   }
+
+  selectGeoAnnotation(geoid) {
+    console.log("GEO-ID", geoid);
+    console.log("SUGGESTED ANNOTATIONS", this.suggestedAnnotations);
+    this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+			return obj.geonameId === geoid
+		});
+		this.suggestedAnnotations = [];
+		this.errors = this.selectedAnnotation == null;
+
+		if (!this.errors) {
+      console.log("SELECTED ANNOTATION", this.selectAnnotation);
+      var lb = this.selectedAnnotation.label;
+      this.prefix = lb;
+      console.log("LB", lb);
+      console.log("PREFIX", this.prefix);
+
+      this.selectLabel(lb, 'upvoted', false);
+		}
+ 	}
 
   async getRecordAnnotations(id) {
     if (this.hasMotivation('Polling')) {
