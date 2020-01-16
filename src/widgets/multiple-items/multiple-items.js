@@ -21,6 +21,7 @@ import { Record } from 'Record.js';
 import { UserServices } from 'UserServices';
 import { CampaignServices } from 'CampaignServices';
 import { I18N } from 'aurelia-i18n';
+import settings from 'global.config.js';
 
 let instance = null;
 
@@ -42,6 +43,8 @@ export class MultipleItems {
 		this.campaignServices = campaignServices;
 		this.i18n = i18n;
 		this.loc;
+		this.project = settings.project;
+		this.campaign = '';
 		this.state = "hide";
 		this.resetInstance();
     if (!instance) {
@@ -76,7 +79,7 @@ export class MultipleItems {
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
-			let response = await this.userServices.getUserAnnotations(this.user.dbId, this.offset, this.count);
+			let response = await this.userServices.getUserAnnotations(this.user.dbId, this.project, this.campaign, this.offset, this.count);
 			this.fillRecordArray(response.records);
 		}
 		this.loading = false;
@@ -123,10 +126,9 @@ export class MultipleItems {
 
 	quickView(record){
 		  this.record=record;
-		  
+
 			$('.action').removeClass('active');
 			$('.action.itemview').addClass('active');
-
   }
 
    detached(){

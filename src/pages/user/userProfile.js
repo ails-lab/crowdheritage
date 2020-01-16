@@ -18,15 +18,19 @@ import { inject, LogManager, NewInstance } from 'aurelia-framework';
 import { ValidationController, ValidationRules } from 'aurelia-validation';
 import { UserServices } from 'UserServices';
 import { MediaServices } from 'MediaServices.js';
+import { CampaignServices } from 'CampaignServices.js';
 import { Router } from 'aurelia-router';
 import { User } from 'User.js';
-import { Record } from 'Record.js'
+import { Record } from 'Record.js';
+import { Campaign } from 'Campaign.js';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
 let logger = LogManager.getLogger('UserProfile.js');
 
-@inject(UserServices, MediaServices, Router, I18N, 'loginPopup', NewInstance.of(ValidationController))
+let COUNT = 10;
+
+@inject(UserServices, MediaServices, CampaignServices, Router, I18N, 'loginPopup', NewInstance.of(ValidationController))
 export class UserProfile {
 
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
@@ -35,15 +39,20 @@ export class UserProfile {
 	get barLevel() { return ( this.progress<=100 ? this.progress : 100 ) }
 	get hasErrors() { return !!this.errors.length; }
 
-  constructor(userServices, mediaServices, router, i18n, loginPopup, validationController) {
+  constructor(userServices, mediaServices, campaignServices, router, i18n, loginPopup, validationController) {
   	this.userServices = userServices;
 		this.mediaServices = mediaServices;
+		this.campaignServices = campaignServices;
 		this.validationController = validationController;
 		this.router = router;
 		this.lg = loginPopup;
 		this.project = settings.project;
 		this.i18n = i18n;
 		this.errors = [];
+
+		this.campaign = null;
+		this.campaigns = [];
+		this.campName = '';
 
 		this.newFirstName = "";
 		this.newLastName = "";
@@ -63,6 +72,15 @@ export class UserProfile {
 
   attached() {
     $('.accountmenu').removeClass('active');
+  }
+
+	toggleSortMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
   }
 
   async activate(params, route) {
@@ -88,12 +106,25 @@ export class UserProfile {
 		this.newAbout = this.user.about;
 
 		route.navModel.setTitle(this.user.fullName + " | " + this.project);
-		let contributions = await this.userServices.getUserAnnotations(this.user.dbId);
-		this.points = contributions.annotationCount;
-		this.created = contributions.createdCount;
-		this.approved = contributions.approvedCount;
-		this.rejected = contributions.rejectedCount;
-		this.annotatedRecordsCount = contributions.annotatedRecordsCount;
+
+		this.campaigns = [];
+    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'all', sortBy: 'Date', offset: 0, count: COUNT} )
+      .then( (results) => {
+				for (let item of results) {
+		      // Based on the selected language, set the campaign {title, description, instructions, prizes}
+		      item.title = ( item.title[this.currentLocaleCode] ? item.title[this.currentLocaleCode] : item.title['en'] );
+		      item.description = ( item.description[this.currentLocaleCode] ? item.description[this.currentLocaleCode] : item.description['en'] );
+		      item.instructions = ( item.instructions[this.currentLocaleCode] ? item.instructions[this.currentLocaleCode] : item.instructions['en'] );
+		      item.prizes.gold = ( item.prizes.gold[this.currentLocaleCode] ? item.prizes.gold[this.currentLocaleCode] : item.prizes.gold['en'] );
+		      item.prizes.silver = ( item.prizes.silver[this.currentLocaleCode] ? item.prizes.silver[this.currentLocaleCode] : item.prizes.silver['en'] );
+		      item.prizes.bronze = ( item.prizes.bronze[this.currentLocaleCode] ? item.prizes.bronze[this.currentLocaleCode] : item.prizes.bronze['en'] );
+		      item.prizes.rookie = ( item.prizes.rookie[this.currentLocaleCode] ? item.prizes.rookie[this.currentLocaleCode] : item.prizes.rookie['en'] );
+					this.campaigns.push(new Campaign(item));
+				}
+				this.campaign = this.campaigns[5];
+				this.campName = this.campaign.title;
+				this.getUserStats(this.campaign.username);
+      });
   }
 
 	// This weird syntax is necessary to be able to access *this*
@@ -186,6 +217,23 @@ export class UserProfile {
 		$('.action-update').removeClass('hiddenfile');
 		$('.userInfo').removeClass('hiddenfile');
 		$('.form-group').addClass('hiddenfile');
+	}
+
+	async getUserStats(campUsername) {
+		this.userServices.getUserAnnotations(this.user.dbId, this.project, campUsername)
+			.then( contributions => {
+				console.log(contributions);
+				this.points = contributions.annotationCount;
+				this.created = contributions.createdCount;
+				this.approved = contributions.approvedCount;
+				this.rejected = contributions.rejectedCount;
+				this.annotatedRecordsCount = contributions.annotatedRecordsCount;
+			});
+	}
+
+	changeCampaign(campUsername, campName) {
+		this.campName = campName;
+		this.getUserStats(campUsername);
 	}
 
 }

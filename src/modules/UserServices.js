@@ -227,8 +227,8 @@ export class UserServices {
 		this.current.count.myOrganizations -= 1;
 	}
 
-	getUserAnnotations(userId, offset = 0, count = 20) {
-		return this.http.fetch(`/user/annotations?userId=${userId}&offset=${offset}&count=${count}`, {
+	getUserAnnotations(userId, project = '', campaign = '', offset = 0, count = 20) {
+		return this.http.fetch(`/user/annotations?userId=${userId}&project=${project}&campaign=${campaign}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
 	}
