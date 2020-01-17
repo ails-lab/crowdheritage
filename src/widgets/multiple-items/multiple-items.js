@@ -45,6 +45,7 @@ export class MultipleItems {
 		this.loc;
 		this.project = settings.project;
 		this.campaign = '';
+		this.cname = '';
 		this.state = "hide";
 		this.resetInstance();
     if (!instance) {
@@ -79,8 +80,8 @@ export class MultipleItems {
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
-			let response = await this.userServices.getUserAnnotations(this.user.dbId, this.project, this.campaign, this.offset, this.count);
-			this.fillRecordArray(response.records);
+			// let response = await this.userServices.getUserAnnotations(this.user.dbId, this.project, this.campaign, this.offset, this.count);
+			// this.fillRecordArray(response.records);
 		}
 		this.loading = false;
 	}
@@ -131,7 +132,13 @@ export class MultipleItems {
 			$('.action.itemview').addClass('active');
   }
 
-   detached(){
+	attached() {
+		if (this.byCollection) {
+			window.addEventListener('scroll', e => this.scrollAndLoadMore());
+		}
+	}
+
+  detached(){
 		this.record=null;
 	}
 
@@ -217,10 +224,6 @@ export class MultipleItems {
 	scrollAndLoadMore() {
 		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
 	 		this.getRecords();
-	}
-
-	attached() {
-		window.addEventListener('scroll', e => this.scrollAndLoadMore());
 	}
 
 }

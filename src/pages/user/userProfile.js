@@ -53,6 +53,7 @@ export class UserProfile {
 		this.campaign = null;
 		this.campaigns = [];
 		this.campName = '';
+		this.campUsername = '';
 
 		this.newFirstName = "";
 		this.newLastName = "";
@@ -68,6 +69,7 @@ export class UserProfile {
 		this.rejected = 0;
 		this.annotatedRecordsCount = 0;
 		this.records = [];
+		this.contributedCampaigns = 0;
   }
 
   attached() {
@@ -121,8 +123,9 @@ export class UserProfile {
 		      item.prizes.rookie = ( item.prizes.rookie[this.currentLocaleCode] ? item.prizes.rookie[this.currentLocaleCode] : item.prizes.rookie['en'] );
 					this.campaigns.push(new Campaign(item));
 				}
-				this.campaign = this.campaigns[5];
+				this.campaign = this.campaigns[0];
 				this.campName = this.campaign.title;
+				this.campUsername = this.campaign.username;
 				this.getUserStats(this.campaign.username);
       });
   }
@@ -228,10 +231,12 @@ export class UserProfile {
 				this.approved = contributions.approvedCount;
 				this.rejected = contributions.rejectedCount;
 				this.annotatedRecordsCount = contributions.annotatedRecordsCount;
+				this.records = contributions.records;
 			});
 	}
 
 	changeCampaign(campUsername, campName) {
+		this.campUsername = campUsername;
 		this.campName = campName;
 		this.getUserStats(campUsername);
 	}
