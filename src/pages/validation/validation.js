@@ -207,15 +207,24 @@ export class Validation {
     this.records.splice(0, this.records.length);
     this.offset = 0;
 
-    $('.enlarge-color').removeClass('enlarge-color');
-    let colorClass = label[0].toUpperCase() + label.slice(1,label.length);
-    colorClass = (colorClass === "Multicoloured") ? "Multicolor" : colorClass;
-    $('.'+colorClass).addClass('enlarge-color');
-    // Set up the query parameters for the new RecordIds retrieval
-    this.label = label.toLowerCase();
-    if (this.label === 'multicolor') {
-      this.label = 'multicoloured';
+    if (this.hasMotivation('ColorTagging')) {
+      // Keep enlarged the selected color in the palette
+      $('.enlarge-color').removeClass('enlarge-color');
+      let colorClass = label[0].toUpperCase() + label.slice(1,label.length);
+      colorClass = (colorClass === "Multicoloured") ? "Multicolor" : colorClass;
+      $('.'+colorClass).addClass('enlarge-color');
+
+      // Restore the original color-label form, which is lowercase
+      this.label = label.toLowerCase();
+      if (this.label === 'multicolor') {
+        this.label = 'multicoloured';
+      }
     }
+    else {
+      this.label = label;
+    }
+
+    // Set up the query parameters for the new RecordIds retrieval
     this.sortBy = sortBy;
     this.generators.splice(0, this.generators.length);
     this.generators.push(this.project + " " + this.campaign.username);
