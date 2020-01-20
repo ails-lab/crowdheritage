@@ -1,36 +1,32 @@
 <template>
-  <div class="tag-item">
-    <!-- infobar-->
-    <div class="wrap">
-      <!-- heading-->
-      <div class="heading green" t="item:poll">POLL</div>
-      <!-- info-->
-			<div class="searchbox">${pollTitle}</div>
-      <!-- taglist-->
-			<div>
-        <ul class="taglist show-more-target" if.bind="pollannotations.length > 0">
-          <li class="pollAction" click.delegate="validate(pollannotations[0].dbId, 'approved', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
-          	<div class="text" t="item:yes">Yes</div>
-          	<ul class="action">
-            	<li class.bind="pollannotations[0].approvedByMe ? 'up active' : 'up'">
-              	<a>
-                	<span class="count">${pollannotations[0].approvedBy.length}</span><span class="thumbs-icon up"></span>
-              	</a>
-            	</li>
+  <div class="right" style="width:100%">
+    <div class="tag-item">
+      <!-- infobar-->
+      <div class="wrap" style="padding-left:0px;">
+        <div class="heading green" t="item:poll">POLL</div>
+         	<div>
+            <ul class="taglist show-more-target">
+              <li repeat.for="ann of pollannotations" if.bind="isValidatedBy(ann, 'all')">
+                <div class="text">
+                  <span style.bind="isCreatedBy(ann) ? 'color: #00ac83;' : ''">${ann.label}</span>
+                  <span class="cg-label" title="Computer-generated annotation" if.bind="isComputerGenerated(ann)">(CG)</span>
+                  <span class="tooltiptext">Created By : <b style="color: white;">${getCreator(ann)}</b></span>
+                </div>
+                <ul class="action">
+                  <li class.bind="isValidatedBy(ann, 'approved') ? 'up active' : 'up'" title="Upvotes">
+                    <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+                  </li>
+                  <li class.bind="isValidatedBy(ann, 'rejected') ? 'down active' : 'down'" title="Downvotes">
+                    <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
+                  </li>
+                  <li class="score" title="Score" style.bind="ann.approvedBy.length>ann.rejectedBy.length ? 'color:#00ac83;' : 'color:#ce5e5e;'">
+                    <i class.bind="ann.approvedBy.length>ann.rejectedBy.length ? 'fa fa-line-chart' : 'fa fa-line-chart fa-flip-vertical'"></i><span class="count">${ann.approvedBy.length-ann.rejectedBy.length}</span>
+                  </li>
+                </ul>
+              </li>
             </ul>
-        	</li>
-          <li class="pollAction" click.delegate="validate(pollannotations[0].dbId, 'rejected', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
-          	<div class="text" t="item:no">No</div>
-          	<ul class="action">
-            	<li class.bind="pollannotations[0].rejectedByMe ? 'down active' : 'down'">
-              	<a>
-                	<span class="count">${pollannotations[0].rejectedBy.length}</span><span class="thumbs-icon down"></span>
-              	</a>
-  						</li>
-          	</ul>
-        	</li>
-      	</ul>
-		  </div>
+    		</div>
+      </div>
     </div>
   </div>
 </template>
