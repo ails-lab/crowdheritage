@@ -45,9 +45,9 @@
           </div>
           <div class="cntr" if.bind="!loadCamp && !loadRec">
 						<br/>
-            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'uname': userUsername}">
             </compose>
-            <compose view="widgets/quickview/tagitem.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+            <compose view="widgets/quickview/tagitem.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'uname': userUsername}">
             </compose>
           </div>
         </div>

@@ -41,16 +41,21 @@ export class quickview {
 
     this.loc;
     this.campaign = null;
-		//If there is a collection
+		// If there is a collection
     this.collection = null;
     this.collectionTitle = '';
     this.collectionCount = 0;
+    // If there is a username
+    this.userUsername = '';
 
 		this.record = 0;
 
     this.loadCamp = false;
     this.mediaDiv = '';
   }
+
+  get hasCollection() { return (this.collectionTitle.length > 0); }
+  get hasUser()       { return (this.userUsername.length > 0);    }
 
   attached() {
    if(this.record){
@@ -89,14 +94,14 @@ export class quickview {
           this.collectionTitle = this.collection.title;
           this.collectionCount = this.collection.entryCount;
 		  }
+      if (params.uname) {
+        this.userUsername = params.uname;
+        console.log("UNAME:",this.userUsername);
+      }
   }
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
-  }
-
-  get hasCollection() {
-    return (this.collectionTitle.length>0);
   }
 
   getCreator(ann) {

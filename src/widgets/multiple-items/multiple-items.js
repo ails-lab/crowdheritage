@@ -57,6 +57,8 @@ export class MultipleItems {
     this.records = [];
     this.collection = null;
 		this.user = null;
+		this.campaign = '';
+		this.cname = '';
     this.loading = false;
     this.totalCount = 0;
     this.count = 24;
@@ -73,17 +75,32 @@ export class MultipleItems {
 	}
 
 	async getRecords() {
+		console.log("ENTERING getRecords()");
 		this.loading = true;
 		if (this.collection) {
+			console.log("We have COLLECTION");
 			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
 			this.totalCount = response.entryCount;
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
-			// let response = await this.userServices.getUserAnnotations(this.user.dbId, this.project, this.campaign, this.offset, this.count);
-			// this.fillRecordArray(response.records);
+			console.log("We have USER");
+			this.userServices.getUserAnnotations(this.user.dbId, this.project, this.campaign, this.offset, this.count)
+				.then( response => {
+					this.fillRecordArray(response.records);					
+				});
 		}
 		this.loading = false;
+	}
+
+	attached() {
+		if (this.byCollection) {
+			window.addEventListener('scroll', e => this.scrollAndLoadMore());
+		}
+	}
+
+  detached(){
+		this.record=null;
 	}
 
 	async activate(params, route) {
@@ -103,7 +120,8 @@ export class MultipleItems {
 			this.totalCount = params.totalCount;
 		}
 
-		if (params.records) {
+		if (params.records && this.records.length==0) {
+			console.log("We have RECORDS");
 			this.loading = true;
 			this.records = params.records;
 			this.fillRecordArray(params.records);
@@ -127,51 +145,8 @@ export class MultipleItems {
 
 	quickView(record){
 		  this.record=record;
-
 			$('.action').removeClass('active');
 			$('.action.itemview').addClass('active');
-  }
-
-	attached() {
-		if (this.byCollection) {
-			window.addEventListener('scroll', e => this.scrollAndLoadMore());
-		}
-	}
-
-  detached(){
-		this.record=null;
-	}
-
-	goToAnnotatedItem(record) {
-		let annotations = record.data.annotations;
-		for (var i in annotations) {
-			let annotators = annotations[i].annotators;
-			for (var j in annotators) {
-				if (annotators[j].withCreator == this.user.dbId) {
-					let item = this.router.routes.find(x => x.name === 'item');
-					let cname = annotators[j].generator.split(' ')[1];
-					let recid = record.dbId;
-					let uname = this.user.username;
-
-					this.campaignServices.getCampaignByName(cname).then( () => {
-						this.router.navigateToRoute('item', {cname: cname, recid: recid, lang: this.loc});
-					}
-					,error => {
-						toastr.error("This campaign doesn't exist anymore");
-					});
-				}
-			}
-		}
-	}
-
-	hasColourTag() {
-		if(this.cname==="colours-catwalk")
-		   return true;
-		else return false;
-  }
-
-  async loadMore() {
-		this.getRecords();
   }
 
 	toggleStateMenu() {
@@ -220,6 +195,10 @@ export class MultipleItems {
 		}
 		return false;
 	}
+
+	async loadMore() {
+		this.getRecords();
+  }
 
 	scrollAndLoadMore() {
 		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
