@@ -27,7 +27,7 @@
 
     <!-- validation section-->
     <section class="validation">
-      <!-- Color Palette -->
+      <!-- ColorTagging -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
         <div>
           <p>Select a <b>color</b> from the Palette and view all the campaign records that have been annotated with it.</p>
@@ -38,7 +38,7 @@
         <!-- hack for last row elements width -->
         <li class="width-helper" repeat.for="i of 20"></li>
       </div>
-      <!-- Search Bar -->
+      <!-- Tagging -->
       <div class="searchbox" if.bind="hasMotivation('Tagging')">
         <div>
           <p>Select a <b>tag</b> from the list and view all the campaign records that have been annotated with it.</p>
@@ -55,7 +55,7 @@
           </ul>
         </div>
       </div>
-      <!-- Geo Search Bar -->
+      <!-- GeoTagging -->
       <!-- <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
         <div>
           <p>Select a <b>location</b> from the list and view all the campaign records that have been annotated with it.</p>
@@ -68,6 +68,7 @@
           </ul>
         </div>
       </div> -->
+      
 
       <!-- Validation Information -->
       <div class="validation-info hiddenfile">

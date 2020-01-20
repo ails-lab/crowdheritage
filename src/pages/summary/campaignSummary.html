@@ -136,7 +136,8 @@
           </div>
           <!-- contribute-->
           <div class="contribute">
-            <a if.bind="isTesterUser || camp.status == 'active'" href="javascript:void(0)" click.delegate="goToItem(campaign, 0, records, 0)" t="summary:contribute-campaign">CONTRIBUTE TO CAMPAIGN</a>
+            <!-- <a href="javascript:void(0)" click.delegate="goToItem(campaign, 0, records, 0)" t="summary:contribute-campaign">CONTRIBUTE TO CAMPAIGN</a> -->
+            <a if.bind="isCreator" route-href="route: validation; params.bind: { cname: campaign.username, lang: loc }">VALIDATE CAMPAIGN RESULTS</a>
           </div>
         </div>
       </div>

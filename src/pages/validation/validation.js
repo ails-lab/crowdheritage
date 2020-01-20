@@ -153,7 +153,38 @@ export class Validation {
 		this.record=null;
 	}
 
+  clearInstance() {
+    this.campaignItem = null;
+    this.recordIds = [];
+    this.records = [];
+    this.record = null;
+    this.annotation = null;
+    this.offset = 0;
+    this.label = "";
+    this.generators = [];
+    this.annotationsToDelete = [];
+    this.sortBy = "upvoted";
+    this.placeholderText = this.i18n.tr('item:tag-search-text');
+
+    this.annotations = [];
+    this.geoannotations = [];
+    this.colorannotations = [];
+    this.pollannotations = [];
+    this.suggestedAnnotations = [];
+    this.suggestedAnnotation = {};
+    this.suggestionsLoading = false;
+    this.suggestedAnnotations =  [];
+		this.selectedAnnotation = null;
+		this.uriRedirect = false;
+
+    this.loadCamp = false;
+    this.loading = false;
+    this.deleting = false;
+  }
+
 	async activate(params, route) {
+    this.clearInstance();
+
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
 

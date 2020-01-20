@@ -48,6 +48,7 @@ export class CampaignSummary {
       this.router = router;
       this.i18n = i18n;
       this.isTesterUser = isTesterUser();
+      this.isCreator = false;
 
       this.records = [];
       this.recId = "";
@@ -95,8 +96,8 @@ export class CampaignSummary {
 
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
-	get user() { return this.userServices.current; }
-  get locale() { return window.location.href.split('/')[3]; }
+	get user()            { return this.userServices.current;           }
+  get locale()          { return window.location.href.split('/')[3];  }
 
   attached() {
     $('.accountmenu').removeClass('active');
@@ -127,6 +128,7 @@ export class CampaignSummary {
         this.collectionsCount = this.campaign.targetCollections.length;
         this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
         this.getUserStats();
+        this.isCreator = this.campaign.creators.includes(this.user.dbId);
     });
   }
 
