@@ -96,7 +96,6 @@ export class quickview {
 		  }
       if (params.uname) {
         this.userUsername = params.uname;
-        console.log("UNAME:",this.userUsername);
       }
   }
 

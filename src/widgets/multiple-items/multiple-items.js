@@ -75,19 +75,16 @@ export class MultipleItems {
 	}
 
 	async getRecords() {
-		console.log("ENTERING getRecords()");
 		this.loading = true;
 		if (this.collection) {
-			console.log("We have COLLECTION");
 			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
 			this.totalCount = response.entryCount;
 			this.fillRecordArray(response.records);
 		}
 		else if (this.user) {
-			console.log("We have USER");
-			this.userServices.getUserAnnotations(this.user.dbId, this.project, this.campaign, this.offset, this.count)
+			this.userServices.getUserAnnotations(this.user.dbId, this.project, this.cname, this.offset, this.count)
 				.then( response => {
-					this.fillRecordArray(response.records);					
+					this.fillRecordArray(response.records);
 				});
 		}
 		this.loading = false;
@@ -121,9 +118,7 @@ export class MultipleItems {
 		}
 
 		if (params.records && this.records.length==0) {
-			console.log("We have RECORDS");
 			this.loading = true;
-			this.records = params.records;
 			this.fillRecordArray(params.records);
 			this.loading = false;
 			return;
