@@ -45,8 +45,8 @@ export class quickview {
     this.collection = null;
     this.collectionTitle = '';
     this.collectionCount = 0;
-    // If there is a username
-    this.userUsername = '';
+    // If there is a user
+    this.userId = '';
 
 		this.record = 0;
 
@@ -94,8 +94,8 @@ export class quickview {
           this.collectionTitle = this.collection.title;
           this.collectionCount = this.collection.entryCount;
 		  }
-      if (params.uname) {
-        this.userUsername = params.uname;
+      if (params.userId) {
+        this.userId = params.userId;
       }
   }
 

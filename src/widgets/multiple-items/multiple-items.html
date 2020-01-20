@@ -26,7 +26,7 @@
 		<!-- entry-->
 		<div role="main">
 		<section class="action itemview" if.bind="record">
-			<compose view-model="widgets/quickview/quickview" model.bind="{'cname': cname, 'record': record, 'uname': user.username, 'lang': loc, 'collection':collection}"></compose>
+			<compose view-model="widgets/quickview/quickview" model.bind="{'cname': cname, 'record': record, 'userId': user.dbId, 'lang': loc, 'collection':collection}"></compose>
 		</section></div>
 		<div class="entries row" ref="grid">
 			<!-- item-->

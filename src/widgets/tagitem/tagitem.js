@@ -73,6 +73,7 @@ export class Tagitem {
     this.suggestionsLoading = false;
     this.suggestedAnnotations =  [];
 		this.selectedAnnotation = null;
+    this.userId = '';
 		this.lg=loginPopup;
 		this.uriRedirect = false;
 
@@ -99,6 +100,9 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
+    if (params.userId) {
+      this.userId = params.userId;
+    }
 		this.loc = window.location.href.split('/')[3];
     try {
       this.colTitle = params.colTitle[0].split(' (')[0];
@@ -935,6 +939,44 @@ export class Tagitem {
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);
+  }
+
+  isCreatedBy(ann) {
+    return ( ann.createdBy[0].withCreator == this.userId );
+  }
+
+  isValidatedBy(ann, valType) {
+    if (valType == 'approved') {
+      for (let anno of ann.approvedBy) {
+        if (anno.withCreator == this.userId) {
+          return true;
+        }
+      }
+    }
+    else if (valType == 'rejected') {
+      for (let anno of ann.rejectedBy) {
+        if (anno.withCreator == this.userId) {
+          return true;
+        }
+      }
+    }
+    else if (valType == 'all') {
+      // If not in user-page, always return TRUE, since there we don't filter the annotation list
+      if (this.userId.length == 0) {
+        return true;
+      }
+      for (let anno of ann.approvedBy) {
+        if (anno.withCreator == this.userId) {
+          return true;
+        }
+      }
+      for (let anno of ann.rejectedBy) {
+        if (anno.withCreator == this.userId) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
 	goToURI(uri) {

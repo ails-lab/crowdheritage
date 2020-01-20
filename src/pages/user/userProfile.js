@@ -225,7 +225,6 @@ export class UserProfile {
 	async getUserStats(campUsername) {
 		this.userServices.getUserAnnotations(this.user.dbId, this.project, campUsername)
 			.then( contributions => {
-				console.log(contributions);
 				this.points = contributions.annotationCount;
 				this.created = contributions.createdCount;
 				this.approved = contributions.approvedCount;
