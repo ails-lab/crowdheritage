@@ -1,0 +1,36 @@
+<template>
+  <div class="tag-item">
+    <!-- infobar-->
+    <div class="wrap">
+      <!-- heading-->
+      <div class="heading green" t="item:poll">POLL</div>
+      <!-- info-->
+			<div class="searchbox">${pollTitle}</div>
+      <!-- taglist-->
+			<div>
+        <ul class="taglist show-more-target" if.bind="pollannotations.length > 0">
+          <li class="pollAction" click.delegate="validate(pollannotations[0].dbId, 'approved', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
+          	<div class="text" t="item:yes">Yes</div>
+          	<ul class="action">
+            	<li class.bind="pollannotations[0].approvedByMe ? 'up active' : 'up'">
+              	<a>
+                	<span class="count">${pollannotations[0].approvedBy.length}</span><span class="thumbs-icon up"></span>
+              	</a>
+            	</li>
+            </ul>
+        	</li>
+          <li class="pollAction" click.delegate="validate(pollannotations[0].dbId, 'rejected', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
+          	<div class="text" t="item:no">No</div>
+          	<ul class="action">
+            	<li class.bind="pollannotations[0].rejectedByMe ? 'down active' : 'down'">
+              	<a>
+                	<span class="count">${pollannotations[0].rejectedBy.length}</span><span class="thumbs-icon down"></span>
+              	</a>
+  						</li>
+          	</ul>
+        	</li>
+      	</ul>
+		  </div>
+    </div>
+  </div>
+</template>

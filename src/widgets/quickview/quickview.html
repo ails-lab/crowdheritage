@@ -49,6 +49,8 @@
             </compose>
             <compose view="widgets/quickview/tagitem.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
             </compose>
+						<compose view="widgets/quickview/tagpoll.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Polling')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
+            </compose>
           </div>
         </div>
 
