@@ -45,7 +45,7 @@
         </div>
         <span>Type in the desired Tag :</span>
         <input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
-        <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
+        <div show.bind="suggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
             <li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}">
               <span>${item.label}</span>
@@ -55,20 +55,21 @@
           </ul>
         </div>
       </div>
+      <br/>
       <!-- GeoTagging -->
-      <!-- <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
+      <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
         <div>
           <p>Select a <b>location</b> from the list and view all the campaign records that have been annotated with it.</p>
         </div>
         <span>Type in the desired GeoTag :</span>
-        <input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
-        <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
+        <input id="annotationInput" autocomplete="off" value.bind="geoPrefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
+        <div show.bind="geoSuggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
- 						<li repeat.for="item of suggestedAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
+ 						<li repeat.for="item of suggestedGeoAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
           </ul>
         </div>
-      </div> -->
-      
+      </div>
+
 
       <!-- Validation Information -->
       <div class="validation-info hiddenfile">

@@ -85,10 +85,12 @@ export class Validation {
     this.colorannotations = [];
     this.pollannotations = [];
     this.suggestedAnnotations = [];
-    this.suggestedAnnotation = {};
+    this.suggestedAnnotation = null;
+    this.suggestedGeoAnnotations = [];
+    this.suggestedGeoAnnotation = null;
     this.suggestionsLoading = false;
-    this.suggestedAnnotations =  [];
 		this.selectedAnnotation = null;
+    this.selectedGeoAnnotation = null;
 		this.uriRedirect = false;
 
     this.loadCamp = false;
@@ -109,6 +111,7 @@ export class Validation {
 
   clearSearchField() {
     this.prefix = '';
+    this.geoPrefix = '';
   }
 
   hasMotivation(name) {
@@ -166,15 +169,19 @@ export class Validation {
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
 
+    this.prefix = '';
+    this.geoPrefix = '';
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
     this.pollannotations = [];
     this.suggestedAnnotations = [];
-    this.suggestedAnnotation = {};
+    this.suggestedAnnotation = null;
+    this.suggestedGeoAnnotations = [];
+    this.suggestedGeoAnnotation = null;
     this.suggestionsLoading = false;
-    this.suggestedAnnotations =  [];
 		this.selectedAnnotation = null;
+    this.selectedGeoAnnotation = null;
 		this.uriRedirect = false;
 
     this.loadCamp = false;
@@ -452,21 +459,30 @@ export class Validation {
     * TAGITEM WIDGET METHODS
     */
   prefixChanged(geo=false) {
-    //	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
-    if (this.prefix === '') {
+    if (!geo && this.prefix === '') {
       this.suggestedAnnotations = [];
       return;
     }
-    this.selectedAnnotation = null;
+    if (geo && this.geoPrefix === '') {
+      this.suggestedGeoAnnotations = [];
+      return;
+    }
 		if (geo || this.campaign.motivation == 'GeoTagging') {
-			this.getGeoAnnotations(this.prefix);
-		} else {
+      this.selectedGeoAnnotation = null;
+			this.getGeoAnnotations(this.geoPrefix);
+		}
+    else {
+      this.selectedAnnotation = null;
 			this.getSuggestedAnnotations(this.prefix);
 		}
   }
 
   get suggestionsActive() {
     return this.suggestedAnnotations.length !== 0;
+  }
+
+  get geoSuggestionsActive() {
+    return this.suggestedGeoAnnotations.length !== 0;
   }
 
   async getSuggestedAnnotations(prefix, lang="all") {
@@ -491,8 +507,8 @@ export class Validation {
   async getGeoAnnotations(prefix) {
 		this.lastRequest = prefix;
 		this.suggestionsLoading = true;
-		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
-		this.selectedAnnotation = null;
+		this.suggestedGeoAnnotations = this.suggestedGeoAnnotations.slice(0, this.suggestedGeoAnnotations.length);
+		this.selectedGeoAnnotation = null;
 		let self = this;
 		await this.thesaurusServices.getGeonameSuggestions(prefix)
 		.then((res) => {
@@ -508,10 +524,9 @@ export class Validation {
 		}
 		var html = '';
 		var geonames = jData.geonames;
-		this.suggestedAnnotations = geonames;
- 		/*if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
-		self.selectedAnnotation = self.suggestedAnnotations[0];
-		}*/
+		this.suggestedGeoAnnotations = geonames;
+    let geoLength = this.suggestedGeoAnnotations.length;
+
 		this.suggestionsLoading = false;
 	}
 
@@ -537,20 +552,15 @@ export class Validation {
   }
 
   selectGeoAnnotation(geoid) {
-    console.log("GEO-ID", geoid);
-    console.log("SUGGESTED ANNOTATIONS", this.suggestedAnnotations);
-    this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+    this.selectedGeoAnnotation = this.suggestedGeoAnnotations.find(obj => {
 			return obj.geonameId === geoid
 		});
-		this.suggestedAnnotations = [];
-		this.errors = this.selectedAnnotation == null;
+		this.suggestedGeoAnnotations = [];
+		this.errors = this.selectedGeoAnnotation == null;
 
 		if (!this.errors) {
-      console.log("SELECTED ANNOTATION", this.selectAnnotation);
-      var lb = this.selectedAnnotation.label;
-      this.prefix = lb;
-      console.log("LB", lb);
-      console.log("PREFIX", this.prefix);
+      var lb = this.selectedGeoAnnotation.name;
+      this.geoPrefix = lb;
 
       this.selectLabel(lb, 'upvoted', false);
 		}
