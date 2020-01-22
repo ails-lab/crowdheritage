@@ -2193,7 +2193,9 @@ body main section.tagging .right .tag-color .coloraction {
 body main section.validation {
   margin: 30px 0px 10px 0px;
   padding: 0px 50px 0px 50px;
-  width: 800px;
+}
+body main section.validation .coloraction {
+  width: 680px;
 }
 body main section.validation .searchbox input {
   width: 360px;
@@ -4839,16 +4841,20 @@ body.fullscreen {
   }
 }
 section.validation div.validation-info {
-  position: relative;
-  top: -90px;
-  left: 780px;
-  height: 0px;
+  margin-top: 20px;
+  padding-top: 10px;
+  // border-top: 1px @main-color solid;
+  // position: relative;
+  // top: -90px;
+  // left: 780px;
+  // height: 0px;
 }
 section.validation div.validation-button-group {
-  position: relative;
-  top: -44px;
-  left: 780px;
-  height: 0px;
+  // margin-top: 5px;
+  // position: relative;
+  // top: -44px;
+  // left: 780px;
+  // height: 0px;
   .cancel {
     margin-right: 10px;
     color: @main-color;
@@ -4864,6 +4870,34 @@ section.validation .searchbox ul.suggestions {
   width: 358px;
   left: 215px;
   height: 174px;
+}
+section.validation .popular-tags ul.tag-list {
+  list-style-type: none;
+  margin: 0;
+  margin-right: 30px;
+  padding: 0;
+  overflow: hidden;
+  background-color: @main-color;
+  display: inline-flex;
+  justify-content: center;
+  border-top: 1px @main-color solid;
+  border-bottom: 1px @main-color solid;
+}
+section.validation .popular-tags ul.tag-list li.tag {
+  float: left;
+  font-weight: bold;
+  cursor: pointer;
+}
+section.validation .popular-tags ul.tag-list li.tag a {
+  display: inline-flex;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+section.validation .popular-tags ul.tag-list li.tag a:hover {
+  background-color: white;
+  color: @main-color;
 }
 .hiddenfile {
 	width: 0px;

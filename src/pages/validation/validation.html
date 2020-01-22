@@ -55,9 +55,9 @@
           </ul>
         </div>
       </div>
-      <br/>
       <!-- GeoTagging -->
       <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
+        <br/>
         <div>
           <p>Select a <b>location</b> from the list and view all the campaign records that have been annotated with it.</p>
         </div>
@@ -69,7 +69,22 @@
           </ul>
         </div>
       </div>
-
+      <!-- Polling -->
+      <div if.bind="hasMotivation('Polling')">
+        <br/>
+        <div>
+          <p>Select a <b>tag</b> from the list and view all the campaign records that have been annotated with it.</p>
+        </div>
+        <div class="popular-tags">
+          <ul class="tag-list">
+            <li class="tag"
+                repeat.for="item of popularPollTags | iterateObject"
+                title.bind="item[1]+'  items'">
+              <a click.delegate="selectLabel(item[0], 'upvoted', false)">${item[0]}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <!-- Validation Information -->
       <div class="validation-info hiddenfile">

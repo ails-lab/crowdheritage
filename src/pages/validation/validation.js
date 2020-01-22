@@ -92,6 +92,21 @@ export class Validation {
 		this.selectedAnnotation = null;
     this.selectedGeoAnnotation = null;
 		this.uriRedirect = false;
+    this.popularTags = null;
+    this.popularColorTags = null;
+    this.popularGeoTags = null;
+    this.popularPollTags = {
+      "Jean-Philippe Rameau" : 'X',
+      "Johann Sebastian Bach" : 'X',
+      "Joseph Haydn" : 'X',
+      "Wolfgang Amadeus Mozart" : 'X',
+      "Ludwig van Beethoven" : 'X',
+      "Franz Liszt" : 'X',
+      "Antonín Dvořák" : 'X',
+      "Béla Bartók" : 'X',
+      "Igor Stravinsky" : 'X',
+      "Leonard Bernstein" : 'X'
+    };
 
     this.loadCamp = false;
     this.loading = false;
@@ -330,6 +345,22 @@ export class Validation {
     }
     if (this.hasMotivation('Tagging')) {
       for (let ann of this.annotations) {
+        if (ann.label === camelLabel) {
+          this.annotation = ann;
+          found = true;
+        }
+      }
+    }
+    if (this.hasMotivation('GeoTagging')) {
+      for (let ann of this.geoannotations) {
+        if (ann.label === camelLabel) {
+          this.annotation = ann;
+          found = true;
+        }
+      }
+    }
+    if (this.hasMotivation('Polling')) {
+      for (let ann of this.pollannotations) {
         if (ann.label === camelLabel) {
           this.annotation = ann;
           found = true;

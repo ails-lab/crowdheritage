@@ -14,14 +14,14 @@
  */
 
 
-import { PLATFORM, FrameworkConfiguration}from "aurelia-framework";
-
-export function configure(aurelia) {
-	aurelia.globalResources(PLATFORM.moduleName('./campaigncounter'));
-	aurelia.globalResources(PLATFORM.moduleName('./index-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./date-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./text-trim'));
-	aurelia.globalResources(PLATFORM.moduleName('./plural-format'));
-	aurelia.globalResources(PLATFORM.moduleName('./campaign-trim'));
-	aurelia.globalResources(PLATFORM.moduleName('./iterate-object'));
+export class IterateObjectValueConverter {
+  toView(value) {
+		if (value == null)
+			return [];
+    var result = [];
+    for (let key in value) {
+      result.push([key, value[key]]);
+    }
+    return result;
+  }
 }
