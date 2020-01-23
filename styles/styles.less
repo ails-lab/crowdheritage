@@ -4877,11 +4877,11 @@ section.validation .popular-tags ul.tag-list {
   margin-right: 30px;
   padding: 0;
   overflow: hidden;
-  background-color: @main-color;
+  background-color: #415072;
   display: inline-flex;
   justify-content: center;
-  border-top: 1px @main-color solid;
-  border-bottom: 1px @main-color solid;
+  border-top: 1px #415072 solid;
+  border-bottom: 1px #415072 solid;
 }
 section.validation .popular-tags ul.tag-list li.tag {
   float: left;
@@ -4889,15 +4889,25 @@ section.validation .popular-tags ul.tag-list li.tag {
   cursor: pointer;
 }
 section.validation .popular-tags ul.tag-list li.tag a {
-  display: inline-flex;
+  display: inline-grid;
   color: white;
   text-align: center;
   padding: 16px;
   text-decoration: none;
 }
+section.validation .popular-tags ul.tag-list li.tag a.selected-tag,
 section.validation .popular-tags ul.tag-list li.tag a:hover {
-  background-color: white;
-  color: @main-color;
+  font-size: 13pt;
+  background-color: #B1B7C4;
+  color: #2A395B;
+  .tag-count {
+    color: #415072;
+    font-weight: bold;
+  }
+}
+section.validation .popular-tags ul.tag-list li.tag .tag-count {
+  font-size: 7pt;
+  color: #808AA0;
 }
 .hiddenfile {
 	width: 0px;

@@ -77,10 +77,11 @@
         </div>
         <div class="popular-tags">
           <ul class="tag-list">
-            <li class="tag"
-                repeat.for="item of popularPollTags | iterateObject"
-                title.bind="item[1]+'  items'">
-              <a click.delegate="selectLabel(item[0], 'upvoted', false)">${item[0]}</a>
+            <li class="tag" repeat.for="item of popularPollTags | iterateObject">
+              <a class="tag-${$index}" click.delegate="selectLabel(item[0], 'upvoted', false, $index)">
+                <span class="tag-label">${item[0]}</span>
+                <span class="tag-count">(${item[1]} items)</span>
+              </a>
             </li>
           </ul>
         </div>

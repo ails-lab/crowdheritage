@@ -245,7 +245,7 @@ export class Validation {
       return '-';
   }
 
-  selectLabel(label, sortBy, reload) {
+  selectLabel(label, sortBy, reload, index) {
     // If the label is the already selected label, do nothing
     if ( !reload && (this.sortBy === sortBy) && (this.label === label.toLowerCase()) ) {
       return;
@@ -275,6 +275,11 @@ export class Validation {
     }
     else {
       this.label = label;
+    }
+
+    if (index != null) {
+      $('.selected-tag').removeClass('selected-tag');
+      $('.tag-'+index).addClass('selected-tag');
     }
 
     // Set up the query parameters for the new RecordIds retrieval
@@ -620,9 +625,6 @@ export class Validation {
         }
         if (this.pollannotations.length > 0) {
           this.pollTitle = this.pollannotations[0].label;
-        }
-        else {
-          toastr.error(this.i18n.tr('item:toastr-empty'));
         }
       });
     }
