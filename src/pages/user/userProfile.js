@@ -114,13 +114,13 @@ export class UserProfile {
       .then( (results) => {
 				for (let item of results) {
 		      // Based on the selected language, set the campaign {title, description, instructions, prizes}
-		      item.title = ( item.title[this.currentLocaleCode] ? item.title[this.currentLocaleCode] : item.title['en'] );
-		      item.description = ( item.description[this.currentLocaleCode] ? item.description[this.currentLocaleCode] : item.description['en'] );
-		      item.instructions = ( item.instructions[this.currentLocaleCode] ? item.instructions[this.currentLocaleCode] : item.instructions['en'] );
-		      item.prizes.gold = ( item.prizes.gold[this.currentLocaleCode] ? item.prizes.gold[this.currentLocaleCode] : item.prizes.gold['en'] );
-		      item.prizes.silver = ( item.prizes.silver[this.currentLocaleCode] ? item.prizes.silver[this.currentLocaleCode] : item.prizes.silver['en'] );
-		      item.prizes.bronze = ( item.prizes.bronze[this.currentLocaleCode] ? item.prizes.bronze[this.currentLocaleCode] : item.prizes.bronze['en'] );
-		      item.prizes.rookie = ( item.prizes.rookie[this.currentLocaleCode] ? item.prizes.rookie[this.currentLocaleCode] : item.prizes.rookie['en'] );
+		      item.title = ( item.title[this.loc] ? item.title[this.loc] : item.title['en'] );
+		      item.description = ( item.description[this.loc] ? item.description[this.loc] : item.description['en'] );
+		      item.instructions = ( item.instructions[this.loc] ? item.instructions[this.loc] : item.instructions['en'] );
+		      item.prizes.gold = ( item.prizes.gold[this.loc] ? item.prizes.gold[this.loc] : item.prizes.gold['en'] );
+		      item.prizes.silver = ( item.prizes.silver[this.loc] ? item.prizes.silver[this.loc] : item.prizes.silver['en'] );
+		      item.prizes.bronze = ( item.prizes.bronze[this.loc] ? item.prizes.bronze[this.loc] : item.prizes.bronze['en'] );
+		      item.prizes.rookie = ( item.prizes.rookie[this.loc] ? item.prizes.rookie[this.loc] : item.prizes.rookie['en'] );
 					this.campaigns.push(new Campaign(item));
 				}
 				this.campaign = this.campaigns[0];

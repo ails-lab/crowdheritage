@@ -1360,15 +1360,18 @@ body main .topsection .sectionlabel .state .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
 }
+.userpage.sort,
 body main .topsection .sort {
   float: right;
   position: relative;
   font-family: "Dosis";
   padding-top: 30px;
 }
+.userpage.sort .lbl,
 body main .topsection .sort .lbl {
   display: inline-block;
 }
+.userpage.sort a,
 body main .topsection .sort a {
   display: inline-block;
   color: @main-color;
@@ -1376,16 +1379,19 @@ body main .topsection .sort a {
   -o-transition: color 0.3s;
   transition: color 0.3s;
 }
+.userpage.sort a .arrow,
 body main .topsection .sort a .arrow {
   margin-left: 10px;
   display: inline-block;
   position: relative;
   top: -1px;
 }
+.userpage.sort a:hover,
 body main .topsection .sort a:hover {
   text-decoration: none;
   color: #009e77;
 }
+.userpage.sort .dropdown-menu,
 body main .topsection .sort .dropdown-menu {
   margin: 5px 0 0 0;
   right: 10px;
@@ -1394,16 +1400,19 @@ body main .topsection .sort .dropdown-menu {
   border: 0px;
   box-shadow: none;
 }
+.userpage.sort .dropdown-menu li,
 body main .topsection .sort .dropdown-menu li {
   display: block;
   margin-bottom: 1px;
 }
+.userpage.sort .dropdown-menu li a,
 body main .topsection .sort .dropdown-menu li a {
   display: block;
   color: #555;
   padding: 7px 10px 7px 10px;
   background-color: #f2f2f2;
 }
+.userpage.sort .dropdown-menu li a:hover,
 body main .topsection .sort .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
@@ -3345,6 +3354,7 @@ body main section.validation .coloraction {
     float: none;
     padding-top: 10px;
   }
+  .userpage.sort,
   body main .topsection .sort {
     display: block;
     float: none;
@@ -5016,8 +5026,9 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
 .selected:hover .tooltiptext {
   visibility: visible;
 }
-body main .topsection .userpage.sort {
-  left: -10px;
+.userpage.sort {
+  top: -30px;
+  font-size: 13pt;
   .dropdown-menu {
     width: fit-content;
   }

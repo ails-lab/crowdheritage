@@ -78,10 +78,22 @@
 				<div class="right">
 					<!-- wrap-->
 					<div class="wrap">
+            <!-- Sort - Filter-->
+            <div class="userpage sort">
+              <!-- sort-->
+              <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
+                <span class="text">${campName}</span>
+                <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
+              </a>
+              <!-- dropdown-->
+              <ul aria-labelledby="sorting" class="dropdown-menu">
+                <li repeat.for="camp of campaigns">
+                  <a href="javascript:void(0)" click.delegate="changeCampaign(camp.username, camp.title)">${camp.title}</a>
+                </li>
+              </ul>
+            </div>
 						<div class="heading">
-              <!-- <img src="/img/badges.png"> -->
               <span>STATISTICS</span>
-              <p>${campName}</p>
             </div>
 						<!-- stats-->
 						<ul class="stats">
@@ -130,22 +142,6 @@
           <!-- label-->
           <div class="sectionlabel">
             <div class="bold" t="user:contributions">CONTRIBUTIONS</div><span t="[append]user:annotated"> ${annotatedRecordsCount} </span>
-          </div>
-          <!-- Sort - Filter-->
-          <div class="userpage sort">
-            <!-- label-->
-            <div class="lbl">CAMPAIGN : </div>
-            <!-- sort-->
-            <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
-              <span class="text">${campName}</span>
-              <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
-            </a>
-            <!-- dropdown-->
-            <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li repeat.for="camp of campaigns">
-                <a href="javascript:void(0)" click.delegate="changeCampaign(camp.username, camp.title)">${camp.title}</a>
-              </li>
-            </ul>
           </div>
 				</div>
 				<compose view-model="widgets/multiple-items/multiple-items"
