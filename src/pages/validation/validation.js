@@ -96,16 +96,16 @@ export class Validation {
     this.popularColorTags = null;
     this.popularGeoTags = null;
     this.popularPollTags = {
-      "Jean-Philippe Rameau" : 'X',
-      "Johann Sebastian Bach" : 'X',
-      "Joseph Haydn" : 'X',
-      "Wolfgang Amadeus Mozart" : 'X',
-      "Ludwig van Beethoven" : 'X',
-      "Franz Liszt" : 'X',
-      "Antonín Dvořák" : 'X',
-      "Béla Bartók" : 'X',
-      "Igor Stravinsky" : 'X',
-      "Leonard Bernstein" : 'X'
+      "Wolfgang Amadeus Mozart" : 801,
+      "Béla Bartók" : 358,
+      "Franz Liszt" : 351,
+      "Ludwig van Beethoven" : 326,
+      "Johann Sebastian Bach" : 276,
+      "Joseph Haydn" : 163,
+      "Leonard Bernstein" : 94,
+      "Antonín Dvořák" : 69,
+      "Igor Stravinsky" : 69,
+      "Jean-Philippe Rameau" : 62
     };
 
     this.loadCamp = false;
@@ -224,6 +224,11 @@ export class Validation {
         response.prizes.rookie = ( response.prizes.rookie[this.loc] ? response.prizes.rookie[this.loc] : response.prizes.rookie['en'] );
 
         this.campaign = new Campaign(response);
+
+        this.campaignServices.getPopularAnnotations(this.campaign.username)
+          .then( response => {
+            this.popularTags = response;
+          });
       })
       .catch(error => {
         let index = this.router.routes.find(x => x.name === 'index');

@@ -89,4 +89,10 @@ export class CampaignServices {
     }).then(checkStatus);
   }
 
+  getPopularAnnotations(campaignName='', term='', offset=0, count=20) {
+    return this.http.fetch(`/campaign/popularAnnotations?campaignName=${campaignName}&term=${term}&offset=${offset}&count=${count}`, {
+			method: 'GET'
+		}).then((response) => response.json());
+  }
+
 }

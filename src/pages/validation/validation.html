@@ -25,8 +25,25 @@
       </div>
     </section>
 
-    <!-- validation section-->
+    <!-- validation section -->
     <section class="validation">
+      <!-- Popular Tags -->
+      <div if.bind="hasMotivation('Tagging') || hasMotivation('GeoTagging')" class="popular-list">
+        <div>
+          <p>Select a <b>tag</b> from the list and view all the campaign records that have been annotated with it.</p>
+        </div>
+        <div class="popular-tags">
+          <ul class="tag-list">
+            <li class="tag" repeat.for="item of popularTags | iterateObject">
+              <a class="tag-${$index}" click.delegate="selectLabel(item[0], 'upvoted', false, $index)">
+                <span class="tag-label">${item[0]}</span>
+                <span class="tag-count">(${item[1]} items)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <br/>
+      </div>
       <!-- ColorTagging -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
         <div>
@@ -40,10 +57,7 @@
       </div>
       <!-- Tagging -->
       <div class="searchbox" if.bind="hasMotivation('Tagging')">
-        <div>
-          <p>Select a <b>tag</b> from the list and view all the campaign records that have been annotated with it.</p>
-        </div>
-        <span>Type in the desired Tag :</span>
+        <span>Search for a Tag :</span>
         <input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind="suggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
@@ -58,10 +72,7 @@
       <!-- GeoTagging -->
       <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
         <br/>
-        <div>
-          <p>Select a <b>location</b> from the list and view all the campaign records that have been annotated with it.</p>
-        </div>
-        <span>Type in the desired GeoTag :</span>
+        <span>Search for a GeoTag :</span>
         <input id="annotationInput" autocomplete="off" value.bind="geoPrefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind="geoSuggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
