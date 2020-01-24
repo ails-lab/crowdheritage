@@ -58,28 +58,27 @@
       <!-- Tagging -->
       <div class="searchbox" if.bind="hasMotivation('Tagging')">
         <span>Search for a Tag :</span>
-        <input id="annotationInput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
+        <input id="annotationInputTag" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind="suggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
-            <li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations" id="${$index}">
-              <span>${item.label}</span>
-              <a if.bind="item.lang">${item.lang}</a>
-              <a style="padding-right:10px" class="fa fa-link" click.delegate="goToURI(item.uri)"></a>
+            <li click.delegate="selectLabel(item[0], 'upvoted', false)" repeat.for="item of suggestedAnnotations" id="${$index}">
+              <span>${item[0]}</span>
+              <span style="float: right;">(${item[1]} items)</span>
             </li>
           </ul>
         </div>
       </div>
       <!-- GeoTagging -->
-      <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
+      <!-- <div class="searchbox" if.bind="hasMotivation('GeoTagging')">
         <br/>
         <span>Search for a GeoTag :</span>
-        <input id="annotationInput" autocomplete="off" value.bind="geoPrefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
+        <input id="annotationInputGeo" autocomplete="off" value.bind="geoPrefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind="geoSuggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
  						<li repeat.for="item of suggestedGeoAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
           </ul>
         </div>
-      </div>
+      </div> -->
       <!-- Polling -->
       <div if.bind="hasMotivation('Polling')">
         <br/>

@@ -26,6 +26,7 @@ import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
+import { IterateObjectValueConverter } from '../../converters/iterate-object.js';
 
 let instance = null;
 let COUNT = 24;
@@ -127,6 +128,7 @@ export class Validation {
   clearSearchField() {
     this.prefix = '';
     this.geoPrefix = '';
+    this.suggestedAnnotations = [];
   }
 
   hasMotivation(name) {
@@ -286,6 +288,9 @@ export class Validation {
       $('.selected-tag').removeClass('selected-tag');
       $('.tag-'+index).addClass('selected-tag');
     }
+    else {
+      $('.selected-tag').removeClass('selected-tag');
+    }
 
     // Set up the query parameters for the new RecordIds retrieval
     this.sortBy = sortBy;
@@ -301,6 +306,8 @@ export class Validation {
         // console.log("RESPONSE", response);
         // Fill the record array with the first batch of records
         this.getRecords(0);
+        this.suggestedAnnotations = [];
+        this.prefix = label;
       })
       .catch(error => {
         console.error(error.message);
@@ -533,16 +540,23 @@ export class Validation {
     this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
     this.selectedAnnotation = null;
     let self = this;
-    await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId, lang).then((res) => {
-      if (res.request === self.lastRequest) {
-        //this.suggestedAnnotations = res.results.slice(0, 20);
-        self.suggestedAnnotations = res.results;
-        if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
-          self.selectedAnnotation = self.suggestedAnnotations[0];
-        }
+    this.campaignServices.getPopularAnnotations(this.campaign.username, prefix)
+      .then( res => {
+        let response = new IterateObjectValueConverter().toView(res);
+        self.suggestedAnnotations = response;
         self.suggestionsLoading = false;
-      }
-    });
+      });
+    // await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId, lang).then((res) => {
+    //   console.log("RES", res);
+    //   console.log("LAST", self.lastRequest);
+    //   if (res.request === self.lastRequest) {
+    //     self.suggestedAnnotations = res.results;
+    //     if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
+    //       self.selectedAnnotation = self.suggestedAnnotations[0];
+    //     }
+    //     self.suggestionsLoading = false;
+    //   }
+    // });
   }
 
   async getGeoAnnotations(prefix) {
