@@ -82,6 +82,14 @@ export class AnnotationServices {
 		}).then(response => annotation);
 	}
 
+	getAnnotation(id) {
+		return this.http.fetch(`/annotation/${id}`, {
+        method: 'GET'
+      }).then(checkStatus).then((response) => {
+		return response.json();
+      });
+	}
+
 	reject(id) {
 		return this.http.fetch(`/annotation/${id}/reject`, {
 			method: 'GET'

@@ -70,6 +70,8 @@ export class UserProfile {
 		this.annotatedRecordsCount = 0;
 		this.records = [];
 		this.contributedCampaigns = 0;
+		this.karmaPoints=0;
+		this.karma = 0;
   }
 
   attached() {
@@ -231,6 +233,13 @@ export class UserProfile {
 				this.rejected = contributions.rejectedCount;
 				this.annotatedRecordsCount = contributions.annotatedRecordsCount;
 				this.records = contributions.records;
+				this.karmaPoints = contributions.karmaPoints;
+				if (this.created > 0){
+					this.karma = Math.round((1-(this.karmaPoints/this.created))*100);
+				}
+				else{
+					this.karma = 100;
+				}
 			});
 	}
 

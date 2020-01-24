@@ -9,11 +9,11 @@
             <div class="wrap"><span>${user.fullName}</span></div>
           </div>
         </div>
-        <!-- <div class="progress">
-          <div role="progressbar" aria-valuenow="${barLevel}" aria-valuemin="0" aria-valuemax="100" style="width: ${barLevel}%;" class="progress-bar">
-            <div class="labl">${barLevel}%</div>
+         <div class="progress">
+          <div role="progressbar" aria-valuenow="${karma}" aria-valuemin="0" aria-valuemax="100" style="width: ${karma}%;" class="progress-bar">
+            <div class="labl">${karma}%</div>
           </div>
-        </div> -->
+        </div> 
         <div class="bgwrap" style="background-image: img/bg-banner.png;"></div>
       </div>
     </section>
@@ -127,6 +127,10 @@
               <li>
                 <strong><div class="lbl" t="app:points">POINTS</div></strong>
                 <div class="val">${points}</div>
+              </li>
+              <li>
+                <strong><div class="lbl">KARMA</div></strong>
+                <div class="val">${karma}%</div>
               </li>
 						</ul>
 						<!-- description-->

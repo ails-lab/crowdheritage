@@ -118,8 +118,8 @@ export class CampaignSummary {
         result.prizes.silver = ( result.prizes.silver[this.loc] ? result.prizes.silver[this.loc] : result.prizes.silver['en'] );
         result.prizes.bronze = ( result.prizes.bronze[this.loc] ? result.prizes.bronze[this.loc] : result.prizes.bronze['en'] );
         result.prizes.rookie = ( result.prizes.rookie[this.loc] ? result.prizes.rookie[this.loc] : result.prizes.rookie['en'] );
-
         this.campaign = new Campaign(result);
+        
         this.getUserPoints();
         if (this.userServices.isAuthenticated()) {
           this.getUserRank(this.userServices.current.dbId);
@@ -141,6 +141,19 @@ export class CampaignSummary {
         this.userUpvotes = this.campaign.userPoints[id].approved;
         this.userDownvotes = this.campaign.userPoints[id].rejected;
         this.userPoints = this.userTags + this.userUpvotes + this.userDownvotes;
+        if (this.campaign.userPoints[id].created != null && this.campaign.userPoints[id].karmaPoints != null){
+          if (this.campaign.userPoints[id].created > 0){
+            this.userKarma = Math.round( (1 - (this.campaign.userPoints[id].karmaPoints/this.campaign.userPoints[id].created)) * 100);
+          }
+          else{
+            this.userKarma = 100;
+          }
+        }
+        else{
+          this.userKarma = 100;
+        }
+
+
       }
 
       // // Old badge awards based on points, now obsolete

@@ -40,11 +40,11 @@ export class Campaign {
     this.target = data.annotationTarget;
     this.created = data.annotationCurrent.created;
     this.approved = data.annotationCurrent.approved;
-    this.rejected = data.annotationCurrent.rejected;
+    this.rejected = data.annotationCurrent.rejected;    
     this.contributorsCount = Object.keys(data.contributorsPoints).length;
     this.totalCurrent = this.created + this.approved + this.rejected;
     this.percentage = Math.min(100, Math.floor(100 * this.totalCurrent / this.target));
-    this.userPoints = data.contributorsPoints;
+    this.userPoints = data.contributorsPoints;    
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
 		this.prizes = data.prizes;

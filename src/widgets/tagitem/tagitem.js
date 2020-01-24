@@ -457,6 +457,20 @@ export class Tagitem {
 
     if (annoType == 'approved') {
       //this.annotationServices.approve(annoId);
+      if (mot == 'tag') {
+        this.RejectFlag = this.annotations[index].rejectedByMe;
+      }
+      else if (mot == 'geo') {
+        this.RejectFlag = this.geoannotations[index].rejectedByMe;
+      }
+      else if (mot == 'color') {
+        this.RejectFlag = this.colorannotations[index].rejectedByMe;
+      }
+      else if (mot == 'poll') {
+        this.RejectFlag = this.pollannotations[index].rejectedByMe;
+      }
+
+
       this.annotationServices.approveObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
         if (mot == 'tag') {
@@ -471,9 +485,28 @@ export class Tagitem {
         else if (mot == 'poll') {
           this.pollannotations[index].approvedBy.push(response);
         }
+
+
+        this.annotationServices.getAnnotation(annoId).then(response => {
+          //If after approval the score is equal (approved = rejected) it means that this annotation had bad karma and now must change -> reduce Karma points of the creator
+          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
+            if (this.RejectFlag) {
+              if((response.score.approvedBy.length - response.score.rejectedBy.length == 2) || (response.score.approvedBy.length - response.score.rejectedBy.length == 1)) {
+                this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
+              }
+            }
+            else{
+              if(response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
+                this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
+              }
+            } 
+          }   
+        });
+
       }).catch(error => {
         console.log(error.message);
       });
+
       if (mot == 'tag') {
         this.annotations[index].approvedByMe = true;
         if (this.annotations[index].rejectedByMe) {
@@ -554,6 +587,19 @@ export class Tagitem {
 
     if (annoType == 'rejected') {
       //this.annotationServices.reject(annoId);
+      if (mot == 'tag') {
+        this.ApproveFlag = this.annotations[index].approvedByMe;
+      }
+      else if (mot == 'geo') {
+        this.ApproveFlag = this.geoannotations[index].approvedByMe;
+      }
+      else if (mot == 'color') {
+        this.ApproveFlag = this.colorannotations[index].approvedByMe;
+      }
+      else if (mot == 'poll') {
+        this.ApproveFlag = this.pollannotations[index].approvedByMe;
+      }
+
       this.annotationServices.rejectObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
         if (mot == 'tag') {
@@ -568,6 +614,24 @@ export class Tagitem {
         else if (mot == 'poll') {
           this.pollannotations[index].rejectedBy.push(response);
         }
+
+        this.annotationServices.getAnnotation(annoId).then(response => {
+          //If after rejection  rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
+          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){ 
+            if (this.ApproveFlag) {
+              if((response.score.rejectedBy.length - response.score.approvedBy.length == 0) || (response.score.rejectedBy.length - response.score.approvedBy.length == 1)) {
+                this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
+              }
+            }
+            else{
+              if(response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
+                this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
+              }
+            }     
+          }
+          
+        });
+
       }).catch(error => {
         console.log(error.message);
       });
@@ -653,7 +717,16 @@ export class Tagitem {
   async unscore(annoId, annoType, index, mot) {
     if (annoType == 'approved') {
       //this.annotationServices.unscore(annoId);
-      this.annotationServices.unscoreObj(annoId).catch(error => {
+      this.annotationServices.unscoreObj(annoId).then(response => {
+        this.annotationServices.getAnnotation(annoId).then(response => {
+          //If after approved unscore rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
+          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
+            if(response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
+              this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints") 
+            }
+          } 
+        });
+      }).catch(error => {
         console.log(error.message);
       });
       if (mot == 'tag') {
@@ -703,7 +776,16 @@ export class Tagitem {
 
     if (annoType == 'rejected') {
       //this.annotationServices.unscore(annoId);
-      this.annotationServices.unscoreObj(annoId).catch(error => {
+      this.annotationServices.unscoreObj(annoId).then(response => {
+        this.annotationServices.getAnnotation(annoId).then(response => {
+          //If after rejected unscore the score is equal (approved = rejected) it means that this annotation had bad karma and now must change -> reduce Karma points of the creator
+          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
+            if(response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
+              this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
+            }
+          } 
+        });
+      }).catch(error => {
         console.log(error.message);
       });
       if (mot == 'tag') {
