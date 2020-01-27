@@ -19,8 +19,8 @@
         </nav>
         <!-- progress-->
         <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="${userKarma}" aria-valuemin="0" aria-valuemax="100" style="width: ${userKarma}%;">
-            <div class="labl">${userKarma}%</div>
+          <div role="progressbar" aria-valuenow="${campaign.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${campaign.percentage}%;" class="progress-bar">
+            <div class="labl">${campaign.percentage}%</div>
           </div>
         </div>
         <!-- bg-->
@@ -84,7 +84,7 @@
                   <div class="lbl">KARMA</div>
                   <div class="val">${userKarma}%</div>
                 </li>
-                
+
                 <!-- <li>
                   <div class="lbl" t="summary:badge">BADGE</div>
                   <div class="val">${userBadgeName}</div>

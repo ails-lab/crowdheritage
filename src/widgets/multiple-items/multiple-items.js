@@ -75,19 +75,19 @@ export class MultipleItems {
 	}
 
 	async getRecords() {
-		this.loading = true;
 		if (this.collection) {
 			let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
 			this.totalCount = response.entryCount;
 			this.fillRecordArray(response.records);
+			this.loading = false;
 		}
 		else if (this.user) {
 			this.userServices.getUserAnnotations(this.user.dbId, this.project, this.cname, this.offset, this.count)
 				.then( response => {
 					this.fillRecordArray(response.records);
+					this.loading = false;
 				});
 		}
-		this.loading = false;
 	}
 
 	attached() {
@@ -123,6 +123,7 @@ export class MultipleItems {
 			this.loading = false;
 			return;
 		}
+		this.loading = true;
 		this.getRecords();
 	}
 
@@ -160,6 +161,7 @@ export class MultipleItems {
 		else {
 			this.state = state;
 			this.records.splice(0, this.records.length);
+			this.loading = true;
 			this.getRecords();
 		}
   }
@@ -192,12 +194,15 @@ export class MultipleItems {
 	}
 
 	async loadMore() {
+		this.loading = true;
 		this.getRecords();
   }
 
 	scrollAndLoadMore() {
-		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
+		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more ) {
+			this.loading = true;
 	 		this.getRecords();
+		}
 	}
 
 }
