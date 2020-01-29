@@ -73,7 +73,7 @@ export class Annotation {
         this.score = this.score - data.score.rejectedBy.length;
       }
     }
-
+		this.publish = data.publish;
   }
 
   capitalizeFirstLetter(str) {
