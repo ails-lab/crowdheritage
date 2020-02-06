@@ -87,6 +87,8 @@ export class Tagitem {
     };
   }
 
+  get suggestionsActive() { return this.suggestedAnnotations.length !== 0; }
+
   attached() {
       document.addEventListener('click', this.handleBodyClick);
 			toggleMore(".taglist");
@@ -322,10 +324,6 @@ export class Tagitem {
     }
   }
 
-  get suggestionsActive() {
-    return this.suggestedAnnotations.length !== 0;
-  }
-
   async annotateLabel(label) {
 		if (label === 'Multicolor') {
 			label = 'Multicoloured';
@@ -499,8 +497,8 @@ export class Tagitem {
               if(response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
                 this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
               }
-            } 
-          }   
+            }
+          }
         });
 
       }).catch(error => {
@@ -617,7 +615,7 @@ export class Tagitem {
 
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after rejection  rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
-          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){ 
+          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
             if (this.ApproveFlag) {
               if((response.score.rejectedBy.length - response.score.approvedBy.length == 0) || (response.score.rejectedBy.length - response.score.approvedBy.length == 1)) {
                 this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
@@ -627,9 +625,9 @@ export class Tagitem {
               if(response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
                 this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
               }
-            }     
+            }
           }
-          
+
         });
 
       }).catch(error => {
@@ -717,14 +715,18 @@ export class Tagitem {
   async unscore(annoId, annoType, index, mot) {
     if (annoType == 'approved') {
       //this.annotationServices.unscore(annoId);
-      this.annotationServices.unscoreObj(annoId).then(response => {
+      this.annotationServices.unscoreObj(annoId).then(response1 => {
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after approved unscore rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
           if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
             if(response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
-              this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints") 
+              this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
             }
-          } 
+          }
+        })
+        .catch(error => {
+          console.log("Couldn't find annotation with id:", annoId);
+          console.log(error.message);
         });
       }).catch(error => {
         console.log(error.message);
@@ -783,7 +785,7 @@ export class Tagitem {
             if(response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
               this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
             }
-          } 
+          }
         });
       }).catch(error => {
         console.log(error.message);
@@ -1061,9 +1063,18 @@ export class Tagitem {
     return false;
   }
 
+  isValidUrl(uri) {
+    return uri.startsWith("http");
+  }
+
 	goToURI(uri) {
+    console.log(uri);
 		this.uriRedirect = true;
 		window.open(uri);
 	}
+
+  clearSearchField() {
+    this.prefix = '';
+  }
 
 }
