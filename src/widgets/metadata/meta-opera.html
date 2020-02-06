@@ -1,0 +1,18 @@
+<template>
+  <div class="metadata">
+    <!-- label-->
+    <div class="heading" t="item:meta">ITEM METADATA</div>
+    <!-- info-->
+    <div class="show-more-parent">
+      <ul class="meta show-more-target row">
+        <li if.bind="record.description" style="width:100%;">
+          <div class="lbl" t="item:description">DESCRIPTION</div>
+          <div class="val" innerhtml.bind="parseDescription(record.description)"></div>
+        </li>
+      </ul>
+      <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>
+    </div>
+    <!-- more-->
+    <!-- <div class="loadmore"><a href="#">LOAD MORE</a></div> -->
+  </div>
+</template>

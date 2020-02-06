@@ -111,4 +111,8 @@ export class Metadata {
   isString(value) {
     return typeof value === 'string' || value instanceof String;
   }
+
+  parseDescription(desc) {
+    return desc.replace(/\//g, '<br/>');
+  }
 }
