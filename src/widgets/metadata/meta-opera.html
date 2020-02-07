@@ -7,7 +7,19 @@
       <ul class="meta show-more-target row">
         <li if.bind="record.description" style="width:100%;">
           <div class="lbl" t="item:description">DESCRIPTION</div>
-          <div class="val" innerhtml.bind="parseDescription(record.description)"></div>
+          <!-- <div class="val" innerhtml.bind="parseDescription(record.description)"></div> -->
+          <div class="val" repeat.for="line of parseDescription(record.description)">
+            <span if.bind="isString(line) && !line.includes(',')">
+              <strong>${line}</strong>
+            </span>
+            <span if.bind="isString(line) && line.includes(',')">
+              <div class="col-sm-6">${line}</div>
+            </span>
+            <div if.bind="!isString(line)" class="desc-row">
+              <div class="col-sm-6">${line.actor}</div>
+              <div class="col-2">${line.role}</div>
+            </div>
+          </div>
         </li>
       </ul>
       <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>

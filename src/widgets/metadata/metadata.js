@@ -113,6 +113,21 @@ export class Metadata {
   }
 
   parseDescription(desc) {
-    return desc.replace(/\//g, '<br/>');
+    // console.log(desc);
+    let descList = desc.replace(/\//g, '<br>').split('<br>');
+    var response = [];
+    for (let line of descList) {
+      let temp = line.split('(');
+      if (temp.length>1) {
+        let item = {};
+        item["actor"] = temp[0].trim();
+        item["role"] = '('+temp[1];
+        response.push(item);
+      }
+      else {
+        response.push(temp[0]);
+      }
+    }
+    return response;
   }
 }
