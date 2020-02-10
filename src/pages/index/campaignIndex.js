@@ -88,7 +88,7 @@ export class CampaignIndex {
     this.campaignServices.getCampaigns( {group: groupName, project: this.project, state: state, sortBy: sortBy, offset: 0, count: COUNT} )
       .then( (resultsArray) => {
         if (this.loading) {
-          this.fillCampaignArray((this.campaigns), resultsArray);
+          this.fillCampaignArray(this.campaigns, resultsArray);
           this.currentCount = this.currentCount + resultsArray.length;
           if (this.currentCount >= this.campaignsCount) {
             this.more = false;
@@ -99,6 +99,7 @@ export class CampaignIndex {
   }
 
   fillCampaignArray(campaignArray, results) {
+    let localIndex = 0;
 		for (let item of results) {
       // Based on the selected language, set the campaign {title, description, instructions, prizes}
       item.title = ( item.title[this.currentLocaleCode] ? item.title[this.currentLocaleCode] : item.title['en'] );
@@ -109,7 +110,15 @@ export class CampaignIndex {
       item.prizes.bronze = ( item.prizes.bronze[this.currentLocaleCode] ? item.prizes.bronze[this.currentLocaleCode] : item.prizes.bronze['en'] );
       item.prizes.rookie = ( item.prizes.rookie[this.currentLocaleCode] ? item.prizes.rookie[this.currentLocaleCode] : item.prizes.rookie['en'] );
 
-			campaignArray.push(new Campaign(item));
+      let camp = new Campaign(item);
+      // Keep the active campaigns at the beginning of the list
+      if ( (this.state == "all") && (camp.status == "active") ) {
+        campaignArray.splice(localIndex, 0, camp);
+        localIndex++;
+      }
+      else {
+        campaignArray.push(camp);
+      }
 		}
   }
 
