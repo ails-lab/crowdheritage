@@ -69,6 +69,7 @@ export class Validation {
   	this.loc;
     this.project = settings.project;
 
+    this.isCreator = false;
     this.campaignItem = null;
     this.recordIds = [];
     this.records = [];
@@ -226,6 +227,12 @@ export class Validation {
         response.prizes.rookie = ( response.prizes.rookie[this.loc] ? response.prizes.rookie[this.loc] : response.prizes.rookie['en'] );
 
         this.campaign = new Campaign(response);
+        this.isCreator = this.campaign.creators.includes(this.user.dbId);
+
+        // if (!this.isCreator) {
+        //   let index = this.router.routes.find(x => x.name === 'index');
+        //   this.router.navigateToRoute('index', {lang: 'en'});
+        // }
 
         this.campaignServices.getPopularAnnotations(this.campaign.username)
           .then( response => {
@@ -450,11 +457,11 @@ export class Validation {
       toastr.error("You have not selected any annotations");
       return;
     }
-    if ( !this.isAuthenticated || !this.campaign.creators.includes(this.user.id) ) {
+    if ( !this.isAuthenticated || !this.isCreator ) {
       toastr.error("You have no permission to perform this action");
       return;
     }
-    if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
+    if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to delete the selected annotations?')) {
       console.log("Deleting annotations...");
     }
     else {
@@ -487,6 +494,21 @@ export class Validation {
         toastr.error("An error occured during the annotation deletion.");
       });
     }
+  }
+
+  publishToEuropeana() {
+    if ( !this.isAuthenticated || !this.isCreator ) {
+      toastr.error("You have no permission to perform this action");
+      return;
+    }
+    if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to publish your campaign annotations to Europeana?')) {
+      console.log("Publishing annotations...");
+    }
+    else {
+      return;
+    }
+
+    // LOGIC GOES HERE
   }
 
 
