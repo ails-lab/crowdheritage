@@ -1,10 +1,13 @@
 <template>
-  <div class="metadata" if.bind="record.description">
+  <div class="metadata">
     <!-- label-->
     <div class="heading" t="item:meta">ITEM METADATA</div>
     <!-- info-->
     <div class="show-more-parent">
       <ul class="meta show-more-target row">
+				<li>
+					<div class="val"><img style="background-color : grey; padding: 5px" src="https://rightsstatements.org/files/buttons/InC.white.svg"></div>
+				</li>
         <li if.bind="record.description" style="width:100%;">
           <div class="lbl" t="item:description">DESCRIPTION</div>
           <!-- <div class="val" innerhtml.bind="parseDescription(record.description)"></div> -->
