@@ -28,6 +28,13 @@
         <li repeat.for="ann of geoannotations">
           <div class="text">${ann.label}</div>
           <ul class="action">
+						<li if.bind="ann.publish">
+							<a>
+								<span>
+									<i class="fa fa-upload"></i><span class="count"></span>
+								</span>
+							</a>
+						</li>
 						<li class.bind="ann.approvedByMe ? 'up active' : 'up'">
             	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'geo')">
               	<i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
