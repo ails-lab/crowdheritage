@@ -12,10 +12,13 @@
           </div>
         </div>
         <!-- vertical nav-->
-        <nav class="vertical">
+        <nav class="vertical" if.bind="project==campaign.project">
           <ul>
             <li><a route-href="route: index; params.bind: {lang: loc}" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
+        </nav>
+        <nav class="vertical" if.bind="!campaign.project">
+          <ul><li><i>CAMPAIGN</i></li><li><i>PREVIEW</i></li></ul>
         </nav>
         <!-- progress-->
         <div class="progress">
@@ -48,12 +51,18 @@
             <!-- user stat-->
             <div class="userstat" if.bind="isAuthenticated">
               <!-- text-->
-              <h1 if.bind="userPoints >= campaign.badges.bronze"><span t="summary:congratulations">Congratulations</span> ${user.firstName}!<br/>
-                <span t="[html]summary:badge-unlocked">You have unlocked the </span> ${userBadgeName} <span t="summary:badge-price">badge</span>.</h1>
-              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
-                <span t="summary:badge-continue">Continue contributing to earn your first badge</span>.</h1>
-              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints==0"><span t="summary:hello">Hello</span> ${user.firstName}!<br/>
-                <span t="summary:badge-start">Start contributing to earn your first badge</span>.</h1>
+              <h1 if.bind="userPoints >= campaign.badges.bronze">
+                <span t="summary:congratulations">Congratulations</span> ${user.firstName}!<br/>
+                <span t="[html]summary:badge-unlocked">You have unlocked the </span> ${userBadgeName} <span t="summary:badge-price">badge</span>.
+              </h1>
+              <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0">
+                <span t="summary:hello">Hello</span> ${user.firstName}!<br/>
+                <span t="summary:badge-continue">Continue contributing to earn your first badge</span>.
+              </h1>
+              <h1 if.bind="(userPoints<campaign.badges.bronze && userPoints==0) || !userPoints">
+                <span t="summary:hello">Hello</span> ${user.firstName}!<br/>
+                <span t="summary:badge-start">Start contributing to earn your first badge</span>.
+              </h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
                 <li>
@@ -148,7 +157,7 @@
       </div>
     </section>
     <!-- collection list-->
-    <section class="collections">
+    <section class="collections" if.bind="collections.length>0">
       <div class="container">
         <!-- top section-->
         <div class="topsection">
