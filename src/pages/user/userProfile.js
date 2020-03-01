@@ -115,15 +115,8 @@ export class UserProfile {
     this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'all', sortBy: 'Date', offset: 0, count: COUNT} )
       .then( (results) => {
 				for (let item of results) {
-		      // Based on the selected language, set the campaign {title, description, instructions, prizes}
-		      item.title = ( item.title[this.loc] ? item.title[this.loc] : item.title['en'] );
-		      item.description = ( item.description[this.loc] ? item.description[this.loc] : item.description['en'] );
-		      item.instructions = ( item.instructions[this.loc] ? item.instructions[this.loc] : item.instructions['en'] );
-		      item.prizes.gold = ( item.prizes.gold[this.loc] ? item.prizes.gold[this.loc] : item.prizes.gold['en'] );
-		      item.prizes.silver = ( item.prizes.silver[this.loc] ? item.prizes.silver[this.loc] : item.prizes.silver['en'] );
-		      item.prizes.bronze = ( item.prizes.bronze[this.loc] ? item.prizes.bronze[this.loc] : item.prizes.bronze['en'] );
-		      item.prizes.rookie = ( item.prizes.rookie[this.loc] ? item.prizes.rookie[this.loc] : item.prizes.rookie['en'] );
-					this.campaigns.push(new Campaign(item));
+		      // Based on the selected language, set the campaign
+					this.campaigns.push(new Campaign(item, this.loc));
 				}
 				this.campaign = this.campaigns[0];
 				this.campName = this.campaign.title;

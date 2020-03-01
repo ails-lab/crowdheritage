@@ -217,16 +217,8 @@ export class Validation {
     this.loadCamp = true;
     let result = await this.campaignServices.getCampaignByName(params.cname)
       .then(response => {
-        // Based on the selected language, set the campaign {title, description, instructions, prizes}
-        response.title = ( response.title[this.loc] ? response.title[this.loc] : response.title['en'] );
-        response.description = ( response.description[this.loc] ? response.description[this.loc] : response.description['en'] );
-        response.instructions = ( response.instructions[this.loc] ? response.instructions[this.loc] : response.instructions['en'] );
-        response.prizes.gold = ( response.prizes.gold[this.loc] ? response.prizes.gold[this.loc] : response.prizes.gold['en'] );
-        response.prizes.silver = ( response.prizes.silver[this.loc] ? response.prizes.silver[this.loc] : response.prizes.silver['en'] );
-        response.prizes.bronze = ( response.prizes.bronze[this.loc] ? response.prizes.bronze[this.loc] : response.prizes.bronze['en'] );
-        response.prizes.rookie = ( response.prizes.rookie[this.loc] ? response.prizes.rookie[this.loc] : response.prizes.rookie['en'] );
-
-        this.campaign = new Campaign(response);
+        // Based on the selected language, set the campaign
+        this.campaign = new Campaign(response, this.loc);
         this.isCreator = this.campaign.creators.includes(this.user.dbId);
 
         // if (!this.isCreator) {

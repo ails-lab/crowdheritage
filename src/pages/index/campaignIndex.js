@@ -101,16 +101,8 @@ export class CampaignIndex {
   fillCampaignArray(campaignArray, results) {
     let localIndex = 0;
 		for (let item of results) {
-      // Based on the selected language, set the campaign {title, description, instructions, prizes}
-      item.title = ( item.title[this.currentLocaleCode] ? item.title[this.currentLocaleCode] : item.title['en'] );
-      item.description = ( item.description[this.currentLocaleCode] ? item.description[this.currentLocaleCode] : item.description['en'] );
-      item.instructions = ( item.instructions[this.currentLocaleCode] ? item.instructions[this.currentLocaleCode] : item.instructions['en'] );
-      item.prizes.gold = ( item.prizes.gold[this.currentLocaleCode] ? item.prizes.gold[this.currentLocaleCode] : item.prizes.gold['en'] );
-      item.prizes.silver = ( item.prizes.silver[this.currentLocaleCode] ? item.prizes.silver[this.currentLocaleCode] : item.prizes.silver['en'] );
-      item.prizes.bronze = ( item.prizes.bronze[this.currentLocaleCode] ? item.prizes.bronze[this.currentLocaleCode] : item.prizes.bronze['en'] );
-      item.prizes.rookie = ( item.prizes.rookie[this.currentLocaleCode] ? item.prizes.rookie[this.currentLocaleCode] : item.prizes.rookie['en'] );
-
-      let camp = new Campaign(item);
+      // Based on the selected language, set the campaign
+      let camp = new Campaign(item, this.currentLocaleCode);
       // Keep the active campaigns at the beginning of the list
       if ( (this.state == "all") && (camp.status == "active") ) {
         campaignArray.splice(localIndex, 0, camp);
