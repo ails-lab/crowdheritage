@@ -388,35 +388,53 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-
+		if (this.isCurrentUserCreator()) {
+			if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
+				console.log("Deleting annotations...");
+			}	else {
+				return;
+			}
+		} else {
     // Since on annotating, the user automatically also upvotes the annotation,
     // when deleting an annotation, you should also remove the point from upvoting
-    this.unscore(id, 'approved', index, mot);
+    	this.unscore(id, 'approved', index, mot);
+		}
 
     this.annotationServices.delete(id).then(() => {
+			let ann;
       if (mot == 'tag') {
-        this.annotations.splice(index, 1);
+        ann = this.annotations.splice(index, 1);
       }
       else if (mot == 'geo') {
         var lt=this.geoannotations[index];
-        this.geoannotations.splice(index, 1);
+        ann = this.geoannotations.splice(index, 1);
         if (this.campaign.motivation == 'GeoTagging')
   				this.ea.publish('geotag-removed', lt.coordinates);
       }
       else if (mot == 'color') {
-        this.colorannotations.splice(index, 1);
+        ann = this.colorannotations.splice(index, 1);
       }
-      this.reloadAnnotations()
-        .then( () => {
-          this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-          if (!this.hasContributed('all')) {
-            this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-              .catch( (error) => {
-                console.log("This ERROR occured : ", error);
-              });
-          }
+      this.reloadAnnotations().then( () => {
+					if (this.isCurrentUserCreator()) {
+						console.log(ann[0]);
+							// Remove one point from each of the upvoters
+							for (let upvoter of ann[0].approvedBy) {
+								this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
+							}
+							// Remove one point from each of the annotators
+							for (let annotator of ann[0].createdBy) {
+								this.campaignServices.decUserPoints(this.campaign.dbId, annotator.withCreator, 'created');
+							}
+					} else {
+          	this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+          	if (!this.hasContributed('all')) {
+            	this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+              	.catch( (error) => {
+                	console.log("This ERROR occured : ", error);
+              	});
+          	}
+					}
         });
-
     }).catch(error => {
       console.log(error.message);
     });
@@ -867,7 +885,7 @@ export class Tagitem {
           this.pollTitle = this.pollannotations[0].label;
         }
         else {
-          toastr.error(this.i18n.tr('item:toastr-empty'));
+          toastr.info(this.i18n.tr('item:toastr-empty'));
         }
       });
     }
@@ -1076,5 +1094,9 @@ export class Tagitem {
   clearSearchField() {
     this.prefix = '';
   }
+
+	isCurrentUserCreator() {
+		return this.campaign.creators.includes(this.userServices.current.dbId);
+	}
 
 }
