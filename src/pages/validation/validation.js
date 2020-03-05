@@ -69,6 +69,7 @@ export class Validation {
   	this.loc;
     this.project = settings.project;
 
+    this.isCreator = false;
     this.campaignItem = null;
     this.recordIds = [];
     this.records = [];
@@ -216,16 +217,14 @@ export class Validation {
     this.loadCamp = true;
     let result = await this.campaignServices.getCampaignByName(params.cname)
       .then(response => {
-        // Based on the selected language, set the campaign {title, description, instructions, prizes}
-        response.title = ( response.title[this.loc] ? response.title[this.loc] : response.title['en'] );
-        response.description = ( response.description[this.loc] ? response.description[this.loc] : response.description['en'] );
-        response.instructions = ( response.instructions[this.loc] ? response.instructions[this.loc] : response.instructions['en'] );
-        response.prizes.gold = ( response.prizes.gold[this.loc] ? response.prizes.gold[this.loc] : response.prizes.gold['en'] );
-        response.prizes.silver = ( response.prizes.silver[this.loc] ? response.prizes.silver[this.loc] : response.prizes.silver['en'] );
-        response.prizes.bronze = ( response.prizes.bronze[this.loc] ? response.prizes.bronze[this.loc] : response.prizes.bronze['en'] );
-        response.prizes.rookie = ( response.prizes.rookie[this.loc] ? response.prizes.rookie[this.loc] : response.prizes.rookie['en'] );
+        // Based on the selected language, set the campaign
+        this.campaign = new Campaign(response, this.loc);
+        this.isCreator = this.campaign.creators.includes(this.user.dbId);
 
-        this.campaign = new Campaign(response);
+        // if (!this.isCreator) {
+        //   let index = this.router.routes.find(x => x.name === 'index');
+        //   this.router.navigateToRoute('index', {lang: 'en'});
+        // }
 
         this.campaignServices.getPopularAnnotations(this.campaign.username)
           .then( response => {
@@ -450,11 +449,11 @@ export class Validation {
       toastr.error("You have not selected any annotations");
       return;
     }
-    if ( !this.isAuthenticated || !this.campaign.creators.includes(this.user.id) ) {
+    if ( !this.isAuthenticated || !this.isCreator ) {
       toastr.error("You have no permission to perform this action");
       return;
     }
-    if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
+    if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to delete the selected annotations?')) {
       console.log("Deleting annotations...");
     }
     else {
@@ -487,6 +486,21 @@ export class Validation {
         toastr.error("An error occured during the annotation deletion.");
       });
     }
+  }
+
+  publishToEuropeana() {
+    if ( !this.isAuthenticated || !this.isCreator ) {
+      toastr.error("You have no permission to perform this action");
+      return;
+    }
+    if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to publish your campaign annotations to Europeana?')) {
+      console.log("Publishing annotations...");
+    }
+    else {
+      return;
+    }
+
+    // LOGIC GOES HERE
   }
 
 

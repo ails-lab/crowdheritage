@@ -25,6 +25,7 @@ import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 import { setMap } from 'utils/Plugin.js';
+import settings from 'global.config.js';
 
 let instance = null;
 
@@ -40,6 +41,7 @@ export class CampaignSummary {
   	if (instance) {
   			return instance;
   		}
+      this.project = settings.project;
       this.loc = window.location.href.split('/')[3];
       this.campaignServices = campaignServices;
       this.collectionServices = collectionServices;
@@ -110,16 +112,9 @@ export class CampaignSummary {
     this.resetInstance();
     this.campaignServices.getCampaignByName(params.cname)
       .then( (result) => {
-        // Based on the selected language, set the campaign {title, description, instructions, prizes}
-        result.title = ( result.title[this.loc] ? result.title[this.loc] : result.title['en'] );
-        result.description = ( result.description[this.loc] ? result.description[this.loc] : result.description['en'] );
-        result.instructions = ( result.instructions[this.loc] ? result.instructions[this.loc] : result.instructions['en'] );
-        result.prizes.gold = ( result.prizes.gold[this.loc] ? result.prizes.gold[this.loc] : result.prizes.gold['en'] );
-        result.prizes.silver = ( result.prizes.silver[this.loc] ? result.prizes.silver[this.loc] : result.prizes.silver['en'] );
-        result.prizes.bronze = ( result.prizes.bronze[this.loc] ? result.prizes.bronze[this.loc] : result.prizes.bronze['en'] );
-        result.prizes.rookie = ( result.prizes.rookie[this.loc] ? result.prizes.rookie[this.loc] : result.prizes.rookie['en'] );
-        this.campaign = new Campaign(result);
-        
+        // Based on the selected language, set the campaign
+        this.campaign = new Campaign(result, this.loc);
+
         this.getUserPoints();
         if (this.userServices.isAuthenticated()) {
           this.getUserRank(this.userServices.current.dbId);
