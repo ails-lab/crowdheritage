@@ -95,4 +95,10 @@ export class CampaignServices {
 		}).then((response) => response.json());
   }
 
+  getCampaignAnnotations(campaignName='', maxRanking=-1) {
+    return this.http.fetch(`/annotation/export?campaignName=${campaignName}`, {
+      method: 'GET'
+    }).then((response) => response.json());
+  }
+
 }

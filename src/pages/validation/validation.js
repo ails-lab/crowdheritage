@@ -81,6 +81,7 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
+    this.exportLabel = "EXPORT ANNOTATIONS TO JSON";
 
     this.annotations = [];
     this.geoannotations = [];
@@ -186,6 +187,7 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
+    this.exportLabel = "EXPORT ANNOTATIONS TO JSON";
 
     this.prefix = '';
     this.geoPrefix = '';
@@ -488,6 +490,40 @@ export class Validation {
     }
   }
 
+  exportAnnotations() {
+    if ( !this.isAuthenticated || !this.isCreator ) {
+      toastr.error("You have no permission to perform this action");
+      return '';
+    }
+
+    if (this.exportLabel === "EXPORTING...") {
+      return;
+    }
+
+    // While waiting for the process to go through, change the cursor to 'wait'
+    let expLink = document.getElementById('exportLink');
+    document.body.style.cursor = 'wait';
+    expLink.style.cursor = 'wait';
+    this.exportLabel = "EXPORTING...";
+
+    this.campaignServices.getCampaignAnnotations(this.campaign.username)
+      .then( response => {
+        // Create the downloadable json file and download it
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response));
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", this.campaign.username+".json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+
+        // When the process is finished, change the cursor back to 'default'
+        document.body.style.cursor = 'default';
+        expLink.style.cursor = 'pointer';
+        this.exportLabel = "EXPORT ANNOTATIONS TO JSON";
+      });
+  }
+
   publishToEuropeana() {
     if ( !this.isAuthenticated || !this.isCreator ) {
       toastr.error("You have no permission to perform this action");
@@ -502,7 +538,6 @@ export class Validation {
 
     // LOGIC GOES HERE
   }
-
 
   // DOES NOT WORK : IT LOADS THE SAME IMAGES
   scrollAndLoadMore() {

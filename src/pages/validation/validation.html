@@ -27,10 +27,16 @@
 
     <!-- validation section -->
     <section class="validation">
-      <!-- <div class="contribute" style.bind="!isCreator ? 'height: 0' : ''">
-        <a if.bind="isCreator" click.delegate="publishToEuropeana()" >PUBLISH TO EUROPEANA</a>
-        <br/>
-      </div> -->
+      <div class="contribute" style.bind="!isCreator ? 'height: 0' : ''">
+        <a if.bind="isCreator" click.delegate="publishToEuropeana()" >
+          <i class="fa fa-cloud-upload"></i>
+          <span>PUBLISH TO EUROPEANA</span>
+        </a>
+        <a  id="exportLink" if.bind="isCreator" click.delegate="exportAnnotations()">
+          <i class="fa fa-download"></i>
+          <span id="exportLabel">${exportLabel}</span>
+        </a>
+      </div>
       <!-- Popular Tags -->
       <div if.bind="hasMotivation('Tagging') || hasMotivation('GeoTagging')" class="popular-list">
         <div>
