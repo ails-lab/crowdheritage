@@ -81,7 +81,8 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.exportLabel = "EXPORT ANNOTATIONS TO JSON";
+    this.exportAnnsLabel = "EXPORT ANNOTATIONS (JSON)";
+    this.exportUsersLabel = "EXPORT CONTRIBUTORS (CSV)";
 
     this.annotations = [];
     this.geoannotations = [];
@@ -187,7 +188,8 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.exportLabel = "EXPORT ANNOTATIONS TO JSON";
+    this.exportAnnsLabel = "EXPORT ANNOTATIONS (JSON)";
+    this.exportUsersLabel = "EXPORT CONTRIBUTORS (CSV)";
 
     this.prefix = '';
     this.geoPrefix = '';
@@ -496,23 +498,23 @@ export class Validation {
       return '';
     }
 
-    if (this.exportLabel === "EXPORTING...") {
+    if (this.exportAnnsLabel === "EXPORTING...") {
       return;
     }
 
     // While waiting for the process to go through, change the cursor to 'wait'
-    let expLink = document.getElementById('exportLink');
+    let expLink = document.getElementById('exportAnnotations');
     document.body.style.cursor = 'wait';
     expLink.style.cursor = 'wait';
-    this.exportLabel = "EXPORTING...";
+    this.exportAnnsLabel = "EXPORTING...";
 
     this.campaignServices.getCampaignAnnotations(this.campaign.username)
       .then( response => {
         // Create the downloadable json file and download it
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response));
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response, null, "\t"));
         var downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", this.campaign.username+".json");
+        downloadAnchorNode.setAttribute("download", this.campaign.username+"_annotations.json");
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
@@ -520,7 +522,52 @@ export class Validation {
         // When the process is finished, change the cursor back to 'default'
         document.body.style.cursor = 'default';
         expLink.style.cursor = 'pointer';
-        this.exportLabel = "EXPORT ANNOTATIONS TO JSON";
+        this.exportAnnsLabel = "EXPORT ANNOTATIONS (JSON)";
+      });
+  }
+
+  exportContributors() {
+    if ( !this.isAuthenticated || !this.isCreator ) {
+      toastr.error("You have no permission to perform this action");
+      return '';
+    }
+
+    if (this.exportUsersLabel === "EXPORTING...") {
+      return;
+    }
+
+    // While waiting for the process to go through, change the cursor to 'wait'
+    let expLink = document.getElementById('exportUsers');
+    document.body.style.cursor = 'wait';
+    expLink.style.cursor = 'wait';
+    this.exportUsersLabel = "EXPORTING...";
+
+    this.campaignServices.getCampaignContributors(this.campaign.username)
+      .then( response => {
+        // Create the downloadable csv file and download it
+        var json = response;
+        var fields = Object.keys(json[0]);
+        var replacer = function(key, value) { return value === null ? '' : value };
+        var csv = json.map(function(row) {
+          return fields.map(function(fieldName) {
+            return JSON.stringify(row[fieldName], replacer);
+          }).join(',');
+        });
+        csv.unshift(fields.join(',')); // add header column
+        csv = csv.join('\r\n');
+
+        var dataStr = "data:text/csv;charset=utf-8," + csv;
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", this.campaign.username+"_contributors.csv");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+
+        // When the process is finished, change the cursor back to 'default'
+        document.body.style.cursor = 'default';
+        expLink.style.cursor = 'pointer';
+        this.exportUsersLabel = "EXPORT CONTRIBUTORS (CSV)";
       });
   }
 

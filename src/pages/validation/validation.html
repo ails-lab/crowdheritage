@@ -27,14 +27,18 @@
 
     <!-- validation section -->
     <section class="validation">
-      <div class="contribute" style.bind="!isCreator ? 'height: 0' : ''">
-        <a if.bind="isCreator" click.delegate="publishToEuropeana()" >
+      <div class="contribute" style.bind="!isCreator ? 'height: 0' : ''" if.bind="isCreator">
+        <a click.delegate="publishToEuropeana()" >
           <i class="fa fa-cloud-upload"></i>
           <span>PUBLISH TO EUROPEANA</span>
         </a>
-        <a  id="exportLink" if.bind="isCreator" click.delegate="exportAnnotations()">
+        <a id="exportUsers" click.delegate="exportContributors()">
+          <i class="fa fa-users"></i>
+          <span id="exportLabel">${exportUsersLabel}</span>
+        </a>
+        <a id="exportAnnotations" click.delegate="exportAnnotations()">
           <i class="fa fa-download"></i>
-          <span id="exportLabel">${exportLabel}</span>
+          <span id="exportLabel">${exportAnnsLabel}</span>
         </a>
       </div>
       <!-- Popular Tags -->

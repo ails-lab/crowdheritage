@@ -101,4 +101,10 @@ export class CampaignServices {
     }).then((response) => response.json());
   }
 
+  getCampaignContributors(cname='') {
+    return this.http.fetch(`/campaign/contributors?cname=${cname}`, {
+      method: 'GET'
+    }).then((response) => response.json());
+  }
+
 }
