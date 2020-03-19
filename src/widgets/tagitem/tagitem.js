@@ -1096,7 +1096,10 @@ export class Tagitem {
   }
 
 	isCurrentUserCreator() {
-		return this.campaign.creators.includes(this.userServices.current.dbId);
+    if (this.userServices.current)
+		  return this.campaign.creators.includes(this.userServices.current.dbId);
+    else
+      return false;
 	}
 
 }
