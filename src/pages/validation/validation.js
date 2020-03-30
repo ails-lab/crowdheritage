@@ -223,7 +223,7 @@ export class Validation {
       .then(response => {
         // Based on the selected language, set the campaign
         this.campaign = new Campaign(response, this.loc);
-        this.isCreator = this.campaign.creators.includes(this.user.dbId);
+        this.isCreator = (this.isAuthenticated) && (this.campaign.creators.includes(this.user.dbId));
 
         // if (!this.isCreator) {
         //   let index = this.router.routes.find(x => x.name === 'index');

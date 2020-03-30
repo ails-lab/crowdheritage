@@ -123,7 +123,7 @@ export class CampaignSummary {
         this.collectionsCount = this.campaign.targetCollections.length;
         this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
         this.getUserStats();
-        this.isCreator = this.campaign.creators.includes(this.user.dbId);
+        this.isCreator = this.isAuthenticated && this.campaign.creators.includes(this.user.dbId);
     });
   }
 

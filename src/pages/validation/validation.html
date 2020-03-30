@@ -51,7 +51,7 @@
             <li class="tag" repeat.for="item of popularTags | iterateObject">
               <a class="tag-${$index}" click.delegate="selectLabel(item[0], 'upvoted', false, $index)">
                 <span class="tag-label">${item[0]}</span>
-                <span class="tag-count">(${item[1]} items)</span>
+                <!-- <span class="tag-count">(${item[1]} items)</span> -->
               </a>
             </li>
           </ul>
@@ -77,7 +77,7 @@
           <ul class="suggestions">
             <li click.delegate="selectLabel(item[0], 'upvoted', false)" repeat.for="item of suggestedAnnotations" id="${$index}">
               <span>${item[0]}</span>
-              <span style="float: right;">(${item[1]} items)</span>
+              <!-- <span style="float: right;">(${item[1]} items)</span> -->
             </li>
           </ul>
         </div>
@@ -104,7 +104,7 @@
             <li class="tag" repeat.for="item of popularPollTags | iterateObject">
               <a class="tag-${$index}" click.delegate="selectLabel(item[0], 'upvoted', false, $index)">
                 <span class="tag-label">${item[0]}</span>
-                <span class="tag-count">(${item[1]} items)</span>
+                <!-- <span class="tag-count">(${item[1]} items)</span> -->
               </a>
             </li>
           </ul>
