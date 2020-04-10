@@ -42,8 +42,8 @@ export class Annotation {
     if(this.motivation=="GeoTagging" && data.body){
     	this.countryName=data.body.countryName;
     	this.coordinates=data.body.coordinates;
-    	this.uri=data.body.uri;
     }
+    this.uri=data.body.uri;
     this.approvedBy = [];
     this.approvedByMe = false;
     this.rejectedBy = [];
