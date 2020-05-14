@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.image.ece.ntua.gr:mariaral/withcrowd.git"
+    "url": "git@github.com:ails-lab/crowdheritage.git"
   },
   "license": "Apache2",
   "author": "National Technical University of Athens",

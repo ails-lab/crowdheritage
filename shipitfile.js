@@ -8,9 +8,9 @@ module.exports = function(shipit) {
 
 	shipit.initConfig({
 		default: {
-			workspace: '/home/mariaral/git/withcrowd',
-			dirToCopy: '/home/mariaral/git/withcrowd/dist',
-			repositoryUrl: 'git@git.image.ece.ntua.gr:mariaral/withcrowd.git',
+			workspace: '/tmp/crowdheritage',
+			dirToCopy: '/tmp/crowdheritage/dist',
+			repositoryUrl: 'git@github.com:ails-lab/crowdheritage.git',
 			ignores: ['.git', 'node_modules'],
 			rsync: ['--del'],
 			keepReleases: 4,
