@@ -16,38 +16,23 @@
 
 /* eslint-disable no-var */
 var settings = {
-	project: 'CrowdHeritage',
-	space: 'espace',
-	auth: {
-		google: '',
-		facebook: ''
-	},
-	baseUrl: 'https://api.crowdheritage.eu',						 // Production backend
-	apiUrl: '/assets/developers-lite.html',
-	googlekey: '',
-  logLevel: 1 																				 // Error: 1, Warn: 2, Info: 3, Debug: 4
+    project: 'CrowdHeritage',
+    space: 'espace',
+    auth: {
+        google: '',
+        facebook: ''
+    },
+    baseUrl: 'https://api.crowdheritage.eu',    // Production backend
+    apiUrl: '/assets/developers-lite.html',
+    googlekey: '',
+    logLevel: 1     // Error: 1, Warn: 2, Info: 3, Debug: 4
 };
 
-// Override settings for development/testing etc
-if (window.location.hostname === 'localhost') {
-	// settings.baseUrl = 'https://api.withculture.eu';  // Original WITH-backend
-	// settings.baseUrl = 'https://api.withcrowd.eu';    // Backend with test-DB
-	// settings.baseUrl = 'http://localhost:9060';       // Local backend for testing
-	// settings.project = 'WITHcrowd';
-	settings.project = 'CrowdHeritage';
-	settings.logLevel = 4; 															 // Debug
-}
-// Override for staging
-else if (window.location.hostname === 'withcrowd.eu') {
-	settings.auth.facebook='';
-	settings.baseUrl = 'https://api.withcrowd.eu';
-}
-else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
-	settings.auth.facebook='';
-	settings.project = 'CrowdHeritage';
-}
-else {
-  console.log(`${window.location.hostname}`);
+try {
+        var localSettings = require('./local.config.js');
+        $.extend(true, settings, localSettings.settings);
+} catch (err) {
+        console.log("Local configuration file not available");
 }
 
 export default settings;
