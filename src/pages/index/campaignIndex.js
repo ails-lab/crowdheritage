@@ -24,7 +24,7 @@ import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-let COUNT = 7;
+const COUNT = 10;
 
 @inject(CampaignServices, UserServices, RecordServices, Router, I18N, 'isTesterUser')
 export class CampaignIndex {
@@ -104,7 +104,7 @@ export class CampaignIndex {
       // Based on the selected language, set the campaign
       let camp = new Campaign(item, this.currentLocaleCode);
       // Keep the active campaigns at the beginning of the list
-      if ( (this.state == "all") && (camp.status == "active") ) {
+      if ( (this.state == "all") && (camp.status !== "inactive") ) {
         campaignArray.splice(localIndex, 0, camp);
         localIndex++;
       }
