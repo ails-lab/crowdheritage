@@ -21,7 +21,6 @@ export class Campaign {
   constructor(data, loc) {
     this.dbId = data.dbId;
     this.username = data.username;
-    this.logo = data.logo;
     this.project = data.project;
     this.creators = data.creators;
     this.space = data.space;
@@ -41,43 +40,25 @@ export class Campaign {
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
     this.vocabularies = data.vocabularies;
+    this.logo = data.logo ? this.setImageProperty(data.logo) : '';
+    this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
+    this.status = this.campaignStatus;
 
-    // Set the campaign banner
-    this.banner = data.banner;
-    if (this.banner) {
-      if (!this.banner.startsWith('http'))
-        this.banner=`${settings.baseUrl}${this.banner}`;
-    }
-    else {
-      this.banner='../../img/assets/img/content/bg-search-space.png'
-    }
-    // Set the campaign status, based on startDate & endDate
-    var today = new Date();
-    var start = new Date(this.startDate);
-    var end = new Date(this.endDate);
-    this.status = 'void';
-    if ( (today>start) && (today<end) ) {
-      this.status = 'active';
-    }
-    else if ( (today>start) && (today>end) ) {
-      this.status = 'inactive';
-    }
-    else if ( (today<start) && (today<end) ) {
-      this.status = 'upcoming';
-    }
-    // Based on the selected language, set the campaign {title, description, instructions, prizes}
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
     else
       this.title = '';
+
     if (data.description)
       this.description = ( data.description[loc] ? data.description[loc] : data.description['en'] );
     else
       this.description = '';
+
     if (data.instructions)
       this.instructions = ( data.instructions[loc] ? data.instructions[loc] : data.instructions['en'] );
     else
       this.instructions = '';
+
     this.prizes = {};
     if (data.prizes) {
       this.prizes.gold = ( data.prizes.gold[loc] ? data.prizes.gold[loc] : data.prizes.gold['en'] );
@@ -92,5 +73,28 @@ export class Campaign {
       this.prizes.rookie = '';
     }
 
+  }
+
+  get campaignStatus() {
+    var today = new Date();
+    var start = new Date(this.startDate);
+    var end = new Date(this.endDate);
+
+    if ( (today>start) && (today<end) ) {
+      return 'active';
+    }
+    else if ( (today>start) && (today>end) ) {
+      return 'inactive';
+    }
+    else if ( (today<start) && (today<end) ) {
+      return 'upcoming';
+    }
+    else {
+      return 'void';
+    }
+  }
+
+  setImageProperty(img) {
+    return (!img.startsWith('http')) ? `${settings.baseUrl}${img}` : img;
   }
 }

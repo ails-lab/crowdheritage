@@ -121,7 +121,7 @@
         <div class="right">
           <!-- wrap-->
           <div class="wrap">
-            <!-- tet-->
+            <!-- text-->
             <div class="text">
               <!-- heading-->
               <div class="heading"> <span t="summary:goal">GOAL</span></div>
@@ -146,6 +146,11 @@
                   </div>
                 </li>
               </ul>
+              <!-- organizer -->
+              <div class="organizer" if.bind="campaign.logo">
+                <span class="info">${campaign.spacename}</span>
+                <img class="logo" src.bind="campaign.logo" />
+              </div>
             </div>
           </div>
           <!-- contribute-->
