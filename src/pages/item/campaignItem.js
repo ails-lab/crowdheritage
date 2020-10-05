@@ -390,14 +390,13 @@ export class CampaignItem {
     this.router.navigateToRoute('collection', {lang: this.loc, cname: this.campaign.username, colid: this.collection.dbId});
   }
 
-  openModal(imgSrc) {
+  openModal() {
     var modal = document.getElementById("myModal");
     var img = document.getElementById("recImg");
     var modalImg = document.getElementById("modalImg");
     var banner = document.getElementById("banner");
     modal.style.display = "block";
     banner.style.display = "none";
-    modalImg.src = imgSrc;
   }
 
   closeModal() {
