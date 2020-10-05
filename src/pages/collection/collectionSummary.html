@@ -29,6 +29,14 @@
     </section>
 		<section class="collections collection-item-list">
 			<div class="container">
+        <div class="description" if.bind="collection.description[0]">
+          <div class="sectionlabel">
+            <div class="bold">
+              <span class="text" t="app:description">DESCRIPTION</span>
+            </div>
+          </div>
+          <p>${collection.description}</p>
+        </div>
     		<compose view-model="widgets/multiple-items/multiple-items"
     						 model.bind="{'cname': cname, 'collection': collection, 'router': router, 'lang': loc}">
     		</compose>
