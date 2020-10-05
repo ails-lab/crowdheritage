@@ -23,6 +23,7 @@ import {
 export class Record {
 
   constructor(data, useFashionRepo=false) {
+    this.validImg = this.findValidImg(data.media);
     this.myfullimg = this.getGlobal('/img/assets/img/loader.gif');
     this.imgworks = false;
     this.source_uri = '';
@@ -589,6 +590,19 @@ export class Record {
       }
     }
     return this.mediaUrl;
+  }
+
+  findValidImg(media) {
+    for (let item of media) {
+      if ('Original' in item) {
+        return {original: item.Original.url, thumbnail: item.Thumbnail.url};
+      }
+    }
+    for (let item of media) {
+      if ('Thumbnail' in item) {
+        return {original: item.Thumbnail.url, thumbnail: item.Thumbnail.url};
+      }
+    }
   }
 
 }

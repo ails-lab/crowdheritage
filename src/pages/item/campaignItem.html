@@ -51,7 +51,7 @@
             <!-- img-->
             <div class="img" with.bind="record">
               <!-- Trigger the modal element -->
-              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal(record.myfullimg)" />
+              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.validImg.thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal(record.validImg.original)" />
               <!-- The modal element -->
               <div id="myModal" class="modal">
                 <!-- Modal Content - Image) -->

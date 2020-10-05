@@ -274,7 +274,6 @@ export class CampaignItem {
 		this.record = this.records.shift();
 		this.loadRec = false;
 		this.showMedia();
-    // console.info(this.record);
 	}
 
 	loadNextRecord() {
@@ -336,8 +335,6 @@ export class CampaignItem {
 		if (routeData.hideOrShowMine) {
 			this.hideOrShowMine =  routeData.hideOrShowMine;
 		}
-    //console.info(this.previous);
-    //console.info(this.records);
 		this.loadNextRecord();
   }
 
