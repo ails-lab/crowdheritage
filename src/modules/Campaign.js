@@ -54,6 +54,11 @@ export class Campaign {
     else
       this.description = '';
 
+    if (data.disclaimer)
+      this.disclaimer = ( data.disclaimer[loc] ? data.disclaimer[loc] : data.disclaimer['en'] );
+    else
+      this.disclaimer = '';
+
     if (data.instructions)
       this.instructions = ( data.instructions[loc] ? data.instructions[loc] : data.instructions['en'] );
     else
