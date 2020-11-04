@@ -26,7 +26,7 @@ import settings from 'global.config.js';
 
 const COUNT = 10;
 
-@inject(CampaignServices, UserServices, RecordServices, Router, I18N, 'isTesterUser')
+@inject(CampaignServices, UserServices, RecordServices, Router, I18N)
 export class CampaignIndex {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -34,12 +34,11 @@ export class CampaignIndex {
     }, 1200);
   }
 
-  constructor(campaignServices, userServices, recordServices, router, i18n, isTesterUser) {
+  constructor(campaignServices, userServices, recordServices, router, i18n) {
     this.campaignServices = campaignServices;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.router = router;
-    this.isTesterUser = isTesterUser();
 
     this.project = settings.project;
 
@@ -50,7 +49,7 @@ export class CampaignIndex {
     this.more = true;
     this.groupName = "";
     this.sortBy = "Date";
-    this.state = "all";
+    this.state = "active";
 
     this.i18n = i18n;
     this.currentLocaleCode = this.i18n.getLocale();
@@ -62,7 +61,7 @@ export class CampaignIndex {
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
-  activate(params) {
+  async activate(params) {
     // If no language is specified, redirect to the English page by default
     if (params.lang == undefined) {
       this.router.navigate("en");
@@ -74,10 +73,18 @@ export class CampaignIndex {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
-    this.campaignServices.getCampaignsCount("", this.project, this.state)
-      .then( result => {
-        this.campaignsCount = result;
-      });
+
+    // Set the default state-filter value. If not 'active' campaigns available, search for 'upcoming', or (in absence of them too) set state-filter value to 'all'.
+    this.campaignsCount = await this.campaignServices.getCampaignsCount("", this.project, this.state);
+    if (this.campaignsCount === 0) {
+      this.state = 'upcoming';
+      this.campaignsCount = await this.campaignServices.getCampaignsCount("", this.project, this.state);
+      if (this.campaignsCount === 0) {
+        this.state = 'all';
+        this.campaignsCount = await this.campaignServices.getCampaignsCount("", this.project, this.state);
+      }
+    }
+
     this.getCampaigns("", this.sortBy, this.state);
   }
 
@@ -103,14 +110,7 @@ export class CampaignIndex {
 		for (let item of results) {
       // Based on the selected language, set the campaign
       let camp = new Campaign(item, this.currentLocaleCode);
-      // Keep the active campaigns at the beginning of the list
-      if ( (this.state == "all") && (camp.status !== "inactive") ) {
-        campaignArray.splice(localIndex, 0, camp);
-        localIndex++;
-      }
-      else {
-        campaignArray.push(camp);
-      }
+      campaignArray.push(camp);
 		}
   }
 
