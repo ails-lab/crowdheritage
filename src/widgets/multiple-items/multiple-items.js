@@ -69,7 +69,7 @@ export class MultipleItems {
 		for (let i in records) {
 			let recordData = records[i];
 			if (recordData !== null) {
-					this.records.push(new Record(recordData, this.cname==="garment-type"));
+					this.records.push(new Record(recordData));
 			}
 		}
 	}

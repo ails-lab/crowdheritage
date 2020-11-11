@@ -406,4 +406,11 @@ export class CampaignItem {
     modal.style.display = "none";
   }
 
+  getValidImg(rec, alt) {
+    if (this.campaign.username === 'garment-type' || this.campaign.username === 'garment-classification')
+      return rec.myfullimg;
+    else
+      return alt;
+  }
+
 }

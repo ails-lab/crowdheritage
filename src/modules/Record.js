@@ -22,7 +22,7 @@ import {
 
 export class Record {
 
-  constructor(data, useFashionRepo=false) {
+  constructor(data) {
     this.validImg = this.findValidImg(data.media);
     this.myfullimg = this.getGlobal('/img/assets/img/loader.gif');
     this.imgworks = false;
@@ -37,7 +37,7 @@ export class Record {
     this.mediaType = null;
     this.creator = '';
     this.vtype = 'IMAGE';
-    this.useFashionRepo = useFashionRepo || window.location.href.includes("garment-type");
+    this.useFashionRepo = window.location.href.includes("garment-type") || window.location.href.includes("garment-classification");
     //this.mediatype='IMAGE';
 		this.replaceImages = {
 			"56ec712875fe241fb97de07c" : "https://api.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=http%3A%2F%2Fwww.topfoto.co.uk%2Fimageflows%2Fimagethumb%2Ff%3DEUFD001764",
@@ -595,12 +595,14 @@ export class Record {
   findValidImg(media) {
     for (let item of media) {
       if ('Original' in item) {
-        return {original: item.Original.url, thumbnail: item.Thumbnail.url};
+        if (item.Original)
+          return {original: item.Original.url, thumbnail: item.Thumbnail.url};
       }
     }
     for (let item of media) {
       if ('Thumbnail' in item) {
-        return {original: item.Thumbnail.url, thumbnail: item.Thumbnail.url};
+        if (item.Thumbnail)
+          return {original: item.Thumbnail.url, thumbnail: item.Thumbnail.url};
       }
     }
   }

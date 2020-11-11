@@ -142,7 +142,7 @@ export class CampaignIndex {
           for (let i in response) {
             let result = response[i];
             if (result !== null) {
-              let record = new Record(result, camp.username === 'garment-type' ? true : false);
+              let record = new Record(result);
               recs.push(record);
             }
           }
