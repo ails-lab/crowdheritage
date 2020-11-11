@@ -36,7 +36,9 @@
 					<a href="javascript:void(0)" click.delegate="quickView(record)">
 						<div class="thumbs">
 							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-							<div class="action"><div class="plus">${record.title | textTrim:22}</div></div>
+							<div class="action">
+								<div class="plus">${record.title | textTrim:22}</div>
+							</div>
 						</div>
 					</a>
 				</div>
@@ -45,7 +47,10 @@
 					<a href="javascript:void(0)" click.delegate="goToItem(record)">
 						<div class="thumbs">
 							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-							<div class="action"><div class="plus">${record.title | textTrim:22}</div><div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div></div>
+							<div class="action">
+								<div class="plus">${record.title | textTrim:22}</div>
+								<!-- <div class="plus small">${record.annotations.length + ' tag' | pluralFormat}</div> -->
+							</div>
 						</div>
 					</a>
 					<a href="javascript:void(0)" click.delegate="quickView(record)"><i  class="fa fa-eye"></i>

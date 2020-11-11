@@ -120,8 +120,8 @@ export class RecordServices {
 		});
 	}
 
-	getAnnotations(id, motivation) {
-		return this.http.fetch(`/record/${id}/listAnnotations?motivation=${motivation}`, {
+	getAnnotations(id, motivation, generator='') {
+		return this.http.fetch(`/record/${id}/listAnnotations?motivation=${motivation}&generator=${generator}`, {
 			method: 'GET'
 		}).then(checkStatus).then((response) => {
 			return response.json();

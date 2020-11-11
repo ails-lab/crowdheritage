@@ -124,6 +124,13 @@ export class Validation {
   get user()            { return this.userServices.current; }
   get more()            { return this.offset < this.recordIds.length; }
 
+  get generatorParam() {
+    if (this.campaign.username === 'colours-catwalk')
+      return `${settings.project} ${this.caname},Image Analysis`;
+    else
+      return `${settings.project} ${this.caname}`;
+  }
+
   scrollToTop() {
     window.scrollTo(0,0);
   }
@@ -719,7 +726,7 @@ export class Validation {
 
   async getRecordAnnotations(id) {
     if (this.hasMotivation('Polling')) {
-      await this.recordServices.getAnnotations(id, 'Polling').then(response => {
+      await this.recordServices.getAnnotations(id, 'Polling', this.generatorParam).then(response => {
         for (var i = 0; i < response.length; i++) {
           //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
           if (!this.userServices.current) {
@@ -744,7 +751,7 @@ export class Validation {
       });
     }
     if (this.hasMotivation('GeoTagging')) {
-      await this.recordServices.getAnnotations(id, 'GeoTagging').then(response => {
+      await this.recordServices.getAnnotations(id, 'GeoTagging', this.generatorParam).then(response => {
         this.geoannotations = [];
         for (var i = 0; i < response.length; i++) {
           if (!this.userServices.current) {
@@ -760,7 +767,7 @@ export class Validation {
       });
     }
     if (this.hasMotivation('Tagging')) {
-      await this.recordServices.getAnnotations(id, 'Tagging').then(response => {
+      await this.recordServices.getAnnotations(id, 'Tagging', this.generatorParam).then(response => {
         this.annotations = [];
         for (var i = 0; i < response.length; i++) {
           if (!this.userServices.current) {
@@ -776,7 +783,7 @@ export class Validation {
       });
     }
     if (this.hasMotivation('ColorTagging')) {
-      await this.recordServices.getAnnotations(id, 'ColorTagging').then(response => {
+      await this.recordServices.getAnnotations(id, 'ColorTagging', this.generatorParam).then(response => {
         this.colorannotations = [];
         for (var i = 0; i < response.length; i++) {
           // Filter the annotations based on the generator
