@@ -35,7 +35,7 @@
               <span class="text" t="app:description">DESCRIPTION</span>
             </div>
           </div>
-          <p>${collection.description}</p>
+          <p innerHtml.bind="collection.description" />
         </div>
     		<compose view-model="widgets/multiple-items/multiple-items"
     						 model.bind="{'cname': cname, 'collection': collection, 'router': router, 'lang': loc}">
