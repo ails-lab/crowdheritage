@@ -112,7 +112,7 @@ export class UserProfile {
 		route.navModel.setTitle(this.user.fullName + " | " + this.project);
 
 		this.campaigns = [];
-    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'all', sortBy: 'Date', offset: 0, count: COUNT} )
+    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'all', sortBy: 'Date_desc', offset: 0, count: COUNT} )
       .then( (results) => {
 				for (let item of results) {
 		      // Based on the selected language, set the campaign

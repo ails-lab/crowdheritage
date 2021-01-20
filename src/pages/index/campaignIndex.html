@@ -74,13 +74,14 @@
             <div class="lbl" t="index:sortby">SORT BY </div>
             <!-- sort-->
             <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
-              <span class="text" t="index:${sortBy.toLowerCase()}">${sortBy.toUpperCase()}</span>
+              <span class="text" t="[html]index:${sortBy.toLowerCase()}">default_sortby</span>
               <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
             </a>
             <!-- dropdown-->
             <ul aria-labelledby="sorting" class="dropdown-menu">
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Alphabetical')" t="index:alphabetical">ALPHABETICAL</a></li>
-              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Date')" t="index:date">DATE</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Alphabetical')" t="[html]index:alphabetical">ALPHABETICAL</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Date_asc')" t="[html]index:date_asc">DATE_ASC</a></li>
+              <li> <a href="javascript:void(0)" click.delegate="reloadCampaigns(state, 'Date_desc')" t="[html]index:date_desc">DATE_DESC</a></li>
             </ul>
           </div>
         </div>

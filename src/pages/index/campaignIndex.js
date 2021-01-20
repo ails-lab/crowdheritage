@@ -48,7 +48,7 @@ export class CampaignIndex {
     this.loading = false;
     this.more = true;
     this.groupName = "";
-    this.sortBy = "Date";
+    this.sortBy = "Date_desc";
     this.state = "active";
 
     this.i18n = i18n;
