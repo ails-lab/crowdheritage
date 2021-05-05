@@ -54,7 +54,7 @@ jobs:
           ${{ runner.OS }}-
  
     - name: instal yarn
-      run: npm install yarn
+      run: npm install -g yarn
   
     - run: yarn install
       env:
