@@ -26,7 +26,7 @@ jobs:
         echo TAG_REF=${GITHUB_SHA::8} >> $GITHUB_ENV              
 
     - name: Set env for development
-      if: endsWith(github.ref, '/development')
+      #if: endsWith(github.ref, '/development')
       run: |
         echo DEPLOY_SERVER=hotwheels.ails.ece.ntua.gr >> $GITHUB_ENV              
         echo DEPLOY_TARGET=/data/with/frontend/current/ >> $GITHUB_ENV
@@ -52,7 +52,10 @@ jobs:
         restore-keys: |
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
-   
+ 
+    - name: instal yarn
+      run: npm install yarn
+  
     - run: yarn install
       env:
         CI: false
