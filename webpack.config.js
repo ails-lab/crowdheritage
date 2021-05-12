@@ -10,6 +10,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || []
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig)
 
+const dotenv = require('dotenv').config({path: __dirname + '/.env'});
 const isProduction = process.env.production === true;
 const platform = process.env.platform // 'default' by default
 const ENV = process.env.production == true ? 'production' : 'development';
@@ -129,10 +130,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       'window.jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-      'NODE_ENV': JSON.stringify(production),
-      'ENV': JSON.stringify(ENV)
-      }
+      'process.env': JSON.stringify(dotenv.parsed)
     }),
     new HtmlWebpackPlugin({
       template: '!html-webpack-plugin/lib/loader!index.html',

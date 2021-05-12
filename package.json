@@ -79,6 +79,7 @@
     "bluebird": "^3.5.1",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.2",
+    "dotenv": "^9.0.2",
     "expose-loader": "^0.7.5",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "font-awesome": "^4.7.0",

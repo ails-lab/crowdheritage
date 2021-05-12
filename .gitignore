@@ -10,3 +10,4 @@ npm-debug.log*
 /test/coverage
 yarn.lock
 src/conf/local.config.js
+.env
