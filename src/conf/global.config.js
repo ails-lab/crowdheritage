@@ -18,12 +18,12 @@ var settings = {
   project: process.env.PROJECT,
   space: process.env.SPACE,
   auth: {
-    google: process.env.GOOGLE_SECRET,
+    google: process.env.WITH_GOOGLE_SECRET,
     facebook: process.env.WITH_FACEBOOK_SECRET
   },
-  baseUrl: process.env.PROD_BASE_URL, // Production backend
+  baseUrl: process.env.BASE_URL, // Production backend
   apiUrl: process.env.API_URL,
-  googlekey: process.env.GOOGLE_KEY,
+  googlekey: process.env.WITH_GOOGLE_KEY,
   logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
 };
 

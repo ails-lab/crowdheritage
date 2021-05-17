@@ -9,11 +9,20 @@ jobs:
   build:
     runs-on: [self-hosted]
     env:
-      REPOSITORY_URL: with.docker.ails.ece.ntua.gr/with-backend
-      CONTAINER_NAME: with-backend
       DEPLOY_USER: deploy
       NODE_OPTIONS: "--max_old_space_size=3192"
-    
+      NODE_ENV: development
+      PROJECT: CrowdHeritage
+      SPACE: 'espace'
+      API_URL: '/assets/developers-lite.html'
+      WITHCROWD_BASE_URL: 'https://dev-api.withcrowd.eu'
+      BASE_URL: 'https://dev-api.crowdheritage.eu'      
+      WITH_GOOGLE_KEY: "${{ secrets.WITH_GOOGLE_KEY }}"
+      WITH_GOOGLE_SECRET: "${{ secrets.WITH_GOOGLE_SECRET }}"
+      WITH_FACEBOOK_SECRET: "${{ secrets.WITH_FACEBOOK_SECRET }}"
+      WITHCROWD_FACEBOOK_SECRET: "${{ secrets.WITHCROWD_FACEBOOK_SECRET }}"
+      CROWDHERITAGE_FACEBOOK_SECRET: "${{ secrets.CROWDHERITAGE_FACEBOOK_SECRET }}"
+
     steps:
 
     - name: Extract branch name
@@ -29,12 +38,12 @@ jobs:
       #if: endsWith(github.ref, '/development')
       run: |
         echo DEPLOY_SERVER=hotwheels.ails.ece.ntua.gr >> $GITHUB_ENV              
-        echo DEPLOY_TARGET=/data/with/frontend/current/ >> $GITHUB_ENV
+        echo DEPLOY_TARGET=/data/crowdheritage/frontend/current/ >> $GITHUB_ENV
     - name: Set env for production
       if: endsWith(github.ref, '/master')
       run: |
         echo DEPLOY_SERVER=lego.ails.ece.ntua.gr >> $GITHUB_ENV       
-        echo DEPLOY_TARGET=/data/with/frontend/current/ >> $GITHUB_ENV
+        echo DEPLOY_TARGET=/data/crowdheritage/frontend/current/ >> $GITHUB_ENV
 
     - uses: actions/checkout@v2
 
@@ -43,15 +52,15 @@ jobs:
       with:
         node-version: '14.6.x'
 
-    - name: Cache yarn modules
-      uses: actions/cache@v2
-      with:
+    #- name: Cache yarn modules
+    #  uses: actions/cache@v2
+    #  with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: "**/node_modules"
-        key: ${{ runner.OS }}-node_modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.OS }}-node-
-          ${{ runner.OS }}-
+    #    path: "**/node_modules"
+    #    key: ${{ runner.OS }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+    #    restore-keys: |
+    #      ${{ runner.OS }}-node-
+    #      ${{ runner.OS }}-
  
     - name: instal yarn
       run: npm install -g yarn
@@ -62,6 +71,7 @@ jobs:
 
     - run: npm run build
       env:
+        NODE_ENV: production
         CI: false
 
     - name: Deploy to Server
