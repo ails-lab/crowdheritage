@@ -65,6 +65,7 @@ jobs:
     - name: prep .env
       run: |+
         cat > .env << EOF
+        NODE_ENV='production'
         PROJECT=CrowdHeritage
         SPACE='espace'
         API_URL='/assets/developers-lite.html'
