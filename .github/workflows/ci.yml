@@ -63,8 +63,8 @@ jobs:
     #      ${{ runner.OS }}-
  
     - name: prep .env
-      run: |
-        cat > .env < EOF
+      run: |+
+        cat > .env << EOF
         PROJECT: CrowdHeritage
         SPACE: 'espace'
         API_URL: '/assets/developers-lite.html'
@@ -76,6 +76,7 @@ jobs:
         WITHCROWD_FACEBOOK_SECRET: "$WITHCROWD_FACEBOOK_SECRET"
         CROWDHERITAGE_FACEBOOK_SECRET: "$CROWDHERITAGE_FACEBOOK_SECRET"
         EOF
+        
 
     - name: show .env
       run: cat .env
