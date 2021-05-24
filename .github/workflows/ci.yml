@@ -65,18 +65,18 @@ jobs:
     - name: prep .env
       run: |+
         cat > .env << EOF
-        PROJECT: CrowdHeritage
-        SPACE: 'espace'
-        API_URL: '/assets/developers-lite.html'
-        WITHCROWD_BASE_URL: 'https://dev-api.withcrowd.eu'
-        BASE_URL: 'https://dev-api.crowdheritage.eu'      
-        WITH_GOOGLE_KEY: "$WITH_GOOGLE_KEY"
-        WITH_GOOGLE_SECRET: "$WITH_GOOGLE_SECRET"
-        WITH_FACEBOOK_SECRET: "$WITH_FACEBOOK_SECRET"
-        WITHCROWD_FACEBOOK_SECRET: "$WITHCROWD_FACEBOOK_SECRET"
-        CROWDHERITAGE_FACEBOOK_SECRET: "$CROWDHERITAGE_FACEBOOK_SECRET"
+        PROJECT=CrowdHeritage
+        SPACE='espace'
+        API_URL='/assets/developers-lite.html'
+        WITHCROWD_BASE_URL='https://dev-api.withcrowd.eu'
+        BASE_URL='https://dev-api.crowdheritage.eu'      
+        WITH_GOOGLE_KEY="$WITH_GOOGLE_KEY"
+        WITH_GOOGLE_SECRET="$WITH_GOOGLE_SECRET"
+        WITH_FACEBOOK_SECRET="$WITH_FACEBOOK_SECRET"
+        WITHCROWD_FACEBOOK_SECRET="$WITHCROWD_FACEBOOK_SECRET"
+        CROWDHERITAGE_FACEBOOK_SECRET="$CROWDHERITAGE_FACEBOOK_SECRET"
         EOF
-        
+
 
     - name: show .env
       run: cat .env
