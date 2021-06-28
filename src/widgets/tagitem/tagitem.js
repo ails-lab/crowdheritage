@@ -447,6 +447,11 @@ export class Tagitem {
     });
   }
 
+  async togglePublish(annId, index){
+    console.log(annId, index)
+    //API CALL FOR CHANGING THE PUBLISH BOOL
+  }
+
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
     if (this.campaign.status != 'active' && !this.isTesterUser) {

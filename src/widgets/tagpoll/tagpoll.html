@@ -13,13 +13,29 @@
           <li class="pollAction" click.delegate="validate(pollannotations[0].dbId, 'approved', 0, pollannotations[0].approvedByMe, pollannotations[0].rejectedByMe, 'poll')">
           	<div class="text" t="item:yes">Yes</div>
           	<ul class="action">
-							<li if.bind="pollannotations[0].publish">
+							<!-- <li if.bind="pollannotations[0].publish">
 								<a>
 									<span>
 										<i class="fa fa-upload"></i><span class="count"></span>
 									</span>
 								</a>
-							</li>
+							</li> -->
+              <li class="publish-btn" if.bind="!pollannotations[0].publish">
+                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title="Click to change the Publish flag to true"
+                  click.delegate="togglePublish(pollannotations[0].dbId, $index)">
+                  <span>
+                    <i class="fa fa-upload text-danger"></i><span class="count"></span>
+                  </span>
+                </a>
+              </li>
+              <li class="publish-btn" if.bind="pollannotations[0].publish">
+                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title="Click to change the Publish flag to false"
+                  click.delegate="togglePublish(pollannotations[0].dbId, $index)">
+                  <span>
+                    <i class="fa fa-upload text-success"></i><span class="count"></span>
+                  </span>
+                </a>
+              </li>
             	<li class.bind="pollannotations[0].approvedByMe ? 'up active' : 'up'">
               	<a>
                 	<span class="count">${pollannotations[0].approvedBy.length}</span><span class="thumbs-icon up"></span>
