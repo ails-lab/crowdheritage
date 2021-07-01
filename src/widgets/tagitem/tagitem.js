@@ -450,13 +450,11 @@ export class Tagitem {
     });
   }
 
-  async togglePublish(annotation){
-    console.log(annotation.dbId, !annotation.publish);
-    //API CALL FOR CHANGING THE PUBLISH BOOL
-    this.annotationServices.markForPublish(annotation.dbId, !annotation.publish)
+  async togglePublish(type, index) {
+    var annotations = type + 'annotations';
+    this.annotationServices.markForPublish(this[annotations][index].dbId, !this[annotations][index].publish)
       .then(response => {
-        console.log(response);
-        this.reloadAnnotations();
+        this[annotations][index].publish = !this[annotations][index].publish;
       })
       .catch(error => console.error(error));
   }

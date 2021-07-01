@@ -32,7 +32,7 @@
         	<ul class="action">
 						<li class="publish-btn" if.bind="!ann.publish">
 							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title.bind="markPublishText"
-                click.delegate="togglePublish(ann)">
+                click.delegate="togglePublish('', $index)">
 								<span>
 									<i class="fa fa-upload text-danger opacity-50"></i><span class="count"></span>
 								</span>
@@ -40,7 +40,7 @@
 						</li>
             <li class="publish-btn" if.bind="ann.publish">
 							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title.bind="unmarkPublishText"
-                click.delegate="togglePublish(ann)">
+                click.delegate="togglePublish('', $index)">
 								<span>
 									<i class="fa fa-upload text-success"></i><span class="count"></span>
 								</span>
