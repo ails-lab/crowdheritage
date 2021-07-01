@@ -21,15 +21,15 @@
 								</a>
 							</li> -->
               <li class="publish-btn" if.bind="!pollannotations[0].publish">
-                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title="Click to change the Publish flag to true"
+                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title.bind="markPublishText"
                   click.delegate="togglePublish(pollannotations[0].dbId, $index)">
                   <span>
-                    <i class="fa fa-upload text-danger"></i><span class="count"></span>
+                    <i class="fa fa-upload text-danger opacity-50"></i><span class="count"></span>
                   </span>
                 </a>
               </li>
               <li class="publish-btn" if.bind="pollannotations[0].publish">
-                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title="Click to change the Publish flag to false"
+                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title.bind="unmarkPublishText"
                   click.delegate="togglePublish(pollannotations[0].dbId, $index)">
                   <span>
                     <i class="fa fa-upload text-success"></i><span class="count"></span>

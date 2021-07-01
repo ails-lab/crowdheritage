@@ -22,6 +22,11 @@
 .isoload{
    visibility:hidden;
 }
+.opacity-0 {opacity: 0;}
+.opacity-25 {opacity: 0.25;}
+.opacity-50 {opacity: 0.5;}
+.opacity-75 {opacity: 0.75;}
+.opacity-100 {opacity: 1;}
 a {
   outline: none;
 }
@@ -5209,10 +5214,15 @@ a:hover .social-button.facebook {
 }
 
 .tooltip {
-  width: 200px;
-  min-width: 200px;
+  min-width: 180px;
   max-height: 50px;
-  height: 50px;
+
+  .tooltip-inner {
+    background-color: @main-color;
+  }
+}
+.tooltip.left .tooltip-arrow {
+  border-left-color: @main-color !important;
 }
 
 .publish-btn{

@@ -59,5 +59,7 @@
   "toastr-existing" : "Tag already exists",
   "toastr-error"    : "An error has occured",
   "toastr-empty"    : "There are no annotations for this record",
-  "toastr-geo"      : "Geotag already exists"
+  "toastr-geo"      : "Geotag already exists",
+  "mark-publish"    : "Click to mark for Publish",
+  "unmark-publish"  : "Click to unmark for Publish"
 }

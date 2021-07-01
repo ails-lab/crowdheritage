@@ -65,6 +65,9 @@ export class Tagitem {
     this.isTesterUser = isTesterUser();
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
+    this.markPublishText = this.i18n.tr('item:mark-publish');
+    this.unmarkPublishText = this.i18n.tr('item:unmark-publish');
+
     this.annotations = [];
     this.geoannotations = [];
     this.colorannotations = [];
@@ -79,7 +82,7 @@ export class Tagitem {
 
 		this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
 		this.handleBodyClick = e => {
-      console.log(e.target.id);
+      // console.log(e.target.id);
       if(e.target.id!="annotationInput"){
       	this.suggestedAnnotations =  [];
       	 this.suggestionsLoading = false;
@@ -447,9 +450,15 @@ export class Tagitem {
     });
   }
 
-  async togglePublish(annId, index){
-    console.log(annId, index)
+  async togglePublish(annotation){
+    console.log(annotation.dbId, !annotation.publish);
     //API CALL FOR CHANGING THE PUBLISH BOOL
+    this.annotationServices.markForPublish(annotation.dbId, !annotation.publish)
+      .then(response => {
+        console.log(response);
+        this.reloadAnnotations();
+      })
+      .catch(error => console.error(error));
   }
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
