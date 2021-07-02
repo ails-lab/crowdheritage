@@ -107,4 +107,10 @@ export class CampaignServices {
     }).then((response) => response.json());
   }
 
+  initiateValidation(campaignId, allowRejected, minScore) {
+    return this.http.fetch(`/campaign/initiateValidation?campaignId=${campaignId}&allowRejected=${allowRejected}&minScore=${minScore}`, {
+      method: 'POST'
+    }).then(response => response);
+  }
+
 }

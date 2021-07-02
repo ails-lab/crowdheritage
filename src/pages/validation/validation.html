@@ -27,7 +27,11 @@
 
     <!-- validation section -->
     <section class="validation">
-      <div class="contribute" style.bind="!isCreator ? 'height: 0' : ''" if.bind="isCreator">
+      <div class="contribute" style.bind="isCreator ? 'height: 0' : ''" if.bind="true">
+        <a id="publishCriteria" click.delegate="publishCriteria()">
+          <i class="fa fa-newspaper-o"></i>
+          <span id="publishLabel">${publishCriteriaLabel}</span>
+        </a>
         <a click.delegate="publishToEuropeana()" >
           <i class="fa fa-cloud-upload"></i>
           <span>PUBLISH TO EUROPEANA</span>

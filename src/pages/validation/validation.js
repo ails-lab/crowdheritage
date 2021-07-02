@@ -16,6 +16,7 @@
 
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { DialogService } from 'aurelia-dialog';
 import { Annotation } from 'Annotation.js';
 import { AnnotationServices } from 'AnnotationServices.js';
 import { ThesaurusServices } from 'ThesaurusServices.js';
@@ -31,10 +32,10 @@ import { IterateObjectValueConverter } from '../../converters/iterate-object.js'
 let instance = null;
 let COUNT = 24;
 
-@inject(AnnotationServices, ThesaurusServices, CampaignServices, RecordServices, UserServices, Router, I18N)
+@inject(AnnotationServices, ThesaurusServices, CampaignServices, RecordServices, UserServices, Router, DialogService, I18N)
 export class Validation {
 
-  constructor(annotationServices, thesaurusServices, campaignServices, recordServices, userServices, router, i18n) {
+  constructor(annotationServices, thesaurusServices, campaignServices, recordServices, userServices, router, dialogService, i18n) {
   	if (instance) {
   		return instance;
   	}
@@ -64,6 +65,7 @@ export class Validation {
     this.recordServices = recordServices;
   	this.userServices = userServices;
   	this.router = router;
+    this.dialogService = dialogService;
   	this.i18n = i18n;
 
   	this.loc;
@@ -112,7 +114,6 @@ export class Validation {
       "Jean-Philippe Rameau" : 62
     };
 
-    this.loadCamp = false;
     this.loading = false;
     this.deleting = false;
   	if (!instance) {
@@ -195,8 +196,9 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.exportAnnsLabel = "EXPORT ANNOTATIONS (JSON)";
-    this.exportUsersLabel = "EXPORT CONTRIBUTORS (CSV)";
+    this.exportAnnsLabel = "EXPORT ANNOTATIONS";
+    this.exportUsersLabel = "EXPORT CONTRIBUTORS";
+    this.publishCriteriaLabel = "PUBLISH CRITERIA";
 
     this.prefix = '';
     this.geoPrefix = '';
@@ -213,7 +215,6 @@ export class Validation {
     this.selectedGeoAnnotation = null;
 		this.uriRedirect = false;
 
-    this.loadCamp = false;
     this.loading = false;
     this.deleting = false;
   }
@@ -225,8 +226,7 @@ export class Validation {
 		this.i18n.setLocale(params.lang);
 
 		this.cname = params.cname;
-    this.loadCamp = true;
-    let result = await this.campaignServices.getCampaignByName(params.cname)
+    await this.campaignServices.getCampaignByName(params.cname)
       .then(response => {
         // Based on the selected language, set the campaign
         this.campaign = new Campaign(response, this.loc);
@@ -246,7 +246,6 @@ export class Validation {
         let index = this.router.routes.find(x => x.name === 'index');
         this.router.navigateToRoute('index', {lang: 'en'});
       });
-    this.loadCamp = false;
 
     route.navModel.setTitle('Validation | ' + this.campaign.title);
 	}
@@ -591,6 +590,22 @@ export class Validation {
     }
 
     // LOGIC GOES HERE
+  }
+
+  publishCriteria() {
+    this.dialogService.open({
+			viewModel: PLATFORM.moduleName('widgets/publishdialog/publishdialog'),
+      overlayDismiss: false,
+      model: this.campaign
+		})
+    .whenClosed(res => {
+      if (!res.wasCancelled) {
+        this.campaignServices.getCampaignByName(this.cname)
+        .then(response => {
+          this.campaign = new Campaign(response, this.loc);
+        });
+      }
+    });
   }
 
   // DOES NOT WORK : IT LOADS THE SAME IMAGES
