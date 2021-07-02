@@ -2241,6 +2241,13 @@ ux-dialog-overlay.active {
   background-color: black;
   opacity: .5;
 }
+ux-dialog-container.active {
+  overflow-y: hidden;
+}
+#statisticsPopup {
+  min-height: 240px;
+  min-width: 500px;
+}
 #publishPopup {
   min-height: 240px;
   min-width: 500px;
@@ -2248,15 +2255,16 @@ ux-dialog-overlay.active {
 #allowRejected {
     margin-top: 9px;
 }
+.validation-menu {
+  display: inline-flex;
+  justify-content: center;
+}
 body main section.validation {
   margin: 30px 0px 10px 0px;
   padding: 0px 50px 0px 50px;
 }
 body main section.validation .contribute {
-  display: flex;
-  position: relative;
-  left: 50%;
-  margin-left: -408px;
+  display: inline-flex;
   text-align: center;
   cursor: default;
   a {

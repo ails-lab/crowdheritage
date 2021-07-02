@@ -36,8 +36,13 @@ export class PublishDialog {
 	get currentLocale() { return window.location.href.split('/')[3]; }
 
 	get inputChanged() {
-		return this.allowRejected != this.campaign.publishCriteria.allowRejected
-			|| parseInt(this.minScore) != this.campaign.publishCriteria.minScore;
+		if (!this.campaign.publishCriteria) {
+			return true;
+		}
+		else {
+			return this.allowRejected != this.campaign.publishCriteria.allowRejected
+				|| parseInt(this.minScore) != this.campaign.publishCriteria.minScore;
+		}
 	}
 
 	activate(params) {

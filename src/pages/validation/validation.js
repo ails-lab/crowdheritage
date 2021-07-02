@@ -83,8 +83,10 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.exportAnnsLabel = "EXPORT ANNOTATIONS (JSON)";
-    this.exportUsersLabel = "EXPORT CONTRIBUTORS (CSV)";
+    this.exportAnnsLabel = "EXPORT ANNOTATIONS";
+    this.exportUsersLabel = "EXPORT CONTRIBUTORS";
+    this.publishCriteriaLabel = "PUBLISH CRITERIA";
+    this.campaignStatisticsLabel = "CAMPAIGN STATISTICS";
 
     this.annotations = [];
     this.geoannotations = [];
@@ -199,6 +201,7 @@ export class Validation {
     this.exportAnnsLabel = "EXPORT ANNOTATIONS";
     this.exportUsersLabel = "EXPORT CONTRIBUTORS";
     this.publishCriteriaLabel = "PUBLISH CRITERIA";
+    this.campaignStatisticsLabel = "CAMPAIGN STATISTICS";
 
     this.prefix = '';
     this.geoPrefix = '';
@@ -590,6 +593,14 @@ export class Validation {
     }
 
     // LOGIC GOES HERE
+  }
+
+  campaignStatistics() {
+    this.dialogService.open({
+			viewModel: PLATFORM.moduleName('widgets/statisticsdialog/statisticsdialog'),
+      overlayDismiss: false,
+      model: this.campaign.username
+		});
   }
 
   publishCriteria() {

@@ -113,4 +113,10 @@ export class CampaignServices {
     }).then(response => response);
   }
 
+  getCampaignStatistics(cname) {
+    return this.http.fetch(`/campaign/statistics?cname=${cname}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
 }
