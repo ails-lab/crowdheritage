@@ -60,6 +60,5 @@
   "toastr-error"    : "An error has occured",
   "toastr-empty"    : "There are no annotations for this record",
   "toastr-geo"      : "Geotag already exists",
-  "mark-publish"    : "Click to mark for Publish",
-  "unmark-publish"  : "Click to unmark for Publish"
+  "toggle-publish"  : "Click to toggle Publish state"
 }

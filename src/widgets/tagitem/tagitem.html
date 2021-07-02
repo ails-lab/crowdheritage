@@ -30,19 +30,13 @@
         <li repeat.for="ann of annotations">
         	<a  href.bind="ann.uri" target="_blank">${ann.label}</a>
         	<ul class="action">
-						<li class="publish-btn" if.bind="!ann.publish">
-							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title.bind="markPublishText"
-                click.delegate="togglePublish('', $index)">
+						<li class="publish-btn" if.bind="isCurrentUserCreator()">
+							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
+                title.bind="togglePublishText" click.delegate="togglePublish('', $index)"
+              >
 								<span>
-									<i class="fa fa-upload text-danger opacity-50"></i><span class="count"></span>
-								</span>
-							</a>
-						</li>
-            <li class="publish-btn" if.bind="ann.publish">
-							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip" title.bind="unmarkPublishText"
-                click.delegate="togglePublish('', $index)">
-								<span>
-									<i class="fa fa-upload text-success"></i><span class="count"></span>
+									<i class.bind="!ann.publish ? 'fa fa-upload text-danger opacity-50' : 'fa fa-upload text-success'"></i>
+                  <span class="count"></span>
 								</span>
 							</a>
 						</li>

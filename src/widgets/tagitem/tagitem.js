@@ -65,8 +65,7 @@ export class Tagitem {
     this.isTesterUser = isTesterUser();
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.markPublishText = this.i18n.tr('item:mark-publish');
-    this.unmarkPublishText = this.i18n.tr('item:unmark-publish');
+    this.togglePublishText = this.i18n.tr('item:toggle-publish');
 
     this.annotations = [];
     this.geoannotations = [];
