@@ -119,4 +119,10 @@ export class CampaignServices {
     }).then(response => response.json());
   }
 
+  exportCampaignAnnotations(campaignName) {
+    return this.http.fetch(`/annotation/exportCampaignAnnotations?campaignName=${campaignName}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
 }

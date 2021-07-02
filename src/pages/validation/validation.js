@@ -235,10 +235,10 @@ export class Validation {
         this.campaign = new Campaign(response, this.loc);
         this.isCreator = (this.isAuthenticated) && (this.campaign.creators.includes(this.user.dbId));
 
-        // if (!this.isCreator) {
-        //   let index = this.router.routes.find(x => x.name === 'index');
-        //   this.router.navigateToRoute('index', {lang: 'en'});
-        // }
+        if (!this.isCreator) {
+          let index = this.router.routes.find(x => x.name === 'index');
+          this.router.navigateToRoute('index', {lang: 'en'});
+        }
 
         this.campaignServices.getPopularAnnotations(this.campaign.username)
           .then( response => {
@@ -517,7 +517,7 @@ export class Validation {
     expLink.style.cursor = 'wait';
     this.exportAnnsLabel = "EXPORTING...";
 
-    this.campaignServices.getCampaignAnnotations(this.campaign.username)
+    this.campaignServices.exportCampaignAnnotations(this.campaign.username)
       .then( response => {
         // Create the downloadable json file and download it
         var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response, null, "\t"));
@@ -531,7 +531,7 @@ export class Validation {
         // When the process is finished, change the cursor back to 'default'
         document.body.style.cursor = 'default';
         expLink.style.cursor = 'pointer';
-        this.exportAnnsLabel = "EXPORT ANNOTATIONS (JSON)";
+        this.exportAnnsLabel = "EXPORT ANNOTATIONS";
       });
   }
 
@@ -576,7 +576,7 @@ export class Validation {
         // When the process is finished, change the cursor back to 'default'
         document.body.style.cursor = 'default';
         expLink.style.cursor = 'pointer';
-        this.exportUsersLabel = "EXPORT CONTRIBUTORS (CSV)";
+        this.exportUsersLabel = "EXPORT CONTRIBUTORS";
       });
   }
 
