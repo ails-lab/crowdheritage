@@ -51,10 +51,10 @@ export class StatisticsDialog {
 				this.statistics.push({'key': 'Items', 'value': response["items-total"]});
 				this.statistics.push({'key': 'Annotated items', 'value': `${response["items-annotated"]} (${this.getPercentage(response["items-annotated"],response["items-total"])}%)`});
 				this.statistics.push({'key': 'Annotations', 'value': response["annotations-total"]});
-				this.statistics.push({'key': 'Annotations (approved)', 'value': `${response["annotations-accepted"]} (${this.getPercentage(response["annotations-accepted"],response["annotations-total"])}%)`});
-				this.statistics.push({'key': 'Annotations (rejected)', 'value': `${response["annotations-rejected"]} (${this.getPercentage(response["annotations-rejected"],response["annotations-total"])}%)`});
 				this.statistics.push({'key': 'Total annotation upvotes', 'value': response["upvotes"]});
 				this.statistics.push({'key': 'Total annotation downvotes', 'value': response["downvotes"]});
+				this.statistics.push({'key': 'Annotations (marked for publish)', 'value': `${response["annotations-accepted"]} (${this.getPercentage(response["annotations-accepted"],response["annotations-total"])}%)`});
+				this.statistics.push({'key': 'Annotations (unmarked for publish)', 'value': `${response["annotations-rejected"]} (${this.getPercentage(response["annotations-rejected"],response["annotations-total"])}%)`});
 
 				this.loading = false;
 			})
