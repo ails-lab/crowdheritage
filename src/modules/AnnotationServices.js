@@ -222,7 +222,6 @@ export class AnnotationServices {
 		});
 	}
 
-
 	async annotateGeoRecord(recid, geoid, camp) {
 		let body = {uri: geoid };
 		let target = { recordId: recid};
@@ -238,8 +237,6 @@ export class AnnotationServices {
 			response.json();
 		});
 	}
-
-
 
 	annotateCollection(colid, term) {
 		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
@@ -284,4 +281,9 @@ export class AnnotationServices {
 		return [ {mode: 0, label: 'All', id: 'grouping-0'}, {mode: 1, label: 'Vocabulary', id: 'grouping-1'}, {mode: 2, label: 'Annotator', id: 'grouping-2'}];
 	}
 
+	markForPublish(id, publish) {
+		return this.http.fetch(`/annotation/${id}/markForPublish?publish=${publish}`, {
+			method: 'GET'
+		}).then(checkStatus);
+	}
 }

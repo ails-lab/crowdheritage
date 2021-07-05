@@ -40,6 +40,7 @@ export class Campaign {
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
     this.vocabularies = data.vocabularies;
+    this.publishCriteria = data.publishCriteria;
     this.logo = data.logo ? this.setImageProperty(data.logo) : '';
     this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
     this.status = this.campaignStatus;

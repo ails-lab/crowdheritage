@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main if.bind="isCreator">
     <!-- new banner-->
     <section class="banner mini">
       <div class="container">
@@ -27,19 +27,29 @@
 
     <!-- validation section -->
     <section class="validation">
-      <div class="contribute" style.bind="!isCreator ? 'height: 0' : ''" if.bind="isCreator">
-        <a click.delegate="publishToEuropeana()" >
-          <i class="fa fa-cloud-upload"></i>
-          <span>PUBLISH TO EUROPEANA</span>
-        </a>
-        <a id="exportUsers" click.delegate="exportContributors()">
-          <i class="fa fa-users"></i>
-          <span id="exportLabel">${exportUsersLabel}</span>
-        </a>
-        <a id="exportAnnotations" click.delegate="exportAnnotations()">
-          <i class="fa fa-download"></i>
-          <span id="exportLabel">${exportAnnsLabel}</span>
-        </a>
+      <div class="row w-100 validation-menu">
+        <div class="contribute">
+          <a id="campaignStatistics" click.delegate="campaignStatistics()">
+            <i class="fa fa-bar-chart"></i>
+            <span id="statisticsLabel">${campaignStatisticsLabel}</span>
+          </a>
+          <a id="publishCriteria" click.delegate="publishCriteria()">
+            <i class="fa fa-newspaper-o"></i>
+            <span id="publishLabel">${publishCriteriaLabel}</span>
+          </a>
+          <!-- <a click.delegate="publishToEuropeana()" >
+            <i class="fa fa-cloud-upload"></i>
+            <span>PUBLISH TO EUROPEANA</span>
+          </a> -->
+          <a id="exportUsers" click.delegate="exportContributors()">
+            <i class="fa fa-users"></i>
+            <span id="exportLabel">${exportUsersLabel}</span>
+          </a>
+          <a id="exportAnnotations" click.delegate="exportAnnotations()">
+            <i class="fa fa-download"></i>
+            <span id="exportLabel">${exportAnnsLabel}</span>
+          </a>
+        </div>
       </div>
       <!-- Popular Tags -->
       <div if.bind="hasMotivation('Tagging') || hasMotivation('GeoTagging')" class="popular-list">

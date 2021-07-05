@@ -107,4 +107,22 @@ export class CampaignServices {
     }).then((response) => response.json());
   }
 
+  initiateValidation(campaignId, allowRejected, minScore) {
+    return this.http.fetch(`/campaign/initiateValidation?campaignId=${campaignId}&allowRejected=${allowRejected}&minScore=${minScore}`, {
+      method: 'POST'
+    }).then(response => response);
+  }
+
+  getCampaignStatistics(cname) {
+    return this.http.fetch(`/campaign/statistics?cname=${cname}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
+  exportCampaignAnnotations(campaignName) {
+    return this.http.fetch(`/annotation/exportCampaignAnnotations?campaignName=${campaignName}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
 }

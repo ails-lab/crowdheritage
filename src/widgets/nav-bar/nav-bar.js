@@ -71,7 +71,7 @@ export class NavBar {
   loginPopup() {
 		this.dialogService.open({
 			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
-		}).then((response) => {
+		}).whenClosed((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');
 			} else {

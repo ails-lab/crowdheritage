@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis:500,600,700|Rubik:400,400i,700,700i|PT+Sans:400,400i,700,700i.css');
 @import './../js/vendor/font-awesome/css/font-awesome.min.css';
 @import './../js/vendor/bootstrap/css/bootstrap.css';
+// @import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import './../js/vendor/slick.js/slick/slick.css';
 @import '../js/vendor/bootstrap/less/mixins.less';
 @import "../js/vendor/bootstrap/less/variables.less";
 // custom settings
 @import "custom.inc.less";
+@import "boot5.less";
 @import "~toastr/build/toastr.css";
 
 // Green
@@ -22,6 +24,11 @@
 .isoload{
    visibility:hidden;
 }
+.opacity-0 {opacity: 0;}
+.opacity-25 {opacity: 0.25;}
+.opacity-50 {opacity: 0.5;}
+.opacity-75 {opacity: 0.75;}
+.opacity-100 {opacity: 1;}
 a {
   outline: none;
 }
@@ -2230,15 +2237,34 @@ body main section.tagging .right .tag-color .coloraction {
   margin: 15px -1px 0 -1px;
   padding: 0;
 }
+ux-dialog-overlay.active {
+  background-color: black;
+  opacity: .5;
+}
+ux-dialog-container.active {
+  overflow-y: hidden;
+}
+#statisticsPopup {
+  min-height: 240px;
+  min-width: 550px;
+}
+#publishPopup {
+  min-height: 240px;
+  min-width: 500px;
+}
+#allowRejected {
+    margin-top: 9px;
+}
+.validation-menu {
+  display: inline-flex;
+  justify-content: center;
+}
 body main section.validation {
   margin: 30px 0px 10px 0px;
   padding: 0px 50px 0px 50px;
 }
 body main section.validation .contribute {
-  display: flex;
-  position: relative;
-  left: 50%;
-  margin-left: -408px;
+  display: inline-flex;
   text-align: center;
   cursor: default;
   a {
@@ -5206,4 +5232,20 @@ a .social-button.facebook:before {
 }
 a:hover .social-button.facebook {
   background-color: #2F426F;
+}
+
+.tooltip {
+  min-width: 180px;
+  max-height: 50px;
+
+  .tooltip-inner {
+    background-color: @main-color;
+  }
+}
+.tooltip.left .tooltip-arrow {
+  border-left-color: @main-color !important;
+}
+
+.publish-btn{
+  cursor: pointer;
 }

@@ -1,0 +1,106 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+     - pgeor/citest
+     - dev
+
+jobs:
+  build:
+    runs-on: [self-hosted]
+    env:
+      DEPLOY_USER: deploy
+      NODE_OPTIONS: "--max_old_space_size=3192"
+      NODE_ENV: development
+      PROJECT: CrowdHeritage
+      SPACE: espace
+      API_URL: /assets/developers-lite.html
+      WITHCROWD_BASE_URL: https://dev-api.withcrowd.eu
+      BASE_URL: https://dev-api.crowdheritage.eu
+      WITH_GOOGLE_KEY: "${{ secrets.WITH_GOOGLE_KEY }}"
+      WITH_GOOGLE_SECRET: "${{ secrets.WITH_GOOGLE_SECRET }}"
+      WITH_FACEBOOK_SECRET: "${{ secrets.WITH_FACEBOOK_SECRET }}"
+      WITHCROWD_FACEBOOK_SECRET: "${{ secrets.WITHCROWD_FACEBOOK_SECRET }}"
+      CROWDHERITAGE_FACEBOOK_SECRET: "${{ secrets.CROWDHERITAGE_FACEBOOK_SECRET }}"
+
+    steps:
+
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+      id: extract_branch
+
+    - name: Set tag ref
+      run: |
+        echo TAG_REF=${GITHUB_SHA::8} >> $GITHUB_ENV
+
+    - name: Set env for development
+      #if: endsWith(github.ref, '/development')
+      run: |
+        echo DEPLOY_SERVER=hotwheels.ails.ece.ntua.gr >> $GITHUB_ENV
+        echo DEPLOY_TARGET=/data/crowdheritage/frontend/current/ >> $GITHUB_ENV
+    - name: Set env for production
+      if: endsWith(github.ref, '/master')
+      run: |
+        echo DEPLOY_SERVER=lego.ails.ece.ntua.gr >> $GITHUB_ENV
+        echo DEPLOY_TARGET=/data/crowdheritage/frontend/current/ >> $GITHUB_ENV
+
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 14
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.6.x'
+
+    #- name: Cache yarn modules
+    #  uses: actions/cache@v2
+    #  with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+    #    path: "**/node_modules"
+    #    key: ${{ runner.OS }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+    #    restore-keys: |
+    #      ${{ runner.OS }}-node-
+    #      ${{ runner.OS }}-
+
+    - name: prep .env
+      run: |+
+        cat > .env << EOF
+        NODE_ENV=production
+        PROJECT=CrowdHeritage
+        SPACE=espace
+        API_URL=/assets/developers-lite.html
+        WITHCROWD_BASE_URL=https://dev-api.withcrowd.eu
+        BASE_URL=https://dev-api.crowdheritage.eu
+        WITH_GOOGLE_KEY=$WITH_GOOGLE_KEY
+        WITH_GOOGLE_SECRET=$WITH_GOOGLE_SECRET
+        WITH_FACEBOOK_SECRET=$WITH_FACEBOOK_SECRET
+        WITHCROWD_FACEBOOK_SECRET=$WITHCROWD_FACEBOOK_SECRET
+        CROWDHERITAGE_FACEBOOK_SECRET=$CROWDHERITAGE_FACEBOOK_SECRET
+        EOF
+
+
+    # - name: show .env
+    #   run: cat .env
+
+    - name: instal yarn
+      run: npm install -g yarn
+
+    - run: yarn install
+      env:
+        CI: false
+
+    - run: npm run build
+      env:
+        NODE_ENV: production
+        CI: false
+
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.1
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.WITH_CI_SSH_KEY }}
+          ARGS: "-v -c -rli --delete --exclude assets -b --backup-dir=/home/${DEPLOY_USER}/backups/with-frontend-${{ steps.extract_branch.outputs.branch }}_backup"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ env.DEPLOY_SERVER }}
+          REMOTE_USER: ${{ env.DEPLOY_USER }}
+          TARGET: ${{ env.DEPLOY_TARGET }}
