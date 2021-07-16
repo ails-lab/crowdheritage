@@ -1,14 +1,16 @@
 <template>
   <require from="../tooltip/tooltip"></require>
-  <div class="tag-item"
-    if.bind="!isTesterUser || !(campaign.username=='instruments' || campaign.username=='garment-type')">
+  <!-- <div class="tag-item"
+    if.bind="!isTesterUser || !(campaign.username=='instruments' || campaign.username=='garment-type')"> -->
+  <div class="tag-item">
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
-      <div class="heading green" t="app:tags">TAGS</div>
+      <div class="heading yellow" t="item:usertagging">USER TAGS</div>
       <!-- info-->
-      <div class="infobar">${campaign.instructions}</div>
-      <div class="searchbox" if.bind="(isTesterUser || campaign.status == 'active') && userServices.isAuthenticated()">
+      <div class="infobar" t="item:usertagging-info">Add your own custom tags</div>
+      <!-- <div class="searchbox" if.bind="(isTesterUser || campaign.status == 'active') && userServices.isAuthenticated()"> -->
+      <div class="searchbox">
         <input id="annotationInput" autocomplete="off" value.bind="prefix"
           input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text"
           placeholder.bind="placeholderText" class="input-tag" />
@@ -35,7 +37,8 @@
           <li repeat.for="ann of annotations">
             <a href.bind="ann.uri" target="_blank">${ann.label}</a>
             <ul class="action">
-              <li class="publish-btn" if.bind="isCurrentUserCreator()">
+              <!-- <li class="publish-btn" if.bind="isCurrentUserCreator()"> -->
+              <li class="publish-btn">
                 <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
                   title.bind="togglePublishText" click.delegate="togglePublish('', $index)">
                   <span>
@@ -46,11 +49,13 @@
                 </a>
               </li>
               <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
-                <a if.bind="!ann.createdByMe" href="javascript:void(0)"
+                <!-- <a if.bind="!ann.createdByMe" href="javascript:void(0)" -->
+                <a href="javascript:void(0)"
                   click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
                   <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
                 </a>
-                <a if.bind="ann.createdByMe">
+                <!-- <a if.bind="ann.createdByMe"> -->
+                <a>
                   <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
                 </a>
               </li>
@@ -63,8 +68,9 @@
                   <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
                 </a>
               </li>
-              <li class="delete"
-                if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0 || isCurrentUserCreator()">
+              <!-- <li class="delete"
+                if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0 || isCurrentUserCreator()"> -->
+              <li class="delete">
                 <a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'tag')">
                   <img src="/img/ic-delete.png">
                 </a>
