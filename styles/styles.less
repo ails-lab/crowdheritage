@@ -2242,11 +2242,11 @@ ux-dialog-overlay.active {
   opacity: .5;
 }
 ux-dialog-container.active {
-  overflow-y: hidden;
+  overflow: auto;
 }
 #statisticsPopup {
-  min-height: 240px;
-  min-width: 550px;
+  height: calc(100vh - 160px);
+  width: calc(100vw - 100px);
 }
 #publishPopup {
   min-height: 240px;
