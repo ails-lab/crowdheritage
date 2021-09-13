@@ -62,5 +62,6 @@
   "toastr-geo": "Geotag already exists",
   "toggle-publish": "Click to toggle Publish state",
   "usertagging": "USER TAGS",
-  "usertagging-info": "Add your own custom tags."
+  "usertagging-info": "Add your own custom tags.",
+  "usertagging-textarea": "Write your description here..."
 }

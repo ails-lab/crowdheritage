@@ -11,25 +11,7 @@
       <div class="infobar" t="item:usertagging-info">Add your own custom tags</div>
       <!-- <div class="searchbox" if.bind="(isTesterUser || campaign.status == 'active') && userServices.isAuthenticated()"> -->
       <div class="searchbox">
-        <input id="annotationInput" autocomplete="off" value.bind="prefix"
-          input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text"
-          placeholder.bind="placeholderText" class="input-tag" />
-        <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview"
-          style="width: 100%; z-index: 9999;">
-          <ul class="suggestions">
-            <li click.delegate="selectSuggestedAnnotation(item.id)" repeat.for="item of suggestedAnnotations"
-              id="${$index}">
-              <span>
-                <strong>${item.label}</strong>
-                <a if.bind="item.lang && item.labels.length>1">${item.lang}</a>
-                <a if.bind="isValidUrl(item.uri)" style="padding-right:10px; padding-top:5px;" class="fa fa-link"
-                  click.delegate="goToURI(item.uri)"></a>
-                <br />
-                <i if.bind="item.description.length>0">${item.description}</i>
-              </span>
-            </li>
-          </ul>
-        </div>
+        <textarea id="user-tag-textarea" t="[placeholder]item:usertagging-textarea" rows="3"></textarea>
       </div>
       <!-- taglist-->
       <div class="show-more-parent">
