@@ -12,6 +12,8 @@
       <!-- <div class="searchbox" if.bind="(isTesterUser || campaign.status == 'active') && userServices.isAuthenticated()"> -->
       <div class="searchbox">
         <textarea id="user-tag-textarea" t="[placeholder]item:usertagging-textarea" rows="3"></textarea>
+        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="nextItem()"
+          t="item:usertagging-submit">Submit</a>
       </div>
       <!-- taglist-->
       <div class="show-more-parent">
