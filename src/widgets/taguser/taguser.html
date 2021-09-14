@@ -3,6 +3,7 @@
   <!-- <div class="tag-item"
     if.bind="!isTesterUser || !(campaign.username=='instruments' || campaign.username=='garment-type')"> -->
   <div class="tag-item">
+    <!-- <div class="tag-user-item"> -->
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
@@ -10,56 +11,17 @@
       <!-- info-->
       <div class="infobar" t="item:usertagging-info">Add your own custom tags</div>
       <!-- <div class="searchbox" if.bind="(isTesterUser || campaign.status == 'active') && userServices.isAuthenticated()"> -->
-      <div class="searchbox">
-        <textarea id="user-tag-textarea" t="[placeholder]item:usertagging-textarea" rows="3"></textarea>
-        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="nextItem()"
+      <div class="searchbox mt-0">
+        <textarea id="user-tag-textarea" value.bind="userTagValue" t="[placeholder]item:usertagging-textarea"
+          rows="3"></textarea>
+        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="submitUserTag(userTagValue)"
           t="item:usertagging-submit">Submit</a>
       </div>
       <!-- taglist-->
       <div class="show-more-parent">
         <ul class="taglist show-more-target">
-          <li repeat.for="ann of annotations">
-            <a href.bind="ann.uri" target="_blank">${ann.label}</a>
-            <ul class="action">
-              <!-- <li class="publish-btn" if.bind="isCurrentUserCreator()"> -->
-              <li class="publish-btn">
-                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
-                  title.bind="togglePublishText" click.delegate="togglePublish('', $index)">
-                  <span>
-                    <i
-                      class.bind="!ann.publish ? 'fa fa-upload text-danger opacity-50' : 'fa fa-upload text-success'"></i>
-                    <span class="count"></span>
-                  </span>
-                </a>
-              </li>
-              <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
-                <!-- <a if.bind="!ann.createdByMe" href="javascript:void(0)" -->
-                <a href="javascript:void(0)"
-                  click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
-                  <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
-                </a>
-                <!-- <a if.bind="ann.createdByMe"> -->
-                <a>
-                  <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
-                </a>
-              </li>
-              <li class.bind="ann.rejectedByMe ? 'down active' : 'down'">
-                <a if.bind="!ann.createdByMe" href="javascript:void(0)"
-                  click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'tag')">
-                  <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
-                </a>
-                <a if.bind="ann.createdByMe">
-                  <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
-                </a>
-              </li>
-              <!-- <li class="delete"
-                if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0 || isCurrentUserCreator()"> -->
-              <li class="delete">
-                <a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'tag')">
-                  <img src="/img/ic-delete.png">
-                </a>
-              </li>
-            </ul>
+          <li repeat.for="ann of userAnnotations">
+            <a href="#" target="_blank">${ann}</a>
           </li>
         </ul>
         <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
