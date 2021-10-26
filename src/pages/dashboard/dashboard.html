@@ -21,10 +21,12 @@
             </li>
           </ul>
           <div class="container-fluid mt-1" if.bind="view=='campaign-editor'">
-            <p>Campaign</p>
+            <compose view-model="pages/dashboard/campaign-editor/campaign-editor">
+    		    </compose>
           </div>
           <div class="container-fluid mt-1" if.bind="view=='collection-editor'">
-            <p>Collection</p>
+            <compose view-model="pages/dashboard/collection-editor/collection-editor">
+    		    </compose>
           </div>
     </section>
   </main>
