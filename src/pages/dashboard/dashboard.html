@@ -1,0 +1,31 @@
+<template>
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <div class="bannertext">
+          <div class="line">
+            <div class="wrap"><span>Dashboard</span></div>
+          </div>
+        </div>
+        <div class="bgwrap" style="" background-image": "img/bg-banner.png;""></div>
+      </div>
+    </section>
+    <section class="container">
+          <ul class=" nav nav-tabs nav-tabs-justified">
+            <li class="nav-item" click.delegate="tabChanged('campaign-editor')">
+              <a class="nav-link active" aria-current="page" href="#">Campaign Editor</a>
+            </li>
+            <li class="nav-item" click.delegate="tabChanged('collection-editor')">
+              <a class="nav-link" href="#">Collection Editor</a>
+            </li>
+          </ul>
+          <div class="container-fluid mt-1" if.bind="view=='campaign-editor'">
+            <p>Campaign</p>
+          </div>
+          <div class="container-fluid mt-1" if.bind="view=='collection-editor'">
+            <p>Collection</p>
+          </div>
+    </section>
+  </main>
+</template>
