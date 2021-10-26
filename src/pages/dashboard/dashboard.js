@@ -34,11 +34,21 @@ export class Dashboard {
   
   constructor() {
     this.view = "campaign-editor"
+    this.collectionClasses = "nav-item"
+    this.campaignClasses = "nav-item active"
+
   }
   
   tabChanged(tab){
     this.view = tab;
-    console.log(this.view)
+    if(tab === 'collection-editor'){
+      this.collectionClasses = "nav-item active"
+      this.campaignClasses = "nav-item"
+    }
+    else if(tab === 'campaign-editor'){
+      this.campaignClasses = "nav-item active"
+      this.collectionClasses = "nav-item"
+    }
   }
 
 }
