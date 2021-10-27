@@ -1374,6 +1374,29 @@ body main .topsection .sectionlabel .state .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff;
 }
+.import-wrap .dropdown-menu {
+  margin: 5px 0 0 0;
+  left: -8px;
+  padding: 0;
+  border-radius: 0;
+  border: 0px;
+  box-shadow: none;
+  min-width: 114px;
+}
+.import-wrap .dropdown-menu li {
+  display: block;
+  margin-bottom: 1px;
+  //width: 80px;
+}
+.import-wrap .dropdown-menu li a {
+  display: block;
+  padding: 5px 10px 5px 10px;
+  background-color: #f2f2f2;
+}
+.import-wrap .dropdown-menu li a:hover {
+  background-color: #4f7979;
+  color: #fff;
+}
 .userpage.sort,
 body main .topsection .sort {
   float: right;
@@ -5248,4 +5271,122 @@ a:hover .social-button.facebook {
 
 .publish-btn{
   cursor: pointer;
+}
+
+.import-wrap {
+  float: right;
+  margin-right: 40px;
+  position: relative;
+}
+
+#import {
+  float: right;
+  text-decoration: none;
+  color: #4f7979;
+  margin-top: 2px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.import-wrap .arrow {
+  display: inline-block;
+  width: 9px;
+  margin-right: 10px;
+  height: 10px;
+  margin-top: 8px;
+  background: url(../img/f87e48b7ace8704f82935e1993a33146.png) no-repeat;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 10;
+  top: 70px;
+  right: 0;
+  background-color: rgb(255, 255, 255);
+  overflow: hidden;
+  transition: 0.8s;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #4f7979;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.action-header {
+  padding-bottom: 30px;
+  margin-top: 25px;
+  border-bottom: 1px solid #ccc;
+}
+
+.action-header .title {
+  color: #4f7979;
+  font-size: 2rem;
+  float: left;
+  text-transform: capitalize;
+}
+
+.action-body {
+  padding: 25px 0;
+
+}
+
+.action-body .form-group {
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right:20px;
+}
+
+.action-body label {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.action-body input{
+  height: 50px;
+  width: 100%;
+}
+
+.sidebar .btn-green {
+  cursor: pointer;
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+  display: block;
+  padding: 5px 30px;
+  border: 1px solid #ffffff;
+  font-size: 12px;
+  letter-spacing: 1.3px;
+  color: #ffffff;
+  transition: all 0.3s;
+  background-color: #4f7979;
+  font-size: 1.4rem;
+}
+
+.button-group .btn-green:hover {
+  background-color: #3b5a5a;
 }

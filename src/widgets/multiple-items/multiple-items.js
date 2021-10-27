@@ -33,6 +33,7 @@ export class MultipleItems {
 	get offset() { return this.records.length }
 	get byUser() { return !!this.user}
 	get byCollection() { return !!this.collection}
+  // get byCollectionEdit() { return this.collectionEdit }
 
   constructor(collectionServices, userServices, campaignServices, i18n) {
 		if (instance) {
@@ -116,6 +117,12 @@ export class MultipleItems {
 			this.user = params.user;
 			this.totalCount = params.totalCount;
 		}
+    // else if(params.collectionEdit){
+    //   this.collection = params.myCollection;
+		// 	this.totalCount = this.collection.entryCount;
+    //   console.log("collectionEdit")
+
+    // }
 
 		if (params.records && this.records.length==0) {
 			this.loading = true;

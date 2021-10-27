@@ -26,6 +26,7 @@
   "collection"          : "COLLECTION",
   "description"         : "DESCRIPTION",
   "return-campaign"     : "RETURN TO CAMPAIGN",
+  "return-edit"         : "RETURN TO EDIT PAGE",
   "return-collection"   : "RETURN TO COLLECTION",
   "tags"                : "TAGS",
   "points"              : "POINTS",

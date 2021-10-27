@@ -1,5 +1,68 @@
 <template>
   <main>
     <h3>Collection Editor</h3>
+    <!-- collection list-->
+    <section class="collections" if.bind="collections.length>0">
+      <div class="container">
+        <!-- top section-->
+        <div class="topsection">
+          <!-- label-->
+          <div class="sectionlabel">
+            <div class="bold" t="summary:collections">COLLECTIONS</div>
+          </div>
+          <div class="import-wrap">
+            <a id="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+              <span class="text">Import Collection</span>
+              <span class="arrow"></span>
+            </a>
+            <ul aria-labelledby="import" class="dropdown-menu">
+              <li><a href="#" click.delegate="importEuropeanaCollection()">Europeana Dataset</a></li>
+              <li><a href="#" click.delegate="importEuropeanaSearch()">Europeana Search</a></li>
+              <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana Gallery</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="campaignlist">
+          <!-- entry-->
+          <div class="entries row" ref="grid">
+            <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
+              <a route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }">
+                <div class="thumbs">
+                  <div class="thumbs-images thumbs-count-${col.absMedia.length}">
+                    <img repeat.for="med of col.absMedia" src.bind="med"
+                      onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+                  </div>
+                  <div class="action">
+                    <h3><b>Edit </b></h3>
+                  </div>
+                </div>
+                <!-- detail-->
+                <div class="detail">
+                  <!-- count-->
+                  <div class="count">
+                    ${col.entryCount}<span t="summary:items">ITEMS</span>
+                  </div>
+                  <!-- title-->
+                  <div class="desc">
+                    <div class="title">${col.title}</div>
+                    <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- more-->
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <compose view-model="widgets/import-europeana/import-europeana"
+    						 model.bind="{'importMethod': importMethod, 'router': router, 'lang': loc}">
+    		</compose>
+    </section>
   </main>
 </template>
