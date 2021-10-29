@@ -1,0 +1,40 @@
+<template>
+
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <!-- lbl-->
+        <div class="bannertext">
+          <div class="line">
+            <div class="lbl"> <span t="app:campaign">CAMPAIGN</span></div>
+            <div class="wrap"><span>${campaign.title}</span></div>
+          </div>
+        </div>
+        <!-- vertical nav-->
+        <nav class="vertical">
+          <ul>
+            <li><a route-href="route: dashboard; params.bind: { lang: loc }" t="[prepend]app:return-edit"><img src="/img/ic-arrow-right-black.png"></a></li>
+          </ul>
+        </nav>
+        <div class="bgwrap" style="background-image: url('${collection.backgroundImage}');"></div>
+      </div>
+    </section>
+		<section class="collections collection-item-list">
+			<div class="container">
+        <div class="description" if.bind="collection.description[0]">
+          <div class="sectionlabel">
+            <div class="bold">
+              <span class="text" t="app:description">DESCRIPTION</span>
+            </div>
+          </div>
+          <p innerHtml.bind="collection.description" />
+        </div>
+    		<compose view-model="widgets/multiple-items/multiple-items"
+    						 model.bind="{'collectionEdit': true, 'myCollection': collection, 'router': router, 'lang': loc}">
+    		</compose>
+    	</div>
+    </section>
+  </main>
+
+</template>
