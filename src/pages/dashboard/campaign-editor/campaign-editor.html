@@ -1,5 +1,63 @@
 <template>
   <main>
     <h3>Campaign Editor</h3>
+    <!-- campaign list-->
+    <section class="collections" if.bind="campaigns.length>0">
+      <div class="container">
+        <!-- top section-->
+        <div class="topsection">
+          <!-- label-->
+          <div class="sectionlabel">
+            <div class="bold" t="summary:campaigns">CAMPAIGNS</div>
+          </div>
+          <div class="import-wrap">
+            <a id="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+              <span class="text">Import Campaign</span>
+              <span class="arrow"></span>
+            </a>
+            <ul aria-labelledby="import" class="dropdown-menu">
+              <li><a href="#" click.delegate="importEuropeanaCollection()">Europeana Dataset</a></li>
+              <li><a href="#" click.delegate="importEuropeanaSearch()">Europeana Search</a></li>
+              <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana Gallery</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="campaignlist">
+          <!-- entry-->
+          <div class="entries row" ref="grid">
+            <div class="entry col-md-4 ${camp.username}" repeat.for="camp of campaigns">
+              <!-- <a route-href="route: campaign-edit; params.bind: { cname: camp.username, lang: loc }"> -->
+              <a route-href="route: summary; params.bind: { cname: camp.username, lang: loc }">
+                <div class="thumbs">
+                  <img class="centered-and-cropped" src.bind="camp.banner" 
+                    onerror="this.src='/img/assets/img/ui/ic-noimage.png'">
+                  <div class="action">
+                    <h3><b>Edit </b></h3>
+                  </div>
+                </div>
+                <!-- detail-->
+                <div class="detail">
+                  <!-- title-->
+                  <div class="desc" style="width: 100%;">
+                    <h4 class="title overflow-ellipsis">${camp.title}</h4>
+                    <div class="owner"><span t="summary:Created on">Created on</span> ${camp.startDate | dateFormat}</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- more-->
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <compose view-model="widgets/import-europeana/import-europeana"
+    						 model.bind="{'importMethod': importMethod, 'router': router, 'lang': loc}">
+    		</compose>
+    </section>
   </main>
 </template>

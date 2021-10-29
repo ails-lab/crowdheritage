@@ -119,8 +119,8 @@ export class App {
 			{ route: ':lang/user/:uname', 	             name: 'user',			 moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
 			{ route: ':lang/feedback',                   name: 'feedback',	 moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
       { route: ':lang/dashboard',                  name: 'dashboard',	 moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
-      { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/dashboard/collection-editor/collection-id-edit/collection-id-edit'), nav: false, title: 'Collection Edit | '+settings.project}
-
+      { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/dashboard/collection-editor/collection-id-edit/collection-id-edit'), nav: false, title: 'Collection Edit | '+settings.project},
+      { route: ':lang/campaign-edit/:cname',       name: 'campaign-edit',	 moduleId: PLATFORM.moduleName('./pages/dashboard/campaign-editor/campaign-cname-edit/campaign-cname-edit'), nav: false, title: 'Campaign Edit | '+settings.project},
     ]);
 
     this.router = router;
