@@ -2181,14 +2181,17 @@ body main section.tagging .right .wrap {
   padding-left: 50px;
 }
 body main section.tagging .right .tag-item,
+body main section.tagging .right .tag-user-item,
 body main section.tagging .right .tag-geo,
 body main section.tagging .right .tag-color {
   margin-bottom: 40px;
 }
 body main section.tagging .right .tag-item:before,
+body main section.tagging .right .tag-user-item:before,
 body main section.tagging .right .tag-geo:before,
 body main section.tagging .right .tag-color:before,
 body main section.tagging .right .tag-item:after,
+body main section.tagging .right .tag-user-item:after,
 body main section.tagging .right .tag-geo:after,
 body main section.tagging .right .cntr:after {
   content: " ";
@@ -2196,25 +2199,30 @@ body main section.tagging .right .cntr:after {
 }
 
 body main section.tagging .cntr .tag-item:before,
+body main section.tagging .cntr .tag-user-item:before,
 body main section.tagging .cntr .tag-geo:before,
 body main section.tagging .cntr .tag-color:before,
 body main section.tagging .cntr .tag-item:after,
+body main section.tagging .cntr .tag-user-item:after,
 body main section.tagging .cntr .tag-geo:after,
 body main section.tagging .cntr .tag-color:after {
   content: " ";
   display: table;
 }
 body main section.tagging .right .tag-item:after,
+body main section.tagging .right .tag-user-item:after,
 body main section.tagging .right .tag-geo:after,
 body main section.tagging .right .tag-color:after {
   clear: both;
 }
 body main section.tagging .cntr .tag-item:after,
+body main section.tagging .cntr .tag-user-item:after,
 body main section.tagging .cntr .tag-geo:after,
 body main section.tagging .cntr .tag-color:after {
   clear: both;
 }
 body main section.tagging .right .tag-item .infobar,
+body main section.tagging .right .tag-user-item .infobar,
 body main section.tagging .right .tag-geo .infobar,
 body main section.tagging .right .tag-color .infobar {
   font-size: 1.4rem;
@@ -2222,6 +2230,7 @@ body main section.tagging .right .tag-color .infobar {
   margin-top: 20px;
 }
 body main section.tagging .right .tag-item .colorbox,
+body main section.tagging .right .tag-user-item .colorbox,
 body main section.tagging .right .tag-geo .colorbox,
 body main section.tagging .right .tag-color .colorbox {
   background-color: @main-color;
@@ -2232,6 +2241,7 @@ body main section.tagging .right .tag-color .colorbox {
   font-family: "Dosis";
 }
 body main section.tagging .right .tag-item .coloraction,
+body main section.tagging .right .tag-user-item .coloraction,
 body main section.tagging .right .tag-geo .coloraction,
 body main section.tagging .right .tag-color .coloraction {
   margin: 15px -1px 0 -1px;
@@ -2309,9 +2319,11 @@ body main section.validation .searchbox input::placeholder {
 }
 body main section.validation .coloraction:before,
 body main section.tagging .right .tag-item .coloraction:before,
+body main section.tagging .right .tag-user-item .coloraction:before,
 body main section.tagging .right .tag-geo .coloraction:before,
 body main section.tagging .right .tag-color .coloraction:before,
 body main section.tagging .right .tag-item .coloraction:after,
+body main section.tagging .right .tag-user-item .coloraction:after,
 body main section.tagging .right .tag-geo .coloraction:after,
 body main section.tagging .right .tag-color .coloraction:after {
   content: " ";
@@ -2319,12 +2331,14 @@ body main section.tagging .right .tag-color .coloraction:after {
 }
 body main section.validation .coloraction:after,
 body main section.tagging .right .tag-item .coloraction:after,
+body main section.tagging .right .tag-user-item .coloraction:after,
 body main section.tagging .right .tag-geo .coloraction:after,
 body main section.tagging .right .tag-color .coloraction:after {
   clear: both;
 }
 body main section.validation .coloraction li,
 body main section.tagging .right .tag-item .coloraction li,
+body main section.tagging .right .tag-user-item .coloraction li,
 body main section.tagging .right .tag-geo .coloraction li,
 body main section.tagging .right .tag-color .coloraction li {
   list-style: none;
@@ -2335,6 +2349,7 @@ body main section.tagging .right .tag-color .coloraction li {
 }
 body main section.validation .coloraction li a,
 body main section.tagging .right .tag-item .coloraction li a,
+body main section.tagging .right .tag-user-item .coloraction li a,
 body main section.tagging .right .tag-geo .coloraction li a,
 body main section.tagging .right .tag-color .coloraction li a {
   display: block;
@@ -2342,6 +2357,7 @@ body main section.tagging .right .tag-color .coloraction li a {
 }
 body main section.validation .coloraction li a .action,
 body main section.tagging .right .tag-item .coloraction li a .action,
+body main section.tagging .right .tag-user-item .coloraction li a .action,
 body main section.tagging .right .tag-geo .coloraction li a .action,
 body main section.tagging .right .tag-color .coloraction li a .action {
   position: absolute;
@@ -2354,6 +2370,7 @@ body main section.tagging .right .tag-color .coloraction li a .action {
 }
 body main section.validation .coloraction li a .action .colorname,
 body main section.tagging .right .tag-item .coloraction li a .action .colorname,
+body main section.tagging .right .tag-user-item .coloraction li a .action .colorname,
 body main section.tagging .right .tag-geo .coloraction li a .action .colorname,
 body main section.tagging .right .tag-color .coloraction li a .action .colorname {
   position: absolute;
@@ -2373,6 +2390,7 @@ body main section.tagging .right .tag-color .coloraction li a .action .colorname
 }
 body main section.validation .coloraction li a .action .colorname::after,
 body main section.tagging .right .tag-item .coloraction li a .action .colorname::after,
+body main section.tagging .right .tag-user-item .coloraction li a .action .colorname::after,
 body main section.tagging .right .tag-geo .coloraction li a .action .colorname::after,
 body main section.tagging .right .tag-color .coloraction li a .action .colorname::after {
   content: "";
@@ -2389,29 +2407,34 @@ body main section.tagging .right .tag-color .coloraction li a .action .colorname
 }
 body main section.validation .coloraction li a:hover .action,
 body main section.tagging .right .tag-item .coloraction li a:hover .action,
+body main section.tagging .right .tag-user-item .coloraction li a:hover .action,
 body main section.tagging .right .tag-geo .coloraction li a:hover .action,
 body main section.tagging .right .tag-color .coloraction li a:hover .action {
   display: block;
 }
 body main section.validation .coloraction li img,
 body main section.tagging .right .tag-item .coloraction li img,
+body main section.tagging .right .tag-user-item .coloraction li img,
 body main section.tagging .right .tag-geo .coloraction li img,
 body main section.tagging .right .tag-color .coloraction li img {
   width: 100%;
 }
 body main section.validation .coloraction li.big,
 body main section.tagging .right .tag-item .coloraction li.big,
+body main section.tagging .right .tag-user-item .coloraction li.big,
 body main section.tagging .right .tag-geo .coloraction li.big,
 body main section.tagging .right .tag-color .coloraction li.big {
   width: 20%;
 }
 body main section.validation .coloraction li.big a .colorname,
 body main section.tagging .right .tag-item .coloraction li.big a .colorname,
+body main section.tagging .right .tag-user-item .coloraction li.big a .colorname,
 body main section.tagging .right .tag-geo .coloraction li.big a .colorname,
 body main section.tagging .right .tag-color .coloraction li.big a .colorname {
   left: 3px;
 }
 body main section.tagging .right .tag-item .searchbox,
+body main section.tagging .right .tag-user-item .searchbox,
 body main section.tagging .right .tag-geo .searchbox,
 body main section.tagging .right .tag-color .searchbox {
   background-color: @main-color;
@@ -2421,12 +2444,14 @@ body main section.tagging .right .tag-color .searchbox {
   position: relative;
 }
 body main section.tagging .right .tag-item .searchbox .wrap,
+body main section.tagging .right .tag-user-item .searchbox .wrap,
 body main section.tagging .right .tag-geo .searchbox .wrap,
 body main section.tagging .right .tag-color .searchbox .wrap {
   width: 535px;
   padding-left: 0;
 }
 body main section.tagging .right .tag-item .searchbox .input-tag,
+body main section.tagging .right .tag-user-item .searchbox .input-tag,
 body main section.tagging .right .tag-geo .searchbox .input-tag,
 body main section.tagging .right .tag-color .searchbox .input-tag {
   border: 0px;
@@ -2437,17 +2462,20 @@ body main section.tagging .right .tag-color .searchbox .input-tag {
   padding: 5px 70px 5px 0;
 }
 body main section.tagging .right .tag-item .searchbox .input-tag::-webkit-input-placeholder,
+body main section.tagging .right .tag-user-item .searchbox .input-tag::-webkit-input-placeholder,
 body main section.tagging .right .tag-geo .searchbox .input-tag::-webkit-input-placeholder,
 body main section.tagging .right .tag-color .searchbox .input-tag::-webkit-input-placeholder {
   color: #bdf4e7;
 }
 body main section.tagging .right .tag-item .searchbox .input-tag:focus,
+body main section.tagging .right .tag-user-item .searchbox .input-tag:focus,
 body main section.tagging .right .tag-geo .searchbox .input-tag:focus,
 body main section.tagging .right .tag-color .searchbox .input-tag:focus {
   outline: 0;
   border-bottom: 1px solid #fff;
 }
 body main section.tagging .right .tag-item .searchbox .link,
+body main section.tagging .right .tag-user-item .searchbox .link,
 body main section.tagging .right .tag-geo .searchbox .link,
 body main section.tagging .right .tag-color .searchbox .link {
   position: absolute;
@@ -2467,6 +2495,7 @@ body main section.tagging .right .tag-color .searchbox .link {
   transition: all 0.3s;
 }
 body main section.tagging .right .tag-item .searchbox .link:hover,
+body main section.tagging .right .tag-user-item .searchbox .link:hover,
 body main section.tagging .right .tag-geo .searchbox .link:hover,
 body main section.tagging .right .tag-color .searchbox .link:hover {
   opacity: 0.9;
@@ -2474,6 +2503,7 @@ body main section.tagging .right .tag-color .searchbox .link:hover {
   text-decoration: none;
 }
 body main section.tagging .right .tag-item .searchbox .enter,
+body main section.tagging .right .tag-user-item .searchbox .enter,
 body main section.tagging .right .tag-geo .searchbox .enter,
 body main section.tagging .right .tag-color .searchbox .enter {
   position: absolute;
@@ -2481,6 +2511,7 @@ body main section.tagging .right .tag-color .searchbox .enter {
   top: 30px;
 }
 body main section.tagging .right .tag-item .geobox,
+body main section.tagging .right .tag-user-item .geobox,
 body main section.tagging .right .tag-geo .geobox,
 body main section.tagging .right .tag-color .geobox {
   background-color: @secondary-color;
@@ -2490,26 +2521,31 @@ body main section.tagging .right .tag-color .geobox {
   position: relative;
 }
 body main section.tagging .right .tag-item .geobox .locations,
+body main section.tagging .right .tag-user-item .geobox .locations,
 body main section.tagging .right .tag-geo .geobox .locations,
 body main section.tagging .right .tag-color .geobox .locations {
   margin: 0;
   padding: 0;
 }
 body main section.tagging .right .tag-item .geobox .locations:before,
+body main section.tagging .right .tag-user-item .geobox .locations:before,
 body main section.tagging .right .tag-geo .geobox .locations:before,
 body main section.tagging .right .tag-color .geobox .locations:before,
 body main section.tagging .right .tag-item .geobox .locations:after,
+body main section.tagging .right .tag-user-item .geobox .locations:after,
 body main section.tagging .right .tag-geo .geobox .locations:after,
 body main section.tagging .right .tag-color .geobox .locations:after {
   content: " ";
   display: table;
 }
 body main section.tagging .right .tag-item .geobox .locations:after,
+body main section.tagging .right .tag-user-item .geobox .locations:after,
 body main section.tagging .right .tag-geo .geobox .locations:after,
 body main section.tagging .right .tag-color .geobox .locations:after {
   clear: both;
 }
 body main section.tagging .right .tag-item .geobox .locations li,
+body main section.tagging .right .tag-user-item .geobox .locations li,
 body main section.tagging .right .tag-geo .geobox .locations li,
 body main section.tagging .right .tag-color .geobox .locations li {
   list-style: none;
@@ -2523,6 +2559,7 @@ body main section.tagging .right .tag-color .geobox .locations li {
   margin-right: 3px;
 }
 body main section.tagging .right .tag-item .geobox .locations li img,
+body main section.tagging .right .tag-user-item .geobox .locations li img,
 body main section.tagging .right .tag-geo .geobox .locations li img,
 body main section.tagging .right .tag-color .geobox .locations li img {
   position: relative;
@@ -2530,6 +2567,7 @@ body main section.tagging .right .tag-color .geobox .locations li img {
   margin-right: 7px;
 }
 body main section.tagging .right .tag-item .geobox .locations li a,
+body main section.tagging .right .tag-user-item .geobox .locations li a,
 body main section.tagging .right .tag-geo .geobox .locations li a,
 body main section.tagging .right .tag-color .geobox .locations li a {
   width: 100%;
@@ -2548,12 +2586,14 @@ body main section.tagging .right .tag-color .geobox .locations li a {
   transition: all 0.3s;
 }
 body main section.tagging .right .tag-item .geobox .locations li a img,
+body main section.tagging .right .tag-user-item .geobox .locations li a img,
 body main section.tagging .right .tag-geo .geobox .locations li a img,
 body main section.tagging .right .tag-color .geobox .locations li a img {
   position: relative;
   top: -1px;
 }
 body main section.tagging .right .tag-item .geobox .locations li a:hover,
+body main section.tagging .right .tag-user-item .geobox .locations li a:hover,
 body main section.tagging .right .tag-geo .geobox .locations li a:hover,
 body main section.tagging .right .tag-color .geobox .locations li a:hover {
   text-decoration: none;
@@ -2561,6 +2601,7 @@ body main section.tagging .right .tag-color .geobox .locations li a:hover {
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .geomap,
+body main section.tagging .right .tag-user-item .geomap,
 body main section.tagging .right .tag-geo .geomap,
 body main section.tagging .right .tag-color .geomap {
   height: 400px;
@@ -2568,24 +2609,28 @@ body main section.tagging .right .tag-color .geomap {
   margin-top: 15px;
 }
 body main section.tagging .right .tag-item .geomap .mapswrap,
+body main section.tagging .right .tag-user-item .geomap .mapswrap,
 body main section.tagging .right .tag-geo .geomap .mapswrap,
 body main section.tagging .right .tag-color .geomap .mapswrap {
   height: 100%;
   width: 100%;
 }
 body main section.tagging .right .tag-item .taglist,
+body main section.tagging .right .tag-user-item .taglist,
 body main section.tagging .right .tag-geo .taglist,
 body main section.tagging .right .tag-color .taglist {
   margin: 0;
   padding: 0;
 }
 body main section.tagging .cntr .tag-item .taglist,
+body main section.tagging .cntr .tag-user-item .taglist,
 body main section.tagging .cntr .tag-geo .taglist,
 body main section.tagging .cntr .tag-color .taglist {
   margin: 0;
   padding: 0;
 }
 body main section.tagging .right .tag-item .taglist > li,
+body main section.tagging .right .tag-user-item .taglist > li,
 body main section.tagging .right .tag-geo .taglist > li,
 body main section.tagging .right .tag-color .taglist > li {
   list-style: none;
@@ -2598,6 +2643,7 @@ body main section.tagging .right .tag-color .taglist > li {
   transition: all 0.3s;
 }
 body main section.tagging .cntr .tag-item .taglist > li,
+body main section.tagging .cntr .tag-user-item .taglist > li,
 body main section.tagging .cntr .tag-geo .taglist > li,
 body main section.tagging .cntr .tag-color .taglist > li {
   list-style: none;
@@ -2610,37 +2656,44 @@ body main section.tagging .cntr .tag-color .taglist > li {
   transition: all 0.3s;
 }
 body main section.tagging .right .tag-item .taglist > li:before,
+body main section.tagging .right .tag-user-item .taglist > li:before,
 body main section.tagging .right .tag-geo .taglist > li:before,
 body main section.tagging .right .tag-color .taglist > li:before,
 body main section.tagging .right .tag-item .taglist > li:after,
+body main section.tagging .right .tag-user-item .taglist > li:after,
 body main section.tagging .right .tag-geo .taglist > li:after,
 body main section.tagging .right .tag-color .taglist > li:after {
   content: " ";
   display: table;
 }
 body main section.tagging .right .tag-item .taglist > li:after,
+body main section.tagging .right .tag-user-item .taglist > li:after,
 body main section.tagging .right .tag-geo .taglist > li:after,
 body main section.tagging .right .tag-color .taglist > li:after {
   clear: both;
 }
 body main section.tagging .right .tag-item .taglist > li .text,
+body main section.tagging .right .tag-user-item .taglist > li .text,
 body main section.tagging .right .tag-geo .taglist > li .text,
 body main section.tagging .right .tag-color .taglist > li .text {
   width: 60%;
   float: left;
 }
 body main section.tagging .right .tag-item .taglist > li:hover,
+body main section.tagging .right .tag-user-item .taglist > li:hover,
 body main section.tagging .right .tag-geo .taglist > li:hover,
 body main section.tagging .right .tag-color .taglist > li:hover {
   background-color: #ebeaea;
   padding: 10px 20px 10px 25px;
 }
 body main section.tagging .right .tag-item .taglist > li .loc,
+body main section.tagging .right .tag-user-item .taglist > li .loc,
 body main section.tagging .right .tag-geo .taglist > li .loc,
 body main section.tagging .right .tag-color .taglist > li .loc {
   margin-right: 10px;
 }
 body main section.tagging .right .tag-item .taglist > li .geo,
+body main section.tagging .right .tag-user-item .taglist > li .geo,
 body main section.tagging .right .tag-geo .taglist > li .geo,
 body main section.tagging .right .tag-color .taglist > li .geo {
   color: #777;
@@ -2648,6 +2701,7 @@ body main section.tagging .right .tag-color .taglist > li .geo {
   margin-left: 5px;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action,
+body main section.tagging .right .tag-user-item .taglist > li ul.action,
 body main section.tagging .right .tag-geo .taglist > li ul.action,
 body main section.tagging .right .tag-color .taglist > li ul.action {
   float: right;
@@ -2656,6 +2710,7 @@ body main section.tagging .right .tag-color .taglist > li ul.action {
   position: relative;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li,
 body main section.tagging .right .tag-geo .taglist > li ul.action li,
 body main section.tagging .right .tag-color .taglist > li ul.action li {
   list-style: none;
@@ -2663,6 +2718,7 @@ body main section.tagging .right .tag-color .taglist > li ul.action li {
   // margin-left: 10px;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li .count {
   font-size: 1.2rem;
@@ -2674,6 +2730,7 @@ body main section.tagging .right .tag-color .taglist > li ul.action li .count {
 }
 body main section.tagging .right {
   .tag-item,
+  .tag-user-item,
   .tag-geo,
   .tag-color {
     .taglist > li ul.action li {
@@ -2698,10 +2755,12 @@ body main section.tagging .right {
     }
   }
 }
-body main section.tagging .right .tag-item .taglist > .pollAction {
+body main section.tagging .right .tag-item .taglist > .pollAction,
+body main section.tagging .right .tag-user-item .taglist > .pollAction {
     cursor: pointer;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon,
 body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon {
   width: 15px;
@@ -2712,38 +2771,45 @@ body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-i
   filter: alpha(opacity=40);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon.up,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li .thumbs-icon.up,
 body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon.up,
 body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon.up {
   top: 2px;
   background: url('../img/ic-thumbs-ups.png') 0 -14px;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon.down,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li .thumbs-icon.down,
 body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon.down,
 body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon.down {
   top: 3px;
   background: url('../img/ic-thumbs-downs.png') 0 -14px;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li img,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li img,
 body main section.tagging .right .tag-geo .taglist > li ul.action li img,
 body main section.tagging .right .tag-color .taglist > li ul.action li img {
   position: relative;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.up a .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up a .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.up a .count {
   color: #999;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a:hover,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover,
 body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover {
   text-decoration: none;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a:hover .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover .count {
   color: #00ac83;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover .thumbs-icon,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a:hover .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover .thumbs-icon,
 body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover .thumbs-icon {
   background-position: 0 0;
@@ -2751,11 +2817,13 @@ body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hove
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.up.active .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.up.active .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up.active .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.up.active .count {
   color: #00ac83;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.up.active .thumbs-icon,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.up.active .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up.active .thumbs-icon,
 body main section.tagging .right .tag-color .taglist > li ul.action li.up.active .thumbs-icon {
   background-position: 0 0;
@@ -2763,21 +2831,25 @@ body main section.tagging .right .tag-color .taglist > li ul.action li.up.active
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down a,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down a,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down a {
   text-decoration: none;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down a .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down a .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down a .count {
   color: #999;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down a:hover .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a:hover .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down a:hover .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down a:hover .count {
   color: #ce5e5e;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down a:hover .thumbs-icon,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a:hover .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down a:hover .thumbs-icon,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down a:hover .thumbs-icon {
   background-position: 0 0;
@@ -2785,11 +2857,13 @@ body main section.tagging .right .tag-color .taglist > li ul.action li.down a:ho
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .count,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.down.active .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .count {
   color: #ce5e5e;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .thumbs-icon,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.down.active .thumbs-icon,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .thumbs-icon,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .thumbs-icon {
   background-position: 0 0;
@@ -2797,6 +2871,7 @@ body main section.tagging .right .tag-color .taglist > li ul.action li.down.acti
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.delete,
+body main section.tagging .right .tag-user-item .taglist > li ul.action li.delete,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.delete,
 body main section.tagging .right .tag-color .taglist > li ul.action li.delete {
   position: absolute;
@@ -2806,25 +2881,30 @@ body main section.tagging .right .tag-color .taglist > li ul.action li.delete {
   filter: alpha(opacity=70);
 }
 body main section.tagging .right .tag-item .taglist.color > li,
+body main section.tagging .right .tag-user-item .taglist.color > li,
 body main section.tagging .right .tag-geo .taglist.color > li,
 body main section.tagging .right .tag-color .taglist.color > li {
   padding: 0;
 }
 body main section.tagging .right .tag-item .taglist.color > li:before,
+body main section.tagging .right .tag-user-item .taglist.color > li:before,
 body main section.tagging .right .tag-geo .taglist.color > li:before,
 body main section.tagging .right .tag-color .taglist.color > li:before,
 body main section.tagging .right .tag-item .taglist.color > li:after,
+body main section.tagging .right .tag-user-item .taglist.color > li:after,
 body main section.tagging .right .tag-geo .taglist.color > li:after,
 body main section.tagging .right .tag-color .taglist.color > li:after {
   content: " ";
   display: table;
 }
 body main section.tagging .right .tag-item .taglist.color > li:after,
+body main section.tagging .right .tag-user-item .taglist.color > li:after,
 body main section.tagging .right .tag-geo .taglist.color > li:after,
 body main section.tagging .right .tag-color .taglist.color > li:after {
   clear: both;
 }
 body main section.tagging .right .tag-item .taglist.color > li .thumbs,
+body main section.tagging .right .tag-user-item .taglist.color > li .thumbs,
 body main section.tagging .right .tag-geo .taglist.color > li .thumbs,
 body main section.tagging .right .tag-color .taglist.color > li .thumbs {
   float: left;
@@ -2833,11 +2913,13 @@ body main section.tagging .right .tag-color .taglist.color > li .thumbs {
   overflow: hidden;
 }
 body main section.tagging .right .tag-item .taglist.color > li .thumbs img,
+body main section.tagging .right .tag-user-item .taglist.color > li .thumbs img,
 body main section.tagging .right .tag-geo .taglist.color > li .thumbs img,
 body main section.tagging .right .tag-color .taglist.color > li .thumbs img {
   height: 50px;
 }
 body main section.tagging .right .tag-item .taglist.color > li .selected,
+body main section.tagging .right .tag-user-item .taglist.color > li .selected,
 body main section.tagging .right .tag-geo .taglist.color > li .selected,
 body main section.tagging .right .tag-color .taglist.color > li .selected {
   float: left;
@@ -2847,16 +2929,19 @@ body main section.tagging .right .tag-color .taglist.color > li .selected {
   transition: all 0.3s;
 }
 body main section.tagging .right .tag-item .taglist.color > li:hover .selected,
+body main section.tagging .right .tag-user-item .taglist.color > li:hover .selected,
 body main section.tagging .right .tag-geo .taglist.color > li:hover .selected,
 body main section.tagging .right .tag-color .taglist.color > li:hover .selected {
   padding: 13px 0 0 25px;
 }
 body main section.tagging .right .tag-item .taglist.color > li ul.action,
+body main section.tagging .right .tag-user-item .taglist.color > li ul.action,
 body main section.tagging .right .tag-geo .taglist.color > li ul.action,
 body main section.tagging .right .tag-color .taglist.color > li ul.action {
   padding: 13px 15px 0 0;
 }
 body main section.tagging .right .tag-item .taglist.color > li ul.action li.delete,
+body main section.tagging .right .tag-user-item .taglist.color > li ul.action li.delete,
 body main section.tagging .right .tag-geo .taglist.color > li ul.action li.delete,
 body main section.tagging .right .tag-color .taglist.color > li ul.action li.delete {
   top: 13px;
@@ -3187,7 +3272,8 @@ body footer .container .right li a:hover {
   }
   body main section.tagging .wraps .container .right .tag-geo .taglist > li .text,
   body main section.tagging .wraps .container .right .tag-color .taglist > li .text,
-  body main section.tagging .wraps .container .right .tag-item .taglist > li .text {
+  body main section.tagging .wraps .container .right .tag-item .taglist > li .text,
+  body main section.tagging .wraps .container .right .tag-user-item .taglist > li .text {
     width: 55%;
   }
   body main section.tagging .wraps .container .right .tag-geo .geomap {
@@ -3626,7 +3712,8 @@ body main section.validation .coloraction {
     padding-left: 0px;
     padding-right: 0px;
   }
-  body main section.tagging .wraps .container .right .tag-item {
+  body main section.tagging .wraps .container .right .tag-item,
+  body main section.tagging .wraps .container .right .tag-user-item {
     margin-bottom: 30px;
   }
   body main section.tagging .wraps .container .right .tag-geo {
@@ -5058,6 +5145,7 @@ body main section.tagging .right .heading, body main section.tagging .cntr .head
   margin-bottom: 0px;
 }
 body main section.tagging .cntr .tag-item .taglist,
+body main section.tagging .cntr .tag-user-item .taglist,
 body main section.tagging .cntr .tag-color .taglist {
   padding-top: 24px;
   height: fit-content !important;
@@ -5067,10 +5155,12 @@ body main section.tagging .cntr .tag-color .taglist {
   }
 }
 body main section.tagging .cntr .tag-item .taglist::before,
+body main section.tagging .cntr .tag-user-item .taglist::before,
 body main section.tagging .cntr .tag-color .taglist::before {
   height: 30px;
 }
 body main section.tagging .cntr .tag-item .taglist > li .cg-label,
+body main section.tagging .cntr .tag-user-item .taglist > li .cg-label,
 body main section.tagging .cntr .tag-color .taglist > li .cg-label {
   color: @main-color;
   margin-left: 10px;
@@ -5078,12 +5168,15 @@ body main section.tagging .cntr .tag-color .taglist > li .cg-label {
   // font-weight: bold;
 }
 body main section.tagging .cntr .tag-item .taglist > li .up .count,
+body main section.tagging .cntr .tag-user-item .taglist > li .up .count,
 body main section.tagging .cntr .tag-item .taglist > li .down .count,
+body main section.tagging .cntr .tag-user-item .taglist > li .down .count,
 body main section.tagging .cntr .tag-color .taglist > li .up .count,
 body main section.tagging .cntr .tag-color .taglist > li .down .count {
   color: #999;
 }
 body main section.tagging .cntr .tag-item .taglist > li .score,
+body main section.tagging .cntr .tag-user-item .taglist > li .score,
 body main section.tagging .cntr .tag-color .taglist > li .score {
   border-left: @main-color 1px solid;
   padding-left: 12px;
