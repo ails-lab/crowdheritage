@@ -1,0 +1,27 @@
+<template>
+  <div class="tag-item">
+    <!-- <div class="tag-user-item"> -->
+    <!-- infobar-->
+    <div class="wrap">
+      <!-- heading-->
+      <div class="heading yellow" t="item:usertagging">USER TAGS</div>
+      <!-- info-->
+      <div class="infobar" t="item:usertagging-info">Add your own custom tags</div>
+      <div class="searchbox mt-0" if.bind="campaign.status == 'active' && userServices.isAuthenticated()">
+        <textarea id="user-tag-textarea" value.bind="userTagValue" t="[placeholder]item:usertagging-textarea" rows="3" />
+        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="submitUserTag(userTagValue)" t="item:usertagging-submit">
+          Submit
+        </a>
+      </div>
+      <!-- taglist-->
+      <div class="show-more-parent">
+        <ul class="taglist show-more-target">
+          <li repeat.for="ann of commentAnnotations">
+            <a href="#" target="_blank">${ann}</a>
+          </li>
+        </ul>
+        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+      </div>
+    </div>
+  </div>
+</template>

@@ -60,6 +60,9 @@
   "toastr-error": "Une erreur est survenue",
   "toastr-empty": "Il n'y a pas d'annotation pour cette image",
   "toastr-geo": "Ce repère existe déjà",
-  "usertagging": "USER TAGS",
-  "usertagging-info": "Add your own custom tags"
+  "toggle-publish": "Click to toggle Publish state",
+  "usertagging": "COMMENTING",
+  "usertagging-info": "Describe the item in your own words.",
+  "usertagging-textarea": "Write your description here...",
+  "usertagging-submit": "Add"
 }

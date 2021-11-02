@@ -100,8 +100,8 @@
             <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"
               model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
-            <compose view="widgets/taguser/taguser.html" view-model="widgets/tagitem/tagitem"
-              if.bind="hasMotivation('Tagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+            <compose view="widgets/tagcomment/tagcomment.html" view-model="widgets/tagitem/tagitem"
+              if.bind="hasMotivation('Commenting')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
             </compose>
             <compose view="widgets/tagcolor/tagcolor.html" view-model="widgets/tagitem/tagitem"
               if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">

@@ -60,6 +60,9 @@
   "toastr-error": "C'è stato un errore",
   "toastr-empty": "Non sono state aggiunte annotazioni a questo record",
   "toastr-geo": "Annotazioni geografiche già presenti",
-  "usertagging": "USER TAGS",
-  "usertagging-info": "Add your own custom tags"
+  "toggle-publish": "Click to toggle Publish state",
+  "usertagging": "COMMENTING",
+  "usertagging-info": "Describe the item in your own words.",
+  "usertagging-textarea": "Write your description here...",
+  "usertagging-submit": "Add"
 }

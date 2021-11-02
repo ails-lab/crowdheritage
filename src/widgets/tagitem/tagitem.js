@@ -71,7 +71,7 @@ export class Tagitem {
     this.geoannotations = [];
     this.colorannotations = [];
     this.pollannotations = [];
-    this.userAnnotations = ['This pill is blue', 'This pill is red', 'There is no spoon', "σδασδ", "δαξφξν"];
+    this.commentAnnotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations = [];
@@ -125,7 +125,7 @@ export class Tagitem {
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
     this.pollannotations.splice(0, this.pollannotations.length);
-    this.userAnnotations.splice(0, this.pollannotations.length);
+    this.commentAnnotations.splice(0, this.commentAnnotations.length);
     this.pollTitle = "";
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
@@ -142,7 +142,7 @@ export class Tagitem {
     this.geoannotations = [];
     this.colorannotations = [];
     this.pollannotations = [];
-    this.userAnnotations = []
+    this.commentAnnotations = []
     await this.getRecordAnnotations(this.recId);
   }
 
@@ -1128,7 +1128,7 @@ export class Tagitem {
   userTagValue = '';
 
   submitUserTag(userTag) {
-    this.userAnnotations.unshift(userTag)
+    this.commentAnnotations.unshift(userTag)
   }
 
 }

@@ -54,7 +54,7 @@ export class LoginDialog {
 				toastr.error("Invalid email/username or password");
 			}
 			else {
-				location.reload();
+				// location.reload();
 				this.controller.ok();
 			}
 		}).catch((error) => {z

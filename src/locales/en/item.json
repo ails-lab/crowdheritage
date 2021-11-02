@@ -61,8 +61,8 @@
   "toastr-empty": "There are no annotations for this record",
   "toastr-geo": "Geotag already exists",
   "toggle-publish": "Click to toggle Publish state",
-  "usertagging": "USER TAGS",
-  "usertagging-info": "Add your own custom tags.",
+  "usertagging": "COMMENTING",
+  "usertagging-info": "Describe the item in your own words.",
   "usertagging-textarea": "Write your description here...",
-  "usertagging-submit": "Submit"
+  "usertagging-submit": "Add"
 }
