@@ -8,49 +8,12 @@
       <div class="action-body">
         <div class="form-group" repeat.for="inp of inputs">
           <label>${inp.label}</label>
-          <input type="text" placeholder="${inp.placeholder}" value.bind="inp.value" change.delegate="printState()">
+          <input type="${inp.type}" placeholder="${inp.placeholder}" value.bind="inp.value">
         </div>
       </div>
       <div class="button-group">
-        <button class="btn-green au-target" click.delegate="printState()">Import Collection</button>
+        <button class="btn-green" click.delegate="importCollection(inputs)">Import Collection</button>
       </div>
     </div>
   </div>
 </template>
-
-
-
-<!-- 
-<div class="action-header">
-  <div class="title" style="text-transform: capitalize;">Import Europeana Search</div>
-</div>
-
-<div class="action-body au-target" validation-renderer="bootstrap" au-target-id="99">
-  <div class="form-group">
-    <label>Collection Name</label>
-    <input type="text" placeholder="Name of your Collection" value.bind="collectionName &amp; validate" id="collname"
-      autofocus="" class="au-target" au-target-id="100">
-  </div>
-  <div class="form-group">
-    <label>Search Term</label>
-    <input type="text" placeholder="Europeana Search Term" value.bind="searchTerm &amp; validate" id="collname"
-      autofocus="" class="au-target" au-target-id="101">
-  </div>
-  <div class="form-group">
-    <label>Query Tail</label>
-    <input type="text" placeholder="The rest of the query for Europeana API" value.bind="tail &amp; validate"
-      id="collname" autofocus="" class="au-target" au-target-id="102">
-  </div>
-  <div class="form-group">
-    <label>Import Limit</label>
-    <input type="text" placeholder="Maximum Number of Items" value.bind="limit &amp; validate" id="collname"
-      autofocus="" class="au-target" au-target-id="103">
-  </div>
-
-</div>
-<div class="button-group"><a href="#" class="btn-green-o cancel au-target" click.delegate="closeTab()"
-    au-target-id="104">Cancel</a>
-  <button class="btn-green au-target" click.delegate="importEuropeanaSearch()" ref="importButton"
-    au-target-id="105">Import collection</button>
-</div>
-<div class="loading au-target aurelia-hide" show.bind="saving" au-target-id="106"></div> -->

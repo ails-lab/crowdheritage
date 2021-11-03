@@ -3850,6 +3850,7 @@ button.email:hover:enabled {
 	background-image: linear-gradient(#cc3334, #bb2d2d);
 }
 #loginPopup {
+  z-index:4;
 	box-sizing: border-box;
 	max-width: 570px;
 	padding: 10px;
@@ -5275,11 +5276,11 @@ a:hover .social-button.facebook {
 
 .import-wrap {
   float: right;
-  margin-right: 40px;
+  margin-right: px;
   position: relative;
 }
 
-#import {
+.import {
   float: right;
   text-decoration: none;
   color: #4f7979;
@@ -5292,7 +5293,7 @@ a:hover .social-button.facebook {
 .import-wrap .arrow {
   display: inline-block;
   width: 9px;
-  margin-right: 10px;
+  margin-right: 3px;
   height: 10px;
   margin-top: 8px;
   background: url(../img/f87e48b7ace8704f82935e1993a33146.png) no-repeat;
@@ -5300,11 +5301,35 @@ a:hover .social-button.facebook {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+
+.import .plus {
+  margin-right: 1px;
+  margin-left: 10px;
+  display: inline-block;
+  width: 10px;
+  height: 1px;
+  position: relative;
+  top: -5px;
+  background-color: #4f7979;
+}
+
+.import .plus::after {
+  content: '';
+  display: block;
+  background-color: inherit;
+  width: inherit;
+  height: inherit;
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  
+}
+
 .sidebar {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 10;
+  z-index: 3;
   top: 70px;
   right: 0;
   background-color: rgb(255, 255, 255);
@@ -5390,3 +5415,37 @@ a:hover .social-button.facebook {
 .button-group .btn-green:hover {
   background-color: #3b5a5a;
 }
+
+.form-group textarea{
+  width:100%;
+}
+
+.form-group select{
+  width:50%;
+}
+// .wrap .itemaction {
+// 				margin: 0;
+// 				padding: 0;
+// 				position: absolute;
+// 				z-index: 3;
+// 				top: 0;
+// 				left: 0;
+// 				.opacity( 0 );
+// 				.transition( all @transition-timing );
+
+// 				// li
+// 				li {
+// 					list-style: none;
+// 					float: left;
+// 					margin-right: 1px;
+
+// 					// favorited
+// 					&.favorited {
+// 						a {
+// 							.heart {
+// 								background-position: 0 -16px;
+// 							}
+// 						}
+// 					}
+//         }
+//       }

@@ -1,0 +1,33 @@
+<template>
+  <div id="editSidebar" class="sidebar">
+    <div class="action-header">
+      <div class="title">${edit ? 'Update Collection' : 'New Collection'}</div>
+    </div>
+    <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+    <div class="action-body">
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" value.bind="title" autofocus>
+      </div>
+      <div class="form-group">
+        <label>
+          Access<br>
+          <select value.bind="selectedAccess">
+            <option repeat.for="acc of access" model.bind="acc.bool">
+              ${acc.value}
+            </option>
+          </select>
+        </label>
+        <!-- ${selectedAccess} -->
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea type="text" value.bind="desc"></textarea>
+      </div>
+    </div>
+    <div class="button-group">
+      <button class="btn-green" click.delegate="save()">Save Collection</button>
+    </div>
+    <i show.bind="saving" class="fa fa-spinner fa-pulse"></i>
+  </div>
+</template>

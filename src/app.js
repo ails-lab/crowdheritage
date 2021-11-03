@@ -106,7 +106,8 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ':lang?', href: 'index',            name: 'index',    	 moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
+      // { route: ':lang?', href: 'index',            name: 'index',    	 moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
+      { route: ':lang?', href: 'index',        name: 'index',  moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: true,  title: settings.project },
       { route: ':lang/:cname',					           name: 'summary',    moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
       { route: ':lang/:cname/validation',          name: 'validation', moduleId: PLATFORM.moduleName('./pages/validation/validation'),        nav: false, title: ''},
 			{ route: ':lang/:cname/collection/:colid',   name: 'collection', moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
