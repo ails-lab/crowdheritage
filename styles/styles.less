@@ -5347,9 +5347,15 @@ a:hover .social-button.facebook {
   width: 100%;
   border: none;
   overflow: auto;
-  outline: none; 
+  outline: none;
   resize: none;
   margin-bottom: -7px;
+  background-color: @main-color;
+  color: white;
+
+  &::placeholder {
+    color: white;
+  }
 }
 
 #submit-user-tag {

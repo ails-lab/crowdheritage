@@ -7,9 +7,15 @@
       <div class="heading yellow" t="item:usertagging">USER TAGS</div>
       <!-- info-->
       <div class="infobar" t="item:usertagging-info">Add your own custom tags</div>
-      <div class="searchbox mt-0" if.bind="campaign.status == 'active' && userServices.isAuthenticated()">
-        <textarea id="user-tag-textarea" value.bind="userTagValue" t="[placeholder]item:usertagging-textarea" rows="3" />
-        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="submitUserTag(userTagValue)" t="item:usertagging-submit">
+      <div class="searchbox mt-0" if.bind="campaign.status == 'active' && !userServices.isAuthenticated()">
+        <textarea
+          id="user-tag-textarea"
+          value.bind="userComment"
+          input.delegate="autosizeCommentArea()"
+          t="[placeholder]item:usertagging-textarea"
+          rows="1">
+        </textarea>
+        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="submitComment()" t="item:usertagging-submit">
           Submit
         </a>
       </div>

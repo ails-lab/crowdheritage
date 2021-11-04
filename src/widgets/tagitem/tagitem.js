@@ -76,6 +76,8 @@ export class Tagitem {
     this.suggestionsLoading = false;
     this.suggestedAnnotations = [];
     this.selectedAnnotation = null;
+    this.userComment = '';
+
     this.userId = '';
     this.lg = loginPopup;
     this.uriRedirect = false;
@@ -1123,12 +1125,13 @@ export class Tagitem {
       return false;
   }
 
-  // For demo purposes - Integrate with API
+  autosizeCommentArea() {
+    let area = document.getElementById('user-tag-textarea');
+    area.style.cssText = 'height:' + area.scrollHeight + 'px';
+  }
 
-  userTagValue = '';
-
-  submitUserTag(userTag) {
-    this.commentAnnotations.unshift(userTag)
+  submitComment(event) {
+    this.commentAnnotations.unshift(this.userComment);
   }
 
 }
