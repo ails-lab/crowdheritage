@@ -316,7 +316,7 @@ export class Tagitem {
           });
       }
 
-      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging').then(() => {
+      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging', this.loc).then(() => {
         toastr.success('Annotation added.');
         self.ea.publish('annotations-created', self.record);
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
@@ -374,7 +374,7 @@ export class Tagitem {
             console.log("This ERROR occured : ", error);
           });
       }
-      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging');
+      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging', this.loc);
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
       // Clear and reload the colorannotations array
       this.colorannotations.splice(0, this.colorannotations.length);
@@ -394,7 +394,7 @@ export class Tagitem {
     }
   }
 
-  // mot has 3 potential values : [tag, geo, color]
+  // mot has 3 potential values : [tag, geo, color, comment]
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
@@ -428,9 +428,11 @@ export class Tagitem {
       else if (mot == 'color') {
         ann = this.colorannotations.splice(index, 1);
       }
+      else if (mot == 'comment') {
+        ann = this.commentAnnotations.splice(index, 1);
+      }
       this.reloadAnnotations().then(() => {
         if (this.isCurrentUserCreator()) {
-          console.log(ann[0]);
           // Remove one point from each of the upvoters
           for (let upvoter of ann[0].approvedBy) {
             this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
@@ -508,7 +510,9 @@ export class Tagitem {
       else if (mot == 'poll') {
         this.RejectFlag = this.pollannotations[index].rejectedByMe;
       }
-
+      else if (mot == 'comment') {
+        this.RejectFlag = this.commentAnnotations[index].rejectedByMe;
+      }
 
       this.annotationServices.approveObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
@@ -524,7 +528,9 @@ export class Tagitem {
         else if (mot == 'poll') {
           this.pollannotations[index].approvedBy.push(response);
         }
-
+        else if (mot == 'comment') {
+          this.commentAnnotations[index].approvedBy.push(response);
+        }
 
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after approval the score is equal (approved = rejected) it means that this annotation had bad karma and now must change -> reduce Karma points of the creator
@@ -622,6 +628,25 @@ export class Tagitem {
           }
         }
       }
+      else if (mot == 'comment') {
+        this.commentAnnotations[index].approvedByMe = true;
+        if (this.commentAnnotations[index].rejectedByMe) {
+          var i = this.commentAnnotations[index].rejectedBy.map(function (e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.commentAnnotations[index].rejectedBy.splice(i, 1);
+          }
+          this.commentAnnotations[index].rejectedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
     }
 
     if (annoType == 'rejected') {
@@ -638,6 +663,9 @@ export class Tagitem {
       else if (mot == 'poll') {
         this.ApproveFlag = this.pollannotations[index].approvedByMe;
       }
+      else if (mot == 'comment') {
+        this.ApproveFlag = this.commentAnnotations[index].approvedByMe;
+      }
 
       this.annotationServices.rejectObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
@@ -652,6 +680,9 @@ export class Tagitem {
         }
         else if (mot == 'poll') {
           this.pollannotations[index].rejectedBy.push(response);
+        }
+        else if (mot == 'comment') {
+          this.commentAnnotations[index].rejectedBy.push(response);
         }
 
         this.annotationServices.getAnnotation(annoId).then(response => {
@@ -750,6 +781,25 @@ export class Tagitem {
           }
         }
       }
+      else if (mot == 'comment') {
+        this.commentAnnotations[index].rejectedByMe = true;
+        if (this.commentAnnotations[index].approvedByMe) {
+          var i = this.commentAnnotations[index].approvedBy.map(function (e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.commentAnnotations[index].approvedBy.splice(i, 1);
+          }
+          this.commentAnnotations[index].approvedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
     }
   }
 
@@ -807,6 +857,15 @@ export class Tagitem {
           this.pollannotations[index].approvedBy.splice(i, 1);
         }
         this.pollannotations[index].approvedByMe = false;
+      }
+      else if (mot == 'comment') {
+        var i = this.commentAnnotations[index].approvedBy.map(function (e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.commentAnnotations[index].approvedBy.splice(i, 1);
+        }
+        this.commentAnnotations[index].approvedByMe = false;
       }
 
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
@@ -866,6 +925,15 @@ export class Tagitem {
           this.pollannotations[index].rejectedBy.splice(i, 1);
         }
         this.pollannotations[index].rejectedByMe = false;
+      }
+      else if (mot == 'comment') {
+        var i = this.commentAnnotations[index].rejectedBy.map(function (e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.commentAnnotations[index].rejectedBy.splice(i, 1);
+        }
+        this.commentAnnotations[index].rejectedByMe = false;
       }
 
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
@@ -976,6 +1044,22 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+    if (this.hasMotivation('Commenting')) {
+      await this.recordServices.getAnnotations(this.recId, 'Commenting', this.generatorParam).then(response => {
+        this.commentAnnotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.commentAnnotations.push(new Annotation(response[i], "", this.loc));
+          } else {
+            this.commentAnnotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.commentAnnotations.sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
   }
 
   getColorLabel(label) {
@@ -1019,6 +1103,7 @@ export class Tagitem {
     var geoFlag = false;
     var colorFlag = false;
     var pollFlag = false;
+    var commFlag = false;
 
     for (var i in this.annotations) {
       if (this.annotations[i].createdByMe || this.annotations[i].approvedByMe || this.annotations[i].rejectedByMe) {
@@ -1044,6 +1129,12 @@ export class Tagitem {
         break;
       }
     }
+    for (var i in this.commentAnnotations) {
+      if (this.commentAnnotations[i].createdByMe || this.commentAnnotations[i].approvedByMe || this.commentAnnotations[i].rejectedByMe) {
+        commFlag = true;
+        break;
+      }
+    }
 
     if (mot == "tag") {
       return tagFlag;
@@ -1057,8 +1148,11 @@ export class Tagitem {
     else if (mot == "poll") {
       return pollFlag;
     }
+    else if (mot == "comment") {
+      return commFlag;
+    }
     else {
-      return tagFlag || geoFlag || colorFlag || pollFlag;
+      return tagFlag || geoFlag || colorFlag || pollFlag || commFlag;
     }
   }
 
@@ -1130,8 +1224,34 @@ export class Tagitem {
     area.style.cssText = 'height:' + area.scrollHeight + 'px';
   }
 
-  submitComment(event) {
-    this.commentAnnotations.unshift(this.userComment);
+  submitComment() {
+    if (this.userComment.trim().length == 0) {
+      toastr.error("Your comment can not be empty");
+    }
+    else {
+      this.annotationServices.annotateRecord(this.recId, this.userComment.trim(), this.campaign.username, 'Commenting', this.loc).then(() => {
+        toastr.success('Annotation added.');
+        self.ea.publish('annotations-created', self.record);
+        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        var lb = this.userComment.trim();
+        this.getRecordAnnotations('').then(() => {
+          for (var [i, ann] of this.commentAnnotations.entries()) {
+            if (ann.label.toLowerCase() === lb.toLowerCase()) {
+              this.score(ann.dbId, 'approved', i, 'comment');
+              break;
+            }
+          }
+        });
+      }).catch((error) => {
+        console.error(error);
+        toastr.error(this.i18n.tr('item:toastr-error'));
+      });
+    }
+
+    this.userComment = '';
+    let area = document.getElementById('user-tag-textarea');
+    area.style.cssText = 'height: 28px';
   }
 
 }
