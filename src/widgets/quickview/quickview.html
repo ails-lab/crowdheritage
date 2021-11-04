@@ -1,7 +1,7 @@
 <template>
-  <div class="action-header">
+  <!-- <div class="action-header">
 
-  </div>
+  </div> -->
   <div class="action-body">
     <div class="group">
       <div class="title">
@@ -43,7 +43,7 @@
               </compose>
             </div>
           </div>
-          <div class="cntr" if.bind="!loadCamp && !loadRec">
+          <div class="cntr" if.bind="!loadCamp && !loadRec && !edit">
 						<br/>
             <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
             </compose>
@@ -57,7 +57,7 @@
         </div>
 
       </section>
-			<button class="btn-close" click.delegate="closeTab()">Close</button>
+			<button class="btn-close" click.delegate="closeTab()" if.bind="!edit">Close</button>
     </div>
   </div>
 </template>

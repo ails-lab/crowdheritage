@@ -245,6 +245,7 @@ body div[role='main'] section.action {
   border-left: 1px solid #ccc;
   z-index: 102;
   padding: 35px;
+  padding-top: 15px;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -5423,29 +5424,93 @@ a:hover .social-button.facebook {
 .form-group select{
   width:50%;
 }
-// .wrap .itemaction {
-// 				margin: 0;
-// 				padding: 0;
-// 				position: absolute;
-// 				z-index: 3;
-// 				top: 0;
-// 				left: 0;
-// 				.opacity( 0 );
-// 				.transition( all @transition-timing );
 
-// 				// li
-// 				li {
-// 					list-style: none;
-// 					float: left;
-// 					margin-right: 1px;
+.itemaction {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    // display: inline-block;
+    list-style-type: none;
+    cursor: pointer;
+    z-index: 3;
+    top: 0;
+    left: 30px;
+    opacity: 0;
+    // filter: alpha(opacity=0);
+    -webkit-transition: all 0.3s;
+    // -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.entry:hover .itemaction{
+  opacity:1;
+}
 
-// 					// favorited
-// 					&.favorited {
-// 						a {
-// 							.heart {
-// 								background-position: 0 -16px;
-// 							}
-// 						}
-// 					}
-//         }
-//       }
+.itemaction ul {
+  display:inline-block;
+  // list-style-type: none;
+  // margin-block-start: 1em;
+  // margin-block-end: 1em;
+  // margin-inline-start: 0px;
+  // margin-inline-end: 0px;
+  // padding-inline-start: 40px;
+}
+
+.itemaction li  {
+  width: 40px;
+  list-style-type: none;
+  height: 40px;
+  margin:3px;
+  background-color: #2a2b28;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-transition: all 0.3s;
+  // -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.itemaction li:hover {
+  background-color: #5d862b;
+}
+
+.itemaction-records {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  // display: inline-block;
+  list-style-type: none;
+  cursor: pointer;
+  z-index: 3;
+  top: 0;
+  left: 0px;
+  opacity: 0;
+  // filter: alpha(opacity=0);
+  -webkit-transition: all 0.3s;
+  // -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.entry:hover .itemaction-records{
+opacity:1;
+}
+
+.itemaction-records li  {
+width: 40px;
+list-style-type: none;
+height: 40px;
+margin:3px;
+background-color: #2a2b28;
+display: flex;
+align-items: center;
+justify-content: center;
+-webkit-transition: all 0.3s;
+// -o-transition: all 0.3s;
+transition: all 0.3s;
+}
+
+.itemaction-records li:hover {
+background-color: #5d862b;
+}
+
+.editicon {
+  width: 20px;
+}

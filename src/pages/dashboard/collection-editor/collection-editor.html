@@ -23,18 +23,6 @@
               <span class="text">New Collection</span>
             </a>
           </div>
-          <div class="import-wrap">
-            <a class="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
-              <span class="arrow"></span>
-              <span class="text">Import Collection</span>
-            </a>
-            <ul aria-labelledby="import" class="dropdown-menu">
-              <li><a href="#" click.delegate="importEuropeanaCollection()">Europeana Dataset</a></li>
-              <li><a href="#" click.delegate="importEuropeanaSearch()">Europeana Search</a></li>
-              <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana User Gallery</a></li>
-            </ul>
-          </div>
-
         </div>
         <div class="campaignlist" if.bind="collections.length>0">
           <!-- entry-->
@@ -47,7 +35,7 @@
                       onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                   </div>
                   <div class="action">
-                    <h3><b>Edit </b></h3>
+                    <h3><b>Edit Records</b></h3>
                   </div>
                 </div>
                 <!-- detail-->
@@ -62,15 +50,17 @@
                     <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
                   </div>
                 </div>
-                <ul >
+                
+                <ul class="itemaction">
                   <li>
-                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top" title="Delete collection" class="delete">Delete</i></a>
+                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top" title="Delete collection" class="delete"><img class="editicon" src="/img/assets/img/ui/ic-delete.png" /></i></a>
                   </li>
                   <li>
-                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top" title="Edit">Edit</a>
+                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top" title="Edit Collection"><img class="editicon" src="/img/assets/img/ui/ic-edit.png" /></a>
                   </li>
                 </ul>
               </a>
+              
             </div>
           </div>
           <!-- more-->
@@ -87,10 +77,5 @@
     <section>
 			<compose view-model="widgets/newcollection/newcollection" model.bind="{ 'parent': thisVM, 'collection' : editableCollection, 'type': edittype}"></compose>
 		</section>
-    <section>
-      <compose view-model="widgets/import-europeana/import-europeana"
-        model.bind="{'importMethod': importMethod, 'router': router, 'lang': loc}">
-      </compose>
-    </section>
   </main>
 </template>

@@ -34,6 +34,7 @@ export class ImportEuropeana {
   }
 
   async activate(params, route) {
+    this.impMethod = params.importMethod
     this.inputs = []
     if (params.importMethod === "Europeana Search") {
       this.inputs = [
@@ -129,6 +130,9 @@ export class ImportEuropeana {
 
     }
     else if (this.importMethod === "Europeana User Gallery") {
+      pass;
+    }
+    else if(this.importMethod === "Single Item"){
       pass;
     }
     // this.collectionServices.
