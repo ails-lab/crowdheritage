@@ -7,7 +7,7 @@
       <div class="heading yellow" t="item:usertagging">USER TAGS</div>
       <!-- info-->
       <div class="infobar" t="item:usertagging-info">Add your own custom tags</div>
-      <div class="searchbox mt-0" if.bind="campaign.status == 'active' && userServices.isAuthenticated()">
+      <div class="searchbox mt-0" if.bind="campaign.status == 'active' && userHasAccessInCampaign()">
         <textarea
           id="user-tag-textarea"
           value.bind="userComment"

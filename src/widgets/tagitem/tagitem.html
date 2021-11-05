@@ -1,14 +1,13 @@
 <template>
   <require from="../tooltip/tooltip"></require>
-  <div class="tag-item"
-    if.bind="!isTesterUser || !(campaign.username=='instruments' || campaign.username=='garment-type')">
+  <div class="tag-item">
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
       <div class="heading green" t="app:tags">TAGS</div>
       <!-- info-->
       <div class="infobar">${campaign.instructions}</div>
-      <div class="searchbox" if.bind="(isTesterUser || campaign.status == 'active') && userServices.isAuthenticated()">
+      <div class="searchbox" if.bind="campaign.status == 'active' && userHasAccessInCampaign()">
         <input id="annotationInput" autocomplete="off" value.bind="prefix"
           input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text"
           placeholder.bind="placeholderText" class="input-tag" />

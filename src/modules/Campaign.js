@@ -13,7 +13,6 @@
  * under the License.
  */
 
-
 import settings from 'global.config.js';
 
 export class Campaign {
@@ -31,6 +30,7 @@ export class Campaign {
     this.purpose = data.purpose;
     this.target = data.annotationTarget;
     this.created = data.annotationCurrent.created;
+    this.userGroupIds = data.userGroupIds;
     this.approved = data.annotationCurrent.approved;
     this.rejected = data.annotationCurrent.rejected;
     this.contributorsCount = Object.keys(data.contributorsPoints).length;

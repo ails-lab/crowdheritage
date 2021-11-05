@@ -61,6 +61,7 @@
   "toastr-empty": "Il n'y a pas d'annotation pour cette image",
   "toastr-geo": "Ce repère existe déjà",
   "toggle-publish": "Click to toggle Publish state",
+  "toastr-restricted": "You can not annotate. This campaign is private.",
   "usertagging": "COMMENTING",
   "usertagging-info": "Describe the item in your own words.",
   "usertagging-textarea": "Write your description here...",

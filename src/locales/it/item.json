@@ -61,6 +61,7 @@
   "toastr-empty": "Non sono state aggiunte annotazioni a questo record",
   "toastr-geo": "Annotazioni geografiche già presenti",
   "toggle-publish": "Click to toggle Publish state",
+  "toastr-restricted": "You can not annotate. This campaign is private.",
   "usertagging": "COMMENTING",
   "usertagging-info": "Describe the item in your own words.",
   "usertagging-textarea": "Write your description here...",

@@ -29,7 +29,7 @@ import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N, 'isTesterUser')
+@inject(CampaignServices, CollectionServices, UserServices, RecordServices, Router, TaskQueue, I18N)
 export class CampaignSummary {
   scrollTo(anchor) {
     $('html, body').animate({
@@ -37,7 +37,7 @@ export class CampaignSummary {
     }, 1000);
   }
 
-  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n, isTesterUser) {
+  constructor(campaignServices, collectionServices, userServices, recordServices, router, taskQueue, i18n) {
   	if (instance) {
   			return instance;
   		}
@@ -49,7 +49,6 @@ export class CampaignSummary {
       this.recordServices = recordServices;
       this.router = router;
       this.i18n = i18n;
-      this.isTesterUser = isTesterUser();
       this.isCreator = false;
 
       this.records = [];

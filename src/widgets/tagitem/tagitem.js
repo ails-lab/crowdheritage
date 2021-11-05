@@ -27,12 +27,12 @@ import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N, 'isTesterUser')
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N)
 export class Tagitem {
 
   @bindable prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n, isTesterUser) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n) {
     this.i18n = i18n;
 
     this.colorSet = [
@@ -62,7 +62,6 @@ export class Tagitem {
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
-    this.isTesterUser = isTesterUser();
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.togglePublishText = this.i18n.tr('item:toggle-publish');
@@ -134,9 +133,6 @@ export class Tagitem {
       await this.userServices.reloadCurrentUser();
     }
     await this.getRecordAnnotations(this.recId);
-    if (this.isTesterUser && (this.campaign.username === "instruments" || this.campaign.username === "garment-type")) {
-      toastr.error("You cannot contribute to this campaign!");
-    }
   }
 
   async reloadAnnotations() {
@@ -210,8 +206,12 @@ export class Tagitem {
 
   selectGeoAnnotation(geoid) {
     // If the campaign is inactive do NOT geoannotate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
 
@@ -273,10 +273,15 @@ export class Tagitem {
 
   selectSuggestedAnnotation(index) {
     // If the campaign is inactive do NOT validate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
+      return;
+    }
+
     if (this.uriRedirect) {
       this.uriRedirect = false;
       this.prefixChanged();
@@ -343,8 +348,12 @@ export class Tagitem {
       label = 'Multicoloured';
     }
     // If the campaign is inactive do NOT annotate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
 
@@ -467,8 +476,12 @@ export class Tagitem {
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
 
@@ -1219,12 +1232,38 @@ export class Tagitem {
       return false;
   }
 
+  userHasAccessInCampaign() {
+    if (!this.userServices.isAuthenticated()) {
+      return false;
+    }
+    if (!this.campaign.userGroupIds || this.campaign.userGroupIds.length === 0) {
+      return true;
+    }
+
+    for (const groupId of this.userServices.current.userGroupsIds) {
+      if (this.campaign.userGroupIds.includes(groupId))
+        return true;
+    }
+
+    return false;
+  }
+
   autosizeCommentArea() {
     let area = document.getElementById('user-tag-textarea');
     area.style.cssText = 'height:' + area.scrollHeight + 'px';
   }
 
   submitComment() {
+    // If the campaign is inactive do NOT annotate
+    if (this.campaign.status != 'active') {
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
+      return;
+    }
+
     if (this.userComment.trim().length == 0) {
       toastr.error("Your comment can not be empty");
     }
