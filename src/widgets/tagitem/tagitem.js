@@ -1232,7 +1232,7 @@ export class Tagitem {
       return false;
   }
 
-  userHasAccessInCampaign() {
+  async userHasAccessInCampaign() {
     if (!this.userServices.isAuthenticated()) {
       return false;
     }
@@ -1240,6 +1240,7 @@ export class Tagitem {
       return true;
     }
 
+    await this.userServices.reloadCurrentUser();
     for (const groupId of this.userServices.current.userGroupsIds) {
       if (this.campaign.userGroupIds.includes(groupId))
         return true;
