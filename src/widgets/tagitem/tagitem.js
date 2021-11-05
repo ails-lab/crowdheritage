@@ -1234,16 +1234,22 @@ export class Tagitem {
 
   async userHasAccessInCampaign() {
     if (!this.userServices.isAuthenticated()) {
+      console.log('user not authenticated')
       return false;
     }
     if (!this.campaign.userGroupIds || this.campaign.userGroupIds.length === 0) {
+      console.log("campaign is public")
       return true;
     }
-
+    console.log("campaign", this.campaign);
+    console.log("user", this.userServices.current);
     await this.userServices.reloadCurrentUser();
+    console.log("reloaded-user", this.userServices.current);
     for (const groupId of this.userServices.current.userGroupsIds) {
-      if (this.campaign.userGroupIds.includes(groupId))
+      if (this.campaign.userGroupIds.includes(groupId)) {
+        console.log("campaign not public - user has access")
         return true;
+      }
     }
 
     return false;
