@@ -23,7 +23,7 @@
       <div class="show-more-parent">
         <ul class="taglist show-more-target">
           <li repeat.for="ann of commentAnnotations">
-            <a>${ann.label}</a>
+            <a class="comment-tag">${ann.label}</a>
             <ul class="action">
               <li class.bind="ann.approvedByMe ? 'up active' : 'up'">
                 <a if.bind="!ann.createdByMe" href="javascript:void(0)"

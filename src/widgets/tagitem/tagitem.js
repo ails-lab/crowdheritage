@@ -1231,7 +1231,7 @@ export class Tagitem {
     else {
       this.annotationServices.annotateRecord(this.recId, this.userComment.trim(), this.campaign.username, 'Commenting', this.loc).then(() => {
         toastr.success('Annotation added.');
-        self.ea.publish('annotations-created', self.record);
+        this.ea.publish('annotations-created', self.record);
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
         // After annotating, automatically upvote the new annotation
         var lb = this.userComment.trim();
