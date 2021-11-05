@@ -1232,7 +1232,7 @@ export class Tagitem {
       return false;
   }
 
-  async userHasAccessInCampaign() {
+  userHasAccessInCampaign() {
     if (!this.userServices.isAuthenticated()) {
       console.log('user not authenticated')
       return false;
@@ -1243,7 +1243,7 @@ export class Tagitem {
     }
     console.log("campaign", this.campaign);
     console.log("user", this.userServices.current);
-    await this.userServices.reloadCurrentUser();
+    // await this.userServices.reloadCurrentUser();
     console.log("reloaded-user", this.userServices.current);
     for (const groupId of this.userServices.current.userGroupsIds) {
       if (this.campaign.userGroupIds.includes(groupId)) {
