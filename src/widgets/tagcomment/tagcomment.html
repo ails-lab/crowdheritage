@@ -21,7 +21,7 @@
       </div>
       <!-- taglist-->
       <div class="show-more-parent">
-        <ul class="taglist show-more-target">
+        <ul class="commentBlock taglist show-more-target">
           <li repeat.for="ann of commentAnnotations">
             <a class="comment-tag">${ann.label}</a>
             <ul class="action">
@@ -52,7 +52,7 @@
             </ul>
           </li>
         </ul>
-        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".commentBlock")'></i>
       </div>
     </div>
   </div>

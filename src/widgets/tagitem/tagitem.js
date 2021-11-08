@@ -102,7 +102,10 @@ export class Tagitem {
 
   attached() {
     document.addEventListener('click', this.handleBodyClick);
-    toggleMore(".taglist");
+    toggleMore(".tagBlock");
+    toggleMore(".commentBlock");
+    toggleMore(".colorBlock");
+    toggleMore(".geoBlock");
   }
 
   detached() {

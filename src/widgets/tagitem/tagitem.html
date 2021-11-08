@@ -30,7 +30,7 @@
       </div>
       <!-- taglist-->
       <div class="show-more-parent">
-        <ul class="taglist show-more-target">
+        <ul class="tagBlock taglist show-more-target">
           <li repeat.for="ann of annotations">
             <a href.bind="ann.uri" target="_blank">${ann.label}</a>
             <ul class="action">
@@ -71,7 +71,7 @@
             </ul>
           </li>
         </ul>
-        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".tagBlock")'></i>
       </div>
     </div>
   </div>
