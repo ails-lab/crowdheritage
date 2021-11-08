@@ -245,6 +245,7 @@ body div[role='main'] section.action {
   border-left: 1px solid #ccc;
   z-index: 102;
   padding: 35px;
+  padding-top: 15px;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -3850,6 +3851,7 @@ button.email:hover:enabled {
 	background-image: linear-gradient(#cc3334, #bb2d2d);
 }
 #loginPopup {
+  z-index:4;
 	box-sizing: border-box;
 	max-width: 570px;
 	padding: 10px;
@@ -5275,11 +5277,11 @@ a:hover .social-button.facebook {
 
 .import-wrap {
   float: right;
-  margin-right: 40px;
+  margin-right: px;
   position: relative;
 }
 
-#import {
+.import {
   float: right;
   text-decoration: none;
   color: #4f7979;
@@ -5292,7 +5294,7 @@ a:hover .social-button.facebook {
 .import-wrap .arrow {
   display: inline-block;
   width: 9px;
-  margin-right: 10px;
+  margin-right: 3px;
   height: 10px;
   margin-top: 8px;
   background: url(../img/f87e48b7ace8704f82935e1993a33146.png) no-repeat;
@@ -5300,11 +5302,35 @@ a:hover .social-button.facebook {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+
+.import .plus {
+  margin-right: 1px;
+  margin-left: 10px;
+  display: inline-block;
+  width: 10px;
+  height: 1px;
+  position: relative;
+  top: -5px;
+  background-color: #4f7979;
+}
+
+.import .plus::after {
+  content: '';
+  display: block;
+  background-color: inherit;
+  width: inherit;
+  height: inherit;
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  
+}
+
 .sidebar {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 10;
+  z-index: 3;
   top: 70px;
   right: 0;
   background-color: rgb(255, 255, 255);
@@ -5395,4 +5421,102 @@ a:hover .social-button.facebook {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.form-group textarea{
+  width:100%;
+}
+
+.form-group select{
+  width:50%;
+}
+
+.itemaction {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    // display: inline-block;
+    list-style-type: none;
+    cursor: pointer;
+    z-index: 3;
+    top: 0;
+    left: 30px;
+    opacity: 0;
+    // filter: alpha(opacity=0);
+    -webkit-transition: all 0.3s;
+    // -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.entry:hover .itemaction{
+  opacity:1;
+}
+
+.itemaction ul {
+  display:inline-block;
+  // list-style-type: none;
+  // margin-block-start: 1em;
+  // margin-block-end: 1em;
+  // margin-inline-start: 0px;
+  // margin-inline-end: 0px;
+  // padding-inline-start: 40px;
+}
+
+.itemaction li  {
+  width: 40px;
+  list-style-type: none;
+  height: 40px;
+  margin:3px;
+  background-color: #2a2b28;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-transition: all 0.3s;
+  // -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.itemaction li:hover {
+  background-color: #5d862b;
+}
+
+.itemaction-records {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  // display: inline-block;
+  list-style-type: none;
+  cursor: pointer;
+  z-index: 3;
+  top: 0;
+  left: 0px;
+  opacity: 0;
+  // filter: alpha(opacity=0);
+  -webkit-transition: all 0.3s;
+  // -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.entry:hover .itemaction-records{
+opacity:1;
+}
+
+.itemaction-records li  {
+width: 40px;
+list-style-type: none;
+height: 40px;
+margin:3px;
+background-color: #2a2b28;
+display: flex;
+align-items: center;
+justify-content: center;
+-webkit-transition: all 0.3s;
+// -o-transition: all 0.3s;
+transition: all 0.3s;
+}
+
+.itemaction-records li:hover {
+background-color: #5d862b;
+}
+
+.editicon {
+  width: 20px;
 }

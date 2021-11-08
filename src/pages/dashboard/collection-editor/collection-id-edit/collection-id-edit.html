@@ -28,8 +28,29 @@
               <span class="text" t="app:description">DESCRIPTION</span>
             </div>
           </div>
-          <p innerHtml.bind="collection.description" />
+          <p>${collection.description[0]}</p>
         </div>
+        <div class="topsection">
+          <div class="import-wrap">
+            <a class="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+              <span class="arrow"></span>
+              <span class="text">Import Items</span>
+            </a>
+            <ul aria-labelledby="import" class="dropdown-menu">
+              <li><a href="#" click.delegate="importSingleItem()">Single Item</a></li>
+              <li><a href="#" click.delegate="importEuropeanaCollection()">Europeana Dataset</a></li>
+              <li><a href="#" click.delegate="importEuropeanaSearch()">Europeana Search</a></li>
+              <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana User Gallery</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <section>
+          <compose view-model="widgets/import-europeana/import-europeana"
+            model.bind="{'importMethod': importMethod, 'router': router, 'lang': loc}">
+          </compose>
+        </section>
     		<compose view-model="widgets/multiple-items/multiple-items"
     						 model.bind="{'collectionEdit': true, 'myCollection': collection, 'router': router, 'lang': loc}">
     		</compose>

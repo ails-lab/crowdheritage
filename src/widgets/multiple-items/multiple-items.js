@@ -32,8 +32,8 @@ export class MultipleItems {
 	get more() { return this.records.length < this.totalCount }
 	get offset() { return this.records.length }
 	get byUser() { return !!this.user}
-	get byCollection() { return !!this.collection}
-  // get byCollectionEdit() { return this.collectionEdit }
+	get byCollection() { return !!this.collection && !this.collectionEdit}
+  get byCollectionEdit() { return this.collectionEdit }
 
   constructor(collectionServices, userServices, campaignServices, i18n) {
 		if (instance) {
@@ -108,8 +108,13 @@ export class MultipleItems {
 		this.i18n.setLocale(params.lang);
 	 	this.cname = params.cname;
 		this.router = params.router;
-
-	 	if (params.collection) {
+    if(params.collectionEdit){
+      this.collectionEdit = params.collectionEdit
+      this.collection = params.myCollection;
+			this.totalCount = this.collection.entryCount;
+      console.log("collectionEdit")
+    }
+	 	else if (params.collection) {
 	 		this.collection = params.collection;
 			this.totalCount = this.collection.entryCount;
 		}
@@ -117,12 +122,6 @@ export class MultipleItems {
 			this.user = params.user;
 			this.totalCount = params.totalCount;
 		}
-    // else if(params.collectionEdit){
-    //   this.collection = params.myCollection;
-		// 	this.totalCount = this.collection.entryCount;
-    //   console.log("collectionEdit")
-
-    // }
 
 		if (params.records && this.records.length==0) {
 			this.loading = true;
@@ -211,5 +210,15 @@ export class MultipleItems {
 	 		this.getRecords();
 		}
 	}
+
+  deleteRecord(record){
+    if (window.confirm("Do you really want to delete this record from your collection?")){
+      this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
+      .then(response => {
+        console.log(response)
+        this.getRecords();
+      })
+    }
+  }
 
 }
