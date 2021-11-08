@@ -1263,19 +1263,19 @@ export class Tagitem {
       return;
     }
 
-    if (this.userComment.trim().length == 0) {
+    var comment = this.userComment.trim();
+    if (comment.length == 0) {
       toastr.error("Your comment can not be empty");
     }
     else {
-      this.annotationServices.annotateRecord(this.recId, this.userComment.trim(), this.campaign.username, 'Commenting', this.loc).then(() => {
+      this.annotationServices.annotateRecord(this.recId, comment, this.campaign.username, 'Commenting', this.loc).then(() => {
         toastr.success('Annotation added.');
         this.ea.publish('annotations-created', self.record);
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
         // After annotating, automatically upvote the new annotation
-        var lb = this.userComment.trim();
         this.getRecordAnnotations('').then(() => {
           for (var [i, ann] of this.commentAnnotations.entries()) {
-            if (ann.label.toLowerCase() === lb.toLowerCase()) {
+            if (ann.label.toLowerCase() === comment.toLowerCase()) {
               this.score(ann.dbId, 'approved', i, 'comment');
               break;
             }
