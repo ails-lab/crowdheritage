@@ -30,8 +30,8 @@ export class CollectionEditor {
     this.collectionsCount = 0;
     this.collections = [];
     this.loading = false;
-    this.currentCount = 0;
-    this.count = 3;
+    this.count = 12;
+    this.offset = 0;
     this.importMethod = ''
   }
 
@@ -44,56 +44,153 @@ export class CollectionEditor {
     }
     if (this.user) {
       this.loading = true;
-      let self = this;
-      // console.log(this.user)
       this.getCollectionsByUser();
       this.loading = false;
     }
 
   }
 
-  getCollectionsByUser(){
-    this.collectionServices.getCollections(0, 12, true, false, this.user.username).then(response => {
-      console.log(response)
+  getCollectionsByUser() {
+    this.collectionServices.getCollections(this.offset, this.count, true, false, this.user.username).then(response => {
       let collectionIds = response.collectionsOrExhibitions.map(col => {
         return col.dbId
       })
-      this.collectionsCount = response.totalCollections
-      this.count = response.totalCollections
+      // console.log(response)
+      this.collectionsCount += response.collectionsOrExhibitions.length;
+      this.offset += this.count;
       this.collectionServices.getMultipleCollections(collectionIds, 0, this.count)
-        .then(response => {
-          this.currentCount = this.currentCount + this.count;
-          if (this.currentCount >= this.collectionsCount) {
-            // console.lo
-            this.more = false;
-          }
-          if (response.length > 0) {
-            for (let i in response) {
-              this.collections.push(new Collection(response[i]));
+        .then(res => {
+          this.more = response.totalCollections > this.collectionsCount
+          if (res.length > 0) {
+            for (let i in res) {
+              this.collections.push(new Collection(res[i]));
             }
           }
         });
     });
   }
 
+  loadMore() {
+    this.getCollectionsByUser()
+  }
+
   newCollection() {
-    document.getElementById("editSidebar").style.width = "450px";
-    document.getElementById("editSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
     this.edittype = 'new';
     this.editableCollection = null;
+    console.log(this.edittype, this.editableCollection)
+    document.getElementById("editSidebar").style.width = "450px";
+    document.getElementById("editSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
   }
 
   editCollection(collection) {
-    document.getElementById("editSidebar").style.width = "450px";
-    document.getElementById("editSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
     this.edittype = 'edit';
     this.editableCollection = collection;
+    document.getElementById("editSidebar").style.width = "450px";
+    document.getElementById("editSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
+  }
+
+  closeNav() {
+    this.selectedAccess = this.edit ? this.collection.isPublic : false;
+    this.title = this.edit ? this.collection.title : '';
+    this.desc = this.edit ? this.collection.description : '';
+    document.getElementById("editSidebar").style.width = "0";
+    document.getElementById("editSidebar").style.boxShadow = "none";
+  }
+
+  closeAfterSave(title, description, access) {
+    if (this.edittype === 'new') {
+      let collectiontosave = {
+        resourceType: 'SimpleCollection',
+        administrative: {
+          access: {
+            isPublic: access
+          }
+        },
+        descriptiveData: {
+          label: {
+            default: [title]
+          },
+          description: {
+            default: [description]
+          }
+        }
+      };
+
+      this.collectionServices.save(collectiontosave)
+        .then(response => {
+          if (response.status !== 200) {
+            if (response.statusText) {
+              throw new Error(response.statusText);
+            } else if (response.error) {
+              throw new Error(response.error);
+            }
+          }
+
+          if (!this.userServices.current) {
+            toastr.error('An error has occurred. You are no longer logged in!');
+            return;
+          }
+
+          /* change editables and user collections */
+          toastr.success('Collection saved successfully!');
+          document.getElementById("editSidebar").style.width = "0";
+          document.getElementById("editSidebar").style.boxShadow = "none"
+          this.collections = [];
+          this.collectionsCount = 0;
+          this.offset = 0;
+          this.getCollectionsByUser();
+        }).catch(error => {
+          toastr.error(error.message);
+        });
+    }
+    else if (this.edittype === 'edit') {
+      let collectiontosave = {
+        resourceType: 'SimpleCollection',
+        administrative: {
+          access: {
+            isPublic: access
+          }
+        },
+        descriptiveData: {
+          label: {
+            default: [title]
+          },
+          description: {
+            default: [description]
+          }
+        }
+      };
+      this.collectionServices.update(this.editableCollection.dbId, collectiontosave)
+        .then(response => {
+          if (response.status !== 200) {
+            if (response.statusText) {
+              throw new Error(response.statusText);
+            } else if (response.error) {
+              throw new Error(response.error);
+            }
+          }
+          toastr.success('Collection updated');
+          document.getElementById("editSidebar").style.width = "0";
+          document.getElementById("editSidebar").style.boxShadow = "none"
+          this.collections = [];
+          this.collectionsCount = 0;
+          this.offset = 0;
+          this.getCollectionsByUser();
+        })
+        .catch(error => {
+          this.closeTab();
+          toastr.error(error.message);
+        });
+    }
   }
 
   deleteCollection(collection) {
     if (window.confirm("Do you really want to delete this collection?")) {
       this.collectionServices.delete(collection.dbId).then(response => {
         console.log(response)
+        this.collections = [];
+        this.collectionsCount = 0;
+        this.offset = 0;
         this.getCollectionsByUser();
       })
     }

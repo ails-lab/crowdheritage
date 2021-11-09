@@ -19,11 +19,7 @@ import { UserServices } from 'UserServices';
 import { MediaServices } from 'MediaServices.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { Router } from 'aurelia-router';
-import { User } from 'User.js';
-import { Record } from 'Record.js';
-import { Campaign } from 'Campaign.js';
 import { I18N } from 'aurelia-i18n';
-import settings from 'global.config.js';
 
 let logger = LogManager.getLogger('Dashboard.js');
 
@@ -36,6 +32,7 @@ export class Dashboard {
     this.view = "campaign-editor"
     this.collectionClasses = "nav-item"
     this.campaignClasses = "nav-item active"
+    this.userGroupClasses = "nav-item"
 
   }
   
@@ -44,11 +41,18 @@ export class Dashboard {
     if(tab === 'collection-editor'){
       this.collectionClasses = "nav-item active"
       this.campaignClasses = "nav-item"
+      this.userGroupClasses = "nav-item"
     }
     else if(tab === 'campaign-editor'){
       this.campaignClasses = "nav-item active"
       this.collectionClasses = "nav-item"
+      this.userGroupClasses = "nav-item"
     }
+    else if(tab === 'user-group-editor'){
+      this.campaignClasses = "nav-item"
+      this.collectionClasses = "nav-item"
+      this.userGroupClasses = "nav-item active"
+    } 
   }
 
 }

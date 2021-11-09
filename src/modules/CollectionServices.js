@@ -126,6 +126,18 @@ export class CollectionServices {
 		}).then((response) => response.json());
 	}
 
+  deleteUserGroup(id) {
+		return this.http.fetch(`/group/${id}`, {
+			method: 'DELETE'
+		}).then(checkStatus).then((response) => response.json());
+	}
+
+	getUserGroups(offset, count) {
+		return this.http.fetch('/group/list?' + 'offset=' + offset + '&count=' + count + '&belongsOnly=true&prefix=*', {
+			method: 'GET'
+		}).then((response) => response.json());
+	}
+
 	parsedJsonResponse(jsonResponse, isSearch, isExhibition) {
 		if (isSearch) {
 			return [jsonResponse.results[0].items, jsonResponse.results[0].totalCount];
@@ -211,6 +223,23 @@ export class CollectionServices {
 				// More options
 			}
 		}).then((response) => response.json());
+	}
+
+  saveUserGroup(userGroup) {
+		return this.http.fetch('/organization/create', {
+			method: 'POST',
+			body: JSON.stringify(userGroup),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => response.json());
+	}
+
+  updateUserGroup(id, group) {
+		return this.http.fetch(`/group/${id}`, {
+			method: 'PUT',
+			body: json(group)
+		}).then(checkStatus).then((response) => response.json());
 	}
 
 	importEuropeanaCollection(collectionID, limit) {

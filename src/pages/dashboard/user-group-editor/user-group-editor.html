@@ -1,0 +1,56 @@
+<template>
+  <main if.bind="!user">
+    <section>
+      <div class="container">
+        <h3>You have to be signed in to see your user groups.</h3>
+      </div>
+    </section>
+  </main>
+  <main if.bind="user">
+    <section class="collections">
+      <div class="container">
+        <!-- top section-->
+        <div class="topsection">
+          <!-- label-->
+          <div class="sectionlabel">
+            <div class="bold">USER GROUPS</div>
+          </div>
+          <div class="import-wrap">
+            <a href="javascript:void(0)" class="import" click.delegate="newUserGroup()">
+              <span class="plus"></span>
+              <span class="text">New User Group</span>
+            </a>
+          </div>
+        </div>
+        <div class="campaignlist" if.bind="userGroups.length>0">
+          <!-- entry-->
+          <div class="entries row" ref="grid">
+            <div class="entry col-md-4 ${col.dbId}" repeat.for="ug of userGroups">
+                <!-- detail-->
+                
+                <div class="detail-user-group" click.delegate="editUserGroup(ug)">
+                  <button class="user-group-delete"  click.delegate="deleteUserGroup(ug.dbId)">X</button>
+                  <div class="desc">
+                    <div class="title">${ug.friendlyName}</div>
+                    <div class="date">Created on ${ug.created}</div>
+                    <div class="about">${ug.about}</div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <!-- more-->
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && userGroups.length < userGroupsCount" click.delegate="loadMore()"
+              t="app:loadmore">LOAD MORE</a>
+            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+          </div>
+        </div>
+        <div if.bind="userGroups.length===0 && !loading">
+          <h5>You have created no collections. Try to add a new one or import one from Europeana</h5>
+        </div>
+      </div>
+    </section>
+    <section>
+			<compose view-model="widgets/newusergroup/newusergroup" model.bind="{ 'userGroup' : editableUserGroup, 'type': edittype}"></compose>
+		</section>
+  </main>

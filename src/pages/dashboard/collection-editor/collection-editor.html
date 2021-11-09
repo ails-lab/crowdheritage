@@ -2,12 +2,11 @@
   <main if.bind="!user">
     <section>
       <div class="container">
-        <h3>You have to be signed in to see your collections</h3>
+        <h3>You have to be signed in to see your collections.</h3>
       </div>
     </section>
   </main>
   <main if.bind="user">
-    <h3>Collection Editor</h3>
     <!-- collection list-->
     <section class="collections">
       <div class="container">
@@ -75,7 +74,7 @@
       </div>
     </section>
     <section>
-			<compose view-model="widgets/newcollection/newcollection" model.bind="{ 'parent': thisVM, 'collection' : editableCollection, 'type': edittype}"></compose>
+			<compose view-model="widgets/newcollection/newcollection" model.bind="{'collection' : editableCollection, 'type': edittype}"></compose>
 		</section>
   </main>
 </template>
