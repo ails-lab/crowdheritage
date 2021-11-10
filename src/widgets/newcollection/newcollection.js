@@ -47,12 +47,9 @@ export class Newcollection {
   }
 
   async activate(params, route) {
-    // console.log(params)
     this.edit = params.type === 'edit' ? true : false;
-    console.log(params.type)
     if (params.collection) {
       this.collection = params.collection
-      // console.log(this.collection)
       this.selectedAccess = this.collection.isPublic;
       this.title = this.collection.title
       this.desc = this.collection.description

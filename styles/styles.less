@@ -6352,7 +6352,7 @@ a:hover .social-button.facebook {
   top: 70px;
   right: 0;
   background-color: rgb(255, 255, 255);
-  overflow: hidden;
+  overflow: auto;
   transition: 0.8s;
   white-space: nowrap;
   padding-left: 10px;
@@ -6418,7 +6418,7 @@ a:hover .social-button.facebook {
 .sidebar .btn-green {
   cursor: pointer;
   float: right;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-right: 20px;
   display: block;
   padding: 5px 30px;
@@ -6567,7 +6567,7 @@ a:hover .social-button.facebook {
   cursor: pointer;
   z-index: 3;
   top: 0;
-  float:right;
+  float: right;
   opacity: 0;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -6593,8 +6593,113 @@ a:hover .social-button.facebook {
   background-color: #1d1c1c;
 }
 
-.frank-gothic-font{
+.frank-gothic-font {
   font-family: Lora, "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 20px;
+}
+
+.autocomplete-suggestions {
+  border: 1px solid #ccc;
+  background: white;
+  box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.75);
+  position: absolute;
+  width: 80%;
+  max-height: 300px;
+  z-index: 2;
+}
+
+.autocomplete-suggestion-extra {
+  // background-color: #FAFAFA;
+  cursor: pointer;
+  padding: 3px 8px 3px 8px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.autocomplete-suggestion-extra:hover {
+  background: #e3e3e3;
+}
+
+.user-table {
+  margin-top:8px;
+  margin-bottom: 2px;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.user-table td{
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 3px;
+}
+.user-table th{
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 3px;
+}
+.user-table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.red-trash {
+  color: red;
+  cursor:pointer;
+  font-size: 20px;
+}
+
+.user-group-table{
+  margin-top:3px;
+  margin-bottom: 10px;
+  font-family: arial, sans-serif;
+  border-collapse: separate;
+  border: 2px solid #2F4949;
+  border-radius: 10px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  width: 100%;
+}
+
+.transparent-bottom{
+  border-bottom: transparent;
+}
+
+.user-group-table th{
+  padding:10px;
+  background-color: #2F4949;
+  color: white;
+}
+
+.user-group-table tr{
+  padding:10px;
+  transition: 0.2s;
+}
+
+.user-group-table tr:nth-child(even) {
+  background-color: #dee7e7;
+}
+
+.user-group-table tr:hover{
+  background-color: #c2d6d6;
+}
+
+.user-group-table td{
+  padding-left:10px;
+}
+
+.clickable{
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.1s;
+}
+
+.clickable:hover{
+  -webkit-transform: scale(1.1);
+}
+
+.mt{
+  margin-top:70px;
+}
+.mt-small{
+  margin-top:25px;
 }

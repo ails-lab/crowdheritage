@@ -55,7 +55,6 @@ export class CollectionEditor {
       let collectionIds = response.collectionsOrExhibitions.map(col => {
         return col.dbId
       })
-      // console.log(response)
       this.collectionsCount += response.collectionsOrExhibitions.length;
       this.offset += this.count;
       this.collectionServices.getMultipleCollections(collectionIds, 0, this.count)
@@ -77,7 +76,6 @@ export class CollectionEditor {
   newCollection() {
     this.edittype = 'new';
     this.editableCollection = null;
-    console.log(this.edittype, this.editableCollection)
     document.getElementById("editSidebar").style.width = "450px";
     document.getElementById("editSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
   }
@@ -187,7 +185,6 @@ export class CollectionEditor {
   deleteCollection(collection) {
     if (window.confirm("Do you really want to delete this collection?")) {
       this.collectionServices.delete(collection.dbId).then(response => {
-        console.log(response)
         this.collections = [];
         this.collectionsCount = 0;
         this.offset = 0;

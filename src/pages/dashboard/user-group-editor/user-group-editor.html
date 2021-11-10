@@ -25,18 +25,35 @@
         <div class="campaignlist" if.bind="userGroups.length>0">
           <!-- entry-->
           <div class="entries row" ref="grid">
-            <div class="entry col-md-4 ${col.dbId}" repeat.for="ug of userGroups">
-                <!-- detail-->
-                
-                <div class="detail-user-group" click.delegate="editUserGroup(ug)">
-                  <button class="user-group-delete"  click.delegate="deleteUserGroup(ug.dbId)">X</button>
-                  <div class="desc">
-                    <div class="title">${ug.friendlyName}</div>
-                    <div class="date">Created on ${ug.created}</div>
-                    <div class="about">${ug.about}</div>
-                  </div>
+            <!-- <div class="entry col-md-4 ${col.dbId}" repeat.for="ug of userGroups">
+              <div class="detail-user-group" click.delegate="editUserGroup(ug)">
+                <button class="user-group-delete" click.delegate="deleteUserGroup(ug.dbId)">X</button>
+                <div class="desc">
+                  <div class="title">${ug.friendlyName}</div>
+                  <div class="date">Created on ${ug.created}</div>
+                  <div class="about">${ug.about}</div>
                 </div>
-            </div>
+              </div>
+            </div> -->
+
+            <table class="${!loading && userGroups.length < userGroupsCount ? 'user-group-table transparent-bottom' : 'user-group-table'}" >
+              <tr>
+                <th>Name</th>
+                <th>Short Name</th>
+                <th>Created on</th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr repeat.for="ug of userGroups">
+                <td>${ug.friendlyName}</td>
+                <td>${ug.username}</td>
+                <td>${ug.created}</td>
+                <td><i class="fa fa-edit clickable" click.delegate="editUserGroup(ug)"></i></td>
+                <td class="red-trash"><i class="fa fa-trash clickable" click.delegate="deleteUserGroup(ug.dbId)"></i></td>
+
+
+              </tr>
+            </table>
           </div>
           <!-- more-->
           <div class="loadmore">
@@ -51,6 +68,7 @@
       </div>
     </section>
     <section>
-			<compose view-model="widgets/newusergroup/newusergroup" model.bind="{ 'userGroup' : editableUserGroup, 'type': edittype}"></compose>
-		</section>
+      <compose view-model="widgets/newusergroup/newusergroup"
+        model.bind="{ 'userGroup' : editableUserGroup, 'type': edittype}"></compose>
+    </section>
   </main>

@@ -1,20 +1,20 @@
 import { inject, LogManager, NewInstance } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { CampaignServices } from 'CampaignServices.js';
-import { CollectionServices } from 'CollectionServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
+import { GroupServices } from '../../../modules/GroupServices';
 let logger = LogManager.getLogger('UserGroupEditor.js');
 
 let COUNT = 10;
 
-@inject(CampaignServices, CollectionServices, UserServices, Router, I18N, 'isTesterUser')
+@inject(CampaignServices, GroupServices, UserServices, Router, I18N, 'isTesterUser')
 export class UserGroupEditor {
-  constructor(campaignServices, collectionServices, userServices, router, i18n, isTesterUser) {
+  constructor(campaignServices, groupServices, userServices, router, i18n, isTesterUser) {
     this.project = settings.project;
     this.loc = window.location.href.split('/')[3];
-    this.collectionServices = collectionServices;
+    this.groupServices = groupServices;
     this.userServices = userServices;
     this.router = router;
     this.i18n = i18n;
@@ -47,7 +47,7 @@ export class UserGroupEditor {
   }
 
   getUserGroups(off, cnt) {
-    this.collectionServices.getUserGroups(off, cnt).then(response => {
+    this.groupServices.getGroups(off, cnt, '*').then(response => {
       this.userGroupsCount = response.groupCount;
       if (response.groups.length === cnt) {
         this.offset = off + cnt;
@@ -66,7 +66,7 @@ export class UserGroupEditor {
   deleteUserGroup(id) {
     this.delete = true;
     if (window.confirm("Do you really want to delete this collection?")) {
-      this.collectionServices.deleteUserGroup(id).then(response => {
+      this.groupServices.delete(id).then(response => {
         console.log(response)
         this.userGroups = [];
         this.userGroupsCount = 0;
@@ -115,7 +115,7 @@ export class UserGroupEditor {
         page: this.editableUserGroup.page,
         privateGroup: this.editableUserGroup.privateGroup
       }
-      this.collectionServices.updateUserGroup(this.editableUserGroup.dbId, userGroup)
+      this.groupServices.update(this.editableUserGroup.dbId, userGroup)
         .then(response => {
           if (response.status !== 200) {
             if (response.statusText) {
@@ -145,7 +145,7 @@ export class UserGroupEditor {
         page: { address: null, city: null, country: "", url: null },
         privateGroup: true
       }
-      this.collectionServices.saveUserGroup(userGroup)
+      this.groupServices.newGroup(userGroup, {value: 'organization'})
         .then(response => {
           if (response.status !== 200) {
             if (response.statusText) {
