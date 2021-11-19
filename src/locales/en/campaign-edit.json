@@ -1,0 +1,10 @@
+{
+  "header": "Edit details for current Campaign",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "title": "Title",
+  "description": "Description",
+  "banner": "Banner",
+  "username": "Username",
+  "update": "Update Campaign"
+}

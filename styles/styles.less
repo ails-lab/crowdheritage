@@ -4155,6 +4155,9 @@ body div[role='main'] section.entrance .input-group .right {
   margin-right: 0;
   width: 49%;
 }
+body div[role='main'] section.entrance .input-group .center {
+  margin-bottom: 10px;
+}
 body div[role='main'] section.entrance .input-group .errormsg {
   color: #9c3b3b;
   line-height: 1.3em;
@@ -4165,7 +4168,9 @@ body div[role='main'] section.entrance .input-group .errormsg {
   font-size: 1.4rem;
 }
 body div[role='main'] section.entrance .input-group input[type="text"],
-body div[role='main'] section.entrance .input-group input[type="password"] {
+body div[role='main'] section.entrance .input-group input[type="password"],
+body div[role='main'] section.entrance .input-group input[type="date"],
+body div[role='main'] section.entrance .input-group textarea {
   padding: 11px 20px;
   border: none;
   border: 1px solid #cfcfcf;
@@ -4176,8 +4181,12 @@ body div[role='main'] section.entrance .input-group input[type="password"] {
 }
 body div[role='main'] section.entrance .input-group input[type="text"]:hover,
 body div[role='main'] section.entrance .input-group input[type="password"]:hover,
+body div[role='main'] section.entrance .input-group input[type="date"]:hover,
 body div[role='main'] section.entrance .input-group input[type="text"]:focus,
-body div[role='main'] section.entrance .input-group input[type="password"]:focus {
+body div[role='main'] section.entrance .input-group input[type="password"]:focus,
+body div[role='main'] section.entrance .input-group input[type="date"]:focus,
+body div[role='main'] section.entrance .input-group textarea:hover,
+body div[role='main'] section.entrance .input-group textarea:focus {
   outline: none;
   border: 1px solid #4f7979;
 }
@@ -5519,4 +5528,9 @@ background-color: #5d862b;
 
 .editicon {
   width: 20px;
+}
+
+img.banner-edit {
+  border: 1px solid #cfcfcf;
+  width: 100%;
 }

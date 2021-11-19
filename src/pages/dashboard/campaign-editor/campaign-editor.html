@@ -12,7 +12,7 @@
           </div>
           <div class="import-wrap">
             <a id="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
-              <span class="text">Import Campaign</span>
+              <span class="text">Create Campaign</span>
               <span class="arrow"></span>
             </a>
             <ul aria-labelledby="import" class="dropdown-menu">
@@ -27,7 +27,7 @@
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${camp.username}" repeat.for="camp of campaigns">
               <!-- <a route-href="route: campaign-edit; params.bind: { cname: camp.username, lang: loc }"> -->
-              <a route-href="route: summary; params.bind: { cname: camp.username, lang: loc }">
+              <a route-href="route: campaign-edit; params.bind: { cname: camp.username, lang: loc }">
                 <div class="thumbs">
                   <img class="centered-and-cropped" src.bind="camp.banner" 
                     onerror="this.src='/img/assets/img/ui/ic-noimage.png'">
