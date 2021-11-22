@@ -45,7 +45,6 @@ export class CollectionEditor {
     if (this.user) {
       this.loading = true;
       this.getCollectionsByUser();
-      this.loading = false;
     }
 
   }
@@ -65,7 +64,9 @@ export class CollectionEditor {
               this.collections.push(new Collection(res[i]));
             }
           }
+          this.loading = false;
         });
+
     });
   }
 

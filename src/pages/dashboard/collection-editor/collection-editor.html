@@ -49,17 +49,20 @@
                     <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
                   </div>
                 </div>
-                
+
                 <ul class="itemaction">
                   <li>
-                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top" title="Delete collection" class="delete"><img class="editicon" src="/img/assets/img/ui/ic-delete.png" /></i></a>
+                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top"
+                      title="Delete collection" class="delete"><img class="editicon"
+                        src="/img/assets/img/ui/ic-delete.png" /></i></a>
                   </li>
                   <li>
-                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top" title="Edit Collection"><img class="editicon" src="/img/assets/img/ui/ic-edit.png" /></a>
+                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top"
+                      title="Edit Collection"><img class="editicon" src="/img/assets/img/ui/ic-edit.png" /></a>
                   </li>
                 </ul>
               </a>
-              
+
             </div>
           </div>
           <!-- more-->
@@ -68,13 +71,16 @@
             <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
           </div>
         </div>
-        <div if.bind="collections.length===0">
+        <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+
+        <div if.bind="collections.length===0 && !loading">
           <h5>You have created no collections. Try to add a new one or import one from Europeana</h5>
         </div>
       </div>
     </section>
     <section>
-			<compose view-model="widgets/newcollection/newcollection" model.bind="{'collection' : editableCollection, 'type': edittype}"></compose>
-		</section>
+      <compose view-model="widgets/newcollection/newcollection"
+        model.bind="{'collection' : editableCollection, 'type': edittype}"></compose>
+    </section>
   </main>
 </template>

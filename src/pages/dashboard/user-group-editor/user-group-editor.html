@@ -36,7 +36,8 @@
               </div>
             </div> -->
 
-            <table class="${!loading && userGroups.length < userGroupsCount ? 'user-group-table transparent-bottom' : 'user-group-table'}" >
+            <table
+              class="${!loading && userGroups.length < userGroupsCount ? 'user-group-table transparent-bottom' : 'user-group-table'}">
               <tr>
                 <th>Name</th>
                 <th>Short Name</th>
@@ -49,7 +50,8 @@
                 <td>${ug.username}</td>
                 <td>${ug.created}</td>
                 <td><i class="fa fa-edit clickable" click.delegate="editUserGroup(ug)"></i></td>
-                <td class="red-trash"><i class="fa fa-trash clickable" click.delegate="deleteUserGroup(ug.dbId)"></i></td>
+                <td class="red-trash"><i class="fa fa-trash clickable" click.delegate="deleteUserGroup(ug.dbId)"></i>
+                </td>
 
 
               </tr>
@@ -62,8 +64,10 @@
             <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
           </div>
         </div>
+        <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+
         <div if.bind="userGroups.length===0 && !loading">
-          <h5>You have created no collections. Try to add a new one or import one from Europeana</h5>
+          <h5>You have created no user groups.</h5>
         </div>
       </div>
     </section>

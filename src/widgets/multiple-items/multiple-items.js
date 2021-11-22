@@ -73,6 +73,7 @@ export class MultipleItems {
         this.records.push(new Record(recordData));
       }
     }
+    this.loading = false;
   }
 
   async getRecords() {

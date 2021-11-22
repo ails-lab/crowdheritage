@@ -47,7 +47,7 @@
             </ul>
 					</a>
 				</div>
-        <div if.bind="byCollectionEdit && records.length === 0" class=" frank-gothic-font">
+        <div if.bind="byCollectionEdit && records.length === 0 && !loading" class=" frank-gothic-font">
           This collection has no records. You can add single items or import some records from Europeana.
         </div>
 
