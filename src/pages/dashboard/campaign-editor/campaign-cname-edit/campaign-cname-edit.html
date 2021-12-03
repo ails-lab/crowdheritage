@@ -57,13 +57,15 @@
                 </div>
                 <div class="center">
                   <label t="campaign-edit:banner">Banner</label>
-                  <img class="banner-edit" src="${banner}" alt="${username+'-'+banner}" width="100%">
-                  <input t="[placeholder]campaign-edit:banner" type="text" placeholder="Banner" id="banner" value.bind="banner" autofocus />
+                  <img class="banner-edit center" src="${banner}" alt="${username+'-'+banner}" width="100%">
+                  <input type="file" id="banner" class="hiddenfile" name="banner" onchange.bind="uploadBanner" accept=".png,.jpg,.jpeg,.gif" />
+                  <button t="campaign-edit:chooseBanner" click.delegate="loadFromFile()"></button>
                   <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
                 </div>
               </div>
               <div class="button-group">
-                <button disabled.bind="!canRegister" class="btn-green" type="submit" t="campaign-edit:update">Update Campaign</button>
+                <a href="javascript:void(0)" class="btn-green-o cancel" click.delegate="router.navigateBack()">Cancel</a>
+                <button class="btn-green" type="submit" t="campaign-edit:update">Update Campaign</button>
               </div>
             </form>
           </div>

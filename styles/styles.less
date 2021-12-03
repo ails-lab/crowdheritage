@@ -4239,11 +4239,13 @@ section.userprofile div.left div.button-group {
   bottom: 0px;
   right: 0px;
 }
-section.userprofile div.left div.button-group a {
+section.userprofile div.left div.button-group a,
+section.campaign-edit div.button-group a {
   color: @main-color;
   font-weight: bold;
 }
-section.userprofile div.left div.button-group button {
+section.userprofile div.left div.button-group button,
+section.campaign-edit div.button-group button {
   margin: 10px;
   background-color: @main-color;
   color: white;
@@ -5533,4 +5535,6 @@ background-color: #5d862b;
 img.banner-edit {
   border: 1px solid #cfcfcf;
   width: 100%;
+  max-height: 150px;
+  object-fit: contain;
 }

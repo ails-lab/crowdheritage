@@ -6,5 +6,6 @@
   "description": "Description",
   "banner": "Banner",
   "username": "Username",
+  "chooseBanner": "Select Banner",
   "update": "Update Campaign"
 }
