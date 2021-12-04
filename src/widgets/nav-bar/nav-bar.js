@@ -90,11 +90,11 @@ export class NavBar {
   }
 
   toggleLangMenu() {
-    if ($('.lang').hasClass('open')) {
-      $('.lang').removeClass('open');
+    if ($('#nav-lang').hasClass('open')) {
+      $('#nav-lang').removeClass('open');
     }
     else {
-      $('.lang').addClass('open');
+      $('#nav-lang').addClass('open');
     }
   }
 

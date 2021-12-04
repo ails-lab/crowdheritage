@@ -29,20 +29,42 @@
           <div class="section-body">
             <form role="form" submit.delegate="register()">
               <div class="input-group">
+                <section class="languages">
+                  <div id="campaign-lang" class="lang">
+                    <span class="text" t="campaign-edit:langSelect">Select language for language-sensitive fields:</span>
+                    <!-- select-->
+                    <a id="langselect-campaign" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+                      <span class="flag"><img src=${getLocale().flag} /></span>
+                      <span class="arrow"><img src="/img/ic-arrow-down-black.png"></span>
+                    </a>
+                    <!-- dropdown-->
+                    <ul aria-labelledby="langselect-campaign" class="dropdown-menu">
+                      <li repeat.for="loc of locales">
+                        <a href="javascript:void(0)" click.delegate="changeLang(loc.code)">
+                          <img src=${loc.flag} width="16px" />
+                          <span css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <br/>
+                </section>
+                <!-- <hr> -->
                 <div class="center">
                   <label t="campaign-edit:title">Title</label>
                   <input t="[placeholder]campaign-edit:title" type="text" placeholder="Title" id="title" value.bind="title" autofocus />
                   <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
                 </div>
                 <div class="center">
-                  <label t="campaign-edit:username">Username</label>
-                  <input t="[placeholder]campaign-edit:username" type="text" placeholder="Username" id="username" value.bind="username" autofocus />
-                  <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
-                </div>
-                <div class="center">
                   <label t="campaign-edit:description">Description</label>
                   <textarea t="[placeholder]campaign-edit:description" rows="4" placeholder="Description" id="description" value.bind="description" autofocus>
                   </textarea>
+                  <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
+                </div>
+                <hr> 
+                <div class="center">
+                  <label t="campaign-edit:username">Username</label>
+                  <input t="[placeholder]campaign-edit:username" type="text" placeholder="Username" id="username" value.bind="username" autofocus />
                   <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
                 </div>
                 <div class="left">

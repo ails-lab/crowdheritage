@@ -1,5 +1,6 @@
 {
   "header": "Edit details for current Campaign",
+  "langSelect": "Select language for language-sensitive fields:",
   "startDate": "Start Date",
   "endDate": "End Date",
   "title": "Title",

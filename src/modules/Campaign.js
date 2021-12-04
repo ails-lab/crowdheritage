@@ -44,6 +44,13 @@ export class Campaign {
     this.logo = data.logo ? this.setImageProperty(data.logo) : '';
     this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
     this.status = this.campaignStatus;
+    // Objects for multilinguality
+    this.titleObject = data.title
+    this.descriptionObject = data.description
+    this.disclaimerObject = data.disclaimer
+    this.instructionsObject = data.instructions
+    this.prizesObject = data.prizes
+    console.log(data)
 
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
