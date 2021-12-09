@@ -8,7 +8,7 @@
         <div class="bannertext">
           <div class="line">
             <div class="lbl"> <span t="app:collection">COLLECTION</span></div>
-            <div class="wrap"><span>${collection.title}</span></div>
+            <div class="wrap"><span>${collection.title[loc] ? collection.title[loc] : collection.title.default}</span></div>
           </div>
         </div>
         <!-- vertical nav-->
@@ -22,13 +22,13 @@
     </section>
 		<section class="collections collection-item-list">
 			<div class="container">
-        <div class="description" if.bind="collection.description[0]">
+        <div class="description" if.bind="collection.description.default[0]">
           <div class="sectionlabel">
             <div class="bold">
               <span class="text" t="app:description">DESCRIPTION</span>
             </div>
           </div>
-          <p>${collection.description[0]}</p>
+          <p>${collection.description[loc] ? collection.description[loc] : collection.description.default}</p>
         </div>
         <div class="topsection">
           <div class="import-wrap">

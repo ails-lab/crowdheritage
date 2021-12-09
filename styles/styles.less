@@ -1716,11 +1716,32 @@ section.languages .lang {
   //padding-top: 30px;
 }
 
+section.languages .lang-collection {
+  float: right;
+  position: relative;
+  font-family: "Dosis";
+  bottom: 2px;
+  right: 0px;
+}
+
 section.languages .lang .lbl {
   display: inline-block;
 }
 
+section.languages .lang-collection .lbl {
+  display: inline-block;
+}
+
 section.languages .lang a {
+  display: inline-block;
+  color: @main-color;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+section.languages .lang-collection a {
   display: inline-block;
   color: @main-color;
   -webkit-transition: color 0.3s;
@@ -1735,8 +1756,19 @@ section.languages .lang a .flag img {
   //margin-right: 5px;
 }
 
+section.languages .lang-collection a .flag img {
+  width: 20px;
+}
+
 section.languages .lang a .arrow {
   margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+section.languages .lang-collection a .arrow {
+  margin-right: 5px;
   display: inline-block;
   position: relative;
   top: -1px;
@@ -1747,9 +1779,23 @@ section.languages .lang a:hover {
   color: #009e77;
 }
 
+section.languages .lang-collection a:hover {
+  text-decoration: none;
+  color: #009e77;
+}
+
 section.languages .lang .dropdown-menu {
   margin: 24px 0 0 -98px;
   right: 10px;
+  padding: 0;
+  border-radius: 0;
+  border: 0px;
+  box-shadow: none;
+}
+
+section.languages .lang-collection .dropdown-menu {
+  margin: 0px 0px 0 -80px;
+  right: 0px;
   padding: 0;
   border-radius: 0;
   border: 0px;
@@ -1764,6 +1810,14 @@ section.languages .lang .dropdown-menu li {
   padding-top: 1px;
 }
 
+section.languages .lang-collection .dropdown-menu li {
+  display: block;
+  width: 159px;
+  margin-bottom: 1px;
+  padding-left: 1px;
+  padding-top: 1px;
+}
+
 section.languages .lang .dropdown-menu li a {
   display: block;
   //color: @main-color !important;
@@ -1771,11 +1825,26 @@ section.languages .lang .dropdown-menu li a {
   background-color: #f2f2f2;
 }
 
+section.languages .lang-collection .dropdown-menu li a {
+  display: block;
+  background-color: #f2f2f2;
+  font-size: 18px;
+}
+
 section.languages .lang .dropdown-menu li a img {
   margin-right: 10px;
 }
 
+section.languages .lang-collection .dropdown-menu li a img {
+  margin-right: 10px;
+}
+
 section.languages .lang .dropdown-menu li a:hover {
+  background-color: @main-color;
+  color: #fff !important;
+}
+
+section.languages .lang-collection .dropdown-menu li a:hover {
   background-color: @main-color;
   color: #fff !important;
 }

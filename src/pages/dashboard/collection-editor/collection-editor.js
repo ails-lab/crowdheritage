@@ -20,10 +20,8 @@ export class CollectionEditor {
     this.campaignServices = campaignServices;
     this.collectionServices = collectionServices;
     this.userServices = userServices;
-    // this.recordServices = recordServices;
     this.router = router;
     this.i18n = i18n;
-    // this.isTesterUser = isTesterUser();
     this.more = true;
     this.isCreator = false;
     this.campaign = 0;
@@ -39,8 +37,8 @@ export class CollectionEditor {
   get user() { return this.userServices.current; }
 
   activate(params, route) {
-    if (this.i18n.getLocale() != this.locale) {
-      this.i18n.setLocale(this.locale);
+    if (this.i18n.getLocale() != this.loc) {
+      this.i18n.setLocale(this.loc);
     }
     if (this.user) {
       this.loading = true;
@@ -51,6 +49,7 @@ export class CollectionEditor {
 
   getCollectionsByUser() {
     this.collectionServices.getCollections(this.offset, this.count, true, false, this.user.username).then(response => {
+      // console.log(this.user.dbId)
       let collectionIds = response.collectionsOrExhibitions.map(col => {
         return col.dbId
       })
@@ -96,7 +95,19 @@ export class CollectionEditor {
     document.getElementById("editSidebar").style.boxShadow = "none";
   }
 
-  closeAfterSave(title, description, access) {
+  closeAfterSave(title, description, access, locales) {
+    // title="sth"
+    if (title === '') {
+      toastr.error('The collection title is required.');
+      return;
+    }
+    let titleObject = { default: title['en'] ? [title['en']] : [""] }
+    let descriptionObject = { default: description['en'] ? [description['en']] : [""] }
+
+    for (let loc of locales) {
+      titleObject[loc.code] = title[loc.code] ? [title[loc.code]] : [""]
+      descriptionObject[loc.code] = description[loc.code] ? [description[loc.code]] : [""]
+    }
     if (this.edittype === 'new') {
       let collectiontosave = {
         resourceType: 'SimpleCollection',
@@ -106,12 +117,8 @@ export class CollectionEditor {
           }
         },
         descriptiveData: {
-          label: {
-            default: [title]
-          },
-          description: {
-            default: [description]
-          }
+          label: titleObject,
+          description: descriptionObject
         }
       };
 
@@ -151,12 +158,8 @@ export class CollectionEditor {
           }
         },
         descriptiveData: {
-          label: {
-            default: [title]
-          },
-          description: {
-            default: [description]
-          }
+          label: titleObject,
+          description: descriptionObject
         }
       };
       this.collectionServices.update(this.editableCollection.dbId, collectiontosave)

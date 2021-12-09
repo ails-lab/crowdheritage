@@ -31,14 +31,15 @@ export class Collection {
 
 	load(data) {
 		this.dbId = data.dbId;
-		this.title = data.descriptiveData.label.default;
+    console.log(data.descriptiveData)
+		this.title = data.descriptiveData.label;
 		this.withCreator = data.administrative.withCreator;
 		this.entryCount = data.administrative.entryCount;
 		if (data.administrative.access.isPublic) {
 			this.isPublic = data.administrative.access.isPublic;
 		}
 		if (data.descriptiveData.description) {
-			this.description = data.descriptiveData.description.default;
+			this.description = data.descriptiveData.description;
 		}
 		this.thumbnail = null;
 		this.media = [];

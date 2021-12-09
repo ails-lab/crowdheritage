@@ -72,6 +72,7 @@ export class UserGroupEditor {
         this.userGroupsCount = 0;
         this.offset = 0;
         this.count = 12;
+        this.loading = true;
         this.getUserGroups(this.offset, this.count);
         this.closeNav()
         this.delete = false;
@@ -106,7 +107,20 @@ export class UserGroupEditor {
   }
 
   closeNavAfterSave(name, shortName, about) {
-    console.log("YEAH");
+    let toastSentence = '';
+
+    if (name === '') {
+      toastSentence += 'Name is '
+    }
+    if (shortName === ''){
+      if (name==='') toastSentence = 'Name and Short Name are '
+      else toastSentence += 'Short Name is '
+    }
+    if (toastSentence !== ''){
+      toastr.error(toastSentence + 'required')
+      return;
+    }
+
     if (this.edittype === "edit") {
       let userGroup = {
         friendlyName: name,
@@ -134,6 +148,7 @@ export class UserGroupEditor {
           this.offset = 0;
           this.count = 12;
           this.closeNav();
+          this.loading = true;
           this.getUserGroups(this.offset, this.count);
         })
     }
@@ -145,7 +160,7 @@ export class UserGroupEditor {
         page: { address: null, city: null, country: "", url: null },
         privateGroup: true
       }
-      this.groupServices.newGroup(userGroup, {value: 'organization'})
+      this.groupServices.newGroup(userGroup, { value: 'organization' })
         .then(response => {
           if (response.status !== 200) {
             if (response.statusText) {
@@ -164,6 +179,7 @@ export class UserGroupEditor {
           this.offset = 0;
           this.count = 12;
           this.closeNav();
+          this.loading = true;
           this.getUserGroups(this.offset, this.count);
         });
     }
