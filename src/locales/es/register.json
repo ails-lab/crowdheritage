@@ -1,0 +1,16 @@
+{
+  "header": "Regístrese con su dirección de correo electrónico",
+  "email": "Email",
+  "username": "Nombre de usuario",
+  "password": "Contraseña",
+  "repeat": "Repita la contraseña",
+  "firstname": "Nombre",
+  "lastname": "Apellido",
+  "select-gender": "Seleccione su género...",
+  "male": "Hombre",
+  "female": "Mujer",
+  "unspecified": "Sin especificación",
+  "accept": "Reconozco que he leído y acepto el",
+  "terms": "Condiciones de uso",
+  "button": "Registrarse"
+}

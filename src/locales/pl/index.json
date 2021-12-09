@@ -1,0 +1,20 @@
+{
+  "bannertext-up"   : "CONTRIBUTE TO OUR",
+  "bannertext-down" : "CULTURE!",
+  "intro-text"      : "WHAT IS CROWDHERITAGE",
+	"description"			: "CrowdHeritage is an open platform where cultural heritage institutions can share their collections’ metadata that need a fix or enrichment, and everybody can contribute to improve them. Cultural institutions will exploit the wisdom and power of the crowd to make their digital collections more discoverable and contributors will get their share of glory and also some gratitud€ back! Start joining a campaign now or <a href='mailto:crowdheritage@ails.ece.ntua.gr'>contact us</a> if you want to set-up your own.",
+  "current"         : "CROWDSOURCING CAMPAIGNS",
+  "sortby"          : "SORT BY ",
+  "alphabetical"    : "ALPHABETICAL",
+  "date_asc"        : "START DATE &#8599;",
+  "date_desc"       : "START DATE &#8600;",
+  "active"          : "ACTIVE",
+  "inactive"        : "CLOSED",
+  "upcoming"        : "UPCOMING",
+  "all"             : "ALL",
+  "opencampaign"    : "OPEN CAMPAIGN",
+  "learn-info-1"    : "Learn more about CrowdHeritage",
+  "learn-info-2"    : "Are you a Fashion, Culture, Art, Heritage, Sport, Music, Landscape lover?<br/>Are you a student, a professional from Educational or Cultural communities?<br/>Are you curious and want to discover European Cultural Heritage?<br/>Join our CrowdHeritage campaigns!<br/><br/>Have questions? <a href='mailto:crowdheritage@ails.ece.ntua.gr'>Contact us</a>",
+  "learn-info-3"    : "Terms & conditions of CrowdHeritage.",
+  "share-facebook"  : "Share"
+}
