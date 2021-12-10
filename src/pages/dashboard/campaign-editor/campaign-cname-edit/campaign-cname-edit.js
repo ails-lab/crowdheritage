@@ -35,14 +35,11 @@ export class CampaignCnameEdit {
       //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
       //{ title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
     ];
+    this.currentLocale = this.locales[0]; // default language for form language picker
+    this.currentLocaleCode = "en"; // default language for form language picker
 
     // Initialization
-    this.title = '';
-    this.username = '';
-    this.description = '';
-    this.startDate = '';
-    this.endDate = '';
-    this.banner = '';
+    this.prizes = ['gold', 'silver', 'bronze', 'rookie']
     this.errors = {};
 
     if (!instance) {
@@ -69,12 +66,6 @@ export class CampaignCnameEdit {
     console.log(this.campaign)
     route.navModel.setTitle('Campaign | '+this.campaign.title);
 
-    this.title = this.campaign.title;
-    this.username = this.campaign.username;
-    this.description = this.campaign.description;
-    this.startDate = this.campaign.startDate.replaceAll("/", "-");
-    this.endDate = this.campaign.endDate.replaceAll("/", "-");
-    this.banner = this.campaign.banner.replace("?file=true", "");
 	}
 
   loadFromFile() {
@@ -89,7 +80,7 @@ export class CampaignCnameEdit {
 		this.mediaServices.upload(data).then((response) => {
 			// this.banner = MediaServices.toObject(response.Medium);
       // TODO: Remove hardcoded URL? campaign.banner seems to be a string like the one below.
-      this.banner = `https://api.crowdheritage.eu${response.medium}`
+      this.campaign.banner = `https://api.crowdheritage.eu${response.medium}`
 			// Show the cancel/save buttons
 			$('.button-group').removeClass('hiddenfile');
 		}).catch((error) => {
@@ -107,28 +98,9 @@ export class CampaignCnameEdit {
     }
   }
 
-  getLocale() {
-    this.currentLocaleCode = this.loc;
-    for (let loc of this.locales) {
-      if (loc.code == this.currentLocaleCode) {
-        this.currentLocale = loc;
-        return this.currentLocale;
-      }
-    }
-    // If the language paremeter is not a valid one redirect to English home page
-    let index = this.router.routes.find(x => x.name === 'index');
-    this.router.navigateToRoute('index', {lang: 'en'});
-  }
-
   changeLang(loc) {
-    // let url = window.location.href.split('/');
-    // if (url[3] == loc) {
-    //   return;
-    // }
-    // else {
-    //   url[3] = loc;
-    //   window.location.href = url.join('/');
-    // }
+    this.currentLocale = loc
+    console.log(this.campaign);
   }
 
 }

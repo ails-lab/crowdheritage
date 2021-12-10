@@ -8,5 +8,10 @@
   "banner": "Banner",
   "username": "Username",
   "chooseBanner": "Select Banner",
-  "update": "Update Campaign"
+  "update": "Update Campaign",
+  "prizes": "Prizes",
+  "gold": "Gold",
+  "silver": "Silver",
+  "bronze": "Bronze",
+  "rookie": "Rookie"
 }
