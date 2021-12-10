@@ -83,8 +83,6 @@ toggleImportMenu() {
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		this.collection = new Collection(collectionData);
-    console.log(this.collection.description)
-    //route.navModel.setTitle(this.collection.title[0]+' | '+settings.project);
     route.navModel.setTitle('Collection | '+this.collection.title[0]);
 	}
 

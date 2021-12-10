@@ -2,7 +2,6 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
-import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 //import settings from 'global.config.js';
 
@@ -35,9 +34,9 @@ export class Newcollection {
       }
     ];
     this.locales = [
-      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" }
+      { title: "English", code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano", code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Français", code: "fr", flag: "/img/assets/images/flags/fr.png" }
       //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
       //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
       //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
@@ -64,12 +63,17 @@ export class Newcollection {
     this.getLocale();
     if (params.collection) {
       this.collection = params.collection
-      console.log(this.collection.title)
       this.selectedAccess = this.collection.isPublic;
       this.title = this.collection.title
-      this.title[this.loc] = this.title[this.loc] ? this.title[this.loc] : this.title.default[0]
+      this.title[this.loc] = this.title[this.loc] ? this.title[this.loc][0] : this.title.default[0]
       this.desc = this.collection.description
-      this.desc[this.loc] = this.desc[this.loc] ? this.desc[this.loc] : this.desc.default[0]
+      this.desc[this.loc] = this.desc[this.loc] ? this.desc[this.loc][0] : this.desc.default[0]
+      for (let locale of this.locales) {
+        if (locale.code !== 'en') {
+          this.title[locale.code] = this.title[locale.code] ? this.title[locale.code][0] : ""
+          this.desc[locale.code] = this.desc[locale.code] ? this.desc[locale.code][0] : ""
+        }
+      }
       // console.log(this.title, this.desc)
 
     }
@@ -77,12 +81,11 @@ export class Newcollection {
       this.collection = new Collection()
       this.collection.isPublic = false
       this.selectedAccess = false
-      this.title = {};
-      this.desc = {}
-      for (let locale of this.locales){
-        this.title[locale] = ""
-        this.desc[locale] = ""
+      for (let locale of this.locales) {
+        this.title[locale.code] = ""
+        this.desc[locale.code] = ""
       }
+
     }
   }
 
@@ -92,7 +95,7 @@ export class Newcollection {
       if (loc.code == this.currentLocaleCode) {
         this.currentLocale = loc;
         this.localeFlagPath = this.currentLocale.flag
-        
+
         return this.currentLocale;
       }
     }
@@ -124,5 +127,5 @@ export class Newcollection {
   }
 
 
-  
+
 }

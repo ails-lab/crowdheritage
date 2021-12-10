@@ -31,7 +31,6 @@ export class Collection {
 
 	load(data) {
 		this.dbId = data.dbId;
-    console.log(data.descriptiveData)
 		this.title = data.descriptiveData.label;
 		this.withCreator = data.administrative.withCreator;
 		this.entryCount = data.administrative.entryCount;

@@ -1,7 +1,5 @@
-import { inject, LogManager, NewInstance } from 'aurelia-framework';
-import { ValidationController, ValidationRules } from 'aurelia-validation';
+import { inject, LogManager } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
-import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
@@ -55,7 +53,7 @@ export class CollectionEditor {
       })
       this.collectionsCount += response.collectionsOrExhibitions.length;
       this.offset += this.count;
-      this.collectionServices.getMultipleCollections(collectionIds, 0, this.count)
+      this.collectionServices.getMultipleMultilingualCollections(collectionIds, 0, this.count)
         .then(res => {
           this.more = response.totalCollections > this.collectionsCount
           if (res.length > 0) {
@@ -96,8 +94,16 @@ export class CollectionEditor {
   }
 
   closeAfterSave(title, description, access, locales) {
-    // title="sth"
-    if (title === '') {
+    // console.log(title, description)
+    let emptyTitle = true;
+    for (const [key, value] of Object.entries(title)) {
+      if (key === "default") continue;
+      if(value !== ""){
+        emptyTitle = false;
+        break
+      }
+    }
+      if (emptyTitle) {
       toastr.error('The collection title is required.');
       return;
     }
@@ -108,6 +114,7 @@ export class CollectionEditor {
       titleObject[loc.code] = title[loc.code] ? [title[loc.code]] : [""]
       descriptionObject[loc.code] = description[loc.code] ? [description[loc.code]] : [""]
     }
+    // console.log(titleObject)
     if (this.edittype === 'new') {
       let collectiontosave = {
         resourceType: 'SimpleCollection',
@@ -121,7 +128,6 @@ export class CollectionEditor {
           description: descriptionObject
         }
       };
-
       this.collectionServices.save(collectiontosave)
         .then(response => {
           if (response.status !== 200) {
@@ -162,6 +168,7 @@ export class CollectionEditor {
           description: descriptionObject
         }
       };
+      console.log(collectiontosave)
       this.collectionServices.update(this.editableCollection.dbId, collectiontosave)
         .then(response => {
           if (response.status !== 200) {

@@ -83,6 +83,22 @@ export class CollectionServices {
 		});
 	}
 
+  getMultipleMultilingualCollections(idArray, offset, count) {
+		let idstr = '';
+		for (let i = offset; i < (offset+count); i++) {
+			if (idstr.length > 0) {
+				idstr += '&';
+			}
+
+			idstr += 'id=' + idArray[i];
+		}
+		return this.http.fetch('/collection/multipleWithAllLangs?' + idstr, {
+			method: 'GET'
+		}).then(checkStatus).then((response) => {
+			return response.json();
+		});
+	}
+
 	// Get thesauri for collection
 	getVocabularies(id, data) {
 		return this.http.fetch(`/collection/${id}/facets`, {

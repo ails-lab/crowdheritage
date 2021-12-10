@@ -45,7 +45,7 @@
                   </div>
                   <!-- title-->
                   <div class="desc">
-                    <div class="title">${col.title[loc] ? col.title[loc] : col.title.default}</div>
+                    <div class="title">${col.title[loc] && col.title[loc] !== '' ? col.title[loc] : col.title.default}</div>
                     <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
                   </div>
                 </div>
