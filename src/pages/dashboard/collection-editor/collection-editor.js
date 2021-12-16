@@ -53,7 +53,7 @@ export class CollectionEditor {
       })
       this.collectionsCount += response.collectionsOrExhibitions.length;
       this.offset += this.count;
-      this.collectionServices.getMultipleMultilingualCollections(collectionIds, 0, this.count)
+      this.collectionServices.getMultipleCollections(collectionIds, 0, this.count,false)
         .then(res => {
           this.more = response.totalCollections > this.collectionsCount
           if (res.length > 0) {
@@ -168,7 +168,7 @@ export class CollectionEditor {
           description: descriptionObject
         }
       };
-      console.log(collectiontosave)
+      // console.log(collectiontosave)
       this.collectionServices.update(this.editableCollection.dbId, collectiontosave)
         .then(response => {
           if (response.status !== 200) {
