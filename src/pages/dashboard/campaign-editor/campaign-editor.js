@@ -33,7 +33,9 @@ export class CampaignEditor {
     this.loading = false;
     this.currentCount = 0;
     this.count = 6;
-    this.importMethod = ''
+
+    // New Campaign Username
+    this.campaignUsername = ''
   }
 
   activate(params, route) {
@@ -47,6 +49,7 @@ export class CampaignEditor {
     this.campaigns = [];
 
     this.loading = true;
+    // TODO: Switch call to getCampaignByName(cname)
     this.campaignServices.getCampaigns( {count: COUNT} )
         .then( (resultsArray) => {
         if (this.loading) {
@@ -81,27 +84,18 @@ export class CampaignEditor {
   }
   
   closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("mySidebar").style.boxShadow = "none"
-    this.importMethod = ''
-
+    document.getElementById("campaignSidebar").style.width = "0";
+    document.getElementById("campaignSidebar").style.boxShadow = "none"
+    this.campaignUsername = ""
   }
 
-  importEuropeanaCollection(){
-    document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Europeana Dataset'
+  createCampaignSidebar() {
+    document.getElementById("campaignSidebar").style.width = "450px";
+    document.getElementById("campaignSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
   }
 
-  importEuropeanaSearch(){
-    document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 10px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Europeana Search'
-  }
-
-  importEuropeanaGallery(){
-    document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 10px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Europeana Gallery'
+  createCampaign() {
+    // TODO: Call editCampaign(campaign)
+    alert(this.campaignUsername)
   }
 }

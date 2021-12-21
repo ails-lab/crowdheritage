@@ -1,10 +1,12 @@
 {
   "header": "Edit details for current Campaign",
-  "langSelect": "Select language for language-sensitive fields:",
+  "langSelect": "Select language for the below fields:",
   "startDate": "Start Date",
   "endDate": "End Date",
   "title": "Title",
   "description": "Description",
+  "disclaimer": "Disclaimer",
+  "instructions": "Instruction",
   "banner": "Banner",
   "username": "Username",
   "chooseBanner": "Select Banner",
@@ -13,5 +15,9 @@
   "gold": "Gold",
   "silver": "Silver",
   "bronze": "Bronze",
-  "rookie": "Rookie"
+  "rookie": "Rookie",
+  "createCampaign": "Create Campaign",
+  "usernameLabel": "Campaign Username (must be unique)",
+  "usernamePlaceholder": "e.g. endngered-species"
+
 }

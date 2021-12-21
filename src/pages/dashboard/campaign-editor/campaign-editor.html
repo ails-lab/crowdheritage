@@ -11,15 +11,9 @@
             <div class="bold" t="summary:campaigns">CAMPAIGNS</div>
           </div>
           <div class="import-wrap">
-            <a id="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+            <a id="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="createCampaignSidebar()">
               <span class="text">Create Campaign</span>
-              <span class="arrow"></span>
             </a>
-            <ul aria-labelledby="import" class="dropdown-menu">
-              <li><a href="#" click.delegate="importEuropeanaCollection()">Europeana Dataset</a></li>
-              <li><a href="#" click.delegate="importEuropeanaSearch()">Europeana Search</a></li>
-              <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana Gallery</a></li>
-            </ul>
           </div>
         </div>
         <div class="campaignlist">
@@ -60,4 +54,24 @@
     		</compose>
     </section>
   </main>
+
+  <!-- Create Campaign Sidebar -->
+  <div id="campaignSidebar" class="sidebar">
+    <div>
+      <div class="action-header">
+        <div class="title" t="campaign-edit:createCampaign">Create Campaign</div>
+      </div>
+      <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+      <div class="action-body">
+        <div class="form-group">
+          <label t="campaign-edit:usernameLabel">Campaign Username (must be unique)</label>
+          <input type="text" placeholder="e.g. endngered-species" value.bind="campaignUsername">
+        </div>
+      </div>
+      <div class="button-group">
+        <button class="btn-green" click.delegate="createCampaign()" t="campaign-edit:createCampaign">Create Campaign</button>
+      </div>
+    </div>
+  </div>
+
 </template>
