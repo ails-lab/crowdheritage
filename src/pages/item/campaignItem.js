@@ -27,7 +27,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 
-let COUNT = 20;
+let COUNT = 5;
 
 @inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
 export class CampaignItem {

@@ -14,55 +14,54 @@
  */
 
 
-import {inject} from 'aurelia-dependency-injection';
-import {Annotation} from 'Annotation';
-import {UserServices} from 'UserServices';
-import {RecordServices} from 'RecordServices';
-import {CampaignServices} from 'CampaignServices.js';
-import {AnnotationServices} from 'AnnotationServices.js';
-import {ThesaurusServices} from 'ThesaurusServices.js';
-import {bindable} from 'aurelia-framework';
-import {EventAggregator} from 'aurelia-event-aggregator';
+import { inject } from 'aurelia-dependency-injection';
+import { Annotation } from 'Annotation';
+import { UserServices } from 'UserServices';
+import { RecordServices } from 'RecordServices';
+import { CampaignServices } from 'CampaignServices.js';
+import { AnnotationServices } from 'AnnotationServices.js';
+import { ThesaurusServices } from 'ThesaurusServices.js';
+import { bindable } from 'aurelia-framework';
+import { EventAggregator } from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
-import {I18N} from 'aurelia-i18n';
+import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N, 'isTesterUser')
+@inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N)
 export class Tagitem {
 
   @bindable prefix = '';
 
-  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n, isTesterUser) {
+  constructor(userServices, recordServices, campaignServices, eventAggregator, annotationServices, thesaurusServices, loginPopup, i18n) {
     this.i18n = i18n;
 
-		this.colorSet = [
-			["Black",       "background-color: #111111", "color: #111111; filter: brightness(500%);"],
-			["Grey",        "background-color: #AAAAAA","color: #AAAAAA; filter: brightness(60%);"],
-			["Brown",       "background-color: brown", "color:brown; filter: brightness(60%);"],
-			["Red",         "background-color: #FF4136","color: #FF4136; filter: brightness(60%);"],
-			["Orange",      "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
-			["Beige",       "background-color: beige", "color: beige; filter: brightness(60%);"],
-			["Yellow",      "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
-			["Green",       "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
-			["Blue",        "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
-			["Purple",      "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
-			["Pink",        "background-color: pink", "color: pink; filter: brightness(60%);"],
-			["White",       "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
-			["Copper",      "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
-			["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
-			["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);" ],
-			["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
-			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
-			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
-		];
+    this.colorSet = [
+      ["Black", "background-color: #111111", "color: #111111; filter: brightness(500%);"],
+      ["Grey", "background-color: #AAAAAA", "color: #AAAAAA; filter: brightness(60%);"],
+      ["Brown", "background-color: brown", "color:brown; filter: brightness(60%);"],
+      ["Red", "background-color: #FF4136", "color: #FF4136; filter: brightness(60%);"],
+      ["Orange", "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
+      ["Beige", "background-color: beige", "color: beige; filter: brightness(60%);"],
+      ["Yellow", "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
+      ["Green", "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
+      ["Blue", "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
+      ["Purple", "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
+      ["Pink", "background-color: pink", "color: pink; filter: brightness(60%);"],
+      ["White", "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
+      ["Copper", "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
+      ["Silver", "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
+      ["Bronze", "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);"],
+      ["Gold", "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
+      ["Multicolor", "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
+      ["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
+    ];
 
-		this.ea = eventAggregator;
+    this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
-    this.isTesterUser = isTesterUser();
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.togglePublishText = this.i18n.tr('item:toggle-publish');
@@ -71,20 +70,23 @@ export class Tagitem {
     this.geoannotations = [];
     this.colorannotations = [];
     this.pollannotations = [];
+    this.commentAnnotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
-    this.suggestedAnnotations =  [];
-		this.selectedAnnotation = null;
-    this.userId = '';
-		this.lg=loginPopup;
-		this.uriRedirect = false;
+    this.suggestedAnnotations = [];
+    this.selectedAnnotation = null;
+    this.userComment = '';
 
-		this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations()});
-		this.handleBodyClick = e => {
+    this.userId = '';
+    this.lg = loginPopup;
+    this.uriRedirect = false;
+
+    this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations() });
+    this.handleBodyClick = e => {
       // console.log(e.target.id);
-      if(e.target.id!="annotationInput"){
-      	this.suggestedAnnotations =  [];
-      	 this.suggestionsLoading = false;
+      if (e.target.id != "annotationInput") {
+        this.suggestedAnnotations = [];
+        this.suggestionsLoading = false;
       }
     };
   }
@@ -99,12 +101,15 @@ export class Tagitem {
   }
 
   attached() {
-      document.addEventListener('click', this.handleBodyClick);
-			toggleMore(".taglist");
+    document.addEventListener('click', this.handleBodyClick);
+    toggleMore(".tagBlock");
+    toggleMore(".commentBlock");
+    toggleMore(".colorBlock");
+    toggleMore(".geoBlock");
   }
 
   detached() {
-	  this.evsubscr1.dispose();
+    this.evsubscr1.dispose();
     document.removeEventListener('click', this.handleBodyClick);
   }
 
@@ -114,7 +119,7 @@ export class Tagitem {
     if (params.userId) {
       this.userId = params.userId;
     }
-		this.loc = window.location.href.split('/')[3];
+    this.loc = window.location.href.split('/')[3];
     try {
       this.colTitle = params.colTitle[0].split(' (')[0];
     } catch (e) {
@@ -123,16 +128,14 @@ export class Tagitem {
     this.annotations.splice(0, this.annotations.length);
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
-    this.pollannotations.splice(0, this.pollannotations.length);;
+    this.pollannotations.splice(0, this.pollannotations.length);
+    this.commentAnnotations.splice(0, this.commentAnnotations.length);
     this.pollTitle = "";
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       await this.userServices.reloadCurrentUser();
     }
     await this.getRecordAnnotations(this.recId);
-    if (this.isTesterUser && (this.campaign.username === "instruments" || this.campaign.username === "garment-type")) {
-      toastr.error("You cannot contribute to this campaign!");
-    }
   }
 
   async reloadAnnotations() {
@@ -140,54 +143,55 @@ export class Tagitem {
     this.geoannotations = [];
     this.colorannotations = [];
     this.pollannotations = [];
+    this.commentAnnotations = []
     await this.getRecordAnnotations(this.recId);
   }
 
-  prefixChanged(geo=false) {
+  prefixChanged(geo = false) {
     //	console.log(this.selectedAnnotation+' '+this.selectedAnnotation.vocabulary+' '+this.selectedAnnotation.label);
     if (this.prefix === '') {
       this.suggestedAnnotations = [];
       return;
     }
     this.selectedAnnotation = null;
-		if (geo || this.campaign.motivation == 'GeoTagging') {
-			this.getGeoAnnotations(this.prefix);
-		} else {
-			this.getSuggestedAnnotations(this.prefix);
-		}
+    if (geo || this.campaign.motivation == 'GeoTagging') {
+      this.getGeoAnnotations(this.prefix);
+    } else {
+      this.getSuggestedAnnotations(this.prefix);
+    }
   }
 
-	async getGeoAnnotations(prefix) {
-		this.lastRequest = prefix;
-		this.suggestionsLoading = true;
-		this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
-		this.selectedAnnotation = null;
-		let self = this;
-		await this.thesaurusServices.getGeonameSuggestions(prefix)
-		.then((res) => {
-    	self.getGeoSuggestions( res);
-  	});
-	}
-
-	getGeoSuggestions(jData) {
-		if (jData == null) {
-			// There was a problem parsing search results
-			alert("nothing found");
-			return;
-		}
-		var html = '';
-		var geonames = jData.geonames;
-		this.suggestedAnnotations = geonames;
- 		/*if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
-		self.selectedAnnotation = self.suggestedAnnotations[0];
-		}*/
-		this.suggestionsLoading = false;
-	}
-
-  async getSuggestedAnnotations(prefix, lang="all") {
+  async getGeoAnnotations(prefix) {
     this.lastRequest = prefix;
     this.suggestionsLoading = true;
-		lang = typeof this.loc !== 'undefined' ? this.loc : 'all';
+    this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
+    this.selectedAnnotation = null;
+    let self = this;
+    await this.thesaurusServices.getGeonameSuggestions(prefix)
+      .then((res) => {
+        self.getGeoSuggestions(res);
+      });
+  }
+
+  getGeoSuggestions(jData) {
+    if (jData == null) {
+      // There was a problem parsing search results
+      alert("nothing found");
+      return;
+    }
+    var html = '';
+    var geonames = jData.geonames;
+    this.suggestedAnnotations = geonames;
+    /*if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
+  self.selectedAnnotation = self.suggestedAnnotations[0];
+  }*/
+    this.suggestionsLoading = false;
+  }
+
+  async getSuggestedAnnotations(prefix, lang = "all") {
+    this.lastRequest = prefix;
+    this.suggestionsLoading = true;
+    lang = typeof this.loc !== 'undefined' ? this.loc : 'all';
     this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
     this.selectedAnnotation = null;
     let self = this;
@@ -203,24 +207,28 @@ export class Tagitem {
     });
   }
 
-	selectGeoAnnotation(geoid) {
+  selectGeoAnnotation(geoid) {
     // If the campaign is inactive do NOT geoannotate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
+      return;
+    }
 
-	  if(this.userServices.isAuthenticated()==false){
+    if (this.userServices.isAuthenticated() == false) {
       toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
-			return;
-		}
+      return;
+    }
 
-		this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
-			return obj.geonameId === geoid
-		});
-		for (var [i, ann] of this.geoannotations.entries()) {
-      if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
+    this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
+      return obj.geonameId === geoid
+    });
+    for (var [i, ann] of this.geoannotations.entries()) {
+      if (ann.uri && ann.uri.indexOf(geoid) != -1) {
         this.prefix = "";
         this.selectedAnnotation = null;
         this.suggestedAnnotations = [];
@@ -231,57 +239,62 @@ export class Tagitem {
         return;
       }
     }
-		this.suggestedAnnotations = [];
-		this.errors = this.selectedAnnotation == null;
+    this.suggestedAnnotations = [];
+    this.errors = this.selectedAnnotation == null;
 
-		if (!this.errors) {
-			let self = this;
+    if (!this.errors) {
+      let self = this;
       if (!this.hasContributed('all')) {
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-          .catch( (error) => {
+          .catch((error) => {
             console.log("This ERROR occured : ", error);
           });
       }
 
-			this.annotationServices.annotateGeoRecord(this.recId, geoid, this.campaign.username)
-			.then(() => {
-				toastr.success('Annotation added.');
-				self.ea.publish('annotations-created', self.record);
-				self.ea.publish('geotag-created', this.selectedAnnotation);
-        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-        // After annotating, automatically upvote the new annotation
-        this.getRecordAnnotations('').then( () => {
-          for (var [i, ann] of this.geoannotations.entries()) {
-            if (ann.uri && ann.uri.indexOf(geoid)!=-1) {
-              this.score(ann.dbId, 'approved', i, 'geo');
-              break;
+      this.annotationServices.annotateGeoRecord(this.recId, geoid, this.campaign.username)
+        .then(() => {
+          toastr.success('Annotation added.');
+          self.ea.publish('annotations-created', self.record);
+          self.ea.publish('geotag-created', this.selectedAnnotation);
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+          // After annotating, automatically upvote the new annotation
+          this.getRecordAnnotations('').then(() => {
+            for (var [i, ann] of this.geoannotations.entries()) {
+              if (ann.uri && ann.uri.indexOf(geoid) != -1) {
+                this.score(ann.dbId, 'approved', i, 'geo');
+                break;
+              }
             }
-          }
+          });
+          this.prefix = "";
+          this.selectedAnnotation = null;
+        }).catch((error) => {
+          toastr.error(this.i18n.tr('item:toastr-error'));
         });
-			 	this.prefix = "";
-				this.selectedAnnotation = null;
-			}).catch((error) => {
-				toastr.error(this.i18n.tr('item:toastr-error'));
-			});
-		}
- 	}
+    }
+  }
 
   selectSuggestedAnnotation(index) {
     // If the campaign is inactive do NOT validate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
+      return;
+    }
+
     if (this.uriRedirect) {
-			this.uriRedirect = false;
-			this.prefixChanged();
-			return;
-		}
+      this.uriRedirect = false;
+      this.prefixChanged();
+      return;
+    }
     if (this.userServices.isAuthenticated() == false) {
       toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
-			return;
-		}
+      return;
+    }
 
     this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
       return obj.id === index
@@ -306,18 +319,18 @@ export class Tagitem {
       let self = this;
       if (!this.hasContributed('all')) {
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-          .catch( (error) => {
+          .catch((error) => {
             console.log("This ERROR occured : ", error);
           });
       }
 
-      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging').then(() => {
+      this.annotationServices.annotateRecord(this.recId, this.selectedAnnotation, this.campaign.username, 'Tagging', this.loc).then(() => {
         toastr.success('Annotation added.');
         self.ea.publish('annotations-created', self.record);
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
         // After annotating, automatically upvote the new annotation
         var lb = this.selectedAnnotation.label;
-        this.getRecordAnnotations('').then( () => {
+        this.getRecordAnnotations('').then(() => {
           for (var [i, ann] of this.annotations.entries()) {
             if (ann.label.toLowerCase() === lb.toLowerCase()) {
               this.score(ann.dbId, 'approved', i, 'tag');
@@ -334,12 +347,16 @@ export class Tagitem {
   }
 
   async annotateLabel(label) {
-		if (label === 'Multicolor') {
-			label = 'Multicoloured';
-		}
+    if (label === 'Multicolor') {
+      label = 'Multicoloured';
+    }
     // If the campaign is inactive do NOT annotate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
 
@@ -365,11 +382,11 @@ export class Tagitem {
       });
       if (!this.hasContributed('all')) {
         this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-          .catch( (error) => {
+          .catch((error) => {
             console.log("This ERROR occured : ", error);
           });
       }
-      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging');
+      await this.annotationServices.annotateRecord(this.recId, this.suggestedAnnotation, this.campaign.username, 'ColorTagging', this.loc);
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
       // Clear and reload the colorannotations array
       this.colorannotations.splice(0, this.colorannotations.length);
@@ -389,7 +406,7 @@ export class Tagitem {
     }
   }
 
-  // mot has 3 potential values : [tag, geo, color]
+  // mot has 3 potential values : [tag, geo, color, comment]
   // depending on which widget called the function
   deleteAnnotation(id, index, mot) {
     if (this.userServices.isAuthenticated() == false) {
@@ -397,53 +414,55 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-		if (this.isCurrentUserCreator()) {
-			if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
-				console.log("Deleting annotations...");
-			}	else {
-				return;
-			}
-		} else {
-    // Since on annotating, the user automatically also upvotes the annotation,
-    // when deleting an annotation, you should also remove the point from upvoting
-    	this.unscore(id, 'approved', index, mot);
-		}
+    if (this.isCurrentUserCreator()) {
+      if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
+        console.log("Deleting annotations...");
+      } else {
+        return;
+      }
+    } else {
+      // Since on annotating, the user automatically also upvotes the annotation,
+      // when deleting an annotation, you should also remove the point from upvoting
+      this.unscore(id, 'approved', index, mot);
+    }
 
     this.annotationServices.delete(id).then(() => {
-			let ann;
+      let ann;
       if (mot == 'tag') {
         ann = this.annotations.splice(index, 1);
       }
       else if (mot == 'geo') {
-        var lt=this.geoannotations[index];
+        var lt = this.geoannotations[index];
         ann = this.geoannotations.splice(index, 1);
         if (this.campaign.motivation == 'GeoTagging')
-  				this.ea.publish('geotag-removed', lt.coordinates);
+          this.ea.publish('geotag-removed', lt.coordinates);
       }
       else if (mot == 'color') {
         ann = this.colorannotations.splice(index, 1);
       }
-      this.reloadAnnotations().then( () => {
-					if (this.isCurrentUserCreator()) {
-						console.log(ann[0]);
-							// Remove one point from each of the upvoters
-							for (let upvoter of ann[0].approvedBy) {
-								this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
-							}
-							// Remove one point from each of the annotators
-							for (let annotator of ann[0].createdBy) {
-								this.campaignServices.decUserPoints(this.campaign.dbId, annotator.withCreator, 'created');
-							}
-					} else {
-          	this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-          	if (!this.hasContributed('all')) {
-            	this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-              	.catch( (error) => {
-                	console.log("This ERROR occured : ", error);
-              	});
-          	}
-					}
-        });
+      else if (mot == 'comment') {
+        ann = this.commentAnnotations.splice(index, 1);
+      }
+      this.reloadAnnotations().then(() => {
+        if (this.isCurrentUserCreator()) {
+          // Remove one point from each of the upvoters
+          for (let upvoter of ann[0].approvedBy) {
+            this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
+          }
+          // Remove one point from each of the annotators
+          for (let annotator of ann[0].createdBy) {
+            this.campaignServices.decUserPoints(this.campaign.dbId, annotator.withCreator, 'created');
+          }
+        } else {
+          this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+          if (!this.hasContributed('all')) {
+            this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
+              .catch((error) => {
+                console.log("This ERROR occured : ", error);
+              });
+          }
+        }
+      });
     }).catch(error => {
       console.log(error.message);
     });
@@ -460,8 +479,12 @@ export class Tagitem {
 
   async validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot) {
     // If the campaign is inactive do NOT validate
-    if (this.campaign.status != 'active' && !this.isTesterUser) {
+    if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
 
@@ -484,7 +507,7 @@ export class Tagitem {
   async score(annoId, annoType, index, mot) {
     if (!this.hasContributed('all')) {
       this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-        .catch( (error) => {
+        .catch((error) => {
           console.log("This ERROR occured : ", error);
         });
     }
@@ -503,7 +526,9 @@ export class Tagitem {
       else if (mot == 'poll') {
         this.RejectFlag = this.pollannotations[index].rejectedByMe;
       }
-
+      else if (mot == 'comment') {
+        this.RejectFlag = this.commentAnnotations[index].rejectedByMe;
+      }
 
       this.annotationServices.approveObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
@@ -519,18 +544,20 @@ export class Tagitem {
         else if (mot == 'poll') {
           this.pollannotations[index].approvedBy.push(response);
         }
-
+        else if (mot == 'comment') {
+          this.commentAnnotations[index].approvedBy.push(response);
+        }
 
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after approval the score is equal (approved = rejected) it means that this annotation had bad karma and now must change -> reduce Karma points of the creator
-          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
+          if (response.score.approvedBy != null && response.score.rejectedBy != null) {
             if (this.RejectFlag) {
-              if((response.score.approvedBy.length - response.score.rejectedBy.length == 2) || (response.score.approvedBy.length - response.score.rejectedBy.length == 1)) {
+              if ((response.score.approvedBy.length - response.score.rejectedBy.length == 2) || (response.score.approvedBy.length - response.score.rejectedBy.length == 1)) {
                 this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
               }
             }
-            else{
-              if(response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
+            else {
+              if (response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
                 this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
               }
             }
@@ -544,7 +571,7 @@ export class Tagitem {
       if (mot == 'tag') {
         this.annotations[index].approvedByMe = true;
         if (this.annotations[index].rejectedByMe) {
-          var i = this.annotations[index].rejectedBy.map(function(e) {
+          var i = this.annotations[index].rejectedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
@@ -563,7 +590,7 @@ export class Tagitem {
       else if (mot == 'geo') {
         this.geoannotations[index].approvedByMe = true;
         if (this.geoannotations[index].rejectedByMe) {
-          var i = this.geoannotations[index].rejectedBy.map(function(e) {
+          var i = this.geoannotations[index].rejectedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
@@ -582,7 +609,7 @@ export class Tagitem {
       else if (mot == 'color') {
         this.colorannotations[index].approvedByMe = true;
         if (this.colorannotations[index].rejectedByMe) {
-          var i = this.colorannotations[index].rejectedBy.map(function(e) {
+          var i = this.colorannotations[index].rejectedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
@@ -601,13 +628,32 @@ export class Tagitem {
       else if (mot == 'poll') {
         this.pollannotations[index].approvedByMe = true;
         if (this.pollannotations[index].rejectedByMe) {
-          var i = this.pollannotations[index].rejectedBy.map(function(e) {
+          var i = this.pollannotations[index].rejectedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
             this.pollannotations[index].rejectedBy.splice(i, 1);
           }
           this.pollannotations[index].rejectedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
+      else if (mot == 'comment') {
+        this.commentAnnotations[index].approvedByMe = true;
+        if (this.commentAnnotations[index].rejectedByMe) {
+          var i = this.commentAnnotations[index].rejectedBy.map(function (e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.commentAnnotations[index].rejectedBy.splice(i, 1);
+          }
+          this.commentAnnotations[index].rejectedByMe = false;
         } else {
           if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
             await this.userServices.reloadCurrentUser();
@@ -633,6 +679,9 @@ export class Tagitem {
       else if (mot == 'poll') {
         this.ApproveFlag = this.pollannotations[index].approvedByMe;
       }
+      else if (mot == 'comment') {
+        this.ApproveFlag = this.commentAnnotations[index].approvedByMe;
+      }
 
       this.annotationServices.rejectObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
@@ -648,17 +697,20 @@ export class Tagitem {
         else if (mot == 'poll') {
           this.pollannotations[index].rejectedBy.push(response);
         }
+        else if (mot == 'comment') {
+          this.commentAnnotations[index].rejectedBy.push(response);
+        }
 
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after rejection  rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
-          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
+          if (response.score.approvedBy != null && response.score.rejectedBy != null) {
             if (this.ApproveFlag) {
-              if((response.score.rejectedBy.length - response.score.approvedBy.length == 0) || (response.score.rejectedBy.length - response.score.approvedBy.length == 1)) {
+              if ((response.score.rejectedBy.length - response.score.approvedBy.length == 0) || (response.score.rejectedBy.length - response.score.approvedBy.length == 1)) {
                 this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
               }
             }
-            else{
-              if(response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
+            else {
+              if (response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
                 this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
               }
             }
@@ -672,7 +724,7 @@ export class Tagitem {
       if (mot == 'tag') {
         this.annotations[index].rejectedByMe = true;
         if (this.annotations[index].approvedByMe) {
-          var i = this.annotations[index].approvedBy.map(function(e) {
+          var i = this.annotations[index].approvedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
@@ -691,7 +743,7 @@ export class Tagitem {
       else if (mot == 'geo') {
         this.geoannotations[index].rejectedByMe = true;
         if (this.geoannotations[index].approvedByMe) {
-          var i = this.geoannotations[index].approvedBy.map(function(e) {
+          var i = this.geoannotations[index].approvedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
@@ -710,7 +762,7 @@ export class Tagitem {
       else if (mot == 'color') {
         this.colorannotations[index].rejectedByMe = true;
         if (this.colorannotations[index].approvedByMe) {
-          var i = this.colorannotations[index].approvedBy.map(function(e) {
+          var i = this.colorannotations[index].approvedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
@@ -729,13 +781,32 @@ export class Tagitem {
       else if (mot == 'poll') {
         this.pollannotations[index].rejectedByMe = true;
         if (this.pollannotations[index].approvedByMe) {
-          var i = this.pollannotations[index].approvedBy.map(function(e) {
+          var i = this.pollannotations[index].approvedBy.map(function (e) {
             return e.withCreator;
           }).indexOf(this.userServices.current.dbId);
           if (i > -1) {
             this.pollannotations[index].approvedBy.splice(i, 1);
           }
           this.pollannotations[index].approvedByMe = false;
+        } else {
+          if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
+            await this.userServices.reloadCurrentUser();
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          } else {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
+          }
+        }
+      }
+      else if (mot == 'comment') {
+        this.commentAnnotations[index].rejectedByMe = true;
+        if (this.commentAnnotations[index].approvedByMe) {
+          var i = this.commentAnnotations[index].approvedBy.map(function (e) {
+            return e.withCreator;
+          }).indexOf(this.userServices.current.dbId);
+          if (i > -1) {
+            this.commentAnnotations[index].approvedBy.splice(i, 1);
+          }
+          this.commentAnnotations[index].approvedByMe = false;
         } else {
           if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
             await this.userServices.reloadCurrentUser();
@@ -754,21 +825,21 @@ export class Tagitem {
       this.annotationServices.unscoreObj(annoId).then(response1 => {
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after approved unscore rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
-          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
-            if(response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
+          if (response.score.approvedBy != null && response.score.rejectedBy != null) {
+            if (response.score.rejectedBy.length - response.score.approvedBy.length == 0) {
               this.campaignServices.incUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
             }
           }
         })
-        .catch(error => {
-          console.log("Couldn't find annotation with id:", annoId);
-          console.log(error.message);
-        });
+          .catch(error => {
+            console.log("Couldn't find annotation with id:", annoId);
+            console.log(error.message);
+          });
       }).catch(error => {
         console.log(error.message);
       });
       if (mot == 'tag') {
-        var i = this.annotations[index].approvedBy.map(function(e) {
+        var i = this.annotations[index].approvedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
@@ -777,7 +848,7 @@ export class Tagitem {
         this.annotations[index].approvedByMe = false;
       }
       else if (mot == 'geo') {
-        var i = this.geoannotations[index].approvedBy.map(function(e) {
+        var i = this.geoannotations[index].approvedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
@@ -786,7 +857,7 @@ export class Tagitem {
         this.geoannotations[index].approvedByMe = false;
       }
       else if (mot == 'color') {
-        var i = this.colorannotations[index].approvedBy.map(function(e) {
+        var i = this.colorannotations[index].approvedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
@@ -795,13 +866,22 @@ export class Tagitem {
         this.colorannotations[index].approvedByMe = false;
       }
       else if (mot == 'poll') {
-        var i = this.pollannotations[index].approvedBy.map(function(e) {
+        var i = this.pollannotations[index].approvedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
           this.pollannotations[index].approvedBy.splice(i, 1);
         }
         this.pollannotations[index].approvedByMe = false;
+      }
+      else if (mot == 'comment') {
+        var i = this.commentAnnotations[index].approvedBy.map(function (e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.commentAnnotations[index].approvedBy.splice(i, 1);
+        }
+        this.commentAnnotations[index].approvedByMe = false;
       }
 
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
@@ -817,8 +897,8 @@ export class Tagitem {
       this.annotationServices.unscoreObj(annoId).then(response => {
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after rejected unscore the score is equal (approved = rejected) it means that this annotation had bad karma and now must change -> reduce Karma points of the creator
-          if (response.score.approvedBy!=null && response.score.rejectedBy!=null){
-            if(response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
+          if (response.score.approvedBy != null && response.score.rejectedBy != null) {
+            if (response.score.approvedBy.length - response.score.rejectedBy.length == 1) {
               this.campaignServices.decUserPoints(this.campaign.dbId, response.annotators[0].withCreator, "karmaPoints")
             }
           }
@@ -827,7 +907,7 @@ export class Tagitem {
         console.log(error.message);
       });
       if (mot == 'tag') {
-        var i = this.annotations[index].rejectedBy.map(function(e) {
+        var i = this.annotations[index].rejectedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
@@ -836,7 +916,7 @@ export class Tagitem {
         this.annotations[index].rejectedByMe = false;
       }
       else if (mot == 'geo') {
-        var i = this.geoannotations[index].rejectedBy.map(function(e) {
+        var i = this.geoannotations[index].rejectedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
@@ -845,7 +925,7 @@ export class Tagitem {
         this.geoannotations[index].rejectedByMe = false;
       }
       else if (mot == 'color') {
-        var i = this.colorannotations[index].rejectedBy.map(function(e) {
+        var i = this.colorannotations[index].rejectedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
@@ -854,13 +934,22 @@ export class Tagitem {
         this.colorannotations[index].rejectedByMe = false;
       }
       else if (mot == 'poll') {
-        var i = this.pollannotations[index].rejectedBy.map(function(e) {
+        var i = this.pollannotations[index].rejectedBy.map(function (e) {
           return e.withCreator;
         }).indexOf(this.userServices.current.dbId);
         if (i > -1) {
           this.pollannotations[index].rejectedBy.splice(i, 1);
         }
         this.pollannotations[index].rejectedByMe = false;
+      }
+      else if (mot == 'comment') {
+        var i = this.commentAnnotations[index].rejectedBy.map(function (e) {
+          return e.withCreator;
+        }).indexOf(this.userServices.current.dbId);
+        if (i > -1) {
+          this.commentAnnotations[index].rejectedBy.splice(i, 1);
+        }
+        this.commentAnnotations[index].rejectedByMe = false;
       }
 
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
@@ -872,7 +961,7 @@ export class Tagitem {
     }
     if (!this.hasContributed('all')) {
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-        .catch( (error) => {
+        .catch((error) => {
           console.log("This ERROR occured : ", error);
         });
     }
@@ -919,7 +1008,7 @@ export class Tagitem {
         }
       });
       // Sort the annotations in descending order, based on their score
-      this.geoannotations.sort(function(a, b) {
+      this.geoannotations.sort(function (a, b) {
         return b.score - a.score;
       });
     }
@@ -935,7 +1024,7 @@ export class Tagitem {
         }
       });
       // Sort the annotations in descending order, based on their score
-      this.annotations.sort(function(a, b) {
+      this.annotations.sort(function (a, b) {
         return b.score - a.score;
       });
     }
@@ -946,15 +1035,15 @@ export class Tagitem {
           // Filter the annotations based on the generator
           var flag = false;
           for (var annotator of response[i].annotators) {
-            if ( (annotator.generator == (settings.project+' '+(this.campaign.username)))
-              || (annotator.generator == 'Image Analysis') ) {
-                flag = true;
-                break;
+            if ((annotator.generator == (settings.project + ' ' + (this.campaign.username)))
+              || (annotator.generator == 'Image Analysis')) {
+              flag = true;
+              break;
             }
           }
           // If the criterias are met, push the annotation inside the array
           if (flag) {
-            if (response[i].body.label.en && response[i].body.label.en=="gray") {
+            if (response[i].body.label.en && response[i].body.label.en == "gray") {
               response[i].body.label.en = ["grey"];
               response[i].body.label.default = ["grey"];
             }
@@ -967,14 +1056,30 @@ export class Tagitem {
         }
       });
       // Sort the annotations in descending order, based on their score
-      this.colorannotations.sort(function(a, b) {
+      this.colorannotations.sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
+    if (this.hasMotivation('Commenting')) {
+      await this.recordServices.getAnnotations(this.recId, 'Commenting', this.generatorParam).then(response => {
+        this.commentAnnotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.commentAnnotations.push(new Annotation(response[i], "", this.loc));
+          } else {
+            this.commentAnnotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.commentAnnotations.sort(function (a, b) {
         return b.score - a.score;
       });
     }
   }
 
   getColorLabel(label) {
-    return this.i18n.tr('item:color:'+label);
+    return this.i18n.tr('item:color:' + label);
   }
 
   getColor(label) {
@@ -988,8 +1093,8 @@ export class Tagitem {
     }
   }
 
-	getStyle(label) {
-		label = (label === 'Multicoloured') ? 'Multicolor' : label;
+  getStyle(label) {
+    label = (label === 'Multicoloured') ? 'Multicolor' : label;
     var index = this.colorSet.findIndex(element => {
       return element[0] == label;
     });
@@ -1003,7 +1108,7 @@ export class Tagitem {
   annotationExists(label) {
     for (var i in this.colorannotations) {
       if (this.colorannotations[i].label == label) {
-        return {'id': this.colorannotations[i].dbId, 'index': i};
+        return { 'id': this.colorannotations[i].dbId, 'index': i };
       }
     }
     return null;
@@ -1014,6 +1119,7 @@ export class Tagitem {
     var geoFlag = false;
     var colorFlag = false;
     var pollFlag = false;
+    var commFlag = false;
 
     for (var i in this.annotations) {
       if (this.annotations[i].createdByMe || this.annotations[i].approvedByMe || this.annotations[i].rejectedByMe) {
@@ -1039,6 +1145,12 @@ export class Tagitem {
         break;
       }
     }
+    for (var i in this.commentAnnotations) {
+      if (this.commentAnnotations[i].createdByMe || this.commentAnnotations[i].approvedByMe || this.commentAnnotations[i].rejectedByMe) {
+        commFlag = true;
+        break;
+      }
+    }
 
     if (mot == "tag") {
       return tagFlag;
@@ -1052,8 +1164,11 @@ export class Tagitem {
     else if (mot == "poll") {
       return pollFlag;
     }
+    else if (mot == "comment") {
+      return commFlag;
+    }
     else {
-      return tagFlag || geoFlag || colorFlag || pollFlag;
+      return tagFlag || geoFlag || colorFlag || pollFlag || commFlag;
     }
   }
 
@@ -1062,7 +1177,7 @@ export class Tagitem {
   }
 
   isCreatedBy(ann) {
-    return ( ann.createdBy[0].withCreator == this.userId );
+    return (ann.createdBy[0].withCreator == this.userId);
   }
 
   isValidatedBy(ann, valType) {
@@ -1103,21 +1218,81 @@ export class Tagitem {
     return uri.startsWith("http");
   }
 
-	goToURI(uri) {
+  goToURI(uri) {
     console.log(uri);
-		this.uriRedirect = true;
-		window.open(uri);
-	}
+    this.uriRedirect = true;
+    window.open(uri);
+  }
 
   clearSearchField() {
     this.prefix = '';
   }
 
-	isCurrentUserCreator() {
+  isCurrentUserCreator() {
     if (this.userServices.current)
-		  return this.campaign.creators.includes(this.userServices.current.dbId);
+      return this.campaign.creators.includes(this.userServices.current.dbId);
     else
       return false;
-	}
+  }
+
+  userHasAccessInCampaign() {
+    if (!this.userServices.isAuthenticated()) {
+      return false;
+    }
+    if (!this.campaign.userGroupIds || this.campaign.userGroupIds.length === 0) {
+      return true;
+    }
+    for (const groupId of this.userServices.current.userGroupsIds) {
+      if (this.campaign.userGroupIds.includes(groupId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  autosizeCommentArea() {
+    let area = document.getElementById('user-tag-textarea');
+    area.style.cssText = 'height:' + area.scrollHeight + 'px';
+  }
+
+  submitComment() {
+    // If the campaign is inactive do NOT annotate
+    if (this.campaign.status != 'active') {
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
+      return;
+    }
+
+    var comment = this.userComment.trim();
+    if (comment.length == 0) {
+      toastr.error("Your comment can not be empty");
+    }
+    else {
+      this.annotationServices.annotateRecord(this.recId, comment, this.campaign.username, 'Commenting', this.loc).then(() => {
+        toastr.success('Annotation added.');
+        this.ea.publish('annotations-created', self.record);
+        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        this.getRecordAnnotations('').then(() => {
+          for (var [i, ann] of this.commentAnnotations.entries()) {
+            if (ann.label.toLowerCase() === comment.toLowerCase()) {
+              this.score(ann.dbId, 'approved', i, 'comment');
+              break;
+            }
+          }
+        });
+      }).catch((error) => {
+        console.error(error);
+        toastr.error(this.i18n.tr('item:toastr-error'));
+      });
+    }
+
+    this.userComment = '';
+    let area = document.getElementById('user-tag-textarea');
+    area.style.cssText = 'height: 28px';
+  }
 
 }

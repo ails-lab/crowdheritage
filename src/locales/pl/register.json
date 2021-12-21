@@ -1,0 +1,16 @@
+{
+  "header"        : "Register with your email address",
+  "email"         : "Email",
+  "username"      : "Username",
+  "password"      : "Password",
+  "repeat"        : "Repeat Password",
+  "firstname"     : "First name",
+  "lastname"      : "Last name",
+  "select-gender" : "Select your gender...",
+  "male"          : "Male",
+  "female"        : "Female",
+  "unspecified"   : "Unspecified",
+  "accept"        : "I acknowledge the I have read and accept the ",
+  "terms"         : "Terms of Use agreement",
+  "button"        : "Register"
+}
