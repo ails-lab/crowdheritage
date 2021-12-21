@@ -23,19 +23,16 @@ import { I18N } from 'aurelia-i18n';
 
 let logger = LogManager.getLogger('Dashboard.js');
 
-let COUNT = 10;
-
 @inject(UserServices, MediaServices, CampaignServices, Router, I18N, 'loginPopup', NewInstance.of(ValidationController))
 export class Dashboard {
-  
+
   constructor() {
     this.view = "campaign-editor"
-    this.collectionClasses = "nav-item"
     this.campaignClasses = "nav-item active"
+    this.collectionClasses = "nav-item"
     this.userGroupClasses = "nav-item"
-
   }
-  
+
   tabChanged(tab){
     this.view = tab;
     if(tab === 'collection-editor'){
@@ -52,7 +49,7 @@ export class Dashboard {
       this.campaignClasses = "nav-item"
       this.collectionClasses = "nav-item"
       this.userGroupClasses = "nav-item active"
-    } 
+    }
   }
 
 }

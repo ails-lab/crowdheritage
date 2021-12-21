@@ -1,5 +1,5 @@
 // DEV CONFIGURATION
-/*var settings = {
+var settings = {
   project: process.env.PROJECT,
   space: process.env.SPACE,
   auth: {
@@ -34,10 +34,10 @@ else {
   console.log(`${window.location.hostname}`);
 }
 
-export default settings;*/
+export default settings;
 
 // MASTER CONFIGURATION
-var settings = {
+/*var settings = {
   project: 'CrowdHeritage',
   space: 'espace',
   auth: {
@@ -57,4 +57,4 @@ try {
   console.log("Local configuration file not available");
 }
 
-export default settings;
+export default settings;*/

@@ -249,7 +249,7 @@ body header .wrap .container nav .account a:hover .lbl {
 body header .wrap .container nav .account .accountmenu {
   position: absolute;
   top: 70px;
-  width: 225px;
+  width: -moz-available;
   right: 0;
   background-color: @main-color;
   margin: 0;
@@ -6868,4 +6868,16 @@ a:hover .social-button.facebook {
   color: #4f7979;
   border-color: #fff;
   text-decoration: none;
+}
+
+#dashboard .nav-tabs {
+  font-size: 13pt;
+}
+
+#dashboard .nav-tabs > li > a {
+  color: @main-color;
+}
+
+#dashboard .nav-item {
+  margin-right: 20px;
 }

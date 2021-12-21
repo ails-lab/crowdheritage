@@ -91,6 +91,8 @@ export async function configure(aurelia) {
         ns: [
           'app',
           'about',
+          'collectionEdit',
+          'dashboard',
           'feedback',
           'index',
           'item',
@@ -99,8 +101,7 @@ export async function configure(aurelia) {
           'register',
           'summary',
           'terms',
-          'user',
-          'collectionEdit'
+          'user'
         ],
         defaultNS: 'app'
       });
