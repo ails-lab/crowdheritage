@@ -42,7 +42,6 @@ export class CollectionEditor {
       this.loading = true;
       this.getCollectionsByUser();
     }
-
   }
 
   getCollectionsByUser() {

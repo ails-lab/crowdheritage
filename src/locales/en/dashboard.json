@@ -1,5 +1,12 @@
 {
   "campaigns": "Campaigns",
   "collections": "Collections",
-  "usergroups": "Usergroups"
+  "usergroups": "Usergroups",
+  "returnDashboard": "RETURN TO DASHBOARD",
+  "newCollection": "New Collection",
+  "viewCollection": "View Collection",
+  "title": "Title",
+  "access": "Access",
+  "description": "Description",
+  "save": "Save Collection"
 }

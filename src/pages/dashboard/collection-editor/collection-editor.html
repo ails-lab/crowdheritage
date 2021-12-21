@@ -1,26 +1,14 @@
 <template>
-  <main if.bind="!user">
-    <section>
-      <div class="container">
-        <h3>You have to be signed in to see your collections.</h3>
-      </div>
-    </section>
-  </main>
   <main if.bind="user">
     <!-- collection list-->
     <section class="collections">
       <div class="container">
         <!-- top section-->
-        <div class="topsection">
-          <!-- label-->
-          <div class="sectionlabel">
-            <div class="bold" t="summary:collections">COLLECTIONS</div>
-          </div>
+        <div class="topsection mb-3 me-5">
           <div class="import-wrap">
-            <a href="javascript:void(0)" class="import" click.delegate="newCollection()">
-              <span class="plus"></span>
-              <span class="text">New Collection</span>
-            </a>
+            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newCollection" click.delegate="newCollection()">
+              <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
         <div class="campaignlist" if.bind="collections.length>0">
@@ -29,12 +17,24 @@
             <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
               <a route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }">
                 <div class="thumbs">
-                  <div class="thumbs-images thumbs-count-${col.absMedia.length}">
-                    <img repeat.for="med of col.absMedia" src.bind="med"
-                      onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+                  <div
+                    if.bind="col.absMedia.length > 0"
+                    class="thumbs-images thumbs-count-${col.absMedia.length}"
+                  >
+                    <img
+                      repeat.for="med of col.absMedia"
+                      src.bind="med"
+                      onError="this.src='/img/assets/img/ui/ic-noimage.png'"
+                    />
+                  </div>
+                  <div
+                    if.bind="col.absMedia.length == 0"
+                    class="thumbs-images thumbs-count-1"
+                  >
+                    <img src="/img/assets/img/ui/ic-noimage.png" />
                   </div>
                   <div class="action">
-                    <h3><b>Edit Records</b></h3>
+                    <h3><b t="dashboard:viewCollection"></b></h3>
                   </div>
                 </div>
                 <!-- detail-->
@@ -54,7 +54,7 @@
                   <li>
                     <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top"
                       title="Delete collection" class="delete"><img class="editicon"
-                        src="/img/assets/img/ui/ic-delete.png" /></i></a>
+                        src="/img/assets/img/ui/ic-delete.png" /></a>
                   </li>
                   <li>
                     <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top"
@@ -68,10 +68,14 @@
           <!-- more-->
           <div class="loadmore">
             <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
-            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+            <div class="more">
+              <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+            </div>
           </div>
         </div>
-        <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
 
         <div if.bind="collections.length===0 && !loading">
           <h5>You have created no collections. Try to add a new one or import one from Europeana</h5>

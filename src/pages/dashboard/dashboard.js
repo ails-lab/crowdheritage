@@ -16,40 +16,48 @@
 import { inject, LogManager, NewInstance } from 'aurelia-framework';
 import { ValidationController, ValidationRules } from 'aurelia-validation';
 import { UserServices } from 'UserServices';
-import { MediaServices } from 'MediaServices.js';
-import { CampaignServices } from 'CampaignServices.js';
 import { Router } from 'aurelia-router';
-import { I18N } from 'aurelia-i18n';
 
 let logger = LogManager.getLogger('Dashboard.js');
 
-@inject(UserServices, MediaServices, CampaignServices, Router, I18N, 'loginPopup', NewInstance.of(ValidationController))
+@inject(UserServices, Router, NewInstance.of(ValidationController))
 export class Dashboard {
 
-  constructor() {
-    this.view = "campaign-editor"
-    this.campaignClasses = "nav-item active"
-    this.collectionClasses = "nav-item"
-    this.userGroupClasses = "nav-item"
+  constructor(userServices, router) {
+    this.userServices = userServices;
+    this.router = router;
+
+    this.view = "";
+    this.campaignsTab = "nav-item";
+    this.collectionsTab = "nav-item";
+    this.userGroupsTab = "nav-item";
   }
 
-  tabChanged(tab){
-    this.view = tab;
-    if(tab === 'collection-editor'){
-      this.collectionClasses = "nav-item active"
-      this.campaignClasses = "nav-item"
-      this.userGroupClasses = "nav-item"
-    }
-    else if(tab === 'campaign-editor'){
-      this.campaignClasses = "nav-item active"
-      this.collectionClasses = "nav-item"
-      this.userGroupClasses = "nav-item"
-    }
-    else if(tab === 'user-group-editor'){
-      this.campaignClasses = "nav-item"
-      this.collectionClasses = "nav-item"
-      this.userGroupClasses = "nav-item active"
-    }
+  attached() {
+    $('.accountmenu').removeClass('active');
+  }
+
+  activate(params) {
+    this.resetClasses();
+    this.view = params.resource ? params.resource : 'campaigns';
+    let typeClasses = this.view.split("-")[0] + 'Tab';
+    this[typeClasses] = this[typeClasses].concat(" ", "active");
+  }
+
+  get locale() { return window.location.href.split('/')[3];  }
+
+  resetClasses() {
+    this.campaignsTab = "nav-item";
+    this.collectionsTab = "nav-item";
+    this.userGroupsTab = "nav-item";
+  }
+
+  tabChanged(tab) {
+    // this.view = tab;
+    // this.resetClasses();
+    // let typeClasses = this.view + 'Tab';
+    // this[typeClasses] = this[typeClasses].concat(" ", "active");
+    this.router.navigateToRoute('dashboard', {lang: this.locale, resource: tab});
   }
 
 }
