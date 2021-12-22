@@ -33,6 +33,7 @@ export class CollectionEditor {
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user() { return this.userServices.current; }
+  get totalCollectionsCount() { return this.userServices.current.count.myCollections; }
 
   activate(params, route) {
     if (this.i18n.getLocale() != this.loc) {
@@ -193,7 +194,8 @@ export class CollectionEditor {
   }
 
   deleteCollection(collection) {
-    if (window.confirm("Do you really want to delete this collection?")) {
+    let message = this.i18n.tr('dashboard:deleteCollectionMessage');
+    if (window.confirm(message)) {
       this.collectionServices.delete(collection.dbId).then(response => {
         this.collections = [];
         this.collectionsCount = 0;

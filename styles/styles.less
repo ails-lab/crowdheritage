@@ -6563,31 +6563,36 @@ a:hover .social-button.facebook {
 }
 
 .itemaction {
+  display: inline-flex;
   margin: 0;
   padding: 0;
   position: absolute;
   list-style-type: none;
   cursor: pointer;
   z-index: 3;
-  top: 0;
-  left: 30px;
+  top: 3px;
+  right: 41px;
+  width: 84px;
   opacity: 0;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+
+li.btn-delete-collection a {
+  padding-bottom: 3px;
+}
+li.btn-edit-collection a {
+  padding-bottom: 2px;
 }
 
 .entry:hover .itemaction {
   opacity: 1;
 }
 
-.itemaction ul {
-  display: inline-block;
-}
-
 .itemaction li {
-  width: 40px;
+  min-width: 40px;
+  min-height: 40px;
   list-style-type: none;
-  height: 40px;
   margin: 3px;
   background-color: #2a2b28;
   display: flex;
@@ -6599,7 +6604,7 @@ a:hover .social-button.facebook {
 }
 
 .itemaction li:hover {
-  background-color: #5d862b;
+  background-color: @main-color;
 }
 
 .itemaction-records {
@@ -6635,7 +6640,7 @@ a:hover .social-button.facebook {
 }
 
 .itemaction-records li:hover {
-  background-color: #5d862b;
+  background-color: @main-color;
 }
 
 .editicon {

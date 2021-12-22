@@ -5,8 +5,12 @@
   "returnDashboard": "RETURN TO DASHBOARD",
   "newCollection": "New Collection",
   "viewCollection": "View Collection",
+  "editCollection": "Edit Collection",
+  "deleteCollection": "Delete Collection",
   "title": "Title",
   "access": "Access",
   "description": "Description",
-  "save": "Save Collection"
+  "save": "Save Collection",
+  "noCollectionsMessage": "No collections found.<br/>Click on the 'New Collection' button and start curating!",
+  "deleteCollectionMessage": "Do you really want to delete this collection?"
 }

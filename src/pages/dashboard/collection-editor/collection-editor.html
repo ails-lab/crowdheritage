@@ -5,6 +5,9 @@
       <div class="container">
         <!-- top section-->
         <div class="topsection mb-3 me-5">
+          <div class="sectionlabel">
+            <div class="bold" t="[append]summary:collections"><strong class="me-2">${totalCollectionsCount}</strong></div>
+          </div>
           <div class="import-wrap">
             <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newCollection" click.delegate="newCollection()">
               <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
@@ -34,14 +37,14 @@
                     <img src="/img/assets/img/ui/ic-noimage.png" />
                   </div>
                   <div class="action">
-                    <h3><b t="dashboard:viewCollection"></b></h3>
+                    <h3 class="my-0"><b t="dashboard:viewCollection"></b></h3>
                   </div>
                 </div>
                 <!-- detail-->
                 <div class="detail">
                   <!-- count-->
                   <div class="count">
-                    ${col.entryCount}<span t="summary:items">ITEMS</span>
+                    ${col.entryCount}<span t="summary:items"></span>
                   </div>
                   <!-- title-->
                   <div class="desc">
@@ -51,14 +54,15 @@
                 </div>
 
                 <ul class="itemaction">
-                  <li>
-                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top"
-                      title="Delete collection" class="delete"><img class="editicon"
-                        src="/img/assets/img/ui/ic-delete.png" /></a>
+                  <li class="btn-edit-collection">
+                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top" title.bind="i18n.tr('dashboard:editCollection')">
+                      <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                    </a>
                   </li>
-                  <li>
-                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top"
-                      title="Edit Collection"><img class="editicon" src="/img/assets/img/ui/ic-edit.png" /></a>
+                  <li class="btn-delete-collection">
+                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
+                      <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                    </a>
                   </li>
                 </ul>
               </a>
@@ -78,7 +82,7 @@
         </div>
 
         <div if.bind="collections.length===0 && !loading">
-          <h5>You have created no collections. Try to add a new one or import one from Europeana</h5>
+          <h5 class="text-center" t="[html]dashboard:noCollectionsMessage"></h5>
         </div>
       </div>
     </section>
