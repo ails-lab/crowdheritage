@@ -8,7 +8,7 @@ import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 let logger = LogManager.getLogger('CollectionEditor.js');
 
-let COUNT = 10;
+let COUNT = 9;
 
 @inject(CampaignServices, CollectionServices, UserServices, Router, I18N, 'isTesterUser')
 export class CollectionEditor {
@@ -26,7 +26,6 @@ export class CollectionEditor {
     this.collectionsCount = 0;
     this.collections = [];
     this.loading = false;
-    this.count = 12;
     this.offset = 0;
     this.importMethod = ''
   }
@@ -46,14 +45,14 @@ export class CollectionEditor {
   }
 
   getCollectionsByUser() {
-    this.collectionServices.getCollections(this.offset, this.count, true, false, this.user.username).then(response => {
+    this.collectionServices.getCollections(this.offset, COUNT, true, false, this.user.username).then(response => {
       // console.log(this.user.dbId)
       let collectionIds = response.collectionsOrExhibitions.map(col => {
         return col.dbId
       })
       this.collectionsCount += response.collectionsOrExhibitions.length;
-      this.offset += this.count;
-      this.collectionServices.getMultipleCollections(collectionIds, 0, this.count,false)
+      this.offset += COUNT;
+      this.collectionServices.getMultipleCollections(collectionIds, 0, COUNT,false)
         .then(res => {
           this.more = response.totalCollections > this.collectionsCount
           if (res.length > 0) {
@@ -103,7 +102,7 @@ export class CollectionEditor {
         break
       }
     }
-      if (emptyTitle) {
+    if (emptyTitle) {
       toastr.error('The collection title is required.');
       return;
     }

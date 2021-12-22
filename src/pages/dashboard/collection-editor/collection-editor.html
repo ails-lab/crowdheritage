@@ -14,7 +14,7 @@
             </button>
           </div>
         </div>
-        <div class="campaignlist" if.bind="collections.length>0">
+        <div class="campaignlist pe-5" if.bind="collections.length>0">
           <!-- entry-->
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
@@ -49,18 +49,18 @@
                   <!-- title-->
                   <div class="desc">
                     <div class="title">${col.title[loc] && col.title[loc] !== '' ? col.title[loc] : col.title.default}</div>
-                    <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
+                    <div class="owner">${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}</div>
                   </div>
                 </div>
 
                 <ul class="itemaction">
-                  <li class="btn-edit-collection">
-                    <a data-toggle="tooltip" click.delegate="editCollection(col)" data-placement="top" title.bind="i18n.tr('dashboard:editCollection')">
+                  <li class="btn-edit-collection" click.delegate="editCollection(col)">
+                    <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:editCollection')">
                       <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
                     </a>
                   </li>
-                  <li class="btn-delete-collection">
-                    <a data-toggle="tooltip" click.delegate="deleteCollection(col)" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
+                  <li class="btn-delete-collection" click.delegate="deleteCollection(col)">
+                    <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
                       <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
                     </a>
                   </li>
@@ -88,7 +88,8 @@
     </section>
     <section>
       <compose view-model="widgets/newcollection/newcollection"
-        model.bind="{'collection' : editableCollection, 'type': edittype, 'lang': loc}"></compose>
+        model.bind="{'collection' : editableCollection, 'type': edittype, 'lang': loc}">
+      </compose>
     </section>
   </main>
 </template>

@@ -1717,11 +1717,26 @@ section.languages .lang {
 }
 
 section.languages .lang-collection {
-  float: right;
+  // float: right;
+  // bottom: 2px;
+  // right: 5px;
   position: relative;
   font-family: "Dosis";
-  bottom: 2px;
-  right: 5px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.languageSelectorLabel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+#langselect {
+  margin-right: 12px;
 }
 
 section.languages .lang .lbl {
@@ -1785,7 +1800,7 @@ section.languages .lang-collection a:hover {
 }
 
 section.languages .lang .dropdown-menu {
-  margin: 24px 0 0 -98px;
+  margin: 24px 0 0 -85px;
   right: 10px;
   padding: 0;
   border-radius: 0;
@@ -1794,8 +1809,8 @@ section.languages .lang .dropdown-menu {
 }
 
 section.languages .lang-collection .dropdown-menu {
-  margin: 0px 0px 0 -80px;
-  right: 0px;
+  width: 159px;
+  left: 260px;
   padding: 0;
   border-radius: 0;
   border: 0px;
@@ -6460,7 +6475,10 @@ a:hover .social-button.facebook {
   transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
+}
 
+#editSidebar .action-header .title {
+  margin-left: 20px;
 }
 
 .sidebar {
@@ -6474,7 +6492,7 @@ a:hover .social-button.facebook {
   overflow: auto;
   transition: 0.8s;
   white-space: nowrap;
-  padding-left: 10px;
+  // padding-left: 10px;
 }
 
 .sidebar a {
@@ -6534,11 +6552,14 @@ a:hover .social-button.facebook {
   width: 100%;
 }
 
-.sidebar .btn-green {
+.sidebar .btn-green,
+.sidebar .btn-red {
   cursor: pointer;
   float: right;
   margin-top: 15px;
   margin-right: 20px;
+  margin-left: 20px;
+  min-width: 110px;
   display: block;
   padding: 5px 30px;
   border: 1px solid #ffffff;
@@ -6546,12 +6567,21 @@ a:hover .social-button.facebook {
   letter-spacing: 1.3px;
   color: #ffffff;
   transition: all 0.3s;
-  background-color: #4f7979;
+  background-color: @main-color;
   font-size: 1.4rem;
 }
-
 .button-group .btn-green:hover {
   background-color: #3b5a5a;
+}
+
+.sidebar .btn-red {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}
+.sidebar .btn-red:hover {
+  background-color: red;
+  color: white;
 }
 
 .form-group textarea {

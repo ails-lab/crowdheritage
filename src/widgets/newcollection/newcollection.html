@@ -1,15 +1,16 @@
 <template>
   <div id="editSidebar" class="sidebar">
     <div class="action-header">
-      <div class="title">${edit ? 'Update Collection' : 'New Collection'}</div>
+      <div class="title mw-3">${edit ? i18n.tr('dashboard:editCollection') : i18n.tr('dashboard:newCollection')}</div>
     </div>
-    <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
-    <section class="languages">
+    <a href="javascript:void(0)" class="closebtn" click.capture="resetInstance()" click.delegate="closeNav()">×</a>
+    <section class="languages mt-5">
       <div class="lang-collection">
         <!-- select-->
+        <label class="languageSelectorLabel" t="dashboard:inputLanguage"></label>
         <a id="langselect" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+          <span class="flag me-3"><img src=${localeFlagPath} /></span>
           <span class="arrow"><img src="/img/ic-arrow-down-black.png"></span>
-          <span class="flag"><img src=${localeFlagPath} /></span>
         </a>
         <!-- dropdown-->
         <ul aria-labelledby="langselect" class="dropdown-menu">
@@ -21,31 +22,29 @@
           </li>
         </ul>
       </div>
-      <br/>
     </section>
-    <div class="action-body">
+    <div class="action-body pt-2 pb-4">
       <div class="form-group">
         <label t="dashboard:title">Title</label>
         <input type="text" id ="title" value.bind="title[loc]" autofocus>
       </div>
       <div class="form-group">
-        <label>
-          Access<br>
-          <select value.bind="selectedAccess">
-            <option repeat.for="acc of access" model.bind="acc.bool">
-              ${acc.value}
-            </option>
-          </select>
-        </label>
-        <!-- ${selectedAccess} -->
-      </div>
-      <div class="form-group">
         <label t="dashboard:description">Description</label>
         <textarea type="text" value.bind="desc[loc]"></textarea>
       </div>
+      <div class="form-group">
+        <label t="dashboard:visibility"></label>
+        <select value.bind="selectedAccess">
+          <option repeat.for="acc of access" model.bind="acc.bool">
+            ${acc.value}
+          </option>
+        </select>
+        <!-- ${selectedAccess} -->
+      </div>
     </div>
-    <div class="button-group">
-      <button t="dashboard:save" class="btn-green" click.delegate="closeAfterSave(title, desc, selectedAccess, locales)">Save Collection</button>
+    <div class="d-flex justify-content-between button-group">
+      <button t="dashboard:cancel" class="btn-red" click.capture="resetInstance()" click.delegate="closeNav()">Cancel</button>
+      <button t="dashboard:save" class="btn-green" click.delegate="closeAfterSave(title, desc, selectedAccess, locales)">Save</button>
     </div>
     <i show.bind="saving" class="fa fa-spinner fa-pulse"></i>
   </div>
