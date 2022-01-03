@@ -38,6 +38,11 @@ export class Dashboard {
   }
 
   activate(params) {
+    // Check if user is logged in and has elevated access
+    if (!this.userServices.isAuthenticated()) {
+      this.router.navigateToRoute('index', {lang: this.locale});
+    }
+
     this.resetClasses();
     this.view = params.resource ? params.resource : 'campaigns';
     let typeClasses = this.view.split("-")[0] + 'Tab';

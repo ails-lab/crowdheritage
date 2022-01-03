@@ -30,23 +30,23 @@ export class UserGroupEditor {
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user() { return this.userServices.current; }
+  get totalGroupsCount() { return this.userServices.current.count.myGroups; }
 
   activate(params, route) {
     if (this.i18n.getLocale() != this.locale) {
       this.i18n.setLocale(this.locale);
     }
     if (this.user) {
-      this.loading = true;
       this.getUserGroups(this.offset, this.count);
     }
   }
 
   loadMore() {
-    this.loading = true
     this.getUserGroups(this.offset, this.count);
   }
 
   getUserGroups(off, cnt) {
+    this.loading = true;
     this.groupServices.getGroups(off, cnt, '*').then(response => {
       this.userGroupsCount = response.groupCount;
       if (response.groups.length === cnt) {
@@ -59,20 +59,22 @@ export class UserGroupEditor {
       response.groups.map(ug => {
         this.userGroups.push(ug)
       })
+      // Reload current user in order to update totalGroupsCount
+      this.userServices.reloadCurrentUser();
       this.loading = false;
     })
   }
 
   deleteUserGroup(id) {
     this.delete = true;
-    if (window.confirm("Do you really want to delete this collection?")) {
+    let message = this.i18n.tr('dashboard:deleteUserGroupMessage');
+    if (window.confirm(message)) {
       this.groupServices.delete(id).then(response => {
         console.log(response)
         this.userGroups = [];
         this.userGroupsCount = 0;
         this.offset = 0;
         this.count = 12;
-        this.loading = true;
         this.getUserGroups(this.offset, this.count);
         this.closeNav()
         this.delete = false;
@@ -148,7 +150,6 @@ export class UserGroupEditor {
           this.offset = 0;
           this.count = 12;
           this.closeNav();
-          this.loading = true;
           this.getUserGroups(this.offset, this.count);
         })
     }
@@ -179,7 +180,6 @@ export class UserGroupEditor {
           this.offset = 0;
           this.count = 12;
           this.closeNav();
-          this.loading = true;
           this.getUserGroups(this.offset, this.count);
         });
     }

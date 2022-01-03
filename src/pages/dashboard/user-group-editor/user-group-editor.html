@@ -1,47 +1,28 @@
 <template>
-  <main if.bind="!user">
-    <section>
-      <div class="container">
-        <h3>You have to be signed in to see your user groups.</h3>
-      </div>
-    </section>
-  </main>
   <main if.bind="user">
-    <section class="collections">
+    <section class="collections mt-5">
       <div class="container">
-        <!-- top section-->
-        <div class="topsection">
-          <!-- label-->
+        <div class="topsection mb-3 me-5">
           <div class="sectionlabel">
-            <div class="bold">USER GROUPS</div>
+            <div class="bold text-uppercase" t="[append]dashboard:usergroups">
+              <strong class="me-2">${totalGroupsCount}</strong>
+            </div>
           </div>
           <div class="import-wrap">
-            <a href="javascript:void(0)" class="import" click.delegate="newUserGroup()">
-              <span class="plus"></span>
-              <span class="text">New User Group</span>
-            </a>
+            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newUsergroup" click.delegate="newUserGroup()">
+              <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
-        <div class="campaignlist" if.bind="userGroups.length>0">
-          <!-- entry-->
+        <div class="campaignlist pe-5 me-5" if.bind="userGroups.length>0">
           <div class="entries row" ref="grid">
-            <!-- <div class="entry col-md-4 ${col.dbId}" repeat.for="ug of userGroups">
-              <div class="detail-user-group" click.delegate="editUserGroup(ug)">
-                <button class="user-group-delete" click.delegate="deleteUserGroup(ug.dbId)">X</button>
-                <div class="desc">
-                  <div class="title">${ug.friendlyName}</div>
-                  <div class="date">Created on ${ug.created}</div>
-                  <div class="about">${ug.about}</div>
-                </div>
-              </div>
-            </div> -->
-
             <table
-              class="${userGroups.length < userGroupsCount ? 'user-group-table transparent-bottom' : 'user-group-table'}">
+              class="${userGroups.length < userGroupsCount ? 'user-group-table transparent-bottom' : 'user-group-table'}"
+            >
               <tr>
-                <th>Name</th>
-                <th>Short Name</th>
-                <th>Created on</th>
+                <th t="dashboard:groupName"></th>
+                <th t="dashboard:shortName"></th>
+                <th t="dashboard:creationDate"></th>
                 <th></th>
                 <th></th>
               </tr>
@@ -49,25 +30,31 @@
                 <td>${ug.friendlyName}</td>
                 <td>${ug.username}</td>
                 <td>${ug.created}</td>
-                <td><i class="fa fa-edit clickable" click.delegate="editUserGroup(ug)"></i></td>
-                <td class="red-trash"><i class="fa fa-trash clickable" click.delegate="deleteUserGroup(ug.dbId)"></i>
+                <td>
+                  <i class="fa fa-edit clickable" click.delegate="editUserGroup(ug)"></i>
                 </td>
-
-
+                <td class="red-trash">
+                  <i class="fa fa-trash clickable" click.delegate="deleteUserGroup(ug.dbId)"></i>
+                </td>
               </tr>
             </table>
           </div>
           <!-- more-->
-          <div class="loadmore">
-            <a href="#" show.bind="!loading && userGroups.length < userGroupsCount" click.delegate="loadMore()"
-              t="app:loadmore">LOAD MORE</a>
-            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+          <div class="loadmore mt-5">
+            <a
+              href="#"
+              show.bind="!loading && userGroups.length < userGroupsCount"
+              click.delegate="loadMore()"
+              t="app:loadmore"
+            ></a>
           </div>
         </div>
-        <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
 
         <div if.bind="userGroups.length===0 && !loading">
-          <h5>You have created no user groups.</h5>
+          <h5 class="text-center" t="[html]dashboard:noUserGroupsMessage"></h5>
         </div>
       </div>
     </section>

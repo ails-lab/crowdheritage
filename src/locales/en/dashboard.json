@@ -9,6 +9,7 @@
   "deleteCollection": "Delete Collection",
   "publicCollection": "Public collection",
   "privateCollection": "Private collection",
+  "newUsergroup": "New Usergroup",
   "visibility": "Visibility",
   "inputLanguage": "Input Language",
   "title": "Title",
@@ -16,6 +17,11 @@
   "description": "Description",
   "cancel": "Cancel",
   "save": "Save",
+  "groupName": "Group Name",
+  "shortName": "Short Name",
+  "creationDate": "Creation date",
   "noCollectionsMessage": "No collections found.<br/>Click on the 'New Collection' button and start curating!",
-  "deleteCollectionMessage": "Do you really want to delete this collection?"
+  "noUserGroupsMessage": "No usergroups found.<br/>Click on the 'New Usergroup' button and create your own group of users!",
+  "deleteCollectionMessage": "Do you really want to delete this collection?",
+  "deleteUserGroupMessage": "Do you really want to delete this usergroup?"
 }
