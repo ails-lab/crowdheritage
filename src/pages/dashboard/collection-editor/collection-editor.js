@@ -21,13 +21,10 @@ export class CollectionEditor {
     this.router = router;
     this.i18n = i18n;
     this.more = true;
-    this.isCreator = false;
-    this.campaign = 0;
     this.collectionsCount = 0;
     this.collections = [];
     this.loading = false;
     this.offset = 0;
-    this.importMethod = ''
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
@@ -39,31 +36,32 @@ export class CollectionEditor {
       this.i18n.setLocale(this.loc);
     }
     if (this.user) {
-      this.loading = true;
       this.getCollectionsByUser();
     }
   }
 
   getCollectionsByUser() {
-    this.collectionServices.getCollections(this.offset, COUNT, true, false, this.user.username).then(response => {
-      // console.log(this.user.dbId)
-      let collectionIds = response.collectionsOrExhibitions.map(col => {
-        return col.dbId
-      })
-      this.collectionsCount += response.collectionsOrExhibitions.length;
-      this.offset += COUNT;
-      this.collectionServices.getMultipleCollections(collectionIds, 0, COUNT,false)
-        .then(res => {
-          this.more = response.totalCollections > this.collectionsCount
-          if (res.length > 0) {
-            for (let i in res) {
-              this.collections.push(new Collection(res[i]));
+    this.loading = true;
+    this.collectionServices.getCollections(this.offset, COUNT, true, false, this.user.username)
+      .then(response => {
+        let collectionIds = response.collectionsOrExhibitions.map(col => {
+          return col.dbId
+        })
+        this.collectionsCount += response.collectionsOrExhibitions.length;
+        this.offset += COUNT;
+        this.collectionServices.getMultipleCollections(collectionIds, 0, COUNT,false)
+          .then(res => {
+            this.more = response.totalCollections > this.collectionsCount
+            if (res.length > 0) {
+              for (let i in res) {
+                this.collections.push(new Collection(res[i]));
+              }
             }
-          }
-          this.loading = false;
-        });
-
-    });
+            // Reload current user in order to update totalCollectionsCount
+            this.userServices.reloadCurrentUser();
+            this.loading = false;
+          });
+      });
   }
 
   loadMore() {

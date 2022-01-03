@@ -50,7 +50,6 @@ export class Newcollection {
     this.desc = {};
     this.originalTitle = null;
     this.originalDescription = null;
-    this.collection = new Collection();
   }
 
   resetInstance() {
@@ -69,12 +68,12 @@ export class Newcollection {
     if (params.collection) {
       this.originalTitle = Object.assign({}, params.collection.title);
       this.originalDescription = Object.assign({}, params.collection.description);
-      this.collection = params.collection
-      this.selectedAccess = this.collection.isPublic;
-      this.title = this.collection.title
-      this.title[this.loc] = this.title[this.loc] ? this.title[this.loc][0] : this.title.default[0]
-      this.desc = this.collection.description
-      this.desc[this.loc] = this.desc[this.loc] ? this.desc[this.loc][0] : this.desc.default[0]
+
+      this.selectedAccess = params.collection.isPublic;
+      this.title = Object.assign({}, params.collection.title);
+      this.title[this.loc] = this.title[this.loc] ? this.title[this.loc][0] : (this.title.default ? this.title.default[0] : this.title)
+      this.desc = Object.assign({}, params.collection.description);
+      this.desc[this.loc] = this.desc[this.loc] ? this.desc[this.loc][0] : (this.desc.default ? this.desc.default[0] : this.desc)
       for (let locale of this.locales) {
         if (locale.code !== 'en') {
           this.title[locale.code] = this.title[locale.code] ? this.title[locale.code][0] : ""
@@ -85,8 +84,7 @@ export class Newcollection {
     else {
       this.originalTitle = null;
       this.originalDescription = null;
-      this.collection = new Collection()
-      this.collection.isPublic = false
+
       this.selectedAccess = false
       for (let locale of this.locales) {
         this.title[locale.code] = ""
