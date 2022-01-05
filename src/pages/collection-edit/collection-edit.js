@@ -9,7 +9,7 @@ import { I18N } from 'aurelia-i18n';
 let instance = null;
 
 @inject(CollectionServices, UserServices, Router, I18N)
-export class CollectionIdEdit {
+export class CollectionEdit {
 
   constructor(collectionServices, userServices, router, i18n) {
     if (instance) {

@@ -89,22 +89,20 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.map([
-      { route: ':lang?', href: 'index',            name: 'index',    	 moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
-      // { route: ':lang?', href: 'index',        name: 'index',  moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: true,  title: settings.project },
-      { route: ':lang/:cname',					           name: 'summary',    moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
-      { route: ':lang/:cname/validation',          name: 'validation', moduleId: PLATFORM.moduleName('./pages/validation/validation'),        nav: false, title: ''},
-			{ route: ':lang/:cname/collection/:colid',   name: 'collection', moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
-			{ route: ':lang/:cname/:recid',              name: 'item',     	 moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
-      { route: ':lang/register',                   name: 'register', 	 moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
-      { route: ':lang/about', href: 'about',       name: 'about',    	 moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
-			{ route: ':lang/partners', href: 'partners', name: 'partners',   moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: true,  title: 'Partners | '+settings.project},
-			{ route: ':lang/privacy',                    name: 'privacy',  	 moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
-			{ route: ':lang/terms',                      name: 'terms',    	 moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
-			{ route: ':lang/user/:uname', 	             name: 'user',			 moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
-			{ route: ':lang/feedback',                   name: 'feedback',	 moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
-      { route: ':lang/dashboard/:resource',        name: 'dashboard',	 moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
-      { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/dashboard/collection-editor/collection-id-edit/collection-id-edit'), nav: false, title: 'Collection Edit | '+settings.project}
-
+      { route: ':lang?', href: 'index',            name: 'index',    	       moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
+      { route: ':lang/:cname',					           name: 'summary',          moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
+      { route: ':lang/:cname/validation',          name: 'validation',       moduleId: PLATFORM.moduleName('./pages/validation/validation'),        nav: false, title: ''},
+			{ route: ':lang/:cname/collection/:colid',   name: 'collection',       moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
+			{ route: ':lang/:cname/:recid',              name: 'item',     	       moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
+      { route: ':lang/register',                   name: 'register', 	       moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
+      { route: ':lang/about', href: 'about',       name: 'about',    	       moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
+			{ route: ':lang/partners', href: 'partners', name: 'partners',         moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: true,  title: 'Partners | '+settings.project},
+			{ route: ':lang/privacy',                    name: 'privacy',  	       moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
+			{ route: ':lang/terms',                      name: 'terms',    	       moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
+			{ route: ':lang/user/:uname', 	             name: 'user',			       moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
+			{ route: ':lang/feedback',                   name: 'feedback',	       moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
+      { route: ':lang/dashboard/:resource',        name: 'dashboard',	       moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
+      { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/collection-edit/collection-edit'), nav: false, title: 'Collection Edit | '+settings.project}
     ]);
 
     this.router = router;

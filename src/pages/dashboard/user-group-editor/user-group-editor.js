@@ -7,7 +7,7 @@ import settings from 'global.config.js';
 import { GroupServices } from '../../../modules/GroupServices';
 let logger = LogManager.getLogger('UserGroupEditor.js');
 
-let COUNT = 10;
+let COUNT = 12;
 
 @inject(CampaignServices, GroupServices, UserServices, Router, I18N, 'isTesterUser')
 export class UserGroupEditor {
@@ -21,7 +21,6 @@ export class UserGroupEditor {
     this.more = true;
     this.isCreator = false;
     this.loading = false;
-    this.count = 12;
     this.userGroups = [];
     this.userGroupsCount = 0;
     this.offset = 0;
@@ -37,12 +36,12 @@ export class UserGroupEditor {
       this.i18n.setLocale(this.locale);
     }
     if (this.user) {
-      this.getUserGroups(this.offset, this.count);
+      this.getUserGroups(this.offset, COUNT);
     }
   }
 
   loadMore() {
-    this.getUserGroups(this.offset, this.count);
+    this.getUserGroups(this.offset, COUNT);
   }
 
   getUserGroups(off, cnt) {
@@ -74,8 +73,7 @@ export class UserGroupEditor {
         this.userGroups = [];
         this.userGroupsCount = 0;
         this.offset = 0;
-        this.count = 12;
-        this.getUserGroups(this.offset, this.count);
+        this.getUserGroups(this.offset, COUNT);
         this.closeNav()
         this.delete = false;
       })
@@ -148,9 +146,8 @@ export class UserGroupEditor {
           this.userGroups = [];
           this.userGroupsCount = 0;
           this.offset = 0;
-          this.count = 12;
           this.closeNav();
-          this.getUserGroups(this.offset, this.count);
+          this.getUserGroups(this.offset, COUNT);
         })
     }
     else if (this.edittype === 'new') {
@@ -178,9 +175,8 @@ export class UserGroupEditor {
           this.userGroups = [];
           this.userGroupsCount = 0;
           this.offset = 0;
-          this.count = 12;
           this.closeNav();
-          this.getUserGroups(this.offset, this.count);
+          this.getUserGroups(this.offset, COUNT);
         });
     }
   }
