@@ -6477,12 +6477,13 @@ a:hover .social-button.facebook {
   -webkit-transform: rotate(90deg);
 }
 
-#editSidebar .action-header .title {
+#editSidebar .action-header .title,
+#newUserGroupSidebar .action-header .title {
   margin-left: 20px;
 }
 
 .sidebar {
-  height: 100%;
+  height: calc(100vh - 70px);
   width: 0;
   position: fixed;
   z-index: 3;
@@ -6758,7 +6759,7 @@ li.btn-edit-collection a {
   background: white;
   box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.75);
   position: absolute;
-  width: 80%;
+  width: 91%;
   max-height: 300px;
   z-index: 2;
 }
@@ -6782,15 +6783,13 @@ li.btn-edit-collection a {
   width: 100%;
 }
 
-.user-table td{
+.user-table td {
   border: 1px solid #dddddd;
-  text-align: center;
-  padding: 3px;
+  padding: 3px 12px 3px 12px;
 }
-.user-table th{
+.user-table th {
   border: 1px solid #dddddd;
-  text-align: center;
-  padding: 3px;
+  padding: 3px 12px 3px 12px;
 }
 .user-table tr:nth-child(even) {
   background-color: #dddddd;

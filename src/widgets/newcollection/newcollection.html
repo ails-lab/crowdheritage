@@ -1,7 +1,9 @@
 <template>
   <div id="editSidebar" class="sidebar">
     <div class="action-header">
-      <div class="title mw-3">${edit ? i18n.tr('dashboard:editCollection') : i18n.tr('dashboard:newCollection')}</div>
+      <div class="title">
+        ${edit ? i18n.tr('dashboard:editCollection') : i18n.tr('dashboard:newCollection')}
+      </div>
     </div>
     <a href="javascript:void(0)" class="closebtn" click.capture="resetInstance()" click.delegate="closeNav()">×</a>
     <section class="languages mt-5">
@@ -39,13 +41,12 @@
             ${acc.value}
           </option>
         </select>
-        <!-- ${selectedAccess} -->
       </div>
     </div>
     <div class="d-flex justify-content-between button-group">
       <button t="dashboard:cancel" class="btn-red" click.capture="resetInstance()" click.delegate="closeNav()">Cancel</button>
       <button t="dashboard:save" class="btn-green" click.delegate="closeAfterSave(title, desc, selectedAccess, locales)">Save</button>
     </div>
-    <i show.bind="saving" class="fa fa-spinner fa-pulse"></i>
+    <!-- <i show.bind="saving" class="fa fa-spinner fa-pulse"></i> -->
   </div>
 </template>

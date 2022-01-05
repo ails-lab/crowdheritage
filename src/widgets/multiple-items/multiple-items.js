@@ -45,6 +45,7 @@ export class MultipleItems {
     this.i18n = i18n;
     this.loc;
     this.project = settings.project;
+    this.collectionEdit = false;
     this.campaign = '';
     this.cname = '';
     this.state = "hide";

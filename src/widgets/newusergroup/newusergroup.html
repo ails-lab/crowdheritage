@@ -1,31 +1,37 @@
 <template>
   <div id="newUserGroupSidebar" class="sidebar">
     <div class="action-header">
-      <div class="title">${(edit ? 'Update ' : 'New ') + 'User Group'}</div>
+      <div class="title">
+        ${edit ? i18n.tr('dashboard:editUsergroup') : i18n.tr('dashboard:newUsergroup')}
+      </div>
     </div>
     <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
-    <div class="action-body">
+    <div class="action-body mt-2">
       <div class="form-group">
-        <label>Name</label>
-        <input type="text" placeholder="Name your group" value.bind="name" autofocus>
-      </div>
-      <div class="form-group">
-        <label>Short Name</label>
-        <input type="text" placeholder="Give a short, unique name" value.bind="shortName" autofocus>
+        <label t="dashboard:groupName"></label>
+        <input type="text" placeholder.bind="i18n.tr('dashboard:groupNamePlaceholder')" value.bind="name" autofocus>
       </div>
       <div class="form-group">
-        <label>Description</label>
-        <textarea rows="2" type="text" placeholder="Describe your group" value.bind="about"></textarea>
+        <label t="dashboard:shortName"></label>
+        <input type="text" placeholder.bind="i18n.tr('dashboard:shortNamePlaceholder')" value.bind="shortName" autofocus>
       </div>
-      <button class="btn-green" click.delegate="closeNavAfterSave(name, shortName, about)">Save User Group</button>
-      
-      <div class="action-header mt"  if.bind="group !== null">
-        <div class="title">Manage Users</div>
+      <div class="form-group">
+        <label t="dashboard:description"></label>
+        <textarea rows="2" type="text" placeholder.bind="i18n.tr('dashboard:descriptionPlaceholder')" value.bind="about"></textarea>
       </div>
-      <div class="form-group mt-small" if.bind="group !== null">        
+      <div class="d-flex justify-content-between button-group">
+        <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
+        <button t="dashboard:save" class="btn-green" click.delegate="closeNavAfterSave(name, shortName, about)"></button>
+      </div>
+
+      <div class="action-header mt-5 pt-3" if.bind="group !== null">
+        <div class="title" t="dashboard:manageUsers"></div>
+      </div>
+      <div class="form-group mt-small" if.bind="group !== null">
         <div class="autocomplete-container">
+          <label t="dashboard:addUser"></label>
           <input id="uinput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged($event.target.value)"
-            type="text" placeholder="Start typing username" />
+            type="text" placeholder.bind="i18n.tr('dashboard:addUserPlaceholder')" />
           <div id="usersuggestions" show.bind='suggestionsActive' class="autocomplete-suggestions">
             <div id="u${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
               mouseover.delegate="domouseover('u'+$index)" mouseout.delegate="domouseout('u'+$index)"
@@ -35,23 +41,25 @@
             </div>
           </div>
         </div>
+        <label t="[prepend]dashboard:groupMembers" class="mt-4"> (${users.length})</label>
         <table class="user-table">
           <tr>
-            <th>Access</th>
-            <th>Username</th>
-            <th></th>
+            <th t="dashboard:username" class="text-left"></th>
+            <th t="dashboard:access" class="text-center"></th>
+            <th class="px-2 text-center"></th>
           </tr>
           <tr repeat.for="user of users">
-            <td if.bind="user.admin">Editor</td>
-            <td if.bind="!user.admin">Member</td>
-            <td>${user.username}</td>
-            <td><i if.bind="!user.admin" class="fa fa-trash red-trash"
-                click.delegate="removeMember(user.username, user.userId, user.category)"></i></td>
+            <td class="text-left">${user.username}</td>
+            <td class="text-center">${user.admin ? i18n.tr('dashboard:editor') : i18n.tr('dashboard:member')}</td>
+            <td class="px-2 text-center">
+              <i if.bind="!user.admin" class="fa fa-trash red-trash" click.delegate="removeMember(user.username, user.userId, user.category)"></i>
+              <i if.bind="user.admin" class="fa fa-lock"></i>
+            </td>
           </tr>
         </table>
       </div>
     </div>
 
-    <i show.bind="saving" class="fa fa-spinner fa-pulse"></i>
+    <!-- <i show.bind="saving" class="fa fa-spinner fa-pulse"></i> -->
   </div>
 </template>

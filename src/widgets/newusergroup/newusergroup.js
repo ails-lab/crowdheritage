@@ -86,17 +86,41 @@ export class Newusergroup {
 			.then(response => {
 				this.loadmembers(response);
 			}).catch(error => {
-				console.log(error.message);
+				console.error(error.message);
 				toastr.error('Error creating group members');
 			});
 		}
 	}
 
 
-	loadmembers( data ) {
+	loadmembers(data) {
 		this.users = data.users;
 		this.groups = data.groups;
+    this.sortMembers();
 	}
+
+  sortMembers() {
+    function compareAccess(a, b) {
+      if ( a.admin && !b.admin ){
+        return -1;
+      }
+      if ( !a.admin && b.admin ){
+        return 1;
+      }
+      return 0;
+    }
+    function compareName(a, b) {
+      if ( a.username.toLowerCase() < b.username.toLowerCase() ){
+        return -1;
+      }
+      if ( a.username.toLowerCase() > b.username.toLowerCase() ){
+        return 1;
+      }
+      return 0;
+    }
+
+    this.users.sort(compareName).sort(compareAccess);
+  }
 
 	addMember( index, type ) {
 		let name = '';
@@ -122,6 +146,7 @@ export class Newusergroup {
 						pos = this.users.findIndex(user => (user.username === name));
 						if ( pos === -1 ) this.users.push(newMember);
 						else throw new Error('Member of the group already');
+            this.sortMembers();
 					} else if (type === 'group' ) {
 						pos = this.groups.findIndex(user => (user.username === name));
 						if ( pos === -1 ) this.groups.push(newMember);
@@ -208,9 +233,6 @@ export class Newusergroup {
     this.about = this.edit ? this.group.about : '';
     document.getElementById("newUserGroupSidebar").style.width = "0";
     document.getElementById("newUserGroupSidebar").style.boxShadow = "none"
-  }b
+  }
 
-
-  // async activate(params) {
-  // }
 }

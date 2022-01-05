@@ -1,5 +1,4 @@
 import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { I18N } from 'aurelia-i18n';
@@ -7,15 +6,14 @@ import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CollectionServices, Router, I18N)
+@inject(CollectionServices, I18N)
 export class Newcollection {
 
-  constructor(collectionServices, router, i18n) {
+  constructor(collectionServices, i18n) {
     if (instance) {
       return instance;
     }
     this.collectionServices = collectionServices;
-    this.router = router;
     this.i18n = i18n;
     this.importMethod = '';
     this.loc = window.location.href.split('/')[3];
