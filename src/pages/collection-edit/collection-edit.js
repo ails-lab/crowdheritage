@@ -4,7 +4,6 @@ import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
-//import settings from 'global.config.js';
 
 let instance = null;
 
@@ -20,7 +19,6 @@ export class CollectionEdit {
     this.router = router;
     this.i18n = i18n;
     this.importMethod = ''
-
 
     this.loc;
     if (!instance) {
@@ -77,14 +75,14 @@ export class CollectionEdit {
   async activate(params, route) {
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
-    // console.log(params)
 
     this.cname = params.cname;
     this.collectionId = params.colid;
     let collectionData = await this.collectionServices.getCollection(this.collectionId, false);
     this.collection = new Collection(collectionData);
-    // console.log(this.collection)
-    route.navModel.setTitle('Collection | ' + this.collection.title[0]);
+
+    let title = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
+    route.navModel.setTitle('Curate | ' + title);
   }
 
 

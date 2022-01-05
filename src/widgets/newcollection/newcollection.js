@@ -51,6 +51,9 @@ export class Newcollection {
   }
 
   resetInstance() {
+    this.currentLocale = this.locales[0];
+    this.currentLocaleCode = this.currentLocale.code;
+    this.localeFlagPath = this.currentLocale.flag;
     this.selectedAccess = false;
     this.title = this.originalTitle ? this.originalTitle : {};
     this.desc = this.originalDescription ? this.originalDescription : {};

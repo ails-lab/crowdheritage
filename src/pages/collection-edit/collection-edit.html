@@ -6,7 +6,7 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"> <span t="app:collection">COLLECTION</span></div>
+            <div class="lbl"><span t="dashboard:curateCollection" class="text-uppercase"></span></div>
             <div class="wrap"><span>${collection.title[loc] && collection.title[loc][0] !== 0 ? collection.title[loc][0] : collection.title.default[0]}</span></div>
           </div>
         </div>
@@ -16,20 +16,17 @@
             <li><a route-href="route: dashboard; params.bind: { lang: loc, resource: 'collections' }" t="[prepend]dashboard:returnDashboard"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
-        <div class="bgwrap" style="background-image: url('${collection.backgroundImage}');"></div>
+        <div class="bgwrap" style="background-image: url('/img/assets/img/content/background-space.png');"></div>
       </div>
     </section>
 		<section class="collections collection-item-list">
 			<div class="container">
-        <div class="description" if.bind="collection.description.default[0]">
+        <div class="topsection">
           <div class="sectionlabel">
-            <div class="bold">
-              <span class="text" t="app:description">DESCRIPTION</span>
+            <div class="bold" t="[append]dashboard:collectedItems">
+              <strong class="me-2">${collection.entryCount}</strong>
             </div>
           </div>
-          <p>${collection.description[loc] && collection.description[loc][0] !== 0 ? collection.description[loc][0] : collection.description.default[0]}</p>
-        </div>
-        <div class="topsection">
           <div class="import-wrap">
             <a class="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
               <span class="arrow"></span>

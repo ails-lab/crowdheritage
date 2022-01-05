@@ -9,5 +9,6 @@
   "items"         : "ITEMS",
   "contribute"    : "Contribute more and unlock the next badge.",
   "contributions" : "CONTRIBUTIONS",
-  "annotated"     : "ANNOTATED ITEMS"
+  "annotated"     : "ANNOTATED ITEMS",
+  "noAnnotedItems": "You haven't annotated any items yet in this campaign"
 }
