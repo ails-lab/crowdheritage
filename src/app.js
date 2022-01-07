@@ -56,6 +56,8 @@ export class App {
     this.dialogService = dialogService;
     this.userServices = userServices;
     container.registerInstance('loginPopup', this.loginPopup.bind(this));
+    container.registerInstance('pageLocales', this.pageLocales.bind(this));
+    container.registerInstance('colorPalette', this.colorPalette.bind(this));
   }
 
   activate() {
@@ -69,19 +71,6 @@ export class App {
   // Properties
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get locale() { return window.location.href.split('/')[3]; }
-
-  // UI Functions
-  loginPopup() {
-		this.dialogService.open({
-			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
-		}).then((response) => {
-			if (!response.wasCancelled) {
-				console.log('NYI - Login User');
-			} else {
-				console.log('Login cancelled');
-			}
-		});
-	}
 
   configureRouter(config, router) {
     config.title = '';
@@ -108,6 +97,52 @@ export class App {
     this.router = router;
   }
 
+  // Global functions
+  loginPopup() {
+		this.dialogService.open({
+			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
+		}).then((response) => {
+			if (!response.wasCancelled) {
+				console.log('NYI - Login User');
+			} else {
+				console.log('Login cancelled');
+			}
+		});
+	}
+  pageLocales() {
+    return [
+      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" },
+      { title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
+      { title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
+      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
+      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
+      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
+    ];
+  }
+  colorPalette() {
+    return [
+      ["Black",       "background-color: #111111", "color: #111111; filter: brightness(500%);"],
+      ["Grey",        "background-color: #AAAAAA", "color: #AAAAAA; filter: brightness(60%);"],
+      ["Brown",       "background-color: brown", "color:brown; filter: brightness(60%);"],
+      ["Red",         "background-color: #FF4136", "color: #FF4136; filter: brightness(60%);"],
+      ["Orange",      "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
+      ["Beige",       "background-color: beige", "color: beige; filter: brightness(60%);"],
+      ["Yellow",      "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
+      ["Green",       "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
+      ["Blue",        "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
+      ["Purple",      "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
+      ["Pink",        "background-color: pink", "color: pink; filter: brightness(60%);"],
+      ["White",       "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
+      ["Copper",      "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
+      ["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
+      ["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);"],
+      ["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
+      ["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
+      ["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
+    ];
+  }
 }
 
 

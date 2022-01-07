@@ -28,21 +28,20 @@
             </div>
           </div>
           <div class="import-wrap">
-            <a class="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
-              <span class="arrow"></span>
-              <span class="text">Import Items</span>
-            </a>
-            <ul aria-labelledby="import" class="dropdown-menu">
+            <button class="btn btn-outline-dark" t="[append]dashboard:importItems" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+              <i class="fa fa-cloud-download fa-lg me-2" aria-hidden="true"></i>
+            </button>
+            <ul aria-labelledby="import" class="dropdown-menu import-menu">
               <!-- <li><a href="#" click.delegate="importSingleItem()">Single Item</a></li> -->
               <li><a href="#" click.delegate="importEuropeanaCollection()">Europeana Dataset</a></li>
               <li><a href="#" click.delegate="importEuropeanaSearch()">Europeana Search</a></li>
-              <!-- <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana User Gallery</a></li> -->
+              <li><a href="#" click.delegate="importEuropeanaGallery()">Europeana Gallery</a></li>
             </ul>
           </div>
 
         </div>
 
-        <section>
+        <section class="mt-4">
           <compose view-model="widgets/import-items/import-items"
             model.bind="{'importMethod': importMethod, 'router': router, 'lang': loc}">
           </compose>
