@@ -26,9 +26,9 @@ export class CampaignCnameEdit {
 
     this.loc;
     this.locales = [
-      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" }
+      { title: "English", code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano", code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Français", code: "fr", flag: "/img/assets/images/flags/fr.png" }
       //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
       //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
       //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
@@ -48,13 +48,13 @@ export class CampaignCnameEdit {
   }
 
   // get isAuthenticated() { return this.userServices.isAuthenticated(); }
-	// get user() { return this.userServices.current; }
+  // get user() { return this.userServices.current; }
 
   attached() {
-	  $('.accountmenu').removeClass('active');
-	}
+    $('.accountmenu').removeClass('active');
+  }
 
-	async activate(params, route) {
+  async activate(params, route) {
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
     console.log(params);
@@ -64,30 +64,30 @@ export class CampaignCnameEdit {
     this.campaign = new Campaign(campaignData);
     //route.navModel.setTitle(this.campaign.title[0]+' | '+settings.project);
     console.log(this.campaign)
-    route.navModel.setTitle('Campaign | '+this.campaign.title);
+    route.navModel.setTitle('Campaign | ' + this.campaign.title);
 
-	}
+  }
 
   loadFromFile() {
-		$('#banner').trigger('click');
-	}
+    $('#banner').trigger('click');
+  }
 
   uploadBanner = () => {
-		let input = document.getElementById('banner');
-		let data = new FormData();
-		data.append('file', input.files[0]);
+    let input = document.getElementById('banner');
+    let data = new FormData();
+    data.append('file', input.files[0]);
 
-		this.mediaServices.upload(data).then((response) => {
-			// this.banner = MediaServices.toObject(response.Medium);
+    this.mediaServices.upload(data).then((response) => {
+      // this.banner = MediaServices.toObject(response.Medium);
       // TODO: Remove hardcoded URL? campaign.banner seems to be a string like the one below.
       this.campaign.banner = `https://api.crowdheritage.eu${response.medium}`
-			// Show the cancel/save buttons
-			$('.button-group').removeClass('hiddenfile');
-		}).catch((error) => {
-			logger.error(error);
-			toastr.danger('Error uploading the file!');
-		});
-	}
+      // Show the cancel/save buttons
+      $('.button-group').removeClass('hiddenfile');
+    }).catch((error) => {
+      logger.error(error);
+      toastr.danger('Error uploading the file!');
+    });
+  }
 
   toggleLangMenu() {
     if ($('#campaign-lang').hasClass('open')) {

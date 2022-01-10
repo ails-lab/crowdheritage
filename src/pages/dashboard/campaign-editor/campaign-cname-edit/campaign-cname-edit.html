@@ -14,7 +14,8 @@
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a route-href="route: dashboard; params.bind: { lang: loc }" t="[prepend]app:return-edit"><img src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a route-href="route: dashboard; params.bind: { lang: loc }" t="[prepend]app:return-edit"><img
+                  src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
         <div class="bgwrap" style="background-image: url('${campaign.banner}');"></div>
@@ -31,29 +32,36 @@
               <div class="input-group">
                 <div class="center">
                   <label t="campaign-edit:username">Username</label>
-                  <input t="[placeholder]campaign-edit:username" type="text" placeholder="Username" id="username" value.bind="campaign.username" autofocus />
+                  <input t="[placeholder]campaign-edit:username" type="text" placeholder="Username" id="username"
+                    value.bind="campaign.username" autofocus />
                   <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
                 </div>
                 <div class="left">
                   <label t="campaign-edit:startDate">Start Date</label>
-                  <input t="[placeholder]campaign-edit:startDate" type="date" placeholder="Start Date" id="startDate" value.bind="campaign.startDate.replaceAll('/','-')" autofocus />
+                  <input t="[placeholder]campaign-edit:startDate" type="date" placeholder="Start Date" id="startDate"
+                    value.bind="campaign.startDate.replaceAll('/','-')" autofocus />
                 </div>
                 <div class="right">
                   <label t="campaign-edit:endDate">End Date</label>
-                  <input t="[placeholder]campaign-edit:endDate" type="date" placeholder="End Date" id="endDate" value.bind="campaign.endDate.replaceAll('/','-')" autofocus />
+                  <input t="[placeholder]campaign-edit:endDate" type="date" placeholder="End Date" id="endDate"
+                    value.bind="campaign.endDate.replaceAll('/','-')" autofocus />
                 </div>
                 <div class="center">
                   <label t="campaign-edit:banner">Banner</label>
-                  <img class="banner-edit center" src="${campaign.banner.replace('?file=true','')}" alt="${username+'-'+banner}" width="100%">
-                  <input type="file" id="banner" class="hiddenfile" name="banner" onchange.bind="uploadBanner" accept=".png,.jpg,.jpeg,.gif" />
+                  <img class="banner-edit center" src="${campaign.banner.replace('?file=true','')}"
+                    alt="${username+'-'+banner}" width="100%">
+                  <input type="file" id="banner" class="hiddenfile" name="banner" onchange.bind="uploadBanner"
+                    accept=".png,.jpg,.jpeg,.gif" />
                   <button t="campaign-edit:chooseBanner" click.delegate="loadFromFile()"></button>
                 </div>
                 <hr>
                 <section class="languages">
                   <div id="campaign-lang" class="lang">
-                    <span class="text" t="campaign-edit:langSelect">Select language for language-sensitive fields:</span>
+                    <span class="text" t="campaign-edit:langSelect">Select language for language-sensitive
+                      fields:</span>
                     <!-- select-->
-                    <a id="langselect-campaign" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+                    <a id="langselect-campaign" href="javascript:void(0)" click.delegate="toggleLangMenu()"
+                      data-toggle="dropdown">
                       <span class="flag"><img src=${currentLocale.flag} /></span>
                       <span class="arrow"><img src="/img/ic-arrow-down-black.png"></span>
                     </a>
@@ -62,42 +70,49 @@
                       <li repeat.for="loc of locales">
                         <a href="javascript:void(0)" click.delegate="changeLang(loc)">
                           <img src=${loc.flag} width="16px" />
-                          <span css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
+                          <span
+                            css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
                         </a>
                       </li>
                     </ul>
                   </div>
-                  <br/>
+                  <br />
                 </section>
                 <div class="center">
                   <label t="campaign-edit:title">Title</label>
-                  <input t="[placeholder]campaign-edit:title" type="text" placeholder="Title" id="title" value.bind="campaign.titleObject[currentLocale.code]" autofocus />
+                  <input t="[placeholder]campaign-edit:title" type="text" placeholder="Title" id="title"
+                    value.bind="campaign.titleObject[currentLocale.code]" autofocus />
                 </div>
                 <div class="center">
                   <label t="campaign-edit:description">Description</label>
-                  <textarea t="[placeholder]campaign-edit:description" rows="4" placeholder="Description" id="description" value.bind="campaign.descriptionObject[currentLocale.code]" autofocus>
+                  <textarea t="[placeholder]campaign-edit:description" rows="4" placeholder="Description"
+                    id="description" value.bind="campaign.descriptionObject[currentLocale.code]" autofocus>
                   </textarea>
                 </div>
                 <div class="center">
                   <label t="campaign-edit:disclaimer">Disclaimer</label>
-                  <textarea t="[placeholder]campaign-edit:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer" value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
+                  <textarea t="[placeholder]campaign-edit:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
+                    value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
                   </textarea>
                 </div>
                 <div class="center">
                   <label t="campaign-edit:instructions">Instructions</label>
-                  <textarea t="[placeholder]campaign-edit:instructions" rows="4" placeholder="Instructions" id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
+                  <textarea t="[placeholder]campaign-edit:instructions" rows="4" placeholder="Instructions"
+                    id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
                   </textarea>
                 </div>
                 <div class="center campaign-prizes">
                   <span class="title">Prizes</span>
                   <div class="center prize-field" repeat.for="prize of prizes">
                     <label t="campaign-edit:${prize}">${prize}</label>
-                    <input t="[placeholder]campaign-edit:${prize}" type="text" placeholder="${prize}" id="${prize}" value.bind="campaign.prizesObject[prize][currentLocale.code]" autofocus />
+                    <input t="[placeholder]campaign-edit:${prize}" type="text" placeholder="${prize}" id="${prize}"
+                      value.bind="campaign.prizesObject[prize][currentLocale.code]" autofocus />
                   </div>
                 </div>
               </div>
               <div class="button-group">
-                <a href="javascript:void(0)" class="btn-green-o cancel" click.delegate="router.navigateBack()">Cancel</a>
+                <a href="javascript:void(0)" class="btn-green-o cancel"
+                  click.delegate="router.navigateBack()">Cancel</a>
                 <button class="btn-green" type="submit" t="campaign-edit:update">Update Campaign</button>
               </div>
             </form>
@@ -105,7 +120,7 @@
         </section>
       </div>
     </div>
-		<!-- <section class="collections collection-item-list">
+    <!-- <section class="collections collection-item-list">
 			<div class="container">
         <div class="description" if.bind="collection.description[0]">
           <div class="sectionlabel">

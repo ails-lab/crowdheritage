@@ -50,24 +50,24 @@ export class CampaignEditor {
 
     this.loading = true;
     // TODO: Switch call to getCampaignByName(cname)
-    this.campaignServices.getCampaigns( {count: COUNT} )
-        .then( (resultsArray) => {
+    this.campaignServices.getCampaigns({ count: COUNT })
+      .then((resultsArray) => {
         if (this.loading) {
-            this.fillCampaignArray(this.campaigns, resultsArray);
-            this.currentCount = this.currentCount + resultsArray.length;
-            // if (this.currentCount >= this.campaignsCount) {
-            //     this.more = false;
-            // }
-            this.loading = false;
-            console.log(this.campaigns[0]);
-            console.log(this.loading);
+          this.fillCampaignArray(this.campaigns, resultsArray);
+          this.currentCount = this.currentCount + resultsArray.length;
+          // if (this.currentCount >= this.campaignsCount) {
+          //     this.more = false;
+          // }
+          this.loading = false;
+          console.log(this.campaigns[0]);
+          console.log(this.loading);
         }
-        });
-    }
+      });
+  }
 
   fillCampaignArray(campaignArray, results) {
     let localIndex = 0;
-		for (let item of results) {
+    for (let item of results) {
       // Based on the selected language, set the campaign
       let camp = new Campaign(item, this.currentLocaleCode);
       campaignArray.push(camp);
@@ -82,7 +82,7 @@ export class CampaignEditor {
       $('.import-wrap').addClass('open');
     }
   }
-  
+
   closeNav() {
     document.getElementById("campaignSidebar").style.width = "0";
     document.getElementById("campaignSidebar").style.boxShadow = "none"
