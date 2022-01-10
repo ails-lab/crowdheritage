@@ -2,7 +2,8 @@
   <main>
     <h3>Campaign Editor</h3>
     <!-- campaign list-->
-    <section class="collections" if.bind="campaigns.length>0">
+
+    <section class="collections">
       <div class="container">
         <!-- top section-->
         <div class="topsection">
@@ -16,7 +17,7 @@
             </a>
           </div>
         </div>
-        <div class="campaignlist">
+        <div class="campaignlist" if.bind="campaignsCount>0">
           <!-- entry-->
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${camp.username}" repeat.for="camp of campaigns">
@@ -42,10 +43,14 @@
             </div>
           </div>
           <!-- more-->
-          <div class="loadmore">
+          <!-- <div class="loadmore">
             <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
             <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
-          </div>
+          </div> -->
+
+        </div>
+        <div if.bind="campaignsCount===0">
+          <h5>You have created no campaigns.</h5>
         </div>
       </div>
     </section>
@@ -66,7 +71,7 @@
       <div class="action-body">
         <div class="form-group">
           <label t="campaign-edit:usernameLabel">Campaign Username (must be unique)</label>
-          <input type="text" placeholder="e.g. endngered-species" value.bind="campaignUsername">
+          <input type="text" placeholder="e.g. endangered-species" value.bind="campaignUsername">
         </div>
       </div>
       <div class="button-group">

@@ -10,7 +10,7 @@ import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 let logger = LogManager.getLogger('CampaignEditor.js');
 
-let COUNT = 10;
+let COUNT = 0;
 
 @inject(CampaignServices, CollectionServices, UserServices, Router, I18N, 'isTesterUser')
 export class CampaignEditor {
@@ -31,36 +31,45 @@ export class CampaignEditor {
     this.collectionsCount = 0;
     this.collections = [];
     this.loading = false;
-    this.currentCount = 0;
-    this.count = 6;
+    this.campaignsCount = 0;
+    // this.currentCount = 0;
 
     // New Campaign Username
     this.campaignUsername = ''
   }
 
-  activate(params, route) {
+  get user() { return this.userServices.current; }
+
+  async activate(params, route) {
     if (this.i18n.getLocale() != this.locale) {
       this.i18n.setLocale(this.locale);
     }
-    this.getCampaigns()
+    if (this.user) {
+      this.campaignsCount = await this.campaignServices.getCampaignsCount("", this.project, this.state);
+      COUNT = this.campaignsCount;
+      this.getCampaigns()
+    }
   }
 
   getCampaigns(groupName, sortBy, state) {
     this.campaigns = [];
 
     this.loading = true;
+    let username = this.user.username
     // TODO: Switch call to getCampaignByName(cname)
-    this.campaignServices.getCampaigns({ count: COUNT })
+    // this.campaignServices.getUserCampaigns(username, 0, COUNT)
+    this.campaignServices.getCampaigns()
       .then((resultsArray) => {
+        if (resultsArray === 0) {
+          this.campaignsCount = 0;
+        }
         if (this.loading) {
           this.fillCampaignArray(this.campaigns, resultsArray);
-          this.currentCount = this.currentCount + resultsArray.length;
+          // this.currentCount = this.currentCount + resultsArray.length;
           // if (this.currentCount >= this.campaignsCount) {
           //     this.more = false;
           // }
           this.loading = false;
-          console.log(this.campaigns[0]);
-          console.log(this.loading);
         }
       });
   }

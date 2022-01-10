@@ -50,7 +50,7 @@ export class Campaign {
     this.disclaimerObject = data.disclaimer
     this.instructionsObject = data.instructions
     this.prizesObject = data.prizes
-    console.log(data)
+    // console.log(data)
 
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
