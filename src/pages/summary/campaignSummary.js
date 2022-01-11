@@ -221,6 +221,7 @@ export class CampaignSummary {
           }
 				}
 			});
+      console.log(this.collections)
     this.loading = false;
   }
 

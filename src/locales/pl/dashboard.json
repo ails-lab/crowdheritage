@@ -1,0 +1,21 @@
+{
+  "campaigns": "Campaigns",
+  "collections": "Collections",
+  "usergroups": "Usergroups",
+  "returnDashboard": "RETURN TO DASHBOARD",
+  "newCollection": "New Collection",
+  "viewCollection": "View Collection",
+  "editCollection": "Edit Collection",
+  "deleteCollection": "Delete Collection",
+  "publicCollection": "Public collection",
+  "privateCollection": "Private collection",
+  "visibility": "Visibility",
+  "inputLanguage": "Input language",
+  "title": "Tytuł",
+  "access": "Access",
+  "description": "Description",
+  "cancel": "Cancel",
+  "save": "Save",
+  "noCollectionsMessage": "No collections found.<br/>Click on the 'New Collection' button and start curating!",
+  "deleteCollectionMessage": "Do you really want to delete this collection?"
+}

@@ -32,33 +32,14 @@ import { IterateObjectValueConverter } from '../../converters/iterate-object.js'
 let instance = null;
 let COUNT = 24;
 
-@inject(AnnotationServices, ThesaurusServices, CampaignServices, RecordServices, UserServices, Router, DialogService, I18N)
+@inject(AnnotationServices, ThesaurusServices, CampaignServices, RecordServices, UserServices, Router, DialogService, I18N, 'colorPalette')
 export class Validation {
 
-  constructor(annotationServices, thesaurusServices, campaignServices, recordServices, userServices, router, dialogService, i18n) {
+  constructor(annotationServices, thesaurusServices, campaignServices, recordServices, userServices, router, dialogService, i18n, colorPalette) {
   	if (instance) {
   		return instance;
   	}
-    this.colorSet = [
-			["Black",       "background-color: #111111", "color: #111111; filter: brightness(500%);"],
-			["Grey",        "background-color: #AAAAAA","color: #AAAAAA; filter: brightness(60%);"],
-			["Brown",       "background-color: brown", "color:brown; filter: brightness(60%);"],
-			["Red",         "background-color: #FF4136","color: #FF4136; filter: brightness(60%);"],
-			["Orange",      "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
-			["Beige",       "background-color: beige", "color: beige; filter: brightness(60%);"],
-			["Yellow",      "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
-			["Green",       "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
-			["Blue",        "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
-			["Purple",      "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
-			["Pink",        "background-color: pink", "color: pink; filter: brightness(60%);"],
-			["White",       "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
-			["Copper",      "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
-			["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
-			["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);" ],
-			["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
-			["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
-			["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
-		];
+    this.colorSet = colorPalette();
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
   	this.campaignServices = campaignServices;

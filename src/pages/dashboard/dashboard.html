@@ -1,0 +1,46 @@
+<template>
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <div class="bannertext">
+          <div class="line">
+            <div class="wrap"><span>Dashboard</span></div>
+          </div>
+        </div>
+        <div class="bgwrap"></div>
+      </div>
+    </section>
+    <section id="dashboard" class="container mt-5 pe-0">
+      <ul class="nav nav-tabs d-flex justify-content-center">
+        <li class=${campaignsTab} click.delegate="tabChanged('campaigns')">
+          <a class="nav-link" aria-current="page" href="#" t="[append]dashboard:campaigns">
+            <i class="fa fa-list-alt fa-lg me-3" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class=${collectionsTab} click.delegate="tabChanged('collections')">
+          <a class="nav-link" href="#" t="[append]dashboard:collections">
+            <i class="fa fa-folder-open-o fa-lg me-3" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class=${userGroupsTab} click.delegate="tabChanged('userGroups')">
+          <a class="nav-link" href="#" t="[append]dashboard:usergroups">
+            <i class="fa fa-users fa-lg me-3" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+      <div class="container-fluid mt-1" if.bind="view=='campaigns'">
+        <compose view-model="pages/dashboard/campaign-editor/campaign-editor">
+		    </compose>
+      </div>
+      <div class="container-fluid mt-1" if.bind="view=='collections'">
+        <compose view-model="pages/dashboard/collection-editor/collection-editor">
+		    </compose>
+      </div>
+      <div class="container-fluid mt-1" if.bind="view=='userGroups'">
+        <compose view-model="pages/dashboard/user-group-editor/user-group-editor">
+		    </compose>
+      </div>
+    </section>
+  </main>
+</template>

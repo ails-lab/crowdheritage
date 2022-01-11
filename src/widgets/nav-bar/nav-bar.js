@@ -25,12 +25,12 @@ import {initMobileMenu} from 'utils/Plugin.js';
 import { PLATFORM } from 'aurelia-pal';
 import { I18N } from 'aurelia-i18n';
 
-@inject(UserServices, Router, EventAggregator, DialogService, I18N)
+@inject(UserServices, Router, EventAggregator, DialogService, I18N, 'pageLocales')
 export class NavBar {
 
   @bindable router = null;
 
-  constructor(userServices, router, eventAggregator, dialogService, i18n) {
+  constructor(userServices, router, eventAggregator, dialogService, i18n, pageLocales) {
 		this.userServices = userServices;
 		this.router = router;
 		this.locked = false;
@@ -44,16 +44,7 @@ export class NavBar {
     }
 
     this.i18n = i18n;
-    this.locales = [
-      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" },
-      { title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
-      { title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
-      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
-      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
-      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
-    ];
+    this.locales = pageLocales();
     this.currentLocale;
     this.currentLocaleCode;
 	}

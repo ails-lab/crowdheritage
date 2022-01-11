@@ -26,12 +26,34 @@
 		<!-- entry-->
 		<div role="main">
 		<section class="action itemview" if.bind="record">
-			<compose view-model="widgets/quickview/quickview" model.bind="{'cname': cname, 'record': record, 'userId': user.dbId, 'lang': loc, 'collection':collection}"></compose>
+			<compose view-model="widgets/quickview/quickview" model.bind="{'cname': cname, 'editMode':byCollectionEdit, 'record': record, 'userId': user.dbId, 'lang': loc, 'collection':collection}"></compose>
 		</section></div>
+		<div if.bind="byCollectionEdit && !byUser && records.length === 0 && !loading">
+			<h5 class="text-center" t="[html]dashboard:emptyCollection"></h5>
+		</div>
+		<div if.bind="byUser && records.length === 0 && !loading">
+			<h5 class="text-center" t="[html]user:noAnnotedItems"></h5>
+		</div>
 		<div class="entries row" ref="grid">
 			<!-- item-->
 			<div class="sizer"></div>
 				<!-- Item Grid for User -->
+        <div if.bind="byCollectionEdit" class="entry ${record.dbId} col-md-3" repeat.for="record of records">
+					<a href="javascript:void(0)" click.delegate="quickView(record)">
+						<div class="thumbs">
+							<img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+							<div class="action">
+								<div class="plus">${record.title | textTrim:22}</div>
+							</div>
+						</div>
+            <ul if.bind="byCollectionEdit && !byUser && !byCollection" class="itemaction-records">
+              <li>
+                <a data-toggle="tooltip" click.delegate="deleteRecord(record)" data-placement="top" title="Delete record from collection" class="delete"><img class="editicon" src="/img/assets/img/ui/ic-delete.png" /></i></a>
+              </li>
+            </ul>
+					</a>
+				</div>
+
 				<div if.bind="byUser" class="entry ${record.dbId} col-md-3" repeat.for="record of records">
 					<a href="javascript:void(0)" click.delegate="quickView(record)">
 						<div class="thumbs">
@@ -56,6 +78,7 @@
 					<a href="javascript:void(0)" click.delegate="quickView(record)"><i  class="fa fa-eye"></i>
 				  </a>
 				</div>
+
 		</div>
 		<div class="loadmore">
 			<a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>

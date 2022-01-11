@@ -56,6 +56,8 @@ export class App {
     this.dialogService = dialogService;
     this.userServices = userServices;
     container.registerInstance('loginPopup', this.loginPopup.bind(this));
+    container.registerInstance('pageLocales', this.pageLocales.bind(this));
+    container.registerInstance('colorPalette', this.colorPalette.bind(this));
   }
 
   activate() {
@@ -70,7 +72,32 @@ export class App {
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get locale() { return window.location.href.split('/')[3]; }
 
-  // UI Functions
+  configureRouter(config, router) {
+    config.title = '';
+    config.addPipelineStep('postcomplete', PostCompleteStep);
+    config.options.pushState = true;
+    config.options.root = '/';
+    config.map([
+      { route: ':lang?', href: 'index',            name: 'index',    	       moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
+      { route: ':lang/:cname',					           name: 'summary',          moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
+      { route: ':lang/:cname/validation',          name: 'validation',       moduleId: PLATFORM.moduleName('./pages/validation/validation'),        nav: false, title: ''},
+			{ route: ':lang/:cname/collection/:colid',   name: 'collection',       moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
+			{ route: ':lang/:cname/:recid',              name: 'item',     	       moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
+      { route: ':lang/register',                   name: 'register', 	       moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
+      { route: ':lang/about', href: 'about',       name: 'about',    	       moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
+			{ route: ':lang/partners', href: 'partners', name: 'partners',         moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: true,  title: 'Partners | '+settings.project},
+			{ route: ':lang/privacy',                    name: 'privacy',  	       moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
+			{ route: ':lang/terms',                      name: 'terms',    	       moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
+			{ route: ':lang/user/:uname', 	             name: 'user',			       moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
+			{ route: ':lang/feedback',                   name: 'feedback',	       moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
+      { route: ':lang/dashboard/:resource',        name: 'dashboard',	       moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
+      { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/collection-edit/collection-edit'), nav: false, title: ''}
+    ]);
+
+    this.router = router;
+  }
+
+  // Global functions
   loginPopup() {
 		this.dialogService.open({
 			viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
@@ -82,30 +109,40 @@ export class App {
 			}
 		});
 	}
-
-  configureRouter(config, router) {
-    config.title = '';
-    config.addPipelineStep('postcomplete', PostCompleteStep);
-    config.options.pushState = true;
-    config.options.root = '/';
-    config.map([
-      { route: ':lang?', href: 'index',            name: 'index',    	 moduleId: PLATFORM.moduleName('./pages/index/campaignIndex'),          nav: true,  title: settings.project },
-      { route: ':lang/:cname',					           name: 'summary',    moduleId: PLATFORM.moduleName('./pages/summary/campaignSummary'),      nav: false, title: '' },
-      { route: ':lang/:cname/validation',          name: 'validation', moduleId: PLATFORM.moduleName('./pages/validation/validation'),        nav: false, title: ''},
-			{ route: ':lang/:cname/collection/:colid',   name: 'collection', moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
-			{ route: ':lang/:cname/:recid',              name: 'item',     	 moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
-      { route: ':lang/register',                   name: 'register', 	 moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
-      { route: ':lang/about', href: 'about',       name: 'about',    	 moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
-			{ route: ':lang/partners', href: 'partners', name: 'partners',   moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: true,  title: 'Partners | '+settings.project},
-			{ route: ':lang/privacy',                    name: 'privacy',  	 moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
-			{ route: ':lang/terms',                      name: 'terms',    	 moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
-			{ route: ':lang/user/:uname', 	             name: 'user',			 moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
-			{ route: ':lang/feedback',                   name: 'feedback',	 moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project}
-    ]);
-
-    this.router = router;
+  pageLocales() {
+    return [
+      { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },
+      { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
+      { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" },
+      { title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
+      { title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
+      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
+      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
+      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
+    ];
   }
-
+  colorPalette() {
+    return [
+      ["Black",       "background-color: #111111", "color: #111111; filter: brightness(500%);"],
+      ["Grey",        "background-color: #AAAAAA", "color: #AAAAAA; filter: brightness(60%);"],
+      ["Brown",       "background-color: brown", "color:brown; filter: brightness(60%);"],
+      ["Red",         "background-color: #FF4136", "color: #FF4136; filter: brightness(60%);"],
+      ["Orange",      "background-color: #FF851B", "color: #FF851B; filter: brightness(60%);"],
+      ["Beige",       "background-color: beige", "color: beige; filter: brightness(60%);"],
+      ["Yellow",      "background-color: #FFDC00", "color: #FFDC00; filter: brightness(60%);"],
+      ["Green",       "background-color: #2ECC40", "color: #2ECC40; filter: brightness(60%);"],
+      ["Blue",        "background-color: #0074D9", "color: #0074D9; filter: brightness(60%);"],
+      ["Purple",      "background-color: #B10DC9", "color: #B10DC9; filter: brightness(60%);"],
+      ["Pink",        "background-color: pink", "color: pink; filter: brightness(60%);"],
+      ["White",       "background-color: #FFFFFF", "color: #FFFFFF; filter: brightness(60%);"],
+      ["Copper",      "background-image: url(/img/color/copper.jpg)", "color: #b87333; filter: brightness(50%);"],
+      ["Silver",      "background-image: url(/img/color/silver.jpg)", "color:  #DDDDDD; filter: brightness(30%);"],
+      ["Bronze",      "background-image: url(/img/color/bronze.jpg)", "color: #cd7f32; filter: brightness(50%);"],
+      ["Gold",        "background-image: url(/img/color/gold.jpg)", "color: #FFD700; filter: brightness(50%);"],
+      ["Multicolor",  "background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)", " color: white; text-shadow: 1px 1px 2px #424242;"],
+      ["Transparent", "", "color: white; text-shadow: 1px 1px 2px #424242;"]
+    ];
+  }
 }
 
 

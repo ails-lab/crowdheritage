@@ -45,6 +45,7 @@ export class quickview {
     this.collection = null;
     this.collectionTitle = '';
     this.collectionCount = 0;
+    this.edit = false;
     // If there is a user
     this.userId = '';
 
@@ -66,34 +67,52 @@ export class quickview {
   async activate(params, routeData) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
+    this.edit = params.editMode;
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
 		//Load Campaign
-		this.loadCamp = true;
-		let result = await this.campaignServices.getCampaignByName(params.cname)
-        .then(response => {
-          // Based on the selected language, set the campaign
-          this.campaign = new Campaign(response, this.loc);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      this.loadCamp = false;
-      this.record = params.record;
-      if (params.collection) {
-          this.collection = params.collection;
-          this.collectionTitle = this.collection.title;
-          this.collectionCount = this.collection.entryCount;
-		  }
-      if (params.userId) {
-        this.userId = params.userId;
+		if(!this.edit)
+    {
+      this.loadCamp = true;
+      let result = await this.campaignServices.getCampaignByName(params.cname)
+          .then(response => {
+            // Based on the selected language, set the campaign
+            this.campaign = new Campaign(response, this.loc);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        this.loadCamp = false;
+        this.record = params.record;
+        if (params.collection) {
+            this.collection = params.collection;
+            this.collectionTitle = this.collection.title;
+            this.collectionCount = this.collection.entryCount;
+        }
+        if (params.userId) {
+          this.userId = params.userId;
+        }
       }
+      else{
+        this.record = params.record;
+        if (params.collection) {
+            this.collection = params.collection;
+            this.collectionTitle = this.collection.title;
+            this.collectionCount = this.collection.entryCount;
+        }
+        if (params.userId) {
+          this.userId = params.userId;
+        }      
+      }
+      console.log(this.record)
   }
 
   hasMotivation(name) {
-    return !!this.campaign.motivation.includes(name);
+    if(!this.edit){
+      return !!this.campaign.motivation.includes(name);
+    }
   }
 
   getCreator(ann) {
