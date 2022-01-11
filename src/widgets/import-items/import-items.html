@@ -2,17 +2,19 @@
   <div id="mySidebar" class="sidebar">
     <div if.bind="importMethod !== ''">
       <div class="action-header">
-        <div class="title">Import ${importMethod}</div>
+        <div class="title">${sidebarTitle}</div>
       </div>
       <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
-      <div class="action-body">
+      <div class="action-body pb-0">
         <div class="form-group" repeat.for="inp of inputs">
           <label>${inp.label}</label>
-          <input type="${inp.type}" placeholder="${inp.placeholder}" value.bind="inp.value">
+          <input if.bind="!inp.textarea" type="${inp.type}" placeholder="${inp.placeholder}" value.bind="inp.value">
+          <textarea if.bind="inp.textarea" rows="3" type="text" placeholder="${inp.placeholder}" value.bind="inp.value"></textarea>
         </div>
       </div>
-      <div class="button-group">
-        <button class="btn-green" click.delegate="importCollection(inputs)">Import ${impMethod}</button>
+      <div class="d-flex justify-content-between button-group">
+        <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
+        <button t="dashboard:import" class="btn-green" click.delegate="importToCollection(inputs)"></button>
       </div>
     </div>
   </div>

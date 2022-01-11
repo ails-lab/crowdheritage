@@ -280,6 +280,25 @@ export class CollectionServices {
     }).then((response) => response.json());
   }
 
+  importEuropeanaGallery(galleryId, galleryName) {
+    return this.http.fetch(`/collection/importGallery?userGalleryId=${galleryId}&collectionName=${galleryName}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json());
+  }
+
+  importEuropeanaItems(body) {
+    return this.http.fetch('/collection/importItems', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json());
+  }
+
   update(id, collection) {
     return this.http.fetch('/collection/' + id, {
       method: 'PUT',

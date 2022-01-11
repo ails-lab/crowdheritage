@@ -41,35 +41,16 @@ export class CollectionEdit {
     $('.accountmenu').removeClass('active');
   }
 
-  importEuropeanaCollection() {
+  openImportSidebar(method) {
     document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Europeana Dataset'
-  }
-
-  importEuropeanaSearch() {
-    document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 10px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Europeana Search'
-  }
-
-  importEuropeanaGallery() {
-    document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 10px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Europeana User Gallery'
-  }
-
-  importSingleItem() {
-    document.getElementById("mySidebar").style.width = "450px";
-    document.getElementById("mySidebar").style.boxShadow = "0px 10px 10px 0px rgba(0,0,0,.6)"
-    this.importMethod = 'Single Item'
+    document.getElementById("mySidebar").style.boxShadow = "0px 10px 10px 0px rgba(0,0,0,.6)";
+    this.importMethod = method;
   }
 
   closeNav() {
     document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("mySidebar").style.boxShadow = "none"
-    this.importMethod = ''
-
+    document.getElementById("mySidebar").style.boxShadow = "none";
+    this.importMethod = '';
   }
 
   async activate(params, route) {
@@ -85,20 +66,17 @@ export class CollectionEdit {
     route.navModel.setTitle('Curate | ' + title);
   }
 
-
-  importCollection(inputs) {
-    // console.log(inputs);
-    if (this.importMethod === "Europeana Dataset") {
+  importToCollection(inputs) {
+    if (this.importMethod === "europeanaDataset") {
       this.collectionServices.importEuropeanaCollection(inputs[0].value, inputs[1].value, this.collection.title.default[0])
         .then(response => {
-          // console.log(response);
           this.collectionServices.getCollection(this.collectionId, false).then(res => {
             this.collection = new Collection(res);
           });
           this.closeNav();
         })
     }
-    else if (this.importMethod === "Europeana Search") {
+    else if (this.importMethod === "europeanaSearch") {
       // this.validationController.validate().then(v => {
       //   if (v.valid) {
       // console.log(this.limit);
@@ -111,8 +89,6 @@ export class CollectionEdit {
           pageSize: 20
         }
       };
-      // console.log(query)
-
       this.collectionServices.importEuropeanaSearch(query)
         .then(response => {
           this.afterImport(response);
@@ -123,14 +99,32 @@ export class CollectionEdit {
         });
 
     }
-    else if (this.importMethod === "Europeana User Gallery") {
-      pass;
+    else if (this.importMethod === "europeanaGallery") {
+      this.collectionServices.importEuropeanaGallery(inputs[0].value, this.collection.title.default[0])
+        .then(response => {
+          this.afterImport(response);
+        })
+        .catch(error => {
+          this.saving = false;
+          toastr.error(error.message);
+        });
     }
-    else if (this.importMethod === "Single Item") {
-      pass;
+    else if (this.importMethod === "europeanaItems") {
+      let body = {
+        itemIds: inputs[0].value.trim().split('\n').filter(url => url.length>0).map(url => '/'+url.split('/item/')[1]),
+        collectionName: this.collection.title.default[0]
+      }
+      this.collectionServices.importEuropeanaItems(body)
+        .then(response => {
+          this.afterImport(response);
+        })
+        .catch(error => {
+          this.saving = false;
+          toastr.error(error.message);
+        });
     }
-    // this.collectionServices.
   }
+
   afterImport(response) {
     this.saving = false;
     if (response.status !== 200) {
@@ -145,19 +139,13 @@ export class CollectionEdit {
       toastr.error('An error has occurred. You are no longer logged in!');
       return;
     }
-    /* change editables and user collections */
-    // if (this.resourceType === 'collection') {
-    // this.ea.publish('collection-created', new Collection(response));
+
     this.collectionServices.getCollection(response, false).then(res => {
       this.collection = new Collection(res);
       toastr.success('Collection imported successfully!');
-
     });
 
     this.closeNav();
-    // }
-
   }
-
 
 }
