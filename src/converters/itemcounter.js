@@ -18,14 +18,14 @@ import { noView } from 'aurelia-framework';
 import { I18N } from 'aurelia-i18n';
 
 @noView
-export class CampaignCounterValueConverter {
+export class ItemCounterValueConverter {
 	static inject = [I18N];
 	constructor(i18n) {
 		this.i18n = i18n;
 	}
-	toView(value, i18n) {
-		let camp = this.i18n.tr('app:campaign');
-		let camps = this.i18n.tr('app:campaigns');
-		return value == 1 ? value+' ' +camp : value+' ' +camps;
+	toView(values, i18n) {
+		let singular = this.i18n.tr('app:'+values[1]);
+		let plural = this.i18n.tr('app:'+values[1]+'s');
+		return values[0] == 1 ? `1 ${singular}` : `${values[0]} ${plural}`;
 	}
 }

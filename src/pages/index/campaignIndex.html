@@ -17,7 +17,7 @@
         <nav class="vertical">
           <ul>
             <li><a href="javascript:void(0)" click.delegate="scrollTo('#learn')" t="[append]app:learnmore"> <img src="/img/ic-arrow-left-black.png"></a></li>
-            <li>${campaignsCount | campaignCounter}</li>
+            <li>${[campaignsCount, 'campaign'] | itemCounter}</li>
           </ul>
         </nav>
         <div class="bgwrap"></div>

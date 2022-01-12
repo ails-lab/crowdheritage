@@ -6,8 +6,8 @@
         <!-- top section-->
         <div class="topsection mb-3 me-5">
           <div class="sectionlabel">
-            <div class="bold" t="[append]summary:collections">
-              <strong class="me-2">${totalCollectionsCount}</strong>
+            <div class="bold">
+              <strong class="me-2">${[totalCollectionsCount, 'collection'] | itemCounter}</strong>
             </div>
           </div>
           <div class="import-wrap">
@@ -36,7 +36,7 @@
                     if.bind="col.absMedia.length == 0"
                     class="thumbs-images thumbs-count-1"
                   >
-                    <img src="/img/assets/img/ui/ic-noimage.png" />
+                    <img src="/img/assets/img/content/background-space.png" />
                   </div>
                   <div class="action">
                     <h3 class="my-0"><b t="dashboard:curateCollection"></b></h3>

@@ -15,6 +15,12 @@
 
   "campaign"            : "CAMPAIGN",
   "campaigns"           : "CAMPAIGNS",
+  "collection"          : "COLLECTION",
+  "collections"         : "COLLECTIONS",
+  "usergroup"           : "USERGROUP",
+  "usergroups"          : "USERGROUPS",
+  "collected-item"      : "COLLECTED ITEM",
+  "collected-items"     : "COLLECTED ITEMS",
   "contribute"          : "CONTRIBUTE NOW",
   "progress"            : "PROGRESS",
   "contributors"        : "CONTRIBUTORS",
@@ -23,7 +29,6 @@
   "loadmore"            : "LOAD MORE",
   "learnmore"           : "LEARN MORE",
 
-  "collection"          : "COLLECTION",
   "description"         : "DESCRIPTION",
   "return-campaign"     : "RETURN TO CAMPAIGN",
   "return-edit"         : "RETURN TO EDIT PAGE",

@@ -23,8 +23,8 @@
 			<div class="container">
         <div class="topsection">
           <div class="sectionlabel">
-            <div class="bold" t="[append]dashboard:collectedItems">
-              <strong class="me-2">${collection.entryCount}</strong>
+            <div class="bold">
+              <strong class="me-2">${[collection.entryCount, 'collected-item'] | itemCounter}</strong>
             </div>
           </div>
           <div class="import-wrap">

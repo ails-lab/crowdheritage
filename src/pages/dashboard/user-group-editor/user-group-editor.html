@@ -4,8 +4,8 @@
       <div class="container">
         <div class="topsection mb-3 me-5">
           <div class="sectionlabel">
-            <div class="bold text-uppercase" t="[append]dashboard:usergroups">
-              <strong class="me-2">${totalGroupsCount}</strong>
+            <div class="bold text-uppercase">
+              <strong class="me-2">${[totalGroupsCount, 'usergroup'] | itemCounter}</strong>
             </div>
           </div>
           <div class="import-wrap">
