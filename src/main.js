@@ -100,8 +100,7 @@ export async function configure(aurelia) {
           'register',
           'summary',
           'terms',
-          'user',
-          'campaign-edit'
+          'user'
         ],
         defaultNS: 'app'
       });

@@ -12,7 +12,7 @@ import { I18N } from 'aurelia-i18n';
 let instance = null;
 
 @inject(CollectionServices, MediaServices, CampaignServices, UserServices, Router, I18N)
-export class CampaignCnameEdit {
+export class CampaignEdit {
 
   constructor(collectionServices, mediaServices, campaignServices, userServices, router, i18n) {
     if (instance) {
