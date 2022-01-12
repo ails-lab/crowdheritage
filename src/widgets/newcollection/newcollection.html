@@ -1,33 +1,53 @@
 <template>
   <div id="editSidebar" class="sidebar">
     <div class="action-header">
-      <div class="title">${edit ? 'Update Collection' : 'New Collection'}</div>
-    </div>
-    <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
-    <div class="action-body">
-      <div class="form-group">
-        <label>Title</label>
-        <input type="text" value.bind="title" autofocus>
-      </div>
-      <div class="form-group">
-        <label>
-          Access<br>
-          <select value.bind="selectedAccess">
-            <option repeat.for="acc of access" model.bind="acc.bool">
-              ${acc.value}
-            </option>
-          </select>
-        </label>
-        <!-- ${selectedAccess} -->
-      </div>
-      <div class="form-group">
-        <label>Description</label>
-        <textarea type="text" value.bind="desc"></textarea>
+      <div class="title">
+        ${edit ? i18n.tr('dashboard:editCollection') : i18n.tr('dashboard:newCollection')}
       </div>
     </div>
-    <div class="button-group">
-      <button class="btn-green" click.delegate="save()">Save Collection</button>
+    <a href="javascript:void(0)" class="closebtn" click.capture="resetInstance()" click.delegate="closeNav()">×</a>
+    <section class="languages mt-5">
+      <div class="lang-collection">
+        <!-- select-->
+        <label class="languageSelectorLabel" t="dashboard:inputLanguage"></label>
+        <a id="langselect" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+          <span class="flag me-2"><img src=${localeFlagPath} /></span>
+          <span class="font-size-bigger me-2">${currentLocale.title}</span>
+          <span class="arrow"><img src="/img/ic-arrow-down-black.png"></span>
+        </a>
+        <!-- dropdown-->
+        <ul aria-labelledby="langselect" class="dropdown-menu">
+          <li repeat.for="locale of locales">
+            <a href="javascript:void(0)" click.delegate="changeLang(locale.code)">
+              <img src=${locale.flag} width="16px" />
+              <span css="font-weight: ${locale.code === currentLocale.code ? 'bold' : 'normal'}">${locale.title}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <div class="action-body pt-2 pb-4">
+      <div class="form-group">
+        <label t="dashboard:title">Title</label>
+        <input type="text" id ="title" value.bind="title[loc]" autofocus>
+      </div>
+      <div class="form-group">
+        <label t="dashboard:description">Description</label>
+        <textarea type="text" value.bind="desc[loc]"></textarea>
+      </div>
+      <div class="form-group">
+        <label t="dashboard:visibility"></label>
+        <select value.bind="selectedAccess">
+          <option repeat.for="acc of access" model.bind="acc.bool">
+            ${acc.value}
+          </option>
+        </select>
+      </div>
     </div>
-    <i show.bind="saving" class="fa fa-spinner fa-pulse"></i>
+    <div class="d-flex justify-content-between button-group">
+      <button t="dashboard:cancel" class="btn-red" click.capture="resetInstance()" click.delegate="closeNav()">Cancel</button>
+      <button t="dashboard:save" class="btn-green" click.delegate="closeAfterSave(title, desc, selectedAccess, locales)">Save</button>
+    </div>
+    <!-- <i show.bind="saving" class="fa fa-spinner fa-pulse"></i> -->
   </div>
 </template>

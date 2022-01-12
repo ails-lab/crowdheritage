@@ -25,7 +25,7 @@ export class User {
 		// Initialize data structures for user collections/exhibitions/etc
 		// TODO: Remove obsolete information when the new calls are in place
 		this.favoritesCollection = data.favorites;
-		this.userGroupsIds = data.userGroupIds ? data.userGroupIds : [];
+		this.userGroupsIds = data.userGroupsIds ? data.userGroupsIds : [];
 		this.adminInGroups = data.adminInGroups ? data.adminInGroups : [];
 		this.groups = [];
 		this.notifications = [];

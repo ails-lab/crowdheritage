@@ -57,8 +57,9 @@ export class CollectionSummary {
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		this.collection = new Collection(collectionData);
-    //route.navModel.setTitle(this.collection.title[0]+' | '+settings.project);
-    route.navModel.setTitle('Collection | '+this.collection.title[0]);
+
+    let title = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
+    route.navModel.setTitle('Collection | ' + title);
 	}
 
 }

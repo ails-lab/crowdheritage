@@ -202,11 +202,18 @@ export class AnnotationServices {
 		});
 	}
 
-	async annotateRecord(recid, term, camp, mot) {
-		let body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
-		if (typeof term.labels !== 'undefined') {
-		 	body.label = term.labels;
-			body.label.default = [ term.label ];
+	async annotateRecord(recid, term, camp, mot, lang) {
+		let body = {}
+		if (mot == "Commenting") {
+			body = {label: { default: [ term ] } };
+			body.label[lang] = [ term ];
+		}
+		else {
+			body = {uri: term.uri, uriVocabulary: term.vocabulary, label: { default: [ term.label ], en: [term.label ] } };
+			if (typeof term.labels !== 'undefined') {
+				body.label = term.labels;
+				body.label.default = [ term.label ];
+			}
 		}
 		let target = { recordId: recid};
 		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: mot, body: body, target: target };

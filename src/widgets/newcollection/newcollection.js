@@ -1,182 +1,114 @@
 import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
-import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 //import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, Router, I18N)
+@inject(CollectionServices, I18N, 'pageLocales')
 export class Newcollection {
 
-  constructor(collectionServices, router, i18n) {
+  constructor(collectionServices, i18n, pageLocales) {
     if (instance) {
       return instance;
     }
     this.collectionServices = collectionServices;
-    this.router = router;
     this.i18n = i18n;
     this.importMethod = '';
-    this.loc;
+    this.loc = window.location.href.split('/')[3];
     this.resourceType = 'collection';
     if (!instance) {
       instance = this;
     }
     this.access = [
       {
-        value: 'Private',
+        value: this.i18n.tr('dashboard:privateCollection'),
         bool: false
       },
       {
-        value: 'Public',
+        value: this.i18n.tr('dashboard:publicCollection'),
         bool: true
       }
     ];
+    this.locales = pageLocales();
+    this.currentLocale;
+    this.currentLocaleCode;
     this.selectedAccess = false;
-    this.collection = new Collection();
+    this.title = {};
+    this.desc = {};
+    this.originalTitle = null;
+    this.originalDescription = null;
+  }
+
+  resetInstance() {
+    this.currentLocale = this.locales[0];
+    this.currentLocaleCode = this.currentLocale.code;
+    this.localeFlagPath = this.currentLocale.flag;
+    this.selectedAccess = false;
+    this.title = this.originalTitle ? this.originalTitle : {};
+    this.desc = this.originalDescription ? this.originalDescription : {};
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user() { return this.userServices.current; }
 
-  attached() {
-  }
-
   async activate(params, route) {
-    // console.log(params)
     this.edit = params.type === 'edit' ? true : false;
+    this.loc = 'en';
+    this.getLocale();
     if (params.collection) {
-      this.collection = params.collection
-      console.log(this.collection)
-      this.selectedAccess = this.collection.isPublic;
-      this.title = this.collection.title
-      this.desc = this.collection.description
+      this.originalTitle = Object.assign({}, params.collection.title);
+      this.originalDescription = Object.assign({}, params.collection.description);
+
+      this.selectedAccess = params.collection.isPublic;
+      this.title = Object.assign({}, params.collection.title);
+      this.title[this.loc] = this.title[this.loc] ? this.title[this.loc][0] : (this.title.default ? this.title.default[0] : this.title)
+      this.desc = Object.assign({}, params.collection.description);
+      this.desc[this.loc] = this.desc[this.loc] ? this.desc[this.loc][0] : (this.desc.default ? this.desc.default[0] : this.desc)
+      for (let locale of this.locales) {
+        if (locale.code !== 'en') {
+          this.title[locale.code] = this.title[locale.code] ? this.title[locale.code][0] : ""
+          this.desc[locale.code] = this.desc[locale.code] ? this.desc[locale.code][0] : ""
+        }
+      }
     }
     else {
-      this.collection = new Collection()
-      this.collection.isPublic = false
+      this.originalTitle = null;
+      this.originalDescription = null;
+
       this.selectedAccess = false
-      this.title = '';
-      this.desc = ''
-    }
-  }
-
-  saveCollections() {
-    if (!this.edit) {
-      this.save()
-    }
-    else{
-      this.update()
-    }
-  }
-
-  closeNav(){
-    this.selectedAccess = this.edit ? this.collection.isPublic : false;
-    this.title = this.edit ? this.collection.title : '';
-    this.desc = this.edit ? this.collection.description: '';
-    document.getElementById("editSidebar").style.width = "0";
-    document.getElementById("editSidebar").style.boxShadow = "none"
-
-  }
-  update(){
-    this.saving = true;
-    let collectiontosave = {
-      resourceType: 'SimpleCollection',
-      administrative: {
-        access: {
-          isPublic: this.selectedAccess
-        }
-      },
-      descriptiveData: {
-        label: {
-          default: [this.title]
-        },
-        description: {
-          default: [this.desc]
-        }
+      for (let locale of this.locales) {
+        this.title[locale.code] = ""
+        this.desc[locale.code] = ""
       }
-    };
-    this.collectionServices.update(this.collection.dbId, collectiontosave)
-      .then(response => {
-        if(response.status !== 200) {
-          if (response.statusText) {
-            throw new Error(response.statusText);
-          } else if (response.error) {
-            throw new Error(response.error);
-          }
-        }
-        // this.ea.publish('collection-updated', this.collection);
-        // if (typeof this.parent.collection !== 'undefined') {
-        //   this.parent.collection.title = this.collection.title;
-        //   this.parent.collection.description = this.collection.description;
-        //   this.parent.collection.isPublic = this.collection.isPublic;
-        // }
-        this.saving = false;
-        toastr.success('Collection updated');
-      })
-      .catch(error => {
-        this.saving = false;
-        this.closeTab();
-        toastr.error(error.message);
-      });
 
+    }
   }
 
-  save() {
+  getLocale() {
+    this.currentLocaleCode = this.loc;
+    for (let loc of this.locales) {
+      if (loc.code == this.currentLocaleCode) {
+        this.currentLocale = loc;
+        this.localeFlagPath = this.currentLocale.flag
 
-    this.saving = true;
-    let collectiontosave = {
-      resourceType: this.resourceType === 'collection' ? 'SimpleCollection' : 'Exhibition',
-      administrative: {
-        access: {
-          isPublic: this.selectedAccess
-        }
-      },
-      descriptiveData: {
-        label: {
-          default: [this.title]
-        },
-        description: {
-          default: [this.desc]
-        }
+        return this.currentLocale;
       }
-    };
+    }
+  }
 
-    this.collectionServices.save(collectiontosave)
-      .then(response => {
-        this.saving = false;
-        if (response.status !== 200) {
-          if (response.statusText) {
-            throw new Error(response.statusText);
-          } else if (response.error) {
-            throw new Error(response.error);
-          }
-        }
+  toggleLangMenu() {
+    if ($('.lang-collection').hasClass('open')) {
+      $('.lang-collection').removeClass('open');
+    }
+    else {
+      $('.lang-collection').addClass('open');
+    }
+  }
 
-        if (!this.userServices.current) {
-          toastr.error('An error has occurred. You are no longer logged in!');
-          return;
-        }
-
-        /* change editables and user collections */
-        if (this.resourceType === 'collection') {
-          // this.ea.publish('collection-created', new Collection(response));
-          toastr.success('Collection saved successfully!');
-        } else {
-          this.ea.publish('exhibition-created', new Collection(response));
-          toastr.success('Exhibition saved successfully!');
-          this.router.navigate('/my/exhibition/' + response.dbId + '/edit');
-        }
-        // if (this.selected) {
-        //   this.addRecord.call(this, response.dbId);
-        // } else {
-        //   this.closeTab();
-        // }
-      }).catch(error => {
-        this.saving = false;
-        toastr.error(error.message);
-      });
+  changeLang(loc) {
+    this.loc = loc
+    this.getLocale()
   }
 }

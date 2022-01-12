@@ -25,7 +25,7 @@
       <div if.bind="colorannotations.length>0" class="colorbox" t="item:votes">Vote submitted colors by other users.</div>
       <!-- taglist-->
 			<div class="show-more-parent">
-      <ul class="taglist color show-more-target">
+      <ul class="colorBlock taglist color show-more-target">
         <li repeat.for="ann of colorannotations">
           <div class="thumbs" style.bind="getStyle(ann.label)"></div>
           <div class="selected" innerhtml.bind="getColorLabel(ann.label)"></div>
@@ -64,7 +64,7 @@
           </ul>
         </li>
       </ul>
-			<i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".taglist")'></i>
+			<i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".colorBlock")'></i>
 		</div>
     </div>
   </div>
