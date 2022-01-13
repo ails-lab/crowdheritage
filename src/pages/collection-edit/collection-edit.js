@@ -82,7 +82,7 @@ export class CollectionEdit {
       // console.log(this.limit);
       let query = {
         collectionName: this.collection.title.default[0],
-        limit: ((inputs[1].value === undefined || inputs[1].value === null) ? -1 : inputs[1].value),
+        limit: ((inputs[1].value === undefined || inputs[1].value === null) ? -1 : parseInt(inputs[1].value)),
         query: {
           searchTerm: inputs[0].value,
           page: 1,
@@ -140,7 +140,7 @@ export class CollectionEdit {
       return;
     }
 
-    this.collectionServices.getCollection(response, false).then(res => {
+    this.collectionServices.getCollection(response.dbId, false).then(res => {
       this.collection = new Collection(res);
       toastr.success('Collection imported successfully!');
     });
