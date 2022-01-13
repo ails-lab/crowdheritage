@@ -328,12 +328,7 @@ export class CollectionServices {
       all: false
     }), {
       method: 'DELETE'
-      /*body: JSON.stringify(record.data),
-      headers: {
-        'Content-Type': 'application/json'
-        // More options
-      }*/
-    }).then(checkStatus);
+    });
   }
 
   addRecordToPosition(record, collectionId, position) {

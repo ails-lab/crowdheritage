@@ -218,10 +218,8 @@ export class MultipleItems {
   deleteRecord(record) {
     if (window.confirm("Do you really want to delete this record from your collection?")) {
       this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
-        .then(response => {
+        .then(() => {
           this.ea.publish('record-removed');
-          // this.records = [];
-          // this.getRecords();
         })
         .catch(error => console.error(error));
     }
