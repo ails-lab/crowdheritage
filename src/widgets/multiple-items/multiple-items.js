@@ -111,6 +111,7 @@ export class MultipleItems {
     this.cname = params.cname;
     this.router = params.router;
     if (params.collectionEdit) {
+      this.state = "show";
       this.collectionEdit = params.collectionEdit
       this.collection = params.myCollection;
       this.totalCount = this.collection.entryCount;
