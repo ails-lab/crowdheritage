@@ -282,11 +282,8 @@ export class CollectionServices {
 
   importEuropeanaGallery(galleryId, galleryName) {
     return this.http.fetch(`/collection/importGallery?userGalleryId=${galleryId}&collectionName=${galleryName}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => response.json());
+      method: 'POST'
+    });
   }
 
   importEuropeanaItems(body) {

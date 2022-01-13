@@ -18,7 +18,8 @@ export class CollectionEdit {
     this.userServices = userServices;
     this.router = router;
     this.i18n = i18n;
-    this.importMethod = ''
+    this.importMethod = '';
+    this.collectionId = '';
 
     this.loc;
     if (!instance) {
@@ -140,7 +141,7 @@ export class CollectionEdit {
       return;
     }
 
-    this.collectionServices.getCollection(response.dbId, false).then(res => {
+    this.collectionServices.getCollection(this.collectionId, false).then(res => {
       this.collection = new Collection(res);
       toastr.success('Collection imported successfully!');
     });
