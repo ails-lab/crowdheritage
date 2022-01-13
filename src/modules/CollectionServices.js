@@ -282,11 +282,8 @@ export class CollectionServices {
 
   importEuropeanaGallery(galleryId, galleryName) {
     return this.http.fetch(`/collection/importGallery?userGalleryId=${galleryId}&collectionName=${galleryName}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => response.json());
+      method: 'POST'
+    });
   }
 
   importEuropeanaItems(body) {
@@ -296,7 +293,7 @@ export class CollectionServices {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((response) => response.json());
+    });
   }
 
   update(id, collection) {
@@ -331,12 +328,7 @@ export class CollectionServices {
       all: false
     }), {
       method: 'DELETE'
-      /*body: JSON.stringify(record.data),
-      headers: {
-        'Content-Type': 'application/json'
-        // More options
-      }*/
-    }).then(checkStatus);
+    });
   }
 
   addRecordToPosition(record, collectionId, position) {

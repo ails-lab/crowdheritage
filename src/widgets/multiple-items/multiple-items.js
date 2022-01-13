@@ -21,11 +21,12 @@ import { Record } from 'Record.js';
 import { UserServices } from 'UserServices';
 import { CampaignServices } from 'CampaignServices';
 import { I18N } from 'aurelia-i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
 import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, CampaignServices, I18N)
+@inject(CollectionServices, UserServices, CampaignServices, I18N, EventAggregator)
 export class MultipleItems {
 
   get smallerClass() { return this.collection ? '' : 'smaller' }
@@ -35,7 +36,7 @@ export class MultipleItems {
   get byCollection() { return !!this.collection && !this.collectionEdit }
   get byCollectionEdit() { return this.collectionEdit }
 
-  constructor(collectionServices, userServices, campaignServices, i18n) {
+  constructor(collectionServices, userServices, campaignServices, i18n, eventAggregator) {
     if (instance) {
       return instance;
     }
@@ -43,6 +44,7 @@ export class MultipleItems {
     this.userServices = userServices;
     this.campaignServices = campaignServices;
     this.i18n = i18n;
+    this.ea = eventAggregator;
     this.loc;
     this.project = settings.project;
     this.collectionEdit = false;
@@ -111,6 +113,7 @@ export class MultipleItems {
     this.cname = params.cname;
     this.router = params.router;
     if (params.collectionEdit) {
+      this.state = "show";
       this.collectionEdit = params.collectionEdit
       this.collection = params.myCollection;
       this.totalCount = this.collection.entryCount;
@@ -215,11 +218,10 @@ export class MultipleItems {
   deleteRecord(record) {
     if (window.confirm("Do you really want to delete this record from your collection?")) {
       this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
-        .then(response => {
-          console.log(response)
-          this.records = [];
-          this.getRecords();
+        .then(() => {
+          this.ea.publish('record-removed');
         })
+        .catch(error => console.error(error));
     }
   }
 

@@ -42,7 +42,7 @@ export class ImportItems {
         {
           textarea: false,
           type: "number",
-          value: "",
+          value: 100,
           label: this.i18n.tr('dashboard:europeanaImportLimitLabel'),
           placeholder: this.i18n.tr('dashboard:europeanaImportLimitPlaceholder')
         },
