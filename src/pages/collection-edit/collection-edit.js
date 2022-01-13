@@ -4,13 +4,14 @@ import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, Router, I18N)
+@inject(CollectionServices, UserServices, Router, I18N, EventAggregator)
 export class CollectionEdit {
 
-  constructor(collectionServices, userServices, router, i18n) {
+  constructor(collectionServices, userServices, router, i18n, eventAggregator) {
     if (instance) {
       return instance;
     }
@@ -18,6 +19,8 @@ export class CollectionEdit {
     this.userServices = userServices;
     this.router = router;
     this.i18n = i18n;
+    this.ea = eventAggregator;
+
     this.importMethod = '';
     this.collectionId = '';
 
@@ -25,6 +28,10 @@ export class CollectionEdit {
     if (!instance) {
       instance = this;
     }
+
+    this.itemRemovalSubscriber = this.ea.subscribe("record-removed", () => {
+      this.reloadEditCollection();
+    });
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
@@ -38,8 +45,15 @@ export class CollectionEdit {
       $('.import-wrap').addClass('open');
     }
   }
+
   attached() {
     $('.accountmenu').removeClass('active');
+  }
+
+  detached() {
+    if (this.itemRemovalSubscriber) {
+      this.itemRemovalSubscriber.dispose();
+    }
   }
 
   openImportSidebar(method) {
@@ -172,6 +186,14 @@ export class CollectionEdit {
     }
 
     return true;
+  }
+
+  reloadEditCollection() {
+    this.collectionServices.getCollection(this.collectionId, false)
+      .then(response => {
+        this.collection = new Collection(response);
+        toastr.success('Item was deleted successfully');
+      });
   }
 
 }
