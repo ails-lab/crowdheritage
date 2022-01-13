@@ -68,8 +68,12 @@ export class CollectionEdit {
   }
 
   importToCollection(inputs) {
+    let value = inputs[0].value;
+    let limit = inputs[1] ? parseInt(inputs[1].value) : '';
+    if (!this.validForm(value, limit)) return;
+
     if (this.importMethod === "europeanaDataset") {
-      this.collectionServices.importEuropeanaCollection(inputs[0].value, inputs[1].value, this.collection.title.default[0])
+      this.collectionServices.importEuropeanaCollection(value, limit, this.collection.title.default[0])
         .then(response => {
           this.collectionServices.getCollection(this.collectionId, false).then(res => {
             this.collection = new Collection(res);
@@ -78,14 +82,11 @@ export class CollectionEdit {
         })
     }
     else if (this.importMethod === "europeanaSearch") {
-      // this.validationController.validate().then(v => {
-      //   if (v.valid) {
-      // console.log(this.limit);
       let query = {
         collectionName: this.collection.title.default[0],
-        limit: ((inputs[1].value === undefined || inputs[1].value === null) ? -1 : parseInt(inputs[1].value)),
+        limit: limit,
         query: {
-          searchTerm: inputs[0].value,
+          searchTerm: value,
           page: 1,
           pageSize: 20
         }
@@ -101,7 +102,7 @@ export class CollectionEdit {
 
     }
     else if (this.importMethod === "europeanaGallery") {
-      this.collectionServices.importEuropeanaGallery(inputs[0].value, this.collection.title.default[0])
+      this.collectionServices.importEuropeanaGallery(value, this.collection.title.default[0])
         .then(response => {
           this.afterImport(response);
         })
@@ -112,7 +113,7 @@ export class CollectionEdit {
     }
     else if (this.importMethod === "europeanaItems") {
       let body = {
-        itemIds: inputs[0].value.trim().split('\n').filter(url => url.length>0).map(url => '/'+url.split('/item/')[1]),
+        itemIds: value.trim().split('\n').filter(url => url.length>0).map(url => '/'+url.split('/item/')[1]),
         collectionName: this.collection.title.default[0]
       }
       this.collectionServices.importEuropeanaItems(body)
@@ -147,6 +148,30 @@ export class CollectionEdit {
     });
 
     this.closeNav();
+  }
+
+  validForm(value, limit) {
+    if (!value || value.length==0) {
+      toastr.error("You must provide a value");
+      return false;
+    }
+
+    if ((this.importMethod === "europeanaSearch") || (this.importMethod === "europeanaDataset")) {
+      if (!Number.isInteger(limit) || limit <= 0) {
+        toastr.error("Import Limit must be a positive number");
+        return false;
+      }
+      else return true;
+    }
+    else if (this.importMethod === "europeanaGallery") {
+      if (!Number.isInteger(parseInt(value)) || parseInt(value) <= 0) {
+        toastr.error("Gallery ID must be a positive number");
+        return false;
+      }
+      else return true;
+    }
+
+    return true;
   }
 
 }

@@ -293,7 +293,7 @@ export class CollectionServices {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((response) => response.json());
+    });
   }
 
   update(id, collection) {
