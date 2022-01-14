@@ -1,5 +1,4 @@
 import { inject, LogManager, NewInstance } from 'aurelia-framework';
-import { ValidationController, ValidationRules } from 'aurelia-validation';
 import { Router } from 'aurelia-router';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
@@ -10,11 +9,11 @@ import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 let logger = LogManager.getLogger('CampaignEditor.js');
 
-let COUNT = 0;
+let COUNT = 9;
 
-@inject(CampaignServices, CollectionServices, UserServices, Router, I18N, 'isTesterUser')
+@inject(CampaignServices, CollectionServices, UserServices, Router, I18N)
 export class CampaignEditor {
-  constructor(campaignServices, collectionServices, userServices, router, i18n, isTesterUser) {
+  constructor(campaignServices, collectionServices, userServices, router, i18n) {
     this.project = settings.project;
     this.loc = window.location.href.split('/')[3];
     this.campaignServices = campaignServices;
@@ -23,7 +22,6 @@ export class CampaignEditor {
     // this.recordServices = recordServices;
     this.router = router;
     this.i18n = i18n;
-    // this.isTesterUser = isTesterUser();
     this.more = true;
     this.isCreator = false;
     this.campaign = 0;
@@ -46,25 +44,21 @@ export class CampaignEditor {
     }
     if (this.user) {
       this.campaignsCount = await this.campaignServices.getCampaignsCount("", this.project, this.state);
-      COUNT = this.campaignsCount;
-      this.getCampaigns()
+      this.getCampaigns();
     }
   }
 
-  getCampaigns(groupName, sortBy, state) {
+  getCampaigns(groupName, sortBy) {
     this.campaigns = [];
 
     this.loading = true;
-    let username = this.user.username
-    // TODO: Switch call to getCampaignByName(cname)
-    // this.campaignServices.getUserCampaigns(username, 0, COUNT)
-    this.campaignServices.getCampaigns()
+    this.campaignServices.getUserCampaigns(this.user.dbId, 0, COUNT)
       .then((resultsArray) => {
         if (resultsArray === 0) {
           this.campaignsCount = 0;
         }
         if (this.loading) {
-          this.fillCampaignArray(this.campaigns, resultsArray);
+          this.fillCampaignArray(resultsArray.campaigns);
           // this.currentCount = this.currentCount + resultsArray.length;
           // if (this.currentCount >= this.campaignsCount) {
           //     this.more = false;
@@ -74,12 +68,11 @@ export class CampaignEditor {
       });
   }
 
-  fillCampaignArray(campaignArray, results) {
-    let localIndex = 0;
+  fillCampaignArray(results) {
     for (let item of results) {
       // Based on the selected language, set the campaign
       let camp = new Campaign(item, this.currentLocaleCode);
-      campaignArray.push(camp);
+      this.campaigns.push(camp);
     }
   }
 

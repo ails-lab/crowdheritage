@@ -65,8 +65,6 @@ export class CampaignServices {
   }
 
   getUserCampaigns(userId, offset = 0, count = 0) {
-    console.log(userId)
-
     return this.http.fetch(`/campaign/userCampaigns?userId=${userId}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());

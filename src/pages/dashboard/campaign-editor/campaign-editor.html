@@ -1,23 +1,20 @@
 <template>
   <main>
-    <h3>Campaign Editor</h3>
-    <!-- campaign list-->
-
-    <section class="collections">
+    <section class="collections mt-3">
       <div class="container">
-        <!-- top section-->
-        <div class="topsection">
-          <!-- label-->
+        <div class="topsection mb-3 me-5">
           <div class="sectionlabel">
-            <div class="bold">${[campaignsCount, 'campaign'] | itemCounter}</div>
+            <div class="bold">
+              <strong class="me-2">${[campaignsCount, 'campaign'] | itemCounter}</strong>
+            </div>
           </div>
           <div class="import-wrap">
-            <a id="import" href="javascript:void(0)" data-toggle="dropdown" click.delegate="createCampaignSidebar()">
-              <span class="text">Create Campaign</span>
-            </a>
+            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newCampaign" click.delegate="createCampaignSidebar()">
+              <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
-        <div class="campaignlist" if.bind="campaignsCount>0">
+        <div class="campaignlist pe-5" if.bind="campaignsCount>0">
           <!-- entry-->
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${camp.username}" repeat.for="camp of campaigns">
@@ -27,15 +24,16 @@
                   <img class="centered-and-cropped" src.bind="camp.banner"
                     onerror="this.src='/img/assets/img/ui/ic-noimage.png'">
                   <div class="action">
-                    <h3><b>Edit </b></h3>
+                    <h3><b t="dashboard:editCampaign"></b></h3>
                   </div>
                 </div>
                 <!-- detail-->
-                <div class="detail">
+                <div class="detail pt-0">
                   <!-- title-->
                   <div class="desc" style="width: 100%;">
-                    <h4 class="title overflow-ellipsis">${camp.title}</h4>
-                    <div class="owner"><span t="summary:Created on">Created on</span> ${camp.startDate | dateFormat}
+                    <h4 class="title overflow-ellipsis mb-2">${camp.title}</h4>
+                    <div class.bind="camp.isPublic ? 'font-italic text-green' : 'font-italic text-red'">
+                      ${camp.isPublic ? i18n.tr('dashboard:publicCampaign') : i18n.tr('dashboard:privateCampaign')}
                     </div>
                   </div>
                 </div>
@@ -43,14 +41,15 @@
             </div>
           </div>
           <!-- more-->
-          <!-- <div class="loadmore">
+          <div class="loadmore">
             <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
-            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
-          </div> -->
-
+          </div>
         </div>
-        <div if.bind="campaignsCount===0">
-          <h5>You have created no campaigns.</h5>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
+        <div if.bind="campaigns.length===0 && !loading">
+          <h5 class="text-center" t="[html]dashboard:noCampaignsMessage"></h5>
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 <template>
   <main if.bind="user">
     <!-- collection list-->
-    <section class="collections mt-5">
+    <section class="collections mt-3">
       <div class="container">
         <!-- top section-->
         <div class="topsection mb-3 me-5">
@@ -51,7 +51,9 @@
                   <!-- title-->
                   <div class="desc">
                     <div class="title">${col.title[loc] && col.title[loc] !== '' ? col.title[loc] : col.title.default}</div>
-                    <div class="owner">${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}</div>
+                    <div class.bind="col.isPublic ? 'font-italic text-green' : 'font-italic text-red'">
+                      ${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}
+                    </div>
                   </div>
                 </div>
 
