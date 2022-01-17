@@ -28,6 +28,8 @@
   "enddate"             : "END DATE",
   "loadmore"            : "LOAD MORE",
   "learnmore"           : "LEARN MORE",
+  "private"             : "Private",
+  "public"              : "Public",
 
   "description"         : "DESCRIPTION",
   "return-campaign"     : "RETURN TO CAMPAIGN",

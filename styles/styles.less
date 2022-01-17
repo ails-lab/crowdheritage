@@ -6665,7 +6665,7 @@ li.btn-edit-collection a {
   position: absolute;
   list-style-type: none;
   cursor: pointer;
-  z-index: 3;
+  z-index: 1;
   top: 0;
   left: 0px;
   opacity: 0;
@@ -7003,4 +7003,59 @@ section.campaign-edit {
 
 #dashboard .nav-item {
   margin-right: 20px;
+}
+
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+  top: -15px;
+  left: -20px;
+}
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid #2980b9;
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 0;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+  right: -12px;
+  top: 30px;
+  transform: rotate(-45deg);
+
+  &.red {
+    background: rgba(255, 91, 90, 0.7);
+  }
+  &.green {
+    background: rgba(131, 188, 63, 0.7);
+  }
+}
+.ribbon::before {
+  top: 0;
+  right: 0;
+}
+.ribbon::after {
+  bottom: 0;
+  left: 0;
+}
+
+#collectionEditThumb::before {
+  left: 38px;
+  right: 38px;
+  top: 38px;
+  bottom: 38px;
 }
