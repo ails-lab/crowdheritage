@@ -44,8 +44,7 @@ export class Campaign {
     this.logo = data.logo ? this.setImageProperty(data.logo) : '';
     this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
     this.status = this.campaignStatus;
-    // TODO: Update the campaign model to contain field isPublic
-    this.isPublic = true;
+    this.isPublic = data.isPublic;
     // Objects for multilinguality
     this.titleObject = data.title
     this.descriptionObject = data.description

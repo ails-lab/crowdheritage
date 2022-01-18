@@ -58,14 +58,14 @@ export class CampaignServices {
 		}).then((response) => response.json());
   }
 
-  getCampaigns( {group = '', project = "CrowdHeritage", state = "all", sortBy= "Date_desc", offset = 0, count = 0} = {} ) {
-    return this.http.fetch(`/campaign/campaigns?group=${group}&project=${project}&state=${state}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
+  getCampaigns( {project = "CrowdHeritage", state = "all", sortBy= "Date_desc", offset = 0, count = 0} = {} ) {
+    return this.http.fetch(`/campaign/campaigns?project=${project}&state=${state}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
 
-  getUserCampaigns(userId, offset = 0, count = 0) {
-    return this.http.fetch(`/campaign/userCampaigns?userId=${userId}&offset=${offset}&count=${count}`, {
+  getUserCampaigns(offset = 0, count = 0) {
+    return this.http.fetch(`/campaign/userCampaigns?offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
