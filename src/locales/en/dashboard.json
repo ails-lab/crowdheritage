@@ -76,7 +76,9 @@
   "silver": "Silver",
   "bronze": "Bronze",
   "rookie": "Rookie",
-  "createCampaign": "Create Campaign",
-  "usernameLabel": "Campaign Username (must be unique)",
-  "usernamePlaceholder": "e.g. endngered-species"
+  "usernameLabel": "Campaign shortname",
+  "usernamePlaceholder": "Give a unique, one-word identifier for your campaign",
+  "campaignSuccessMessage": "Your campaign was created successfully",
+  "emptyUsernameError": "The campaign shortname can not be empty",
+  "invalidUsernameError": "The campaign shortname can not contain blank spaces. Use dashes instead"
 }

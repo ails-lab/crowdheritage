@@ -21,7 +21,7 @@
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
               <a route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }">
-                <div id="collectionEditThumb" class="thumbs">
+                <div id="editThumbs" class="thumbs">
                   <div class="ribbon">
                     <span class.bind="col.isPublic ? 'green' : 'red'">
                       ${col.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}

@@ -77,6 +77,12 @@ export class CampaignServices {
 		}).then(checkStatus).then((response) => response.json());
 	}
 
+  createEmptyCampaign(campaignUserName) {
+    return this.http.fetch(`/campaign/createEmptyCampaign?campaignUserName=${campaignUserName}`, {
+			method: 'POST'
+		}).then((response) => response.json());
+  }
+
   incUserPoints(campaignId, userId, annoType) {
     return this.http.fetch(`/campaign/incUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {
       method: 'GET'

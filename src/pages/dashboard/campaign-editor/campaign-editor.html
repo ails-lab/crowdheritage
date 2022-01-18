@@ -18,9 +18,13 @@
           <!-- entry-->
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${camp.username}" repeat.for="camp of campaigns">
-              <!-- <a route-href="route: campaign-edit; params.bind: { cname: camp.username, lang: loc }"> -->
               <a route-href="route: campaign-edit; params.bind: { cname: camp.username, lang: loc }">
-                <div class="thumbs">
+                <div id="editThumbs" class="thumbs">
+                  <div class="ribbon">
+                    <span class.bind="camp.isPublic ? 'green' : 'red'">
+                      ${camp.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}
+                    </span>
+                  </div>
                   <img class="centered-and-cropped" src.bind="camp.banner"
                     onerror="this.src='/img/assets/img/ui/ic-noimage.png'">
                   <div class="action">
@@ -31,9 +35,9 @@
                 <div class="detail pt-0">
                   <!-- title-->
                   <div class="desc" style="width: 100%;">
-                    <h4 class="title overflow-ellipsis mb-2">${camp.title}</h4>
-                    <div class.bind="camp.isPublic ? 'font-italic text-green' : 'font-italic text-red'">
-                      ${camp.isPublic ? i18n.tr('dashboard:publicCampaign') : i18n.tr('dashboard:privateCampaign')}
+                    <h4 class="title overflow-ellipsis mb-2">${camp.title ? camp.title : camp.username}</h4>
+                    <div class="owner">
+                      <span t="[prepend]summary:Created on"> ${camp.startDate | dateFormat}</span>
                     </div>
                   </div>
                 </div>
@@ -53,30 +57,23 @@
         </div>
       </div>
     </section>
-    <section>
-      <compose view-model="widgets/import-items/import-items"
-        model.bind="{'importMethod': importMethod, 'router': router, 'lang': loc}">
-      </compose>
-    </section>
   </main>
 
   <!-- Create Campaign Sidebar -->
-  <div id="campaignSidebar" class="sidebar">
-    <div>
-      <div class="action-header">
-        <div class="title" t="dashboard:createCampaign">Create Campaign</div>
+  <div id="editSidebar" class="sidebar">
+    <div class="action-header">
+      <div class="title" t="dashboard:newCampaign"></div>
+    </div>
+    <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+    <div class="action-body">
+      <div class="form-group">
+        <label t="dashboard:usernameLabel"></label>
+        <input type="text" placeholder.bind="i18n.tr('dashboard:usernamePlaceholder')" value.bind="campaignUsername">
       </div>
-      <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
-      <div class="action-body">
-        <div class="form-group">
-          <label t="dashboard:usernameLabel">Campaign Username (must be unique)</label>
-          <input type="text" placeholder="e.g. endangered-species" value.bind="campaignUsername">
-        </div>
-      </div>
-      <div class="button-group">
-        <button class="btn-green" click.delegate="createCampaign()" t="dashboard:createCampaign">Create
-          Campaign</button>
-      </div>
+    </div>
+    <div class="d-flex justify-content-between button-group">
+      <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
+      <button t="app:create" class="btn-green" click.delegate="createCampaign()"></button>
     </div>
   </div>
 
