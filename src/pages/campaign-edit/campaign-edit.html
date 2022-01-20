@@ -4,28 +4,64 @@
       <div class="container">
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"> <span t="dashboard:editCampaign" class=text-uppercase></span></div>
-            <div class="wrap"><span>${campaign.title}</span></div>
+            <div class="lbl"> <span t="dashboard:editCampaign" class="text-uppercase"></span></div>
+            <div class="wrap"><span>${campaign.title ? campaign.title : campaign.username}</span></div>
           </div>
         </div>
-        <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a route-href="route: dashboard; params.bind: { lang: loc }" t="[prepend]app:return-edit"><img
-                  src="/img/ic-arrow-right-black.png"></a></li>
+            <li><a route-href="route: dashboard; params.bind: { lang: loc, resource: 'campaigns' }" t="[prepend]dashboard:returnDashboard">
+              <img src="/img/ic-arrow-right-black.png">
+            </a></li>
           </ul>
         </nav>
         <div class="bgwrap" style="background-image: url('/img/assets/img/content/background-space.png');"></div>
       </div>
     </section>
     <div role="main">
-      <div class="viewer">
+      <div class="container pe-0">
         <section class="entrance campaign-edit">
-          <div class="section-header">
-            <div class="text" t="dashboard:header">Edit details for current Campaign</div>
-          </div>
-          <div class="section-body">
-            <form role="form" submit.delegate="register()">
+          <div class="section-body campaignEditor">
+            <div class="d-flex justify-content-between button-group mb-5">
+              <div class="toggleWrapper">
+                <label class="mb-0 me-4" t="[prepend]dashboard:visibility">:</label>
+                <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked.bind="campaign.isPublic">
+                <label class="mb-0" for="toggle1"></label>
+                <span class="ms-2">${campaign.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}</span>
+              </div>
+              <div>
+                <button t="app:preview" class="m-0 btn-green" click.delegate="previewCampaign()"></button>
+                <button t="app:delete" class="btn-red m-0 me-3" click.delegate="deleteCampaign()"></button>
+              </div>
+            </div>
+            <div class="topsection mb-3">
+              <div class="sectionlabel">
+                <div class="bold">
+                  <strong class="text-uppercase me-2" t="dashboard:campaignDetails"></strong>
+                </div>
+              </div>
+              <div class="import-wrap">
+                <section class="languages">
+                  <div class="lang-collection lang-campEditor">
+                    <label class="languageSelectorLabel m-0 pb-1 pe-4" t="[prepend]dashboard:inputLanguage">:</label>
+                    <a id="langselect" class="me-0" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+                      <span class="flag me-2"><img class="pb-2" src=${currentLocale.flag} /></span>
+                      <span class="font-size-bigger me-1">${currentLocale.title}</span>
+                      <span><img src="/img/ic-arrow-down-black.png"></span>
+                    </a>
+                    <ul aria-labelledby="langselect" class="dropdown-menu">
+                      <li repeat.for="locale of locales">
+                        <a href="javascript:void(0)" click.delegate="changeLang($index)">
+                          <img src=${locale.flag} width="16px" />
+                          <span css="font-weight: ${locale.code === currentLocale.code ? 'bold' : 'normal'}">${locale.title}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <form role="form">
               <div class="input-group">
                 <div class="center">
                   <label t="dashboard:username">Username</label>
@@ -51,30 +87,6 @@
                     accept=".png,.jpg,.jpeg,.gif" />
                   <button t="dashboard:chooseBanner" click.delegate="loadFromFile()"></button>
                 </div>
-                <hr>
-                <section class="languages">
-                  <div id="campaign-lang" class="lang">
-                    <span class="text" t="dashboard:langSelect">Select language for language-sensitive
-                      fields:</span>
-                    <!-- select-->
-                    <a id="langselect-campaign" href="javascript:void(0)" click.delegate="toggleLangMenu()"
-                      data-toggle="dropdown">
-                      <span class="flag"><img src=${currentLocale.flag} /></span>
-                      <span class="arrow"><img src="/img/ic-arrow-down-black.png"></span>
-                    </a>
-                    <!-- dropdown-->
-                    <ul aria-labelledby="langselect-campaign" class="dropdown-menu">
-                      <li repeat.for="loc of locales">
-                        <a href="javascript:void(0)" click.delegate="changeLang(loc)">
-                          <img src=${loc.flag} width="16px" />
-                          <span
-                            css="font-weight: ${loc.code === currentLocale.code ? 'bold' : 'normal'}">${loc.title}</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <br />
-                </section>
                 <div class="center">
                   <label t="dashboard:title">Title</label>
                   <input t="[placeholder]dashboard:title" type="text" placeholder="Title" id="title"
@@ -107,31 +119,44 @@
                   </div>
                 </div>
               </div>
-              <div class="button-group">
-                <a href="javascript:void(0)" class="btn-green-o cancel"
-                  click.delegate="router.navigateBack()">Cancel</a>
-                <button class="btn-green" type="submit" t="dashboard:update">Update Campaign</button>
+              <div class="topsection mt-5 mb-3">
+                <div class="sectionlabel">
+                  <div class="bold">
+                    <strong class="text-uppercase me-2" t="dashboard:campaignAnnotations"></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="center">
+                  <label t="dashboard:username">Username</label>
+                  <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
+                    value.bind="campaign.username" autofocus />
+                  <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
+                </div>
+              </div>
+              <div class="topsection mt-5 mb-3">
+                <div class="sectionlabel">
+                  <div class="bold">
+                    <strong class="text-uppercase me-2" t="dashboard:campaignAccess"></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="center">
+                  <label t="dashboard:username">Username</label>
+                  <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
+                    value.bind="campaign.username" autofocus />
+                  <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between button-group mt-5">
+                <button t="dashboard:cancel" class="m-0 btn-red" click.delegate="goBackToDashboard()"></button>
+                <button t="app:update" class="m-0 btn-green" click.delegate="updateCampaign()"></button>
               </div>
             </form>
           </div>
         </section>
       </div>
     </div>
-    <!-- <section class="collections collection-item-list">
-			<div class="container">
-        <div class="description" if.bind="collection.description[0]">
-          <div class="sectionlabel">
-            <div class="bold">
-              <span class="text" t="app:description">DESCRIPTION</span>
-            </div>
-          </div>
-          <p innerHtml.bind="collection.description" />
-        </div>
-    		<compose view-model="widgets/multiple-items/multiple-items"
-    						 model.bind="{'collectionEdit': true, 'myCollection': collection, 'router': router, 'lang': loc}">
-    		</compose>
-    	</div>
-    </section> -->
   </main>
-
 </template>

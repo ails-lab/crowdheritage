@@ -31,6 +31,9 @@
   "private"             : "Private",
   "public"              : "Public",
   "create"              : "Create",
+  "delete"              : "Delete",
+  "update"              : "Update",
+  "preview"             : "Preview",
 
   "description"         : "DESCRIPTION",
   "return-campaign"     : "RETURN TO CAMPAIGN",

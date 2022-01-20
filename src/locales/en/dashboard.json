@@ -59,7 +59,10 @@
   "europeanaItemsPlaceholder": "List of Europeana item URLs",
   "editCampaign": "Edit Campaign",
   "newCampaign": "New Campaign",
-  "header": "Edit details for current Campaign",
+  "campaignVisibility": "Campaign visibility",
+  "campaignDetails": "Campaign details",
+  "campaignAnnotations": "Campaign annotations",
+  "campaignAccess": "Campaign access",
   "langSelect": "Select language for the below fields:",
   "startDate": "Start Date",
   "endDate": "End Date",
@@ -80,5 +83,6 @@
   "usernamePlaceholder": "Give a unique, one-word identifier for your campaign",
   "campaignSuccessMessage": "Your campaign was created successfully",
   "emptyUsernameError": "The campaign shortname can not be empty",
-  "invalidUsernameError": "The campaign shortname can not contain blank spaces. Use dashes instead"
+  "invalidUsernameError": "The campaign shortname can not contain blank spaces. Use dashes instead",
+  "deleteCampaignMessage": "Are you sure you want to delete this campaign?\nThis action can not be undone!\nYou can set the visibility to private, instead."
 }

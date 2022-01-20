@@ -11,10 +11,10 @@ import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CollectionServices, MediaServices, CampaignServices, UserServices, Router, I18N)
+@inject(CollectionServices, MediaServices, CampaignServices, UserServices, Router, I18N, 'pageLocales')
 export class CampaignEdit {
 
-  constructor(collectionServices, mediaServices, campaignServices, userServices, router, i18n) {
+  constructor(collectionServices, mediaServices, campaignServices, userServices, router, i18n, pageLocales) {
     if (instance) {
       return instance;
     }
@@ -25,18 +25,8 @@ export class CampaignEdit {
     this.i18n = i18n;
 
     this.loc;
-    this.locales = [
-      { title: "English", code: "en", flag: "/img/assets/images/flags/en.png" },
-      { title: "Italiano", code: "it", flag: "/img/assets/images/flags/it.png" },
-      { title: "Français", code: "fr", flag: "/img/assets/images/flags/fr.png" }
-      //{ title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" },
-      //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
-      //{ title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
-      //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
-      //{ title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" }
-    ];
+    this.locales = pageLocales();
     this.currentLocale = this.locales[0]; // default language for form language picker
-    this.currentLocaleCode = "en"; // default language for form language picker
 
     // Initialization
     this.prizes = ['gold', 'silver', 'bronze', 'rookie']
@@ -57,15 +47,12 @@ export class CampaignEdit {
   async activate(params, route) {
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
-    console.log(params);
-
     this.cname = params.cname;
     let campaignData = await this.campaignServices.getCampaignByName(this.cname);
-    this.campaign = new Campaign(campaignData);
-    //route.navModel.setTitle(this.campaign.title[0]+' | '+settings.project);
-    console.log(this.campaign)
-    route.navModel.setTitle('Campaign | ' + this.campaign.title);
+    this.campaign = new Campaign(campaignData, this.loc);
 
+    let title = this.campaign.title ? this.campaign.title : this.campaign.username;
+    route.navModel.setTitle('Edit Campaign | ' + title);
   }
 
   loadFromFile() {
@@ -90,16 +77,37 @@ export class CampaignEdit {
   }
 
   toggleLangMenu() {
-    if ($('#campaign-lang').hasClass('open')) {
-      $('#campaign-lang').removeClass('open');
+    if ($('.lang-collection').hasClass('open')) {
+      $('.lang-collection').removeClass('open');
     }
     else {
-      $('#campaign-lang').addClass('open');
+      $('.lang-collection').addClass('open');
     }
   }
 
-  changeLang(loc) {
-    this.currentLocale = loc
+  changeLang(index) {
+    this.currentLocale = this.locales[index];
+  }
+
+  goBackToDashboard() {
+    this.router.navigateToRoute('dashboard', {lang: this.loc, resource: 'campaigns'});
+  }
+
+  previewCampaign() {
+    this.router.navigateToRoute('summary', {lang: this.loc, cname: this.cname});
+  }
+
+  deleteCampaign() {
+    if (window.confirm(this.i18n.tr('dashboard:deleteCampaignMessage'))) {
+      this.campaignServices.deleteCampaign(this.campaign.dbId)
+        .then(() => {
+          this.goBackToDashboard();
+        })
+        .catch(error => console.error(error));
+    }
+  }
+
+  updateCampaign() {
     console.log(this.campaign);
   }
 

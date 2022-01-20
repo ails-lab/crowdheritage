@@ -5191,13 +5191,11 @@ section.userprofile div.left div.button-group {
   bottom: 0px;
   right: 0px;
 }
-section.userprofile div.left div.button-group a,
-section.campaign-edit div.button-group a {
+section.userprofile div.left div.button-group a {
   color: @main-color;
   font-weight: bold;
 }
-section.userprofile div.left div.button-group button,
-section.campaign-edit div.button-group button {
+section.userprofile div.left div.button-group button {
   margin: 10px;
   background-color: @main-color;
   color: white;
@@ -6568,6 +6566,8 @@ a:hover .social-button.facebook {
   width: 100%;
 }
 
+.campaignEditor .btn-green,
+.campaignEditor .btn-red,
 .sidebar .btn-green,
 .sidebar .btn-red {
   cursor: pointer;
@@ -6596,11 +6596,13 @@ a:hover .social-button.facebook {
   white-space: nowrap;
 }
 
+.campaignEditor .btn-red,
 .sidebar .btn-red {
   background-color: white;
   color: red;
   border: 1px solid red;
 }
+.campaignEditor .btn-red:hover,
 .sidebar .btn-red:hover {
   background-color: red;
   color: white;
@@ -7058,4 +7060,98 @@ section.campaign-edit {
   right: 38px;
   top: 38px;
   bottom: 38px;
+}
+
+section.entrance.campaign-edit {
+  width: 100% !important;
+  display: block;
+  padding-top: 30px !important;
+}
+
+
+section.languages .lang-collection.lang-campEditor .dropdown-menu {
+  left: 54px;
+}
+
+.inactiveMixin {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+.beforeAnimation {
+  -moz-transition: .2s cubic-bezier(.24, 0, .5, 1);
+  -o-transition: .2s cubic-bezier(.24, 0, .5, 1);
+  -webkit-transition: .2s cubic-bezier(.24, 0, .5, 1);
+  transition: .2s cubic-bezier(.24, 0, .5, 1);
+}
+
+.afterAnimation {
+  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 0px 0 hsla(0, 0%, 0%, .04), 0 4px 9px hsla(0, 0%, 0%, .13), 0 3px 3px hsla(0, 0%, 0%, .05);
+  -moz-transition: .35s cubic-bezier(.54, 1.60, .5, 1);
+  -o-transition: .35s cubic-bezier(.54, 1.60, .5, 1);
+  -webkit-transition: .35s cubic-bezier(.54, 1.60, .5, 1);
+  transition: .35s cubic-bezier(.54, 1.60, .5, 1);
+}
+
+// Mobile Toggle Switch
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  input {
+    &.mobileToggle {
+      opacity: 0; // hides checkbox
+      position: absolute;
+      & + label {
+        position: relative;
+        display: inline-block;
+        user-select: none;
+        -moz-transition: .4s ease;
+        -o-transition: .4s ease;
+        -webkit-transition: .4s ease;
+        transition: .4s ease;
+        -webkit-tap-highlight-color: transparent;
+        height: 23px;
+        width: 40px;
+        border: 1px solid #e4e4e4;
+        border-radius: 60px;
+        &:before {
+          .inactiveMixin;
+          .beforeAnimation;
+          background: rgba(255, 91, 90, 0.7);
+          height: 21px;
+          width: 38px;
+          top: 0;
+          left: 0;
+          border-radius: 30px;
+        }
+        &:after {
+          .inactiveMixin;
+          .afterAnimation;
+          background: whitesmoke;
+          height: 21px;
+          width: 21px;
+          top: 0px;
+          left: 0px;
+          border-radius: 60px;
+        }
+        &:hover:after {
+          cursor: pointer;
+        }
+      }
+      // When Active
+      &:checked {
+        & + label:before {
+          background: rgba(131, 188, 63, 0.7); // Active Color
+          -moz-transition: width .2s cubic-bezier(0, 0, 0, .1);
+          -o-transition: width .2s cubic-bezier(0, 0, 0, .1);
+          -webkit-transition: width .2s cubic-bezier(0, 0, 0, .1);
+          transition: width .2s cubic-bezier(0, 0, 0, .1);
+        }
+        & + label:after {
+          left: 17px;
+        }
+      }
+    }
+  }
 }
