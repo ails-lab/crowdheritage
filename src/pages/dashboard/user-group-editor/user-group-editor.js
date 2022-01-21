@@ -90,7 +90,7 @@ export class UserGroupEditor {
 
   editUserGroup(userGroup) {
     if (!this.delete) {
-      document.getElementById("newUserGroupSidebar").style.width = "450px";
+      document.getElementById("newUserGroupSidebar").style.width = "500px";
       document.getElementById("newUserGroupSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
       this.edittype = 'edit';
       this.editableUserGroup = userGroup;

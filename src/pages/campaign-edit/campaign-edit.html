@@ -64,7 +64,7 @@
             <form role="form">
               <div class="input-group">
                 <div class="center">
-                  <label t="dashboard:username">Username</label>
+                  <label t="dashboard:shortName">Username</label>
                   <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
                     value.bind="campaign.username" autofocus />
                   <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
@@ -81,11 +81,22 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:banner">Banner</label>
-                  <img class="banner-edit center" src="${campaign.banner.replace('?file=true','')}"
-                    alt="${username+'-'+banner}" width="100%">
-                  <input type="file" id="banner" class="hiddenfile" name="banner" onchange.bind="uploadBanner"
-                    accept=".png,.jpg,.jpeg,.gif" />
-                  <button t="dashboard:chooseBanner" click.delegate="loadFromFile()"></button>
+                  <div class="banner-edit center">
+                    <img src="${campaign.banner.replace('?file=true','')}" alt="${username+'-'+banner}" width="100%">
+                    <ul class="itemaction">
+                      <li if.bind="campaign.banner != DEFAULT_BANNER" class="btn-delete-collection me-0" click.delegate="removeBanner()">
+                        <a data-toggle="tooltip" data-placement="top" class="delete">
+                          <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                        </a>
+                      </li>
+                      <li class="btn-edit-collection" click.delegate="loadFromFile('#bannerFile')">
+                        <a data-toggle="tooltip" data-placement="top">
+                          <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                        </a>
+                      </li>
+      							</ul>
+                  </div>
+                  <input type="file" id="bannerFile" class="hiddenfile" name="banner" onchange.bind="uploadBanner" accept=".png,.jpg,.jpeg,.gif" />
                 </div>
                 <div class="center">
                   <label t="dashboard:title">Title</label>
@@ -98,21 +109,35 @@
                     id="description" value.bind="campaign.descriptionObject[currentLocale.code]" autofocus>
                   </textarea>
                 </div>
-                <div class="center">
-                  <label t="dashboard:disclaimer">Disclaimer</label>
-                  <textarea t="[placeholder]dashboard:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
-                    value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
-                  </textarea>
+                <div class="d-flex">
+                  <div class="w-30 me-3">
+                    <label t="dashboard:logo">Logo</label>
+                    <div class="logo-edit center">
+                      <img if.bind="campaign.logo" src="${campaign.logo.replace('?file=true','')}" alt="${username+'-'+logo}" width="100%">
+                      <ul class="itemaction">
+                        <li if.bind="campaign.logo" class="btn-delete-collection me-0" click.delegate="removeLogo()">
+                          <a data-toggle="tooltip" data-placement="top" class="delete">
+                            <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                          </a>
+                        </li>
+                        <li class="btn-edit-collection" click.delegate="loadFromFile('#logoFile')">
+                          <a data-toggle="tooltip" data-placement="top">
+                            <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                          </a>
+                        </li>
+        							</ul>
+                    </div>
+                    <input type="file" id="logoFile" class="hiddenfile" name="logo" onchange.bind="uploadLogo" accept=".png,.jpg,.jpeg,.gif" />
+                  </div>
+                  <div class="w-70">
+                    <label t="dashboard:disclaimer">Disclaimer</label>
+                    <textarea t="[placeholder]dashboard:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
+                      value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
+                    </textarea>
+                  </div>
                 </div>
                 <div class="center">
-                  <label t="dashboard:instructions">Instructions</label>
-                  <textarea t="[placeholder]dashboard:instructions" rows="4" placeholder="Instructions"
-                    id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
-                  </textarea>
-                </div>
-                <div class="center campaign-prizes">
-                  <span class="title">Prizes</span>
-                  <div class="center prize-field" repeat.for="prize of prizes">
+                  <div repeat.for="prize of prizes" class="mb-3">
                     <label t="dashboard:${prize}">${prize}</label>
                     <input t="[placeholder]dashboard:${prize}" type="text" placeholder="${prize}" id="${prize}"
                       value.bind="campaign.prizesObject[prize][currentLocale.code]" autofocus />
@@ -122,16 +147,31 @@
               <div class="topsection mt-5 mb-3">
                 <div class="sectionlabel">
                   <div class="bold">
-                    <strong class="text-uppercase me-2" t="dashboard:campaignAnnotations"></strong>
+                    <strong class="text-uppercase me-2" t="dashboard:campaignAnnotating"></strong>
                   </div>
                 </div>
               </div>
               <div class="input-group">
                 <div class="center">
-                  <label t="dashboard:username">Username</label>
-                  <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
-                    value.bind="campaign.username" autofocus />
-                  <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
+                  <label t="dashboard:annotationTarget">Annotation target (number of contributions)</label>
+                  <input t="[placeholder]dashboard:target" type="number" id="annotationTarget" value.bind="campaign.target" class="w-100 p-4" />
+                </div>
+                <div class="center">
+                  <label t="dashboard:campaignMotivations">Campaign motivations</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                    <label class="form-check-label" for="inlineCheckbox2">2</label>
+                  </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:instructions">Instructions</label>
+                  <textarea t="[placeholder]dashboard:instructions" rows="4" placeholder="Instructions"
+                    id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
+                  </textarea>
                 </div>
               </div>
               <div class="topsection mt-5 mb-3">
@@ -143,7 +183,7 @@
               </div>
               <div class="input-group">
                 <div class="center">
-                  <label t="dashboard:username">Username</label>
+                  <label t="dashboard:campaignModerators">Campaign moderators</label>
                   <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
                     value.bind="campaign.username" autofocus />
                   <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>

@@ -7,7 +7,7 @@ import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
-//import settings from 'global.config.js';
+import settings from 'global.config.js';
 
 let instance = null;
 
@@ -15,6 +15,7 @@ let instance = null;
 export class CampaignEdit {
 
   constructor(collectionServices, mediaServices, campaignServices, userServices, router, i18n, pageLocales) {
+    this.DEFAULT_BANNER = 'http://withculture.eu/assets/img/content/background-space.png';
     if (instance) {
       return instance;
     }
@@ -55,25 +56,46 @@ export class CampaignEdit {
     route.navModel.setTitle('Edit Campaign | ' + title);
   }
 
-  loadFromFile() {
-    $('#banner').trigger('click');
+  displayImage(img) {
+    return (!img.startsWith('http')) ? `${settings.baseUrl}${img}` : img;
+  }
+
+  loadFromFile(id) {
+    $(id).trigger('click');
   }
 
   uploadBanner = () => {
-    let input = document.getElementById('banner');
+    let input = document.getElementById('bannerFile');
     let data = new FormData();
     data.append('file', input.files[0]);
 
     this.mediaServices.upload(data).then((response) => {
-      // this.banner = MediaServices.toObject(response.Medium);
-      // TODO: Remove hardcoded URL? campaign.banner seems to be a string like the one below.
-      this.campaign.banner = `https://api.crowdheritage.eu${response.medium}`
-      // Show the cancel/save buttons
-      $('.button-group').removeClass('hiddenfile');
+      this.campaign.banner = this.displayImage(response.original);
     }).catch((error) => {
       logger.error(error);
       toastr.danger('Error uploading the file!');
     });
+  }
+
+  removeBanner() {
+    this.campaign.banner = this.DEFAULT_BANNER;
+  }
+
+  uploadLogo = () => {
+    let input = document.getElementById('logoFile');
+    let data = new FormData();
+    data.append('file', input.files[0]);
+
+    this.mediaServices.upload(data).then((response) => {
+      this.campaign.logo = this.displayImage(response.original);
+    }).catch((error) => {
+      logger.error(error);
+      toastr.danger('Error uploading the file!');
+    });
+  }
+
+  removeLogo() {
+    this.campaign.logo = null;
   }
 
   toggleLangMenu() {
@@ -94,7 +116,7 @@ export class CampaignEdit {
   }
 
   previewCampaign() {
-    this.router.navigateToRoute('summary', {lang: this.loc, cname: this.cname});
+    window.open(this.router.generate('summary', {lang: this.loc, cname: this.cname}));
   }
 
   deleteCampaign() {
@@ -108,7 +130,28 @@ export class CampaignEdit {
   }
 
   updateCampaign() {
-    console.log(this.campaign);
+    // TODO: Use correct API call to update campaign details
+    // startDate = "2021/12/14";
+    let obj = {
+      username: this.campaign.username,
+      title: this.campaign.titleObject,
+      description: this.campaign.descriptionObject,
+      instructions: this.campaign.instructionsObject,
+      banner: this.campaign.banner.split(settings.baseUrl)[1],
+      logo: this.campaign.logo.split(settings.baseUrl)[1],
+      disclaimer: this.campaign.disclaimerObject,
+      isPublic: this.campaign.isPublic,
+      // motivation: ,
+      prizes: this.campaign.prizesObject,
+      annotationTarget: this.campaign.target,
+      // vocabularies: ,
+      startDate: this.campaign.startDate.replaceAll('-','/'),
+      endDate: this.campaign.endDate.replaceAll('-','/'),
+      // creators: ,
+      // userGroupIds: ,
+      // targetCollections:
+    };
+    console.log(obj);
   }
 
 }

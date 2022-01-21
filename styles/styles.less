@@ -6617,19 +6617,21 @@ a:hover .social-button.facebook {
 }
 
 .itemaction {
-  display: inline-flex;
+  display: none;
   margin: 0;
   padding: 0;
   position: absolute;
   list-style-type: none;
   cursor: pointer;
   z-index: 3;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.entry .itemaction {
   top: 3px;
   right: 41px;
   width: 84px;
-  opacity: 0;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
 }
 
 li.btn-delete-collection a {
@@ -6640,7 +6642,7 @@ li.btn-edit-collection a {
 }
 
 .entry:hover .itemaction {
-  opacity: 1;
+  display: inline-flex;
 }
 
 .itemaction li {
@@ -6718,11 +6720,40 @@ background-color: @main-color;
   width: 20px;
 }
 
-img.banner-edit {
+.banner-edit {
+  display: flex;
   border: 1px solid #cfcfcf;
   width: 100%;
-  max-height: 150px;
-  object-fit: contain;
+  height: 150px;
+  & img {
+    object-fit: contain;
+    max-height: 148px;
+  }
+  .itemaction {
+    width: max-content;
+  }
+}
+
+.banner-edit:hover .itemaction {
+  display: inline-flex;
+}
+
+.logo-edit {
+  display: flex;
+  border: 1px solid #cfcfcf;
+  width: 100%;
+  height: 137px;
+  & img {
+    object-fit: contain;
+    max-height: 135px;
+  }
+  .itemaction {
+    width: max-content;
+  }
+}
+
+.logo-edit:hover .itemaction {
+  display: inline-flex;
 }
 
 section.campaign-edit {
