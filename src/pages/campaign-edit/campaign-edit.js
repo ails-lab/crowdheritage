@@ -5,22 +5,24 @@ import { MediaServices } from 'MediaServices.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
+import { ThesaurusServices } from 'ThesaurusServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, MediaServices, CampaignServices, UserServices, Router, I18N, 'pageLocales')
+@inject(CollectionServices, MediaServices, CampaignServices, UserServices, ThesaurusServices, Router, I18N, 'pageLocales')
 export class CampaignEdit {
 
-  constructor(collectionServices, mediaServices, campaignServices, userServices, router, i18n, pageLocales) {
+  constructor(collectionServices, mediaServices, campaignServices, userServices, thesaurusServices, router, i18n, pageLocales) {
     this.DEFAULT_BANNER = 'http://withculture.eu/assets/img/content/background-space.png';
     if (instance) {
       return instance;
     }
     this.campaignServices = campaignServices;
     this.userServices = userServices;
+    this.thesaurusServices = thesaurusServices;
     this.mediaServices = mediaServices;
     this.router = router;
     this.i18n = i18n;
@@ -30,7 +32,10 @@ export class CampaignEdit {
     this.currentLocale = this.locales[0]; // default language for form language picker
 
     // Initialization
-    this.prizes = ['gold', 'silver', 'bronze', 'rookie']
+    this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.availableVocabularies = [];
     this.errors = {};
 
     if (!instance) {
@@ -51,6 +56,18 @@ export class CampaignEdit {
     this.cname = params.cname;
     let campaignData = await this.campaignServices.getCampaignByName(this.cname);
     this.campaign = new Campaign(campaignData, this.loc);
+
+    this.campaign.startDate = this.campaign.startDate.replaceAll('/','-');
+    this.campaign.endDate = this.campaign.endDate.replaceAll('/','-');
+    if (this.campaign.motivation) {
+      for (let mot of this.campaign.motivation) {
+        this.motivationValues[mot] = true;
+      }
+    }
+    this.thesaurusServices.listVocabularies()
+      .then(response => {
+        this.availableVocabularies = response;
+      });
 
     let title = this.campaign.title ? this.campaign.title : this.campaign.username;
     route.navModel.setTitle('Edit Campaign | ' + title);
@@ -130,8 +147,7 @@ export class CampaignEdit {
   }
 
   updateCampaign() {
-    // TODO: Use correct API call to update campaign details
-    // startDate = "2021/12/14";
+    // TODO: Use correct API call to update campaign details. Add form validation.
     let obj = {
       username: this.campaign.username,
       title: this.campaign.titleObject,
@@ -141,7 +157,7 @@ export class CampaignEdit {
       logo: this.campaign.logo.split(settings.baseUrl)[1],
       disclaimer: this.campaign.disclaimerObject,
       isPublic: this.campaign.isPublic,
-      // motivation: ,
+      motivation: Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]),
       prizes: this.campaign.prizesObject,
       annotationTarget: this.campaign.target,
       // vocabularies: ,

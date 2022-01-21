@@ -72,12 +72,12 @@
                 <div class="left">
                   <label t="dashboard:startDate">Start Date</label>
                   <input t="[placeholder]dashboard:startDate" type="date" placeholder="Start Date" id="startDate"
-                    value.bind="campaign.startDate.replaceAll('/','-')" autofocus />
+                    value.bind="campaign.startDate" autofocus />
                 </div>
                 <div class="right">
                   <label t="dashboard:endDate">End Date</label>
                   <input t="[placeholder]dashboard:endDate" type="date" placeholder="End Date" id="endDate"
-                    value.bind="campaign.endDate.replaceAll('/','-')" autofocus />
+                    value.bind="campaign.endDate" autofocus />
                 </div>
                 <div class="center">
                   <label t="dashboard:banner">Banner</label>
@@ -131,7 +131,7 @@
                   </div>
                   <div class="w-70">
                     <label t="dashboard:disclaimer">Disclaimer</label>
-                    <textarea t="[placeholder]dashboard:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
+                    <textarea class="disclaimerTextarea" t="[placeholder]dashboard:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
                       value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
                     </textarea>
                   </div>
@@ -157,21 +157,26 @@
                   <input t="[placeholder]dashboard:target" type="number" id="annotationTarget" value.bind="campaign.target" class="w-100 p-4" />
                 </div>
                 <div class="center">
-                  <label t="dashboard:campaignMotivations">Campaign motivations</label>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                    <label class="form-check-label" for="inlineCheckbox1">1</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                    <label class="form-check-label" for="inlineCheckbox2">2</label>
-                  </div>
-                </div>
-                <div class="center">
                   <label t="dashboard:instructions">Instructions</label>
                   <textarea t="[placeholder]dashboard:instructions" rows="4" placeholder="Instructions"
                     id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
                   </textarea>
+                </div>
+                <div class="center">
+                  <label t="dashboard:campaignMotivations">Campaign motivations</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="mot of motivations">
+                      <input class="form-check-input" type="checkbox" id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]">
+                      <span class="form-check-label" for.bind="`mot-${$index}`">${mot}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:vocabularies">Vocabularies</label>
+                  <select name="cars" id="cars" disabled.bind="!motivationValues.Tagging">
+                    <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
+                    <option repeat.for="voc of availableVocabularies" value.bind="voc.name">${voc.label}</option>
+                  </select>
                 </div>
               </div>
               <div class="topsection mt-5 mb-3">

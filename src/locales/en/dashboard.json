@@ -79,6 +79,8 @@
   "silver": "Silver prize message",
   "bronze": "Bronze prize message",
   "rookie": "No prize message",
+  "vocabularies": "Vocabularies",
+  "vocabulariesPlaceholder": "-- Select vocabularies for semantic Tagging --",
   "campaignModerators": "Campaign moderators",
   "campaignMotivations": "Campaign motivations",
   "usernameLabel": "Campaign shortname",
