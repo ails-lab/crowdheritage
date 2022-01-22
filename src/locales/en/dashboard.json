@@ -82,6 +82,7 @@
   "vocabularies": "Vocabularies",
   "vocabulariesPlaceholder": "-- Select vocabularies for semantic Tagging --",
   "campaignModerators": "Campaign moderators",
+  "campaignUsergroups": "Campaign usergroups",
   "campaignMotivations": "Campaign motivations",
   "usernameLabel": "Campaign shortname",
   "usernamePlaceholder": "Give a unique, one-word identifier for your campaign",

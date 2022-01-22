@@ -1,29 +1,32 @@
 import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
-import { Collection } from 'Collection.js';
-import { MediaServices } from 'MediaServices.js';
 import { CollectionServices } from 'CollectionServices.js';
-import { Campaign } from 'Campaign.js';
+import { MediaServices } from 'MediaServices.js';
 import { CampaignServices } from 'CampaignServices.js';
+import { UserServices } from 'UserServices.js';
+import { GroupServices } from 'GroupServices.js';
 import { ThesaurusServices } from 'ThesaurusServices.js';
-import { UserServices } from 'UserServices';
+import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
+import { Collection } from 'Collection.js';
+import { Campaign } from 'Campaign.js';
 import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, MediaServices, CampaignServices, UserServices, ThesaurusServices, Router, I18N, 'pageLocales')
+@inject(CollectionServices, MediaServices, CampaignServices, UserServices, GroupServices, ThesaurusServices, Router, I18N, 'pageLocales')
 export class CampaignEdit {
 
-  constructor(collectionServices, mediaServices, campaignServices, userServices, thesaurusServices, router, i18n, pageLocales) {
+  constructor(collectionServices, mediaServices, campaignServices, userServices, groupServices, thesaurusServices, router, i18n, pageLocales) {
     this.DEFAULT_BANNER = 'http://withculture.eu/assets/img/content/background-space.png';
     if (instance) {
       return instance;
     }
+    this.collectionServices = collectionServices;
+    this.mediaServices = mediaServices;
     this.campaignServices = campaignServices;
     this.userServices = userServices;
+    this.groupServices = groupServices;
     this.thesaurusServices = thesaurusServices;
-    this.mediaServices = mediaServices;
     this.router = router;
     this.i18n = i18n;
 
@@ -37,6 +40,8 @@ export class CampaignEdit {
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
+    this.suggestedNames = [];
+    this.moderators = [];
     this.errors = {};
 
     if (!instance) {
@@ -44,8 +49,9 @@ export class CampaignEdit {
     }
   }
 
-  // get isAuthenticated() { return this.userServices.isAuthenticated(); }
-  // get user() { return this.userServices.current; }
+  get suggestionsActive() { return this.suggestedNames.length !== 0; }
+  get isAuthenticated() { return this.userServices.isAuthenticated(); }
+  get user() { return this.userServices.current; }
 
   attached() {
     $('.accountmenu').removeClass('active');
@@ -70,6 +76,15 @@ export class CampaignEdit {
       .then(response => {
         this.availableVocabularies = response;
       });
+    if (this.campaign.creators) {
+      for (let userId of this.campaign.creators) {
+        this.userServices.getUser(userId)
+          .then(response => {
+            this.moderators.push(new Object({id: response.dbId, name: response.username}));
+          })
+          .catch(error => console.error(error));
+      }
+    }
 
     let title = this.campaign.title ? this.campaign.title : this.campaign.username;
     route.navModel.setTitle('Edit Campaign | ' + title);
@@ -151,6 +166,51 @@ export class CampaignEdit {
     window.open(this.router.generate('summary', {lang: this.loc, cname: this.cname}));
   }
 
+  prefixChanged(newValue, oldValue) {
+		if (newValue === '') {
+			this.suggestedNames = [];
+			return;
+		}
+		this.getSuggestedNames(newValue);
+		$('#usersuggestions').show();
+	}
+  domouseover(index) {
+		$('#' + index).addClass('autocomplete-selected');
+	}
+	domouseout(index) {
+		$('#' + index).removeClass('autocomplete-selected');
+	}
+  hideSuggestions() {
+		this.prefix = '';
+		$('#usersuggestions').hide();
+		$('#uinput').val('');
+	}
+
+  getSuggestedNames(prefix) {
+		this.suggestedNames = [];
+		this.userServices.listUserNames(prefix).then((res) => {
+			this.suggestedNames = res.slice(0, 8);
+		});
+	}
+
+  addMember(index) {
+    let name = this.suggestedNames[index].value;
+    this.hideSuggestions();
+
+    this.groupServices.findByGroupNameOrEmail(name)
+      .then(response => {
+        this.moderators.push(new Object({id: response.userId, name: response.username}));
+      })
+      .catch(error => console.error(error));
+  }
+
+  removeMember(id) {
+    const index = this.moderators.map(mod => mod.id).indexOf(id);
+    if (index > -1) {
+      this.moderators.splice(index, 1);
+    }
+  }
+
   deleteCampaign() {
     if (window.confirm(this.i18n.tr('dashboard:deleteCampaignMessage'))) {
       this.campaignServices.deleteCampaign(this.campaign.dbId)
@@ -178,7 +238,7 @@ export class CampaignEdit {
       vocabularies: this.selectedVocabularies,
       startDate: this.campaign.startDate.replaceAll('-','/'),
       endDate: this.campaign.endDate.replaceAll('-','/'),
-      // creators: ,
+      creators: this.moderators.map(mod => mod.id),
       // userGroupIds: ,
       // targetCollections:
     };
