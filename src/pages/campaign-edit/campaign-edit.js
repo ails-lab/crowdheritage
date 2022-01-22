@@ -36,6 +36,7 @@ export class CampaignEdit {
     this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
+    this.selectedVocabularies = [];
     this.errors = {};
 
     if (!instance) {
@@ -64,6 +65,7 @@ export class CampaignEdit {
         this.motivationValues[mot] = true;
       }
     }
+    this.selectedVocabularies = this.campaign.vocabularies ? this.campaign.vocabularies : [];
     this.thesaurusServices.listVocabularies()
       .then(response => {
         this.availableVocabularies = response;
@@ -75,6 +77,19 @@ export class CampaignEdit {
 
   displayImage(img) {
     return (!img.startsWith('http')) ? `${settings.baseUrl}${img}` : img;
+  }
+
+  addVocabulary(voc) {
+    if (!this.selectedVocabularies.includes(voc)) {
+      this.selectedVocabularies.push(voc);
+    }
+  }
+
+  removeVocabulary(voc) {
+    const index = this.selectedVocabularies.indexOf(voc);
+    if (index > -1) {
+      this.selectedVocabularies.splice(index, 1);
+    }
   }
 
   loadFromFile(id) {
@@ -160,7 +175,7 @@ export class CampaignEdit {
       motivation: Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]),
       prizes: this.campaign.prizesObject,
       annotationTarget: this.campaign.target,
-      // vocabularies: ,
+      vocabularies: this.selectedVocabularies,
       startDate: this.campaign.startDate.replaceAll('-','/'),
       endDate: this.campaign.endDate.replaceAll('-','/'),
       // creators: ,

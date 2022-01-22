@@ -173,7 +173,13 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:vocabularies">Vocabularies</label>
-                  <select name="cars" id="cars" disabled.bind="!motivationValues.Tagging">
+                  <ul class="vocabularyPills">
+                    <li repeat.for="voc of selectedVocabularies">
+                      <span class="me-2">${voc}</span>
+                      <a click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <select name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
                     <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
                     <option repeat.for="voc of availableVocabularies" value.bind="voc.name">${voc.label}</option>
                   </select>
