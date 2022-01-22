@@ -41,7 +41,9 @@ export class CampaignEdit {
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.suggestedNames = [];
+    this.suggestedGroupNames = [];
     this.moderators = [];
+    this.userGroups = [];
     this.errors = {};
 
     if (!instance) {
@@ -50,6 +52,7 @@ export class CampaignEdit {
   }
 
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
+  get gsuggestionsActive() { return this.suggestedGroupNames.length !== 0; }
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user() { return this.userServices.current; }
 
@@ -81,6 +84,15 @@ export class CampaignEdit {
         this.userServices.getUser(userId)
           .then(response => {
             this.moderators.push(new Object({id: response.dbId, name: response.username}));
+          })
+          .catch(error => console.error(error));
+      }
+    }
+    if (this.campaign.userGroupIds) {
+      for (let groupId of this.campaign.userGroupIds) {
+        this.groupServices.getGroup(groupId)
+          .then(response => {
+            this.userGroups.push(new Object({id: response.dbId, name: response.username}));
           })
           .catch(error => console.error(error));
       }
@@ -174,16 +186,31 @@ export class CampaignEdit {
 		this.getSuggestedNames(newValue);
 		$('#usersuggestions').show();
 	}
+  groupPrefixChanged(newValue, oldValue) {
+		if (newValue === '') {
+			this.suggestedGroupNames = [];
+			return;
+		}
+		this.getSuggestedGroupNames(newValue);
+		$('#groupsuggestions').show();
+	}
   domouseover(index) {
 		$('#' + index).addClass('autocomplete-selected');
 	}
 	domouseout(index) {
 		$('#' + index).removeClass('autocomplete-selected');
 	}
-  hideSuggestions() {
-		this.prefix = '';
-		$('#usersuggestions').hide();
-		$('#uinput').val('');
+  hideSuggestions(type) {
+    if (type === 'user') {
+      this.prefix = '';
+      $('#usersuggestions').hide();
+      $('#uinput').val('');
+    }
+    if (type === 'group') {
+      this.gprefix = '';
+  		$('#groupsuggestions').hide();
+  		$('#ginput').val('');
+    }
 	}
 
   getSuggestedNames(prefix) {
@@ -192,14 +219,25 @@ export class CampaignEdit {
 			this.suggestedNames = res.slice(0, 8);
 		});
 	}
+  getSuggestedGroupNames(gprefix) {
+		this.suggestedGroupNames = [];
+		this.groupServices.listGroupNames(gprefix).then((res) => {
+			this.suggestedGroupNames = res.slice(0, 8);
+		});
+	}
 
-  addMember(index) {
-    let name = this.suggestedNames[index].value;
-    this.hideSuggestions();
+  addMember(index, type) {
+    let name = (type === 'user') ? this.suggestedNames[index].value : this.suggestedGroupNames[index].value;
+    this.hideSuggestions(type);
 
     this.groupServices.findByGroupNameOrEmail(name)
       .then(response => {
-        this.moderators.push(new Object({id: response.userId, name: response.username}));
+        if (type === 'user') {
+          this.moderators.push(new Object({id: response.userId, name: response.username}));
+        }
+        if (type === 'group') {
+          this.userGroups.push(new Object({id: response.userId, name: response.username}));
+        }
       })
       .catch(error => console.error(error));
   }
@@ -208,6 +246,12 @@ export class CampaignEdit {
     const index = this.moderators.map(mod => mod.id).indexOf(id);
     if (index > -1) {
       this.moderators.splice(index, 1);
+    }
+  }
+  removeGroup(id) {
+    const index = this.userGroups.map(group => group.id).indexOf(id);
+    if (index > -1) {
+      this.userGroups.splice(index, 1);
     }
   }
 
@@ -239,7 +283,7 @@ export class CampaignEdit {
       startDate: this.campaign.startDate.replaceAll('-','/'),
       endDate: this.campaign.endDate.replaceAll('-','/'),
       creators: this.moderators.map(mod => mod.id),
-      // userGroupIds: ,
+      userGroupIds: this.userGroups.map(group => group.id),
       // targetCollections:
     };
     console.log(obj);

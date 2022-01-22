@@ -33,6 +33,7 @@
   "manageUsers": "Manage Users",
   "addUser": "Add user",
   "addUserPlaceholder": "Start typing a username",
+  "addGroupPlaceholder": "Start typing a group short-name",
   "groupMembers": "Group Members",
   "username": "Username",
   "editor": "Editor",

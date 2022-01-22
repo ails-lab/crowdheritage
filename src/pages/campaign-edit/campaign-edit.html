@@ -177,7 +177,7 @@
                     <li repeat.for="voc of selectedVocabularies">
                       <i class="fa fa-book me-1" aria-hidden="true"></i>
                       <span class="me-2">${voc}</span>
-                      <a click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                      <a if.bind="motivationValues.Tagging" click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
                     </li>
                   </ul>
                   <select name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
@@ -194,14 +194,13 @@
                 </div>
               </div>
               <div class="input-group">
-                <div class=" center autocomplete-container">
+                <div class="center autocomplete-container">
                   <label t="dashboard:campaignModerators">Campaign moderators</label>
                   <ul class="tagPills">
                     <li repeat.for="mod of moderators">
                       <i class="fa fa-user-o me-1" aria-hidden="true"></i>
                       <span class="me-2">${mod.name}</span>
                       <a if.bind="user.username != mod.name" click.delegate="removeMember(mod.id)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
-                      <i if.bind="user.username == mod.name" class="fa fa-lock" aria-hidden="true"></i>
                     </li>
                   </ul>
                   <input id="uinput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged($event.target.value)"
@@ -209,17 +208,31 @@
                   <div id="usersuggestions" show.bind='suggestionsActive' class="autocomplete-suggestions">
                     <div id="u${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
                       mouseover.delegate="domouseover('u'+$index)" mouseout.delegate="domouseout('u'+$index)"
-                      click.delegate="addMember($index)" repeat.for="item of suggestedNames">
+                      click.delegate="addMember($index, 'user')" repeat.for="item of suggestedNames"
+                    >
                       ${item.value}
-                      <!-- <span class="label pull-right" style="color: black">${item.data.category}</span> -->
                     </div>
                   </div>
                 </div>
-                <div class="center">
+                <div class="center autocomplete-container">
                   <label t="dashboard:campaignUsergroups">Campaign usergroups</label>
-                  <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
-                    value.bind="campaign.username" autofocus />
-                  <span class="help-block has-error" if.bind="errors.email">${errors.email}</span>
+                  <ul class="tagPills">
+                    <li repeat.for="group of userGroups">
+                      <i class="fa fa-users me-1" aria-hidden="true"></i>
+                      <span class="me-2">${group.name}</span>
+                      <a click.delegate="removeGroup(group.id)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <input id="ginput" autocomplete="off" value.bind="gprefix" input.delegate="groupPrefixChanged($event.target.value)"
+                    type="text" placeholder.bind="i18n.tr('dashboard:addGroupPlaceholder')" />
+                  <div id="groupsuggestions" show.bind='gsuggestionsActive' class="autocomplete-suggestions">
+                    <div id="g${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
+                      mouseover.delegate="domouseover('g'+$index)" mouseout.delegate="domouseout('g'+$index)"
+                      click.delegate="addMember($index, 'group')" repeat.for="item of suggestedGroupNames"
+                    >
+                      ${item.value}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="d-flex justify-content-between button-group mt-5">
