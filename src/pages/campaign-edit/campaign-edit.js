@@ -40,10 +40,12 @@ export class CampaignEdit {
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
+    this.vocabulariesIndexing = {tagType: ''};
     this.suggestedNames = [];
     this.suggestedGroupNames = [];
     this.moderators = [];
     this.userGroups = [];
+    this.tagGroups = [];
     this.errors = {};
 
     if (!instance) {
@@ -75,6 +77,10 @@ export class CampaignEdit {
       }
     }
     this.selectedVocabularies = this.campaign.vocabularies ? this.campaign.vocabularies : [];
+    this.selectedVocabularies.forEach(voc => {
+      this.vocabulariesIndexing[voc] = false;
+    });
+
     this.thesaurusServices.listVocabularies()
       .then(response => {
         this.availableVocabularies = response;
@@ -97,6 +103,20 @@ export class CampaignEdit {
           .catch(error => console.error(error));
       }
     }
+    // TODO: Remove dummyData after campaign model changes
+    let dummyData = {
+      creator: ['photo', 'fashion', 'aat'],
+      location: ['fashion', 'wikidata']
+    };
+    this.campaign.vocabulariesMapping = dummyData;
+    if (this.campaign.vocabulariesMapping) {
+      Object.keys(this.campaign.vocabulariesMapping).forEach(tagType => {
+        let mapping = Object.assign({}, this.vocabulariesIndexing);
+        Object.keys(mapping).forEach(mapKey => mapping[mapKey] = this.campaign.vocabulariesMapping[tagType].includes(mapKey) ? true : false);
+        mapping.tagType = tagType;
+        this.tagGroups.push(mapping);
+      });
+    }
 
     let title = this.campaign.title ? this.campaign.title : this.campaign.username;
     route.navModel.setTitle('Edit Campaign | ' + title);
@@ -109,6 +129,7 @@ export class CampaignEdit {
   addVocabulary(voc) {
     if (!this.selectedVocabularies.includes(voc)) {
       this.selectedVocabularies.push(voc);
+      this.vocabulariesIndexing[voc] = false;
     }
   }
 
@@ -116,7 +137,21 @@ export class CampaignEdit {
     const index = this.selectedVocabularies.indexOf(voc);
     if (index > -1) {
       this.selectedVocabularies.splice(index, 1);
+      delete this.vocabulariesIndexing[voc];
+      this.tagGroups.forEach(tGroup => {
+        delete tGroup[voc];
+      });
+
     }
+  }
+
+  createNewTagGroup() {
+    let mapping = Object.assign({}, this.vocabulariesIndexing);
+    this.tagGroups.push(mapping);
+  }
+
+  deleteTagGroup(index) {
+    this.tagGroups.splice(index, 1);
   }
 
   loadFromFile(id) {
@@ -267,6 +302,11 @@ export class CampaignEdit {
 
   updateCampaign() {
     // TODO: Use correct API call to update campaign details. Add form validation.
+    let vocabulariesMapping = {};
+    this.tagGroups.filter(tagGroup => tagGroup.tagType !== '').forEach(tGroup => {
+      vocabulariesMapping[tGroup.tagType] = Object.keys(tGroup).filter(field => tGroup[field] === true);
+    });
+
     let obj = {
       username: this.campaign.username,
       title: this.campaign.titleObject,
@@ -280,6 +320,7 @@ export class CampaignEdit {
       prizes: this.campaign.prizesObject,
       annotationTarget: this.campaign.target,
       vocabularies: this.selectedVocabularies,
+      vocabulariesMapping: vocabulariesMapping,
       startDate: this.campaign.startDate.replaceAll('-','/'),
       endDate: this.campaign.endDate.replaceAll('-','/'),
       creators: this.moderators.map(mod => mod.id),
