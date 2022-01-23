@@ -103,12 +103,6 @@ export class CampaignEdit {
           .catch(error => console.error(error));
       }
     }
-    // TODO: Remove dummyData after campaign model changes
-    let dummyData = {
-      creator: ['photo', 'fashion', 'aat'],
-      location: ['fashion', 'wikidata']
-    };
-    this.campaign.vocabulariesMapping = dummyData;
     if (this.campaign.vocabulariesMapping) {
       Object.keys(this.campaign.vocabulariesMapping).forEach(tagType => {
         let mapping = Object.assign({}, this.vocabulariesIndexing);
