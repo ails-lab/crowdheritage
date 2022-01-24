@@ -151,6 +151,26 @@
                 </div>
               </div>
               <div class="input-group">
+                <div class="center autocomplete-container">
+                  <label t="dashboard:targetCollections">Target Collections</label>
+                  <ul class="tagPills">
+                    <li repeat.for="col of selectedCollections">
+                      <i class="fa fa-folder-open-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${col.name}</span>
+                      <a click.delegate="removeCollection($index)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <input id="cinput" autocomplete="off" value.bind="cprefix" input.delegate="colPrefixChanged($event.target.value)"
+                    type="text" placeholder.bind="i18n.tr('dashboard:addCollectionPlaceholder')" />
+                  <div id="collectionsuggestions" show.bind='csuggestionsActive' class="autocomplete-suggestions">
+                    <div id="c${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
+                      mouseover.delegate="domouseover('c'+$index)" mouseout.delegate="domouseout('c'+$index)"
+                      click.delegate="addCollection(col)" repeat.for="col of suggestedColNames"
+                    >
+                      ${col.name}
+                    </div>
+                  </div>
+                </div>
                 <div class="center">
                   <label t="dashboard:annotationTarget">Annotation target (number of contributions)</label>
                   <input t="[placeholder]dashboard:target" type="number" id="annotationTarget" value.bind="campaign.target" class="w-100 p-4" />

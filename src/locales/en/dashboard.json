@@ -80,6 +80,8 @@
   "silver": "Silver prize message",
   "bronze": "Bronze prize message",
   "rookie": "No prize message",
+  "targetCollections": "Target Collections",
+  "addCollectionPlaceholder": "Start typing a collection name",
   "vocabularies": "Semantic Tagging Vocabularies",
   "vocabulariesMappings": "Semantic Tag Groupings",
   "vocabulariesPlaceholder": "-- Select vocabularies for semantic Tagging --",

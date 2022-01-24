@@ -175,8 +175,7 @@ export class CollectionServices {
     }
     return this.http.fetch(`${url}?offset=${offset}&count=${count}&collectionHits=${collectionHits}&term=${term}&isShared=${isShared}&isExhibition=${isExhibition}&creator=${creator}&sortBy=${sortBy}`, {
       method: 'GET'
-    }).then((response) => response.json())
-      .then((jsonResponse) => this.parsedJsonResponse(jsonResponse, isSearch, isExhibition));
+    }).then((response) => response.json());
   }
 
   getPublicCollections(offset, count, collectionHits, isExhibition, creator) {

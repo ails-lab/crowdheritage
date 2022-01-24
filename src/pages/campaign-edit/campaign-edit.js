@@ -43,9 +43,11 @@ export class CampaignEdit {
     this.vocabulariesIndexing = {tagType: ''};
     this.suggestedNames = [];
     this.suggestedGroupNames = [];
+    this.suggestedColNames = [];
     this.moderators = [];
     this.userGroups = [];
     this.tagGroups = [];
+    this.selectedCollections = [];
     this.errors = {};
 
     if (!instance) {
@@ -55,6 +57,7 @@ export class CampaignEdit {
 
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
   get gsuggestionsActive() { return this.suggestedGroupNames.length !== 0; }
+  get csuggestionsActive() { return this.suggestedColNames.length !== 0; }
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user() { return this.userServices.current; }
 
@@ -71,11 +74,13 @@ export class CampaignEdit {
 
     this.campaign.startDate = this.campaign.startDate.replaceAll('/','-');
     this.campaign.endDate = this.campaign.endDate.replaceAll('/','-');
+
     if (this.campaign.motivation) {
       for (let mot of this.campaign.motivation) {
         this.motivationValues[mot] = true;
       }
     }
+
     this.selectedVocabularies = this.campaign.vocabularies ? this.campaign.vocabularies : [];
     this.selectedVocabularies.forEach(voc => {
       this.vocabulariesIndexing[voc] = false;
@@ -85,6 +90,7 @@ export class CampaignEdit {
       .then(response => {
         this.availableVocabularies = response;
       });
+
     if (this.campaign.creators) {
       for (let userId of this.campaign.creators) {
         this.userServices.getUser(userId)
@@ -94,6 +100,7 @@ export class CampaignEdit {
           .catch(error => console.error(error));
       }
     }
+
     if (this.campaign.userGroupIds) {
       for (let groupId of this.campaign.userGroupIds) {
         this.groupServices.getGroup(groupId)
@@ -103,6 +110,7 @@ export class CampaignEdit {
           .catch(error => console.error(error));
       }
     }
+
     if (this.campaign.vocabulariesMapping) {
       Object.keys(this.campaign.vocabulariesMapping).forEach(tagType => {
         let mapping = Object.assign({}, this.vocabulariesIndexing);
@@ -112,12 +120,34 @@ export class CampaignEdit {
       });
     }
 
+    if (this.campaign.targetCollections) {
+      this.collectionServices.getMultipleCollections(this.campaign.targetCollections, 0, this.campaign.targetCollections.length)
+        .then(response => {
+          if (response.length > 0) {
+          	for (let col of response) {
+              let title = col.descriptiveData.label[this.loc] && col.descriptiveData.label[this.loc] !== '' ? col.descriptiveData.label[this.loc] : col.descriptiveData.label.default;
+              this.selectedCollections.push(new Object({id: col.dbId, name: title}));
+            }
+  				}
+  			})
+        .catch(error => console.error(error));
+    }
+
     let title = this.campaign.title ? this.campaign.title : this.campaign.username;
     route.navModel.setTitle('Edit Campaign | ' + title);
   }
 
   displayImage(img) {
     return (!img.startsWith('http')) ? `${settings.baseUrl}${img}` : img;
+  }
+
+  addCollection(col) {
+    this.selectedCollections.push(col);
+    this.hideSuggestions('col');
+  }
+
+  removeCollection(index) {
+    this.selectedCollections.splice(index, 1);
   }
 
   addVocabulary(voc) {
@@ -223,6 +253,15 @@ export class CampaignEdit {
 		this.getSuggestedGroupNames(newValue);
 		$('#groupsuggestions').show();
 	}
+  colPrefixChanged(newValue, oldValue) {
+		if (newValue === '') {
+			this.suggestedColNames = [];
+			return;
+		}
+		this.getSuggestedColNames(newValue);
+		$('#collectionsuggestions').show();
+	}
+
   domouseover(index) {
 		$('#' + index).addClass('autocomplete-selected');
 	}
@@ -240,20 +279,34 @@ export class CampaignEdit {
   		$('#groupsuggestions').hide();
   		$('#ginput').val('');
     }
+    if (type === 'col') {
+      this.gprefix = '';
+  		$('#collectionsuggestions').hide();
+  		$('#cinput').val('');
+    }
 	}
 
   getSuggestedNames(prefix) {
 		this.suggestedNames = [];
-		this.userServices.listUserNames(prefix).then((res) => {
-			this.suggestedNames = res.slice(0, 8);
-		});
+		this.userServices.listUserNames(prefix)
+      .then(res => {
+  			this.suggestedNames = res.slice(0, 8);
+  		});
 	}
   getSuggestedGroupNames(gprefix) {
 		this.suggestedGroupNames = [];
-		this.groupServices.listGroupNames(gprefix).then((res) => {
-			this.suggestedGroupNames = res.slice(0, 8);
-		});
+		this.groupServices.listGroupNames(gprefix)
+      .then(res => {
+  			this.suggestedGroupNames = res.slice(0, 8);
+  		});
 	}
+  getSuggestedColNames(cprefix) {
+    this.suggestedColNames = [];
+    this.collectionServices.getCollectionsGeneric({term: cprefix})
+      .then(res => {
+        this.suggestedColNames = res.results[0].items.map(col => new Object({id: col.dbId, name: col.descriptiveData.label.default[0]}));
+      })
+  }
 
   addMember(index, type) {
     let name = (type === 'user') ? this.suggestedNames[index].value : this.suggestedGroupNames[index].value;
@@ -319,7 +372,7 @@ export class CampaignEdit {
       endDate: this.campaign.endDate.replaceAll('-','/'),
       creators: this.moderators.map(mod => mod.id),
       userGroupIds: this.userGroups.map(group => group.id),
-      // targetCollections:
+      targetCollections: this.selectedCollections.map(col => col.id)
     };
     console.log(obj);
   }
