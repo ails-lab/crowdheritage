@@ -165,7 +165,6 @@ export class CollectionEditor {
           description: descriptionObject
         }
       };
-      // console.log(collectiontosave)
       this.collectionServices.update(this.editableCollection.dbId, collectiontosave)
         .then(response => {
           if (response.status !== 200) {

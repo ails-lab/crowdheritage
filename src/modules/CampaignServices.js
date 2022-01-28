@@ -51,21 +51,21 @@ export class CampaignServices {
 		}).then(checkStatus);
   }
 
-	editCampaign(campaign) {
-    return this.http.fetch(`/campaign/${campaign.dbId}`, {
+	editCampaign(id, newCamp) {
+    return this.http.fetch(`/campaign/${id}`, {
 			method: 'PUT',
-			body: json(campaign)
+			body: json(newCamp)
 		}).then((response) => response.json());
   }
 
-  getCampaigns( {group = '', project = "CrowdHeritage", state = "all", sortBy= "Date_desc", offset = 0, count = 0} = {} ) {
-    return this.http.fetch(`/campaign/campaigns?group=${group}&project=${project}&state=${state}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
+  getCampaigns( {project = "CrowdHeritage", state = "all", sortBy= "Date_desc", offset = 0, count = 0} = {} ) {
+    return this.http.fetch(`/campaign/campaigns?project=${project}&state=${state}&sortBy=${sortBy}&offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
 
-  getUserCampaigns(userId, offset = 0, count = 0) {
-    return this.http.fetch(`/campaign/userCampaigns?userId=${userId}&offset=${offset}&count=${count}`, {
+  getUserCampaigns(offset = 0, count = 0) {
+    return this.http.fetch(`/campaign/userCampaigns?offset=${offset}&count=${count}`, {
 			method: 'GET'
 		}).then((response) => response.json());
   }
@@ -76,6 +76,12 @@ export class CampaignServices {
 			body: json(campaign)
 		}).then(checkStatus).then((response) => response.json());
 	}
+
+  createEmptyCampaign(campaignUserName) {
+    return this.http.fetch(`/campaign/createEmptyCampaign?campaignUserName=${campaignUserName}`, {
+			method: 'POST'
+		}).then((response) => response.json());
+  }
 
   incUserPoints(campaignId, userId, annoType) {
     return this.http.fetch(`/campaign/incUserPoints?campaignId=${campaignId}&userId=${userId}&annotationType=${annoType}`, {

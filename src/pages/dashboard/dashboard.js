@@ -39,7 +39,7 @@ export class Dashboard {
 
   activate(params) {
     // Check if user is logged in and has elevated access
-    if (!this.userServices.isAuthenticated()) {
+    if (!this.userServices.isAuthenticated() || !this.userServices.current.isEditor) {
       this.router.navigateToRoute('index', {lang: this.locale});
     }
 
@@ -58,10 +58,6 @@ export class Dashboard {
   }
 
   tabChanged(tab) {
-    // this.view = tab;
-    // this.resetClasses();
-    // let typeClasses = this.view + 'Tab';
-    // this[typeClasses] = this[typeClasses].concat(" ", "active");
     this.router.navigateToRoute('dashboard', {lang: this.locale, resource: tab});
   }
 

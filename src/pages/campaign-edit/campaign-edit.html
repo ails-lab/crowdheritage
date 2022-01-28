@@ -1,0 +1,284 @@
+<template>
+  <main>
+    <section class="banner mini">
+      <div class="container">
+        <div class="bannertext">
+          <div class="line">
+            <div class="lbl"> <span t="dashboard:editCampaign" class="text-uppercase"></span></div>
+            <div class="wrap"><span>${campaign.title ? campaign.title : campaign.username}</span></div>
+          </div>
+        </div>
+        <nav class="vertical">
+          <ul>
+            <li><a route-href="route: dashboard; params.bind: { lang: loc, resource: 'campaigns' }" t="[prepend]dashboard:returnDashboard">
+              <img src="/img/ic-arrow-right-black.png">
+            </a></li>
+          </ul>
+        </nav>
+        <div class="bgwrap" style="background-image: url('/img/assets/img/content/background-space.png');"></div>
+      </div>
+    </section>
+    <div if.bind="loading" class="d-flex justify-content-center">
+      <i class="fa fa-spinner fa-pulse"></i>
+    </div>
+    <div if.bind="!loading" role="main">
+      <div class="container pe-0">
+        <section class="entrance campaign-edit">
+          <div class="section-body campaignEditor">
+            <div class="d-flex justify-content-between button-group mb-5">
+              <div class="toggleWrapper">
+                <label class="mb-0 me-4" t="[prepend]dashboard:visibility">:</label>
+                <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked.bind="campaign.isPublic">
+                <label class="mb-0" for="toggle1"></label>
+                <span class="ms-2">${campaign.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}</span>
+              </div>
+              <div>
+                <button t="app:preview" class="m-0 btn-green" click.delegate="previewCampaign()"></button>
+                <button t="app:delete" class="btn-red m-0 me-3" click.delegate="deleteCampaign()"></button>
+              </div>
+            </div>
+            <div class="topsection mb-3">
+              <div class="sectionlabel">
+                <div class="bold">
+                  <strong class="text-uppercase me-2" t="dashboard:campaignDetails"></strong>
+                </div>
+              </div>
+              <div class="import-wrap">
+                <section class="languages">
+                  <div class="lang-collection lang-campEditor">
+                    <label class="languageSelectorLabel m-0 pb-1 pe-4" t="[prepend]dashboard:inputLanguage">:</label>
+                    <a id="langselect" class="me-0" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
+                      <span class="flag me-2"><img class="pb-2" src=${currentLocale.flag} /></span>
+                      <span class="font-size-bigger me-1">${currentLocale.title}</span>
+                      <span><img src="/img/ic-arrow-down-black.png"></span>
+                    </a>
+                    <ul aria-labelledby="langselect" class="dropdown-menu">
+                      <li repeat.for="locale of locales">
+                        <a href="javascript:void(0)" click.delegate="changeLang($index)">
+                          <img src=${locale.flag} width="16px" />
+                          <span css="font-weight: ${locale.code === currentLocale.code ? 'bold' : 'normal'}">${locale.title}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <form role="form">
+              <div class="input-group">
+                <!-- <div class="center">
+                  <label t="dashboard:shortName">Username</label>
+                  <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
+                    value.bind="campaign.username" autofocus />
+                </div> -->
+                <div class="left">
+                  <label t="dashboard:startDate">Start Date</label>
+                  <input t="[placeholder]dashboard:startDate" type="date" placeholder="Start Date" id="startDate"
+                    value.bind="campaign.startDate" autofocus />
+                </div>
+                <div class="right">
+                  <label t="dashboard:endDate">End Date</label>
+                  <input t="[placeholder]dashboard:endDate" type="date" placeholder="End Date" id="endDate"
+                    value.bind="campaign.endDate" autofocus />
+                </div>
+                <div class="center">
+                  <label t="dashboard:banner">Banner</label>
+                  <div class="banner-edit center">
+                    <img src="${campaign.banner.replace('?file=true','')}" alt="${username+'-'+banner}" width="100%">
+                    <ul class="itemaction">
+                      <li if.bind="campaign.banner != DEFAULT_BANNER" class="btn-delete-collection me-0" click.delegate="removeBanner()">
+                        <a data-toggle="tooltip" data-placement="top" class="delete">
+                          <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                        </a>
+                      </li>
+                      <li class="btn-edit-collection" click.delegate="loadFromFile('#bannerFile')">
+                        <a data-toggle="tooltip" data-placement="top">
+                          <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                        </a>
+                      </li>
+      							</ul>
+                  </div>
+                  <input type="file" id="bannerFile" class="hiddenfile" name="banner" onchange.bind="uploadBanner" accept=".png,.jpg,.jpeg,.gif" />
+                </div>
+                <div class="center">
+                  <label t="dashboard:title">Title</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                  <input t="[placeholder]dashboard:title" type="text" placeholder="Title" id="title"
+                    value.bind="campaign.titleObject[currentLocale.code]" autofocus />
+                </div>
+                <div class="center">
+                  <label t="dashboard:description">Description</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                  <textarea t="[placeholder]dashboard:description" rows="4" placeholder="Description"
+                    id="description" value.bind="campaign.descriptionObject[currentLocale.code]" autofocus>
+                  </textarea>
+                </div>
+                <div class="d-flex">
+                  <div class="w-30 me-3">
+                    <label t="dashboard:logo">Logo</label>
+                    <div class="logo-edit center">
+                      <img if.bind="campaign.logo" src="${campaign.logo.replace('?file=true','')}" alt="${username+'-'+logo}" width="100%">
+                      <ul class="itemaction">
+                        <li if.bind="campaign.logo" class="btn-delete-collection me-0" click.delegate="removeLogo()">
+                          <a data-toggle="tooltip" data-placement="top" class="delete">
+                            <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                          </a>
+                        </li>
+                        <li class="btn-edit-collection" click.delegate="loadFromFile('#logoFile')">
+                          <a data-toggle="tooltip" data-placement="top">
+                            <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                          </a>
+                        </li>
+        							</ul>
+                    </div>
+                    <input type="file" id="logoFile" class="hiddenfile" name="logo" onchange.bind="uploadLogo" accept=".png,.jpg,.jpeg,.gif" />
+                  </div>
+                  <div class="w-70">
+                    <label t="dashboard:disclaimer">Disclaimer</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                    <textarea class="disclaimerTextarea" t="[placeholder]dashboard:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
+                      value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
+                    </textarea>
+                  </div>
+                </div>
+                <div class="center">
+                  <div repeat.for="prize of prizes" class="mb-3">
+                    <label t="dashboard:${prize}"></label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                    <input t="[placeholder]dashboard:${prize}" type="text" placeholder="${prize}" id="${prize}"
+                      value.bind="campaign.prizesObject[prize][currentLocale.code]" autofocus />
+                  </div>
+                </div>
+              </div>
+              <div class="topsection mt-5 mb-3">
+                <div class="sectionlabel">
+                  <div class="bold">
+                    <strong class="text-uppercase me-2" t="dashboard:campaignAnnotating"></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="center autocomplete-container">
+                  <label t="dashboard:targetCollections">Target Collections</label>
+                  <ul class="tagPills">
+                    <li repeat.for="col of selectedCollections">
+                      <i class="fa fa-folder-open-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${col.name}</span>
+                      <a click.delegate="removeCollection($index)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <input id="cinput" autocomplete="off" value.bind="cprefix" input.delegate="colPrefixChanged($event.target.value)"
+                    type="text" placeholder.bind="i18n.tr('dashboard:addCollectionPlaceholder')" />
+                  <div id="collectionsuggestions" show.bind='csuggestionsActive' class="autocomplete-suggestions">
+                    <div id="c${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
+                      mouseover.delegate="domouseover('c'+$index)" mouseout.delegate="domouseout('c'+$index)"
+                      click.delegate="addCollection(col)" repeat.for="col of suggestedColNames"
+                    >
+                      ${col.name}
+                    </div>
+                  </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:annotationTarget">Annotation target (number of contributions)</label>
+                  <input t="[placeholder]dashboard:target" type="number" id="annotationTarget" value.bind="campaign.target" class="w-100 p-4" />
+                </div>
+                <div class="center">
+                  <label t="dashboard:instructions">Instructions</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                  <textarea t="[placeholder]dashboard:instructions" rows="4" placeholder="Instructions"
+                    id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
+                  </textarea>
+                </div>
+                <div class="center">
+                  <label t="dashboard:campaignMotivations">Campaign motivations</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="mot of motivations">
+                      <input class="form-check-input" type="checkbox" id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]">
+                      <span class="form-check-label" for.bind="`mot-${$index}`">${mot}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:vocabularies">Vocabularies</label>
+                  <ul class="tagPills">
+                    <li repeat.for="voc of selectedVocabularies">
+                      <i class="fa fa-book me-1" aria-hidden="true"></i>
+                      <span class="me-2">${voc}</span>
+                      <a if.bind="motivationValues.Tagging" click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
+                    <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
+                    <option repeat.for="voc of availableVocabularies" value.bind="voc.name">[${voc.name}] - ${voc.label}</option>
+                  </select>
+                </div>
+                <div class="center">
+                  <label t="dashboard:vocabulariesMappings">Tag types</label>
+                  <span class="me-2">(${i18n.tr("dashboard:optional")})</span>
+                  <span class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
+                  <br/>
+                  <div class="d-flex mt-2" repeat.for="group of tagGroups">
+                    <input class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
+                    <div class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
+                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]">
+                      <span class="form-check-label">${voc}</span>
+                    </div>
+                    <span class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="topsection mt-5 mb-3">
+                <div class="sectionlabel">
+                  <div class="bold">
+                    <strong class="text-uppercase me-2" t="dashboard:campaignAccess"></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="center autocomplete-container">
+                  <label t="dashboard:campaignModerators">Campaign moderators</label>
+                  <ul class="tagPills">
+                    <li repeat.for="mod of moderators">
+                      <i class="fa fa-user-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${mod.name}</span>
+                      <a if.bind="user.username != mod.name" click.delegate="removeMember(mod.id)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <input id="uinput" autocomplete="off" value.bind="prefix" input.delegate="prefixChanged($event.target.value)"
+                    type="text" placeholder.bind="i18n.tr('dashboard:addUserPlaceholder')" />
+                  <div id="usersuggestions" show.bind='suggestionsActive' class="autocomplete-suggestions">
+                    <div id="u${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
+                      mouseover.delegate="domouseover('u'+$index)" mouseout.delegate="domouseout('u'+$index)"
+                      click.delegate="addMember($index, 'user')" repeat.for="item of suggestedNames"
+                    >
+                      ${item.value}
+                    </div>
+                  </div>
+                </div>
+                <div class="center autocomplete-container">
+                  <label t="dashboard:campaignUsergroups">Campaign usergroups</label>
+                  <ul class="tagPills">
+                    <li repeat.for="group of userGroups">
+                      <i class="fa fa-users me-1" aria-hidden="true"></i>
+                      <span class="me-2">${group.name}</span>
+                      <a click.delegate="removeGroup(group.id)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <input id="ginput" autocomplete="off" value.bind="gprefix" input.delegate="groupPrefixChanged($event.target.value)"
+                    type="text" placeholder.bind="i18n.tr('dashboard:addGroupPlaceholder')" />
+                  <div id="groupsuggestions" show.bind='gsuggestionsActive' class="autocomplete-suggestions">
+                    <div id="g${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
+                      mouseover.delegate="domouseover('g'+$index)" mouseout.delegate="domouseout('g'+$index)"
+                      click.delegate="addMember($index, 'group')" repeat.for="item of suggestedGroupNames"
+                    >
+                      ${item.value}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between button-group mt-5">
+                <button t="dashboard:cancel" class="m-0 btn-red" click.delegate="goBackToDashboard()"></button>
+                <button t="dashboard:save" class="m-0 btn-green" click.delegate="updateCampaign()"></button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</template>

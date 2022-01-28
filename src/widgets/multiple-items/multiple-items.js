@@ -225,4 +225,14 @@ export class MultipleItems {
     }
   }
 
+  deleteRecord(record){
+    if (window.confirm("Do you really want to delete this record from your collection?")){
+      this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
+      .then(response => {
+        console.log(response)
+        this.getRecords();
+      })
+    }
+  }
+
 }

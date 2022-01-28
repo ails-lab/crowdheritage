@@ -48,15 +48,20 @@ export class ThesaurusServices {
 	  }
 
   async getGeonameSuggestions(prefix ) {
-	  this.http.configure(
-	        fetchConfigGeo);
+	  this.http.configure(fetchConfigGeo);
 	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
-	      method: 'GET'
-	    }).then((response) => {
-	      this.http.configure(reset);
-	      return response.json();
+      method: 'GET'
+	  })
+    .then((response) => {
+      this.http.configure(reset);
+      return response.json();
+    });
+  }
 
-	    });
-	  }
+  listVocabularies() {
+    return this.http.fetch('/thesaurus/listVocabularies', {
+      method: 'GET'
+    }).then(response => response.json());
+  }
 
 }

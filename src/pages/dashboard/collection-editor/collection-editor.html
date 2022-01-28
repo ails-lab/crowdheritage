@@ -1,13 +1,13 @@
 <template>
   <main if.bind="user">
     <!-- collection list-->
-    <section class="collections mt-5">
+    <section class="collections mt-3">
       <div class="container">
         <!-- top section-->
         <div class="topsection mb-3 me-5">
           <div class="sectionlabel">
-            <div class="bold" t="[append]summary:collections">
-              <strong class="me-2">${totalCollectionsCount}</strong>
+            <div class="bold">
+              <strong class="me-2">${[totalCollectionsCount, 'collection'] | itemCounter}</strong>
             </div>
           </div>
           <div class="import-wrap">
@@ -21,7 +21,12 @@
           <div class="entries row" ref="grid">
             <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
               <a route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }">
-                <div class="thumbs">
+                <div id="editThumbs" class="thumbs">
+                  <div class="ribbon">
+                    <span class.bind="col.isPublic ? 'green' : 'red'">
+                      ${col.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}
+                    </span>
+                  </div>
                   <div
                     if.bind="col.absMedia.length > 0"
                     class="thumbs-images thumbs-count-${col.absMedia.length}"
@@ -36,7 +41,7 @@
                     if.bind="col.absMedia.length == 0"
                     class="thumbs-images thumbs-count-1"
                   >
-                    <img src="/img/assets/img/ui/ic-noimage.png" />
+                    <img src="/img/assets/img/content/background-space.png" />
                   </div>
                   <div class="action">
                     <h3 class="my-0"><b t="dashboard:curateCollection"></b></h3>
@@ -51,7 +56,9 @@
                   <!-- title-->
                   <div class="desc">
                     <div class="title">${col.title[loc] && col.title[loc] !== '' ? col.title[loc] : col.title.default}</div>
-                    <div class="owner">${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}</div>
+                    <!-- <div class.bind="col.isPublic ? 'font-italic text-green' : 'font-italic text-red'">
+                      ${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}
+                    </div> -->
                   </div>
                 </div>
 
