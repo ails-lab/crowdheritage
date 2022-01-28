@@ -66,11 +66,11 @@
             </div>
             <form role="form">
               <div class="input-group">
-                <div class="center">
+                <!-- <div class="center">
                   <label t="dashboard:shortName">Username</label>
                   <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
                     value.bind="campaign.username" autofocus />
-                </div>
+                </div> -->
                 <div class="left">
                   <label t="dashboard:startDate">Start Date</label>
                   <input t="[placeholder]dashboard:startDate" type="date" placeholder="Start Date" id="startDate"
@@ -140,7 +140,7 @@
                 </div>
                 <div class="center">
                   <div repeat.for="prize of prizes" class="mb-3">
-                    <label t="dashboard:${prize}">${prize}</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                    <label t="dashboard:${prize}"></label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
                     <input t="[placeholder]dashboard:${prize}" type="text" placeholder="${prize}" id="${prize}"
                       value.bind="campaign.prizesObject[prize][currentLocale.code]" autofocus />
                   </div>

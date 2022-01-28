@@ -35,6 +35,7 @@ export class CampaignEdit {
     this.currentLocale = this.locales[0]; // default language for form language picker
     this.loading = false;
 
+    this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
     this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
@@ -56,6 +57,7 @@ export class CampaignEdit {
   }
 
   clearInstance() {
+    this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
     this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
@@ -98,6 +100,7 @@ export class CampaignEdit {
 
   async loadCampaign() {
     this.loading = true;
+    this.clearInstance();
     let campaignData = await this.campaignServices.getCampaignByName(this.cname);
     this.campaign = new Campaign(campaignData, this.loc);
 
@@ -381,7 +384,7 @@ export class CampaignEdit {
       vocabulariesMapping[tGroup.tagType] = Object.keys(tGroup).filter(field => tGroup[field] === true);
     });
 
-    let obj = {
+    const obj = {
       username: this.campaign.username,
       title: this.campaign.titleObject,
       description: this.campaign.descriptionObject,
@@ -406,7 +409,6 @@ export class CampaignEdit {
       .then(response => {
         window.scrollTo(0,0);
         toastr.success(this.i18n.tr('dashboard:campaignUpdatedSuccess'));
-        this.clearInstance();
         this.loadCampaign();
       })
       .catch(error => {
