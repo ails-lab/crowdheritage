@@ -94,5 +94,7 @@
   "campaignSuccessMessage": "Your campaign was created successfully",
   "emptyUsernameError": "The campaign shortname can not be empty",
   "invalidUsernameError": "The campaign shortname can not contain blank spaces. Use dashes instead",
-  "deleteCampaignMessage": "Are you sure you want to delete this campaign?\nThis action can not be undone!\nYou can set the visibility to private, instead."
+  "deleteCampaignMessage": "Are you sure you want to delete this campaign?\nThis action can not be undone!\nYou can set the visibility to private, instead.",
+  "campaignUpdatedSuccess": "Campaign updated successfully",
+  "campaignUpdatedError": "Campaign update failed"
 }

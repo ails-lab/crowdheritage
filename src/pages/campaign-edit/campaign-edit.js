@@ -33,8 +33,8 @@ export class CampaignEdit {
     this.loc;
     this.locales = pageLocales();
     this.currentLocale = this.locales[0]; // default language for form language picker
+    this.loading = false;
 
-    // Initialization
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
     this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
@@ -55,6 +55,22 @@ export class CampaignEdit {
     }
   }
 
+  clearInstance() {
+    this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.availableVocabularies = [];
+    this.selectedVocabularies = [];
+    this.vocabulariesIndexing = {tagType: ''};
+    this.suggestedNames = [];
+    this.suggestedGroupNames = [];
+    this.suggestedColNames = [];
+    this.moderators = [];
+    this.userGroups = [];
+    this.tagGroups = [];
+    this.selectedCollections = [];
+  }
+
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
   get gsuggestionsActive() { return this.suggestedGroupNames.length !== 0; }
   get csuggestionsActive() { return this.suggestedColNames.length !== 0; }
@@ -66,9 +82,22 @@ export class CampaignEdit {
   }
 
   async activate(params, route) {
+    // Check if user is logged in and has elevated access
+    if (!this.userServices.isAuthenticated() || !this.userServices.current.isEditor) {
+      this.router.navigateToRoute('index', {lang: this.locale});
+    }
+
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
     this.cname = params.cname;
+
+    await this.loadCampaign();
+    let title = this.campaign.title ? this.campaign.title : this.campaign.username;
+    route.navModel.setTitle('Edit Campaign | ' + title);
+  }
+
+  async loadCampaign() {
+    this.loading = true;
     let campaignData = await this.campaignServices.getCampaignByName(this.cname);
     this.campaign = new Campaign(campaignData, this.loc);
 
@@ -133,8 +162,7 @@ export class CampaignEdit {
         .catch(error => console.error(error));
     }
 
-    let title = this.campaign.title ? this.campaign.title : this.campaign.username;
-    route.navModel.setTitle('Edit Campaign | ' + title);
+    this.loading = false;
   }
 
   displayImage(img) {
@@ -348,7 +376,6 @@ export class CampaignEdit {
   }
 
   updateCampaign() {
-    // TODO: Use correct API call to update campaign details. Add form validation.
     let vocabulariesMapping = {};
     this.tagGroups.filter(tagGroup => tagGroup.tagType !== '').forEach(tGroup => {
       vocabulariesMapping[tGroup.tagType] = Object.keys(tGroup).filter(field => tGroup[field] === true);
@@ -367,14 +394,25 @@ export class CampaignEdit {
       prizes: this.campaign.prizesObject,
       annotationTarget: this.campaign.target,
       vocabularies: this.selectedVocabularies,
-      vocabulariesMapping: vocabulariesMapping,
+      // vocabulariesMapping: vocabulariesMapping,
       startDate: this.campaign.startDate.replaceAll('-','/'),
       endDate: this.campaign.endDate.replaceAll('-','/'),
       creators: this.moderators.map(mod => mod.id),
       userGroupIds: this.userGroups.map(group => group.id),
       targetCollections: this.selectedCollections.map(col => col.id)
     };
-    console.log(obj);
+
+    this.campaignServices.editCampaign(this.campaign.dbId, obj)
+      .then(response => {
+        window.scrollTo(0,0);
+        toastr.success(this.i18n.tr('dashboard:campaignUpdatedSuccess'));
+        this.clearInstance();
+        this.loadCampaign();
+      })
+      .catch(error => {
+        console.error(error);
+        toastr.error(this.i18n.tr('dashboard:campaignUpdatedError'));
+      })
   }
 
 }

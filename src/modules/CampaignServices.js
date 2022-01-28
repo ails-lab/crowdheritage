@@ -51,10 +51,10 @@ export class CampaignServices {
 		}).then(checkStatus);
   }
 
-	editCampaign(campaign) {
-    return this.http.fetch(`/campaign/${campaign.dbId}`, {
+	editCampaign(id, newCamp) {
+    return this.http.fetch(`/campaign/${id}`, {
 			method: 'PUT',
-			body: json(campaign)
+			body: json(newCamp)
 		}).then((response) => response.json());
   }
 

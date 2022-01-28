@@ -69,6 +69,11 @@ export class CollectionEdit {
   }
 
   async activate(params, route) {
+    // Check if user is logged in and has elevated access
+    if (!this.userServices.isAuthenticated() || !this.userServices.current.isEditor) {
+      this.router.navigateToRoute('index', {lang: this.locale});
+    }
+
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
 
