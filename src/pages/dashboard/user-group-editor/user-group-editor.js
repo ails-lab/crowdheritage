@@ -9,9 +9,9 @@ let logger = LogManager.getLogger('UserGroupEditor.js');
 
 let COUNT = 12;
 
-@inject(CampaignServices, GroupServices, UserServices, Router, I18N, 'isTesterUser')
+@inject(CampaignServices, GroupServices, UserServices, Router, I18N)
 export class UserGroupEditor {
-  constructor(campaignServices, groupServices, userServices, router, i18n, isTesterUser) {
+  constructor(campaignServices, groupServices, userServices, router, i18n) {
     this.project = settings.project;
     this.loc = window.location.href.split('/')[3];
     this.groupServices = groupServices;

@@ -19,6 +19,8 @@
   "collections"         : "COLLECTIONS",
   "usergroup"           : "USERGROUP",
   "usergroups"          : "USERGROUPS",
+  "vocabulary"          : "Vocabulary",
+  "vocabularys"         : "Vocabularies",
   "collected-item"      : "COLLECTED ITEM",
   "collected-items"     : "COLLECTED ITEMS",
   "contribute"          : "CONTRIBUTE NOW",

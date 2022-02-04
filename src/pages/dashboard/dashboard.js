@@ -28,9 +28,7 @@ export class Dashboard {
     this.router = router;
 
     this.view = "";
-    this.campaignsTab = "nav-item";
-    this.collectionsTab = "nav-item";
-    this.userGroupsTab = "nav-item";
+    this.resetClasses();
   }
 
   attached() {
@@ -55,6 +53,7 @@ export class Dashboard {
     this.campaignsTab = "nav-item";
     this.collectionsTab = "nav-item";
     this.userGroupsTab = "nav-item";
+    this.vocabulariesTab = "nav-item";
   }
 
   tabChanged(tab) {

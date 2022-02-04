@@ -64,4 +64,16 @@ export class ThesaurusServices {
     }).then(response => response.json());
   }
 
+  createEmptyThesaurus(name, version, label) {
+    return this.http.fetch(`/thesaurus/createEmptyThesaurus?name=${name}&version=${version}&label=${label}`, {
+      method: 'POST'
+    }).then(response => response.json());
+  }
+
+  deleteThesaurus(id) {
+    return this.http.fetch(`/thesaurus/${id}`, {
+      method: 'DELETE'
+    }).then(response => response.json());
+  }
+
 }

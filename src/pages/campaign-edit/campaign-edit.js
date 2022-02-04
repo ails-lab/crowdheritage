@@ -121,6 +121,16 @@ export class CampaignEdit {
     this.thesaurusServices.listVocabularies()
       .then(response => {
         this.availableVocabularies = response;
+        function compareName(a, b) {
+          if ( a.name.toLowerCase() < b.name.toLowerCase() ){
+            return -1;
+          }
+          if ( a.name.toLowerCase() > b.name.toLowerCase() ){
+            return 1;
+          }
+          return 0;
+        }
+        this.availableVocabularies.sort(compareName);
       });
 
     if (this.campaign.creators) {
