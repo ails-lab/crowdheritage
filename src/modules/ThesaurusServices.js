@@ -76,4 +76,35 @@ export class ThesaurusServices {
     }).then(response => response.json());
   }
 
+  getThesaurusAdmin(name) {
+    return this.http.fetch(`/thesaurus/${name}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
+  listTerms(name) {
+    return this.http.fetch(`/thesaurus/listTerms?thesaurusName=${name}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
+  populateThesaurus(name, version, csvData) {
+    return this.http.fetch(`/thesaurus/populateCustomThesaurus?thesaurusName=${name}&thesaurusVersion=${version}`, {
+			method: 'POST',
+			body: csvData
+		});
+  }
+
+  deleteAllThesaurusTerms(id) {
+    return this.http.fetch(`/thesaurus/deleteThesaurus/${id}`, {
+      method: 'DELETE'
+    }).then(response => response.json());
+  }
+
+  deleteTerm(id) {
+    return this.http.fetch(`/thesaurus/term/${id}`, {
+      method: 'DELETE'
+    }).then(response => response.json());
+  }
+
 }

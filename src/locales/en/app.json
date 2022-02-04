@@ -21,6 +21,8 @@
   "usergroups"          : "USERGROUPS",
   "vocabulary"          : "Vocabulary",
   "vocabularys"         : "Vocabularies",
+  "term"                : "Vocabulary Term",
+  "terms"               : "Vocabulary Terms",
   "collected-item"      : "COLLECTED ITEM",
   "collected-items"     : "COLLECTED ITEMS",
   "contribute"          : "CONTRIBUTE NOW",

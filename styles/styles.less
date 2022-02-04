@@ -26,6 +26,10 @@
   height: 288.75px
 }
 
+.float-right {
+  float: right;
+}
+
 .text-red {
   color: red;
 }
@@ -1633,6 +1637,12 @@ body main .topsection .sectionlabel .state .dropdown-menu li a:hover {
   box-shadow: none;
   min-width: 114px;
   right: 0;
+
+  &.import-menu {
+    width: max-content;
+    left: auto;
+    right: 0;
+  }
 }
 
 .import-wrap .dropdown-menu li {
@@ -7238,5 +7248,19 @@ input.tag-type {
     padding-left: 7px;
     padding-top: 4px;
     align-self: center;
+  }
+}
+
+.deleteButton {
+  height: 37px;
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+  transition: all 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: red;
+    color: white;
   }
 }

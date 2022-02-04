@@ -102,7 +102,7 @@ export class VocabularyEditor {
   }
 
   curateVocabulary(voc) {
-    console.log('Curating...', voc);
+    this.router.navigateToRoute('vocabulary-edit', {lang: this.loc, vname: voc.name});
   }
 
   closeNav() {

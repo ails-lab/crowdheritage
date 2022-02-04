@@ -1,0 +1,95 @@
+<template>
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <!-- lbl-->
+        <div class="bannertext">
+          <div class="line">
+            <div class="lbl"><span t="dashboard:curateVocabulary" class="text-uppercase"></span></div>
+            <div class="wrap"><span>${vocabulary.label}</span></div>
+          </div>
+        </div>
+        <!-- vertical nav-->
+        <nav class="vertical">
+          <ul>
+            <li><a route-href="route: dashboard; params.bind: { lang: loc, resource: 'vocabularies' }" t="[prepend]dashboard:returnDashboard"><img src="/img/ic-arrow-right-black.png"></a></li>
+          </ul>
+        </nav>
+        <div class="bgwrap" style="background-image: url('/img/assets/img/content/background-space.png');"></div>
+      </div>
+    </section>
+		<section class="collections collection-item-list">
+			<div class="container">
+        <div class="topsection">
+          <div class="sectionlabel">
+            <div class="bold text-uppercase">
+              <strong class="me-2">${[terms.length, 'term'] | itemCounter}</strong>
+            </div>
+          </div>
+          <div class="import-wrap vocabulary-add-button">
+            <button class="btn btn-outline-dark" t="[append]dashboard:addTerms" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+              <i class="fa fa-cloud-download fa-lg me-2" aria-hidden="true"></i>
+            </button>
+            <ul aria-labelledby="import" class="dropdown-menu import-menu">
+              <li><a t="dashboard:uploadTermsCsv" href="#" click.delegate="loadFromFile()"></a></li>
+              <li><a t="dashboard:addNewTerms" href="#" click.delegate="openImportSidebar()"></a></li>
+            </ul>
+          </div>
+          <button t="dashboard:deleteAllTerms" class="float-right deleteButton me-3" click.delegate="deleteAllTerms()"></button>
+        </div>
+        <div class="campaignlist" if.bind="terms.length > 0">
+          <div class="entries row" ref="grid">
+            <table class="user-group-table">
+              <tr>
+                <th t="dashboard:label"></th>
+                <th t="dashboard:uri"></th>
+                <th></th>
+              </tr>
+              <tr repeat.for="term of terms">
+                <td>${term.semantic.prefLabel['en']}</td>
+                <td>
+                  <a href.bind="term.semantic.uri" target="_blank">
+                    ${term.semantic.uri}
+                  </a>
+                </td>
+                <td class="red-trash">
+                  <i class="fa fa-trash clickable" click.delegate="deleteTerm(term.dbId)"></i>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
+
+        <div if.bind="terms.length===0 && !loading">
+          <h5 class="text-center" t="[html]dashboard:noTermsMessage"></h5>
+        </div>
+    	</div>
+    </section>
+
+    <div class="hiddenfile">
+      <input type="file" id="csvUpload" name="csv" onchange.bind="uploadFile" accept=".csv" />
+    </div>
+
+    <!-- Import Sidebar -->
+    <div id="editSidebar" class="sidebar">
+      <div class="action-header">
+        <div class="title" t="dashboard:newVocabulary"></div>
+      </div>
+      <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+      <div class="action-body">
+        <div class="form-group">
+          <label t="dashboard:uriList"></label>
+          <textarea rows="3" type="text" placeholder.bind="i18n.tr('dashboard:uriListPlaceholder')" value.bind="newTerms"></textarea>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between button-group">
+        <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
+        <button t="app:create" class="btn-green" click.delegate="addTerms()"></button>
+      </div>
+    </div>
+  </main>
+</template>

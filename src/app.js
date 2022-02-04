@@ -92,7 +92,8 @@ export class App {
 			{ route: ':lang/feedback',                   name: 'feedback',	       moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
       { route: ':lang/dashboard/:resource',        name: 'dashboard',	       moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
       { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/collection-edit/collection-edit'), nav: false, title: ''},
-      { route: ':lang/campaign-edit/:cname',       name: 'campaign-edit',	   moduleId: PLATFORM.moduleName('./pages/campaign-edit/campaign-edit'),  nav: false, title: ''}
+      { route: ':lang/campaign-edit/:cname',       name: 'campaign-edit',	   moduleId: PLATFORM.moduleName('./pages/campaign-edit/campaign-edit'),  nav: false, title: ''},
+      { route: ':lang/vocabulary-edit/:vname',     name: 'vocabulary-edit',	 moduleId: PLATFORM.moduleName('./pages/vocabulary-edit/vocabulary-edit'),  nav: false, title: ''}
     ]);
 
     this.router = router;
