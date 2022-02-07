@@ -149,4 +149,20 @@ export class VocabularyEdit {
     this.closeNav();
   }
 
+  downloadTerms() {
+    var csv_header = "URI,Label\n";
+    var csv_body = this.terms.map(term => `${term.semantic.uri},${term.semantic.prefLabel.en}`).join("\n");
+    var csv = csv_header.concat(csv_body);
+
+    var dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", this.shortName+'.csv');
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+
+    this.closeNav();
+  }
+
 }

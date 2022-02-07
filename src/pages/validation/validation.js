@@ -546,7 +546,7 @@ export class Validation {
         csv.unshift(fields.join(',')); // add header column
         csv = csv.join('\r\n');
 
-        var dataStr = "data:text/csv;charset=utf-8," + csv;
+        var dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
         var downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
         downloadAnchorNode.setAttribute("download", this.campaign.username+"_contributors.csv");
