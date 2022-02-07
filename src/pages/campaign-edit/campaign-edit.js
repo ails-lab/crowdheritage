@@ -388,7 +388,25 @@ export class CampaignEdit {
     }
   }
 
+  validInput() {
+    if (new Date(this.campaign.startDate) >= new Date(this.campaign.endDate)) {
+      toastr.error("Campaign duration invalid");
+      return false;
+    }
+    let target = parseInt(this.campaign.target);
+    if (!Number.isInteger(target) || target <= 0) {
+      toastr.error("Annotation target must be a positive number");
+      return false;
+    }
+    return true;
+  }
+
   updateCampaign() {
+    if (!this.validInput()) {
+      window.scrollTo(0,0);
+      return;
+    }
+
     let vocabulariesMapping = [];
     this.tagGroups.filter(tagGroup => tagGroup.tagType !== '').forEach(tGroup => {
       vocabulariesMapping.push(new Object({
