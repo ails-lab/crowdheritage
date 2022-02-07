@@ -194,7 +194,7 @@ export class Tagitem {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
-    if (!this.userHasAccessInCampaign) {
+    if (!this.userHasAccessInCampaign()) {
       toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
@@ -261,7 +261,7 @@ export class Tagitem {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
-    if (!this.userHasAccessInCampaign) {
+    if (!this.userHasAccessInCampaign()) {
       toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
@@ -336,7 +336,7 @@ export class Tagitem {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
-    if (!this.userHasAccessInCampaign) {
+    if (!this.userHasAccessInCampaign()) {
       toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
@@ -464,7 +464,7 @@ export class Tagitem {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
-    if (!this.userHasAccessInCampaign) {
+    if (!this.userHasAccessInCampaign()) {
       toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
@@ -1242,7 +1242,7 @@ export class Tagitem {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
     }
-    if (!this.userHasAccessInCampaign) {
+    if (!this.userHasAccessInCampaign()) {
       toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
