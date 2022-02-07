@@ -107,4 +107,14 @@ export class ThesaurusServices {
     }).then(response => response.json());
   }
 
+  addTerms(body) {
+    return this.http.fetch('/thesaurus/addTerms', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => response.json());
+  }
+
 }

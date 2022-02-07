@@ -142,11 +142,24 @@ export class VocabularyEdit {
   }
 
   addTerms() {
-    let terms = this.newTerms.trim().split('\n').filter(url => url.trim().length>0);
-    // TODO: Add relevant API call here
-    console.log(terms);
-
+    this.loading = true;
+    document.body.style.cursor = 'wait';
+    let body = {
+      thesaurusName: this.vocabulary.name,
+      thesaurusVersion: this.vocabulary.version,
+      uris: this.newTerms.trim().split('\n').filter(url => url.trim().length>0)
+    };
     this.closeNav();
+    this.thesaurusServices.addTerms(body)
+      .then(response => {
+        toastr.success(response.message);
+        this.loadTerms();
+        document.body.style.cursor = 'default';
+      })
+      .catch(error => {
+        toastr.error(error.error);
+        document.body.style.cursor = 'default';
+      })
   }
 
   downloadTerms() {
