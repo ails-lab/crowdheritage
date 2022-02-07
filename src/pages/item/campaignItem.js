@@ -318,7 +318,7 @@ export class CampaignItem {
 		//Load Collection (if any)
 		if (routeData.collection) {
 			this.collection = routeData.collection;
-      this.collectionTitle = this.collection.title;
+      this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
       this.collectionCount = this.collection.entryCount;
 			this.offset = (routeData.offset) ? routeData.offset : 0;
 			this.batchOffset = this.offset + routeData.records.length;
