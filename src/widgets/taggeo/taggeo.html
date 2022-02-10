@@ -15,10 +15,10 @@
       </div>
       <!-- searchbox-->
       <div class="searchbox" if.bind="campaign.status == 'active' && userHasAccessInCampaign()">
-      	<input id="annotationInput" autocomplete="off" value.bind="prefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
-        <div show.bind='suggestionsActive' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
+      	<input id="annotationInput" autocomplete="off" value.bind="tagPrefix[''] & debounce:500" input.delegate="prefixChanged(true, '') & debounce:500"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+        <div show.bind='suggestionsActive[""]' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
- 						<li repeat.for="item of suggestedAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
+ 						<li repeat.for='item of suggestedAnnotations[""]'  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
           </ul>
         </div>
       	<i class='fa fa-spinner fa-spin ' show.bind="suggestionsLoading"></i>
@@ -31,7 +31,7 @@
           <ul class="action">
             <li class="publish-btn" if.bind="isCurrentUserCreator()">
 							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
-                title.bind="togglePublishText" click.delegate="togglePublish('geo', $index)"
+                title.bind="togglePublishText" click.delegate="togglePublish('geo', $index, '')"
               >
 								<span>
 									<i class.bind="!ann.publish ? 'fa fa-upload text-danger opacity-50' : 'fa fa-upload text-success'"></i>
@@ -40,7 +40,7 @@
 							</a>
 						</li>
 						<li class.bind="ann.approvedByMe ? 'up active' : 'up'">
-            	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'geo')">
+            	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'approved', $index, ann.approvedByMe, ann.rejectedByMe, 'geo', '')">
               	<i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
             	</a>
               <a if.bind="ann.createdByMe">
@@ -48,7 +48,7 @@
             	</a>
           	</li>
           	<li class.bind="ann.rejectedByMe ? 'down active' : 'down'">
-            	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'geo')">
+            	<a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'geo', '')">
               	<span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
             	</a>
               <a if.bind="ann.createdByMe" >
@@ -56,7 +56,7 @@
             	</a>
 						</li>
           	<li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0">
-            	<a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'geo')">
+            	<a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'geo', '')">
               	<img src="/img/ic-delete.png">
             	</a>
           	</li>

@@ -98,20 +98,20 @@
               </div>
             </div>
             <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"
-              model.bind="{'campaign': campaign, 'recId': record.dbId}">
+              model.bind="{'campaign': campaign, 'recId': recId}">
             </compose>
             <compose view="widgets/tagcomment/tagcomment.html" view-model="widgets/tagitem/tagitem"
-              if.bind="hasMotivation('Commenting')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+              if.bind="hasMotivation('Commenting')" model.bind="{'campaign': campaign, 'recId': recId}">
             </compose>
             <compose view="widgets/tagcolor/tagcolor.html" view-model="widgets/tagitem/tagitem"
-              if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+              if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': recId}">
             </compose>
             <compose view="widgets/taggeo/taggeo.html" view-model="widgets/tagitem/tagitem"
-              if.bind="hasMotivation('GeoTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId}">
+              if.bind="hasMotivation('GeoTagging')" model.bind="{'campaign': campaign, 'recId': recId}">
             </compose>
             <compose view="widgets/tagpoll/tagpoll.html" view-model="widgets/tagitem/tagitem"
               if.bind="hasMotivation('Polling')"
-              model.bind="{'campaign': campaign, 'recId': record.dbId, 'colTitle': collectionTitle}">
+              model.bind="{'campaign': campaign, 'recId': recId, 'colTitle': collectionTitle}">
             </compose>
             <div class="wrap next-item-alternative-link">
               <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)" click.delegate="previousItem()"

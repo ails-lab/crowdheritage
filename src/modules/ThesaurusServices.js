@@ -39,8 +39,8 @@ export class ThesaurusServices {
     });
   }
 
-  async getCampaignSuggestions(word, campaignId, lang="all") {
-		return this.http.fetch(`/thesaurus/suggestions?word=${word}&campaignId=${campaignId}&language=${lang}`, {
+  async getCampaignSuggestions(word, vocabularies, lang="all") {
+		return this.http.fetch(`/thesaurus/suggestions?word=${word}&namespaces=${vocabularies}&language=${lang}`, {
 	      method: 'GET'
 	    }).then(checkStatus).then((response) => {
 	      return response.json();

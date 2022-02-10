@@ -129,21 +129,21 @@ export class CampaignItem {
     this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT)
       .then(response => {
 				this.fillRecordArray(response);
-        if (this.recId == this.records[0].dbId) {
-				  this.loadRecordFromBatch();
+        if (this.records[0] && this.recId == this.records[0].dbId) {
+          this.loadRecordFromBatch();
         } else {
           this.recordServices.getRecord(this.recId)
             .then(response => {
               this.records.unshift(new Record(response));
               this.loadRecordFromBatch();
             }).catch(error => {
-      				this.loadRec = false;
-              console.log(error.message);
+              this.loadRec = false;
+              console.error(error.message);
             });
         }
       }).catch(error => {
-				this.loadRec = false;
-        console.log(error.message);
+        this.loadRec = false;
+        console.error(error.message);
       });
   }
 

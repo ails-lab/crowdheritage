@@ -147,7 +147,7 @@ export class VocabularyEdit {
     let body = {
       thesaurusName: this.vocabulary.name,
       thesaurusVersion: this.vocabulary.version,
-      uris: this.newTerms.trim().split('\n').filter(url => url.trim().length>0)
+      uris: [...new Set(this.newTerms.trim().split('\n').filter(url => url.trim().length>0))] //remove duplicates, trailing whitespaces and empty lines
     };
     this.closeNav();
     this.thesaurusServices.addTerms(body)
@@ -159,7 +159,7 @@ export class VocabularyEdit {
       .catch(error => {
         toastr.error(error.error);
         document.body.style.cursor = 'default';
-      })
+      });
   }
 
   downloadTerms() {

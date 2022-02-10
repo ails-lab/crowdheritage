@@ -44,6 +44,7 @@ export class Annotation {
     	this.coordinates=data.body.coordinates;
     }
     this.uri=data.body.uri;
+    this.tagType = data.target.selector ? data.target.selector.property : "";
     this.approvedBy = [];
     this.approvedByMe = false;
     this.rejectedBy = [];
