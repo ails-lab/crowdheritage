@@ -26,6 +26,10 @@
   height: 288.75px
 }
 
+.float-right {
+  float: right;
+}
+
 .text-red {
   color: red;
 }
@@ -1633,6 +1637,12 @@ body main .topsection .sectionlabel .state .dropdown-menu li a:hover {
   box-shadow: none;
   min-width: 114px;
   right: 0;
+
+  &.import-menu {
+    width: max-content;
+    left: auto;
+    right: 0;
+  }
 }
 
 .import-wrap .dropdown-menu li {
@@ -5924,7 +5934,8 @@ body div[role='main'] section.registernow .action {
   position: absolute;
   left: 20px;
   right: 20px;
-  height: 250px;
+  height: max-content;
+  max-height: 250px;
   z-index: 2;
   overflow-y: scroll;
 }
@@ -5937,6 +5948,10 @@ body div[role='main'] section.registernow .action {
   a {
     position: relative;
     float: right;
+  }
+
+  &:first-child {
+    border-top: 1px solid @main-color;
   }
 }
 
@@ -7230,8 +7245,27 @@ input.tag-type {
   display: inline-flex;
   padding-bottom: 4px;
 
+  .form-check-input {
+    align-self: center;
+  }
+
   .form-check-label {
     padding-left: 7px;
-    padding-top: 10px;
+    padding-top: 4px;
+    align-self: center;
+  }
+}
+
+.deleteButton {
+  height: 37px;
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+  transition: all 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: red;
+    color: white;
   }
 }

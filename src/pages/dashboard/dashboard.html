@@ -23,6 +23,11 @@
             <i class="fa fa-folder-open-o fa-lg me-3" aria-hidden="true"></i>
           </a>
         </li>
+        <li class=${vocabulariesTab} click.delegate="tabChanged('vocabularies')">
+          <a class="nav-link" href="#" t="[append]app:vocabularys">
+            <i class="fa fa-book fa-lg me-3" aria-hidden="true"></i>
+          </a>
+        </li>
         <li class=${userGroupsTab} click.delegate="tabChanged('userGroups')">
           <a class="nav-link" href="#" t="[append]dashboard:usergroups">
             <i class="fa fa-users fa-lg me-3" aria-hidden="true"></i>
@@ -35,6 +40,10 @@
       </div>
       <div class="container-fluid mt-1" if.bind="view=='collections'">
         <compose view-model="pages/dashboard/collection-editor/collection-editor">
+		    </compose>
+      </div>
+      <div class="container-fluid mt-1" if.bind="view=='vocabularies'">
+        <compose view-model="pages/dashboard/vocabulary-editor/vocabulary-editor">
 		    </compose>
       </div>
       <div class="container-fluid mt-1" if.bind="view=='userGroups'">

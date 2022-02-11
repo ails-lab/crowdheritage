@@ -121,6 +121,16 @@ export class CampaignEdit {
     this.thesaurusServices.listVocabularies()
       .then(response => {
         this.availableVocabularies = response;
+        function compareName(a, b) {
+          if ( a.name.toLowerCase() < b.name.toLowerCase() ){
+            return -1;
+          }
+          if ( a.name.toLowerCase() > b.name.toLowerCase() ){
+            return 1;
+          }
+          return 0;
+        }
+        this.availableVocabularies.sort(compareName);
       });
 
     if (this.campaign.creators) {
@@ -143,11 +153,11 @@ export class CampaignEdit {
       }
     }
 
-    if (this.campaign.vocabulariesMapping) {
-      Object.keys(this.campaign.vocabulariesMapping).forEach(tagType => {
+    if (this.campaign.vocabularyMapping) {
+      this.campaign.vocabularyMapping.forEach(entry => {
         let mapping = Object.assign({}, this.vocabulariesIndexing);
-        Object.keys(mapping).forEach(mapKey => mapping[mapKey] = this.campaign.vocabulariesMapping[tagType].includes(mapKey) ? true : false);
-        mapping.tagType = tagType;
+        Object.keys(mapping).forEach(mapKey => mapping[mapKey] = entry.vocabularies.includes(mapKey) ? true : false);
+        mapping.tagType = entry.labelName;
         this.tagGroups.push(mapping);
       });
     }
@@ -378,13 +388,34 @@ export class CampaignEdit {
     }
   }
 
+  validInput() {
+    if (new Date(this.campaign.startDate) >= new Date(this.campaign.endDate)) {
+      toastr.error("Campaign duration invalid");
+      return false;
+    }
+    let target = parseInt(this.campaign.target);
+    if (!Number.isInteger(target) || target <= 0) {
+      toastr.error("Annotation target must be a positive number");
+      return false;
+    }
+    return true;
+  }
+
   updateCampaign() {
-    let vocabulariesMapping = {};
+    if (!this.validInput()) {
+      window.scrollTo(0,0);
+      return;
+    }
+
+    let vocabulariesMapping = [];
     this.tagGroups.filter(tagGroup => tagGroup.tagType !== '').forEach(tGroup => {
-      vocabulariesMapping[tGroup.tagType] = Object.keys(tGroup).filter(field => tGroup[field] === true);
+      vocabulariesMapping.push(new Object({
+        labelName: tGroup.tagType,
+        vocabularies: Object.keys(tGroup).filter(field => tGroup[field] === true)
+      }));
     });
 
-    const obj = {
+    const camp = {
       username: this.campaign.username,
       title: this.campaign.titleObject,
       description: this.campaign.descriptionObject,
@@ -397,7 +428,7 @@ export class CampaignEdit {
       prizes: this.campaign.prizesObject,
       annotationTarget: this.campaign.target,
       vocabularies: this.selectedVocabularies,
-      // vocabulariesMapping: vocabulariesMapping,
+      vocabularyMapping: vocabulariesMapping,
       startDate: this.campaign.startDate.replaceAll('-','/'),
       endDate: this.campaign.endDate.replaceAll('-','/'),
       creators: this.moderators.map(mod => mod.id),
@@ -405,7 +436,7 @@ export class CampaignEdit {
       targetCollections: this.selectedCollections.map(col => col.id)
     };
 
-    this.campaignServices.editCampaign(this.campaign.dbId, obj)
+    this.campaignServices.editCampaign(this.campaign.dbId, camp)
       .then(response => {
         window.scrollTo(0,0);
         toastr.success(this.i18n.tr('dashboard:campaignUpdatedSuccess'));
@@ -414,7 +445,7 @@ export class CampaignEdit {
       .catch(error => {
         console.error(error);
         toastr.error(this.i18n.tr('dashboard:campaignUpdatedError'));
-      })
+      });
   }
 
 }

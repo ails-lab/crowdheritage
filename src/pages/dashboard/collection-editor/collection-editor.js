@@ -10,9 +10,9 @@ let logger = LogManager.getLogger('CollectionEditor.js');
 
 let COUNT = 9;
 
-@inject(CampaignServices, CollectionServices, UserServices, Router, I18N, 'isTesterUser')
+@inject(CampaignServices, CollectionServices, UserServices, Router, I18N)
 export class CollectionEditor {
-  constructor(campaignServices, collectionServices, userServices, router, i18n, isTesterUser) {
+  constructor(campaignServices, collectionServices, userServices, router, i18n) {
     this.project = settings.project;
     this.loc = window.location.href.split('/')[3];
     this.campaignServices = campaignServices;
