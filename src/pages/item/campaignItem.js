@@ -15,10 +15,9 @@
 
 
 import { inject } from 'aurelia-framework';
-import { Router, activationStrategy } from 'aurelia-router';
+import { Router } from 'aurelia-router';
 import { Record } from 'Record.js';
 import { Campaign } from 'Campaign.js';
-import { Collection } from 'Collection.js';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
@@ -73,6 +72,10 @@ export class CampaignItem {
 
 	get lastItem() {
 		return this.offset == (this.collectionCount - 1);
+	}
+
+  get isLiked(){
+		return this.recordServices.isLiked(this.record.externalId);
 	}
 
 	previousItem() {
@@ -411,6 +414,40 @@ export class CampaignItem {
       return rec.myfullimg;
     else
       return alt;
+  }
+
+  likeRecord() {
+    document.body.style.cursor = 'wait';
+    if (this.isLiked) {
+      this.recordServices.unlike(this.record.externalId)
+        .then(response => {
+          let index = this.userServices.current.favorites.indexOf(this.record.externalId);
+          if (index > -1) {
+            this.userServices.current.favorites.splice(index, 1);
+            this.userServices.current.count.myFavorites -= 1;
+          }
+          document.body.style.cursor = 'default';
+        })
+        .catch(error => {
+          toastr.error(error.message);
+          document.body.style.cursor = 'default';
+        });
+    }
+    else {
+      this.recordServices.like(this.record.data)
+        .then(response => {
+          let index = this.userServices.current.favorites.indexOf(this.record.externalId);
+          if (index == -1) {
+            this.userServices.current.favorites.push(this.record.externalId);
+            this.userServices.current.count.myFavorites += 1;
+            document.body.style.cursor = 'default';
+          }
+        })
+        .catch(error => {
+          toastr.error(error.message);
+          document.body.style.cursor = 'default';
+        });
+    }
   }
 
 }
