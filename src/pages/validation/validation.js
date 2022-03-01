@@ -516,7 +516,7 @@ export class Validation {
       });
   }
 
-  exportContributors() {
+  exportContributors(fileType) {
     if ( !this.isAuthenticated || !this.isCreator ) {
       toastr.error("You have no permission to perform this action");
       return '';
@@ -533,23 +533,31 @@ export class Validation {
     this.exportUsersLabel = "EXPORTING...";
 
     this.campaignServices.getCampaignContributors(this.campaign.username)
-      .then( response => {
-        // Create the downloadable csv file and download it
+      .then(response => {
         var json = response;
-        var fields = Object.keys(json[0]);
-        var replacer = function(key, value) { return value === null ? '' : value };
-        var csv = json.map(function(row) {
-          return fields.map(function(fieldName) {
-            return JSON.stringify(row[fieldName], replacer);
-          }).join(',');
-        });
-        csv.unshift(fields.join(',')); // add header column
-        csv = csv.join('\r\n');
-
-        var dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+        var dataStr = "";
         var downloadAnchorNode = document.createElement('a');
+        var filename = `${this.campaign.username}_contributors.${fileType}`;
+
+        if (fileType === 'csv') {
+          // Create the downloadable csv file
+          var fields = Object.keys(json[0]);
+          var replacer = function(key, value) { return value === null ? '' : value };
+          var csv = json.map(function(row) {
+            return fields.map(function(fieldName) {
+              return JSON.stringify(row[fieldName], replacer);
+            }).join(',');
+          });
+          csv.unshift(fields.join(',')); // add header column
+          csv = csv.join('\r\n');
+          dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+        }
+        else {
+          dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json, null, '\t'));
+        }
+
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", this.campaign.username+"_contributors.csv");
+        downloadAnchorNode.setAttribute("download", filename);
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
