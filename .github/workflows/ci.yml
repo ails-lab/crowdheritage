@@ -5,6 +5,7 @@ on:
     branches:
      - pgeor/citest
      - dev
+     - master
 
 jobs:
   build:
@@ -45,6 +46,7 @@ jobs:
       run: |
         echo DEPLOY_SERVER=lego.ails.ece.ntua.gr >> $GITHUB_ENV
         echo DEPLOY_TARGET=/data/crowdheritage/frontend/current/ >> $GITHUB_ENV
+        echo BASE_URL=https://api.crowdheritage.eu >> $GITHUB_ENV
 
     - uses: actions/checkout@v2
 
@@ -70,8 +72,8 @@ jobs:
         PROJECT=CrowdHeritage
         SPACE=espace
         API_URL=/assets/developers-lite.html
-        WITHCROWD_BASE_URL=https://dev-api.withcrowd.eu
-        BASE_URL=https://dev-api.crowdheritage.eu
+        WITHCROWD_BASE_URL=https://invalid.dev-api.withcrowd.eu
+        BASE_URL=$BASE_URL
         WITH_GOOGLE_KEY=$WITH_GOOGLE_KEY
         WITH_GOOGLE_SECRET=$WITH_GOOGLE_SECRET
         WITH_FACEBOOK_SECRET=$WITH_FACEBOOK_SECRET
