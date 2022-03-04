@@ -24,6 +24,7 @@ export class User {
 
 		// Initialize data structures for user collections/exhibitions/etc
 		// TODO: Remove obsolete information when the new calls are in place
+		this.isEditor = data.campaignCreationAccess;
 		this.favoritesCollection = data.favorites;
 		this.userGroupsIds = data.userGroupsIds ? data.userGroupsIds : [];
 		this.adminInGroups = data.adminInGroups ? data.adminInGroups : [];

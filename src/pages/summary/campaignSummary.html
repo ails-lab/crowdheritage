@@ -17,7 +17,7 @@
             <li><a route-href="route: index; params.bind: {lang: loc}" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
           </ul>
         </nav>
-        <nav class="vertical" if.bind="!campaign.project">
+        <nav class="vertical" if.bind="!campaign.isPublic">
           <ul><li><i>CAMPAIGN</i></li><li><i>PREVIEW</i></li></ul>
         </nav>
         <!-- progress-->
@@ -196,7 +196,7 @@
                   </div>
                   <!-- title-->
                   <div class="desc">
-                    <div class="title">${col.title}</div>
+                    <div class="title">${col.title[loc] ? col.title[loc] : col.title.default}</div>
                     <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
                   </div>
                 </div></a>

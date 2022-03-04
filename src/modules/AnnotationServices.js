@@ -32,22 +32,22 @@ export class AnnotationServices {
 		this.vocabularyIndex = [];
 
 		let self = this;
-		this.getAnnotators().then(data => {
-			for (let i in data) {
-				self.annotators.push(data[i]);
-				self.annotators[i].id = 'annotategroup' + i;
-				self.annotators[i].hrefid = '#annotategroup' + i;
-				self.annotators[i].cid = 'cannotategroup' + i;
-				self.annotators[i].chrefid = '#cannotategroup' + i;
-				self.annotators[i].order = i;
-			}
-		});
-		this.getVocabularies().then(data => {
-			for (let i in data) {
-				self.vocabularies.push(data[i]);
-				self.vocabularyIndex[data[i].name] = data[i];
-			}
-		});
+		// this.getAnnotators().then(data => {
+		// 	for (let i in data) {
+		// 		self.annotators.push(data[i]);
+		// 		self.annotators[i].id = 'annotategroup' + i;
+		// 		self.annotators[i].hrefid = '#annotategroup' + i;
+		// 		self.annotators[i].cid = 'cannotategroup' + i;
+		// 		self.annotators[i].chrefid = '#cannotategroup' + i;
+		// 		self.annotators[i].order = i;
+		// 	}
+		// });
+		// this.getVocabularies().then(data => {
+		// 	for (let i in data) {
+		// 		self.vocabularies.push(data[i]);
+		// 		self.vocabularyIndex[data[i].name] = data[i];
+		// 	}
+		// });
 	}
 
 	getVocabularyLabel(code) {
@@ -202,7 +202,7 @@ export class AnnotationServices {
 		});
 	}
 
-	async annotateRecord(recid, term, camp, mot, lang) {
+	async annotateRecord(recid, property, term, camp, mot, lang) {
 		let body = {}
 		if (mot == "Commenting") {
 			body = {label: { default: [ term ] } };
@@ -215,7 +215,10 @@ export class AnnotationServices {
 				body.label.default = [ term.label ];
 			}
 		}
-		let target = { recordId: recid};
+		let target = { recordId: recid };
+		if (property) {
+			target.selector = { property: property };
+		}
 		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: mot, body: body, target: target };
 
 		return this.http.fetch('/record/annotation', {

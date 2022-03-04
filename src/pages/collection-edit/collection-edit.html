@@ -1,0 +1,55 @@
+<template>
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <!-- lbl-->
+        <div class="bannertext">
+          <div class="line">
+            <div class="lbl"><span t="dashboard:curateCollection" class="text-uppercase"></span></div>
+            <div class="wrap"><span>${collection.title[loc] && collection.title[loc][0] !== 0 ? collection.title[loc][0] : collection.title.default[0]}</span></div>
+          </div>
+        </div>
+        <!-- vertical nav-->
+        <nav class="vertical">
+          <ul>
+            <li><a route-href="route: dashboard; params.bind: { lang: loc, resource: 'collections' }" t="[prepend]dashboard:returnDashboard"><img src="/img/ic-arrow-right-black.png"></a></li>
+          </ul>
+        </nav>
+        <div class="bgwrap" style="background-image: url('/img/assets/img/content/background-space.png');"></div>
+      </div>
+    </section>
+		<section class="collections collection-item-list">
+			<div class="container">
+        <div class="topsection">
+          <div class="sectionlabel">
+            <div class="bold">
+              <strong class="me-2">${[collection.entryCount, 'collected-item'] | itemCounter}</strong>
+            </div>
+          </div>
+          <div class="import-wrap">
+            <button class="btn btn-outline-dark" t="[append]dashboard:importItems" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+              <i class="fa fa-cloud-download fa-lg me-2" aria-hidden="true"></i>
+            </button>
+            <ul aria-labelledby="import" class="dropdown-menu import-menu">
+              <!-- <li><a t="dashboard:europeanaDataset" href="#" click.delegate="openImportSidebar('europeanaDataset')"></a></li> -->
+              <li><a t="dashboard:europeanaGallery" href="#" click.delegate="openImportSidebar('europeanaGallery')"></a></li>
+              <li><a t="dashboard:europeanaSearch" href="#" click.delegate="openImportSidebar('europeanaSearch')"></a></li>
+              <li><a t="dashboard:europeanaItems" href="#" click.delegate="openImportSidebar('europeanaItems')"></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <section class="mt-4">
+          <compose view-model="widgets/import-items/import-items"
+            model.bind="{'importMethod': importMethod, 'lang': loc}">
+          </compose>
+        </section>
+    		<compose view-model="widgets/multiple-items/multiple-items"
+    						 model.bind="{'collectionEdit': true, 'myCollection': collection, 'router': router, 'lang': loc}">
+    		</compose>
+    	</div>
+    </section>
+  </main>
+
+</template>

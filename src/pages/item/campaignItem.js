@@ -15,10 +15,9 @@
 
 
 import { inject } from 'aurelia-framework';
-import { Router, activationStrategy } from 'aurelia-router';
+import { Router } from 'aurelia-router';
 import { Record } from 'Record.js';
 import { Campaign } from 'Campaign.js';
-import { Collection } from 'Collection.js';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
@@ -75,6 +74,10 @@ export class CampaignItem {
 		return this.offset == (this.collectionCount - 1);
 	}
 
+  get isLiked(){
+		return this.recordServices.isLiked(this.record.externalId);
+	}
+
 	previousItem() {
     // clear previous media
     this.mediaDiv = '';
@@ -129,21 +132,21 @@ export class CampaignItem {
     this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT)
       .then(response => {
 				this.fillRecordArray(response);
-        if (this.recId == this.records[0].dbId) {
-				  this.loadRecordFromBatch();
+        if (this.records[0] && this.recId == this.records[0].dbId) {
+          this.loadRecordFromBatch();
         } else {
           this.recordServices.getRecord(this.recId)
             .then(response => {
               this.records.unshift(new Record(response));
               this.loadRecordFromBatch();
             }).catch(error => {
-      				this.loadRec = false;
-              console.log(error.message);
+              this.loadRec = false;
+              console.error(error.message);
             });
         }
       }).catch(error => {
-				this.loadRec = false;
-        console.log(error.message);
+        this.loadRec = false;
+        console.error(error.message);
       });
   }
 
@@ -318,7 +321,7 @@ export class CampaignItem {
 		//Load Collection (if any)
 		if (routeData.collection) {
 			this.collection = routeData.collection;
-      this.collectionTitle = this.collection.title;
+      this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
       this.collectionCount = this.collection.entryCount;
 			this.offset = (routeData.offset) ? routeData.offset : 0;
 			this.batchOffset = this.offset + routeData.records.length;
@@ -411,6 +414,40 @@ export class CampaignItem {
       return rec.myfullimg;
     else
       return alt;
+  }
+
+  likeRecord() {
+    document.body.style.cursor = 'wait';
+    if (this.isLiked) {
+      this.recordServices.unlike(this.record.externalId)
+        .then(response => {
+          let index = this.userServices.current.favorites.indexOf(this.record.externalId);
+          if (index > -1) {
+            this.userServices.current.favorites.splice(index, 1);
+            this.userServices.current.count.myFavorites -= 1;
+          }
+          document.body.style.cursor = 'default';
+        })
+        .catch(error => {
+          toastr.error(error.message);
+          document.body.style.cursor = 'default';
+        });
+    }
+    else {
+      this.recordServices.like(this.record.data)
+        .then(response => {
+          let index = this.userServices.current.favorites.indexOf(this.record.externalId);
+          if (index == -1) {
+            this.userServices.current.favorites.push(this.record.externalId);
+            this.userServices.current.count.myFavorites += 1;
+            document.body.style.cursor = 'default';
+          }
+        })
+        .catch(error => {
+          toastr.error(error.message);
+          document.body.style.cursor = 'default';
+        });
+    }
   }
 
 }

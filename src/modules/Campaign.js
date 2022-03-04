@@ -22,15 +22,14 @@ export class Campaign {
     this.username = data.username;
     this.project = data.project;
     this.creators = data.creators;
-    this.space = data.space;
-    this.spacename = data.spacename;
+    this.userGroupIds = data.userGroupIds;
     this.startDate = data.startDate;
     this.endDate = data.endDate;
+    this.creationDate = data.created;
     this.motivation = data.motivation;
     this.purpose = data.purpose;
     this.target = data.annotationTarget;
     this.created = data.annotationCurrent.created;
-    this.userGroupIds = data.userGroupIds;
     this.approved = data.annotationCurrent.approved;
     this.rejected = data.annotationCurrent.rejected;
     this.contributorsCount = Object.keys(data.contributorsPoints).length;
@@ -40,10 +39,18 @@ export class Campaign {
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
     this.vocabularies = data.vocabularies;
+    this.vocabularyMapping = data.vocabularyMapping;
     this.publishCriteria = data.publishCriteria;
     this.logo = data.logo ? this.setImageProperty(data.logo) : '';
     this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
     this.status = this.campaignStatus;
+    this.isPublic = data.isPublic;
+    // Objects for multilinguality
+    this.titleObject = data.title;
+    this.descriptionObject = data.description;
+    this.disclaimerObject = data.disclaimer;
+    this.instructionsObject = data.instructions;
+    this.prizesObject = data.prizes;
 
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );

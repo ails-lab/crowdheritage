@@ -40,6 +40,7 @@
             <!-- account menu-->
             <ul id="accountmenu" class="accountmenu">
               <li><a t="app:profile" route-href="route: user; params.bind: { uname: user.username, lang: locale }">Profile</a></li>
+              <li if.bind="user.isEditor"><a route-href="route: dashboard; params.bind: {lang: locale, resource: 'campaigns'}">Dashboard</a></li>
               <li><a t="app:sign-out" href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
             </ul>
           </div>
@@ -54,7 +55,7 @@
             <li if.bind="project=='CrowdHeritage'">
               <!-- select language-->
               <section class="languages">
-                <div class="lang">
+                <div id="nav-lang" class="lang">
                   <!-- select-->
                   <a id="langselect" href="javascript:void(0)" click.delegate="toggleLangMenu()" data-toggle="dropdown">
                     <span class="flag"><img src=${getLocale().flag} /></span>

@@ -39,8 +39,8 @@ export class ThesaurusServices {
     });
   }
 
-  async getCampaignSuggestions(word, campaignId, lang="all") {
-		return this.http.fetch(`/thesaurus/suggestions?word=${word}&campaignId=${campaignId}&language=${lang}`, {
+  async getCampaignSuggestions(word, vocabularies, lang="all") {
+		return this.http.fetch(`/thesaurus/suggestions?word=${word}&namespaces=${vocabularies}&language=${lang}`, {
 	      method: 'GET'
 	    }).then(checkStatus).then((response) => {
 	      return response.json();
@@ -48,15 +48,73 @@ export class ThesaurusServices {
 	  }
 
   async getGeonameSuggestions(prefix ) {
-	  this.http.configure(
-	        fetchConfigGeo);
+	  this.http.configure(fetchConfigGeo);
 	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
-	      method: 'GET'
-	    }).then((response) => {
-	      this.http.configure(reset);
-	      return response.json();
+      method: 'GET'
+	  })
+    .then((response) => {
+      this.http.configure(reset);
+      return response.json();
+    });
+  }
 
-	    });
-	  }
+  listVocabularies() {
+    return this.http.fetch('/thesaurus/listVocabularies', {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
+  createEmptyThesaurus(name, version, label) {
+    return this.http.fetch(`/thesaurus/createEmptyThesaurus?name=${name}&version=${version}&label=${label}`, {
+      method: 'POST'
+    }).then(response => response.json());
+  }
+
+  deleteThesaurus(id) {
+    return this.http.fetch(`/thesaurus/${id}`, {
+      method: 'DELETE'
+    }).then(response => response.json());
+  }
+
+  getThesaurusAdmin(name) {
+    return this.http.fetch(`/thesaurus/${name}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
+  listTerms(name) {
+    return this.http.fetch(`/thesaurus/listTerms?thesaurusName=${name}`, {
+      method: 'GET'
+    }).then(response => response.json());
+  }
+
+  populateThesaurus(name, version, csvData) {
+    return this.http.fetch(`/thesaurus/populateCustomThesaurus?thesaurusName=${name}&thesaurusVersion=${version}`, {
+			method: 'POST',
+			body: csvData
+		});
+  }
+
+  deleteAllThesaurusTerms(id) {
+    return this.http.fetch(`/thesaurus/deleteThesaurus/${id}`, {
+      method: 'DELETE'
+    }).then(response => response.json());
+  }
+
+  deleteTerm(id) {
+    return this.http.fetch(`/thesaurus/term/${id}`, {
+      method: 'DELETE'
+    }).then(response => response.json());
+  }
+
+  addTerms(body) {
+    return this.http.fetch('/thesaurus/addTerms', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => response.json());
+  }
 
 }

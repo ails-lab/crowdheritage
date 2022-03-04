@@ -250,7 +250,7 @@ export class CampaignSummary {
           })
         .catch(error => {
           this.loading = false;
-          console.log(error.message);
+          console.error(error.message);
         });
     }
 
@@ -274,7 +274,7 @@ export class CampaignSummary {
           }
         }).catch(error => {
           this.loading = false;
-          console.log(error.message);
+          console.error(error.message);
         });
     }
   }

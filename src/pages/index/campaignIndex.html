@@ -17,7 +17,7 @@
         <nav class="vertical">
           <ul>
             <li><a href="javascript:void(0)" click.delegate="scrollTo('#learn')" t="[append]app:learnmore"> <img src="/img/ic-arrow-left-black.png"></a></li>
-            <li>${campaignsCount | campaignCounter}</li>
+            <li>${[campaignsCount, 'campaign'] | itemCounter}</li>
           </ul>
         </nav>
         <div class="bgwrap"></div>
@@ -93,7 +93,7 @@
           <div show.bind="loading" class="campaign">
             <center>
               <img src="/img/assets/img/loader.gif" alt="Loading campaigns">
-              <p>Loading Crowdsouring Campaigns</p>
+              <p t="index:loadingCampaigns"></p>
             </center>
           </div>
           <div show.bind="!loading" class="campaign" repeat.for="camp of campaigns">
@@ -162,7 +162,7 @@
         <!-- more-->
         <div class="loadmore">
           <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
-          <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+          <div class="more"><i show.bind="loading && campaigns.length > 0" class="fa fa-spinner fa-pulse"></i></div>
         </div>
       </div>
     </section>

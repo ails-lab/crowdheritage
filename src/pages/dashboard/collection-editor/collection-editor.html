@@ -1,0 +1,101 @@
+<template>
+  <main if.bind="user">
+    <!-- collection list-->
+    <section class="collections mt-3">
+      <div class="container">
+        <!-- top section-->
+        <div class="topsection mb-3 me-5">
+          <div class="sectionlabel">
+            <div class="bold">
+              <strong class="me-2">${[totalCollectionsCount, 'collection'] | itemCounter}</strong>
+            </div>
+          </div>
+          <div class="import-wrap">
+            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newCollection" click.delegate="newCollection()">
+              <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="campaignlist pe-5" if.bind="collections.length>0">
+          <!-- entry-->
+          <div class="entries row" ref="grid">
+            <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
+              <a route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }">
+                <div id="editThumbs" class="thumbs">
+                  <div class="ribbon">
+                    <span class.bind="col.isPublic ? 'green' : 'red'">
+                      ${col.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}
+                    </span>
+                  </div>
+                  <div
+                    if.bind="col.absMedia.length > 0"
+                    class="thumbs-images thumbs-count-${col.absMedia.length}"
+                  >
+                    <img
+                      repeat.for="med of col.absMedia"
+                      src.bind="med"
+                      onError="this.src='/img/assets/img/ui/ic-noimage.png'"
+                    />
+                  </div>
+                  <div
+                    if.bind="col.absMedia.length == 0"
+                    class="thumbs-images thumbs-count-1"
+                  >
+                    <img src="/img/assets/img/content/background-space.png" />
+                  </div>
+                  <div class="action">
+                    <h3 class="my-0"><b t="dashboard:curateCollection"></b></h3>
+                  </div>
+                </div>
+                <!-- detail-->
+                <div class="detail">
+                  <!-- count-->
+                  <div class="count">
+                    ${col.entryCount}<span t="summary:items"></span>
+                  </div>
+                  <!-- title-->
+                  <div class="desc">
+                    <div class="title">${col.title[loc] && col.title[loc] !== '' ? col.title[loc] : col.title.default}</div>
+                    <!-- <div class.bind="col.isPublic ? 'font-italic text-green' : 'font-italic text-red'">
+                      ${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}
+                    </div> -->
+                  </div>
+                </div>
+
+                <ul class="itemaction">
+                  <li class="btn-edit-collection" click.delegate="editCollection(col)">
+                    <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:editCollection')">
+                      <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                    </a>
+                  </li>
+                  <li class="btn-delete-collection" click.delegate="deleteCollection(col)">
+                    <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
+                      <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                    </a>
+                  </li>
+                </ul>
+              </a>
+
+            </div>
+          </div>
+          <!-- more-->
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
+
+        <div if.bind="collections.length===0 && !loading">
+          <h5 class="text-center" t="[html]dashboard:noCollectionsMessage"></h5>
+        </div>
+      </div>
+    </section>
+    <section>
+      <compose view-model="widgets/newcollection/newcollection"
+        model.bind="{'collection' : editableCollection, 'type': edittype, 'lang': loc}">
+      </compose>
+    </section>
+  </main>
+</template>

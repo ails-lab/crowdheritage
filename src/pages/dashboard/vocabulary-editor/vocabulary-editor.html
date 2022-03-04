@@ -1,0 +1,78 @@
+<template>
+  <main if.bind="user">
+    <section class="collections mt-3">
+      <div class="container">
+        <div class="topsection mb-3 me-5">
+          <div class="sectionlabel">
+            <div class="bold text-uppercase">
+              <strong class="me-2">${[vocabulariesCount, 'vocabulary'] | itemCounter}</strong>
+            </div>
+          </div>
+          <div class="import-wrap">
+            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newVocabulary" click.delegate="newVocabulary()">
+              <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="campaignlist pe-5 me-5" if.bind="vocabulariesCount > 0">
+          <div class="entries row" ref="grid">
+            <table class="user-group-table">
+              <tr>
+                <th t="dashboard:shortName"></th>
+                <th t="dashboard:title"></th>
+                <th t="dashboard:creationDate"></th>
+                <th t="dashboard:version"></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr repeat.for="voc of vocabularies">
+                <td>${voc.name}</td>
+                <td>${voc.label}</td>
+                <td>${voc.created}</td>
+                <td>${voc.version}</td>
+                <td>
+                  <i class="fa fa-edit clickable" click.delegate="curateVocabulary(voc)"></i>
+                </td>
+                <td class="red-trash">
+                  <i class="fa fa-trash clickable" click.delegate="deleteVocabulary(voc.dbId)"></i>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
+
+        <div if.bind="vocabulariesCount===0 && !loading">
+          <h5 class="text-center" t="[html]dashboard:noVocabulariesMessage"></h5>
+        </div>
+      </div>
+    </section>
+
+    <!-- Create Vocabulary Sidebar -->
+    <div id="editSidebar" class="sidebar">
+      <div class="action-header">
+        <div class="title" t="dashboard:newVocabulary"></div>
+      </div>
+      <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+      <div class="action-body">
+        <div class="form-group">
+          <label t="dashboard:shortName"></label>
+          <input type="text" placeholder.bind="i18n.tr('dashboard:shortNamePlaceholder')" value.bind="shortName">
+        </div>
+        <div class="form-group">
+          <label t="dashboard:title"></label>
+          <input type="text" placeholder.bind="i18n.tr('dashboard:titlePlaceholder')" value.bind="title">
+        </div>
+        <div class="form-group">
+          <label t="dashboard:version"></label>
+          <input type="text" placeholder.bind="i18n.tr('dashboard:versionPlaceholder')" value.bind="version">
+        </div>
+      </div>
+      <div class="d-flex justify-content-between button-group">
+        <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
+        <button t="app:create" class="btn-green" click.delegate="createVocabulary()"></button>
+      </div>
+    </div>
+  </main>

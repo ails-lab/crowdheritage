@@ -1,0 +1,80 @@
+<template>
+  <main>
+    <section class="collections mt-3">
+      <div class="container">
+        <div class="topsection mb-3 me-5">
+          <div class="sectionlabel">
+            <div class="bold">
+              <strong class="me-2">${[campaignsCount, 'campaign'] | itemCounter}</strong>
+            </div>
+          </div>
+          <div class="import-wrap">
+            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newCampaign" click.delegate="createCampaignSidebar()">
+              <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="campaignlist pe-5" if.bind="campaignsCount>0">
+          <!-- entry-->
+          <div class="entries row" ref="grid">
+            <div class="entry col-md-4 ${camp.username}" repeat.for="camp of campaigns">
+              <a route-href="route: campaign-edit; params.bind: { cname: camp.username, lang: loc }">
+                <div id="editThumbs" class="thumbs">
+                  <div class="ribbon">
+                    <span class.bind="camp.isPublic ? 'green' : 'red'">
+                      ${camp.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}
+                    </span>
+                  </div>
+                  <img class="centered-and-cropped" src.bind="camp.banner"
+                    onerror="this.src='/img/assets/img/ui/ic-noimage.png'">
+                  <div class="action">
+                    <h3><b t="dashboard:editCampaign"></b></h3>
+                  </div>
+                </div>
+                <!-- detail-->
+                <div class="detail pt-0">
+                  <!-- title-->
+                  <div class="desc" style="width: 100%;">
+                    <h4 class="title overflow-ellipsis mb-2">${camp.title ? camp.title : camp.username}</h4>
+                    <div class="owner">
+                      <span t="[prepend]summary:Created on"> ${camp.creationDate | dateFormat}</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- more-->
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+        </div>
+        <div if.bind="campaigns.length===0 && !loading">
+          <h5 class="text-center" t="[html]dashboard:noCampaignsMessage"></h5>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Create Campaign Sidebar -->
+  <div id="editSidebar" class="sidebar">
+    <div class="action-header">
+      <div class="title" t="dashboard:newCampaign"></div>
+    </div>
+    <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+    <div class="action-body">
+      <div class="form-group">
+        <label t="dashboard:usernameLabel"></label>
+        <input type="text" placeholder.bind="i18n.tr('dashboard:usernamePlaceholder')" value.bind="campaignUsername">
+      </div>
+    </div>
+    <div class="d-flex justify-content-between button-group">
+      <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
+      <button t="app:create" class="btn-green" click.delegate="createCampaign()"></button>
+    </div>
+  </div>
+
+</template>
