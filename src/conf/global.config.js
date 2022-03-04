@@ -4,7 +4,7 @@ var settings = {
   space: process.env.SPACE,
   auth: {
     google: process.env.WITH_GOOGLE_SECRET,
-    facebook: process.env.WITH_FACEBOOK_SECRET
+    facebook: process.env.CROWDHERITAGE_FACEBOOK_SECRET
   },
   baseUrl: process.env.BASE_URL, // Production backend
   apiUrl: process.env.API_URL,
