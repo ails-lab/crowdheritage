@@ -35,26 +35,3 @@ else {
 }
 
 export default settings;
-
-// MASTER CONFIGURATION
-/*var settings = {
-  project: 'CrowdHeritage',
-  space: 'espace',
-  auth: {
-    google: '',
-    facebook: ''
-  },
-  baseUrl: 'https://api.crowdheritage.eu', // Production backend
-  apiUrl: '/assets/developers-lite.html',
-  googlekey: '',
-  logLevel: 1 // Error: 1, Warn: 2, Info: 3, Debug: 4
-};
-
-try {
-  var localSettings = require('./local.config.js');
-  $.extend(true, settings, localSettings.settings);
-} catch (err) {
-  console.log("Local configuration file not available");
-}
-
-export default settings;*/
