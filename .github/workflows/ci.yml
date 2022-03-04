@@ -100,7 +100,7 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.1.1
       env:
           SSH_PRIVATE_KEY: ${{ secrets.WITH_CI_SSH_KEY }}
-          ARGS: "-v -c -rli --delete --exclude assets -b --backup-dir=/home/${DEPLOY_USER}/backups/with-frontend-${{ steps.extract_branch.outputs.branch }}_backup"
+          ARGS: "-v -c -rli --delete -b --backup-dir=/home/${DEPLOY_USER}/backups/with-frontend-${{ steps.extract_branch.outputs.branch }}_backup"
           SOURCE: "dist/"
           REMOTE_HOST: ${{ env.DEPLOY_SERVER }}
           REMOTE_USER: ${{ env.DEPLOY_USER }}
