@@ -27,7 +27,7 @@ else if (window.location.hostname === 'withcrowd.eu') {
   settings.project = 'WITHcrowd';
 }
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
-  settings.auth.facebook = CROWDHERITAGE_FACEBOOK_SECRET;
+  //settings.auth.facebook = CROWDHERITAGE_FACEBOOK_SECRET;
   settings.project = 'CrowdHeritage';
 }
 else {
