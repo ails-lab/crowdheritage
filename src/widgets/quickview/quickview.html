@@ -43,7 +43,7 @@
               </compose>
             </div>
           </div>
-          <div class="cntr" if.bind="!loadCamp && !loadRec && !edit">
+          <div class="cntr" if.bind="!loadCamp && !edit">
 						<br/>
             <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
             </compose>

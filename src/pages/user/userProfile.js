@@ -28,7 +28,7 @@ import settings from 'global.config.js';
 
 let logger = LogManager.getLogger('UserProfile.js');
 
-let COUNT = 10;
+let COUNT = 12;
 
 @inject(UserServices, MediaServices, CampaignServices, Router, I18N, 'loginPopup', NewInstance.of(ValidationController))
 export class UserProfile {
@@ -112,7 +112,7 @@ export class UserProfile {
 		route.navModel.setTitle(this.user.fullName + " | " + this.project);
 
 		this.campaigns = [];
-    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'all', sortBy: 'Date_desc', offset: 0, count: COUNT} )
+    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'active', sortBy: 'Date_desc', offset: 0, count: COUNT} )
       .then( (results) => {
 				for (let item of results) {
 		      // Based on the selected language, set the campaign
