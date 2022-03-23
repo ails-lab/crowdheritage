@@ -8,7 +8,7 @@
 	<div class="leaderboard">
 		<!-- list-->
 		<div class="user" repeat.for="user of topUsers">
-			<a route-href="route: user; params.bind: { uname: user[0].username, lang: currentLocale }">
+			<a route-href="route: user; params.bind: { uname: user[0].username, lang: currentLocale }" target="_blank">
 				<div class="no">${$index+1}</div>
 				<div class="thumbs"><img src.bind="getProfileImage(user[0])"></div>
 				<div class="details">
@@ -19,6 +19,12 @@
 					<span class="lbl" t="app:points">POINTS</span>
 				</div>
 			</a>
+		</div>
+	</div>
+	<div if.bind="!loading && more" class="leaderboard">
+		<div class="loadmore">
+			<a click.delegate="getTopUsers()" t="app:loadmore">LOAD MORE</a>
+			<div class="more"><i show.bind="loading && campaigns.length > 0" class="fa fa-spinner fa-pulse"></i></div>
 		</div>
 	</div>
 </template>

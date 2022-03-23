@@ -54,6 +54,8 @@ export class Leaderboard {
   get currentLocale() { return window.location.href.split('/')[3]; }
 
   async getTopUsers() {
+    this.loading = true;
+
     let lim = 0;
     if (this.offset+COUNT > this.campaign.contributorsCount) {
       lim = this.campaign.contributorsCount;
@@ -70,6 +72,8 @@ export class Leaderboard {
     if (this.offset >= this.campaign.contributorsCount) {
       this.more = false;
     }
+
+    this.loading = false;
   }
 
   async getUserData(userId, points) {
@@ -78,12 +82,6 @@ export class Leaderboard {
     if (points > 0) {
       this.topUsers.push([user, points]);
     }
-  }
-
-  loadMore() {
-    this.loading = true;
-    this.getTopUsers();
-    this.loading = false;
   }
 
   getProfileImage(user) {

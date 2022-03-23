@@ -1419,6 +1419,7 @@ body main section.campaignstats .right .leaderboard {
   max-height: 300px;
   align-items: center;
   margin-top: 25px;
+  overflow-x: auto;
 }
 
 body main section.campaignstats .right .sectionlabel {
@@ -1435,7 +1436,7 @@ body main section.campaignstats .right .heading {
 }
 
 body main section.campaignstats .right .leaderboard div.user {
-  padding-right: 50px;
+  padding-right: 40px;
 }
 
 body main section.campaignstats .right .leaderboard div a {
@@ -1502,11 +1503,15 @@ body main section.campaignstats .right .leaderboard div div.thumbs img {
 
 body main section.campaignstats .right .leaderboard div div.details {
   width: 150px;
+  padding-right: 8px;
 }
 
 body main section.campaignstats .right .leaderboard div div.details .name {
   font-size: 1.4rem;
   line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 body main section.campaignstats .right .leaderboard div div.points {
