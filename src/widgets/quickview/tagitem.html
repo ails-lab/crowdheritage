@@ -9,8 +9,8 @@
               <li repeat.for="ann of annotations" if.bind="isValidatedBy(ann, 'all')">
                 <div class="text">
                   <span style.bind="isCreatedBy(ann) ? 'color: #00ac83;' : ''">${ann.label}</span>
-                  <span class="cg-label" title="Computer-generated annotation" if.bind="isComputerGenerated(ann)">(CG)</span>
-                  <span class="tooltiptext">Created By : <b style="color: white;">${getCreator(ann)}</b></span>
+                  <!-- <span class="cg-label" title="Computer-generated annotation" if.bind="isComputerGenerated(ann)">(CG)</span>
+                  <span class="tooltiptext">Created By : <b style="color: white;">${getCreator(ann)}</b></span> -->
                 </div>
                 <ul class="action">
                   <li class.bind="isValidatedBy(ann, 'approved') ? 'up active' : 'up'" title="Upvotes">

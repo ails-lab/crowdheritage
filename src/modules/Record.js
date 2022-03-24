@@ -168,6 +168,7 @@ export class Record {
       }
     }
     this.annotations = data.annotationIds ? data.annotationIds : [];
+    this.annotationObjects = data.annotations ? data.annotations : [];
 
     if (data.descriptiveData.creator) {
       this.creator = data.descriptiveData.creator;

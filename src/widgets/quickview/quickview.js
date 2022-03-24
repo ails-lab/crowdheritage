@@ -104,9 +104,8 @@ export class quickview {
         }
         if (params.userId) {
           this.userId = params.userId;
-        }      
+        }
       }
-      console.log(this.record)
   }
 
   hasMotivation(name) {

@@ -45,13 +45,15 @@
           </div>
           <div class="cntr" if.bind="!loadCamp && !edit">
 						<br/>
-            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
+            <compose view="widgets/quickview/tagitem.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Tagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
-            <compose view="widgets/quickview/tagitem.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
+            <compose view="widgets/quickview/taggeo.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('GeoTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
-            <compose view="widgets/quickview/taggeo.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('GeoTagging')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
+            <compose view="widgets/quickview/tagcomment.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Commenting')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
-						<compose view="widgets/quickview/tagpoll.html" view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Polling')" model.bind="{'campaign': campaign, 'recId': record.dbId, 'userId': userId}">
+            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('ColorTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
+            </compose>
+						<compose view="widgets/quickview/tagpoll.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Polling')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
           </div>
         </div>
