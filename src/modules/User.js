@@ -42,7 +42,7 @@ export class User {
 
 	// Properties
 	get id() { return this.dbId; }
-	get fullName() { return `${this.firstName} ${this.lastName}`; }
+	get fullName() { return (this.firstName && this.lastName) ? `${this.firstName} ${this.lastName}` : this.username; }
 	get profileImage() {
 		if (this.avatar && this.avatar.Square) {
 			return `${settings.baseUrl}${this.avatar.Square}`;

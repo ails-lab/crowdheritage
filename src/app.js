@@ -88,7 +88,7 @@ export class App {
 			{ route: ':lang/partners', href: 'partners', name: 'partners',         moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: true,  title: 'Partners | '+settings.project},
 			{ route: ':lang/privacy',                    name: 'privacy',  	       moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
 			{ route: ':lang/terms',                      name: 'terms',    	       moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
-			{ route: ':lang/user/:uname', 	             name: 'user',			       moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
+			{ route: ':lang/user/:userId', 	             name: 'user',			       moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
 			{ route: ':lang/feedback',                   name: 'feedback',	       moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
       { route: ':lang/dashboard/:resource',        name: 'dashboard',	       moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
       { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/collection-edit/collection-edit'), nav: false, title: ''},

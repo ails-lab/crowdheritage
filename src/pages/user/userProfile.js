@@ -96,12 +96,12 @@ export class UserProfile {
     	this.userServices.reloadCurrentUser();
     }
 
-		if (this.currentUser && (params.uname == this.currentUser.username)) {
+		if (this.currentUser && (params.userId == this.currentUser.dbId)) {
 				this.myProfile = true;
 				this.user = this.currentUser;
 		}
 		else {
-			let userData = await this.userServices.getUserByUsername(params.uname);
+			let userData = await this.userServices.getUser(params.userId);
 			this.user = new User(userData);
 		}
 

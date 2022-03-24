@@ -8,7 +8,7 @@
 	<div class="leaderboard">
 		<!-- list-->
 		<div class="user" repeat.for="user of topUsers">
-			<a route-href="route: user; params.bind: { uname: user[0].username, lang: currentLocale }" target="_blank">
+			<a route-href="route: user; params.bind: { userId: user[0].dbId, lang: currentLocale }" target="_blank">
 				<div class="no">${$index+1}</div>
 				<div class="thumbs"><img src.bind="getProfileImage(user[0])"></div>
 				<div class="details">
