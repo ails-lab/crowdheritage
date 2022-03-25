@@ -22,12 +22,11 @@ if (window.location.hostname === 'localhost') {
 }
 // Override for staging
 else if (window.location.hostname === 'withcrowd.eu') {
-  settings.auth.facebook = WITHCROWD_FACEBOOK_SECRET;
-  settings.baseUrl = WITHCROWD_BASE_URL;
+  settings.auth.facebook = process.env.WITHCROWD_FACEBOOK_SECRET;
+  settings.baseUrl = process.env.WITHCROWD_BASE_URL;
   settings.project = 'WITHcrowd';
 }
 else if (window.location.hostname === 'crowdheritage.eu' || window.location.hostname === 'www.crowdheritage.eu') {
-  //settings.auth.facebook = CROWDHERITAGE_FACEBOOK_SECRET;
   settings.project = 'CrowdHeritage';
 }
 else {
