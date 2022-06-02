@@ -24,6 +24,7 @@ export class Record {
 
   constructor(data) {
     this.validImg = this.findValidImg(data.media);
+    this.withImg = `${settings.baseUrl}/media/byUrl?url=${this.validImg.original}&version=Thumbnail`;
     this.myfullimg = this.getGlobal('/img/assets/img/loader.gif');
     this.imgworks = false;
     this.source_uri = '';
