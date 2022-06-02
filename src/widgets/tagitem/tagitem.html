@@ -65,7 +65,7 @@
                 </a>
               </li>
               <li class="delete"
-                if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0">
+                if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0 || isCurrentUserCreator()">
                 <a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'tag', tagType)">
                   <img src="/img/ic-delete.png">
                 </a>

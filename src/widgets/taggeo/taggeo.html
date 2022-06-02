@@ -55,7 +55,7 @@
               	<span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
             	</a>
 						</li>
-          	<li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0">
+          	<li class="delete" if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0 || isCurrentUserCreator()">
             	<a href="javascript:void(0)" click.delegate="deleteAnnotation(ann.dbId, $index, 'geo', '')">
               	<img src="/img/ic-delete.png">
             	</a>
