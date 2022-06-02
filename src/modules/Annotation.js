@@ -26,6 +26,10 @@ export class Annotation {
 				this.label = this.capitalizeFirstLetter(data.body.label.fr[0]);
 			else if (lang === 'it' && typeof data.body.label.it !== 'undefined')
 				this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
+      else if (lang === 'es' && typeof data.body.label.es !== 'undefined')
+        this.label = this.capitalizeFirstLetter(data.body.label.es[0]);
+      else if (lang === 'pl' && typeof data.body.label.pl !== 'undefined')
+        this.label = this.capitalizeFirstLetter(data.body.label.pl[0]);
 		}
 
     this.createdBy = data.annotators;
