@@ -50,6 +50,7 @@ export class UserProfile {
 		this.i18n = i18n;
 		this.errors = [];
 
+		this.loading = false;
 		this.campaign = null;
 		this.campaigns = [];
 		this.campName = '';
@@ -111,18 +112,27 @@ export class UserProfile {
 
 		route.navModel.setTitle(this.user.fullName + " | " + this.project);
 
+		this.loading = true;
 		this.campaigns = [];
-    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'active', sortBy: 'Date_desc', offset: 0, count: COUNT} )
+    this.campaignServices.getCampaigns( {group: '', project: this.project, state: 'all', sortBy: 'Date_desc', offset: 0} )
       .then( (results) => {
 				for (let item of results) {
 		      // Based on the selected language, set the campaign
-					this.campaigns.push(new Campaign(item, this.loc));
+					let camp = new Campaign(item, this.loc);
+					if (this.user.id in camp.userPoints) {
+						this.campaigns.push(camp);
+					}
 				}
 				this.campaign = this.campaigns[0];
 				this.campName = this.campaign.title;
 				this.campUsername = this.campaign.username;
 				this.getUserStats(this.campaign.username);
-      });
+				this.loading = false;
+      })
+			.catch(error => {
+				toastr.danger('Error loading user statistics');
+				this.loading = false;
+			});
   }
 
 	// This weird syntax is necessary to be able to access *this*

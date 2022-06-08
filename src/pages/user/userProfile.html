@@ -13,7 +13,7 @@
           <div role="progressbar" aria-valuenow="${karma}" aria-valuemin="0" aria-valuemax="100" style="width: ${karma}%;" class="progress-bar">
             <div class="labl">${karma}%</div>
           </div>
-        </div> 
+        </div>
         <div class="bgwrap" style="background-image: img/bg-banner.png;"></div>
       </div>
     </section>
@@ -77,7 +77,10 @@
 				<!-- right-->
 				<div class="right">
 					<!-- wrap-->
-					<div class="wrap">
+          <div class="wrap text-center" if.bind="loading">
+            <i class="fa fa-spinner fa-pulse"></i>
+          </div>
+					<div class="wrap" if.bind="!loading">
             <!-- Sort - Filter-->
             <div class="userpage sort">
               <!-- sort-->
