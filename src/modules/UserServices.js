@@ -16,7 +16,8 @@
 
 import { inject } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
-import { AuthService } from 'aurelia-authentication';
+// import { AuthService } from 'aurelia-authentication';
+import { AuthService } from 'aurelia-auth';
 import fetchConfig from 'fetch.config.js';
 import { checkStatus } from 'fetch.config.js';
 import { User } from 'User.js';
@@ -40,6 +41,7 @@ export class UserServices {
 
 	// Check if there is a logged user
 	isAuthenticated() {
+    console.log(this.auth)
 		return this.auth.isAuthenticated();
 	}
 
@@ -103,8 +105,10 @@ export class UserServices {
 	login(credentials, options = {}, redirectUri = null) {
 		return this.auth.login(credentials, options, redirectUri)
 			.then((response) => {
-				this.current = new User(response);
+        this.auth.setToken(response.accessToken)
+        localStorage.setItem('access_token', response.accessToken);
 				this.ea.publish('login', {});
+        this.reloadCurrentUser();
 			})
 			.catch((error) => {
 				console.log(error.body);
@@ -133,6 +137,7 @@ export class UserServices {
 	}
 
 	logout(redirectUri = null) {
+    this.auth.logout();
 		this.ea.publish('logout', {});
 		this.current = null;
 		if(window.opener)

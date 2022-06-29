@@ -46,7 +46,7 @@ export class LoginDialog {
 	// Functionality
 	signin() {
 		this.userServices.login({
-			email: this.email,
+      emailOrUsername: this.email,
 			password: this.password
 		}, {}, 0).then((response) => {	// Do not redirect
 			if (response === "Invalid email/username or password") {

@@ -33,6 +33,9 @@ export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
+    .plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig) => {
+      baseConfig.configure(config);
+    })
     .plugin(PLATFORM.moduleName('aurelia-animator-velocity'), (instance) => {
 			instance.options.duration = 200;
 			instance.options.easing = 'linear';
@@ -68,9 +71,9 @@ export async function configure(aurelia) {
       config.settings.startingZIndex = 5;
       config.settings.keyboard = true;
     })
-    .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
-			baseConfig.configure(config);
-		})
+    // .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
+		// 	baseConfig.configure(config);
+		// })
     .plugin(PLATFORM.moduleName('aurelia-validation'))
     .plugin(PLATFORM.moduleName('aurelia-i18n'), instance => {
       let aliases = ['t', 'i18n'];

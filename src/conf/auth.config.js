@@ -16,22 +16,25 @@
 
 import settings from './global.config.js';
 
-export default {
-	baseUrl: settings.baseUrl,
-	signupUrl: '/user/register',
-	loginUrl: '/user/login',
-	profileUrl: '/user/me',
-	token_prefix: 'WITH',
-	accessTokenName: 'dbId',
-	loginRedirect: '#/my',
-	providers: {
-		google: {
-			clientId: settings.auth.google,
-			url: '/user/googleLogin'
-		},
-		facebook: {
-			clientId: settings.auth.facebook,
-			url: '/user/facebookLogin'
-		}
-	}
+var config = {
+  baseUrl: settings.baseUrl,
+  signupUrl: '/user/register',
+  loginUrl: '/user/login',
+  profileUrl: '/user/me',
+  tokenName: 'id_token',
+  // token_prefix: 'WITH',
+  // accessTokenName: 'dbId',
+  loginRedirect: '#/my',
+  providers: {
+    google: {
+      clientId: '239531826023-ibk10mb9p7ull54j55a61og5lvnjrff6.apps.googleusercontent.com',
+      url: '/user/googleLogin'
+    },
+    facebook: {
+      clientId: '1452782111708498',
+      url: '/user/facebookLogin'
+    }
+  }
 };
+
+export default config;

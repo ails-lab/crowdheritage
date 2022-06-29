@@ -19,19 +19,24 @@ import { DialogService } from 'aurelia-dialog';
 import { UserServices } from './modules/UserServices.js';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
+// import HttpClientConfig from 'aurelia-auth/app.httpClient.config';
+import {FetchConfig} from 'aurelia-auth';
+
+import {AuthorizeStep} from 'aurelia-auth';
 import less from 'less';
 
 // The styles.less import is now obsolete
 // We import it, through the color-set.less files
 //import './../styles/styles.less';
 
-@inject(DialogService, UserServices, Container, I18N)
+@inject(DialogService, UserServices, Container, I18N, FetchConfig)
 export class App {
 
-  constructor(dialogService, userServices, container, i18n) {
+  constructor(dialogService, userServices, container, i18n, fetchConfig) {
     this.project = settings.project;
     // Load the desired locale
     this.i18n = i18n;
+    this.fetchConfig = fetchConfig;
     /*this.i18n
         .setLocale('en')
         .then( () => {
@@ -61,6 +66,7 @@ export class App {
   }
 
   activate() {
+    this.fetchConfig.configure();
 		if (this.userServices.isAuthenticated() && this.userServices.current === null) {
 			return Promise.all([
 				this.userServices.reloadCurrentUser()
@@ -74,6 +80,7 @@ export class App {
 
   configureRouter(config, router) {
     config.title = '';
+    config.addPipelineStep('authorize', AuthorizeStep);
     config.addPipelineStep('postcomplete', PostCompleteStep);
     config.options.pushState = true;
     config.options.root = '/';
@@ -90,7 +97,7 @@ export class App {
 			{ route: ':lang/terms',                      name: 'terms',    	       moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},
 			{ route: ':lang/user/:userId', 	             name: 'user',			       moduleId: PLATFORM.moduleName('./pages/user/userProfile'),				      nav: false, title: ''},
 			{ route: ':lang/feedback',                   name: 'feedback',	       moduleId: PLATFORM.moduleName('./pages/feedback/feedback'),            nav: false, title: 'Feedback & Contact | '+settings.project},
-      { route: ':lang/dashboard/:resource',        name: 'dashboard',	       moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project},
+      { route: ':lang/dashboard/:resource',        name: 'dashboard',	       moduleId: PLATFORM.moduleName('./pages/dashboard/dashboard'),          nav: false, title: 'Dashboard | '+settings.project, auth: true},
       { route: ':lang/collection-edit/:colid',     name: 'collection-edit',	 moduleId: PLATFORM.moduleName('./pages/collection-edit/collection-edit'), nav: false, title: ''},
       { route: ':lang/campaign-edit/:cname',       name: 'campaign-edit',	   moduleId: PLATFORM.moduleName('./pages/campaign-edit/campaign-edit'),  nav: false, title: ''},
       { route: ':lang/vocabulary-edit/:vname',     name: 'vocabulary-edit',	 moduleId: PLATFORM.moduleName('./pages/vocabulary-edit/vocabulary-edit'),  nav: false, title: ''}

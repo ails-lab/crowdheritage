@@ -37,6 +37,7 @@ const coreBundles = {
   aurelia: [
   	'aurelia-api',
   	'aurelia-authentication',
+    'aurelia-auth',
   	'aurelia-binding',
   	'aurelia-dependency-injection',
   	'aurelia-event-aggregator',
@@ -119,7 +120,8 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       baseUrl: baseUrl
     }),
     new ModuleDependenciesPlugin({
-      'aurelia-authentication': [ './authFilterValueConverter' ]
+      // 'aurelia-authentication': [ './authFilterValueConverter' ],
+      'aurelia-auth': [ './auth-filter' ]
     }),
     new webpack.ProvidePlugin({
       regeneratorRuntime: 'regenerator-runtime', // to support await/async syntax

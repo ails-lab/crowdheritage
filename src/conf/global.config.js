@@ -15,7 +15,7 @@ var settings = {
 // Override settings for development/testing etc
 if (window.location.hostname === 'localhost') {
   // settings.baseUrl = process.env.WITH_BASE_URL;  // Original WITH-backend
-  settings.baseUrl = process.env.DEV_BASE_URL;   // Backend with test-DB
+  settings.baseUrl = process.env.NEW_BACKEND_URL;   // Backend with test-DB
   // settings.baseUrl = process.env.LOCAL_BASE_URL; // Local backend for testing
   // settings.project = 'WITHcrowd';
   settings.logLevel = 4; // Debug
