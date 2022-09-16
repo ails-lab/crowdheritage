@@ -235,9 +235,10 @@ export class UserServices {
 
   resetPassword(emailOrUsername) {
 		return this.http.fetch(`/user/resetPassword/${emailOrUsername}`, {
-			method: 'POST'
+			method: 'GET'
 		}).then(checkStatus)
-			.then((response) => response.json());
+			.then((response) => {
+        response.json()});
 	}
 
   changePassword(jsonBody) {

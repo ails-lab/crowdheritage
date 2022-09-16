@@ -75,7 +75,6 @@ export class LoginDialog {
 
   forgetPasswordSubmit(){
     this.userServices.resetPassword(this.emailForget).then(response => {
-      // console.log(response)
       toastr.success("Instructions to change your password were sent to your account's email");
 
     }).catch( error => {

@@ -58,10 +58,19 @@ export class Register {
       token: this.token,
       password: this.password
     }).then(response => {
-      console.log(response);
+      if (response.ok) {
+
+        toastr.success("Password changed successfully.</br> You can now sign in with your new credentials.")
+        this.router.navigateToRoute('index', { lang: this.loc });
+      }
+      else{
+				response.json().then((data) => {
+					toastr.error(data.error);
+      })
+    }
     }).catch(error => {
-      toastr.error(error);
-    })
+        toastr.error(error);
+      })
   }
 
 }
