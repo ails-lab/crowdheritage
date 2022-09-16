@@ -43,6 +43,16 @@ export class LoginDialog {
 		$('.externalLogin').slideDown();
 	}
 
+  showForgetPasswordDialog(){
+    $('.forgetPasswordDialog').slideDown();
+    $('.emailLogin').slideUp();
+  }
+
+  cancelForgetPassword(){
+    $('.externalLogin').slideDown();
+    $('.forgetPasswordDialog').slideUp();
+  }
+
 	// Functionality
 	signin() {
 		this.userServices.login({
@@ -62,6 +72,17 @@ export class LoginDialog {
 			logger.error(error);
 		});
 	}
+
+  forgetPasswordSubmit(){
+    this.userServices.resetPassword(this.emailForget).then(response => {
+      // console.log(response)
+      toastr.success("Instructions to change your password were sent to your account's email");
+
+    }).catch( error => {
+      toastr.error("This email/username does not exist");
+      logger.error(error);
+    })
+  }
 
 	authenticate(provider) {
 		this.userServices.authenticate(provider, this.router.currentInstruction.fragment)
