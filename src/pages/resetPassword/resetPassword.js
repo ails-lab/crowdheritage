@@ -54,6 +54,10 @@ export class Register {
       toastr.error("Password and Repeat Password must match");
       return;
     }
+    if( this.password.length < 6){
+      toastr.error("Password must contain at least 6 characters");
+      return;
+    }
     this.userServices.changePassword({
       token: this.token,
       password: this.password
