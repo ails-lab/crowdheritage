@@ -12,6 +12,8 @@
   "login-message-left": "¿Tiene una cuenta?",
   "login-message-right": "La adhesión es rápida y sencilla",
   "login-message-alt": "Inciciar sesión con Facebook or Google",
+  "login-back"          : "Back",
+  "login-forget-password":"Forgot Password?",
   "campaign": "Campaña",
   "campaigns": "Campaña",
   "contribute": "contribuir ahora",

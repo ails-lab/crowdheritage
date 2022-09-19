@@ -2837,6 +2837,12 @@ button.google:hover:enabled {
 button.email:hover:enabled {
 	background-image: linear-gradient(#b5b5b5, #a1a1a1);
 }
+button.non-underlined:hover {
+	text-decoration: none;
+}
+span.dark-red:hover{
+  color: #7d2220;
+}
 #loginPopup {
 	box-sizing: border-box;
 	max-width: 570px;
@@ -2854,6 +2860,10 @@ button.email:hover:enabled {
 	padding: 30px 0;
 }
 .emailLogin {
+	vertical-align: top;
+	display: none;
+}
+.forgetPasswordDialog {
 	vertical-align: top;
 	display: none;
 }

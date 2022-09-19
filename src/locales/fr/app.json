@@ -11,6 +11,8 @@
   "login-message-left"  : "Vous n'avez pas encore de compte ?",
   "login-message-right" : "L’inscription est rapide et facile",
   "login-message-alt"   : "Se connecter avec Facebook ou Google",
+  "login-back"          : "Back",
+  "login-forget-password":"Forgot Password?",
 
   "campaign"            : "CAMPAGNE",
   "campaigns"           : "CAMPAGNES",
