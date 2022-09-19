@@ -13,8 +13,8 @@
   "login-message-right" : "Joining is quick and easy",
   "login-message-alt"   : "Login with Facebook or Google",
   "login-back"          : "Back",
-  "login-forget-password":"Forgot Password?",
-
+  "login-reset-password": "Reset password",
+  "login-forget-password": "Forgot Password?",
 
   "campaign"            : "CAMPAIGN",
   "campaigns"           : "CAMPAIGNS",
@@ -59,5 +59,7 @@
 
   "footer-involved"     : "Get involved: it’s easy!",
   "footer-sign"         : "Sign in on the Platform and begin!",
-  "footer-register"     : "Register now"
+  "footer-register"     : "Register now",
+  "cancel"              : "Cancel",
+  "reset"               : "Reset"
 }

@@ -51,7 +51,7 @@ export class Register {
 
   submit() {
     if (!this.checkValidity()) {
-      toastr.error("Password and Repeat Password must match");
+      toastr.error("Passwords do not match");
       return;
     }
     if( this.password.length < 6){
@@ -63,8 +63,7 @@ export class Register {
       password: this.password
     }).then(response => {
       if (response.ok) {
-
-        toastr.success("Password changed successfully.</br> You can now sign in with your new credentials.")
+        toastr.success("Password changed successfully. Please login.")
         this.router.navigateToRoute('index', { lang: this.loc });
       }
       else{

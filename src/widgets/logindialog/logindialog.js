@@ -18,16 +18,18 @@ import { inject, LogManager } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { UserServices } from 'UserServices.js';
 import { Router } from 'aurelia-router';
+import { I18N } from 'aurelia-i18n';
 
 let logger = LogManager.getLogger('logindialog.js');
 
-@inject(DialogController, UserServices, Router)
+@inject(DialogController, UserServices, Router, I18N)
 export class LoginDialog {
 
-	constructor(controller, userServices, router) {
+	constructor(controller, userServices, router, i18n) {
 		this.controller = controller;
 		this.userServices = userServices;
 		this.router = router;
+		this.i18n = i18n;
 	}
 
 	get currentLocale() { return window.location.href.split('/')[3]; }
@@ -46,11 +48,14 @@ export class LoginDialog {
   showForgetPasswordDialog(){
     $('.forgetPasswordDialog').slideDown();
     $('.emailLogin').slideUp();
+		$('#dialogHeader').text(this.i18n.tr('app:login-reset-password'));
   }
 
   cancelForgetPassword(){
-    $('.externalLogin').slideDown();
+    $('.emailLogin').slideDown();
     $('.forgetPasswordDialog').slideUp();
+		this.emailForget = '';
+		$('#dialogHeader').text(this.i18n.tr('app:login-header'));
   }
 
 	// Functionality
@@ -75,8 +80,8 @@ export class LoginDialog {
 
   forgetPasswordSubmit(){
     this.userServices.resetPassword(this.emailForget).then(response => {
-      toastr.success("Instructions to change your password were sent to your account's email");
-
+      toastr.success("A link to reset your password was sent to your email");
+			this.controller.ok();
     }).catch( error => {
       toastr.error("This email/username does not exist");
       logger.error(error);

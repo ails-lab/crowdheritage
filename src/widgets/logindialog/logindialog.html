@@ -4,7 +4,7 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 
-		<h2 t="app:login-header">Sign in to CrowdHeritage</h2>
+		<h2 t="app:login-header" id="dialogHeader">Sign in to CrowdHeritage</h2>
 
 			<div class="externalLogin">
 				<button class="facebook" type="button" click.delegate="authenticate('facebook')">
@@ -19,26 +19,27 @@
           <i class="google_small"></i>
 					<span>Google</span>
 				</button>
-        
+
 				<div class="footer" t="[prepend]app:login-message-left"><a t="app:login-message-right" href="javascript:void(0)" click.delegate="register()">Joining is quick and easy</a>.</div>
 			</div>
       <div class="forgetPasswordDialog">
-        <p>Specify your email or password to retrieve your account</p>
-        <form class="form mt-5 px-2">
-          <div class="row">
-            <div class="col-md-8 col-sm-8 col-ms-8 col-xs-12">
+        <form class="form mt-4 px-5 mx-2">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-sm-12 col-ms-12 col-xs-12">
               <div class="form-group" data-bind="validationElement: emailUser" style="vertical-align: top;">
                 <label class="sr-only" for="useremailforget">Email or Username</label>
                 <input type="text" class="form-control" id="useremailforget" placeholder="Username or E-mail" value.bind="emailForget" hasfocus />
               </div>
             </div>
-            <div class="col-md-2 col-sm-2 col-ms-2 col-xs-12 px-1">
-              <button type="submit" class="btn btn-primary btn-block" click.delegate="forgetPasswordSubmit()" style="vertical-align: top;">Submit</button>
-            </div>
-            <div class="col-md-2 col-sm-2 col-ms-2 col-xs-12 px-1">
-              <button type="submit" class="btn btn-light btn-block" click.delegate="cancelForgetPassword()" style="vertical-align: top;">Cancel</button>
-            </div>
           </div>
+					<div class="row d-flex justify-content-between mt-4 mb-5">
+						<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12 d-flex justify-content-start">
+							<button type="button" class="btn btn-light btn-block w-50" click.delegate="cancelForgetPassword()" t="app:cancel"></button>
+						</div>
+						<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12 d-flex justify-content-end">
+							<button type="submit" class="btn btn-primary btn-block w-50" click.delegate="forgetPasswordSubmit()" t="app:reset"></button>
+						</div>
+					</div>
         </form>
       </div>
 			<div class="emailLogin">
