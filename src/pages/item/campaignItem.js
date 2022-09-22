@@ -74,10 +74,6 @@ export class CampaignItem {
 		return this.offset == (this.collectionCount - 1);
 	}
 
-  get isLiked(){
-		return this.recordServices.isLiked(this.record.externalId);
-	}
-
 	previousItem() {
     // clear previous media
     this.mediaDiv = '';
@@ -242,37 +238,6 @@ export class CampaignItem {
     }
   }
 
-  toggleFullscreen(){
-    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-    (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-    (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-    (document.msFullscreenElement && document.msFullscreenElement !== null);
-
-    var docElm = document.documentElement;
-    if (!isInFullScreen) {
-      if (docElm.requestFullscreen) {
-        docElm.requestFullscreen();
-      } else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen();
-      } else if (docElm.webkitRequestFullScreen) {
-        docElm.webkitRequestFullScreen();
-      } else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen();
-      }
-      screen.orientation.lock("landscape");
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    }
-  }
-
 	loadRecordFromBatch(){
 		this.record = this.records.shift();
 		this.loadRec = false;
@@ -341,10 +306,6 @@ export class CampaignItem {
 		this.loadNextRecord();
   }
 
-  hasMotivation(name) {
-    return !!this.campaign.motivation.includes(name);
-  }
-
   get hasCollection() {
     return (this.collectionTitle.length>0);
   }
@@ -391,63 +352,6 @@ export class CampaignItem {
 
   returnToCollection() {
     this.router.navigateToRoute('collection', {lang: this.loc, cname: this.campaign.username, colid: this.collection.dbId});
-  }
-
-  openModal() {
-    var modal = document.getElementById("myModal");
-    var img = document.getElementById("recImg");
-    var modalImg = document.getElementById("modalImg");
-    var banner = document.getElementById("banner");
-    modal.style.display = "block";
-    banner.style.display = "none";
-  }
-
-  closeModal() {
-    var modal = document.getElementById('myModal');
-    var banner = document.getElementById("banner");
-    banner.style.display = "block";
-    modal.style.display = "none";
-  }
-
-  getValidImg(rec, alt) {
-    if (this.campaign.username === 'garment-type' || this.campaign.username === 'garment-classification')
-      return rec.myfullimg;
-    else
-      return alt;
-  }
-
-  likeRecord() {
-    document.body.style.cursor = 'wait';
-    if (this.isLiked) {
-      this.recordServices.unlike(this.record.externalId)
-        .then(response => {
-          let index = this.userServices.current.favorites.indexOf(this.record.externalId);
-          if (index > -1) {
-            this.userServices.current.favorites.splice(index, 1);
-            this.userServices.current.count.myFavorites -= 1;
-          }
-          document.body.style.cursor = 'default';
-        })
-        .catch(error => {
-          toastr.error(error.message);
-          document.body.style.cursor = 'default';
-        });
-    }
-    else {
-      this.recordServices.like(this.record.data)
-        .then(response => {
-          let index = this.userServices.current.favorites.indexOf(this.record.externalId);
-          if (index == -1) {
-            this.userServices.current.favorites.push(this.record.externalId);
-            this.userServices.current.count.myFavorites += 1;
-            document.body.style.cursor = 'default';
-          }
-        })
-        .catch(error => {
-          toastr.error(error.message);
-          document.body.style.cursor = 'default';
-        });
-    }
   }
 
 }
