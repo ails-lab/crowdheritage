@@ -84,6 +84,7 @@ export class App {
 			{ route: ':lang/:cname/collection/:colid',   name: 'collection',       moduleId: PLATFORM.moduleName('./pages/collection/collectionSummary'), nav: false, title: ''},
 			{ route: ':lang/:cname/:recid',              name: 'item',     	       moduleId: PLATFORM.moduleName('./pages/item/campaignItem'),            nav: false, title: 'Annotate | '+settings.project, activationStrategy: 'replace' },
       { route: ':lang/register',                   name: 'register', 	       moduleId: PLATFORM.moduleName('./pages/register/register'),            nav: false, title: 'Register | '+settings.project},
+      { route: ':lang/resetPassword',              name: 'resetPassword', 	 moduleId: PLATFORM.moduleName('./pages/resetPassword/resetPassword'),  nav: false, title: 'Reset Password | '+settings.project},
       { route: ':lang/about', href: 'about',       name: 'about',    	       moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
 			{ route: ':lang/partners', href: 'partners', name: 'partners',         moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: true,  title: 'Partners | '+settings.project},
 			{ route: ':lang/privacy',                    name: 'privacy',  	       moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
