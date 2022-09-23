@@ -40,6 +40,10 @@ export class Metadata {
 		this.rightsImage = null;
   }
 
+  attached() {
+		toggleMore(".meta");
+  }
+
   async activate(params) {
     this.record = params.record;
     try {
