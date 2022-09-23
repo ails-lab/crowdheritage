@@ -148,7 +148,6 @@ export class CampaignItem {
 
   attached() {
     $('.accountmenu').removeClass('active');
-		toggleMore(".meta");
 
     //var scrollPoint = document.getElementById("scrollPoint");
     //scrollPoint.scrollIntoView( {behavior: 'smooth'} );
