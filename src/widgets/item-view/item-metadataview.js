@@ -3,8 +3,6 @@ import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
-import { Record } from 'Record.js';
-import { Campaign } from 'Campaign.js';
 
 @inject(Router, I18N, UserServices, RecordServices)
 export class ItemMetadataView {
@@ -28,7 +26,6 @@ export class ItemMetadataView {
     this.campaign = params.campaign;
     this.record = params.record;
     this.mediaDiv = params.mediaDiv;
-    this.collectionTitle = params.collectionTitle;
 
     this.recId = this.record.dbId;
   }

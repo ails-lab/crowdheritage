@@ -3,8 +3,6 @@ import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
-import { Record } from 'Record.js';
-import { Campaign } from 'Campaign.js';
 
 @inject(Router, I18N, UserServices, RecordServices)
 export class ItemDataView {
@@ -24,10 +22,12 @@ export class ItemDataView {
   }
 
   activate(params) {
-    this.loc = params.lang;
+    this.loc = params.loc;
     this.campaign = params.campaign;
     this.record = params.record;
     this.mediaDiv = params.mediaDiv;
+    this.records = params.records;
+    this.previous = params.previous;
     this.collectionTitle = params.collectionTitle;
 
     this.recId = this.record.dbId;
@@ -41,8 +41,6 @@ export class ItemDataView {
 
   openModal() {
     var modal = document.getElementById("myModal");
-    var img = document.getElementById("recImg");
-    var modalImg = document.getElementById("modalImg");
     var banner = document.getElementById("banner");
     modal.style.display = "block";
     banner.style.display = "none";
@@ -97,7 +95,7 @@ export class ItemDataView {
     document.body.style.cursor = 'wait';
     if (this.isLiked) {
       this.recordServices.unlike(this.record.externalId)
-        .then(response => {
+        .then(() => {
           let index = this.userServices.current.favorites.indexOf(this.record.externalId);
           if (index > -1) {
             this.userServices.current.favorites.splice(index, 1);
@@ -112,7 +110,7 @@ export class ItemDataView {
     }
     else {
       this.recordServices.like(this.record.data)
-        .then(response => {
+        .then(() => {
           let index = this.userServices.current.favorites.indexOf(this.record.externalId);
           if (index == -1) {
             this.userServices.current.favorites.push(this.record.externalId);

@@ -46,14 +46,15 @@
       view="widgets/item-view/item-dataview.html"
       view-model="widgets/item-view/item-dataview"
       model.bind="{'loc': loc, 'campaign': campaign, 'record': record,
-                   'mediaDiv': mediaDiv, 'collectionTitle': collectionTitle}">
-    </compose>
+                   'mediaDiv': mediaDiv, 'records': records,
+                   'previous': previous, 'collectionTitle': collectionTitle}"
+    ></compose>
     <compose
       if.bind="!loadRec && !loadCamp && campaign.orientation == 'METADATA'"
       view="widgets/item-view/item-metadataview.html"
       view-model="widgets/item-view/item-metadataview"
       model.bind="{'loc': loc, 'campaign': campaign, 'record': record,
-                   'mediaDiv': mediaDiv, 'collectionTitle': collectionTitle}">
-    </compose>
+                   'mediaDiv': mediaDiv}"
+    ></compose>
   </main>
 </template>
