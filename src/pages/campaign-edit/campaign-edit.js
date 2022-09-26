@@ -7,7 +7,6 @@ import { GroupServices } from 'GroupServices.js';
 import { ThesaurusServices } from 'ThesaurusServices.js';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
-import { Collection } from 'Collection.js';
 import { Campaign } from 'Campaign.js';
 import settings from 'global.config.js';
 
@@ -38,6 +37,9 @@ export class CampaignEdit {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
     this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.purposes = ['ANNOTATE', 'VALIDATE'];
+    this.orientations = ['DATA', 'METADATA'];
+    this.feedbackMethods = ['UPVOTE', 'RATE'];
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
@@ -424,6 +426,9 @@ export class CampaignEdit {
       logo: this.campaign.logo.split(settings.baseUrl)[1],
       disclaimer: this.campaign.disclaimerObject,
       isPublic: this.campaign.isPublic,
+      purpose: this.campaign.purpose,
+      orientation: this.campaign.orientation,
+      contributorFeedbackMethod: this.campaign.feedbackMethod,
       motivation: Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]),
       prizes: this.campaign.prizesObject,
       annotationTarget: this.campaign.target,
@@ -437,7 +442,7 @@ export class CampaignEdit {
     };
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)
-      .then(response => {
+      .then(() => {
         window.scrollTo(0,0);
         toastr.success(this.i18n.tr('dashboard:campaignUpdatedSuccess'));
         this.loadCampaign();

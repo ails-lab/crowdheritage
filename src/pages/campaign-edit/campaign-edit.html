@@ -185,6 +185,33 @@
                   </textarea>
                 </div>
                 <div class="center">
+                  <label t="dashboard:campaignPurpose">Campaign purpose</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="purpose of purposes">
+                      <input class="form-check-input" type="radio" id.bind="`purpose-${$index}`" model.bind="purpose" checked.bind="campaign.purpose">
+                      <span class="form-check-label" for.bind="`purpose-${$index}`">${purpose}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:campaignOrientation">Campaign orientation</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="orientation of orientations">
+                      <input class="form-check-input" type="radio" id.bind="`orientation-${$index}`" model.bind="orientation" checked.bind="campaign.orientation">
+                      <span class="form-check-label" for.bind="`orientation-${$index}`">${orientation}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:campaignFeedbackMethod">Campaign feedback method</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="feedback of feedbackMethods">
+                      <input class="form-check-input" type="radio" id.bind="`feedback-${$index}`" model.bind="feedback" checked.bind="campaign.feedbackMethod">
+                      <span class="form-check-label" for.bind="`feedback-${$index}`">${feedback}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center">
                   <label t="dashboard:campaignMotivations">Campaign motivations</label>
                   <div class="motivations d-flex">
                     <div class="me-5" repeat.for="mot of motivations">
