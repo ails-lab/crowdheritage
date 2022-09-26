@@ -28,6 +28,8 @@ export class Campaign {
     this.creationDate = data.created;
     this.motivation = data.motivation;
     this.purpose = data.purpose;
+    this.orientation = data.orientation;
+    this.feedbackMethod = data.contributorFeedbackMethod;
     this.target = data.annotationTarget;
     this.created = data.annotationCurrent.created;
     this.approved = data.annotationCurrent.approved;
@@ -45,7 +47,6 @@ export class Campaign {
     this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
     this.status = this.campaignStatus;
     this.isPublic = data.isPublic;
-    this.orientation = data.orientation;
     // Objects for multilinguality
     this.titleObject = data.title;
     this.descriptionObject = data.description;
