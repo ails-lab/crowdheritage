@@ -47,7 +47,6 @@ export class Campaign {
     this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
     this.status = this.campaignStatus;
     this.isPublic = data.isPublic;
-    this.orientation = data.orientation;
     // Objects for multilinguality
     this.titleObject = data.title;
     this.descriptionObject = data.description;
