@@ -997,9 +997,9 @@ export class Tagitem {
         this.geoannotations = [];
         for (var i = 0; i < response.length; i++) {
           if (!this.userServices.current) {
-            this.geoannotations.push(new Annotation(response[i], ""));
+            this.geoannotations.push(new Annotation(response[i], "", this.loc));
           } else {
-            this.geoannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+            this.geoannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
           }
         }
       });
