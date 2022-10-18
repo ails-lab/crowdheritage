@@ -18,7 +18,7 @@
       	<input id="annotationInput" autocomplete="off" value.bind="tagPrefix[''] & debounce:500" input.delegate="prefixChanged(true, '') & debounce:500"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind='suggestionsActive[""]' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
- 						<li repeat.for='item of suggestedAnnotations[""]'  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
+ 						<li repeat.for='item of suggestedAnnotations[""]'  click.delegate="selectGeoAnnotation(item.geonameId)">${item.name}, ${item.countryName}</li>
           </ul>
         </div>
       	<i class='fa fa-spinner fa-spin ' show.bind="suggestionsLoading"></i>

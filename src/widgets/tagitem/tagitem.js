@@ -155,7 +155,8 @@ export class Tagitem {
     this.suggestedAnnotations[""] = [];
     this.selectedAnnotation = null;
     let self = this;
-    await this.thesaurusServices.getGeonameSuggestions(prefix)
+    let lang = typeof this.loc !== 'undefined' ? this.loc : 'en';
+    await this.thesaurusServices.getGeonameSuggestions(prefix, lang)
       .then((res) => {
         self.getGeoSuggestions(res);
       });

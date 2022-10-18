@@ -47,9 +47,10 @@ export class ThesaurusServices {
 	    });
 	  }
 
-  async getGeonameSuggestions(prefix ) {
+  async getGeonameSuggestions(prefix, lang="en") {
 	  this.http.configure(fetchConfigGeo);
-	  return this.http.fetch("https://secure.geonames.org/searchJSON?q=" +  encodeURIComponent(prefix)  + "&username=annachristaki&maxRows=10", {
+    let url = `https://secure.geonames.org/searchJSON?q=${encodeURIComponent(prefix)}&username=annachristaki&lang=${lang}&maxRows=10`;
+	  return this.http.fetch(url, {
       method: 'GET'
 	  })
     .then((response) => {

@@ -683,7 +683,8 @@ export class Validation {
 		this.suggestedGeoAnnotations = this.suggestedGeoAnnotations.slice(0, this.suggestedGeoAnnotations.length);
 		this.selectedGeoAnnotation = null;
 		let self = this;
-		await this.thesaurusServices.getGeonameSuggestions(prefix)
+    let lang = typeof this.loc !== 'undefined' ? this.loc : 'en';
+		await this.thesaurusServices.getGeonameSuggestions(prefix, lang)
 		.then((res) => {
     	self.getGeoSuggestions( res);
   	});

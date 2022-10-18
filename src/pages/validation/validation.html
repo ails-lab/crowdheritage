@@ -99,7 +99,7 @@
         <input id="annotationInputGeo" autocomplete="off" value.bind="geoPrefix & debounce:500" input.delegate="prefixChanged(true) & debounce:500" click.delegate="clearSearchField()" type="text" placeholder.bind="placeholderText" class="input-tag"/>
         <div show.bind="geoSuggestionsActive" class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
- 						<li repeat.for="item of suggestedGeoAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.toponymName}, ${item.countryName}</li>
+ 						<li repeat.for="item of suggestedGeoAnnotations"  click.delegate="selectGeoAnnotation(item.geonameId)">${item.name}, ${item.countryName}</li>
           </ul>
         </div>
       </div> -->
