@@ -22,11 +22,44 @@
       </div>
     </div>
     <div class="row d-flex justify-content-center">
-      <div class="col-md-9 rating-container">
-        <label for="rating" class="form-label col-md-5">Rate the translation:</label>
-        <input type="range" class="form-range col-md-5" id="rating" value.bind="rating" input.delegate="ratingChanged()" change.delegate="submit()">
-        <input type="number" min="0" max="100" class="form-text rating-text-form col-md-2" id="ratingText" value.bind="ratingText" input.delegate="ratingTextChanged()">%
+      <div class="col-md-12 rating-container">
+        <label for="rating" class="form-label col-md-4">Rate the translation:</label>
+        <input type="range" class="form-range col-md-4" id="rating" value.bind="rating" input.delegate="ratingChanged()"
+          change.delegate="submitRating()">
+        <input type="number" min="0" max="100" class="form-text rating-text-form col-md-2" id="ratingText"
+          value.bind="ratingText" input.delegate="ratingTextChanged()">%
+        <button class="btn-link col-md-2 text-dark" click.delegate="toggleCollapse()" role="button">
+          Review <i class="fa fa-arrow-circle-down"></i>
+        </button>
       </div>
+    </div>
+    <div class="row mt-5 collapse" id="collapse-${index}">
+      <div class="col-md-12 review-details">
+        <div class="center col-md-4 mb-3">
+          <ul class="tagPills">
+            <li repeat.for="err of selectedErrorTypes">
+              <i class="fa fa-exclamation me-1" aria-hidden="true"></i>
+              <span class="me-2">${err}</span>
+              <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+          <select class="mb-0" name="errorTypes" id="errorTypesSelector"
+            change.delegate="addErrorType($event.target.value)">
+            <option value="" selected>Error Type</option>
+            <option repeat.for="err of errorTypes" value.bind="err">${err}</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <textarea id="corrected_translation" name="corrected_translation" rows="4" placeholder="Corrected Translation"
+            value.bind="corrected_translation">
+            </textarea>
+        </div>
+        <div class="col-md-4 mb-3">
+          <textarea id="comment" name="comment" rows="4" placeholder="Comment" value.bind="comment">
+            </textarea>
+        </div>
+      </div>
+      <button class="btn btn-submit-details" click.delegate="submitDetails()" >Submit</button>
     </div>
   </div>
 </template>

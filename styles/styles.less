@@ -7352,12 +7352,39 @@ input.tag-type {
           -moz-appearance: textfield;
         }
 
+        .text-dark{
+          color: black;
+        }
+
         .rating-text-form{
           width: 65px;
           height: 30px;
           text-align: center;
           margin-right: -1.6rem;
         }
+      }
+      .review-details{
+        select{
+          background-color: rgb(107,117,124);
+          color: white;
+          padding: 5px;
+          width: 100%;
+        }
+        textarea{
+          width:100%;
+          resize: none;
+          &::placeholder{
+            color: @main-color;
+            opacity: 1;
+            font-weight: 600;
+          }
+        }
+      }
+      .btn-submit-details{
+        color: white;
+        background-color: @main-color;
+        float: right;
+        margin-right: 30px;
       }
     }
   }

@@ -32,7 +32,14 @@ export class MetadataRating {
 		this.i18n = i18n;
     this.rating = 0;
     this.ratingText = '';
+    this.selectedErrorTypes = [];
+    this.errorTypes = ['Error 1', 'Error 2', 'Error 3'];
+    this.corrected_translation = '';
+    this.comment = '';
 	}
+  activate(params) {
+    this.index = params.index;
+  }
   ratingChanged(){
     this.ratingText = this.rating
   }
@@ -42,7 +49,32 @@ export class MetadataRating {
       this.rating = 0;
     }
   }
-  submit(){
+  removeSelectedError(err){
+    const index = this.selectedErrorTypes.indexOf(err);
+    if (index > -1) {
+      this.selectedErrorTypes.splice(index, 1);
+    }
+  }
+  addErrorType(err) {
+    if (!this.selectedErrorTypes.includes(err)) {
+      this.selectedErrorTypes.push(err);
+    }
+  }
+
+  // Done in js/jquery because the bootstrap way did not work
+  toggleCollapse(){
+    if($(`#collapse-${this.index}`).hasClass('in')){
+      $(`#collapse-${this.index}`).collapse('hide'); 
+    }
+    else{
+      $(`#collapse-${this.index}`).collapse('show')
+    }
+  }
+  submitRating(){
+    // Submit rating
+  }
+  submitDetails(){
+    console.log(this.selectedErrorTypes, this.corrected_translation, this.comment)
     // Submit rating
   }
 

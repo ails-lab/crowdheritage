@@ -11,7 +11,7 @@
       <div class="container translations-container d-flex ">
         <div class="col-md-12" >
           <compose view-model="widgets/metadata-rating/metadata-rating" repeat.for="record of record.dcfields"
-            model.bind="{'record': record, 'lang': loc}">
+            model.bind="{'record': record, 'lang': loc, 'index': $index}">
           </compose>
         </div>
       </div>
