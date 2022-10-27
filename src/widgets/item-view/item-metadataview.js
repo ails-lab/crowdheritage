@@ -12,9 +12,12 @@ export class ItemMetadataView {
     this.userServices = userServices;
     this.recordServices = recordServices;
 
-    this.campaign = null;
+    this.collection = null;
+    this.campaign = '';
+    this.cname = '';
     this.record = null;
     this.mediaDiv = '';
+    this.metadataMode = true;
 
     this.previous = null;
     this.recId = '';
@@ -26,7 +29,13 @@ export class ItemMetadataView {
     this.campaign = params.campaign;
     this.record = params.record;
     this.mediaDiv = params.mediaDiv;
+    this.cname= this.campaign.username;
 
     this.recId = this.record.dbId;
+  }
+
+  quickView() {
+    $('.action').removeClass('active');
+    $('.action.itemview').addClass('active');
   }
 }

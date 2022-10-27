@@ -1,3 +1,18 @@
 <template>
-  
+  <section id="tagging" class="tagging">
+    <!-- title-->
+    <div class="metadata-container container pe-0">
+      <div id="scrollPointMetadata" class="title d-flex justify-content-between">
+        <span>${record.title}</span>
+        <a href="javascript:void(0)" click.delegate="quickView()"><i class="fa fa-eye"></i></a>
+      </div>
+    </div>
+  </section>
+  <div role="main">
+    <section class="action itemview hgdgsd" if.bind="record">
+      <compose view-model="widgets/quickview/quickview"
+        model.bind="{'cname': cname, 'metadataMode': metadataMode, 'record': record, 'lang': loc}">
+      </compose>
+    </section>
+  </div>
 </template>

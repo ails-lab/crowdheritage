@@ -59,15 +59,17 @@ export class quickview {
   get hasUser()       { return (this.userUsername.length > 0);    }
 
   attached() {
-   if(this.record){
+   if(this.record && !this.metadataMode){
 			$('.action').removeClass('active');
-			$('.action.itemview').addClass('active');}
+			$('.action.itemview').addClass('active');
+    }
   }
 
   async activate(params, routeData) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
     this.edit = params.editMode;
+    this.metadataMode = params.metadataMode;
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
