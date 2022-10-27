@@ -1,0 +1,32 @@
+<template>
+  <div class="card">
+    <div class="row">
+      <div class="annotation-name col-md-12"><b>dc:description</b></div>
+    </div>
+    <div class="row">
+      <div class="main-display d-flex justify-content-between">
+        <div class="original col-md-6">
+          <h4>Original</h4>
+          <p>Ci meraviglia agitazione vi te ah sopraffare calpestare. Io alte po ah mano glie di. Ricuperata irrequieto
+            calpestare ma ti. Sola ecco luce the sei ieri ben. Attira fa le salute un re intera. Muove dimmi vibri perse
+            ma ne carra no io. Trapassi mutevole vi tempesta minaccia soffochi sa stridore. Talvolta ai spinetta me el
+            io torrente sommersa percosso tramonto.
+          </p>
+        </div>
+        <div class="translated col-md-6">
+          <h4>Automated Translation</h4>
+          <p>Man request adapted spirits set pressed. Up to denoting subjects sensible feelings it indulged directly. We
+            dwelling elegance do shutters appetite yourself diverted. Our next drew much you with rank. Tore many held
+            age hold rose than our. She literature sentiments any contrasted. Set aware joy sense young now tears.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-9 rating-container">
+        <label for="rating" class="form-label col-md-5">Rate the translation:</label>
+        <input type="range" class="form-range col-md-5" id="rating" value.bind="rating" input.delegate="ratingChanged()" change.delegate="submit()">
+        <input type="number" min="0" max="100" class="form-text rating-text-form col-md-2" id="ratingText" value.bind="ratingText" input.delegate="ratingTextChanged()">%
+      </div>
+    </div>
+  </div>
+</template>

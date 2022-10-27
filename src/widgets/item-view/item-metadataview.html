@@ -1,5 +1,5 @@
 <template>
-  <section id="tagging" class="tagging">
+  <section id="metadata-tagging" class="tagging metadata-tagging">
     <!-- title-->
     <div class="metadata-container container pe-0">
       <div id="scrollPointMetadata" class="title d-flex justify-content-between">
@@ -7,9 +7,18 @@
         <a href="javascript:void(0)" click.delegate="quickView()"><i class="fa fa-eye"></i></a>
       </div>
     </div>
+    <div class="wraps">
+      <div class="container translations-container d-flex ">
+        <div class="col-md-12" >
+          <compose view-model="widgets/metadata-rating/metadata-rating" repeat.for="record of record.dcfields"
+            model.bind="{'record': record, 'lang': loc}">
+          </compose>
+        </div>
+      </div>
+    </div>
   </section>
   <div role="main">
-    <section class="action itemview hgdgsd" if.bind="record">
+    <section class="action itemview" if.bind="record">
       <compose view-model="widgets/quickview/quickview"
         model.bind="{'cname': cname, 'metadataMode': metadataMode, 'record': record, 'lang': loc}">
       </compose>

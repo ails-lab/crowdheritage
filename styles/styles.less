@@ -7306,12 +7306,59 @@ input.tag-type {
   color: red;
 }
 
-.metadata-container{
-  .fa-eye{
-    position: relative;
-    top: 0;
-    left: 0;
-    color: black;
-    margin-left: 50px;
+.metadata-tagging{
+  .metadata-container{
+    .title{
+      &::before{
+        height: 100px;
+      }
+      .fa-eye{
+        position: relative;
+        top: 0;
+        left: 0;
+        color: black;
+        margin-left: 3rem;
+      }
+    }
+  }
+  .translations-container{
+    margin-top: 5rem;
+    padding-left: 65px;
+    flex-direction: column;
+    .card{
+      padding: 2rem;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1000px;
+      border: 1px solid black;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      .main-display{
+        gap: 3rem;
+      }
+      .rating-container{
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+
+        .rating-text-form{
+          width: 65px;
+          height: 30px;
+          text-align: center;
+          margin-right: -1.6rem;
+        }
+      }
+    }
   }
 }
