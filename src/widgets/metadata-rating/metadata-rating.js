@@ -56,7 +56,7 @@ export class MetadataRating {
     }
   }
   addErrorType(err) {
-    if (!this.selectedErrorTypes.includes(err)) {
+    if (err != '' && !this.selectedErrorTypes.includes(err)) {
       this.selectedErrorTypes.push(err);
     }
   }

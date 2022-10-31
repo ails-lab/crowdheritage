@@ -24,7 +24,7 @@
     <div class="row d-flex justify-content-center">
       <div class="col-md-12 rating-container">
         <label for="rating" class="form-label col-md-4">Rate the translation:</label>
-        <input type="range" class="form-range col-md-4" id="rating" value.bind="rating" input.delegate="ratingChanged()"
+        <input type="range" class="form-range col-md-4 rating-range" id="rating" value.bind="rating" input.delegate="ratingChanged()"
           change.delegate="submitRating()">
         <input type="number" min="0" max="100" class="form-text rating-text-form col-md-2" id="ratingText"
           value.bind="ratingText" input.delegate="ratingTextChanged()">%
