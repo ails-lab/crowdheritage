@@ -36,9 +36,16 @@ export class MetadataRating {
     this.errorTypes = ['Error 1', 'Error 2', 'Error 3'];
     this.corrected_translation = '';
     this.comment = '';
+    this.noRatings = false;
 	}
   activate(params) {
     this.index = params.index;
+    // noRatings flag is set true if noone has rated this translation and it a label is displayed in the ui
+    if(this.index == 1){
+      this.noRatings = true;
+    }
+    // corrected translation field is prefilled with the automated translation
+    // this.corrected_translation = this.automatedTranslation
   }
   ratingChanged(){
     this.ratingText = this.rating

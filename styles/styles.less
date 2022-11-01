@@ -7335,6 +7335,17 @@ input.tag-type {
       border: 1px solid black;
       border-radius: 20px;
       margin-bottom: 2rem;
+      &.no-ratings::after{
+        content: 'NO RATINGS';
+        position: absolute;
+        top: 10px;
+        right: -10px;
+        background-color: #d7102e;
+        font-size: 14px;
+        color: white;
+        padding: 7px 20px;
+        border-radius: 5px;
+      }
       .main-display{
         gap: 3rem;
       }
