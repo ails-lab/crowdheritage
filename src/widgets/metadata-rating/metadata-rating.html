@@ -1,33 +1,44 @@
 <template>
-  <div class="card" class.bind="noRatings ? 'no-ratings' : '' ">
+  <div
+    class="card"
+    class.bind="noRatings ? 'no-ratings' : 'with-ratings'"
+    data-value.bind="labelText"
+  >
     <div class="row">
-      <div class="annotation-name col-md-12"><b>dc:description</b></div>
+      <div class="annotation-name col-md-12">
+        <b>${property}</b>
+      </div>
     </div>
     <div class="row">
       <div class="main-display d-flex justify-content-between">
         <div class="original col-md-6">
-          <h4>Original</h4>
-          <p>Ci meraviglia agitazione vi te ah sopraffare calpestare. Io alte po ah mano glie di. Ricuperata irrequieto
-            calpestare ma ti. Sola ecco luce the sei ieri ben. Attira fa le salute un re intera. Muove dimmi vibri perse
-            ma ne carra no io. Trapassi mutevole vi tempesta minaccia soffochi sa stridore. Talvolta ai spinetta me el
-            io torrente sommersa percosso tramonto.
+          <h4>Original Value</h4>
+          <p>
+            ${originalValue}
           </p>
         </div>
         <div class="translated col-md-6">
-          <h4>Automated Translation</h4>
-          <p>Man request adapted spirits set pressed. Up to denoting subjects sensible feelings it indulged directly. We
-            dwelling elegance do shutters appetite yourself diverted. Our next drew much you with rank. Tore many held
-            age hold rose than our. She literature sentiments any contrasted. Set aware joy sense young now tears.</p>
+          <h4>Annotation Value</h4>
+          <p>
+            ${annotationValue}
+          </p>
         </div>
       </div>
     </div>
     <div class="row d-flex justify-content-center">
       <div class="col-md-12 rating-container">
         <label for="rating" class="form-label col-md-4">Rate the translation:</label>
-        <input type="range" class="form-range col-md-4 rating-range" id="rating" value.bind="rating" input.delegate="ratingChanged()"
-          change.delegate="submitRating()">
-        <input type="number" min="0" max="100" class="form-text rating-text-form col-md-2" id="ratingText"
-          value.bind="ratingText" input.delegate="ratingTextChanged()">%
+        <input
+          type="range" class="form-range col-md-4 rating-range" id="rating"
+          value.bind="ratingValue" input.delegate="ratingValueChanged()"
+          change.delegate="submitRating()"
+        >
+        <input
+          type="number" min="0" max="100"
+          class="form-text rating-text-form col-md-2" id="ratingText"
+          value.bind="ratingText" input.delegate="ratingTextChanged()"
+          focusout.delegate="submitRating()"
+        >%
         <button class="btn-link col-md-2 text-dark" click.delegate="toggleCollapse()" role="button">
           Review <i class="fa fa-arrow-circle-down"></i>
         </button>
@@ -38,28 +49,34 @@
         <div class="center col-md-4 mb-3">
           <ul class="tagPills">
             <li repeat.for="err of selectedErrorTypes">
-              <i class="fa fa-exclamation me-1" aria-hidden="true"></i>
-              <span class="me-2">${err}</span>
+              <!-- <i class="fa fa-exclamation me-1" aria-hidden="true"></i> -->
+              <span class="me-2">${err.shortDescription}</span>
               <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
             </li>
           </ul>
-          <select class="mb-0" name="errorTypes" id="errorTypesSelector"
-            change.delegate="addErrorType($event.target.value)">
-            <option value="" selected>Error Type</option>
-            <option repeat.for="err of errorTypes" value.bind="err">${err}</option>
+          <select
+            class="text-center mb-0" name="errorTypes" id="errorTypesSelector"
+            change.delegate="addErrorType($event.target.value)"
+          >
+            <option value="" selected disabled>---- Select Error Type ----</option>
+            <option repeat.for="err of errorTypes" value.bind="err.tokenizedVersion">${err.shortDescription}</option>
           </select>
         </div>
         <div class="col-md-4 mb-3">
-          <textarea id="corrected_translation" name="corrected_translation" rows="4" placeholder="Corrected Translation"
-            value.bind="corrected_translation">
-            </textarea>
+          <textarea
+            id="corrected_translation" name="corrected_translation" rows="4"
+            placeholder="Corrected Translation" value.bind="correctedAnnotation"
+          ></textarea>
         </div>
         <div class="col-md-4 mb-3">
-          <textarea id="comment" name="comment" rows="4" placeholder="Comment" value.bind="comment">
-            </textarea>
+          <textarea
+            id="comment" name="comment" rows="4" placeholder="Comment" value.bind="userComment"
+          ></textarea>
         </div>
       </div>
-      <button class="btn btn-submit-details" click.delegate="submitDetails()" >Submit</button>
+      <button class="btn btn-submit-details" click.delegate="submitDetails()">
+        Submit
+      </button>
     </div>
   </div>
 </template>

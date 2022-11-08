@@ -30,59 +30,86 @@ export class MetadataRating {
 		this.userServices = userServices;
 		this.router = router;
 		this.i18n = i18n;
-    this.rating = 0;
+
+		this.annotation = null;
+		this.errorTypes = [];
+
+		this.noRatings = false;
+    this.ratingValue = 0;
     this.ratingText = '';
     this.selectedErrorTypes = [];
-    this.errorTypes = ['Error 1', 'Error 2', 'Error 3'];
-    this.corrected_translation = '';
-    this.comment = '';
-    this.noRatings = false;
+    this.correctedAnnotation = '';
+    this.userComment = '';
 	}
   activate(params) {
     this.index = params.index;
-    // noRatings flag is set true if noone has rated this translation and it a label is displayed in the ui
-    if(this.index == 1){
+		this.annotation = params.annotation;
+		this.errorTypes = params.errorTypes;
+
+		// Set noRatings flag to true if noone has rated this translation
+    if (this.annotation.ratedBy.length === 0) {
       this.noRatings = true;
     }
-    // corrected translation field is prefilled with the automated translation
-    // this.corrected_translation = this.automatedTranslation
+		this.labelText = this.noRatings ? 'NO RATING' : `${this.annotation.ratedBy.length} RATING`;
+		this.labelText += this.annotation.ratedBy.length !== 1 ? 'S' : '';
+
+		// let selectorUrl = this.annotation.selector.property;
+		// let propertyTitle = selectorUrl.substring(selectorUrl.lastIndexOf('/') + 1);
+		// this.property = propertyTitle.charAt(0).toUpperCase() + propertyTitle.slice(1);
+		this.property = this.annotation.selector.property;
+		this.originalValue = this.annotation.selector.origValue;
+		this.annotationValue = this.annotation.label;
+		if (this.userServices.current) {
+			this.rating = this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId);
+			console.log(this.rating)
+			this.ratingValue = this.rating ? this.rating.confidence : 0;
+			this.ratingText = this.rating ? this.rating.confidence : '';
+			this.correctedAnnotation = this.rating ? this.rating.validationCorrection : '';
+			this.userComment = this.rating ? this.rating.validationComment : '';
+			if (this.rating && this.rating.validationErrorType) {
+				this.rating.validationErrorType.forEach(errType => {
+					this.selectedErrorTypes.push(this.errorTypes.find(e => e.tokenizedVersion === errType));
+				});
+			}
+		}
   }
-  ratingChanged(){
-    this.ratingText = this.rating
+
+  ratingValueChanged() {
+    this.ratingText = this.ratingValue;
   }
-  ratingTextChanged(){
-    this.rating = this.ratingText
-    if (this.ratingText == ""){
-      this.rating = 0;
+  ratingTextChanged() {
+    this.ratingValue = !this.ratingText ? 0 : this.ratingText;
+  }
+	addErrorType(err) {
+		let errorType = this.errorTypes.find(e => e.tokenizedVersion === err);
+    if (errorType && !this.selectedErrorTypes.includes(errorType)) {
+      this.selectedErrorTypes.push(errorType);
     }
   }
-  removeSelectedError(err){
-    const index = this.selectedErrorTypes.indexOf(err);
+  removeSelectedError(errorType) {
+    const index = this.selectedErrorTypes.indexOf(errorType);
     if (index > -1) {
       this.selectedErrorTypes.splice(index, 1);
     }
   }
-  addErrorType(err) {
-    if (err != '' && !this.selectedErrorTypes.includes(err)) {
-      this.selectedErrorTypes.push(err);
-    }
-  }
 
-  // Done in js/jquery because the bootstrap way did not work
-  toggleCollapse(){
-    if($(`#collapse-${this.index}`).hasClass('in')){
-      $(`#collapse-${this.index}`).collapse('hide'); 
+  toggleCollapse() {
+		// Done in js/jquery because the bootstrap way did not work
+    if ($(`#collapse-${this.index}`).hasClass('in')) {
+      $(`#collapse-${this.index}`).collapse('hide');
     }
-    else{
-      $(`#collapse-${this.index}`).collapse('show')
+    else {
+      $(`#collapse-${this.index}`).collapse('show');
+			// Empty corrected translation field is prefilled with the automated translation
+			this.correctedAnnotation = (this.correctedAnnotation === '') ? this.annotationValue : this.correctedAnnotation;
     }
   }
-  submitRating(){
-    // Submit rating
+  submitRating() {
+    // TODO: Submit rating API call
+		console.log(this.ratingValue);
   }
-  submitDetails(){
-    console.log(this.selectedErrorTypes, this.corrected_translation, this.comment)
-    // Submit rating
+  submitDetails() {
+    // TODO: Submit rating API call
+		console.log(this.selectedErrorTypes, this.correctedAnnotation, this.userComment);
   }
-
 }

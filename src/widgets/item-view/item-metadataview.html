@@ -4,14 +4,19 @@
     <div class="metadata-container container pe-0">
       <div id="scrollPointMetadata" class="title d-flex justify-content-between">
         <span>${record.title}</span>
-        <a href="javascript:void(0)" click.delegate="quickView()"><i class="fa fa-eye"></i></a>
+        <a href="javascript:void(0)" click.delegate="quickView()">
+          <i if.bind="!record.Thumbnail" class="fa fa-eye"></i>
+          <img if.bind="record.Thumbnail" src.bind="record.Thumbnail" height="128" />
+        </a>
       </div>
     </div>
     <div class="wraps">
       <div class="container translations-container d-flex ">
         <div class="col-md-12" >
-          <compose view-model="widgets/metadata-rating/metadata-rating" repeat.for="record of record.dcfields"
-            model.bind="{'record': record, 'lang': loc, 'index': $index}">
+          <compose
+            repeat.for="annotation of annotations"
+            view-model="widgets/metadata-rating/metadata-rating"
+            model.bind="{'annotation': annotation, 'errorTypes': campaign.validationErrorTypes, 'lang': loc, 'index': $index}">
           </compose>
         </div>
       </div>

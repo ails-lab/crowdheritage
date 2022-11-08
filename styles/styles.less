@@ -7322,7 +7322,7 @@ input.tag-type {
     }
   }
   .translations-container{
-    margin-top: 5rem;
+    margin-top: 1rem;
     padding-left: 65px;
     flex-direction: column;
     .card{
@@ -7335,16 +7335,22 @@ input.tag-type {
       border: 1px solid black;
       border-radius: 20px;
       margin-bottom: 2rem;
-      &.no-ratings::after{
-        content: 'NO RATINGS';
+      &::after {
+        content: attr(data-value);
         position: absolute;
         top: 10px;
         right: -10px;
-        background-color: #d7102e;
         font-size: 14px;
+        font-weight: bold;
         color: white;
-        padding: 7px 20px;
+        padding: 3px 9px;
         border-radius: 5px;
+      }
+      &.no-ratings::after {
+        background: rgba(255, 91, 90, 1);
+      }
+      &.with-ratings::after {
+        background: rgba(131, 188, 63, 1);
       }
       .main-display{
         gap: 3rem;
