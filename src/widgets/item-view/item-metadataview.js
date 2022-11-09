@@ -43,6 +43,9 @@ export class ItemMetadataView {
             let user = this.userServices.current ? this.userServices.current.dbId : "";
             this.annotations.push(new Annotation(ann, user, "all", this.generator));
           }
+          this.annotations.sort(function(a, b) {
+            return a.score - b.score;
+          });
         })
         .catch(error => console.error(error.message));
     });

@@ -90,7 +90,7 @@ export class Annotation {
             }
           }
         }
-        this.score = this.score - data.score.ratedBy.length;
+        this.score = data.score.ratedBy.length;
       }
     }
 		this.publish = data.publish;

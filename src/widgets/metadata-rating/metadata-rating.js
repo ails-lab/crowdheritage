@@ -64,7 +64,6 @@ export class MetadataRating {
 		this.annotationValue = this.annotation.label;
 		if (this.userServices.current) {
 			this.rating = this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId);
-			console.log(this.rating)
 			this.ratingValue = this.rating ? this.rating.confidence : 0;
 			this.ratingText = this.rating ? this.rating.confidence : '';
 			this.correctedAnnotation = this.rating ? this.rating.validationCorrection : '';
