@@ -17,17 +17,19 @@
 import { inject, LogManager } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { UserServices } from 'UserServices.js';
+import { AnnotationServices } from 'AnnotationServices.js';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 
 let logger = LogManager.getLogger('metadata-rating.js');
 
-@inject(DialogController, UserServices, Router, I18N)
+@inject(DialogController, UserServices, AnnotationServices, Router, I18N)
 export class MetadataRating {
 
-	constructor(controller, userServices, router, i18n) {
+	constructor(controller, userServices, annotationServices, router, i18n) {
 		this.controller = controller;
 		this.userServices = userServices;
+		this.annotationServices = annotationServices;
 		this.router = router;
 		this.i18n = i18n;
 
@@ -45,6 +47,7 @@ export class MetadataRating {
     this.index = params.index;
 		this.annotation = params.annotation;
 		this.errorTypes = params.errorTypes;
+		this.generator = params.generator;
 
 		// Set noRatings flag to true if noone has rated this translation
     if (this.annotation.ratedBy.length === 0) {
@@ -74,6 +77,19 @@ export class MetadataRating {
 		}
   }
 
+	get isReviewClosed() { return $(`#collapse-${this.index}`).hasClass('in'); }
+
+	resetRatingForm() {
+		this.ratingValue = 0;
+		this.ratingText = '';
+		this.selectedErrorTypes = [];
+		this.correctedAnnotation = '';
+		this.userComment = '';
+		if (this.isReviewClosed) {
+			this.toggleCollapse();
+		}
+	}
+
   ratingValueChanged() {
     this.ratingText = this.ratingValue;
   }
@@ -95,21 +111,60 @@ export class MetadataRating {
 
   toggleCollapse() {
 		// Done in js/jquery because the bootstrap way did not work
-    if ($(`#collapse-${this.index}`).hasClass('in')) {
+    if (this.isReviewClosed) {
       $(`#collapse-${this.index}`).collapse('hide');
     }
     else {
       $(`#collapse-${this.index}`).collapse('show');
 			// Empty corrected translation field is prefilled with the automated translation
-			this.correctedAnnotation = (this.correctedAnnotation === '') ? this.annotationValue : this.correctedAnnotation;
+			this.correctedAnnotation = (!this.correctedAnnotation) ? this.annotationValue : this.correctedAnnotation;
     }
   }
   submitRating() {
-    // TODO: Submit rating API call
-		console.log(this.ratingValue);
+		if (!this.userServices.current) {
+			toastr.error('You need to login first');
+			this.resetRatingForm();
+			return;
+		}
+		document.body.style.cursor = 'wait';
+    this.annotationServices.rateAnnotation(this.annotation.dbId, this.generator, this.ratingValue)
+			.then(() => {
+				document.body.style.cursor = 'default';
+			})
+			.catch(error => {
+				toastr.error('Something went wrong');
+				this.resetRatingForm();
+				console.error(error.message);
+				document.body.style.cursor = 'default';
+			});
   }
-  submitDetails() {
-    // TODO: Submit rating API call
-		console.log(this.selectedErrorTypes, this.correctedAnnotation, this.userComment);
+  submitReview() {
+		if (!this.userServices.current) {
+			toastr.error('You need to login first');
+			this.resetRatingForm();
+			return;
+		}
+		if (!this.ratingText) {
+			toastr.error('You need to enter a rating value');
+			return;
+		}
+		document.body.style.cursor = 'wait';
+		let errTypes = this.selectedErrorTypes.map(e => e.tokenizedVersion);
+		errTypes = !errTypes.length ? null : errTypes;
+		let correction = !this.correctedAnnotation ? null : this.correctedAnnotation;
+		correction = (correction == this.annotationValue) ?  null : correction;
+		let comment = !this.userComment ? null : this.userComment;
+    this.annotationServices.reviewAnnotation(this.annotation.dbId, this.generator, this.ratingValue, correction, comment, errTypes)
+			.then(() => {
+				document.body.style.cursor = 'default';
+				toastr.success('Your review has been submitted');
+				this.toggleCollapse();
+			})
+			.catch(error => {
+				toastr.error('Something went wrong');
+				this.resetRatingForm();
+				console.error(error.message);
+				document.body.style.cursor = 'default';
+			});
   }
 }

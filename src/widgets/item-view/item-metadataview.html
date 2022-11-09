@@ -16,7 +16,7 @@
           <compose
             repeat.for="annotation of annotations"
             view-model="widgets/metadata-rating/metadata-rating"
-            model.bind="{'annotation': annotation, 'errorTypes': campaign.validationErrorTypes, 'lang': loc, 'index': $index}">
+            model.bind="{'annotation': annotation, 'errorTypes': campaign.validationErrorTypes, 'generator': generator, 'lang': loc, 'index': $index}">
           </compose>
         </div>
       </div>

@@ -39,8 +39,12 @@
           value.bind="ratingText" input.delegate="ratingTextChanged()"
           focusout.delegate="submitRating()"
         >%
-        <button class="btn-link col-md-2 text-dark" click.delegate="toggleCollapse()" role="button">
-          Review <i class="fa fa-arrow-circle-down"></i>
+        <button class="btn-link col-md-2 text-dark text-decoration-none" click.delegate="toggleCollapse()" role="button">
+          Review
+          <span class="ps-1 pb-1 arrow">
+            <img if.bind="!isReviewClosed" width="13px" src="/img/ic-arrow-down-black.png">
+            <img if.bind="isReviewClosed" width="13px" src="/img/ic-arrow-up-black.png">
+          </span>
         </button>
       </div>
     </div>
@@ -74,7 +78,7 @@
           ></textarea>
         </div>
       </div>
-      <button class="btn btn-submit-details" click.delegate="submitDetails()">
+      <button class="btn btn-submit-details" click.delegate="submitReview()">
         Submit
       </button>
     </div>
