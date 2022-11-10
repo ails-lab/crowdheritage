@@ -20,18 +20,20 @@ import { UserServices } from 'UserServices.js';
 import { AnnotationServices } from 'AnnotationServices.js';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
 let logger = LogManager.getLogger('metadata-rating.js');
 
-@inject(DialogController, UserServices, AnnotationServices, Router, I18N)
+@inject(DialogController, UserServices, AnnotationServices, Router, I18N, EventAggregator)
 export class MetadataRating {
 
-	constructor(controller, userServices, annotationServices, router, i18n) {
+	constructor(controller, userServices, annotationServices, router, i18n, eventAggregator) {
 		this.controller = controller;
 		this.userServices = userServices;
 		this.annotationServices = annotationServices;
 		this.router = router;
 		this.i18n = i18n;
+		this.ea = eventAggregator;
 
 		this.annotation = null;
 		this.errorTypes = [];
@@ -55,8 +57,6 @@ export class MetadataRating {
     if (this.annotation.ratedBy.length === 0) {
       this.noRatings = true;
     }
-		this.labelText = this.noRatings ? 'NO RATING' : `${this.annotation.ratedBy.length} RATING`;
-		this.labelText += this.annotation.ratedBy.length !== 1 ? 'S' : '';
 
 		// let selectorUrl = this.annotation.selector.property;
 		// let propertyTitle = selectorUrl.substring(selectorUrl.lastIndexOf('/') + 1);
@@ -79,6 +79,12 @@ export class MetadataRating {
   }
 
 	get isReviewAccordionOpen() { return $(`#collapse-${this.index}`).hasClass('in'); }
+
+	get labelText() {
+		let txt = this.noRatings ? 'NO RATING' : `${this.annotation.ratedBy.length} RATING`;
+		txt += this.annotation.ratedBy.length !== 1 ? 'S' : '';
+		return txt;
+	}
 
 	get cardClass() {
 		let className = "card";
@@ -146,6 +152,9 @@ export class MetadataRating {
 			.then(() => {
 				document.body.style.cursor = 'default';
 				toastr.success('Your rating has been submitted');
+				if (!this.annotation.ratedByMe) {
+					this.ea.publish('rating-added');
+				}
 			})
 			.catch(error => {
 				toastr.error('Something went wrong');
@@ -175,6 +184,9 @@ export class MetadataRating {
 				document.body.style.cursor = 'default';
 				toastr.success('Your review has been submitted');
 				this.toggleCollapse();
+				if (!this.annotation.ratedByMe) {
+					this.ea.publish('rating-added');
+				}
 			})
 			.catch(error => {
 				toastr.error('Something went wrong');
