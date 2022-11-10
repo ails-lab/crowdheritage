@@ -36,6 +36,7 @@ export class MetadataRating {
 		this.annotation = null;
 		this.errorTypes = [];
 
+		this.arrowImg = "/img/ic-arrow-down-black.png";
 		this.noRatings = false;
     this.ratingValue = 0;
     this.ratingText = '';
@@ -48,6 +49,7 @@ export class MetadataRating {
 		this.annotation = params.annotation;
 		this.errorTypes = params.errorTypes;
 		this.generator = params.generator;
+		this.isCampaignOrganizer = params.isOrganizer;
 
 		// Set noRatings flag to true if noone has rated this translation
     if (this.annotation.ratedBy.length === 0) {
@@ -76,7 +78,14 @@ export class MetadataRating {
 		}
   }
 
-	get isReviewClosed() { return $(`#collapse-${this.index}`).hasClass('in'); }
+	get isReviewAccordionOpen() { return $(`#collapse-${this.index}`).hasClass('in'); }
+
+	get cardClass() {
+		let className = "card";
+		className += this.noRatings ? " no-ratings" : " with-ratings";
+		className += this.isCampaignOrganizer ? " view-ratings" : "";
+		return className;
+	}
 
 	resetRatingForm() {
 		this.ratingValue = 0;
@@ -84,7 +93,7 @@ export class MetadataRating {
 		this.selectedErrorTypes = [];
 		this.correctedAnnotation = '';
 		this.userComment = '';
-		if (this.isReviewClosed) {
+		if (this.isReviewAccordionOpen) {
 			this.toggleCollapse();
 		}
 	}
@@ -110,11 +119,13 @@ export class MetadataRating {
 
   toggleCollapse() {
 		// Done in js/jquery because the bootstrap way did not work
-    if (this.isReviewClosed) {
+    if (this.isReviewAccordionOpen) {
       $(`#collapse-${this.index}`).collapse('hide');
+			this.arrowImg = "/img/ic-arrow-down-black.png";
     }
     else {
       $(`#collapse-${this.index}`).collapse('show');
+			this.arrowImg = "/img/ic-arrow-up-black.png";
 			// Empty corrected translation field is prefilled with the automated translation
 			this.correctedAnnotation = (!this.correctedAnnotation) ? this.annotationValue : this.correctedAnnotation;
     }
@@ -125,10 +136,16 @@ export class MetadataRating {
 			this.resetRatingForm();
 			return;
 		}
+		if (this.ratingValue < 0 || this.ratingValue > 100) {
+			toastr.error('Invalid rating value');
+			this.ratingValue = 0;
+			return;
+		}
 		document.body.style.cursor = 'wait';
     this.annotationServices.rateAnnotation(this.annotation.dbId, this.generator, this.ratingValue)
 			.then(() => {
 				document.body.style.cursor = 'default';
+				toastr.success('Your rating has been submitted');
 			})
 			.catch(error => {
 				toastr.error('Something went wrong');

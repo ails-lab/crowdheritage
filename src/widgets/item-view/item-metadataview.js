@@ -49,7 +49,13 @@ export class ItemMetadataView {
         })
         .catch(error => console.error(error.message));
     });
+  }
 
+  get isOrganizer() {
+    if (this.userServices.current)
+      return this.campaign.creators.includes(this.userServices.current.dbId);
+    else
+      return false;
   }
 
   quickView() {
