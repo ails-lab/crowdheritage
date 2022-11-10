@@ -1,21 +1,29 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { Annotation } from 'Annotation';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
+import settings from 'global.config.js';
 
-@inject(Router, I18N, UserServices, RecordServices)
+@inject(Router, I18N, EventAggregator, UserServices, RecordServices)
 export class ItemMetadataView {
-  constructor(router, i18n, userServices, recordServices) {
+  constructor(router, i18n, eventAggregator, userServices, recordServices) {
     this.router = router;
     this.i18n = i18n;
+    this.ea = eventAggregator;
     this.userServices = userServices;
     this.recordServices = recordServices;
 
-    this.campaign = null;
+    this.collection = null;
+    this.campaign = '';
+    this.cname = '';
     this.record = null;
     this.mediaDiv = '';
+    this.metadataMode = true;
 
+    this.annotations = [];
     this.previous = null;
     this.recId = '';
     this.loc = '';
@@ -26,7 +34,41 @@ export class ItemMetadataView {
     this.campaign = params.campaign;
     this.record = params.record;
     this.mediaDiv = params.mediaDiv;
-
+    this.cname= this.campaign.username;
     this.recId = this.record.dbId;
+    this.generator = `${settings.project} ${this.campaign.username}`;
+
+    this.fetchAnnotations();
+
+    this.ratingListener = this.ea.subscribe('rating-added', () => this.fetchAnnotations());
+  }
+
+  get isOrganizer() {
+    if (this.userServices.current)
+      return this.campaign.creators.includes(this.userServices.current.dbId);
+    else
+      return false;
+  }
+
+  fetchAnnotations() {
+    this.annotations = [];
+    this.campaign.motivation.forEach(motivation => {
+      this.recordServices.getAnnotations(this.recId, motivation, this.generator)
+        .then(response => {
+          for (let ann of response) {
+            let user = this.userServices.current ? this.userServices.current.dbId : "";
+            this.annotations.push(new Annotation(ann, user, "all", this.generator));
+          }
+          this.annotations.sort(function(a, b) {
+            return a.score - b.score;
+          });
+        })
+        .catch(error => console.error(error.message));
+    });
+  }
+
+  quickView() {
+    $('.action').removeClass('active');
+    $('.action.itemview').addClass('active');
   }
 }

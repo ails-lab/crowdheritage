@@ -1,0 +1,98 @@
+<template>
+  <div
+    class="card"
+    class.bind="noRatings ? 'no-ratings' : 'with-ratings'"
+    data-value.bind="labelText"
+  >
+    <div class="metadata-container">
+      <div class="row">
+        <div class="annotation-name col-md-12">
+          <b>${property}</b>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="main-display d-flex justify-content-between">
+          <div class="original col-md-6">
+            <h4>Value</h4>
+            <p>
+              ${originalValue}
+            </p>
+          </div>
+          <div class="translated col-md-6">
+            <h4>Annotation</h4>
+            <p>
+              ${annotationValue}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feedback-container">
+      <div class="row d-flex justify-content-center mt-3">
+        <div class="col-md-12 rating-container">
+          <label for="rating" class="form-label col-md-3 pe-0">
+            ${annotation.ratedByMe ? 'Your rating :' : 'Add rating :'}
+          </label>
+          <input
+            type="range" class="form-range col-md-7 pe-0 rating-range" id="rating"
+            value.bind="ratingValue" input.delegate="ratingValueChanged()"
+            change.delegate="submitRating()"
+          >
+          <input
+            type="number" min="0" max="100"
+            class="form-text rating-text-form col-md-2" id="ratingText"
+            value.bind="ratingText" input.delegate="ratingTextChanged($event)"
+            focusout.delegate="submitRating()"
+          >%
+          <button class="btn-link col-md-2 text-dark text-decoration-none" click.delegate="toggleCollapse()" role="button">
+            Review
+            <span class="ps-1 pb-1 arrow">
+              <img width="13px" src.bind="arrowImg">
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="row mt-2 collapse" id="collapse-${index}">
+        <div class="col-md-12 review-details">
+          <div class="center col-md-4 mb-3">
+            <h4>Error Types</h4>
+            <ul class="tagPills">
+              <li class="d-flex" repeat.for="err of selectedErrorTypes">
+                <span class="errorTypePill me-2">${err.shortDescription}</span>
+                <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+            <select
+              class="text-center mb-0" name="errorTypes" id="errorTypesSelector"
+              change.delegate="addErrorType($event.target.value)"
+            >
+              <option value="" selected disabled>---- Select Error Type ----</option>
+              <option
+                repeat.for="err of errorTypes"
+                value.bind="err.tokenizedVersion" title.bind="err.longDescription"
+              >
+                ${err.shortDescription}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <h4>Corrected Annotation</h4>
+            <textarea
+              id="corrected_translation" name="corrected_translation" rows="4"
+              placeholder="Corrected Annotation" value.bind="correctedAnnotation"
+            ></textarea>
+          </div>
+          <div class="col-md-4 mb-3">
+            <h4>Comment</h4>
+            <textarea
+              id="comment" name="comment" rows="4" placeholder="Comment" value.bind="userComment"
+            ></textarea>
+          </div>
+        </div>
+        <button class="btn btn-submit-details" click.delegate="submitReview()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</template>

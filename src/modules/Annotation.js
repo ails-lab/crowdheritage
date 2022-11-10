@@ -16,7 +16,7 @@
 
 export class Annotation {
 
-  constructor(data, userId, lang="all") {
+  constructor(data, userId, lang="all", generator) {
     this.dbId = data.dbId;
     this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
 		if (lang !== "all") {
@@ -48,11 +48,14 @@ export class Annotation {
     	this.coordinates=data.body.coordinates;
     }
     this.uri=data.body.uri;
+    this.selector = data.target.selector;
     this.tagType = data.target.selector ? data.target.selector.property : "";
     this.approvedBy = [];
     this.approvedByMe = false;
     this.rejectedBy = [];
     this.rejectedByMe = false;
+    this.ratedBy = [];
+    this.ratedByMe = false;
     this.score = 0;
     if (data.score) {
       if (data.score.approvedBy) {
@@ -76,6 +79,18 @@ export class Annotation {
           }
         }
         this.score = this.score - data.score.rejectedBy.length;
+      }
+      if (data.score.ratedBy) {
+        this.ratedBy = data.score.ratedBy.filter(rate => rate.generator === generator);
+        if (!this.ratedByMe) {
+          for (let i in this.ratedBy) {
+            if (this.ratedBy[i].withCreator == userId) {
+              this.ratedByMe = true;
+              break;
+            }
+          }
+        }
+        this.score = data.score.ratedBy.length;
       }
     }
 		this.publish = data.publish;

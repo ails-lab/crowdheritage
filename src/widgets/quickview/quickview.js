@@ -59,22 +59,23 @@ export class quickview {
   get hasUser()       { return (this.userUsername.length > 0);    }
 
   attached() {
-   if(this.record){
+   if(this.record && !this.metadataMode){
 			$('.action').removeClass('active');
-			$('.action.itemview').addClass('active');}
+			$('.action.itemview').addClass('active');
+    }
   }
 
   async activate(params, routeData) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
     this.edit = params.editMode;
+    this.metadataMode = params.metadataMode;
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
 		//Load Campaign
-		if(!this.edit)
-    {
+		if (!this.edit) {
       this.loadCamp = true;
       let result = await this.campaignServices.getCampaignByName(params.cname)
           .then(response => {
@@ -86,6 +87,7 @@ export class quickview {
           });
         this.loadCamp = false;
         this.record = params.record;
+        this.showMedia();
         if (params.collection) {
             this.collection = params.collection;
             this.collectionTitle = this.collection.title;
@@ -95,8 +97,9 @@ export class quickview {
           this.userId = params.userId;
         }
       }
-      else{
+      else {
         this.record = params.record;
+        this.showMedia();
         if (params.collection) {
             this.collection = params.collection;
             this.collectionTitle = this.collection.title;
@@ -160,6 +163,10 @@ export class quickview {
 	}
 
   closeTab() {
+    let mediaPlayer = document.getElementById("mediaplayer");
+    if (mediaPlayer) {
+      mediaPlayer.pause();
+    }
      $('.action.itemview').removeClass('active');
 	}
 

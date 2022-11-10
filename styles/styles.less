@@ -7305,3 +7305,170 @@ input.tag-type {
   background-color: white;
   color: red;
 }
+
+.metadata-tagging {
+  .info-container {
+    display: flex;
+    justify-content: flex-end;
+    .instructions-container {
+      .title {
+        margin-bottom: 20px;
+        &::before {
+          height: 100px;
+        }
+      }
+      .heading {
+        margin-left: 66px;
+        display: inline-block;
+        color: #fff;
+        background-color: @main-color;
+        padding: 0 8px;
+        position: relative;
+        margin-bottom: 15px;
+        font-family: "Dosis";
+      }
+      .campaignInstructions {
+        margin-left: 66px;
+        margin-bottom: 30px;
+        padding: 0;
+      }
+    }
+    .thumb-button-container {
+      margin: 0;
+      padding: 0;
+      display: block;
+      height: max-content;
+      width: max-content;
+      .thumb-button {
+        .fa-external-link {
+          position: relative;
+          top: 0;
+          left: 0;
+          color: @main-color;
+          margin-left: 3rem;
+        }
+        img.btn-thumb {
+          transition: transform ease-in-out .2s;
+          &:hover {
+            transform: scale(1.15);
+          }
+        }
+      }
+    }
+  }
+  .translations-container {
+    display: flex;
+    .card {
+      position: relative;
+      margin-left: 32px;
+      margin-right: 32px;
+      border: 1px solid black;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      &::after {
+        content: attr(data-value);
+        position: absolute;
+        top: 14px;
+        right: -14px;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        padding: 3px 9px;
+        border-radius: 5px;
+      }
+      &.no-ratings::after {
+        background: rgba(255, 91, 90, 1);
+      }
+      &.with-ratings::after {
+        background: rgba(131, 188, 63, 1);
+      }
+      // &.with-ratings::after {
+      //   cursor: pointer;
+      // }
+      h4 {
+        color: @main-color;
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      .metadata-container {
+        padding: 1.2rem 2rem 0 2rem;
+        .main-display {
+          gap: 3rem;
+        }
+      }
+      .feedback-container {
+        padding: 0.4rem 0 1.2rem 0;
+        background-color: #f6f6f6;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        .rating-container {
+          display: flex;
+          gap: 2rem;
+          align-items: center;
+
+          .form-label {
+            font-family: "Dosis";
+            line-height: 1.4;
+            color: @main-color;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 4px;
+          }
+
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          input[type=number] {
+            -moz-appearance: textfield;
+          }
+
+          .text-dark{
+            color: black;
+          }
+
+          .rating-range{
+            padding-left: 0;
+            cursor: pointer;
+          }
+          .rating-text-form{
+            width: 65px;
+            height: 30px;
+            text-align: center;
+            margin-right: -1.6rem;
+          }
+        }
+        .review-details {
+          select {
+            background-color: rgb(107,117,124);
+            color: white;
+            padding: 5px;
+            width: 100%;
+            cursor: pointer;
+          }
+          textarea {
+            width:100%;
+            resize: none;
+            padding: 5px;
+          }
+          .errorTypePill {
+            display: inline-block;
+            width: 244px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .btn-submit-details {
+          color: white;
+          background-color: @main-color;
+          float: right;
+          margin-right: 30px;
+        }
+      }
+    }
+  }
+}

@@ -1,3 +1,39 @@
 <template>
-  
+  <section id="metadata-tagging" class="tagging metadata-tagging">
+    <!-- title-->
+    <div class="info-container container pe-0">
+      <div class="col instructions-container">
+        <div id="scrollPointMetadata" class="title d-flex justify-content-between">
+          <span>${record.title}</span>
+        </div>
+        <div class="heading">${campaign.feedbackMethod}</div>
+        <p class="campaignInstructions col-md-11" innerHtml.bind="campaign.instructions"></p>
+      </div>
+      <div class="col thumb-button-container">
+        <a href="javascript:void(0)" click.delegate="quickView()" class="thumb-button">
+          <i if.bind="!record.Thumbnail" class="fa fa-external-link fa-lg"></i>
+          <img class="btn-thumb" if.bind="record.Thumbnail" src.bind="record.Thumbnail" width="100" />
+        </a>
+      </div>
+    </div>
+    <div class="wraps">
+      <div class="container translations-container">
+        <div class="col-md-12">
+          <compose
+            repeat.for="annotation of annotations"
+            view-model="widgets/metadata-rating/metadata-rating"
+            model.bind="{'annotation': annotation, 'errorTypes': campaign.validationErrorTypes,
+            'generator': generator, 'isOrganizer': isOrganizer, 'lang': loc, 'index': $index}">
+          </compose>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div role="main">
+    <section class="action itemview" if.bind="record">
+      <compose view-model="widgets/quickview/quickview"
+        model.bind="{'cname': cname, 'metadataMode': metadataMode, 'record': record, 'lang': loc}">
+      </compose>
+    </section>
+  </div>
 </template>
