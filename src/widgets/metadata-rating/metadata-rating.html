@@ -30,7 +30,9 @@
     <div class="feedback-container">
       <div class="row d-flex justify-content-center mt-3">
         <div class="col-md-12 rating-container">
-          <label for="rating" class="form-label col-md-3 pe-0">Your rating:</label>
+          <label for="rating" class="form-label col-md-3 pe-0">
+            ${annotation.ratedByMe ? 'Your rating :' : 'Add rating :'}
+          </label>
           <input
             type="range" class="form-range col-md-7 pe-0 rating-range" id="rating"
             value.bind="ratingValue" input.delegate="ratingValueChanged()"

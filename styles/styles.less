@@ -7307,28 +7307,44 @@ input.tag-type {
 }
 
 .metadata-tagging {
-  .metadata-container {
-    .title {
-      &::before {
-        height: 100px;
+  .info-container {
+    display: flex;
+    justify-content: flex-end;
+    .instructions-container {
+      .title {
+        margin-bottom: 20px;
+        &::before {
+          height: 100px;
+        }
+      }
+      .heading {
+        margin-left: 66px;
+        display: inline-block;
+        color: #fff;
+        background-color: @main-color;
+        padding: 0 8px;
+        position: relative;
+        margin-bottom: 15px;
+        font-family: "Dosis";
+      }
+      .campaignInstructions {
+        margin-left: 66px;
+        margin-bottom: 30px;
+        padding: 0;
       }
     }
-  }
-  .wraps {
     .thumb-button-container {
-      margin-right: 6px;
-      padding-left: 0;
+      margin: 0;
+      padding: 0;
+      display: block;
+      height: max-content;
+      width: max-content;
       .thumb-button {
-        position: sticky;
-        top: 90px;
-        display: block;
-        height: max-content;
-        width: max-content;
-        .fa-eye {
+        .fa-external-link {
           position: relative;
           top: 0;
           left: 0;
-          color: black;
+          color: @main-color;
           margin-left: 3rem;
         }
         img.btn-thumb {
@@ -7344,10 +7360,8 @@ input.tag-type {
     display: flex;
     .card {
       position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 94%;
-      max-width: 1000px;
+      margin-left: 32px;
+      margin-right: 32px;
       border: 1px solid black;
       border-radius: 12px;
       margin-bottom: 2rem;
