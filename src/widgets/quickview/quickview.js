@@ -75,8 +75,7 @@ export class quickview {
       this.userServices.reloadCurrentUser();
     }
 		//Load Campaign
-		if(!this.edit)
-    {
+		if (!this.edit) {
       this.loadCamp = true;
       let result = await this.campaignServices.getCampaignByName(params.cname)
           .then(response => {
@@ -88,6 +87,7 @@ export class quickview {
           });
         this.loadCamp = false;
         this.record = params.record;
+        this.showMedia();
         if (params.collection) {
             this.collection = params.collection;
             this.collectionTitle = this.collection.title;
@@ -97,8 +97,9 @@ export class quickview {
           this.userId = params.userId;
         }
       }
-      else{
+      else {
         this.record = params.record;
+        this.showMedia();
         if (params.collection) {
             this.collection = params.collection;
             this.collectionTitle = this.collection.title;
@@ -162,6 +163,10 @@ export class quickview {
 	}
 
   closeTab() {
+    let mediaPlayer = document.getElementById("mediaplayer");
+    if (mediaPlayer) {
+      mediaPlayer.pause();
+    }
      $('.action.itemview').removeClass('active');
 	}
 
