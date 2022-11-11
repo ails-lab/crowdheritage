@@ -45,6 +45,7 @@ export class MetadataRating {
     this.userComment = '';
 	}
   activate(params) {
+    this.selectedErrorTypes = [];
     this.index = params.index;
 		this.annotation = params.annotation;
 		this.errorTypes = params.errorTypes;

@@ -1,4 +1,5 @@
 <template>
+  <require from="../tooltip/tooltip"></require>
   <div class="card">
     <div class="metadata-container">
       <div class="row">
@@ -60,8 +61,9 @@
           <div class="center col-md-4 mb-3">
             <h4>Error Types</h4>
             <ul class="tagPills">
-              <li class="d-flex" repeat.for="err of selectedErrorTypes">
-                <span class="errorTypePill me-2" title.bind="err.longDescription">${err.shortDescription}</span>
+              <li class="d-flex" repeat.for="err of selectedErrorTypes" bootstrap-tooltip data-toggle="tooltip" data-placement="right"
+              data-title="bootstrap tooltip" title.bind="err.longDescription">
+                <span class="errorTypePill me-2">${err.shortDescription}</span>
                 <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
               </li>
             </ul>
