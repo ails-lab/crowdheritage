@@ -15,7 +15,6 @@
 
 
 import { inject, LogManager } from 'aurelia-framework';
-import { DialogController } from 'aurelia-dialog';
 import { UserServices } from 'UserServices.js';
 import { AnnotationServices } from 'AnnotationServices.js';
 import { Router } from 'aurelia-router';
@@ -24,11 +23,10 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 
 let logger = LogManager.getLogger('metadata-rating.js');
 
-@inject(DialogController, UserServices, AnnotationServices, Router, I18N, EventAggregator)
+@inject(UserServices, AnnotationServices, Router, I18N, EventAggregator)
 export class MetadataRating {
 
-	constructor(controller, userServices, annotationServices, router, i18n, eventAggregator) {
-		this.controller = controller;
+	constructor(userServices, annotationServices, router, i18n, eventAggregator) {
 		this.userServices = userServices;
 		this.annotationServices = annotationServices;
 		this.router = router;
@@ -87,9 +85,9 @@ export class MetadataRating {
 	}
 
 	get cardClass() {
-		let className = "card";
-		className += this.noRatings ? " no-ratings" : " with-ratings";
-		className += this.isCampaignOrganizer ? " view-ratings" : "";
+		let className = "";
+		className += (this.noRatings) ? " no-ratings" : " with-ratings";
+		className += (this.isCampaignOrganizer && !this.noRatings) ? " view-ratings" : "";
 		return className;
 	}
 
@@ -195,4 +193,11 @@ export class MetadataRating {
 				document.body.style.cursor = 'default';
 			});
   }
+
+	openRatingsModal() {
+		if (!this.isCampaignOrganizer || this.noRatings) {
+			return;
+		}
+		this.ea.publish('open-ratings-modal', this.index);
+	}
 }

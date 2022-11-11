@@ -2826,6 +2826,55 @@ ux-dialog-container.active {
   width: calc(100vw - 100px);
 }
 
+#ratingsPopup {
+  height: calc(100vh - 180px);
+  width: calc(100vw - 120px);
+  padding: 8px 32px;
+
+  h4 {
+    color: @main-color;
+    font-weight: 600;
+  }
+
+  .ratings-table {
+    margin-top:8px;
+    margin-bottom: 2px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    th.narrow-column,
+    td.narrow-column {
+      width: 1rem;
+    }
+    td {
+      text-align: center;
+      border: 1px solid #aaaaaa;
+      padding: 3px 12px 3px 12px;
+      p.error-code {
+        margin-bottom: 4px;
+        width: max-content;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        &:hover {
+          cursor: default;
+        }
+      }
+    }
+    th {
+      border: 1px solid #aaaaaa;
+      padding: 3px 12px 3px 12px;
+      font-family: "Dosis";
+      color: @main-color;
+      font-size: 18px;
+      text-align: center;
+    }
+    tr:nth-child(even) {
+      background-color: #eeeeee;
+    }
+  }
+}
+
 #publishPopup {
   min-height: 240px;
   min-width: 500px;
@@ -7365,26 +7414,6 @@ input.tag-type {
       border: 1px solid black;
       border-radius: 12px;
       margin-bottom: 2rem;
-      &::after {
-        content: attr(data-value);
-        position: absolute;
-        top: 14px;
-        right: -14px;
-        font-size: 14px;
-        font-weight: bold;
-        color: white;
-        padding: 3px 9px;
-        border-radius: 5px;
-      }
-      &.no-ratings::after {
-        background: rgba(255, 91, 90, 1);
-      }
-      &.with-ratings::after {
-        background: rgba(131, 188, 63, 1);
-      }
-      // &.with-ratings::after {
-      //   cursor: pointer;
-      // }
       h4 {
         color: @main-color;
         font-weight: 600;
@@ -7395,6 +7424,31 @@ input.tag-type {
         padding: 1.2rem 2rem 0 2rem;
         .main-display {
           gap: 3rem;
+        }
+        .ratings-counter a {
+          position: absolute;
+          top: 0;
+          right: -20px;
+          font-size: 14px;
+          font-weight: bold;
+          color: white;
+          padding: 3px 9px;
+          border-radius: 5px;
+          border: none;
+          &:hover {
+            cursor: default;
+            text-decoration: none;
+          }
+          &.no-ratings {
+            background: rgba(255, 91, 90, 1);
+          }
+          &.with-ratings {
+            background: rgba(131, 188, 63, 1);
+          }
+          &.view-ratings:hover {
+            padding: 4px 10px;
+            cursor: pointer;
+          }
         }
       }
       .feedback-container {
@@ -7456,7 +7510,7 @@ input.tag-type {
           }
           .errorTypePill {
             display: inline-block;
-            width: 244px;
+            width: 290px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

@@ -1,4 +1,5 @@
 import { inject } from 'aurelia-framework';
+import { DialogService } from 'aurelia-dialog';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import { EventAggregator } from 'aurelia-event-aggregator';
@@ -7,9 +8,10 @@ import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
 import settings from 'global.config.js';
 
-@inject(Router, I18N, EventAggregator, UserServices, RecordServices)
+@inject(DialogService, Router, I18N, EventAggregator, UserServices, RecordServices)
 export class ItemMetadataView {
-  constructor(router, i18n, eventAggregator, userServices, recordServices) {
+  constructor(dialogService, router, i18n, eventAggregator, userServices, recordServices) {
+    this.dialogService = dialogService;
     this.router = router;
     this.i18n = i18n;
     this.ea = eventAggregator;
@@ -41,6 +43,7 @@ export class ItemMetadataView {
     this.fetchAnnotations();
 
     this.ratingListener = this.ea.subscribe('rating-added', () => this.fetchAnnotations());
+    this.ratingsModalListener = this.ea.subscribe('open-ratings-modal', (index) => this.openRatingsModal(index));
   }
 
   get isOrganizer() {
@@ -66,6 +69,14 @@ export class ItemMetadataView {
         .catch(error => console.error(error.message));
     });
   }
+
+  openRatingsModal(annotationIndex) {
+		this.dialogService.open({
+			viewModel: PLATFORM.moduleName('widgets/ratingsdialog/ratingsdialog'),
+      overlayDismiss: false,
+      model: {campaign: this.campaign, annotation: this.annotations[annotationIndex]}
+		});
+	}
 
   quickView() {
     $('.action').removeClass('active');

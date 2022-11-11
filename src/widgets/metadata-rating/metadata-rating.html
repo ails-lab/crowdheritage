@@ -1,13 +1,16 @@
 <template>
-  <div
-    class="card"
-    class.bind="noRatings ? 'no-ratings' : 'with-ratings'"
-    data-value.bind="labelText"
-  >
+  <div class="card">
     <div class="metadata-container">
       <div class="row">
-        <div class="annotation-name col-md-12">
+        <div class="annotation-name col-md-10 col-sm-8 col-xs-6">
           <b>${property}</b>
+        </div>
+        <div class="ratings-counter col-md-2 col-sm-4 col-xs-6">
+          <a class.bind="cardClass" click.delegate="openRatingsModal()">
+            <span>
+              ${labelText}
+            </span>
+          </a>
         </div>
       </div>
       <div class="row mb-2">
@@ -58,7 +61,7 @@
             <h4>Error Types</h4>
             <ul class="tagPills">
               <li class="d-flex" repeat.for="err of selectedErrorTypes">
-                <span class="errorTypePill me-2">${err.shortDescription}</span>
+                <span class="errorTypePill me-2" title.bind="err.longDescription">${err.shortDescription}</span>
                 <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
               </li>
             </ul>
