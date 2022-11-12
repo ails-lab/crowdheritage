@@ -17,18 +17,21 @@
 import { inject, LogManager } from 'aurelia-framework';
 import { UserServices } from 'UserServices.js';
 import { AnnotationServices } from 'AnnotationServices.js';
+import { CampaignServices } from 'CampaignServices.js';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import settings from 'global.config.js';
 
 let logger = LogManager.getLogger('metadata-rating.js');
 
-@inject(UserServices, AnnotationServices, Router, I18N, EventAggregator)
+@inject(UserServices, AnnotationServices, CampaignServices, Router, I18N, EventAggregator)
 export class MetadataRating {
 
-	constructor(userServices, annotationServices, router, i18n, eventAggregator) {
+	constructor(userServices, annotationServices, campaignServices, router, i18n, eventAggregator) {
 		this.userServices = userServices;
 		this.annotationServices = annotationServices;
+		this.campaignServices = campaignServices;
 		this.router = router;
 		this.i18n = i18n;
 		this.ea = eventAggregator;
@@ -47,19 +50,17 @@ export class MetadataRating {
   activate(params) {
     this.selectedErrorTypes = [];
     this.index = params.index;
+		this.campaign = params.campaign;
 		this.annotation = params.annotation;
-		this.errorTypes = params.errorTypes;
-		this.generator = params.generator;
-		this.isCampaignOrganizer = params.isOrganizer;
+		this.errorTypes = params.campaign.validationErrorTypes;
+		this.generator = `${settings.project} ${this.campaign.username}`;
+		this.itemRatedByMe = params.itemRatedByMe;
 
 		// Set noRatings flag to true if noone has rated this translation
     if (this.annotation.ratedBy.length === 0) {
       this.noRatings = true;
     }
 
-		// let selectorUrl = this.annotation.selector.property;
-		// let propertyTitle = selectorUrl.substring(selectorUrl.lastIndexOf('/') + 1);
-		// this.property = propertyTitle.charAt(0).toUpperCase() + propertyTitle.slice(1);
 		this.property = this.annotation.selector.property;
 		this.originalValue = this.annotation.selector.origValue;
 		this.annotationValue = this.annotation.label;
@@ -75,6 +76,13 @@ export class MetadataRating {
 				});
 			}
 		}
+  }
+
+	get isCampaignOrganizer() {
+    if (this.userServices.current)
+      return this.campaign.creators.includes(this.userServices.current.dbId);
+    else
+      return false;
   }
 
 	get isReviewAccordionOpen() { return $(`#collapse-${this.index}`).hasClass('in'); }
@@ -151,8 +159,12 @@ export class MetadataRating {
 			.then(() => {
 				document.body.style.cursor = 'default';
 				toastr.success('Your rating has been submitted');
+				this.ea.publish('rating-added');
 				if (!this.annotation.ratedByMe) {
-					this.ea.publish('rating-added');
+					this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'rated');
+					if (!this.itemRatedByMe) {
+						this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+					}
 				}
 			})
 			.catch(error => {
@@ -183,8 +195,12 @@ export class MetadataRating {
 				document.body.style.cursor = 'default';
 				toastr.success('Your review has been submitted');
 				this.toggleCollapse();
+				this.ea.publish('rating-added');
 				if (!this.annotation.ratedByMe) {
-					this.ea.publish('rating-added');
+					this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'rated');
+					if (!this.itemRatedByMe) {
+						this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+					}
 				}
 			})
 			.catch(error => {

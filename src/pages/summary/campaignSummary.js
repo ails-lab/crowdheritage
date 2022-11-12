@@ -134,7 +134,8 @@ export class CampaignSummary {
         this.userTags = this.campaign.userPoints[id].created;
         this.userUpvotes = this.campaign.userPoints[id].approved;
         this.userDownvotes = this.campaign.userPoints[id].rejected;
-        this.userPoints = this.userTags + this.userUpvotes + this.userDownvotes;
+        this.userRatings = this.campaign.userPoints[id].rated;
+        this.userPoints = this.userTags + this.userUpvotes + this.userDownvotes + this.userRatings;
         if (this.campaign.userPoints[id].created != null && this.campaign.userPoints[id].karmaPoints != null){
           if (this.campaign.userPoints[id].created > 0){
             this.userKarma = Math.round( (1 - (this.campaign.userPoints[id].karmaPoints/this.campaign.userPoints[id].created)) * 100);
@@ -187,7 +188,8 @@ export class CampaignSummary {
     Object.keys(this.campaign.userPoints).forEach( userId => {
       let score = this.campaign.userPoints[userId].created +
                   this.campaign.userPoints[userId].approved +
-                  this.campaign.userPoints[userId].rejected;
+                  this.campaign.userPoints[userId].rejected +
+                  this.campaign.userPoints[userId].rated;
       this.points.push([userId, score]);
     });
     this.points.sort( function(a, b) {

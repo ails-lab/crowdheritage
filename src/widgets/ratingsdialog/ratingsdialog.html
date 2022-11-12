@@ -33,16 +33,11 @@
 						</p>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<h4 class="mb-1">Average Rating</h4>
-						<p class="mb-0">
-							${averageRating}% (${ratings.length} contributors)
-						</p>
-					</div>
-				</div>
 			</div>
-			<h3 class="text-center mt-0">Ratings</h3>
+			<h3 class="text-center mt-4">
+				<span class="me-3">Ratings</span> ~
+				<span class="main-color ms-4"><i class="fa fa-bar-chart me-2" aria-hidden="true"></i> ${averageRating}%</span>
+			</h3>
 			<div class="row ratings-overview">
 				<table class="ratings-table">
 					<tr>
@@ -58,6 +53,7 @@
 						<td>${rating.validationCorrection || '-'}</td>
 						<td>${rating.validationComment || '-'}</td>
 						<td class="narrow-column">
+							<span if.bind="!rating.validationErrorType.length">-</span>
 							<p
 								repeat.for="eType of rating.validationErrorType" class="error-code"
 								bootstrap-tooltip data-toggle="tooltip" data-placement="left"

@@ -39,18 +39,12 @@ export class ItemMetadataView {
     this.cname= this.campaign.username;
     this.recId = this.record.dbId;
     this.generator = `${settings.project} ${this.campaign.username}`;
+    this.ratedByMe = false;
 
     this.fetchAnnotations();
 
     this.ratingListener = this.ea.subscribe('rating-added', () => this.fetchAnnotations());
     this.ratingsModalListener = this.ea.subscribe('open-ratings-modal', (index) => this.openRatingsModal(index));
-  }
-
-  get isOrganizer() {
-    if (this.userServices.current)
-      return this.campaign.creators.includes(this.userServices.current.dbId);
-    else
-      return false;
   }
 
   fetchAnnotations() {
@@ -60,7 +54,13 @@ export class ItemMetadataView {
         .then(response => {
           for (let ann of response) {
             let user = this.userServices.current ? this.userServices.current.dbId : "";
-            this.annotations.push(new Annotation(ann, user, "all", this.generator));
+            let annotation = new Annotation(ann, user, "all", this.generator);
+            if (user && !this.ratedByMe) {
+              if (annotation.ratedBy) {
+                this.ratedByMe = !!annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId);
+              }
+            }
+            this.annotations.push(annotation);
           }
           this.annotations.sort(function(a, b) {
             return a.score - b.score;

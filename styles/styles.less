@@ -16,6 +16,10 @@
 @secondary-color: #CAB284;
 @third-color: #CA8484;
 
+.main-color {
+  color: @main-color;
+}
+
 .cursor-pointer:hover {
   cursor: pointer;
 }
@@ -2831,6 +2835,13 @@ ux-dialog-container.active {
   width: calc(100vw - 120px);
   padding: 8px 32px;
   max-width: 1300px;
+
+  .close {
+    position: relative;
+    top: 0;
+    right: -16px;
+    font-size: 32px;
+  }
 
   h4 {
     color: @main-color;
@@ -7387,6 +7398,9 @@ input.tag-type {
       }
     }
     .thumb-button-container {
+      position: relative;
+      right: 64px;
+      top: 8px;
       margin: 0;
       padding: 0;
       display: block;

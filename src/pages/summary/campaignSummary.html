@@ -65,15 +65,15 @@
               </h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
-                <li>
+                <li if.bind="campaign.purpose == 'ANNOTATE'">
                   <div class="lbl" t="app:tags">TAGS</div>
                   <div class="val">${userTags}</div>
                 </li>
-                <li>
+                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
                   <div class="lbl" t="user:upvotes">UPVOTES</div>
                   <div class="val">${userUpvotes}</div>
                 </li>
-                <li>
+                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
                   <div class="lbl" t="user:downvotes">DOWNVOTES</div>
                   <div class="val">${userDownvotes}</div>
                 </li>
