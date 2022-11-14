@@ -50,7 +50,7 @@ export class MultipleItems {
     this.collectionEdit = false;
     this.campaign = '';
     this.cname = '';
-    this.state = "hide";
+    this.state = "show";
     this.resetInstance();
     if (!instance) {
       instance = this;
