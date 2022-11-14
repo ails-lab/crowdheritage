@@ -22,11 +22,12 @@ import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { CollectionServices } from 'CollectionServices.js';
+import { Collection } from 'Collection.js';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 
-let COUNT = 5;
+let COUNT = 10;
 
 @inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
 export class CampaignItem {
@@ -54,6 +55,7 @@ export class CampaignItem {
     this.collectionCount = 0;
 		//All the collection items have been retrieved
 		this.offset = 0;
+    this.collectionId = null;
 
 		this.record = 0;
 		this.records = [];
@@ -64,6 +66,7 @@ export class CampaignItem {
 
     this.mediaDiv = '';
 		this.hideOrShowMine = 'hide';
+    this.recordInFirstBatch = false;
 
     this.pollSubscriber = this.ea.subscribe("pollAnnotationAdded", () => {
       this.nextItem();
@@ -71,7 +74,7 @@ export class CampaignItem {
   }
 
 	get lastItem() {
-		return this.offset == (this.collectionCount - 1);
+    return this.offset == (this.collectionCount - 1);
 	}
 
 	previousItem() {
@@ -85,9 +88,14 @@ export class CampaignItem {
     this.records.unshift(this.record);
 	  this.records.unshift(this.previous.shift());
     item.records = this.records;
-		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
-	}
+		item.offset = this.offset - 1;
+    if(this.collectionId){
+      this.router.navigateToRoute('item', {cname: this.campaign.username, collectionId: this.collectionId, hideOrShowMine: this.hideOrShowMine, recid: this.records[0].dbId, lang: this.loc});
+    }
+	  else{
+      this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
+    }
+  }
 
   nextItem() {
     // clear previous media
@@ -99,23 +107,43 @@ export class CampaignItem {
     item.previous = this.previous;
 	  item.records = this.records;
 		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
+    if(this.collectionId){
+      this.router.navigateToRoute('item', {cname: this.campaign.username, collectionId: this.collectionId, hideOrShowMine: this.hideOrShowMine, recid: this.records[0].dbId, lang: this.loc});
+    }
+    else{
+      this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
+    }
   }
 
-	fillRecordArray(recordDataArray) {
+	async fillRecordArray(recordDataArray) {
 		for (let i in recordDataArray) {
 			let recordData = recordDataArray[i];
 			if (recordData !== null) {
-				let record = new Record(recordData);
-				this.records.push(record);
+        let record = new Record(recordData);
+        if(this.records.includes(record)){
+          continue;
+        }
+        if(this.collectionId && record.dbId == this.recId){
+          this.recordInFirstBatch = true;
+          this.records.unshift(record)
+        }
+        else{
+          this.records.push(record);
+        }
 			}
 		}
+    if(this.collectionId && !this.recordInFirstBatch){
+      await this.recordServices.getRecord(this.recId).then(response => {
+        let record = new Record(response)
+        this.records.unshift(record);
+      });
+    }
 	}
 
 	loadNextCollectionRecords() {
 		this.collectionServices.getRecords(this.collection.dbId, this.batchOffset, COUNT, this.hideOrShowMine)
-		.then( response => {
-			this.fillRecordArray(response.records);
+		.then(async (response) => {
+			await this.fillRecordArray(response.records);
 			this.batchOffset += response.records.length;
 			this.loadRecordFromBatch();
 		}).catch(error => {
@@ -124,10 +152,10 @@ export class CampaignItem {
 		});
 	}
 
-  loadRandomCampaignRecords() {
+  async loadRandomCampaignRecords() {
     this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT)
-      .then(response => {
-				this.fillRecordArray(response);
+      .then(async (response) => {
+				await this.fillRecordArray(response);
         if (this.records[0] && this.recId == this.records[0].dbId) {
           this.loadRecordFromBatch();
         } else {
@@ -238,7 +266,7 @@ export class CampaignItem {
   }
 
 	loadRecordFromBatch(){
-		this.record = this.records.shift();
+    this.record = this.records.shift();
 		this.loadRec = false;
 		this.showMedia();
 	}
@@ -257,9 +285,10 @@ export class CampaignItem {
 		}
 	}
 
-  async activate(params, routeData) {
+  async activate(params, routeData, routeConfig) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
+    this.collectionId = routeConfig.queryParams ? routeConfig.queryParams.collectionId : null;
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
@@ -288,8 +317,16 @@ export class CampaignItem {
       this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
       this.collectionCount = this.collection.entryCount;
 			this.offset = (routeData.offset) ? routeData.offset : 0;
-			this.batchOffset = this.offset + routeData.records.length;
+      this.batchOffset = this.offset + routeData.records.length;
 		}
+    else if(this.collectionId) {
+      let collectionData = await this.collectionServices.getCollection(this.collectionId);
+		  this.collection = new Collection(collectionData);
+      this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
+      this.collectionCount = this.collection.entryCount;
+			this.offset = 0;
+			this.batchOffset = 0;
+    }
 		if (routeData.records) {
 			this.records = routeData.records;
 		}
@@ -299,8 +336,8 @@ export class CampaignItem {
     } else {
       this.previous =[];
     }
-		if (routeData.hideOrShowMine) {
-			this.hideOrShowMine =  routeData.hideOrShowMine;
+		if (routeConfig.queryParams && routeConfig.queryParams.hideOrShowMine) {
+			this.hideOrShowMine =  routeConfig.queryParams.hideOrShowMine;
 		}
 		this.loadNextRecord();
   }

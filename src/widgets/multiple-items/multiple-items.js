@@ -145,7 +145,7 @@ export class MultipleItems {
     item.collection = this.collection;
     item.records = [];
     item.hideOrShowMine = this.state;
-    this.router.navigateToRoute('item', { cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc });
+    this.router.navigateToRoute('item', { cname: this.cname, collectionId: this.collection.dbId, hideOrShowMine: item.hideOrShowMine, recid: this.records[item.offset].dbId, lang: this.loc });
     this.record = null;
   }
 
