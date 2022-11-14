@@ -116,6 +116,7 @@ export class CampaignItem {
   }
 
 	async fillRecordArray(recordDataArray) {
+    this.recordInFirstBatch = false;
 		for (let i in recordDataArray) {
 			let recordData = recordDataArray[i];
 			if (recordData !== null) {
