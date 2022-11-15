@@ -70,6 +70,7 @@ export class CollectionServices {
   getMultipleCollections(idArray, offset, count, filterForLocale = true) {
     let idstr = '';
     for (let i = offset; i < (offset + count); i++) {
+      if(idArray[i] == undefined) continue;
       if (idstr.length > 0) {
         idstr += '&';
       }
