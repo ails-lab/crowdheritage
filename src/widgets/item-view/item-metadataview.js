@@ -58,6 +58,11 @@ export class ItemMetadataView {
     this.ratingsModalListener = this.ea.subscribe('open-ratings-modal', (index) => this.openRatingsModal(index));
   }
 
+	detached() {
+		this.ratingListener.dispose();
+		this.ratingsModalListener.dispose();
+	}
+
   fetchAnnotations() {
     this.annotations = JSON.parse(JSON.stringify(defaultFieldOrder));
     this.campaign.motivation.forEach(motivation => {
