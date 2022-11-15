@@ -23,7 +23,6 @@ export class ItemMetadataView {
     this.cname = '';
     this.record = null;
     this.mediaDiv = '';
-    this.metadataMode = true;
 
     this.annotations = [];
     this.previous = null;

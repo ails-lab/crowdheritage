@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="action-header">
-
-  </div> -->
   <div class="action-body">
     <div class="group">
       <div class="title">
@@ -9,15 +6,12 @@
           <i class="fa fa-times"></i>
         </button>
       </div>
-
       <section id="tagging" class="tagging">
         <!-- title-->
         <div show.bind="!loadRec">
           <div id="scrollPoint" class="title">${record.title}</div>
         </div>
-
         <div class="wraps">
-
           <!-- left-->
           <div class="cntr" show.bind="!loadRec">
             <!-- img-->
@@ -29,7 +23,6 @@
                 <!-- Modal Content - Image) -->
                 <img class="modal-content" id="modalImg" click.delegate="closeModal()">
               </div>
-
               <!-- Here goes the media, besides images -->
               <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
             </div>
@@ -43,7 +36,7 @@
               </compose>
             </div>
           </div>
-          <div class="cntr" if.bind="!loadCamp && !edit">
+          <div class="cntr" if.bind="!loadCamp && !edit && !metadataMode">
 						<br/>
             <compose view="widgets/quickview/tagitem.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Tagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
@@ -57,9 +50,8 @@
             </compose>
           </div>
         </div>
-
       </section>
-			<button class="btn-close" click.delegate="closeTab()" if.bind="!edit">Close</button>
+			<button class="mt-5 btn-close" click.delegate="closeTab()" if.bind="!edit">Close</button>
     </div>
   </div>
 </template>
