@@ -31,12 +31,6 @@ let COUNT = 5;
 @inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
 export class CampaignItem {
 
-  scrollTo(anchor) {
-    $('html, body').animate({
-      scrollTop: $(anchor).offset().top
-    }, 0);
-  }
-
   constructor(userServices, recordServices, campaignServices, collectionServices, eventAggregator, router, i18n) {
     this.userServices = userServices;
     this.recordServices = recordServices;
@@ -149,26 +143,10 @@ export class CampaignItem {
   attached() {
     $('.accountmenu').removeClass('active');
 
-    //var scrollPoint = document.getElementById("scrollPoint");
-    //scrollPoint.scrollIntoView( {behavior: 'smooth'} );
     var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null)
                       || (document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
                       || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
                       || (document.msFullscreenElement && document.msFullscreenElement !== null);
-    if (isInFullScreen) {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      });
-    }
-    else {
-      window.scrollTo({
-        top: 300,
-        left: 0,
-        behavior: 'smooth'
-      });
-    }
 
     document.addEventListener("fullscreenchange", function () {
       var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||

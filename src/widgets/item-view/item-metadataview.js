@@ -8,6 +8,18 @@ import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
 import settings from 'global.config.js';
 
+const defaultFieldOrder = [
+	{fieldName: 'dc:title'},
+	{fieldName: 'dc:description'},
+	{fieldName: 'dc:type'},
+	{fieldName: 'dc:subject'},
+	{fieldName: 'dcterms:medium'},
+	{fieldName: 'dc:format'},
+	{fieldName: 'dcterms:temporal'},
+	{fieldName: 'dcterms:alternative'},
+	{fieldName: 'dcterms:spatial'}
+];
+
 @inject(DialogService, Router, I18N, EventAggregator, UserServices, RecordServices)
 export class ItemMetadataView {
   constructor(dialogService, router, i18n, eventAggregator, userServices, recordServices) {
@@ -47,7 +59,7 @@ export class ItemMetadataView {
   }
 
   fetchAnnotations() {
-    this.annotations = [];
+    this.annotations = JSON.parse(JSON.stringify(defaultFieldOrder));
     this.campaign.motivation.forEach(motivation => {
       this.recordServices.getAnnotations(this.recId, motivation, this.generator)
         .then(response => {
@@ -59,14 +71,19 @@ export class ItemMetadataView {
                 this.ratedByMe = !!annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId);
               }
             }
-            this.annotations.push(annotation);
+            let annotationSelector = annotation.selector.property;
+            let annIndex = this.annotations.findIndex(ann => ann.fieldName == annotationSelector);
+            if (annIndex < 0) {
+              this.annotations.push(annotation);
+            }
+            else {
+              this.annotations.splice(annIndex, 0, annotation);
+            }
           }
-          this.annotations.sort(function(a, b) {
-            return a.score - b.score;
-          });
         })
         .catch(error => console.error(error.message));
     });
+    this.annotations.filter(ann => !ann.fieldName);
   }
 
   openRatingsModal(annotationIndex) {
