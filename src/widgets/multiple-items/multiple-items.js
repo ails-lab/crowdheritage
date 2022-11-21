@@ -145,7 +145,8 @@ export class MultipleItems {
     item.collection = this.collection;
     item.records = [];
     item.hideOrShowMine = this.state;
-    this.router.navigateToRoute('item', { cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc });
+    // TODO: add correct filters for show and hide and also sorting method
+    this.router.navigateToRoute('item', { cname: this.cname, collectionId: this.collection.dbId, recid: this.records[item.offset].dbId, lang: this.loc });
     this.record = null;
   }
 

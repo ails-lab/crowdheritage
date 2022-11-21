@@ -18,6 +18,7 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { Record } from 'Record.js';
 import { Campaign } from 'Campaign.js';
+import { Collection } from 'Collection.js';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
@@ -57,87 +58,29 @@ export class CampaignItem {
     // this.more = true;
 
     this.mediaDiv = '';
-		this.hideOrShowMine = 'hide';
+		this.hideOrShowParam = 'ALL';
+    this.recordIds = [];
+    this.recordIndex = null;
+    this.sortingParam = null;
 
     this.pollSubscriber = this.ea.subscribe("pollAnnotationAdded", () => {
       this.nextItem();
     });
   }
 
-	get lastItem() {
-		return this.offset == (this.collectionCount - 1);
-	}
 
 	previousItem() {
     // clear previous media
     this.mediaDiv = '';
-	  let item = this.router.routes.find(x => x.name === 'item');
-	  item.campaign = this.campaign;
-		item.collection = this.collection;
-	  item.records = this.records;
-    item.previous = this.previous;
-    this.records.unshift(this.record);
-	  this.records.unshift(this.previous.shift());
-    item.records = this.records;
-		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
+    //TODO add sorting param
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, collectionId: this.collectionId, recid: this.recordIds[this.recordIndex - 1], lang: this.loc, hideOrShowMine: this.hideOrShowParam});
 	}
 
   nextItem() {
     // clear previous media
     this.mediaDiv = '';
-	  let item = this.router.routes.find(x => x.name === 'item');
-	  item.campaign = this.campaign;
-		item.collection = this.collection;
-    this.previous.unshift(this.record);
-    item.previous = this.previous;
-	  item.records = this.records;
-		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
-  }
-
-	fillRecordArray(recordDataArray) {
-		for (let i in recordDataArray) {
-			let recordData = recordDataArray[i];
-			if (recordData !== null) {
-				let record = new Record(recordData);
-				this.records.push(record);
-			}
-		}
-	}
-
-	loadNextCollectionRecords() {
-		this.collectionServices.getRecords(this.collection.dbId, this.batchOffset, COUNT, this.hideOrShowMine)
-		.then( response => {
-			this.fillRecordArray(response.records);
-			this.batchOffset += response.records.length;
-			this.loadRecordFromBatch();
-		}).catch(error => {
-			this.loadRec = false;
-			console.error(error.message);
-		});
-	}
-
-  loadRandomCampaignRecords() {
-    this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, COUNT)
-      .then(response => {
-				this.fillRecordArray(response);
-        if (this.records[0] && this.recId == this.records[0].dbId) {
-          this.loadRecordFromBatch();
-        } else {
-          this.recordServices.getRecord(this.recId)
-            .then(response => {
-              this.records.unshift(new Record(response));
-              this.loadRecordFromBatch();
-            }).catch(error => {
-              this.loadRec = false;
-              console.error(error.message);
-            });
-        }
-      }).catch(error => {
-        this.loadRec = false;
-        console.error(error.message);
-      });
+    //TODO add sorting param
+	  this.router.navigateToRoute('item', {cname: this.campaign.username, collectionId: this.collectionId, recid: this.recordIds[this.recordIndex + 1], lang: this.loc, hideOrShowMine: this.hideOrShowParam});
   }
 
   attached() {
@@ -215,29 +158,42 @@ export class CampaignItem {
     }
   }
 
-	loadRecordFromBatch(){
-		this.record = this.records.shift();
-		this.loadRec = false;
-		this.showMedia();
-	}
+  getRecordIds(){
+    this.collectionServices.listCollectionRecordIds(this.collectionId, this.hideOrShowParam, this.sortingParam)
+      .then(response => {
 
-	loadNextRecord() {
-		this.loadRec = true;
-		if(this.records.length > 1) {
-			this.loadRecordFromBatch();
-			return;
-		}
-		//Fill the batch and return the first item
-		if (this.collection) {
-			this.loadNextCollectionRecords();
-		} else {
-			this.loadRandomCampaignRecords();
-		}
-	}
+        this.recordIds = response.recordIds;
+        this.recordIndex = this.recordIds.indexOf(this.recId)
+        this.isFirstItem = this.recordIndex == 0
+        this.isLastItem = this.recordIds[this.recordIds.length - 1] == this.recId;
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+  }
 
-  async activate(params, routeData) {
+  async getRecord(id){
+    await this.recordServices.getRecord(id).then(response => {
+      this.record = new Record(response)
+    })
+    .catch(error => {
+        console.error(error.message);
+        this.router.navigateToRoute('summary', {cname: camp.username, lang: this.loc});
+      });
+  }
+
+  async activate(params, routeData, routeConfig) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
+    
+    this.recId = params.recid;
+    this.collectionId = routeConfig.queryParams  ? routeConfig.queryParams.collectionId : null;
+    this.hideOrShowParam = routeConfig.queryParams && routeConfig.queryParams.hideOrShowMine ? routeConfig.queryParams.hideOrShowMine : 'ALL';
+    //TODO add sorting param
+    this.sortingParam = null;
+
+    this.getRecord(this.recId);
+    this.getRecordIds();
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
@@ -268,19 +224,18 @@ export class CampaignItem {
 			this.offset = (routeData.offset) ? routeData.offset : 0;
 			this.batchOffset = this.offset + routeData.records.length;
 		}
+    else {
+      let collectionData = await this.collectionServices.getCollection(this.collectionId);
+		  this.collection = new Collection(collectionData);
+      this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
+    }
+
 		if (routeData.records) {
 			this.records = routeData.records;
 		}
-    this.recId = params.recid;
-    if (routeData.previous) {
-      this.previous = routeData.previous;
-    } else {
-      this.previous =[];
-    }
 		if (routeData.hideOrShowMine) {
 			this.hideOrShowMine =  routeData.hideOrShowMine;
 		}
-		this.loadNextRecord();
   }
 
   get hasCollection() {
@@ -291,35 +246,6 @@ export class CampaignItem {
 		toggleMore(container);
 	}
 
-  showMedia() {
-    if (this.record.source_uri && !this.checkURL(this.record.source_uri) && this.record.source_uri.indexOf('archives_items_') > -1) {
-    	var id = this.record.source_uri.split("_")[2];
-      this.mediaDiv = '<div><iframe id="mediaplayer" src="http://archives.crem-cnrs.fr/archives/items/'+id+'/player/346x130/" height="250px" scrolling="no" width="361px"></iframe></div>';
-    }
-    else if (this.record.mediatype=="WEBPAGE") {
-      this.mediaDiv = '<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>';
-    }
-    else {
-    	if(this.record.mediatype=="VIDEO" && !this.checkURL(this.record.fullresImage)) {
-        this.mediaDiv = '<video id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</video>';
-    	}
-    	else if(this.record.mediatype=="AUDIO"  && !this.checkURL(this.record.fullresImage)) {
-    		if(this.record.thumbnail) {
-          this.mediaDiv = '<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio></div>';
-        }
-        else {
-          this.mediaDiv = '<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio>';
-        }
-      }
-    }
-  }
-
-  checkURL(url) {
-		if (url) {
-      return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
-    }
-		return false;
-	}
 
   goToCamp(camp) {
     let summary = this.router.routes.find(x => x.name === 'summary');
