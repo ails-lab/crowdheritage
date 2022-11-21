@@ -18,6 +18,7 @@ import { inject } from 'aurelia-framework';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { Record } from 'Record.js';
+import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { CampaignServices } from 'CampaignServices';
 import { I18N } from 'aurelia-i18n';
@@ -26,7 +27,7 @@ import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, CampaignServices, I18N, EventAggregator)
+@inject(CollectionServices, RecordServices, UserServices, CampaignServices, I18N, EventAggregator)
 export class MultipleItems {
 
   get smallerClass() { return this.collection ? '' : 'smaller' }
@@ -36,11 +37,12 @@ export class MultipleItems {
   get byCollection() { return !!this.collection && !this.collectionEdit }
   get byCollectionEdit() { return this.collectionEdit }
 
-  constructor(collectionServices, userServices, campaignServices, i18n, eventAggregator) {
+  constructor(collectionServices, recordServices, userServices, campaignServices, i18n, eventAggregator) {
     if (instance) {
       return instance;
     }
     this.collectionServices = collectionServices;
+    this.recordServices = recordServices;
     this.userServices = userServices;
     this.campaignServices = campaignServices;
     this.i18n = i18n;
@@ -50,7 +52,8 @@ export class MultipleItems {
     this.collectionEdit = false;
     this.campaign = '';
     this.cname = '';
-    this.state = "show";
+    this.state = "all-items";
+    this.sortBy = "default-order";
     this.resetInstance();
     if (!instance) {
       instance = this;
@@ -58,6 +61,7 @@ export class MultipleItems {
   }
 
   resetInstance() {
+    this.recordIds = null;
     this.records = [];
     this.collection = null;
     this.user = null;
@@ -81,10 +85,25 @@ export class MultipleItems {
 
   async getRecords() {
     if (this.collection) {
-      let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
-      this.totalCount = response.entryCount;
-      this.fillRecordArray(response.records);
-      this.loading = false;
+      let sortByMethod = (this.sortBy == 'contributions-count') ? true : false;
+      let filterBy = "ALL";
+      if (this.state == "contributed-items") {
+        filterBy = "FILTER_ONLY_USER_CONTRIBUTIONS";
+      }
+      else if (this.state == "not-contributed-items") {
+        filterBy = "HIDE_USER_CONTRIBUTIONS";
+      }
+      if (!this.recordIds) {
+        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, filterBy, sortByMethod);
+        this.recordIds = response.recordIds;
+        this.totalCount = response.recordIds.length;
+      }
+      let idsBatch = this.recordIds.slice(this.offset, this.offset + this.count);
+      this.recordServices.getRecordsByIds(idsBatch)
+        .then(response => {
+          this.fillRecordArray(response.records);
+        })
+        .catch(error => console.error(error));
     }
     else if (this.user) {
       this.userServices.getUserAnnotations(this.user.dbId, this.project, this.cname, this.offset, this.count)
@@ -113,7 +132,7 @@ export class MultipleItems {
     this.cname = params.cname;
     this.router = params.router;
     if (params.collectionEdit) {
-      this.state = "show";
+      this.state = "all-items";
       this.collectionEdit = params.collectionEdit
       this.collection = params.myCollection;
       this.totalCount = this.collection.entryCount;
@@ -164,12 +183,23 @@ export class MultipleItems {
     }
   }
 
-  reloadCollection(state) {
-    if (state == this.state) {
+  toggleSortMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
+  }
+
+  reloadCollection(state, sortBy) {
+    if (state == this.state && sortBy == this.sortBy) {
       return;
     }
     else {
       this.state = state;
+      this.sortBy = sortBy;
+      this.recordIds = null;
       this.records.splice(0, this.records.length);
       this.loading = true;
       this.getRecords();

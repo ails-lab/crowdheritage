@@ -9,18 +9,39 @@
 					<!-- State - Filter-->
 					<div class="state">
 						<a id="sorting" href="javascript:void(0)" click.delegate="toggleStateMenu()" data-toggle="dropdown">
-							<span class="text" t="[prepend]app:${state.toLowerCase()}">
+							<span class="text" t="[prepend]app:${state.toLowerCase()}"> <strong class="ms-2">(${totalCount})</strong>
 								<span class="arrow"><img width="11px" src="/img/ic-arrow-down-white.png"></span>
 							</span>
 						</a>
 						<!-- dropdown-->
 						<ul aria-labelledby="sorting" class="dropdown-menu">
-							<li> <a href="javascript:void(0)" click.delegate="reloadCollection('hide')" t="app:hide">HIDE</a></li>
-							<li> <a href="javascript:void(0)" click.delegate="reloadCollection('show')" t="app:show">SHOW</a></li>
+							<li>
+								<a href="javascript:void(0)" click.delegate="reloadCollection('all-items', sortBy)" t="app:all-items">ALL</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" click.delegate="reloadCollection('contributed-items', sortBy)" t="app:contributed-items">CONTRIBUTED</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" click.delegate="reloadCollection('not-contributed-items', sortBy)" t="app:not-contributed-items">NOT CONTRIBUTED</a>
+							</li>
 						</ul>
 					</div>
 				</div>
-				<span t="app:annotated">MY ANNOTATED ITEMS</span>
+				<span t="app:${state.toLowerCase()}-desc">SUBTITLE</span>
+			</div>
+			<div class="sort">
+				<!-- label-->
+				<div class="lbl" t="index:sortby">SORT BY </div>
+				<!-- sort-->
+				<a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
+					<span class="text" t="[html]app:${sortBy}">default_sortby</span>
+					<span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
+				</a>
+				<!-- dropdown-->
+				<ul aria-labelledby="sorting" class="dropdown-menu">
+					<li> <a href="javascript:void(0)" click.delegate="reloadCollection(state, 'default-order')" t="app:default-order">DEFAULT ORDER</a></li>
+					<li> <a href="javascript:void(0)" click.delegate="reloadCollection(state, 'contributions-count')" t="app:contributions-count">CONTRIBUTIONS COUNT</a></li>
+				</ul>
 			</div>
 		</div>
 		<!-- entry-->
