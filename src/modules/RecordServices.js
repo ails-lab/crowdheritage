@@ -74,6 +74,19 @@ export class RecordServices {
 		});
 	}
 
+	getRecordsByIds(recordIds) {
+		let url = "/record/getRecordsByIds?";
+		recordIds.forEach(recordId => {
+			url += `id=${recordId}&`;
+		});
+		url = url.slice(0, -1);
+		return this.http.fetch(url, {
+			method: 'GET'
+		}).then(checkStatus).then((response) => {
+			return response.json();
+		});
+	}
+
 	getRecordIdsByAnnLabel(label, generators, order) {
 		let gens = '';
 		for (let gen of generators) {

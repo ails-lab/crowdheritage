@@ -43,6 +43,15 @@ export class CollectionServices {
     }).then((response) => response.json());
   }
 
+  getCollectionRecordIds(id, filterBy, sortBy) {
+    let url = `/collection/${id}/listRecordIds`;
+    url += filterBy ? `?fetch=${filterBy}&` : '?';
+    url = sortBy ? url + `sortingCriteria=true` : url.slice(0, -1);
+    return this.http.fetch(url, {
+      method: 'GET'
+    }).then((response) => response.json());
+  }
+
   searchForRecords(collectionId, term, offset, count) {
     return this.http.fetch(`/api/searchCollection/${collectionId}?offset=${offset}&count=${count}&term=*${term}*`, {
       method: 'GET'
