@@ -20,7 +20,7 @@
       <div class="container translations-container">
         <div class="col-md-12">
           <compose
-            repeat.for="annotation of annotations"
+            repeat.for="annotation of validAnnotations"
             view-model="widgets/metadata-rating/metadata-rating"
             model.bind="{'campaign': campaign, 'annotation': annotation,
                         'itemRatedByMe': ratedByMe, 'index': $index}">

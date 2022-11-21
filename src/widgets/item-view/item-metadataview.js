@@ -43,7 +43,7 @@ export class ItemMetadataView {
   }
 
   activate(params) {
-    this.loc = params.lang;
+    this.loc = params.loc;
     this.campaign = params.campaign;
     this.record = params.record;
     this.mediaDiv = params.mediaDiv;
@@ -63,6 +63,10 @@ export class ItemMetadataView {
 		this.ratingsModalListener.dispose();
 	}
 
+	get validAnnotations() {
+		return this.annotations.filter(ann => !ann.fieldName);
+	}
+
   fetchAnnotations() {
     this.annotations = JSON.parse(JSON.stringify(defaultFieldOrder));
     this.campaign.motivation.forEach(motivation => {
@@ -70,7 +74,7 @@ export class ItemMetadataView {
         .then(response => {
           for (let ann of response) {
             let user = this.userServices.current ? this.userServices.current.dbId : "";
-            let annotation = new Annotation(ann, user, "all", this.generator);
+            let annotation = new Annotation(ann, user, this.loc, this.generator);
             if (user && !this.ratedByMe) {
               if (annotation.ratedBy) {
                 this.ratedByMe = !!annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId);
