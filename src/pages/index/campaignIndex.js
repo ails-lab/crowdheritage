@@ -127,35 +127,35 @@ export class CampaignIndex {
     this.loading = false;
   }
 
-  goToRandomItem(camp, col, records, offset) {
-    let item = this.router.routes.find(x => x.name === 'item');
-    let recs = [];
-    item.campaign = camp;
-    item.collection = 0;
-    item.offset = offset;
+  // goToRandomItem(camp, col, records, offset) {
+  //   let item = this.router.routes.find(x => x.name === 'item');
+  //   let recs = [];
+  //   item.campaign = camp;
+  //   item.collection = 0;
+  //   item.offset = offset;
 
-    // Get 2 random records to start annotating
-    this.loading = true;
-    this.recordServices.getRandomRecordsFromCollections(camp.targetCollections, 2)
-      .then(response => {
-        if (response.length>0) {
-          for (let i in response) {
-            let result = response[i];
-            if (result !== null) {
-              let record = new Record(result);
-              recs.push(record);
-            }
-          }
-          this.loading = false;
-          item.records = recs;
-          this.router.navigateToRoute('item', {cname: camp.username, lang: this.currentLocaleCode, recid: recs[0].dbId});
-        }
-        })
-      .catch(error => {
-        this.loading = false;
-        console.log(error.message);
-      });
-  }
+  //   // Get 2 random records to start annotating
+  //   this.loading = true;
+  //   this.recordServices.getRandomRecordsFromCollections(camp.targetCollections, 2)
+  //     .then(response => {
+  //       if (response.length>0) {
+  //         for (let i in response) {
+  //           let result = response[i];
+  //           if (result !== null) {
+  //             let record = new Record(result);
+  //             recs.push(record);
+  //           }
+  //         }
+  //         this.loading = false;
+  //         item.records = recs;
+  //         this.router.navigateToRoute('item', {cname: camp.username, lang: this.currentLocaleCode, recid: recs[0].dbId});
+  //       }
+  //       })
+  //     .catch(error => {
+  //       this.loading = false;
+  //       console.log(error.message);
+  //     });
+  // }
 
   toggleSortMenu() {
     if ($('.sort').hasClass('open')) {
