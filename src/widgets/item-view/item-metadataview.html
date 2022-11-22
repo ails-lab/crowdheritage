@@ -6,7 +6,7 @@
         <div id="scrollPointMetadata" class="title d-flex justify-content-between w-85">
           <span>${record.title}</span>
         </div>
-        <div class="heading">${campaign.feedbackMethod}</div>
+        <div class="heading">RATING</div>
         <p class="campaignInstructions col-md-10 col-sm-8" innerHtml.bind="campaign.instructions"></p>
       </div>
       <div class="col thumb-button-container">
@@ -20,7 +20,7 @@
       <div class="container translations-container">
         <div class="col-md-12">
           <compose
-            repeat.for="annotation of annotations"
+            repeat.for="annotation of validAnnotations"
             view-model="widgets/metadata-rating/metadata-rating"
             model.bind="{'campaign': campaign, 'annotation': annotation,
                         'itemRatedByMe': ratedByMe, 'index': $index}">
