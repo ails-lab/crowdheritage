@@ -101,7 +101,11 @@ export class MultipleItems {
       let idsBatch = this.recordIds.slice(this.offset, this.offset + this.count);
       this.recordServices.getRecordsByIds(idsBatch)
         .then(response => {
-          this.fillRecordArray(response.records);
+          idsBatch.forEach(id => {
+            let rec = response.records.find(r => r.dbId == id);
+            this.records.push(new Record(rec));
+          });
+          this.loading = false;
         })
         .catch(error => console.error(error));
     }
