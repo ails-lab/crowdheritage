@@ -73,6 +73,18 @@ export class MultipleItems {
     this.loc = window.location.href.split('/')[3];
   }
 
+  get filterBy() {
+    if (this.state == "contributed-items") {
+      return "FILTER_ONLY_USER_CONTRIBUTIONS";
+    }
+    else if (this.state == "not-contributed-items") {
+      return "HIDE_USER_CONTRIBUTIONS";
+    }
+    else {
+      return "ALL";
+    }
+  }
+
   fillRecordArray(records) {
     for (let i in records) {
       let recordData = records[i];
@@ -86,15 +98,8 @@ export class MultipleItems {
   async getRecords() {
     if (this.collection) {
       let sortByMethod = (this.sortBy == 'contributions-count') ? true : false;
-      let filterBy = "ALL";
-      if (this.state == "contributed-items") {
-        filterBy = "FILTER_ONLY_USER_CONTRIBUTIONS";
-      }
-      else if (this.state == "not-contributed-items") {
-        filterBy = "HIDE_USER_CONTRIBUTIONS";
-      }
       if (!this.recordIds) {
-        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, filterBy, sortByMethod);
+        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod);
         this.recordIds = response.recordIds;
         this.totalCount = response.recordIds.length;
       }
@@ -162,13 +167,26 @@ export class MultipleItems {
 
   goToItem(record) {
     let item = this.router.routes.find(x => x.name === 'item');
-    item.campaign = this.campaign;
-    item.offset = this.records.indexOf(record);
-    //TODO pass the subarray of items as well
     item.collection = this.collection;
-    item.records = [];
-    item.hideOrShowMine = this.state;
-    this.router.navigateToRoute('item', { cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc });
+    item.recordIds = this.recordIds;
+    item.record = record;
+    item.recordIndex = this.records.indexOf(record);
+    item.filterBy = this.filterBy;
+    item.sortBy = this.sortBy;
+    let params = {
+      cname: this.cname,
+      collectionId: this.collection.dbId,
+      recid: record.dbId,
+      lang: this.loc
+    }
+    if (this.sortBy == 'contributions-count') {
+      params.sortBy = true;
+    }
+    if (this.filterBy != "ALL") {
+      params.filterBy = this.filterBy;
+    }
+    this.router.navigateToRoute('item', params);
+
     this.record = null;
   }
 
@@ -254,18 +272,9 @@ export class MultipleItems {
       this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
         .then(() => {
           this.ea.publish('record-removed');
+          this.getRecords();
         })
         .catch(error => console.error(error));
-    }
-  }
-
-  deleteRecord(record){
-    if (window.confirm("Do you really want to delete this record from your collection?")){
-      this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
-      .then(response => {
-        console.log(response)
-        this.getRecords();
-      })
     }
   }
 

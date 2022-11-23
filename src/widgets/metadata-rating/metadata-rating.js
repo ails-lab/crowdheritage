@@ -66,7 +66,7 @@ export class MetadataRating {
 		this.annotationValue = this.annotation.label;
 		this.annotationLanguage = this.annotation.labelLang;
 		if (this.userServices.current) {
-			this.rating = this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId);
+			this.rating = this.annotation.ratedBy ? this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId) : 0;
 			this.ratingValue = this.rating ? this.rating.confidence : 0;
 			this.ratingText = this.rating ? this.rating.confidence : '';
 			this.correctedAnnotation = this.rating ? this.rating.validationCorrection : '';
@@ -90,7 +90,7 @@ export class MetadataRating {
 
 	get labelText() {
 		let txt = this.noRatings ? 'NO RATING' : `${this.annotation.ratedBy.length} RATING`;
-		txt += this.annotation.ratedBy.length !== 1 ? 'S' : '';
+		txt += !this.annotation.ratedBy || this.annotation.ratedBy.length !== 1 ? 'S' : '';
 		return txt;
 	}
 
