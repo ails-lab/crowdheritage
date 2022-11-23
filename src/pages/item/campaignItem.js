@@ -24,15 +24,12 @@ import { RecordServices } from 'RecordServices.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 
-let COUNT = 5;
-
-@inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
+@inject(Router, UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, I18N)
 export class CampaignItem {
 
-  constructor(userServices, recordServices, campaignServices, collectionServices, eventAggregator, router, i18n) {
+  constructor(router, userServices, recordServices, campaignServices, collectionServices, eventAggregator, i18n) {
     this.userServices = userServices;
     this.recordServices = recordServices;
     this.campaignServices = campaignServices;
@@ -41,115 +38,44 @@ export class CampaignItem {
     this.router = router;
     this.i18n = i18n;
 
-    this.loc;
+    this.loc = '';
+    this.mediaDiv = '';
     this.campaign = null;
-		//If there is a collection
     this.collection = null;
     this.collectionTitle = '';
     this.collectionCount = 0;
-		//All the collection items have been retrieved
-		this.offset = 0;
-
-		this.record = 0;
-		this.records = [];
-
+    this.recordIds = [];
+    this.record = null;
+    this.recordIndex = -1;
+    this.filterBy = 'ALL';
+    this.sortByContributionCount = false;
     this.loadCamp = false;
     this.loadRec = false;
-    // this.more = true;
-
-    this.mediaDiv = '';
-		this.hideOrShowParam = 'ALL';
-    this.recordIds = [];
-    this.recordIndex = null;
-    this.sortingParam = null;
 
     this.pollSubscriber = this.ea.subscribe("pollAnnotationAdded", () => {
-      this.nextItem();
+      this.goToItem('next');
     });
   }
 
-
-	previousItem() {
-    // clear previous media
-    this.mediaDiv = '';
-    //TODO add sorting param
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, collectionId: this.collectionId, recid: this.recordIds[this.recordIndex - 1], lang: this.loc, hideOrShowMine: this.hideOrShowParam});
-	}
-
-  nextItem() {
-    // clear previous media
-    this.mediaDiv = '';
-    //TODO add sorting param
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, collectionId: this.collectionId, recid: this.recordIds[this.recordIndex + 1], lang: this.loc, hideOrShowMine: this.hideOrShowParam});
+  handleFullscreen() {
+    let isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null)
+      || (document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
+      || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
+      || (document.msFullscreenElement && document.msFullscreenElement !== null);
+    if (isInFullScreen) {
+      $("body").addClass("fullscreen");
+    } else {
+      $("body").removeClass("fullscreen");
+    }
   }
 
   attached() {
     $('.accountmenu').removeClass('active');
-
-    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null)
-                      || (document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
-                      || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
-                      || (document.msFullscreenElement && document.msFullscreenElement !== null);
-
-    document.addEventListener("fullscreenchange", function () {
-      var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null);
-      if (isInFullScreen) {
-        $("body").addClass("fullscreen");
-      } else {
-        $("body").removeClass("fullscreen");
-      }
-    }, false);
-
-    document.addEventListener("mozfullscreenchange", function () {
-      var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null);
-      if (isInFullScreen) {
-        $("body").addClass("fullscreen");
-      } else {
-        $("body").removeClass("fullscreen");
-      }
-    }, false);
-
-    document.addEventListener("webkitfullscreenchange", function () {
-      var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null);
-      if (isInFullScreen) {
-        $("body").addClass("fullscreen");
-      } else {
-        $("body").removeClass("fullscreen");
-      }
-    }, false);
-
-    document.addEventListener("msfullscreenchange", function () {
-      var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null);
-      if (isInFullScreen) {
-        $("body").addClass("fullscreen");
-      } else {
-        $("body").removeClass("fullscreen");
-      }
-    }, false);
-
-    document.addEventListener("MSFullscreenChange", function () {
-      var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null);
-      if (isInFullScreen) {
-        $("body").addClass("fullscreen");
-      } else {
-        $("body").removeClass("fullscreen");
-      }
-    }, false);
+    document.addEventListener("fullscreenchange", this.handleFullscreen(), false);
+    document.addEventListener("mozfullscreenchange", this.handleFullscreen(), false);
+    document.addEventListener("webkitfullscreenchange", this.handleFullscreen(), false);
+    document.addEventListener("msfullscreenchange", this.handleFullscreen(), false);
+    document.addEventListener("MSFullscreenChange", this.handleFullscreen(), false);
   }
 
   detached() {
@@ -158,99 +84,102 @@ export class CampaignItem {
     }
   }
 
-  getRecordIds(){
-    this.collectionServices.listCollectionRecordIds(this.collectionId, this.hideOrShowParam, this.sortingParam)
-      .then(response => {
-
-        this.recordIds = response.recordIds;
-        this.recordIndex = this.recordIds.indexOf(this.recId)
-        this.isFirstItem = this.recordIndex == 0
-        this.isLastItem = this.recordIds[this.recordIds.length - 1] == this.recId;
-      })
-      .catch(error => {
-        console.error(error.message);
-      });
-  }
-
-  async getRecord(id){
-    await this.recordServices.getRecord(id).then(response => {
-      this.record = new Record(response)
-    })
-    .catch(error => {
-        console.error(error.message);
-        this.router.navigateToRoute('summary', {cname: camp.username, lang: this.loc});
-      });
-  }
-
   async activate(params, routeData, routeConfig) {
-    this.loc = params.lang;
-		this.i18n.setLocale(params.lang);
-    
-    this.recId = params.recid;
-    this.collectionId = routeConfig.queryParams  ? routeConfig.queryParams.collectionId : null;
-    this.hideOrShowParam = routeConfig.queryParams && routeConfig.queryParams.hideOrShowMine ? routeConfig.queryParams.hideOrShowMine : 'ALL';
-    //TODO add sorting param
-    this.sortingParam = null;
-
-    this.getRecord(this.recId);
-    this.getRecordIds();
-
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
+    this.loc = params.lang;
+		this.i18n.setLocale(params.lang);
+    this.recId = params.recid;
+    this.collectionId = params.collectionId ? params.collectionId : null;
+    this.filterBy = params.filterBy ? params.filterBy : 'ALL';
+    this.sortByContributionCount = params.sortBy ? params.sortBy : null;
+
 		//Load Campaign
 		this.loadCamp = true;
-		if (routeData.campaign) {
-      this.campaign = routeData.campaign;
-      this.loadCamp = false;
-		}
-    else {
-			let result = await this.campaignServices.getCampaignByName(params.cname)
-        .then(response => {
-          // Based on the selected language, set the campaign
-          this.campaign = new Campaign(response, this.loc);
-        })
-        .catch(error => {
-          let index = this.router.routes.find(x => x.name === 'index');
-          this.router.navigateToRoute('index', {lang: 'en'});
-        });
-			this.loadCamp = false;
-		}
-		//Load Collection (if any)
+    this.campaignServices.getCampaignByName(params.cname)
+      .then(response => {
+        this.campaign = new Campaign(response, this.loc);
+        this.loadCamp = false;
+      })
+      .catch(error => {
+        let index = this.router.routes.find(x => x.name === 'index');
+        this.router.navigateToRoute('index', {lang: 'en'});
+      });
+
+		// Load Collection
 		if (routeData.collection) {
 			this.collection = routeData.collection;
-      this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
-      this.collectionCount = this.collection.entryCount;
-			this.offset = (routeData.offset) ? routeData.offset : 0;
-			this.batchOffset = this.offset + routeData.records.length;
 		}
     else {
       let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		  this.collection = new Collection(collectionData);
-      this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
+    }
+    this.collectionTitle = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
+
+    // Load RecordIds
+    if (routeData.recordIds) {
+      this.recordIds = routeData.recordIds;
+    }
+    else {
+      let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, this.sortByContributionCount);
+      this.recordIds = response.recordIds;
+    }
+    this.collectionCount = this.recordIds.length;
+    this.recordIndex = (routeData.recordIndex) ? routeData.recordIndex : this.recordIds.indexOf(this.recId);
+    this.isFirstItem = this.recordIndex == 0;
+    this.isLastItem = this.recordIds[this.recordIds.length - 1] == this.recId;
+
+    // Load Record
+    if (routeData.record) {
+      this.record = routeData.record;
+    }
+    else {
+      this.loadRec = true;
+      await this.recordServices.getRecord(this.recId)
+        .then(response => {
+          this.record = new Record(response);
+          this.loadRec = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.returnToCampaign();
+        });
+    }
+  }
+
+  goToItem(direction) {
+    this.mediaDiv = '';
+    let index = (direction ==  'previous') ? this.recordIndex - 1 : this.recordIndex + 1;
+
+    let item = this.router.routes.find(x => x.name === 'item');
+    item.collection = this.collection;
+    item.recordIds = this.recordIds;
+    item.recordIndex = index;
+    item.record = null;
+    item.filterBy = this.filterBy;
+    item.sortBy = this.sortByContributionCount;
+
+    let params = {
+      cname: this.campaign.username,
+      collectionId: this.collectionId,
+      recid: this.recordIds[index],
+      lang: this.loc,
+    };
+    if (this.sortByContributionCount) {
+      params.sortBy = true;
+    }
+    if (this.filterBy != "ALL") {
+      params.filterBy = this.filterBy;
     }
 
-		if (routeData.records) {
-			this.records = routeData.records;
-		}
-		if (routeData.hideOrShowMine) {
-			this.hideOrShowMine =  routeData.hideOrShowMine;
-		}
-  }
-
-  get hasCollection() {
-    return (this.collectionTitle.length>0);
-  }
-
-	toggleLoadMore(container) {
-		toggleMore(container);
+	  this.router.navigateToRoute('item', params);
 	}
 
-
-  goToCamp(camp) {
+  returnToCampaign() {
     let summary = this.router.routes.find(x => x.name === 'summary');
-    summary.campaign = camp;
-    this.router.navigateToRoute('summary', {cname: camp.username, lang: this.loc});
+    summary.campaign = this.campaign;
+    this.router.navigateToRoute('summary', {cname: this.campaign.username, lang: this.loc});
   }
 
   returnToCollection() {

@@ -36,12 +36,6 @@ export class CollectionServices {
     }).then((response) => response.json());
   }
 
-  async listCollectionRecordIds(id, hideOrShowParam, sortParam){
-    let sortQueryParam = sortParam ? `&sortingCriteria=true` : '';
-    return this.http.fetch(`/collection/${id}/listRecordIds?fetch=${hideOrShowParam}${sortQueryParam}`, {
-      method: 'GET'
-    }).then((response) => response.json());
-  }
   // Records retrieval
   async getRecords(id, offset, count, hideMine) {
     return this.http.fetch('/collection/' + id + '/list?' + 'start=' + offset + '&count=' + count + '&locale=ALL' + '&hideMyAnnotated=' + (hideMine === 'hide'), {
