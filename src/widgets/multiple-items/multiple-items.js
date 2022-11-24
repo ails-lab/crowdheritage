@@ -99,7 +99,7 @@ export class MultipleItems {
     if (this.collection) {
       let sortByMethod = (this.sortBy == 'contributions-count') ? true : false;
       if (!this.recordIds) {
-        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod);
+        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
         this.recordIds = response.recordIds;
         this.totalCount = response.recordIds.length;
       }

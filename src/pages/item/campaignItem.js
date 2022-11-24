@@ -126,7 +126,7 @@ export class CampaignItem {
       this.recordIds = routeData.recordIds;
     }
     else {
-      let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, this.sortByContributionCount);
+      let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, this.sortByContributionCount, params.cname);
       this.recordIds = response.recordIds;
     }
     this.collectionCount = this.recordIds.length;

@@ -43,10 +43,10 @@ export class CollectionServices {
     }).then((response) => response.json());
   }
 
-  getCollectionRecordIds(id, filterBy, sortBy) {
+  getCollectionRecordIds(id, filterBy, sortBy, cname) {
     let url = `/collection/${id}/listRecordIds`;
     url += filterBy ? `?fetch=${filterBy}&` : '?';
-    url = sortBy ? url + `sortingCriteria=true` : url.slice(0, -1);
+    url = sortBy ? url + `cname=${cname}&sortingCriteria=true` : url.slice(0, -1);
     return this.http.fetch(url, {
       method: 'GET'
     }).then((response) => response.json());
