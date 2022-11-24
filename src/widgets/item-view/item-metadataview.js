@@ -34,7 +34,6 @@ export class ItemMetadataView {
     this.campaign = '';
     this.cname = '';
     this.record = null;
-    this.mediaDiv = '';
 
     this.annotations = [];
     this.previous = null;
@@ -46,7 +45,6 @@ export class ItemMetadataView {
     this.loc = params.loc;
     this.campaign = params.campaign;
     this.record = params.record;
-    this.mediaDiv = params.mediaDiv;
     this.cname= this.campaign.username;
     this.recId = this.record.dbId;
     this.generator = `${settings.project} ${this.campaign.username}`;

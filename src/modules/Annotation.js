@@ -19,7 +19,12 @@ export class Annotation {
   constructor(data, userId, lang="all", generator) {
     this.dbId = data.dbId;
     this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
-    this.labelLang = Object.keys(data.body.label).filter(key => key != "default")[0].toUpperCase();
+    try {
+      this.labelLang = Object.keys(data.body.label).filter(key => key != "default")[0].toUpperCase();
+    } catch (e) {
+      this.labelLang = "DEFAULT";
+    }
+
 		if (lang !== "all") {
 			if (lang === 'en' && typeof data.body.label.en !== 'undefined') {
         this.label = this.capitalizeFirstLetter(data.body.label.en[0]);

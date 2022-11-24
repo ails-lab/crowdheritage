@@ -25,12 +25,12 @@ export class ItemDataView {
     this.loc = params.loc;
     this.campaign = params.campaign;
     this.record = params.record;
-    this.mediaDiv = params.mediaDiv;
     this.records = params.records;
     this.previous = params.previous;
     this.collectionTitle = params.collectionTitle;
 
     this.recId = this.record.dbId;
+    this.showMedia();
   }
 
   get isLiked() { return this.recordServices.isLiked(this.record.externalId);	}
@@ -151,5 +151,35 @@ export class ItemDataView {
 	  item.records = this.records;
 		item.offset = this.offset + 1;
 	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
+  }
+
+  checkURL(url) {
+		if (url) {
+      return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
+		return false;
+	}
+
+  showMedia() {
+    if (this.record.source_uri && !this.checkURL(this.record.source_uri) && this.record.source_uri.indexOf('archives_items_') > -1) {
+    	var id = this.record.source_uri.split("_")[2];
+      this.mediaDiv = '<div><iframe id="mediaplayer" src="http://archives.crem-cnrs.fr/archives/items/'+id+'/player/346x130/" height="250px" scrolling="no" width="361px"></iframe></div>';
+    }
+    else if (this.record.mediatype=="WEBPAGE") {
+      this.mediaDiv = '<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>';
+    }
+    else {
+    	if(this.record.mediatype=="VIDEO" && !this.checkURL(this.record.fullresImage)) {
+        this.mediaDiv = '<video id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</video>';
+    	}
+    	else if(this.record.mediatype=="AUDIO"  && !this.checkURL(this.record.fullresImage)) {
+    		if(this.record.thumbnail) {
+          this.mediaDiv = '<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio></div>';
+        }
+        else {
+          this.mediaDiv = '<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio>';
+        }
+      }
+    }
   }
 }

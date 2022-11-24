@@ -39,7 +39,6 @@ export class CampaignItem {
     this.i18n = i18n;
 
     this.loc = '';
-    this.mediaDiv = '';
     this.campaign = null;
     this.collection = null;
     this.collectionTitle = '';
@@ -154,7 +153,6 @@ export class CampaignItem {
   }
 
   goToItem(direction) {
-    this.mediaDiv = '';
     let index = (direction ==  'previous') ? this.recordIndex - 1 : this.recordIndex + 1;
 
     let item = this.router.routes.find(x => x.name === 'item');
