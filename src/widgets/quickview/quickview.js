@@ -15,32 +15,24 @@
 
 
 import { inject } from 'aurelia-framework';
-import { Router, activationStrategy } from 'aurelia-router';
-import { Record } from 'Record.js';
-import { Campaign } from 'Campaign.js';
-import { Collection } from 'Collection.js';
+import { Campaign } from 'Campaign';
 import { UserServices } from 'UserServices';
-import { RecordServices } from 'RecordServices.js';
-import { CampaignServices } from 'CampaignServices.js';
-import { CollectionServices } from 'CollectionServices.js';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { CampaignServices } from 'CampaignServices';
 import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
 
-@inject(UserServices, RecordServices, CampaignServices, CollectionServices, EventAggregator, Router, I18N)
+@inject(UserServices, CampaignServices, I18N)
 export class quickview {
 
-  constructor(userServices, recordServices, campaignServices, collectionServices, eventAggregator, router, i18n) {
+  constructor(userServices, campaignServices, i18n) {
     this.userServices = userServices;
-    this.recordServices = recordServices;
     this.campaignServices = campaignServices;
-    this.collectionServices = collectionServices;
-    this.ea = eventAggregator;
-    this.router = router;
     this.i18n = i18n;
 
     this.loc;
     this.campaign = null;
+    this.record = null;
+    this.loadCamp = false;
 		// If there is a collection
     this.collection = null;
     this.collectionTitle = '';
@@ -49,9 +41,6 @@ export class quickview {
     // If there is a user
     this.userId = '';
 
-		this.record = 0;
-
-    this.loadCamp = false;
     this.mediaDiv = '';
   }
 
@@ -59,7 +48,7 @@ export class quickview {
   get hasUser()       { return (this.userUsername.length > 0);    }
 
   attached() {
-   if(this.record && !this.metadataMode){
+   if (this.record && !this.metadataMode) {
 			$('.action').removeClass('active');
 			$('.action.itemview').addClass('active');
     }
@@ -70,45 +59,49 @@ export class quickview {
 		this.i18n.setLocale(params.lang);
     this.edit = params.editMode;
     this.metadataMode = params.metadataMode;
+    this.record = params.record;
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
 		//Load Campaign
 		if (!this.edit) {
-      this.loadCamp = true;
-      let result = await this.campaignServices.getCampaignByName(params.cname)
+      if (params.campaign) {
+        this.campaign = params.campaign;
+      }
+      else {
+        this.loadCamp = true;
+        let result = await this.campaignServices.getCampaignByName(params.cname)
           .then(response => {
             // Based on the selected language, set the campaign
             this.campaign = new Campaign(response, this.loc);
+            this.loadCamp = false;
           })
           .catch(error => {
             console.log(error);
           });
-        this.loadCamp = false;
-        this.record = params.record;
-        this.showMedia();
-        if (params.collection) {
-            this.collection = params.collection;
-            this.collectionTitle = this.collection.title;
-            this.collectionCount = this.collection.entryCount;
-        }
-        if (params.userId) {
-          this.userId = params.userId;
-        }
       }
-      else {
-        this.record = params.record;
-        this.showMedia();
-        if (params.collection) {
-            this.collection = params.collection;
-            this.collectionTitle = this.collection.title;
-            this.collectionCount = this.collection.entryCount;
-        }
-        if (params.userId) {
-          this.userId = params.userId;
-        }
+      this.showMedia();
+      if (params.collection) {
+          this.collection = params.collection;
+          this.collectionTitle = this.collection.title;
+          this.collectionCount = this.collection.entryCount;
       }
+      if (params.userId) {
+        this.userId = params.userId;
+      }
+    }
+    else {
+      this.showMedia();
+      if (params.collection) {
+          this.collection = params.collection;
+          this.collectionTitle = this.collection.title;
+          this.collectionCount = this.collection.entryCount;
+      }
+      if (params.userId) {
+        this.userId = params.userId;
+      }
+    }
   }
 
   hasMotivation(name) {
@@ -167,7 +160,7 @@ export class quickview {
     if (mediaPlayer) {
       mediaPlayer.pause();
     }
-     $('.action.itemview').removeClass('active');
+    $('.action.itemview').removeClass('active');
 	}
 
   openModal(imgSrc) {
