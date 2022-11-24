@@ -47,7 +47,11 @@
 		<!-- entry-->
 		<div role="main">
 		<section class="action itemview" if.bind="record">
-			<compose view-model="widgets/quickview/quickview" model.bind="{'cname': cname, 'editMode':byCollectionEdit, 'record': record, 'userId': user.dbId, 'lang': loc, 'collection':collection}"></compose>
+			<compose
+				view-model="widgets/quickview/quickview"
+				model.bind="{'cname': cname, 'editMode':byCollectionEdit, 'record': record,
+					'userId': user.dbId, 'lang': loc, 'collection':collection}">
+				</compose>
 		</section></div>
 		<div if.bind="byCollectionEdit && !byUser && records.length === 0 && !loading">
 			<h5 class="text-center" t="[html]dashboard:emptyCollection"></h5>

@@ -39,7 +39,6 @@ export class CampaignItem {
     this.i18n = i18n;
 
     this.loc = '';
-    this.mediaDiv = '';
     this.campaign = null;
     this.collection = null;
     this.collectionTitle = '';
@@ -96,16 +95,21 @@ export class CampaignItem {
     this.sortByContributionCount = params.sortBy ? params.sortBy : null;
 
 		//Load Campaign
-		this.loadCamp = true;
-    this.campaignServices.getCampaignByName(params.cname)
-      .then(response => {
-        this.campaign = new Campaign(response, this.loc);
-        this.loadCamp = false;
-      })
-      .catch(error => {
-        let index = this.router.routes.find(x => x.name === 'index');
-        this.router.navigateToRoute('index', {lang: 'en'});
-      });
+    if (routeData.campaign) {
+      this.campaign = routeData.campaign;
+    }
+    else {
+  		this.loadCamp = true;
+      this.campaignServices.getCampaignByName(params.cname)
+        .then(response => {
+          this.campaign = new Campaign(response, this.loc);
+          this.loadCamp = false;
+        })
+        .catch(error => {
+          let index = this.router.routes.find(x => x.name === 'index');
+          this.router.navigateToRoute('index', {lang: 'en'});
+        });
+    }
 
 		// Load Collection
 		if (routeData.collection) {
@@ -149,10 +153,10 @@ export class CampaignItem {
   }
 
   goToItem(direction) {
-    this.mediaDiv = '';
     let index = (direction ==  'previous') ? this.recordIndex - 1 : this.recordIndex + 1;
 
     let item = this.router.routes.find(x => x.name === 'item');
+    item.campaign = this.campaign;
     item.collection = this.collection;
     item.recordIds = this.recordIds;
     item.recordIndex = index;

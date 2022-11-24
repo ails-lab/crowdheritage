@@ -97,6 +97,7 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
+    this.widgetMotivation = params.motivation;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
     this.tagTypes = this.tagTypes.length > 0 ? this.tagTypes : [''];
     this.tagTypes.forEach(type => {
@@ -964,7 +965,7 @@ export class Tagitem {
   }
 
   async getRecordAnnotations(id) {
-    if (this.hasMotivation('Polling')) {
+    if (this.widgetMotivation == 'Polling') {
       await this.recordServices.getAnnotations(this.recId, 'Polling', this.generatorParam).then(response => {
         for (var i = 0; i < response.length; i++) {
           //if (response[i].annotators[0].generator == (settings.project+' '+(this.campaign.username))) {
@@ -992,7 +993,7 @@ export class Tagitem {
         }
       });
     }
-    if (this.hasMotivation('GeoTagging')) {
+    if (this.widgetMotivation == 'GeoTagging') {
       await this.recordServices.getAnnotations(this.recId, 'GeoTagging', this.generatorParam).then(response => {
         this.geoannotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -1008,7 +1009,7 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
-    if (this.hasMotivation('Tagging')) {
+    if (this.widgetMotivation == 'Tagging') {
       await this.recordServices.getAnnotations(this.recId, 'Tagging', this.generatorParam).then(response => {
         this.tagTypes.forEach(type => {
           this.annotations[type] = [];
@@ -1030,7 +1031,7 @@ export class Tagitem {
         });
       });
     }
-    if (this.hasMotivation('ColorTagging')) {
+    if (this.widgetMotivation == 'ColorTagging') {
       await this.recordServices.getAnnotations(this.recId, 'ColorTagging', this.generatorParam).then(response => {
         this.colorannotations = [];
         for (var i = 0; i < response.length; i++) {
@@ -1062,7 +1063,7 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
-    if (this.hasMotivation('Commenting')) {
+    if (this.widgetMotivation == 'Commenting') {
       await this.recordServices.getAnnotations(this.recId, 'Commenting', this.generatorParam).then(response => {
         this.commentAnnotations = [];
         for (var i = 0; i < response.length; i++) {
