@@ -13,22 +13,12 @@
  * under the License.
  */
 
-
-import { inject } from 'aurelia-framework';
-import { Router, activationStrategy } from 'aurelia-router';
 import { Record } from 'Record.js';
-import { UserServices } from 'UserServices';
-import { RecordServices } from 'RecordServices.js';
 import { toggleMore } from 'utils/Plugin.js';
 
-@inject(Router, UserServices, RecordServices)
 export class Metadata {
 
-  constructor(router, userServices, recordServices) {
-    this.router = router;
-    this.userServices = userServices;
-    this.recordServices = recordServices;
-
+  constructor() {
     this.record = null;
 
     this.place = "";
@@ -48,35 +38,7 @@ export class Metadata {
     this.record = params.record;
     try {
       if (this.record.data) {
-
-        if ( !('content' in this.record.data) ) {
-          await this.recordServices.getRecord(this.record.dbId)
-            .then( response => {
-              //this.record = response;
-              let content = JSON.parse(response.content['JSONLD-EDM'])['@graph'];
-              for (let i in content) {
-                if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
-                  this.place = content[i]['skos:altLabel'];
-                }
-                if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['edm:year']) ) {
-                  this.date = content[i]['edm:year'];
-                }
-                if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
-                  this.formatUri = content[i]['dc:format'][0]['@id'];
-                  this.format = content[i]['dc:format'][1]['@value'].split(' ')[1];
-                }
-                if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
-                  this.mediumUri = content[i]['dcterms:medium'][1]['@id'];
-                  this.medium = content[i]['dcterms:medium'][0]['@value'].split(' ')[1];
-                }
-              }
-            })
-            .catch(error => {
-              console.log(error.message);
-            });
-        }
-
-        else {
+        if ('content' in this.record.data) {
           let content = JSON.parse(this.record.data.content['JSONLD-EDM'])['@graph'];
           for (let i in content) {
             if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
@@ -95,7 +57,6 @@ export class Metadata {
             }
           }
         }
-
       }
     }
     catch (err) {
