@@ -52,8 +52,8 @@ export class MultipleItems {
     this.collectionEdit = false;
     this.campaign = '';
     this.cname = '';
-    this.state = "all-items";
-    this.sortBy = "default-order";
+    this.state = "not-contributed-items";
+    this.sortBy = "contributions-count";
     this.resetInstance();
     if (!instance) {
       instance = this;
