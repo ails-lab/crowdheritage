@@ -450,41 +450,43 @@ export class Record {
     let self1 = this;
     // console.log("checking Fullres for "+this.title);
     let fr = this.getGlobal(this.fullres);
-    this.checkImage(fr,
-      function() {
-        // console.log("Works Fullres for "+self1.title);
-        // console.log("Works Fullres for "+fr);
-        self1.myfullimg = fr;
-        self1.imgworks = true;
-      },
-      function() {
-        // console.log("Not working Fullres for "+self1.title);
-        // console.log("Not working Fullres for "+fr);
-        if (!self1.imgworks) {
-          self1.myfullimg = self1.getGlobal('/img/assets/img/ui/ic-noimage.png');
-          console.log("no images found");
-        }
-      }
-    );
+    self1.myfullimg = fr;
+    // this.checkImage(fr,
+    //   function() {
+    //     // console.log("Works Fullres for "+self1.title);
+    //     // console.log("Works Fullres for "+fr);
+    //     self1.myfullimg = fr;
+    //     self1.imgworks = true;
+    //   },
+    //   function() {
+    //     // console.log("Not working Fullres for "+self1.title);
+    //     // console.log("Not working Fullres for "+fr);
+    //     if (!self1.imgworks) {
+    //       self1.myfullimg = self1.getGlobal('/img/assets/img/ui/ic-noimage.png');
+    //       console.log("no images found");
+    //     }
+    //   }
+    // );
   }
 
   checkThumbnail() {
     // console.log("checking Thumbnail for "+this.title);
     let self1 = this;
     let th = self1.getGlobal(self1.thumbnail);
-    self1.checkImage(th,
-      function() {
-        // console.log("Works Thumbnail for "+self1.title);
-        // console.log("Works Thumbnail for "+th);
-        self1.myfullimg = th;
-        self1.imgworks = true;
-      },
-      function() {
-        // console.log("Not working Thumbnail for "+self1.title);
-        // console.log("Not working Thumbnail for "+th);
-
-      }
-    );
+    self1.myfullimg = th;
+    // self1.checkImage(th,
+    //   function() {
+    //     // console.log("Works Thumbnail for "+self1.title);
+    //     // console.log("Works Thumbnail for "+th);
+    //     self1.myfullimg = th;
+    //     self1.imgworks = true;
+    //   },
+    //   function() {
+    //     // console.log("Not working Thumbnail for "+self1.title);
+    //     // console.log("Not working Thumbnail for "+th);
+    //
+    //   }
+    // );
   }
 
   checkImage(imageSrc, good, bad) {
