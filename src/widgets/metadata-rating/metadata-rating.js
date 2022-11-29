@@ -18,6 +18,8 @@ import { inject, LogManager } from 'aurelia-framework';
 import { UserServices } from 'UserServices.js';
 import { AnnotationServices } from 'AnnotationServices.js';
 import { CampaignServices } from 'CampaignServices.js';
+import { DialogService } from 'aurelia-dialog';
+import { PLATFORM } from 'aurelia-pal';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import { EventAggregator } from 'aurelia-event-aggregator';
@@ -25,16 +27,17 @@ import settings from 'global.config.js';
 
 let logger = LogManager.getLogger('metadata-rating.js');
 
-@inject(UserServices, AnnotationServices, CampaignServices, Router, I18N, EventAggregator)
+@inject(UserServices, AnnotationServices, CampaignServices, DialogService, Router, I18N, EventAggregator)
 export class MetadataRating {
 
-	constructor(userServices, annotationServices, campaignServices, router, i18n, eventAggregator) {
+	constructor(userServices, annotationServices, campaignServices, dialogService, router, i18n, eventAggregator) {
 		this.userServices = userServices;
 		this.annotationServices = annotationServices;
 		this.campaignServices = campaignServices;
 		this.router = router;
 		this.i18n = i18n;
 		this.ea = eventAggregator;
+    this.dialogService = dialogService;
 
 		this.annotation = null;
 		this.errorTypes = [];
@@ -101,6 +104,18 @@ export class MetadataRating {
 		return className;
 	}
 
+  loginPopup() {
+    this.dialogService.open({
+      viewModel: PLATFORM.moduleName('widgets/logindialog/logindialog')
+    }).whenClosed((response) => {
+      if (!response.wasCancelled) {
+        console.log('NYI - Login User');
+      } else {
+        console.log('Login cancelled');
+      }
+    });
+  }
+
 	resetRatingForm() {
 		this.ratingValue = 0;
 		this.ratingText = '';
@@ -144,10 +159,12 @@ export class MetadataRating {
 			this.correctedAnnotation = (!this.correctedAnnotation) ? this.annotationValue : this.correctedAnnotation;
     }
   }
+
   submitRating() {
 		if (!this.userServices.current) {
 			toastr.error('You need to login first');
 			this.resetRatingForm();
+      this.loginPopup();
 			return;
 		}
 		if (this.ratingValue < 0 || this.ratingValue > 100) {
@@ -179,6 +196,7 @@ export class MetadataRating {
 		if (!this.userServices.current) {
 			toastr.error('You need to login first');
 			this.resetRatingForm();
+      this.loginPopup();
 			return;
 		}
 		if (!this.ratingText) {
