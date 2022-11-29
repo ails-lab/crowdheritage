@@ -7318,16 +7318,27 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
   flex-flow: wrap;
 
   li {
-    color: white;
-    background: @main-color;
+    color: black;
     border: 1px @main-color solid;
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
     padding: 3px 7px 3px 7px;
+    &.Severe {
+      background-color: #e06666;
+    }
+    &.High {
+      background-color: #6d9eeb;
+    }
+    &.Medium {
+      background-color: #c27ba0;
+    }
+    &.Low {
+      background-color: #ffffff;
+    }
 
     a {
-      color: white;
+      color: black;
 
       &:hover {
         cursor: pointer;
@@ -7538,6 +7549,21 @@ input.tag-type {
             padding: 5px;
             width: 100%;
             cursor: pointer;
+            option {
+              color: black;
+            }
+            option.Severe {
+              background-color: #e06666;
+            }
+            option.High {
+              background-color: #6d9eeb;
+            }
+            option.Medium {
+              background-color: #c27ba0;
+            }
+            option.Low {
+              background-color: #ffffff;
+            }
           }
           textarea {
             width:100%;

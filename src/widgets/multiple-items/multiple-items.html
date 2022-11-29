@@ -4,10 +4,10 @@
 		<!-- top section-->
 		<div if.bind="byCollection" class="topsection">
 			<!-- label-->
-			<div if.bind="userServices.isAuthenticated()" class="sectionlabel">
+			<div class="sectionlabel">
 				<div class="bold">
 					<!-- State - Filter-->
-					<div class="state">
+					<div if.bind="userServices.isAuthenticated()" class="state">
 						<a id="sorting" href="javascript:void(0)" click.delegate="toggleStateMenu()" data-toggle="dropdown">
 							<span class="text" t="[prepend]app:${state.toLowerCase()}"> <strong class="ms-2">(${totalCount})</strong>
 								<span class="arrow"><img width="11px" src="/img/ic-arrow-down-white.png"></span>
@@ -26,8 +26,11 @@
 							</li>
 						</ul>
 					</div>
+					<div if.bind="!userServices.isAuthenticated()" class="state">
+						${[totalCount, 'collection-item'] | itemCounter}
+					</div>
 				</div>
-				<span t="app:${state.toLowerCase()}-desc">SUBTITLE</span>
+				<span if.bind="userServices.isAuthenticated()" t="app:${state.toLowerCase()}-desc">SUBTITLE</span>
 			</div>
 			<div class="sort">
 				<!-- label-->

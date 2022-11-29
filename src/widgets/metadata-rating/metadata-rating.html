@@ -68,7 +68,7 @@
             <h4>Error Types</h4>
             <ul class="tagPills">
               <li class="d-flex" repeat.for="err of selectedErrorTypes" bootstrap-tooltip data-toggle="tooltip" data-placement="right"
-              data-title="bootstrap tooltip" title.bind="err.longDescription">
+              data-title="bootstrap tooltip" title.bind="err.longDescription" class.bind="err.severity">
                 <span class="errorTypePill me-2">${err.shortDescription}</span>
                 <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
               </li>
@@ -79,7 +79,7 @@
             >
               <option value="" selected disabled>---- Select Error Type ----</option>
               <option
-                repeat.for="err of errorTypes"
+                repeat.for="err of errorTypes" class.bind="err.severity"
                 value.bind="err.tokenizedVersion" title.bind="err.longDescription"
               >
                 ${err.shortDescription}
@@ -87,7 +87,7 @@
             </select>
           </div>
           <div class="col-md-4 mb-3">
-            <h4>Corrected Annotation</h4>
+            <h4>Corrected Target Value</h4>
             <textarea
               id="corrected_translation" name="corrected_translation" rows="4"
               placeholder="Corrected Annotation" value.bind="correctedAnnotation"
