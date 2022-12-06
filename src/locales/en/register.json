@@ -13,7 +13,7 @@
   "male"          : "Male",
   "female"        : "Female",
   "unspecified"   : "Unspecified",
-  "accept"        : "I acknowledge the I have read and accept the ",
+  "accept"        : "I acknowledge that I have read and accept the ",
   "terms"         : "Terms of Use agreement",
   "button"        : "Register"
 }
