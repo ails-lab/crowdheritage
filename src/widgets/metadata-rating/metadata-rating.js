@@ -59,27 +59,19 @@ export class MetadataRating {
 		this.generator = `${settings.project} ${this.campaign.username}`;
 		this.itemRatedByMe = params.itemRatedByMe;
 
-		// Set noRatings flag to true if noone has rated this translation
+    // Set noRatings flag to true if noone has rated this translation
     if (!this.annotation.ratedBy || this.annotation.ratedBy.length === 0) {
       this.noRatings = true;
     }
-		this.property = this.annotation.selector.property;
-		this.originalValue = this.annotation.selector.origValue;
-		this.originalLanguage = this.annotation.selector.origLang;
-		this.annotationValue = this.annotation.label;
-		this.annotationLanguage = this.annotation.labelLang;
-		if (this.userServices.current) {
-			this.rating = this.annotation.ratedBy ? this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId) : 0;
-			this.ratingValue = this.rating ? this.rating.confidence : 0;
-			this.ratingText = this.rating ? this.rating.confidence : '';
-			this.correctedAnnotation = this.rating ? this.rating.validationCorrection : '';
-			this.userComment = this.rating ? this.rating.validationComment : '';
-			if (this.rating && this.rating.validationErrorType) {
-				this.rating.validationErrorType.forEach(errType => {
-					this.selectedErrorTypes.push(this.errorTypes.find(e => e.tokenizedVersion === errType));
-				});
-			}
-		}
+    this.property = this.annotation.selector.property;
+    this.originalValue = this.annotation.selector.origValue;
+    this.originalLanguage = this.annotation.selector.origLang;
+    this.annotationValue = this.annotation.label;
+    this.annotationLanguage = this.annotation.labelLang;
+
+    if (this.userServices.current) {
+      this.initializeRatings();
+    }
   }
 
 	get isCampaignOrganizer() {
@@ -103,6 +95,20 @@ export class MetadataRating {
 		className += (this.isCampaignOrganizer && !this.noRatings) ? " view-ratings" : "";
 		return className;
 	}
+
+  initializeRatings() {
+    this.rating = this.annotation.ratedBy ? this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId) : 0;
+    this.ratingValue = this.rating ? this.rating.confidence : 0;
+    this.ratingText = this.rating ? this.rating.confidence : '';
+    this.correctedAnnotation = this.rating ? this.rating.validationCorrection : '';
+    this.userComment = this.rating ? this.rating.validationComment : '';
+    this.selectedErrorTypes = [];
+    if (this.rating && this.rating.validationErrorType) {
+      this.rating.validationErrorType.forEach(errType => {
+        this.selectedErrorTypes.push(this.errorTypes.find(e => e.tokenizedVersion === errType));
+      });
+    }
+  }
 
   loginPopup() {
     this.dialogService.open({
@@ -167,54 +173,31 @@ export class MetadataRating {
       this.loginPopup();
 			return;
 		}
-		if (this.ratingValue < 0 || this.ratingValue > 100) {
-			toastr.error('Invalid rating value');
-			this.ratingValue = 0;
-			return;
-		}
-		document.body.style.cursor = 'wait';
-    this.annotationServices.rateAnnotation(this.annotation.dbId, this.generator, this.ratingValue)
-			.then(() => {
-				document.body.style.cursor = 'default';
-				toastr.success('Your rating has been submitted');
-				this.ea.publish('rating-added');
-				if (!this.annotation.ratedByMe) {
-					this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'rated');
-					if (!this.itemRatedByMe) {
-						this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
-					}
-				}
-			})
-			.catch(error => {
-				toastr.error('Something went wrong');
-				this.resetRatingForm();
-				console.error(error.message);
-				document.body.style.cursor = 'default';
-			});
-  }
-  submitReview() {
-		if (!this.userServices.current) {
-			toastr.error('You need to login first');
-			this.resetRatingForm();
-      this.loginPopup();
-			return;
-		}
 		if (!this.ratingText) {
 			toastr.error('You need to enter a rating value');
 			return;
 		}
+    if (this.ratingValue < 0 || this.ratingValue > 100) {
+      toastr.error('Invalid rating value');
+      this.ratingValue = 0;
+      return;
+    }
+
 		document.body.style.cursor = 'wait';
 		let errTypes = this.selectedErrorTypes.map(e => e.tokenizedVersion);
 		errTypes = !errTypes.length ? null : errTypes;
 		let correction = !this.correctedAnnotation ? null : this.correctedAnnotation;
 		correction = (correction == this.annotationValue) ?  null : correction;
 		let comment = !this.userComment ? null : this.userComment;
-    this.annotationServices.reviewAnnotation(this.annotation.dbId, this.generator, this.ratingValue, correction, comment, errTypes)
-			.then(() => {
+    this.annotationServices.rateAnnotation(this.annotation.dbId, this.generator, this.ratingValue, correction, comment, errTypes)
+			.then(response => {
 				document.body.style.cursor = 'default';
 				toastr.success('Your review has been submitted');
-				this.toggleCollapse();
-				this.ea.publish('rating-added');
+        this.ea.publish('rating-added', {index: this.index, ratings: response.ratedBy});
+        this.annotation.ratedBy = response.ratedBy;
+        this.noRatings = false;
+        this.itemRatedByMe = true;
+        this.initializeRatings();
 				if (!this.annotation.ratedByMe) {
 					this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'rated');
 					if (!this.itemRatedByMe) {

@@ -52,7 +52,7 @@ export class ItemMetadataView {
 
     this.fetchAnnotations();
 
-    this.ratingListener = this.ea.subscribe('rating-added', () => this.fetchAnnotations());
+    this.ratingListener = this.ea.subscribe('rating-added', (e) => this.annotations[e.index].ratedBy = e.ratings);
     this.ratingsModalListener = this.ea.subscribe('open-ratings-modal', (index) => this.openRatingsModal(index));
   }
 
@@ -90,14 +90,13 @@ export class ItemMetadataView {
         })
         .catch(error => console.error(error.message));
     });
-    this.annotations.filter(ann => !ann.fieldName);
   }
 
   openRatingsModal(annotationIndex) {
 		this.dialogService.open({
 			viewModel: PLATFORM.moduleName('widgets/ratingsdialog/ratingsdialog'),
       overlayDismiss: false,
-      model: {campaign: this.campaign, annotation: this.annotations[annotationIndex]}
+      model: {campaign: this.campaign, annotation: this.validAnnotations[annotationIndex]}
 		});
 	}
 
