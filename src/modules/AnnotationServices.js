@@ -297,21 +297,7 @@ export class AnnotationServices {
 		}).then(checkStatus);
 	}
 
-	rateAnnotation(annotationId, generator, rating) {
-		let body = {
-			generator: generator,
-			confidence: rating
-		}
-		return this.http.fetch(`/annotation/${annotationId}/rateObj`, {
-			method: 'POST',
-			body: JSON.stringify(body),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(checkStatus)
-	}
-
-	reviewAnnotation(annotationId, generator, rating, correctedAnnotation, userComment, selectedErrorTypes) {
+  rateAnnotation(annotationId, generator, rating, correctedAnnotation, userComment, selectedErrorTypes) {
 		let body = {
 			generator: generator,
 			confidence: rating
@@ -325,6 +311,10 @@ export class AnnotationServices {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(checkStatus)
+		})
+      .then(checkStatus)
+      .then(response => {
+        return response.json();
+      });
 	}
 }
