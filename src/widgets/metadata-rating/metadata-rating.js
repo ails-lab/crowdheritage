@@ -100,7 +100,8 @@ export class MetadataRating {
     this.rating = this.annotation.ratedBy ? this.annotation.ratedBy.find(rate => rate.withCreator === this.userServices.current.dbId) : 0;
     this.ratingValue = this.rating ? this.rating.confidence : 0;
     this.ratingText = this.rating ? this.rating.confidence : '';
-    this.correctedAnnotation = this.rating ? this.rating.validationCorrection : '';
+    // Empty corrected translation field is prefilled with the automated translation
+    this.correctedAnnotation = (this.rating && this.rating.validationCorrection) ? this.rating.validationCorrection : this.annotationValue;
     this.userComment = this.rating ? this.rating.validationComment : '';
     this.selectedErrorTypes = [];
     if (this.rating && this.rating.validationErrorType) {
@@ -161,8 +162,6 @@ export class MetadataRating {
     else {
       $(`#collapse-${this.index}`).collapse('show');
 			this.arrowImg = "/img/ic-arrow-up-black.png";
-			// Empty corrected translation field is prefilled with the automated translation
-			this.correctedAnnotation = (!this.correctedAnnotation) ? this.annotationValue : this.correctedAnnotation;
     }
   }
 
@@ -192,7 +191,7 @@ export class MetadataRating {
     this.annotationServices.rateAnnotation(this.annotation.dbId, this.generator, this.ratingValue, correction, comment, errTypes)
 			.then(response => {
 				document.body.style.cursor = 'default';
-				toastr.success('Your review has been submitted');
+				toastr.success("Your rating has been submitted");
         this.ea.publish('rating-added', {index: this.index, ratings: response.ratedBy});
         this.annotation.ratedBy = response.ratedBy;
         this.noRatings = false;

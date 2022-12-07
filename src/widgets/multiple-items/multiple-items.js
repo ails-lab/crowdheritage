@@ -52,7 +52,7 @@ export class MultipleItems {
     this.collectionEdit = false;
     this.campaign = '';
     this.cname = '';
-    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all";
+    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
     this.sortBy = "contributions-count";
     this.resetInstance();
     if (!instance) {
@@ -95,11 +95,15 @@ export class MultipleItems {
     this.loading = false;
   }
 
-  async getRecords() {
+  async getRecords(initialSetup) {
     if (this.collection) {
       let sortByMethod = (this.sortBy == 'contributions-count') ? true : false;
       if (!this.recordIds) {
         let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
+        if (initialSetup && !response.recordIds.length) {
+          this.state = "all-items";
+          response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
+        }
         this.recordIds = response.recordIds;
         this.totalCount = response.recordIds.length;
       }
@@ -131,6 +135,8 @@ export class MultipleItems {
 
   detached() {
     this.record = null;
+    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
+    this.sortBy = "contributions-count";
   }
 
   async activate(params, route) {
@@ -162,7 +168,7 @@ export class MultipleItems {
       return;
     }
     this.loading = true;
-    this.getRecords();
+    this.getRecords(true);
   }
 
   goToItem(record) {
