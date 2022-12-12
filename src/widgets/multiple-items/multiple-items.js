@@ -18,6 +18,7 @@ import { inject } from 'aurelia-framework';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { Record } from 'Record.js';
+import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { CampaignServices } from 'CampaignServices';
 import { I18N } from 'aurelia-i18n';
@@ -26,7 +27,7 @@ import settings from 'global.config.js';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, CampaignServices, I18N, EventAggregator)
+@inject(CollectionServices, RecordServices, UserServices, CampaignServices, I18N, EventAggregator)
 export class MultipleItems {
 
   get smallerClass() { return this.collection ? '' : 'smaller' }
@@ -36,11 +37,12 @@ export class MultipleItems {
   get byCollection() { return !!this.collection && !this.collectionEdit }
   get byCollectionEdit() { return this.collectionEdit }
 
-  constructor(collectionServices, userServices, campaignServices, i18n, eventAggregator) {
+  constructor(collectionServices, recordServices, userServices, campaignServices, i18n, eventAggregator) {
     if (instance) {
       return instance;
     }
     this.collectionServices = collectionServices;
+    this.recordServices = recordServices;
     this.userServices = userServices;
     this.campaignServices = campaignServices;
     this.i18n = i18n;
@@ -50,7 +52,8 @@ export class MultipleItems {
     this.collectionEdit = false;
     this.campaign = '';
     this.cname = '';
-    this.state = "hide";
+    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
+    this.sortBy = "contributions-count";
     this.resetInstance();
     if (!instance) {
       instance = this;
@@ -58,6 +61,7 @@ export class MultipleItems {
   }
 
   resetInstance() {
+    this.recordIds = null;
     this.records = [];
     this.collection = null;
     this.user = null;
@@ -67,6 +71,18 @@ export class MultipleItems {
     this.totalCount = 0;
     this.count = 24;
     this.loc = window.location.href.split('/')[3];
+  }
+
+  get filterBy() {
+    if (this.state == "contributed-items") {
+      return "FILTER_ONLY_USER_CONTRIBUTIONS";
+    }
+    else if (this.state == "not-contributed-items") {
+      return "HIDE_USER_CONTRIBUTIONS";
+    }
+    else {
+      return "ALL";
+    }
   }
 
   fillRecordArray(records) {
@@ -79,12 +95,28 @@ export class MultipleItems {
     this.loading = false;
   }
 
-  async getRecords() {
+  async getRecords(initialSetup) {
     if (this.collection) {
-      let response = await this.collectionServices.getRecords(this.collection.dbId, this.offset, this.count, this.state);
-      this.totalCount = response.entryCount;
-      this.fillRecordArray(response.records);
-      this.loading = false;
+      let sortByMethod = (this.sortBy == 'contributions-count') ? true : false;
+      if (!this.recordIds) {
+        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
+        if (initialSetup && !response.recordIds.length) {
+          this.state = "all-items";
+          response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
+        }
+        this.recordIds = response.recordIds;
+        this.totalCount = response.recordIds.length;
+      }
+      let idsBatch = this.recordIds.slice(this.offset, this.offset + this.count);
+      this.recordServices.getRecordsByIds(idsBatch)
+        .then(response => {
+          idsBatch.forEach(id => {
+            let rec = response.records.find(r => r.dbId == id);
+            this.records.push(new Record(rec));
+          });
+          this.loading = false;
+        })
+        .catch(error => console.error(error));
     }
     else if (this.user) {
       this.userServices.getUserAnnotations(this.user.dbId, this.project, this.cname, this.offset, this.count)
@@ -103,6 +135,8 @@ export class MultipleItems {
 
   detached() {
     this.record = null;
+    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
+    this.sortBy = "contributions-count";
   }
 
   async activate(params, route) {
@@ -113,7 +147,7 @@ export class MultipleItems {
     this.cname = params.cname;
     this.router = params.router;
     if (params.collectionEdit) {
-      this.state = "show";
+      this.state = "all-items";
       this.collectionEdit = params.collectionEdit
       this.collection = params.myCollection;
       this.totalCount = this.collection.entryCount;
@@ -134,18 +168,31 @@ export class MultipleItems {
       return;
     }
     this.loading = true;
-    this.getRecords();
+    this.getRecords(true);
   }
 
   goToItem(record) {
     let item = this.router.routes.find(x => x.name === 'item');
-    item.campaign = this.campaign;
-    item.offset = this.records.indexOf(record);
-    //TODO pass the subarray of items as well
     item.collection = this.collection;
-    item.records = [];
-    item.hideOrShowMine = this.state;
-    this.router.navigateToRoute('item', { cname: this.cname, recid: this.records[item.offset].dbId, lang: this.loc });
+    item.recordIds = this.recordIds;
+    item.record = record;
+    item.recordIndex = this.records.indexOf(record);
+    item.filterBy = this.filterBy;
+    item.sortBy = this.sortBy;
+    let params = {
+      cname: this.cname,
+      collectionId: this.collection.dbId,
+      recid: record.dbId,
+      lang: this.loc
+    }
+    if (this.sortBy == 'contributions-count') {
+      params.sortBy = true;
+    }
+    if (this.filterBy != "ALL") {
+      params.filterBy = this.filterBy;
+    }
+    this.router.navigateToRoute('item', params);
+
     this.record = null;
   }
 
@@ -164,12 +211,23 @@ export class MultipleItems {
     }
   }
 
-  reloadCollection(state) {
-    if (state == this.state) {
+  toggleSortMenu() {
+    if ($('.sort').hasClass('open')) {
+      $('.sort').removeClass('open');
+    }
+    else {
+      $('.sort').addClass('open');
+    }
+  }
+
+  reloadCollection(state, sortBy) {
+    if (state == this.state && sortBy == this.sortBy) {
       return;
     }
     else {
       this.state = state;
+      this.sortBy = sortBy;
+      this.recordIds = null;
       this.records.splice(0, this.records.length);
       this.loading = true;
       this.getRecords();
@@ -220,18 +278,9 @@ export class MultipleItems {
       this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
         .then(() => {
           this.ea.publish('record-removed');
+          this.getRecords();
         })
         .catch(error => console.error(error));
-    }
-  }
-
-  deleteRecord(record){
-    if (window.confirm("Do you really want to delete this record from your collection?")){
-      this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
-      .then(response => {
-        console.log(response)
-        this.getRecords();
-      })
     }
   }
 

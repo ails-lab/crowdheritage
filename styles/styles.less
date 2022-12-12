@@ -16,6 +16,10 @@
 @secondary-color: #CAB284;
 @third-color: #CA8484;
 
+.main-color {
+  color: @main-color;
+}
+
 .cursor-pointer:hover {
   cursor: pointer;
 }
@@ -100,6 +104,10 @@ a:focus {
 
 .sectionlabel span {
   display: block;
+}
+
+#mediaplayer {
+  width: 100%
 }
 
 html,
@@ -1497,6 +1505,8 @@ body main section.campaignstats .right .leaderboard div div.thumbs {
 }
 
 body main section.campaignstats .right .leaderboard div div.thumbs img {
+  object-fit: cover;
+  height: 50px;
   width: 50px;
   border-radius: 25px;
 }
@@ -2582,8 +2592,7 @@ body main section.tagging .cntr .img .modal-content,
 body main section.tagging .left .img .modal-content {
   margin: auto;
   display: block;
-  width: 80%;
-  max-width: 700px;
+  width: 96%;
 }
 
 body main section.tagging .cntr .img .modal-content,
@@ -2692,7 +2701,7 @@ body main section.tagging .cntr .metadata ul.meta li .val small {
 }
 
 body main section.tagging .cntr .metadata .show-more-parent i.show-more {
-  display: none;
+  // display: none;
 }
 
 body main section.tagging .left .metadata .show-more-parent .val .desc-row {
@@ -2824,6 +2833,63 @@ ux-dialog-container.active {
 #statisticsPopup {
   height: calc(100vh - 160px);
   width: calc(100vw - 100px);
+}
+
+#ratingsPopup {
+  height: calc(100vh - 180px);
+  width: calc(100vw - 120px);
+  padding: 8px 32px;
+  max-width: 1300px;
+
+  .close {
+    position: relative;
+    top: 0;
+    right: -16px;
+    font-size: 32px;
+  }
+
+  h4 {
+    color: @main-color;
+    font-weight: 600;
+  }
+
+  .ratings-table {
+    margin-top:8px;
+    margin-bottom: 2px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    th.narrow-column,
+    td.narrow-column {
+      width: 1rem;
+    }
+    td {
+      text-align: center;
+      border: 1px solid #aaaaaa;
+      padding: 3px 12px 3px 12px;
+      p.error-code {
+        margin-bottom: 4px;
+        width: max-content;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        &:hover {
+          cursor: default;
+        }
+      }
+    }
+    th {
+      border: 1px solid #aaaaaa;
+      padding: 3px 12px 3px 12px;
+      font-family: "Dosis";
+      color: @main-color;
+      font-size: 18px;
+      text-align: center;
+    }
+    tr:nth-child(even) {
+      background-color: #eeeeee;
+    }
+  }
 }
 
 #publishPopup {
@@ -5211,7 +5277,7 @@ body div[role='main'] section.entrance .input-group.ack {
 body div[role='main'] section.entrance .input-group.ack label {
   font-weight: 300;
   cursor: pointer;
-  color: #bebebe;
+  color: #595959;
   margin-left: 5px;
   font-size: 1.4rem;
 }
@@ -6483,6 +6549,9 @@ a:hover .social-button.facebook {
 .tooltip.left .tooltip-arrow {
   border-left-color: @main-color  !important;
 }
+.tooltip.right .tooltip-arrow {
+  border-right-color: @main-color  !important;
+}
 
 .publish-btn {
   cursor: pointer;
@@ -7249,16 +7318,27 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
   flex-flow: wrap;
 
   li {
-    color: white;
-    background: @main-color;
+    color: black;
     border: 1px @main-color solid;
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
     padding: 3px 7px 3px 7px;
+    &.Severe {
+      background-color: #e06666;
+    }
+    &.High {
+      background-color: #6d9eeb;
+    }
+    &.Medium {
+      background-color: #c27ba0;
+    }
+    &.Low {
+      background-color: #ffffff;
+    }
 
     a {
-      color: white;
+      color: black;
 
       &:hover {
         cursor: pointer;
@@ -7305,3 +7385,213 @@ input.tag-type {
   background-color: white;
   color: red;
 }
+
+.metadata-tagging {
+  .info-container {
+    display: flex;
+    justify-content: flex-end;
+    .instructions-container {
+      .title {
+        margin-bottom: 20px;
+        &::before {
+          height: 100px;
+        }
+      }
+      .heading {
+        margin-left: 66px;
+        display: inline-block;
+        color: #fff;
+        background-color: @main-color;
+        padding: 0 8px;
+        position: relative;
+        margin-bottom: 15px;
+        font-family: "Dosis";
+      }
+      .campaignInstructions {
+        margin-left: 66px;
+        margin-bottom: 30px;
+        padding: 0;
+      }
+    }
+    .thumb-button-container {
+      position: relative;
+      right: 64px;
+      top: 8px;
+      margin: 0;
+      padding: 0;
+      display: block;
+      height: max-content;
+      width: max-content;
+      .thumb-button {
+        .fa-external-link {
+          position: relative;
+          top: 0;
+          left: 0;
+          color: @main-color;
+          margin-left: 3rem;
+        }
+        img.btn-thumb {
+          transition: transform ease-in-out .2s;
+          &:hover {
+            transform: scale(1.15);
+          }
+        }
+      }
+    }
+  }
+  .translations-container {
+    display: flex;
+    .card {
+      position: relative;
+      margin-left: 32px;
+      margin-right: 32px;
+      border: 1px solid black;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      h4 {
+        color: @main-color;
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      .metadata-container {
+        padding: 1.2rem 2rem 0 2rem;
+        .main-display {
+          gap: 3rem;
+          h4 {
+            display: inline-flex;
+            .field-lang {
+              background: #708F8F;
+              color: white;
+              border-radius: 4px;
+              padding: 2px 6px;
+              margin-top: 3px;
+              margin-left: 12px;
+              font-size: 13px;
+              font-weight: bold;
+            }
+          }
+        }
+        .ratings-counter a {
+          position: absolute;
+          top: 0;
+          right: -20px;
+          font-size: 14px;
+          font-weight: bold;
+          color: white;
+          padding: 3px 9px;
+          border-radius: 5px;
+          border: none;
+          &:hover {
+            cursor: default;
+            text-decoration: none;
+          }
+          &.no-ratings {
+            background: rgba(255, 91, 90, 1);
+          }
+          &.with-ratings {
+            background: rgba(131, 188, 63, 1);
+          }
+          &.view-ratings:hover {
+            padding: 4px 10px;
+            cursor: pointer;
+          }
+        }
+      }
+      .feedback-container {
+        padding: 0.4rem 0 1.2rem 0;
+        background-color: #f6f6f6;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        .rating-container {
+          display: flex;
+          gap: 2rem;
+          align-items: center;
+
+          .form-label {
+            font-family: "Dosis";
+            line-height: 1.4;
+            color: @main-color;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 4px;
+          }
+
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          input[type=number] {
+            -moz-appearance: textfield;
+          }
+
+          .text-dark{
+            color: black;
+          }
+
+          .rating-range{
+            padding-left: 0;
+            cursor: pointer;
+          }
+          .rating-text-form{
+            width: 65px;
+            height: 30px;
+            text-align: center;
+            margin-right: -1.6rem;
+          }
+        }
+        .review-details {
+          select {
+            background-color: rgb(107,117,124);
+            color: white;
+            padding: 5px;
+            width: 100%;
+            cursor: pointer;
+            option {
+              color: black;
+            }
+            option.Severe {
+              background-color: #e06666;
+            }
+            option.High {
+              background-color: #6d9eeb;
+            }
+            option.Medium {
+              background-color: #c27ba0;
+            }
+            option.Low {
+              background-color: #ffffff;
+            }
+          }
+          textarea {
+            width:100%;
+            resize: none;
+            padding: 5px;
+            &.originalValue {
+              color: darkgrey;
+            }
+          }
+          .errorTypePill {
+            display: inline-block;
+            width: 290px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .btn-submit-details {
+          color: white;
+          background-color: @main-color;
+          float: right;
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}
+
+ .toast-top-right {
+   top: 83px !important;
+ }

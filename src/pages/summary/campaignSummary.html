@@ -65,15 +65,15 @@
               </h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
-                <li>
+                <li if.bind="campaign.purpose == 'ANNOTATE'">
                   <div class="lbl" t="app:tags">TAGS</div>
                   <div class="val">${userTags}</div>
                 </li>
-                <li>
+                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
                   <div class="lbl" t="user:upvotes">UPVOTES</div>
                   <div class="val">${userUpvotes}</div>
                 </li>
-                <li>
+                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
                   <div class="lbl" t="user:downvotes">DOWNVOTES</div>
                   <div class="val">${userDownvotes}</div>
                 </li>
@@ -197,7 +197,6 @@
                   <!-- title-->
                   <div class="desc">
                     <div class="title">${col.title[loc] ? col.title[loc] : col.title.default}</div>
-                    <div class="owner"><span t="summary:by">Curated by</span> ${col.creatorName}</div>
                   </div>
                 </div></a>
             </div>

@@ -1,0 +1,70 @@
+<template>
+	<require from="../tooltip/tooltip"></require>
+	<ux-dialog id="ratingsPopup">
+		<button type="button" class="close" click.trigger="controller.cancel()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+
+    <ux-dialog-body>
+			<h2 class="text-center mt-2 mb-5">Annotation Overview</h2>
+
+			<div class="row annotation-info">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mb-1">Property</h4>
+						<p class="mb-0">
+							${annotation.selector.property}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mb-1">Value</h4>
+						<p class="mb-0">
+							${annotation.selector.origValue}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mb-1">Annotation</h4>
+						<p class="mb-0">
+							${annotation.label}
+						</p>
+					</div>
+				</div>
+			</div>
+			<h3 class="text-center mt-4">
+				<span class="me-3">Ratings</span> ~
+				<span class="main-color ms-4"><i class="fa fa-bar-chart me-2" aria-hidden="true"></i> ${averageRating}%</span>
+			</h3>
+			<div class="row ratings-overview">
+				<table class="ratings-table">
+					<tr>
+						<th class="narrow-column">#</th>
+						<th class="narrow-column">Rating</th>
+						<th>Corrected Annotation</th>
+						<th>Comment</th>
+						<th class="narrow-column">Error Types</th>
+					</tr>
+					<tr repeat.for="rating of ratings">
+						<td class="narrow-column">${$index + 1}</td>
+						<td class="narrow-column">${rating.confidence}%</td>
+						<td>${rating.validationCorrection || '-'}</td>
+						<td>${rating.validationComment || '-'}</td>
+						<td class="narrow-column">
+							<span if.bind="!rating.validationErrorType.length">-</span>
+							<p
+								repeat.for="eType of rating.validationErrorType" class="error-code"
+								bootstrap-tooltip data-toggle="tooltip" data-placement="left"
+								data-title="bootstrap tooltip" title.bind="getErrorDescription(eType)"
+							>
+								${eType}
+							</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+    </ux-dialog-body>
+  </ux-dialog>
+</template>

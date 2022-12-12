@@ -16,20 +16,36 @@
 
 export class Annotation {
 
-  constructor(data, userId, lang="all") {
+  constructor(data, userId, lang="all", generator) {
     this.dbId = data.dbId;
     this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
+    try {
+      this.labelLang = Object.keys(data.body.label).filter(key => key != "default")[0].toUpperCase();
+    } catch (e) {
+      this.labelLang = "DEFAULT";
+    }
+
 		if (lang !== "all") {
-			if (lang === 'en' && typeof data.body.label.en !== 'undefined')
-				this.label = this.capitalizeFirstLetter(data.body.label.en[0]);
-			else if (lang === 'fr' && typeof data.body.label.fr !== 'undefined')
-				this.label = this.capitalizeFirstLetter(data.body.label.fr[0]);
-			else if (lang === 'it' && typeof data.body.label.it !== 'undefined')
-				this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
-      else if (lang === 'es' && typeof data.body.label.es !== 'undefined')
+			if (lang === 'en' && typeof data.body.label.en !== 'undefined') {
+        this.label = this.capitalizeFirstLetter(data.body.label.en[0]);
+        this.labelLang = 'EN';
+      }
+			else if (lang === 'fr' && typeof data.body.label.fr !== 'undefined') {
+        this.label = this.capitalizeFirstLetter(data.body.label.fr[0]);
+        this.labelLang = 'FR';
+      }
+			else if (lang === 'it' && typeof data.body.label.it !== 'undefined') {
+        this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
+        this.labelLang = 'IT';
+      }
+      else if (lang === 'es' && typeof data.body.label.es !== 'undefined') {
         this.label = this.capitalizeFirstLetter(data.body.label.es[0]);
-      else if (lang === 'pl' && typeof data.body.label.pl !== 'undefined')
+        this.labelLang = 'ES';
+      }
+      else if (lang === 'pl' && typeof data.body.label.pl !== 'undefined') {
         this.label = this.capitalizeFirstLetter(data.body.label.pl[0]);
+        this.labelLang = 'PL';
+      }
 		}
 
     this.createdBy = data.annotators;
@@ -48,11 +64,14 @@ export class Annotation {
     	this.coordinates=data.body.coordinates;
     }
     this.uri=data.body.uri;
+    this.selector = data.target.selector;
     this.tagType = data.target.selector ? data.target.selector.property : "";
     this.approvedBy = [];
     this.approvedByMe = false;
     this.rejectedBy = [];
     this.rejectedByMe = false;
+    this.ratedBy = [];
+    this.ratedByMe = false;
     this.score = 0;
     if (data.score) {
       if (data.score.approvedBy) {
@@ -76,6 +95,18 @@ export class Annotation {
           }
         }
         this.score = this.score - data.score.rejectedBy.length;
+      }
+      if (data.score.ratedBy) {
+        this.ratedBy = data.score.ratedBy.filter(rate => rate.generator === generator);
+        if (!this.ratedByMe) {
+          for (let i in this.ratedBy) {
+            if (this.ratedBy[i].withCreator == userId) {
+              this.ratedByMe = true;
+              break;
+            }
+          }
+        }
+        this.score = data.score.ratedBy.length;
       }
     }
 		this.publish = data.publish;
