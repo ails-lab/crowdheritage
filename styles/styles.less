@@ -2559,6 +2559,11 @@ body main section.tagging .left .img #recImg {
   max-height: 400px;
 }
 
+body main section.tagging .left .img #recImg {
+  position: relative;
+  z-index: 2;
+}
+
 body main section.tagging .cntr .img #recImg:hover,
 body main section.tagging .left .img #recImg:hover {
   opacity: 0.9;
@@ -2587,6 +2592,10 @@ body main section.tagging .left .img .modal {
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.9);
   /* Black w/ opacity */
+}
+
+body main section.tagging .left .img .modal {
+  z-index: 3;
 }
 
 body main section.tagging .cntr .img .modal-content,

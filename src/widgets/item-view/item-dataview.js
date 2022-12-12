@@ -39,6 +39,10 @@ export class ItemDataView {
     return !!this.campaign.motivation.includes(name);
   }
 
+  getPlaceholderImage(evt){
+    evt.srcElement.src = this.record.thumbnail;
+  }
+
   openModal() {
     var modal = document.getElementById("myModal");
     var banner = document.getElementById("banner");

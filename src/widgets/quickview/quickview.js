@@ -104,6 +104,10 @@ export class quickview {
     }
   }
 
+  getPlaceholderImage(evt){
+    evt.srcElement.src = this.record.thumbnail;
+  }
+
   hasMotivation(name) {
     if(!this.edit){
       return !!this.campaign.motivation.includes(name);

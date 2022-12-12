@@ -23,7 +23,7 @@
             <div id="myModal" class="modal">
               <!-- Modal Content - Image) -->
               <img class="modal-content" id="modalImg" src.bind="getValidImg(record, record.validImg.original)"
-                onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="closeModal()">
+              error.trigger="getPlaceholderImage($event)" click.delegate="closeModal()">
             </div>
             <!-- Here goes the media, besides images -->
             <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
