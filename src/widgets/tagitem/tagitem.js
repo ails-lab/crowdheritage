@@ -36,6 +36,7 @@ export class Tagitem {
     this.i18n = i18n;
 
     this.colorSet = colorPalette();
+    this.colorPalette = null;
 
     this.ea = eventAggregator;
     this.userServices = userServices;
@@ -98,6 +99,7 @@ export class Tagitem {
     this.campaign = params.campaign;
     this.recId = params.recId;
     this.widgetMotivation = params.motivation;
+    this.colorPalette = this.campaign.colorPallete;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
     this.tagTypes = this.tagTypes.length > 0 ? this.tagTypes : [''];
     this.tagTypes.forEach(type => {
@@ -340,6 +342,32 @@ export class Tagitem {
       }).catch((error) => {
         toastr.error(this.i18n.tr('item:toastr-error'));
       });
+    }
+  }
+
+  colorAnnotate(color) {
+    if (this.campaign.status != 'active') {
+      toastr.error(this.i18n.tr('item:toastr-inactive'));
+      return;
+    }
+    if (!this.userHasAccessInCampaign()) {
+      toastr.error(this.i18n.tr('item:toastr-restricted'));
+      return;
+    }
+    if (this.userServices.isAuthenticated() == false) {
+      toastr.error(this.i18n.tr('item:toastr-login'));
+      this.lg.call();
+      return;
+    }
+    console.log(color)
+    console.log(this.colorannotations)
+    let annotationExists = this.colorannotations.find(ann => ann.uri == color.uri);
+
+    if (!annotationExists) {
+
+    }
+    else {
+
     }
   }
 
@@ -1079,6 +1107,11 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+  }
+
+  colorLabel(labelObject) {
+    let label = labelObject[this.loc] || labelObject['en'];
+    return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
   getColorLabel(label) {

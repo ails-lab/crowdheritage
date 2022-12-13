@@ -6,7 +6,7 @@
       <!-- heading-->
       <div class="heading green" t="item:color-tagging">COLOR TAGGING</div>
       <!-- info-->
-				<div class="infobar" innerhtml.bind="campaign.instructions"></div>
+      <div class="infobar" innerhtml.bind="campaign.instructions"></div>
       <!-- color action-->
       <div class="coloraction">
         <section class="color" style.bind="color[1]" repeat.for="color of colorSet" click.delegate="annotateLabel(color[0])">
@@ -20,6 +20,16 @@
         </section>
         <!-- hack for last row elements width -->
         <li class="width-helper" repeat.for="i of 20"></li>
+      </div>
+      <div class="coloraction">
+        <section
+          repeat.for="color of colorPalette"
+          class="color"
+          style.bind="color.style || 'background:'+color.cssHexCode"
+          click.delegate="colorAnnotate(color)"
+        >
+          <h2 class="name" innerhtml.bind="colorLabel(color.label)"></h2>
+        </section>
       </div>
       <!-- searchbox-->
       <div if.bind="colorannotations.length>0" class="colorbox" t="item:votes">Vote submitted colors by other users.</div>
