@@ -2556,6 +2556,12 @@ body main section.tagging .cntr .img #recImg,
 body main section.tagging .left .img #recImg {
   transition: 0.3s;
   cursor: pointer;
+  max-height: 400px;
+}
+
+body main section.tagging .left .img #recImg {
+  position: relative;
+  z-index: 2;
 }
 
 body main section.tagging .cntr .img #recImg:hover,
@@ -2588,11 +2594,15 @@ body main section.tagging .left .img .modal {
   /* Black w/ opacity */
 }
 
+body main section.tagging .left .img .modal {
+  z-index: 3;
+}
+
 body main section.tagging .cntr .img .modal-content,
 body main section.tagging .left .img .modal-content {
   margin: auto;
   display: block;
-  width: 96%;
+  height: 85vh;
 }
 
 body main section.tagging .cntr .img .modal-content,
