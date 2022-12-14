@@ -18,6 +18,7 @@ export class Taglist {
 
   activate(params) {
     this.clearInstance();
+    this.colorPalette = params.colorPalette || null;
     this.userId = params.userId;
     for (let annotation of params.annotations) {
       let ann = new Annotation(annotation, this.userId, this.lang);
@@ -86,6 +87,11 @@ export class Taglist {
       return true;
     else
       return false;
+  }
+
+  getStyle(annotation) {
+    let color = this.colorPalette.find(color => color.uri == annotation.uri);
+    return `background: ${color['cssHexCode']};`;
   }
 
 }
