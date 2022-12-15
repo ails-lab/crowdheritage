@@ -36,6 +36,7 @@ export class Tagitem {
     this.i18n = i18n;
 
     this.colorSet = colorPalette();
+    this.colorPalette = null;
 
     this.ea = eventAggregator;
     this.userServices = userServices;
@@ -98,6 +99,7 @@ export class Tagitem {
     this.campaign = params.campaign;
     this.recId = params.recId;
     this.widgetMotivation = params.motivation;
+    this.colorPalette = this.campaign.colorPallete;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
     this.tagTypes = this.tagTypes.length > 0 ? this.tagTypes : [''];
     this.tagTypes.forEach(type => {
@@ -343,11 +345,7 @@ export class Tagitem {
     }
   }
 
-  async annotateLabel(label) {
-    if (label === 'Multicolor') {
-      label = 'Multicoloured';
-    }
-    // If the campaign is inactive do NOT annotate
+  async colorAnnotate(color) {
     if (this.campaign.status != 'active') {
       toastr.error(this.i18n.tr('item:toastr-inactive'));
       return;
@@ -356,48 +354,54 @@ export class Tagitem {
       toastr.error(this.i18n.tr('item:toastr-restricted'));
       return;
     }
-
     if (this.userServices.isAuthenticated() == false) {
       toastr.error(this.i18n.tr('item:toastr-login'));
       this.lg.call();
       return;
     }
-    var answer = this.annotationExists(label);
-    if (!answer) {
-      // While waiting for the annotation to go through, change the cursor to 'wait'
-      document.body.style.cursor = 'wait';
-      let clrs = document.getElementsByClassName("color");
-      for (let clr of clrs) {
-        clr.style.cursor = 'wait';
-      }
 
-      if (this.userServices.isAuthenticated() && this.userServices.current === null) {
-        await this.userServices.reloadCurrentUser();
-      }
-      await this.thesaurusServices.getSuggestions(label, this.campaign.vocabularies).then(res => {
-        this.suggestedAnnotation = res.results[0];
-      });
-      if (!this.hasContributed('all')) {
-        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
-          .catch((error) => {
-            console.error("This ERROR occured : ", error);
-          });
-      }
-      await this.annotationServices.annotateRecord(this.recId, null, this.suggestedAnnotation, this.campaign.username, 'ColorTagging', this.loc);
-      this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
-      // Clear and reload the colorannotations array
-      this.colorannotations.splice(0, this.colorannotations.length);
-      await this.getRecordAnnotations(this.recId);
-      // Try to annotate again, in order to also upvote the new annotation
-      await this.annotateLabel(label);
-    }
-    else if (!this.colorannotations[answer.index].approvedByMe) {
-      await this.score(answer.id, 'approved', answer.index, 'color');
-    }
-
-    // When the annotation is finished, change the cursor back to 'default'
-    document.body.style.cursor = 'default';
+    document.body.style.cursor = 'wait';
     let clrs = document.getElementsByClassName("color");
+    for (let clr of clrs) {
+      clr.style.cursor = 'wait';
+    }
+    let existingAnnotation = this.colorannotations.find(ann => ann.uri == color.uri);
+    if (!existingAnnotation) {
+      let multiLabels = {};
+      Object.keys(color.label).forEach(function(key, index) {
+        multiLabels[key] = [color.label[key]];
+      });
+      let ann = {
+        categories: [ "colours" ],
+        label: this.getColorLabel(color.label),
+        labels: multiLabels,
+        matchedLabel: this.getColorLabel(color.label),
+        uri: color.uri,
+        vocabulary: this.campaign.username
+      };
+      this.annotationServices.annotateRecord(this.recId, null, ann, this.campaign.username, 'ColorTagging', this.loc)
+        .then(async () => {
+          if (!this.hasContributed('all')) {
+            this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
+          }
+          this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+          // Clear and reload the colorannotations array
+          this.colorannotations.splice(0, this.colorannotations.length);
+          await this.getRecordAnnotations(this.recId);
+          let newAnnotationIndex = this.colorannotations.findIndex(ann => ann.uri == color.uri);
+          await this.score(this.colorannotations[newAnnotationIndex].dbId, 'approved', newAnnotationIndex, 'color');
+        })
+        .catch(error => console.error(error));
+    }
+    else {
+      let existingAnnotationIndex = this.colorannotations.findIndex(ann => ann.dbId == existingAnnotation.dbId);
+      if (!this.colorannotations[existingAnnotationIndex].approvedByMe) {
+        await this.score(existingAnnotation.dbId, 'approved', existingAnnotationIndex, 'color');
+      }
+    }
+
+    document.body.style.cursor = 'default';
+    clrs = document.getElementsByClassName("color");
     for (let clr of clrs) {
       clr.style.cursor = 'default';
     }
@@ -1051,9 +1055,9 @@ export class Tagitem {
               response[i].body.label.default = ["grey"];
             }
             if (!this.userServices.current) {
-              this.colorannotations.push(new Annotation(response[i], ""));
+              this.colorannotations.push(new Annotation(response[i], "", this.loc));
             } else {
-              this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId));
+              this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
             }
           }
         }
@@ -1081,31 +1085,14 @@ export class Tagitem {
     }
   }
 
-  getColorLabel(label) {
-    return this.i18n.tr('item:color:' + label);
+  getColorLabel(labelObject) {
+    let label = labelObject[this.loc] || labelObject['en'];
+    return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
-  getColor(label) {
-    var index = this.colorSet.findIndex(element => {
-      return element[1] == label;
-    });
-    if (index == -1) {
-      return '/img/assets/images/no_image.jpg';
-    } else {
-      return this.colorSet[index][0];
-    }
-  }
-
-  getStyle(label) {
-    label = (label === 'Multicoloured') ? 'Multicolor' : label;
-    var index = this.colorSet.findIndex(element => {
-      return element[0] == label;
-    });
-    if (index == -1) {
-      return '';
-    } else {
-      return this.colorSet[index][1];
-    }
+  getStyle(annotation) {
+    let color = this.colorPalette.find(color => color.uri == annotation.uri);
+    return `background: ${color['cssHexCode']};`;
   }
 
   annotationExists(label) {
