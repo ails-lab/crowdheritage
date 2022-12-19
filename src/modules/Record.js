@@ -600,7 +600,7 @@ export class Record {
     for (let item of media) {
       if ('Original' in item) {
         if (item.Original)
-          return {original: item.Original.url, thumbnail: item.Thumbnail.url};
+          return {original: item.Original.url, thumbnail: item.Thumbnail ? item.Thumbnail.url : item.Original.url};
       }
     }
     for (let item of media) {
