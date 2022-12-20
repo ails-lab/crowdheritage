@@ -40,6 +40,8 @@ export class quickview {
     this.edit = false;
     // If there is a user
     this.userId = '';
+    this.imageErrorCounter = 0;
+    this.noImageStyle = '';
 
     this.mediaDiv = '';
   }
@@ -105,7 +107,15 @@ export class quickview {
   }
 
   getPlaceholderImage(evt){
-    evt.srcElement.src = this.record.thumbnail;
+    if(this.imageErrorCounter >= 1){
+      evt.srcElement.src = '/img/assets/img/ui/ic-noimage.png'
+      this.noImageStyle = 'pointer-events: none'
+    }
+    else{
+      evt.srcElement.src = this.record.thumbnail;
+    }
+    this.imageErrorCounter++;
+    
   }
 
   hasMotivation(name) {
@@ -168,6 +178,7 @@ export class quickview {
 	}
 
   openModal(imgSrc) {
+    if(this.imageErrorCounter >= 2) return;
     var modal = document.getElementById("myModal");
     var img = document.getElementById("recImg");
     var modalImg = document.getElementById("modalImg");
