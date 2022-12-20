@@ -1,0 +1,50 @@
+<template>
+  <main>
+    <!-- new banner-->
+    <section class="banner mini">
+      <div class="container">
+        <div class="bannertext">
+          <div class="line">
+            <div class="wrap"><span>Moderation</span></div>
+          </div>
+        </div>
+        <div class="bgwrap"></div>
+      </div>
+    </section>
+    <section id="moderation" class="container mt-5 pe-0">
+      <ul class="nav nav-tabs d-flex justify-content-center">
+        <li class=${validationTab} click.delegate="tabChanged('validation')">
+          <a class="nav-link" aria-current="page" href="#">
+            <i class="fa fa-list-alt  fa-lg me-3" aria-hidden="true"></i>
+            Validation
+          </a>
+        </li>
+        <li class=${statisticsTab} click.delegate="tabChanged('statistics')">
+          <a class="nav-link" href="#" >
+            <i class="fa fa-folder-open-o fa-lg me-3" aria-hidden="true"></i>
+            Statistics
+          </a>
+        </li>
+        <li class=${dataExportTab} click.delegate="tabChanged('dataExport')">
+          <a class="nav-link" href="#">
+            <i class="fa fa-book fa-lg me-3" aria-hidden="true"></i>
+            Data Export
+          </a>
+        </li>
+
+      </ul>
+      <div class="container-fluid mt-1" if.bind="view=='validation'">
+        <compose view-model="pages/moderation/validation/validation">
+		    </compose>
+      </div>
+      <div class="container-fluid mt-1" if.bind="view=='statistics'">
+        <compose view-model="pages/moderation/statistics/statistics">
+		    </compose>
+      </div>
+      <div class="container-fluid mt-1" if.bind="view=='dataExport'">
+        <compose view-model="pages/moderation/data-export/data-export">
+		    </compose>
+      </div>
+    </section>
+  </main>
+</template>
