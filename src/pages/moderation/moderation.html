@@ -21,28 +21,28 @@
         </li>
         <li class=${statisticsTab} click.delegate="tabChanged('statistics')">
           <a class="nav-link" href="#" >
-            <i class="fa fa-folder-open-o fa-lg me-3" aria-hidden="true"></i>
+            <i class="fa fa-bar-chart fa-lg me-3" aria-hidden="true"></i>
             Statistics
           </a>
         </li>
         <li class=${dataExportTab} click.delegate="tabChanged('dataExport')">
           <a class="nav-link" href="#">
-            <i class="fa fa-book fa-lg me-3" aria-hidden="true"></i>
+            <i class="fa fa-download fa-lg me-3" aria-hidden="true"></i>
             Data Export
           </a>
         </li>
 
       </ul>
-      <div class="container-fluid mt-1" if.bind="view=='validation'">
-        <compose view-model="pages/moderation/validation/validation">
+      <div class="container-fluid mt-5" if.bind="view=='validation'">
+        <compose view-model="pages/moderation/validation/validation" model.bind="{'cname': cname, 'lang': loc}">
 		    </compose>
       </div>
-      <div class="container-fluid mt-1" if.bind="view=='statistics'">
-        <compose view-model="pages/moderation/statistics/statistics">
+      <div class="container-fluid mt-5" if.bind="view=='statistics'">
+        <compose view-model="pages/moderation/statistics/statistics" model.bind="{'cname': cname, 'lang': loc}">
 		    </compose>
       </div>
-      <div class="container-fluid mt-1" if.bind="view=='dataExport'">
-        <compose view-model="pages/moderation/data-export/data-export">
+      <div class="container-fluid mt-5" if.bind="view=='dataExport'">
+        <compose view-model="pages/moderation/data-export/data-export" model.bind="{'cname': cname, 'lang': loc}">
 		    </compose>
       </div>
     </section>

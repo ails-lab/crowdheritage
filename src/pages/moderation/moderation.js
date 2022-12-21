@@ -28,6 +28,7 @@ export class Moderation {
     this.router = router;
     this.cname = ''
     this.view = "";
+    this.loc = window.location.href.split('/')[3];
     this.resetClasses();
   }
 
@@ -43,10 +44,8 @@ export class Moderation {
     }
 
     this.resetClasses();
-    console.log(params)
     this.view = params.resource ? params.resource : 'validation';
     let typeClasses = this.view.split("-")[0] + 'Tab';
-    console.log(typeClasses)
     this[typeClasses] = this[typeClasses].concat(" ", "active");
   }
 
