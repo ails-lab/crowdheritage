@@ -2496,6 +2496,20 @@ body main section.tagging .collection {
   display: none;
 }
 
+body main section.tagging .title-section{
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+body main section.tagging .title-section .tooltip.left .tooltip-arrow {
+  right: 17px !important;
+}
+body main section.tagging .title-section i{
+  margin-right: 5px;
+  font-size: 2rem;
+  line-height: 1.6;
+  color: #4F7979;
+}
 body main section.tagging .title {
   font-size: 2.0rem;
   font-family: "Dosis";
@@ -6555,6 +6569,8 @@ a:hover .social-button.facebook {
     background-color: @main-color;
   }
 }
+
+
 
 .tooltip.left .tooltip-arrow {
   border-left-color: @main-color  !important;
