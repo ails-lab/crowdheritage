@@ -569,21 +569,6 @@ export class Validation {
       });
   }
 
-  publishToEuropeana() {
-    if ( !this.isAuthenticated || !this.isCreator ) {
-      toastr.error("You have no permission to perform this action");
-      return;
-    }
-    if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to publish your campaign annotations to Europeana?')) {
-      console.log("Publishing annotations...");
-    }
-    else {
-      return;
-    }
-
-    // LOGIC GOES HERE
-  }
-
   campaignStatistics() {
     this.dialogService.open({
 			viewModel: PLATFORM.moduleName('widgets/statisticsdialog/statisticsdialog'),
@@ -608,13 +593,6 @@ export class Validation {
     });
   }
 
-  // DOES NOT WORK : IT LOADS THE SAME IMAGES
-  scrollAndLoadMore() {
-		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
-    this.loading = true;
-	 		this.getRecords(this.offset);
-	}
-
   async loadMore() {
     this.loading = true;
 		this.getRecords(this.offset);
@@ -635,7 +613,6 @@ export class Validation {
     }
 		if (geo || this.campaign.motivation == 'GeoTagging') {
       this.selectedGeoAnnotation = null;
-			this.getGeoAnnotations(this.geoPrefix);
 		}
     else {
       this.selectedAnnotation = null;
@@ -645,10 +622,6 @@ export class Validation {
 
   get suggestionsActive() {
     return this.suggestedAnnotations.length !== 0;
-  }
-
-  get geoSuggestionsActive() {
-    return this.suggestedGeoAnnotations.length !== 0;
   }
 
   async getSuggestedAnnotations(prefix, lang="all") {
@@ -724,21 +697,6 @@ export class Validation {
       this.selectLabel(lb, 'upvoted', false);
     }
   }
-
-  selectGeoAnnotation(geoid) {
-    this.selectedGeoAnnotation = this.suggestedGeoAnnotations.find(obj => {
-			return obj.geonameId === geoid
-		});
-		this.suggestedGeoAnnotations = [];
-		this.errors = this.selectedGeoAnnotation == null;
-
-		if (!this.errors) {
-      var lb = this.selectedGeoAnnotation.name;
-      this.geoPrefix = lb;
-
-      this.selectLabel(lb, 'upvoted', false);
-		}
- 	}
 
   async getRecordAnnotations(id) {
     if (this.hasMotivation('Polling')) {
