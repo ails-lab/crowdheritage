@@ -178,7 +178,6 @@ export class Validation {
   }
 
   async activate(params, route) {
-    console.log(params, route)
     this.clearInstance();
 
     this.loc = params.lang;
@@ -271,7 +270,6 @@ export class Validation {
     this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators, this.sortBy)
       .then(response => {
         this.recordIds = response;
-        // console.log("RESPONSE", response);
         // Fill the record array with the first batch of records
         this.getRecords(0);
         this.suggestedAnnotations = [];
@@ -378,7 +376,6 @@ export class Validation {
     }
     $('.validation-button-group').removeClass('hiddenfile');
     $('.validation-info').removeClass('hiddenfile');
-    // console.log("[SELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   unselectAnnotation(record) {
@@ -392,7 +389,6 @@ export class Validation {
         this.annotationsToDelete.splice(i, 1);
         $('.' + record.dbId + ' .thumbs').removeClass('discardAnnotation');
         $('.' + record.dbId + ' .fa-trash').addClass('hiddenfile');
-        // console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
         if (this.annotationsToDelete.length == 0) {
           $('.validation-button-group').addClass('hiddenfile');
           $('.validation-info').addClass('hiddenfile');
@@ -410,7 +406,6 @@ export class Validation {
     $('.fa-trash').addClass('hiddenfile');
     $('.validation-button-group').addClass('hiddenfile');
     $('.validation-info').addClass('hiddenfile');
-    // console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   deleteAnnotations() {
@@ -448,10 +443,9 @@ export class Validation {
           $('.' + camelLabel).addClass('enlarge-color');
           $('.validation-button-group').addClass('hiddenfile');
           $('.validation-info').addClass('hiddenfile');
-          // console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
         })
         .catch(error => {
-          console.log(error.message);
+          console.error(error.message);
           toastr.error("An error occured during the annotation deletion.");
         });
     }

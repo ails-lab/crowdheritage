@@ -1,3 +1,16 @@
 <template>
-  Data-export
+  <main if.bind="isCreator">
+
+    <section class="validation data-export">
+        <a id="exportUsers" class="export-btn" click.delegate="exportContributors('json')">
+          <i class="fa fa-users"></i>
+          <span id="exportLabel">${exportUsersLabel}</span>
+        </a>
+        <a id="exportAnnotations" class="export-btn" click.delegate="exportAnnotations()">
+          <i class="fa fa-download"></i>
+          <span id="exportLabel">${exportAnnsLabel}</span>
+        </a>
+      </div>
+    </section>
+  </main>
 </template>
