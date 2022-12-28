@@ -39,6 +39,7 @@ export class quickview {
     this.collectionCount = 0;
     this.edit = false;
     this.mediaUrlArray = [];
+    this.mediaRenderAttempts = 0;
     // If there is a user
     this.userId = '';
 
@@ -55,19 +56,24 @@ export class quickview {
     }
   }
 
-  async activate(params, routeData) {
+  async activate(params) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
     this.edit = params.editMode;
     this.metadataMode = params.metadataMode;
     this.record = params.record;
     this.mediaUrlArray = [];
-    for(let med of this.record.data.media){
+    this.mediaRenderAttempts = 0;
+    this.mediaDiv = "";
+    for (let med of this.record.data.media) {
       if(med.Original && med.Original.url) this.mediaUrlArray.push(med.Original.url)
     }
-    if(this.record.data.descriptiveData && this.record.data.descriptiveData.isShownAt) this.mediaUrlArray.push(this.record.data.descriptiveData.isShownAt)
-    if(this.record.data.descriptiveData && this.record.data.descriptiveData.isShownBy) this.mediaUrlArray.push(this.record.data.descriptiveData.isShownBy)
-
+    if (this.record.data.descriptiveData && this.record.data.descriptiveData.isShownAt) {
+      this.mediaUrlArray.push(this.record.data.descriptiveData.isShownAt);
+    }
+    if (this.record.data.descriptiveData && this.record.data.descriptiveData.isShownBy) {
+      this.mediaUrlArray.push(this.record.data.descriptiveData.isShownBy);
+    }
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -85,7 +91,7 @@ export class quickview {
             this.loadCamp = false;
           })
           .catch(error => {
-            console.log(error);
+            console.error(error);
           });
       }
       this.showMedia();
@@ -109,15 +115,21 @@ export class quickview {
         this.userId = params.userId;
       }
     }
+
+    window.addEventListener('media-unplayable', () => this.setVideoPlaceholder());
   }
 
   getPlaceholderImage(evt){
     evt.srcElement.src = this.record.thumbnail;
   }
 
-  getVideoPlaceholder(evt){
-    console.log(evt.srcElement)
-    evt.srcElement.src = this.record.thumbnail;
+  setVideoPlaceholder() {
+    this.mediaRenderAttempts++;
+    // Only render placeholder when all sources fail
+    if (this.mediaRenderAttempts == this.mediaUrlArray.length) {
+      this.mediaRenderAttempts = 0;
+      this.mediaDiv = `<p class="mt-5">The media source is unplayable. Please visit <a href="${this.mediaUrlArray[0]}" target="_blank">original item</a>.</p>`;
+    }
   }
 
   hasMotivation(name) {
@@ -150,8 +162,8 @@ export class quickview {
       this.mediaDiv = '<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>';
     }
     else {
-      let sourcesStr = this.mediaUrlArray.map(med =>{
-        return '<source src="' + med + '">'
+      let sourcesStr = this.mediaUrlArray.map(med => {
+        return `<source src="${med}" onerror="window.dispatchEvent(new CustomEvent('media-unplayable'))" >`
       }).join('');
     	if(this.record.mediatype=="VIDEO" && !this.checkURL(this.record.fullresImage)) {
         this.mediaDiv = '<video id="mediaplayer" controls width="576" height="324">'+ sourcesStr +'Your browser does not support HTML5</video>';
