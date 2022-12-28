@@ -28,6 +28,8 @@ export class ItemDataView {
     this.records = params.records;
     this.previous = params.previous;
     this.collectionTitle = params.collectionTitle;
+    this.imageErrorCounter = 0;
+    this.noImageStyle = '';
 
     this.recId = this.record.dbId;
     this.showMedia();
@@ -40,10 +42,19 @@ export class ItemDataView {
   }
 
   getPlaceholderImage(evt){
-    evt.srcElement.src = this.record.thumbnail;
+    if(this.imageErrorCounter >= 1){
+      evt.srcElement.src = '/img/assets/img/ui/ic-noimage.png'
+      this.noImageStyle = 'pointer-events: none'
+    }
+    else{
+      evt.srcElement.src = this.record.thumbnail;
+    }
+    this.imageErrorCounter++;
+
   }
 
   openModal() {
+    if(this.imageErrorCounter >= 2) return;
     var modal = document.getElementById("myModal");
     var banner = document.getElementById("banner");
     modal.style.display = "block";
