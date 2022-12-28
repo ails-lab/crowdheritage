@@ -2498,11 +2498,15 @@ body main section.tagging .collection {
 
 body main section.tagging .title-section{
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 2rem;
 }
-body main section.tagging .title-section .tooltip.left .tooltip-arrow {
-  right: 17px !important;
+body main section.tagging .title-section .tooltip.top {
+  .tooltip-inner {
+    padding: 4px 8px;
+  }
+  .tooltip-arrow {
+    border-top-color: @main-color;
+  }
 }
 body main section.tagging .title-section i{
   margin-right: 5px;

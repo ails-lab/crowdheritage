@@ -14,14 +14,9 @@
           <a if.bind="mediaUrlArray.length" href.bind="mediaUrlArray[0]" 
               target="_blank" rel="noopener noreferrer">
                 <i class="fa fa-external-link" bootstrap-tooltip 
-                data-toggle="tooltip" data-placement="left"
-                data-title="" title="Follow this URL to view the actual item"></i>
+                data-toggle="tooltip" data-placement="top"
+                data-title="" title="View original item"></i>
           </a>
-          <div if.bind="!mediaUrlArray.length">
-            <i class="fa fa-external-link" bootstrap-tooltip 
-            data-toggle="tooltip" data-placement="left"
-            data-title="" title="No URL to the actual item is provided in the metadata"></i>
-          </div>
         </div>
         <div class="wraps">
           <!-- left-->
