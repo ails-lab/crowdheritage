@@ -18,6 +18,9 @@ export class Taglist {
 
   activate(params) {
     this.clearInstance();
+    if (!params) {
+      return;
+    }
     this.colorPalette = params.colorPalette || null;
     this.userId = params.userId;
     for (let annotation of params.annotations) {

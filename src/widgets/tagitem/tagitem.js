@@ -99,7 +99,7 @@ export class Tagitem {
     this.campaign = params.campaign;
     this.recId = params.recId;
     this.widgetMotivation = params.motivation;
-    this.colorPalette = this.campaign.colorPallete;
+    this.colorPalette = params.campaign ? this.campaign.colorPallete : this.colorSet;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
     this.tagTypes = this.tagTypes.length > 0 ? this.tagTypes : [''];
     this.tagTypes.forEach(type => {
@@ -1091,8 +1091,11 @@ export class Tagitem {
   }
 
   getStyle(annotation) {
-    let color = this.colorPalette.find(color => color.uri == annotation.uri);
-    return `background: ${color['cssHexCode']};`;
+    let color = this.colorPalette.find(color => color.uri == annotation.uri || color.uri == annotation.uri.replace("http", "https"));
+    if (color) {
+      return color.style || `background: ${color['cssHexCode']};`;
+    }
+    return '';
   }
 
   annotationExists(label) {
