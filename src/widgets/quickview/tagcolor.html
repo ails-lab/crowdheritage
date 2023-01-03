@@ -7,9 +7,10 @@
      	<div>
       <ul class="taglist color show-more-target">
         <li repeat.for="ann of colorannotations" if.bind="isValidatedBy(ann, 'all')">
-          <div class="thumbs" style.bind="getStyle(ann.label)"></div>
+          <div class="thumbs" style.bind="getStyle(ann)"></div>
           <div class="selected">
-            <span style.bind="isCreatedBy(ann) ? 'color: #00ac83;' : ''">${getColorLabel(ann.label)}</span> <span class="cg-label" title="Computer-generated annotation" if.bind="isComputerGenerated(ann)">(CG)</span>
+            <span style.bind="isCreatedBy(ann) ? 'color: #00ac83;' : ''">${ann.label}</span>
+            <span class="cg-label" title="Computer-generated annotation" if.bind="isComputerGenerated(ann)">(CG)</span>
             <span class="tooltiptext">Created By : <b style="color: white;">${getCreator(ann)}</b></span>
           </div>
           <ul class="action">

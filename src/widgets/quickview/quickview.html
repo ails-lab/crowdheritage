@@ -1,4 +1,5 @@
 <template>
+  <require from="../tooltip/tooltip"></require>
   <div class="action-body">
     <div class="group">
       <div class="title">
@@ -8,8 +9,14 @@
       </div>
       <section id="tagging" class="tagging">
         <!-- title-->
-        <div show.bind="!loadRec">
+        <div show.bind="!loadRec" class="title-section">
           <div id="scrollPoint" class="title">${record.title}</div>
+          <a if.bind="mediaUrlArray.length" href.bind="mediaUrlArray[0]" 
+              target="_blank" rel="noopener noreferrer">
+                <i class="fa fa-external-link" bootstrap-tooltip 
+                data-toggle="tooltip" data-placement="top"
+                data-title="" title="View original item"></i>
+          </a>
         </div>
         <div class="wraps">
           <!-- left-->
@@ -17,11 +24,11 @@
             <!-- img-->
             <div class="img" with.bind="record">
               <!-- Trigger the modal element -->
-              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal(record.myfullimg)" />
+              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" error.trigger="getPlaceholderImage($event)" click.delegate="openModal(record.myfullimg)" style.bind="noImageStyle" />
               <!-- The modal element -->
               <div id="myModal" class="modal">
                 <!-- Modal Content - Image) -->
-                <img class="modal-content" id="modalImg" click.delegate="closeModal()">
+                <img class="modal-content" id="modalImg" click.delegate="closeModal()" error.trigger="getPlaceholderImage($event)">
               </div>
               <!-- Here goes the media, besides images -->
               <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
@@ -44,7 +51,7 @@
             </compose>
             <compose view="widgets/quickview/tagcomment.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Commenting')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
-            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('ColorTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
+            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('ColorTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId, 'colorPalette': campaign.colorPallete}">
             </compose>
 						<compose view="widgets/quickview/tagpoll.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Polling')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>

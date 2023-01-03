@@ -38,8 +38,12 @@ export class quickview {
     this.collectionTitle = '';
     this.collectionCount = 0;
     this.edit = false;
+    this.mediaUrlArray = [];
+    this.mediaRenderAttempts = 0;
     // If there is a user
     this.userId = '';
+    this.imageErrorCounter = 0;
+    this.noImageStyle = '';
 
     this.mediaDiv = '';
   }
@@ -54,13 +58,24 @@ export class quickview {
     }
   }
 
-  async activate(params, routeData) {
+  async activate(params) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
     this.edit = params.editMode;
     this.metadataMode = params.metadataMode;
     this.record = params.record;
-
+    this.mediaUrlArray = [];
+    this.mediaRenderAttempts = 0;
+    this.mediaDiv = "";
+    for (let med of this.record.data.media) {
+      if(med.Original && med.Original.url) this.mediaUrlArray.push(med.Original.url)
+    }
+    if (this.record.data.descriptiveData && this.record.data.descriptiveData.isShownAt) {
+      this.mediaUrlArray.push(this.record.data.descriptiveData.isShownAt);
+    }
+    if (this.record.data.descriptiveData && this.record.data.descriptiveData.isShownBy) {
+      this.mediaUrlArray.push(this.record.data.descriptiveData.isShownBy);
+    }
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -78,7 +93,7 @@ export class quickview {
             this.loadCamp = false;
           })
           .catch(error => {
-            console.log(error);
+            console.error(error);
           });
       }
       this.showMedia();
@@ -101,6 +116,29 @@ export class quickview {
       if (params.userId) {
         this.userId = params.userId;
       }
+    }
+
+    window.addEventListener('media-unplayable', () => this.setVideoPlaceholder());
+  }
+
+  getPlaceholderImage(evt){
+    if(this.imageErrorCounter >= 1){
+      evt.srcElement.src = '/img/assets/img/ui/ic-noimage.png'
+      this.noImageStyle = 'pointer-events: none'
+    }
+    else{
+      evt.srcElement.src = this.record.thumbnail;
+    }
+    this.imageErrorCounter++;
+    
+  }
+
+  setVideoPlaceholder() {
+    this.mediaRenderAttempts++;
+    // Only render placeholder when all sources fail
+    if (this.mediaRenderAttempts == this.mediaUrlArray.length) {
+      this.mediaRenderAttempts = 0;
+      this.mediaDiv = `<p class="mt-5">The media source is unplayable. Please visit <a href="${this.mediaUrlArray[0]}" target="_blank">original item</a>.</p>`;
     }
   }
 
@@ -134,15 +172,19 @@ export class quickview {
       this.mediaDiv = '<div><iframe id="mediaplayer" src="'+this.record.fullresImage+'" width="100%" height="600px"></iframe></div>';
     }
     else {
+      let sourcesStr = this.mediaUrlArray.map(med => {
+        return `<source src="${med}" onerror="window.dispatchEvent(new CustomEvent('media-unplayable'))" >`
+      }).join('');
     	if(this.record.mediatype=="VIDEO" && !this.checkURL(this.record.fullresImage)) {
-        this.mediaDiv = '<video id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</video>';
+        this.mediaDiv = '<video id="mediaplayer" controls width="576" height="324">'+ sourcesStr +'Your browser does not support HTML5</video>';
     	}
+      // source that has video change ticket to a valid one to see example <source src="https://stream12.noterik.com/progressive/stream12/domain/euscreen/user/eu_rtbf/video/1944/rawvideo/1/raw.mp4?ticket=9699703"></source>
     	else if(this.record.mediatype=="AUDIO"  && !this.checkURL(this.record.fullresImage)) {
     		if(this.record.thumbnail) {
-          this.mediaDiv = '<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio></div>';
+          this.mediaDiv = '<div><img src="'+this.record.thumbnail+'" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324">'+ sourcesStr +'Your browser does not support HTML5</audio></div>';
         }
         else {
-          this.mediaDiv = '<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324"><source src="' + this.record.fullresImage + '">Your browser does not support HTML5</audio>';
+          this.mediaDiv = '<div><img src="/img/assets/img/ui/ic-noimage.png" style="max-width:50%;"/></br></br></div><div><audio id="mediaplayer" controls width="576" height="324">'+ sourcesStr +'Your browser does not support HTML5</audio>';
         }
       }
     }
@@ -156,6 +198,7 @@ export class quickview {
 	}
 
   closeTab() {
+    this.mediaUrlArray = [];
     let mediaPlayer = document.getElementById("mediaplayer");
     if (mediaPlayer) {
       mediaPlayer.pause();
@@ -164,6 +207,7 @@ export class quickview {
 	}
 
   openModal(imgSrc) {
+    if(this.imageErrorCounter >= 2) return;
     var modal = document.getElementById("myModal");
     var img = document.getElementById("recImg");
     var modalImg = document.getElementById("modalImg");

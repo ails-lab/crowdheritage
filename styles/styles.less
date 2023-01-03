@@ -2496,6 +2496,24 @@ body main section.tagging .collection {
   display: none;
 }
 
+body main section.tagging .title-section{
+  display: flex;
+  gap: 2rem;
+}
+body main section.tagging .title-section .tooltip.top {
+  .tooltip-inner {
+    padding: 4px 8px;
+  }
+  .tooltip-arrow {
+    border-top-color: @main-color;
+  }
+}
+body main section.tagging .title-section i{
+  margin-right: 5px;
+  font-size: 2rem;
+  line-height: 1.6;
+  color: #4F7979;
+}
 body main section.tagging .title {
   font-size: 2.0rem;
   font-family: "Dosis";
@@ -2556,6 +2574,12 @@ body main section.tagging .cntr .img #recImg,
 body main section.tagging .left .img #recImg {
   transition: 0.3s;
   cursor: pointer;
+  max-height: 400px;
+}
+
+body main section.tagging .left .img #recImg {
+  position: relative;
+  z-index: 2;
 }
 
 body main section.tagging .cntr .img #recImg:hover,
@@ -2588,11 +2612,15 @@ body main section.tagging .left .img .modal {
   /* Black w/ opacity */
 }
 
+body main section.tagging .left .img .modal {
+  z-index: 3;
+}
+
 body main section.tagging .cntr .img .modal-content,
 body main section.tagging .left .img .modal-content {
   margin: auto;
   display: block;
-  width: 96%;
+  height: 85vh;
 }
 
 body main section.tagging .cntr .img .modal-content,
@@ -3628,8 +3656,8 @@ body main section.tagging .right .tag-item .taglist.color > li ul.action li.dele
 body main section.tagging .right .tag-user-item .taglist.color > li ul.action li.delete,
 body main section.tagging .right .tag-geo .taglist.color > li ul.action li.delete,
 body main section.tagging .right .tag-color .taglist.color > li ul.action li.delete {
-  top: 13px;
-  right: 259px;
+  top: 12px;
+  right: -24px;
 }
 
 body main section.tagging .right .heading,
@@ -4098,9 +4126,9 @@ body {
                 .name {
                   text-align: center;
                   font-weight: bold;
-                  // text-shadow: 1px 1px 2px #424242;
+                  text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
                   font-size: 1.1em;
-                  // overflow-wrap: break-word;
+                  overflow-wrap: break-word;
                 }
               }
             }
@@ -6545,6 +6573,8 @@ a:hover .social-button.facebook {
     background-color: @main-color;
   }
 }
+
+
 
 .tooltip.left .tooltip-arrow {
   border-left-color: @main-color  !important;

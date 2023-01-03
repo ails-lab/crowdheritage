@@ -6,20 +6,17 @@
       <!-- heading-->
       <div class="heading green" t="item:color-tagging">COLOR TAGGING</div>
       <!-- info-->
-				<div class="infobar" innerhtml.bind="campaign.instructions"></div>
+      <div class="infobar" innerhtml.bind="campaign.instructions"></div>
       <!-- color action-->
       <div class="coloraction">
-        <section class="color" style.bind="color[1]" repeat.for="color of colorSet" click.delegate="annotateLabel(color[0])">
-          <!-- <a href="javascript:void(0)" click.delegate="annotateLabel(color[1])"> -->
-						<h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
-            <!-- <img src.bind="color[0]">
-            <div class="action">
-              <div class="colorname" innerhtml.bind="color[1]"></div>
-            </div> -->
-          <!-- </a> -->
+        <section
+          repeat.for="color of colorPalette"
+          class="color"
+          style.bind="color.style || 'background:'+color.cssHexCode"
+          click.delegate="colorAnnotate(color)"
+        >
+          <h2 class="name" innerhtml.bind="getColorLabel(color.label)"></h2>
         </section>
-        <!-- hack for last row elements width -->
-        <li class="width-helper" repeat.for="i of 20"></li>
       </div>
       <!-- searchbox-->
       <div if.bind="colorannotations.length>0" class="colorbox" t="item:votes">Vote submitted colors by other users.</div>
@@ -27,8 +24,8 @@
 			<div class="show-more-parent">
       <ul class="colorBlock taglist color show-more-target">
         <li repeat.for="ann of colorannotations">
-          <div class="thumbs" style.bind="getStyle(ann.label)"></div>
-          <div class="selected" innerhtml.bind="getColorLabel(ann.label)"></div>
+          <div class="thumbs" style.bind="getStyle(ann)"></div>
+          <div class="selected" innerhtml.bind="ann.label"></div>
           <ul class="action">
             <li class="publish-btn" if.bind="isCurrentUserCreator()">
 							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
