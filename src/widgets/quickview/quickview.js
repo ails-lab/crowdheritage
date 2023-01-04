@@ -63,6 +63,8 @@ export class quickview {
   }
 
   async activate(params) {
+    this.imageErrorCounter = 0;
+    this.noImageStyle = '';
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
     this.edit = params.editMode;
@@ -142,7 +144,7 @@ export class quickview {
     // Only render placeholder when all sources fail
     if (this.mediaRenderAttempts == this.mediaUrlArray.length) {
       this.mediaRenderAttempts = 0;
-      this.mediaDiv = `<p class="mt-5">The media source is unplayable. Please visit <a href="${this.externalLink()}" target="_blank">original item</a>.</p>`;
+      this.mediaDiv = `<p class="mt-5 mx-4">The media source is unplayable. You can visit the original item <a href="${this.externalLink()}" target="_blank">here</a>.</p>`;
     }
   }
 
