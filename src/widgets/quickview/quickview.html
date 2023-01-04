@@ -11,7 +11,7 @@
         <!-- title-->
         <div show.bind="!loadRec" class="title-section">
           <div id="scrollPoint" class="title">${record.title}</div>
-          <a if.bind="mediaUrlArray.length" href.bind="mediaUrlArray[0]" 
+          <a if.bind="mediaUrlArray.length" href.bind="externalLink()" 
               target="_blank" rel="noopener noreferrer">
                 <i class="fa fa-external-link" bootstrap-tooltip 
                 data-toggle="tooltip" data-placement="top"
