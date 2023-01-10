@@ -166,6 +166,11 @@ export class MetadataRating {
   }
 
   submitRating() {
+    if (this.campaign.status != 'active') {
+      toastr.error('You can not contribute. The campaign is not active.');
+      this.resetRatingForm();
+      return;
+    }
 		if (!this.userServices.current) {
 			toastr.error('You need to login first');
 			this.resetRatingForm();
