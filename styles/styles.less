@@ -12,6 +12,7 @@
 
 // Green
 @main-color: #4F7979;
+@alt-color: #2F4949;
 //Yellow
 @secondary-color: #CAB284;
 @third-color: #CA8484;
@@ -7193,8 +7194,13 @@ section.campaign-edit {
   font-size: 13pt;
 }
 
-#dashboard .nav-tabs > li > a {
-  color: @main-color;
+#dashboard .nav-tabs > li {
+  &.active > a {
+    color: @main-color;
+  }
+  > a {
+    color: @alt-color;
+  }
 }
 
 #dashboard .nav-item {
@@ -7205,8 +7211,13 @@ section.campaign-edit {
   font-size: 13pt;
 }
 
-#moderation .nav-tabs > li > a {
-  color: @main-color;
+#moderation .nav-tabs > li {
+  &.active > a {
+    color: @main-color;
+  }
+  > a {
+    color: @alt-color;
+  }
 }
 
 #moderation .nav-item {

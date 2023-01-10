@@ -16,17 +16,21 @@
 import { inject, LogManager, NewInstance } from 'aurelia-framework';
 import { ValidationController, ValidationRules } from 'aurelia-validation';
 import { UserServices } from 'UserServices';
+import { CampaignServices } from 'CampaignServices';
+import { Campaign } from "Campaign";
 import { Router } from 'aurelia-router';
 
 let logger = LogManager.getLogger('Moderation.js');
 
-@inject(UserServices, Router, NewInstance.of(ValidationController))
+@inject(UserServices, CampaignServices, Router, NewInstance.of(ValidationController))
 export class Moderation {
 
-  constructor(userServices, router) {
+  constructor(userServices, campaignServices, router) {
     this.userServices = userServices;
+    this.campaignServices = campaignServices;
     this.router = router;
-    this.cname = ''
+    this.campaign = null;
+    this.cname = '';
     this.view = "";
     this.loc = window.location.href.split('/')[3];
     this.resetClasses();
@@ -36,15 +40,22 @@ export class Moderation {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params) {
-    this.cname = params.cname
-    // Check if user is logged in and has elevated access
-    if (!this.userServices.isAuthenticated() || !this.userServices.current.isEditor) {
-      this.router.navigateToRoute('index', {lang: this.locale});
+  async activate(params) {
+    this.cname = params.cname;
+
+    if (!this.campaign) {
+      let campaignData = await this.campaignServices.getCampaignByName(this.cname);
+      this.campaign = new Campaign(campaignData, this.loc);
+    }
+
+    let isCreator = this.userServices.isAuthenticated() && this.campaign.creators.includes(this.userServices.current.dbId);
+    if (!isCreator) {
+      let index = this.router.routes.find(x => x.name === 'index');
+      this.router.navigateToRoute('index', { lang: 'en' });
     }
 
     this.resetClasses();
-    this.view = params.resource ? params.resource : 'validation';
+    this.view = params.resource ? params.resource : 'statistics';
     let typeClasses = this.view.split("-")[0] + 'Tab';
     this[typeClasses] = this[typeClasses].concat(" ", "active");
   }
@@ -60,5 +71,4 @@ export class Moderation {
   tabChanged(tab) {
     this.router.navigateToRoute('moderation', {lang: this.locale, cname: this.cname, resource: tab});
   }
-
 }

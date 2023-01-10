@@ -36,7 +36,6 @@ export class Validation {
     this.loc;
     this.project = settings.project;
 
-    this.isCreator = false;
     this.campaignItem = null;
     this.recordIds = [];
     this.records = [];
@@ -183,29 +182,15 @@ export class Validation {
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
 
-    this.cname = params.cname;
-    await this.campaignServices.getCampaignByName(params.cname)
-      .then(response => {
-        // Based on the selected language, set the campaign
-        this.campaign = new Campaign(response, this.loc);
-        this.isCreator = (this.isAuthenticated) && (this.campaign.creators.includes(this.user.dbId));
+    this.cname = params.campaign.username;
+    this.campaign = params.campaign;
 
-        if (!this.isCreator) {
-          let index = this.router.routes.find(x => x.name === 'index');
-          this.router.navigateToRoute('index', { lang: 'en' });
-        }
-
-        this.campaignServices.getPopularAnnotations(this.campaign.username)
-          .then(response => {
-            this.popularTags = response;
-          });
-      })
-      .catch(error => {
-        let index = this.router.routes.find(x => x.name === 'index');
-        this.router.navigateToRoute('index', { lang: 'en' });
-      });
-
-    // route.navModel.setTitle('Validation | ' + this.campaign.title);
+    if (!this.popularTags) {
+      this.campaignServices.getPopularAnnotations(this.campaign.username)
+        .then(response => {
+          this.popularTags = response;
+        });
+    }
   }
 
   getSortbyLabel(sortBy) {
@@ -411,10 +396,6 @@ export class Validation {
   deleteAnnotations() {
     if (this.annotationsToDelete.length == 0) {
       toastr.error("You have not selected any annotations");
-      return;
-    }
-    if (!this.isAuthenticated || !this.isCreator) {
-      toastr.error("You have no permission to perform this action");
       return;
     }
     if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to delete the selected annotations?')) {

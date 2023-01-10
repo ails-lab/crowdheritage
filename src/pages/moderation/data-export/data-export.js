@@ -18,7 +18,6 @@ export class DataExport {
     this.campaignServices = campaignServices;
 
     this.i18n = i18n;
-    this.isCreator = false;
     this.cname = '';
     this.exportAnnsLabel = "EXPORT ANNOTATIONS";
     this.exportUsersLabel = "EXPORT CONTRIBUTORS";
@@ -33,31 +32,9 @@ export class DataExport {
     this.i18n.setLocale(params.lang);
 
     this.cname = params.cname;
-    await this.campaignServices.getCampaignByName(params.cname)
-      .then(response => {
-        // Based on the selected language, set the campaign
-        this.campaign = new Campaign(response, this.loc);
-        this.isCreator = (this.isAuthenticated) && (this.campaign.creators.includes(this.user.dbId));
-
-        if (!this.isCreator) {
-          let index = this.router.routes.find(x => x.name === 'index');
-          this.router.navigateToRoute('index', { lang: 'en' });
-        }
-
-        this.campaignServices.getPopularAnnotations(this.campaign.username)
-          .then(response => {
-            this.popularTags = response;
-          });
-      })
-      .catch(error => {
-        console.error(error)
-        let index = this.router.routes.find(x => x.name === 'index');
-        this.router.navigateToRoute('index', { lang: 'en' });
-      });
-
+    this.campaign = params.campaign;
   }
   clearInstance() {
-    this.isCreator = false;
     this.cname = '';
     this.exportAnnsLabel = "EXPORT ANNOTATIONS";
     this.exportUsersLabel = "EXPORT CONTRIBUTORS";
@@ -67,11 +44,6 @@ export class DataExport {
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
   exportAnnotations() {
-    if (!this.isAuthenticated || !this.isCreator) {
-      toastr.error("You have no permission to perform this action");
-      return '';
-    }
-
     if (this.exportAnnsLabel === "EXPORTING...") {
       return;
     }
@@ -101,11 +73,6 @@ export class DataExport {
   }
 
   exportContributors(fileType) {
-    if (!this.isAuthenticated || !this.isCreator) {
-      toastr.error("You have no permission to perform this action");
-      return '';
-    }
-
     if (this.exportUsersLabel === "EXPORTING...") {
       return;
     }

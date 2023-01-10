@@ -29,6 +29,7 @@ export class Statistics {
 		this.campaignServices = campaignServices;
     this.router = router;
 
+    this.cname = '';
 		this.loading = false;
 		this.statistics = [];
 		this.countChartData = {
@@ -66,8 +67,9 @@ export class Statistics {
 
 	activate(params) {
 		this.loading = true;
+    this.cname = params.campaign.username;
 
-		this.campaignServices.getCampaignStatistics(params.cname)
+		this.campaignServices.getCampaignStatistics(this.cname)
 			.then(response => {
 				for (const key in response) {
 					this.statistics[key] = response[key];
