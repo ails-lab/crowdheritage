@@ -25,7 +25,7 @@
             <div class="img" with.bind="record">
               <!-- Trigger the modal element -->
               <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" error.trigger="getPlaceholderImage($event)" click.delegate="openModal(record.myfullimg)" style.bind="noImageStyle" />
-              <p class="mt-4 font-italic" show.bind="imageErrorCounter > 1">The URL to the item provided in the metadata is not working.</p>
+              <p class="mt-4 font-italic" show.bind="imageErrorCounter > 1">The media file provided in the metadata is not working. You can  visit the original item <a href.bind="externalLink()" target="_blank" rel="noopener noreferrer">here</a>.</p>
               <!-- The modal element -->
               <div id="myModal" class="modal">
                 <!-- Modal Content - Image) -->
