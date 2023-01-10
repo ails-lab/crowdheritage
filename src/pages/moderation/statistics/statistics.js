@@ -78,9 +78,12 @@ export class Statistics {
 				this.statistics.push({'key': 'Contributors', 'value': response["contributors"]});
 				this.statistics.push({'key': 'Collections', 'value': response["collections"]});
 				this.statistics.push({'key': 'Items', 'value': response["items-total"]});
-				this.statistics.push({'key': 'Annotations', 'value': response["annotations-total"]});
-				this.statistics.push({'key': 'Total annotation upvotes', 'value': response["upvotes"]});
-				this.statistics.push({'key': 'Total annotation downvotes', 'value': response["downvotes"]});
+				this.statistics.push({'key': 'Total annotations', 'value': response["annotations-total"]});
+        this.statistics.push({'key': 'Human annotations', 'value': response["annotations-human"]});
+        this.statistics.push({'key': 'Software annotations', 'value': response["annotations-software"]});
+				this.statistics.push({'key': 'Total upvotes', 'value': response["upvotes"]});
+				this.statistics.push({'key': 'Total downvotes', 'value': response["downvotes"]});
+        this.statistics.push({'key': 'Total ratings', 'value': response["rates"]});
 
 				let countData = response["annotation-count-frequency"];
 				for (const key in countData) {
