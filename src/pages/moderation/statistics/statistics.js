@@ -29,7 +29,9 @@ export class Statistics {
 		this.campaignServices = campaignServices;
     this.router = router;
 
+    this.campaign = null;
     this.cname = '';
+    this.isRatingCampaign = false;
 		this.loading = false;
 		this.statistics = [];
 		this.countChartData = {
@@ -67,7 +69,9 @@ export class Statistics {
 
 	activate(params) {
 		this.loading = true;
-    this.cname = params.campaign.username;
+    this.campaign = params.campaign;
+    this.cname = this.campaign.username;
+    this.isRatingCampaign = this.campaign.feedbackMethod == 'RATE';
 
 		this.campaignServices.getCampaignStatistics(this.cname)
 			.then(response => {
@@ -81,9 +85,13 @@ export class Statistics {
 				this.statistics.push({'key': 'Total annotations', 'value': response["annotations-total"]});
         this.statistics.push({'key': 'Human annotations', 'value': response["annotations-human"]});
         this.statistics.push({'key': 'Software annotations', 'value': response["annotations-software"]});
-				this.statistics.push({'key': 'Total upvotes', 'value': response["upvotes"]});
-				this.statistics.push({'key': 'Total downvotes', 'value': response["downvotes"]});
-        this.statistics.push({'key': 'Total ratings', 'value': response["rates"]});
+        if (!this.isRatingCampaign) {
+          this.statistics.push({'key': 'Total upvotes', 'value': response["upvotes"]});
+          this.statistics.push({'key': 'Total downvotes', 'value': response["downvotes"]});
+        }
+				else {
+          this.statistics.push({'key': 'Total ratings', 'value': response["rates"]});
+        }
 
 				let countData = response["annotation-count-frequency"];
 				for (const key in countData) {
@@ -98,68 +106,89 @@ export class Statistics {
 					this.dateChartData.datasets[0].backgroundColor.push(this.randomColor);
 				}
 
-				var countChart = $("#countChart");
-				new Chart(countChart, {
-				  "type": "bar",
-				  "data": this.countChartData,
-					"options": {
-						responsive: true,
-						maintainAspectRatio: false,
-				    scales: {
-				      y: {
-				        beginAtZero: true
-				      }
-				    }
-					}
-				});
-				var dateChart = $("#dateChart");
-				new Chart(dateChart, {
-				  "type": "line",
-				  "data": this.dateChartData,
-					"options": {
-						responsive: true,
-						maintainAspectRatio: false,
-				    scales: {
-				      y: {
-				        beginAtZero: true
-				      }
-				    }
-				  }
-				});
-				var annotatedChart = $("#annotatedChart");
-				new Chart(annotatedChart, {
-					"type": "pie",
-					"data": {
-						labels: ['Items annotated', 'Items not annotated'],
-						datasets: [{
-							label: 'Annotated items',
-							data: [response["items-annotated"], response["items-total"] - response["items-annotated"]],
-							backgroundColor: ['rgb(71, 179, 156)', 'rgb(236, 107, 86)'],
-							hoverOffset: 4
-						}]
-					},
-					"options": {
-						responsive: true,
-						maintainAspectRatio: false
-					}
-				});
-				var publishChart = $("#publishChart");
-				new Chart(publishChart, {
-					"type": "doughnut",
-					"data": {
-						labels: ['Annotations for publish', 'Annotations discarded'],
-						datasets: [{
-							label: 'Items for publish',
-							data: [response["annotations-accepted"], response["annotations-rejected"]],
-							backgroundColor: ['rgb(60, 157, 78)', 'rgb(201, 77, 109)'],
-							hoverOffset: 4
-						}]
-					},
-					"options": {
-						responsive: true,
-						maintainAspectRatio: false
-					}
-				});
+        if (!this.isRatingCampaign) {
+          var countChart = $("#countChart");
+          new Chart(countChart, {
+            "type": "bar",
+            "data": this.countChartData,
+            "options": {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+          var dateChart = $("#dateChart");
+          new Chart(dateChart, {
+            "type": "line",
+            "data": this.dateChartData,
+            "options": {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+          var annotatedChart = $("#annotatedChart");
+          new Chart(annotatedChart, {
+            "type": "pie",
+            "data": {
+              labels: ['Items annotated', 'Items not annotated'],
+              datasets: [{
+                label: 'Annotated items',
+                data: [response["items-annotated"], response["items-total"] - response["items-annotated"]],
+                backgroundColor: ['rgb(71, 179, 156)', 'rgb(236, 107, 86)'],
+                hoverOffset: 4
+              }]
+            },
+            "options": {
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+          var publishChart = $("#publishChart");
+          new Chart(publishChart, {
+            "type": "doughnut",
+            "data": {
+              labels: ['Annotations for publish', 'Annotations discarded'],
+              datasets: [{
+                label: 'Items for publish',
+                data: [response["annotations-accepted"], response["annotations-rejected"]],
+                backgroundColor: ['rgb(60, 157, 78)', 'rgb(201, 77, 109)'],
+                hoverOffset: 4
+              }]
+            },
+            "options": {
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+        }
+        else {
+          var ratedChart = $("#ratedChart");
+          new Chart(ratedChart, {
+            "type": "pie",
+            "data": {
+              labels: ['Items fully rated', 'Items not fully rated'],
+              datasets: [{
+                label: 'Fully rated items',
+                data: [response["items-with-fully-rated-annotations"], response["items-total"] - response["items-with-fully-rated-annotations"]],
+                backgroundColor: ['rgb(71, 179, 156)', 'rgb(236, 107, 86)'],
+                hoverOffset: 4
+              }]
+            },
+            "options": {
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+        }
 
 				this.loading = false;
 			})
