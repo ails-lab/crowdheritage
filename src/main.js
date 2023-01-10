@@ -95,6 +95,7 @@ export async function configure(aurelia) {
           'feedback',
           'index',
           'item',
+          'moderation',
           'partners',
           'privacy',
           'register',

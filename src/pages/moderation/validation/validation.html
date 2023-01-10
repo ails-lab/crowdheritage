@@ -1,0 +1,158 @@
+<template>
+  <main>
+    <section class="validation">
+      <a id="publishCriteria" class="publish-citeria-btn" click.delegate="publishCriteria()">
+        <i class="fa fa-newspaper-o me-3"></i>
+        <span id="publishLabel">Publish Criteria</span>
+      </a>
+
+      <div if.bind="hasMotivation('Tagging') || hasMotivation('GeoTagging')" class="popular-list">
+        <div>
+          <p>Select a <b>tag</b> from the list and view all the campaign records that have been annotated with it.</p>
+        </div>
+        <div class="popular-tags">
+          <ul class="tag-list">
+            <li class="tag" repeat.for="item of popularTags | iterateObject">
+              <a class="tag-${$index}" click.delegate="selectLabel(item[0], 'upvoted', false, $index)">
+                <span class="tag-label">${item[0]}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <br />
+      </div>
+      <!-- ColorTagging -->
+      <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
+        <div>
+          <p>Select a <b>color</b> from the Palette and view all the campaign records that have been annotated with it.
+          </p>
+        </div>
+        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]"
+          click.delegate="selectLabel(color[0], 'upvoted', false)">
+          <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
+        </section>
+        <!-- hack for last row elements width -->
+        <li class="width-helper" repeat.for="i of 20"></li>
+      </div>
+      <!-- Tagging -->
+      <div class="searchbox" if.bind="hasMotivation('Tagging')">
+        <span>Search for a Tag :</span>
+        <input id="annotationInputTag" autocomplete="off" value.bind="prefix"
+          input.delegate="prefixChanged() & debounce:150" click.delegate="clearSearchField()" type="text"
+          placeholder.bind="placeholderText" class="input-tag" />
+        <div show.bind="suggestionsActive" class="autocomplete-suggestions-itemview"
+          style="width: 100%; z-index: 9999;">
+          <ul class="suggestions">
+            <li click.delegate="selectLabel(item[0], 'upvoted', false)" repeat.for="item of suggestedAnnotations"
+              id="${$index}">
+              <span>${item[0]}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div if.bind="hasMotivation('Polling')">
+        <br />
+        <div>
+          <p>Select a <b>tag</b> from the list and view all the campaign records that have been annotated with it.</p>
+        </div>
+        <div class="popular-tags">
+          <ul class="tag-list">
+            <li class="tag" repeat.for="item of popularPollTags | iterateObject">
+              <a class="tag-${$index}" click.delegate="selectLabel(item[0], 'upvoted', false, $index)">
+                <span class="tag-label">${item[0]}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Validation Information -->
+      <div class="validation-info hiddenfile">
+        <p>You have selected <b>${annotationsToDelete.length}</b> annotations :</p>
+      </div>
+      <div class="validation-button-group hiddenfile">
+        <a href="javascript:void(0)" class="btn-green-o cancel" click.delegate="clearSelections()">Cancel Selection</a>
+        <button class="btn-red" click.delegate="deleteAnnotations()" disabled.bind="hasErrors">Delete
+          Annotations</button>
+      </div>
+    </section>
+
+    <!-- grid section-->
+    <section class="collections collection-item-list">
+      <div class="container">
+        <!-- campaign reel-->
+        <div id="recs" class="campaignlist">
+          <!-- top section-->
+          <div class="topsection" if.bind="label!=''">
+            <!-- label-->
+            <div class="sectionlabel">
+              <div class="bold">${label.toUpperCase()}</div>
+              <span if.bind="!loading">${recordIds.length} ANNOTATED ITEMS</span>
+              <span if.bind="loading"><i class="fa fa-spinner fa-pulse"></i> ANNOTATED ITEMS</span>
+            </div>
+            <!-- Sort - Filter-->
+            <div class="sort">
+              <!-- label-->
+              <div class="lbl" t="index:sortby">SORT BY </div>
+              <!-- sort-->
+              <a id="sorting" href="javascript:void(0)" click.delegate="toggleSortMenu()" data-toggle="dropdown">
+                <span class="text">${getSortbyLabel(sortBy)}</span>
+                <span class="arrow"><img src="/img/ic-arrow-down-green.png"></span>
+              </a>
+              <!-- dropdown-->
+              <ul aria-labelledby="sorting" class="dropdown-menu">
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'upvoted', false)">UPVOTES</a></li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'downvoted', false)">DOWNVOTES</a>
+                </li>
+                <li> <a href="javascript:void(0)" click.delegate="selectLabel(label, 'neutral', false)">SCORE</a></li>
+              </ul>
+            </div>
+          </div>
+          <div if.bind="loading" class="campaign">
+            <center>
+              <img src="/img/assets/img/loader.gif" alt="Loading annotations">
+              <p>Loading Annotations</p>
+            </center>
+          </div>
+          <div role="main">
+            <section class="action itemview" if.bind="record">
+              <compose view-model="widgets/quickview/quickview"
+                model.bind="{'cname': cname, 'record': record, 'lang': loc, 'collection':collection}"></compose>
+            </section>
+          </div>
+          <!-- entry-->
+          <div class="entries row" ref="grid">
+            <!-- item-->
+            <div class="sizer"></div>
+            <!-- Item Grid -->
+            <div class="entry ${record.dbId} col-md-3" repeat.for="record of records">
+              <a class="image-action" href="javascript:void(0)" click.delegate="selectAnnotation(record)">
+                <div class="thumbs">
+                  <img src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
+                  <div class="action">
+                  </div>
+                </div>
+              </a>
+              <a href="javascript:void(0)" click.delegate="quickView(record)" class="show-info">
+                <i class="fa fa-eye"></i>
+              </a>
+              <a href="javascript:void(0)" click.delegate="unselectAnnotation(record)">
+                <i class="fa fa-trash hiddenfile"></i>
+              </a>
+            </div>
+          </div>
+          <div class="loadmore">
+            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+            <br /><br /><br />
+            <div class="back-top" show.bind="recordIds.length>0">
+              <a href="#" click.delegate="scrollToTop()">
+                <i class="fa fa-chevron-up"></i>
+                <span>TOP</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</template>

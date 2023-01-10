@@ -1,25 +1,10 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 
 
-import { inject } from 'aurelia-framework';
+import { inject, LogManager } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { DialogService } from 'aurelia-dialog';
 import { Annotation } from 'Annotation.js';
 import { AnnotationServices } from 'AnnotationServices.js';
-import { ThesaurusServices } from 'ThesaurusServices.js';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices.js';
 import { Record } from 'Record.js';
@@ -27,32 +12,30 @@ import { RecordServices } from 'RecordServices.js';
 import { UserServices } from 'UserServices';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
-import { IterateObjectValueConverter } from '../../converters/iterate-object.js';
+import { IterateObjectValueConverter } from '../../../converters/iterate-object.js';
 
+let logger = LogManager.getLogger('Validation.js');
 let instance = null;
 let COUNT = 24;
 
-@inject(AnnotationServices, ThesaurusServices, CampaignServices, RecordServices, UserServices, Router, DialogService, I18N, 'colorPalette')
+@inject(AnnotationServices, CampaignServices, RecordServices, UserServices, Router, DialogService, I18N, 'colorPalette')
 export class Validation {
-
-  constructor(annotationServices, thesaurusServices, campaignServices, recordServices, userServices, router, dialogService, i18n, colorPalette) {
-  	if (instance) {
-  		return instance;
-  	}
+  constructor(annotationServices, campaignServices, recordServices, userServices, router, dialogService, i18n, colorPalette) {
+    if (instance) {
+      return instance;
+    }
     this.colorSet = colorPalette();
     this.annotationServices = annotationServices;
-    this.thesaurusServices = thesaurusServices;
-  	this.campaignServices = campaignServices;
+    this.campaignServices = campaignServices;
     this.recordServices = recordServices;
-  	this.userServices = userServices;
-  	this.router = router;
+    this.userServices = userServices;
+    this.router = router;
     this.dialogService = dialogService;
-  	this.i18n = i18n;
+    this.i18n = i18n;
 
-  	this.loc;
+    this.loc;
     this.project = settings.project;
 
-    this.isCreator = false;
     this.campaignItem = null;
     this.recordIds = [];
     this.records = [];
@@ -64,10 +47,6 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.exportAnnsLabel = "EXPORT ANNOTATIONS";
-    this.exportUsersLabel = "EXPORT CONTRIBUTORS";
-    this.publishCriteriaLabel = "PUBLISH CRITERIA";
-    this.campaignStatisticsLabel = "CAMPAIGN STATISTICS";
 
     this.annotations = [];
     this.geoannotations = [];
@@ -78,36 +57,35 @@ export class Validation {
     this.suggestedGeoAnnotations = [];
     this.suggestedGeoAnnotation = null;
     this.suggestionsLoading = false;
-		this.selectedAnnotation = null;
+    this.selectedAnnotation = null;
     this.selectedGeoAnnotation = null;
-		this.uriRedirect = false;
+    this.uriRedirect = false;
     this.popularTags = null;
     this.popularColorTags = null;
     this.popularGeoTags = null;
     this.popularPollTags = {
-      "Wolfgang Amadeus Mozart" : 801,
-      "Béla Bartók" : 358,
-      "Franz Liszt" : 351,
-      "Ludwig van Beethoven" : 326,
-      "Johann Sebastian Bach" : 276,
-      "Joseph Haydn" : 163,
-      "Leonard Bernstein" : 94,
-      "Antonín Dvořák" : 69,
-      "Igor Stravinsky" : 69,
-      "Jean-Philippe Rameau" : 62
+      "Wolfgang Amadeus Mozart": 801,
+      "Béla Bartók": 358,
+      "Franz Liszt": 351,
+      "Ludwig van Beethoven": 326,
+      "Johann Sebastian Bach": 276,
+      "Joseph Haydn": 163,
+      "Leonard Bernstein": 94,
+      "Antonín Dvořák": 69,
+      "Igor Stravinsky": 69,
+      "Jean-Philippe Rameau": 62
     };
 
     this.loading = false;
     this.deleting = false;
-  	if (!instance) {
-  		instance = this;
-  	}
+    if (!instance) {
+      instance = this;
+    }
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
-  get user()            { return this.userServices.current; }
-  get more()            { return this.offset < this.recordIds.length; }
-
+  get user() { return this.userServices.current; }
+  get more() { return this.offset < this.recordIds.length; }
   get generatorParam() {
     if (this.campaign.username === 'colours-catwalk')
       return `${settings.project} ${this.caname},Image Analysis`;
@@ -116,7 +94,7 @@ export class Validation {
   }
 
   scrollToTop() {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   clearSearchField() {
@@ -130,9 +108,9 @@ export class Validation {
   }
 
   hasColourTag() {
-		if(this.cname==="colours-catwalk")
-		   return true;
-		else
+    if (this.cname === "colours-catwalk")
+      return true;
+    else
       return false;
   }
 
@@ -146,7 +124,7 @@ export class Validation {
   }
 
   getColorLabel(label) {
-    return this.i18n.tr('item:color:'+label);
+    return this.i18n.tr('item:color:' + label);
   }
 
   toggleSortMenu() {
@@ -160,12 +138,11 @@ export class Validation {
 
   attached() {
     $('.accountmenu').removeClass('active');
-    // window.addEventListener('scroll', e => this.scrollAndLoadMore());
   }
 
   detached() {
-		this.record=null;
-	}
+    this.record = null;
+  }
 
   clearInstance() {
     this.campaignItem = null;
@@ -179,10 +156,6 @@ export class Validation {
     this.annotationsToDelete = [];
     this.sortBy = "upvoted";
     this.placeholderText = this.i18n.tr('item:tag-search-text');
-    this.exportAnnsLabel = "EXPORT ANNOTATIONS";
-    this.exportUsersLabel = "EXPORT CONTRIBUTORS";
-    this.publishCriteriaLabel = "PUBLISH CRITERIA";
-    this.campaignStatisticsLabel = "CAMPAIGN STATISTICS";
 
     this.prefix = '';
     this.geoPrefix = '';
@@ -195,44 +168,30 @@ export class Validation {
     this.suggestedGeoAnnotations = [];
     this.suggestedGeoAnnotation = null;
     this.suggestionsLoading = false;
-		this.selectedAnnotation = null;
+    this.selectedAnnotation = null;
     this.selectedGeoAnnotation = null;
-		this.uriRedirect = false;
+    this.uriRedirect = false;
 
     this.loading = false;
     this.deleting = false;
   }
 
-	async activate(params, route) {
+  async activate(params, route) {
     this.clearInstance();
 
     this.loc = params.lang;
-		this.i18n.setLocale(params.lang);
+    this.i18n.setLocale(params.lang);
 
-		this.cname = params.cname;
-    await this.campaignServices.getCampaignByName(params.cname)
-      .then(response => {
-        // Based on the selected language, set the campaign
-        this.campaign = new Campaign(response, this.loc);
-        this.isCreator = (this.isAuthenticated) && (this.campaign.creators.includes(this.user.dbId));
+    this.cname = params.campaign.username;
+    this.campaign = params.campaign;
 
-        if (!this.isCreator) {
-          let index = this.router.routes.find(x => x.name === 'index');
-          this.router.navigateToRoute('index', {lang: 'en'});
-        }
-
-        this.campaignServices.getPopularAnnotations(this.campaign.username)
-          .then( response => {
-            this.popularTags = response;
-          });
-      })
-      .catch(error => {
-        let index = this.router.routes.find(x => x.name === 'index');
-        this.router.navigateToRoute('index', {lang: 'en'});
-      });
-
-    route.navModel.setTitle('Validation | ' + this.campaign.title);
-	}
+    if (!this.popularTags) {
+      this.campaignServices.getPopularAnnotations(this.campaign.username)
+        .then(response => {
+          this.popularTags = response;
+        });
+    }
+  }
 
   getSortbyLabel(sortBy) {
     if (sortBy == "upvoted")
@@ -247,7 +206,7 @@ export class Validation {
 
   selectLabel(label, sortBy, reload, index) {
     // If the label is the already selected label, do nothing
-    if ( !reload && (this.sortBy === sortBy) && (this.label === label.toLowerCase()) ) {
+    if (!reload && (this.sortBy === sortBy) && (this.label === label.toLowerCase())) {
       return;
     }
 
@@ -263,9 +222,9 @@ export class Validation {
     if (this.hasMotivation('ColorTagging')) {
       // Keep enlarged the selected color in the palette
       $('.enlarge-color').removeClass('enlarge-color');
-      let colorClass = label[0].toUpperCase() + label.slice(1,label.length);
+      let colorClass = label[0].toUpperCase() + label.slice(1, label.length);
       colorClass = (colorClass === "Multicoloured") ? "Multicolor" : colorClass;
-      $('.'+colorClass).addClass('enlarge-color');
+      $('.' + colorClass).addClass('enlarge-color');
 
       // Restore the original color-label form, which is lowercase
       this.label = label.toLowerCase();
@@ -279,7 +238,7 @@ export class Validation {
 
     if (index != null) {
       $('.selected-tag').removeClass('selected-tag');
-      $('.tag-'+index).addClass('selected-tag');
+      $('.tag-' + index).addClass('selected-tag');
     }
     else {
       $('.selected-tag').removeClass('selected-tag');
@@ -294,9 +253,8 @@ export class Validation {
     }
     // Retrieve the new recordIds array
     this.recordServices.getRecordIdsByAnnLabel(this.label, this.generators, this.sortBy)
-      .then( response => {
+      .then(response => {
         this.recordIds = response;
-        // console.log("RESPONSE", response);
         // Fill the record array with the first batch of records
         this.getRecords(0);
         this.suggestedAnnotations = [];
@@ -307,7 +265,7 @@ export class Validation {
       });
   }
 
-	async getRecords(offset) {
+  async getRecords(offset) {
     // Clone the recordIds array
     let recIds = this.recordIds.slice(0, this.recordIds.length);
     // Keep only the next batch in the array
@@ -334,10 +292,10 @@ export class Validation {
     this.loading = false;
   }
 
-  quickView(record){
-	  this.record=record;
-		$('.action').removeClass('active');
-		$('.action.itemview').addClass('active');
+  quickView(record) {
+    this.record = record;
+    $('.action').removeClass('active');
+    $('.action.itemview').addClass('active');
   }
 
   async findAnnotation(record) {
@@ -397,13 +355,12 @@ export class Validation {
     }
     else {
       // Select which annotations to discard
-      $('.'+record.dbId+' .thumbs').addClass('discardAnnotation');
-      $('.'+record.dbId+' .fa-trash').removeClass('hiddenfile');
+      $('.' + record.dbId + ' .thumbs').addClass('discardAnnotation');
+      $('.' + record.dbId + ' .fa-trash').removeClass('hiddenfile');
       this.annotationsToDelete.push(this.annotation);
     }
     $('.validation-button-group').removeClass('hiddenfile');
     $('.validation-info').removeClass('hiddenfile');
-    // console.log("[SELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   unselectAnnotation(record) {
@@ -415,9 +372,8 @@ export class Validation {
     for (let i in this.annotationsToDelete) {
       if (this.annotationsToDelete[i].dbId === this.annotation.dbId) {
         this.annotationsToDelete.splice(i, 1);
-        $('.'+record.dbId+' .thumbs').removeClass('discardAnnotation');
-        $('.'+record.dbId+' .fa-trash').addClass('hiddenfile');
-        // console.log("[UNSELECT] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
+        $('.' + record.dbId + ' .thumbs').removeClass('discardAnnotation');
+        $('.' + record.dbId + ' .fa-trash').addClass('hiddenfile');
         if (this.annotationsToDelete.length == 0) {
           $('.validation-button-group').addClass('hiddenfile');
           $('.validation-info').addClass('hiddenfile');
@@ -435,16 +391,11 @@ export class Validation {
     $('.fa-trash').addClass('hiddenfile');
     $('.validation-button-group').addClass('hiddenfile');
     $('.validation-info').addClass('hiddenfile');
-    // console.log("[CLEAR] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
   }
 
   deleteAnnotations() {
     if (this.annotationsToDelete.length == 0) {
       toastr.error("You have not selected any annotations");
-      return;
-    }
-    if ( !this.isAuthenticated || !this.isCreator ) {
-      toastr.error("You have no permission to perform this action");
       return;
     }
     if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to delete the selected annotations?')) {
@@ -457,174 +408,56 @@ export class Validation {
     // Discard the selected annotations
     for (var ann of this.annotationsToDelete) {
       this.annotationServices.delete(ann.dbId)
-      .then( () => {
-        // Remove one point from each of the upvoters
-        for (let upvoter of ann.approvedBy) {
-          this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
-        }
-        // Remove one point from each of the annotators
-        for (let annotator of ann.createdBy) {
-          this.campaignServices.decUserPoints(this.campaign.dbId, annotator.withCreator, 'created');
-        }
-        // Refresh the view
-        this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
-        this.selectLabel(this.label, this.sortBy, true);
-        let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
-        $('.'+camelLabel).addClass('enlarge-color');
-        $('.validation-button-group').addClass('hiddenfile');
-        $('.validation-info').addClass('hiddenfile');
-        // console.log("[DELETE] ANNOTATIONS TO DELETE:", this.annotationsToDelete);
-      })
-      .catch(error => {
-        console.log(error.message);
-        toastr.error("An error occured during the annotation deletion.");
-      });
+        .then(() => {
+          // Remove one point from each of the upvoters
+          for (let upvoter of ann.approvedBy) {
+            this.campaignServices.decUserPoints(this.campaign.dbId, upvoter.withCreator, 'approved');
+          }
+          // Remove one point from each of the annotators
+          for (let annotator of ann.createdBy) {
+            this.campaignServices.decUserPoints(this.campaign.dbId, annotator.withCreator, 'created');
+          }
+          // Refresh the view
+          this.annotationsToDelete.splice(0, this.annotationsToDelete.length);
+          this.selectLabel(this.label, this.sortBy, true);
+          let camelLabel = this.label.charAt(0).toUpperCase() + this.label.slice(1);
+          $('.' + camelLabel).addClass('enlarge-color');
+          $('.validation-button-group').addClass('hiddenfile');
+          $('.validation-info').addClass('hiddenfile');
+        })
+        .catch(error => {
+          console.error(error.message);
+          toastr.error("An error occured during the annotation deletion.");
+        });
     }
-  }
-
-  exportAnnotations() {
-    if ( !this.isAuthenticated || !this.isCreator ) {
-      toastr.error("You have no permission to perform this action");
-      return '';
-    }
-
-    if (this.exportAnnsLabel === "EXPORTING...") {
-      return;
-    }
-
-    // While waiting for the process to go through, change the cursor to 'wait'
-    let expLink = document.getElementById('exportAnnotations');
-    document.body.style.cursor = 'wait';
-    expLink.style.cursor = 'wait';
-    this.exportAnnsLabel = "EXPORTING...";
-
-    this.campaignServices.exportCampaignAnnotations(this.campaign.username)
-      .then( response => {
-        // Create the downloadable json file and download it
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response, null, "\t"));
-        var downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", this.campaign.username+"_annotations.json");
-        document.body.appendChild(downloadAnchorNode); // required for firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
-
-        // When the process is finished, change the cursor back to 'default'
-        document.body.style.cursor = 'default';
-        expLink.style.cursor = 'pointer';
-        this.exportAnnsLabel = "EXPORT ANNOTATIONS";
-      });
-  }
-
-  exportContributors(fileType) {
-    if ( !this.isAuthenticated || !this.isCreator ) {
-      toastr.error("You have no permission to perform this action");
-      return '';
-    }
-
-    if (this.exportUsersLabel === "EXPORTING...") {
-      return;
-    }
-
-    // While waiting for the process to go through, change the cursor to 'wait'
-    let expLink = document.getElementById('exportUsers');
-    document.body.style.cursor = 'wait';
-    expLink.style.cursor = 'wait';
-    this.exportUsersLabel = "EXPORTING...";
-
-    this.campaignServices.getCampaignContributors(this.campaign.username)
-      .then(response => {
-        var json = response;
-        var dataStr = "";
-        var downloadAnchorNode = document.createElement('a');
-        var filename = `${this.campaign.username}_contributors.${fileType}`;
-
-        if (fileType === 'csv') {
-          // Create the downloadable csv file
-          var fields = Object.keys(json[0]);
-          var replacer = function(key, value) { return value === null ? '' : value };
-          var csv = json.map(function(row) {
-            return fields.map(function(fieldName) {
-              return JSON.stringify(row[fieldName], replacer);
-            }).join(',');
-          });
-          csv.unshift(fields.join(',')); // add header column
-          csv = csv.join('\r\n');
-          dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
-        }
-        else {
-          dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json, null, '\t'));
-        }
-
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", filename);
-        document.body.appendChild(downloadAnchorNode); // required for firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
-
-        // When the process is finished, change the cursor back to 'default'
-        document.body.style.cursor = 'default';
-        expLink.style.cursor = 'pointer';
-        this.exportUsersLabel = "EXPORT CONTRIBUTORS";
-      });
-  }
-
-  publishToEuropeana() {
-    if ( !this.isAuthenticated || !this.isCreator ) {
-      toastr.error("You have no permission to perform this action");
-      return;
-    }
-    if (confirm('ATTENTION: This action can not be undone!!\n\nAre you sure you want to publish your campaign annotations to Europeana?')) {
-      console.log("Publishing annotations...");
-    }
-    else {
-      return;
-    }
-
-    // LOGIC GOES HERE
-  }
-
-  campaignStatistics() {
-    this.dialogService.open({
-			viewModel: PLATFORM.moduleName('widgets/statisticsdialog/statisticsdialog'),
-      overlayDismiss: false,
-      model: this.campaign.username
-		});
   }
 
   publishCriteria() {
     this.dialogService.open({
-			viewModel: PLATFORM.moduleName('widgets/publishdialog/publishdialog'),
+      viewModel: PLATFORM.moduleName('widgets/publishdialog/publishdialog'),
       overlayDismiss: false,
       model: this.campaign
-		})
-    .whenClosed(res => {
-      if (!res.wasCancelled) {
-        this.campaignServices.getCampaignByName(this.cname)
-        .then(response => {
-          this.campaign = new Campaign(response, this.loc);
-        });
-      }
-    });
+    })
+      .whenClosed(res => {
+        if (!res.wasCancelled) {
+          this.campaignServices.getCampaignByName(this.cname)
+            .then(response => {
+              this.campaign = new Campaign(response, this.loc);
+            });
+        }
+      });
   }
-
-  // DOES NOT WORK : IT LOADS THE SAME IMAGES
-  scrollAndLoadMore() {
-		if (($("#recs").height() - window.scrollY < 900 ) && !this.loading && this.more )
-    this.loading = true;
-	 		this.getRecords(this.offset);
-	}
 
   async loadMore() {
     this.loading = true;
-		this.getRecords(this.offset);
+    this.getRecords(this.offset);
   }
 
 
   /**
     * TAGITEM WIDGET METHODS
     */
-  prefixChanged(geo=false) {
+  prefixChanged(geo = false) {
     if (!geo && this.prefix === '') {
       this.suggestedAnnotations = [];
       return;
@@ -633,83 +466,40 @@ export class Validation {
       this.suggestedGeoAnnotations = [];
       return;
     }
-		if (geo || this.campaign.motivation == 'GeoTagging') {
+    if (geo || this.campaign.motivation == 'GeoTagging') {
       this.selectedGeoAnnotation = null;
-			this.getGeoAnnotations(this.geoPrefix);
-		}
+    }
     else {
       this.selectedAnnotation = null;
-			this.getSuggestedAnnotations(this.prefix);
-		}
+      this.getSuggestedAnnotations(this.prefix);
+    }
   }
 
   get suggestionsActive() {
     return this.suggestedAnnotations.length !== 0;
   }
 
-  get geoSuggestionsActive() {
-    return this.suggestedGeoAnnotations.length !== 0;
-  }
-
-  async getSuggestedAnnotations(prefix, lang="all") {
+  async getSuggestedAnnotations(prefix, lang = "all") {
     this.lastRequest = prefix;
     this.suggestionsLoading = true;
-		lang = typeof this.loc !== 'undefined' ? this.loc : 'all';
+    lang = typeof this.loc !== 'undefined' ? this.loc : 'all';
     this.suggestedAnnotations = this.suggestedAnnotations.slice(0, this.suggestedAnnotations.length);
     this.selectedAnnotation = null;
     let self = this;
     this.campaignServices.getPopularAnnotations(this.campaign.username, prefix)
-      .then( res => {
+      .then(res => {
         let response = new IterateObjectValueConverter().toView(res);
         self.suggestedAnnotations = response;
         self.suggestionsLoading = false;
       });
-    // await this.thesaurusServices.getCampaignSuggestions(prefix, this.campaign.dbId, lang).then((res) => {
-    //   console.log("RES", res);
-    //   console.log("LAST", self.lastRequest);
-    //   if (res.request === self.lastRequest) {
-    //     self.suggestedAnnotations = res.results;
-    //     if (self.suggestedAnnotations.length > 0 && self.suggestedAnnotations[0].exact) {
-    //       self.selectedAnnotation = self.suggestedAnnotations[0];
-    //     }
-    //     self.suggestionsLoading = false;
-    //   }
-    // });
   }
-
-  async getGeoAnnotations(prefix) {
-		this.lastRequest = prefix;
-		this.suggestionsLoading = true;
-		this.suggestedGeoAnnotations = this.suggestedGeoAnnotations.slice(0, this.suggestedGeoAnnotations.length);
-		this.selectedGeoAnnotation = null;
-		let self = this;
-    let lang = typeof this.loc !== 'undefined' ? this.loc : 'en';
-		await this.thesaurusServices.getGeonameSuggestions(prefix, lang)
-		.then((res) => {
-    	self.getGeoSuggestions( res);
-  	});
-	}
-
-	getGeoSuggestions(jData) {
-		if (jData == null) {
-			// There was a problem parsing search results
-			alert("nothing found");
-			return;
-		}
-		var html = '';
-		var geonames = jData.geonames;
-		this.suggestedGeoAnnotations = geonames;
-    let geoLength = this.suggestedGeoAnnotations.length;
-
-		this.suggestionsLoading = false;
-	}
 
   selectSuggestedAnnotation(index) {
     if (this.uriRedirect) {
-			this.uriRedirect = false;
-			this.prefixChanged();
-			return;
-		}
+      this.uriRedirect = false;
+      this.prefixChanged();
+      return;
+    }
 
     this.selectedAnnotation = this.suggestedAnnotations.find(obj => {
       return obj.id === index
@@ -724,21 +514,6 @@ export class Validation {
       this.selectLabel(lb, 'upvoted', false);
     }
   }
-
-  selectGeoAnnotation(geoid) {
-    this.selectedGeoAnnotation = this.suggestedGeoAnnotations.find(obj => {
-			return obj.geonameId === geoid
-		});
-		this.suggestedGeoAnnotations = [];
-		this.errors = this.selectedGeoAnnotation == null;
-
-		if (!this.errors) {
-      var lb = this.selectedGeoAnnotation.name;
-      this.geoPrefix = lb;
-
-      this.selectLabel(lb, 'upvoted', false);
-		}
- 	}
 
   async getRecordAnnotations(id) {
     if (this.hasMotivation('Polling')) {
@@ -778,7 +553,7 @@ export class Validation {
         }
       });
       // Sort the annotations in descending order, based on their score
-      this.geoannotations.sort(function(a, b) {
+      this.geoannotations.sort(function (a, b) {
         return b.score - a.score;
       });
     }
@@ -794,7 +569,7 @@ export class Validation {
         }
       });
       // Sort the annotations in descending order, based on their score
-      this.annotations.sort(function(a, b) {
+      this.annotations.sort(function (a, b) {
         return b.score - a.score;
       });
     }
@@ -805,15 +580,15 @@ export class Validation {
           // Filter the annotations based on the generator
           var flag = false;
           for (var annotator of response[i].annotators) {
-            if ( (annotator.generator == (settings.project+' '+(this.campaign.username)))
-              || (annotator.generator == 'Image Analysis') ) {
-                flag = true;
-                break;
+            if ((annotator.generator == (settings.project + ' ' + (this.campaign.username)))
+              || (annotator.generator == 'Image Analysis')) {
+              flag = true;
+              break;
             }
           }
           // If the criterias are met, push the annotation inside the array
           if (flag) {
-            if (response[i].body.label.en && response[i].body.label.en=="gray") {
+            if (response[i].body.label.en && response[i].body.label.en == "gray") {
               response[i].body.label.en = ["grey"];
               response[i].body.label.default = ["grey"];
             }
@@ -826,9 +601,11 @@ export class Validation {
         }
       });
       // Sort the annotations in descending order, based on their score
-      this.colorannotations.sort(function(a, b) {
+      this.colorannotations.sort(function (a, b) {
         return b.score - a.score;
       });
     }
   }
+
+
 }
