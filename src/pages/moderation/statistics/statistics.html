@@ -18,22 +18,25 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div if.bind="isRatingCampaign" class="col-md-4">
+        <canvas id="ratedChart" width="250" height="250" />
+      </div>
+      <div if.bind="!isRatingCampaign" class="col-md-4">
         <canvas id="annotatedChart" width="250" height="250" />
       </div>
-      <div class="col-md-4">
+      <div if.bind="!isRatingCampaign" class="col-md-4">
         <canvas id="publishChart" width="250" height="250" />
       </div>
     </div>
 
     <div class="row my-5">
-      <div class="col-md-12">
+      <div if.bind="!isRatingCampaign" class="col-md-12">
         <canvas id="dateChart" height="300" />
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
+      <div if.bind="!isRatingCampaign" class="col-md-12">
         <canvas id="countChart" height="300" />
       </div>
     </div>
