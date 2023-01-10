@@ -1,0 +1,15 @@
+<template>
+  <main>
+    <section class="validation data-export">
+        <a id="exportUsers" class="export-btn" click.delegate="exportContributors('json')">
+          <i class="fa fa-users me-3"></i>
+          <span id="exportLabel">${exportUsersLabel}</span>
+        </a>
+        <a id="exportAnnotations" class="export-btn" click.delegate="exportAnnotations()">
+          <i class="fa fa-download me-3"></i>
+          <span id="exportLabel">${exportAnnsLabel}</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</template>

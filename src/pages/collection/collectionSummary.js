@@ -16,6 +16,8 @@
 
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { Campaign } from 'Campaign.js';
+import { CampaignServices } from 'CampaignServices.js';
 import { Collection } from 'Collection.js';
 import { CollectionServices } from 'CollectionServices.js';
 import { UserServices } from 'UserServices';
@@ -24,19 +26,21 @@ import { I18N } from 'aurelia-i18n';
 
 let instance = null;
 
-@inject(CollectionServices, UserServices, Router, I18N)
+@inject(CampaignServices, CollectionServices, UserServices, Router, I18N)
 export class CollectionSummary {
 
-  constructor(collectionServices, userServices, router, i18n) {
+  constructor(campaignServices, collectionServices, userServices, router, i18n) {
 		if (instance) {
 			return instance;
 		}
+    this.campaignServices = campaignServices;
 	  this.collectionServices = collectionServices;
 	  this.userServices = userServices;
 	  this.router = router;
     this.i18n = i18n;
 
     this.loc;
+    this.campaign = null;
 	  if (!instance) {
 			instance = this;
 		}
@@ -54,6 +58,12 @@ export class CollectionSummary {
 		this.i18n.setLocale(params.lang);
 
 		this.cname = params.cname;
+    this.campaignServices.getCampaignByName(params.cname)
+      .then(result => {
+        // Based on the selected language, set the campaign
+        this.campaign = new Campaign(result, this.loc);
+      });
+
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		this.collection = new Collection(collectionData);

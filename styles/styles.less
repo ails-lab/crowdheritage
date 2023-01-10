@@ -12,6 +12,7 @@
 
 // Green
 @main-color: #4F7979;
+@alt-color: #2F4949;
 //Yellow
 @secondary-color: #CAB284;
 @third-color: #CA8484;
@@ -2935,8 +2936,40 @@ ux-dialog-container.active {
 }
 
 body main section.validation {
-  margin: 30px 0px 10px 0px;
+  margin: 50px 0px 10px 0px;
   padding: 0px 50px 0px 50px;
+}
+
+body main section.validation .publish-citeria-btn {
+  background-color: #4f7979;
+  color: white;
+  float: right;
+  cursor: pointer;
+  position: relative;
+  top: -45px;
+  right: 30px;
+  padding: 5px 15px;
+  border-radius: 3px;
+}
+
+body main section.validation.data-export {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+body main section.validation .export-btn {
+  background-color: #4f7979;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  top: -45px;
+  right: 30px;
+  padding: 5px 15px;
+  border-radius: 3px;
+  min-width: 210px;
 }
 
 body main section.validation .contribute {
@@ -6262,7 +6295,6 @@ section.validation .searchbox ul.suggestions {
 }
 
 section.validation .popular-list {
-  text-align: center;
   margin-top: 24px;
 }
 
@@ -7182,11 +7214,33 @@ section.campaign-edit {
   font-size: 13pt;
 }
 
-#dashboard .nav-tabs > li > a {
-  color: @main-color;
+#dashboard .nav-tabs > li {
+  &.active > a {
+    color: @main-color;
+  }
+  > a {
+    color: @alt-color;
+  }
 }
 
 #dashboard .nav-item {
+  margin-right: 20px;
+}
+
+#moderation .nav-tabs {
+  font-size: 13pt;
+}
+
+#moderation .nav-tabs > li {
+  &.active > a {
+    color: @main-color;
+  }
+  > a {
+    color: @alt-color;
+  }
+}
+
+#moderation .nav-item {
   margin-right: 20px;
 }
 
@@ -7360,8 +7414,14 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
     &.High {
       background-color: #6d9eeb;
     }
+    &.MediumHigh {
+      background-color: #a4c2f4;
+    }
     &.Medium {
       background-color: #c27ba0;
+    }
+    &.MediumLow {
+      background-color: #ead1dc;
     }
     &.Low {
       background-color: #ffffff;
@@ -7588,8 +7648,14 @@ input.tag-type {
             option.High {
               background-color: #6d9eeb;
             }
+            option.MediumHigh {
+              background-color: #a4c2f4;
+            }
             option.Medium {
               background-color: #c27ba0;
+            }
+            option.MediumLow {
+              background-color: #ead1dc;
             }
             option.Low {
               background-color: #ffffff;

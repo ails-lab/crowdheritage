@@ -1,0 +1,44 @@
+<template>
+	<div>
+    <div if.bind="loading" class="campaign">
+      <center>
+        <img src="/img/assets/img/loader.gif" alt="Loading campaigns">
+        <p>Loading statistics...</p>
+      </center>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div if.bind="!loading" class="row mb-2 font-size-bigger" repeat.for="stat of statistics">
+          <div class="col-md-7 font-weight-bold">
+            ${stat.key}:
+          </div>
+          <div class="col-md-5">
+            ${stat.value}
+          </div>
+        </div>
+      </div>
+      <div if.bind="isRatingCampaign" class="col-md-4">
+        <canvas id="ratedChart" width="250" height="250" />
+      </div>
+      <div if.bind="!isRatingCampaign" class="col-md-4">
+        <canvas id="annotatedChart" width="250" height="250" />
+      </div>
+      <div if.bind="!isRatingCampaign" class="col-md-4">
+        <canvas id="publishChart" width="250" height="250" />
+      </div>
+    </div>
+
+    <div class="row my-5">
+      <div if.bind="!isRatingCampaign" class="col-md-12">
+        <canvas id="dateChart" height="300" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div if.bind="!isRatingCampaign" class="col-md-12">
+        <canvas id="countChart" height="300" />
+      </div>
+    </div>
+  </div>
+</template>
