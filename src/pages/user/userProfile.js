@@ -246,10 +246,11 @@ export class UserProfile {
 			});
 	}
 
-	changeCampaign(campUsername, campName) {
-		this.campUsername = campUsername;
-		this.campName = campName;
-		this.getUserStats(campUsername);
+	changeCampaign(campaign) {
+    this.campaign = campaign;
+		this.campUsername = campaign.username;
+		this.campName = campaign.title;
+		this.getUserStats(this.campUsername);
 	}
 
 }
