@@ -58,7 +58,7 @@ export async function configure(aurelia) {
     */
     .plugin(PLATFORM.moduleName('google-maps-api'), config => {
       config.options({
-        apiKey: 'AIzaSyD4SpqL2DlfdiKJquVUmPnxPqFu56hChK8'
+        apiKey: process.env.GOOGLE_MAPS_API_KEY
       })
     })
     .plugin(PLATFORM.moduleName('aurelia-dialog'), config => {
