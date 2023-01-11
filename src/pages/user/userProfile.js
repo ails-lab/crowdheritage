@@ -68,6 +68,7 @@ export class UserProfile {
 		this.created = 0;
 		this.approved = 0;
 		this.rejected = 0;
+    this.ratings = 0;
 		this.annotatedRecordsCount = 0;
 		this.records = [];
 		this.contributedCampaigns = 0;
@@ -231,6 +232,7 @@ export class UserProfile {
 		this.userServices.getUserAnnotations(this.user.dbId, this.project, campUsername)
 			.then( contributions => {
 				this.points = contributions.annotationCount;
+        this.ratings = contributions.ratedCount ? contributions.ratedCount : 0;
 				this.created = contributions.createdCount;
 				this.approved = contributions.approvedCount;
 				this.rejected = contributions.rejectedCount;

@@ -107,23 +107,27 @@
 									<small>${points}/500</small>
 								</div>
 							</li> -->
-							<li>
+							<li show.bind="campaign.feedbackMethod != 'RATE' && campaign.purpose != 'VALIDATE'">
 								<div class="lbl" t="user:inserted">INSERTED TAGS</div>
 								<div class="val">${created}</div>
 							</li>
-							<li show.bind="campaign.feedbackMethod != 'RATE'">
+							<li show.bind="campaign.feedbackMethod != 'RATE' && campaign.purpose != 'VALIDATE'">
 								<div class="lbl" t="user:upvotes">UPVOTES</div>
 								<div class="val">${approved}</div>
 							</li>
-							<li show.bind="campaign.feedbackMethod != 'RATE'">
+							<li show.bind="campaign.feedbackMethod != 'RATE' && campaign.purpose != 'VALIDATE'">
 								<div class="lbl" t="user:downvotes">DOWNVOTES</div>
 								<div class="val">${rejected}</div>
+							</li>
+							<li show.bind="campaign.feedbackMethod == 'RATE' && campaign.purpose == 'VALIDATE'">
+								<div class="lbl" t="user:downvotes">RATINGS</div>
+								<div class="val">${ratings}</div>
 							</li>
               <!-- <li>
                 <div class="lbl">CAMPAIGNS</div>
                 <div class="val">${contributedCampaigns}</div>
               </li> -->
-              <li show.bind="campaign.feedbackMethod != 'RATE'">
+              <li show.bind="campaign.feedbackMethod != 'RATE' && campaign.purpose != 'VALIDATE'">
                 <div class="lbl" t="user:items">ITEMS</div>
                 <div class="val">${annotatedRecordsCount}</div>
               </li>
@@ -131,7 +135,7 @@
                 <strong><div class="lbl" t="app:points">POINTS</div></strong>
                 <div class="val">${points}</div>
               </li>
-              <li>
+              <li show.bind="campaign.feedbackMethod != 'RATE' && campaign.purpose != 'VALIDATE'">
                 <strong><div class="lbl">KARMA</div></strong>
                 <div class="val">${karma}%</div>
               </li>
@@ -143,7 +147,7 @@
       </div>
     </section>
 
-		<section class="collections collection-item-list" show.bind="campaign.feedbackMethod != 'RATE'">
+		<section class="collections collection-item-list" show.bind="campaign.feedbackMethod != 'RATE' && campaign.purpose != 'VALIDATE'">
 			<div class="container">
 				<div class="topsection">
           <!-- label-->
