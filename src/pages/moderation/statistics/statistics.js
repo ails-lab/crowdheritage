@@ -78,19 +78,20 @@ export class Statistics {
 				for (const key in response) {
 					this.statistics[key] = response[key];
 				}
-				this.statistics.push({'key': 'Campaign', 'value': response["campaign"]});
-				this.statistics.push({'key': 'Contributors', 'value': response["contributors"]});
-				this.statistics.push({'key': 'Collections', 'value': response["collections"]});
-				this.statistics.push({'key': 'Items', 'value': response["items-total"]});
-				this.statistics.push({'key': 'Total annotations', 'value': response["annotations-total"]});
-        this.statistics.push({'key': 'Human annotations', 'value': response["annotations-human"]});
-        this.statistics.push({'key': 'Software annotations', 'value': response["annotations-software"]});
+				this.statistics.push({'key': 'Campaign', 'value': response["campaign"], 'info': 'Campaign unique short-name'});
+				this.statistics.push({'key': 'Contributors', 'value': response["contributors"], 'info': 'Number of users that have contributed'});
+				this.statistics.push({'key': 'Collections', 'value': response["collections"], 'info': 'Number of campaign collections'});
+				this.statistics.push({'key': 'Items', 'value': response["items-total"], 'info': 'Number of campaign items'});
+				this.statistics.push({'key': 'Total annotations', 'value': response["annotations-total"], 'info': 'Total number of campaign annotations'});
+        this.statistics.push({'key': 'Human annotations', 'value': response["annotations-human"], 'info': 'Number of user-generated campaign annotations'});
+        this.statistics.push({'key': 'Software annotations', 'value': response["annotations-software"], 'info': 'Number of existing software-generated campaign annotations'});
+        this.statistics.push({'key': 'Software annotations feedback rate', 'value': 100*response["softwareAnnotationsContributionPercentage"]+'%', 'info': 'Percentage of the software generated annotations that have at least one contribution'});
         if (!this.isRatingCampaign) {
-          this.statistics.push({'key': 'Total upvotes', 'value': response["upvotes"]});
-          this.statistics.push({'key': 'Total downvotes', 'value': response["downvotes"]});
+          this.statistics.push({'key': 'Total upvotes', 'value': response["upvotes"], 'info': 'Number of total campaign upvotes'});
+          this.statistics.push({'key': 'Total downvotes', 'value': response["downvotes"], 'info': 'Number of total campaign downvotes'});
         }
 				else {
-          this.statistics.push({'key': 'Total ratings', 'value': response["rates"]});
+          this.statistics.push({'key': 'Total ratings', 'value': response["rates"], 'info': 'Number of total campaign ratings'});
         }
 
 				let countData = response["annotation-count-frequency"];

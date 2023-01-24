@@ -1,4 +1,5 @@
 <template>
+  <require from="../../../widgets/tooltip/tooltip"></require>
 	<div>
     <div if.bind="loading" class="campaign">
       <center>
@@ -10,7 +11,10 @@
     <div class="row">
       <div class="col-md-4">
         <div if.bind="!loading" class="row mb-2 font-size-bigger" repeat.for="stat of statistics">
-          <div class="col-md-7 font-weight-bold">
+          <div
+            class="col-md-7 font-weight-bold" title.bind="stat.info"
+            bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="bootstrap tooltip"
+          >
             ${stat.key}:
           </div>
           <div class="col-md-5">
