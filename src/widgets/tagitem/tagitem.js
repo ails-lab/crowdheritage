@@ -67,7 +67,6 @@ export class Tagitem {
 
     this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations() });
     this.handleBodyClick = e => {
-      // console.log(e.target.id);
       if (e.target.id != "annotationInput") {
         this.suggestedAnnotations = {};
         this.suggestionsLoading = false;
@@ -396,7 +395,7 @@ export class Tagitem {
     else {
       let existingAnnotationIndex = this.colorannotations.findIndex(ann => ann.dbId == existingAnnotation.dbId);
       if (!this.colorannotations[existingAnnotationIndex].approvedByMe) {
-        await this.score(existingAnnotation.dbId, 'approved', existingAnnotationIndex, 'color');
+        await this.validate(existingAnnotation.dbId, 'approved', existingAnnotationIndex, existingAnnotation.approvedByMe, existingAnnotation.rejectedByMe, 'color', null);
       }
     }
 
@@ -495,10 +494,27 @@ export class Tagitem {
       return;
     }
 
-    if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe))
-      await this.unscore(annoId, annoType, index, mot, tagType);
-    else
-      await this.score(annoId, annoType, index, mot, tagType);
+    if (mot != 'color') {
+      if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe)) {
+        await this.unscore(annoId, annoType, index, mot, tagType);
+      }
+      else {
+        await this.score(annoId, annoType, index, mot, tagType);
+      }
+    }
+    else {
+      let annUri = this.colorannotations[index].uri;
+      this.colorannotations.forEach(async (ann, i) => {
+        if (ann.uri == annUri) {
+          if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe)) {
+            await this.unscore(ann.dbId, annoType, i, mot, tagType);
+          }
+          else {
+            await this.score(ann.dbId, annoType, i, mot, tagType);
+          }
+        }
+      });
+    }
 
     if (mot == 'poll') {
       this.ea.publish('pollAnnotationAdded');
@@ -1054,11 +1070,11 @@ export class Tagitem {
               response[i].body.label.en = ["grey"];
               response[i].body.label.default = ["grey"];
             }
-            if (!this.userServices.current) {
-              this.colorannotations.push(new Annotation(response[i], "", this.loc));
-            } else {
-              this.colorannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
-            }
+            let userId = this.userServices.current ? this.userServices.current.dbId : "";
+            let newAnn = new Annotation(response[i], userId, this.loc);
+            let existingAnn = this.colorannotations.find(ann => ann.uri == newAnn.uri);
+            newAnn.isDuplicate = !!existingAnn;
+            this.colorannotations.push(newAnn);
           }
         }
       });
