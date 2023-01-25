@@ -5,7 +5,7 @@
     <!-- info-->
     <div class="show-more-parent">
       <ul class="meta show-more-target row">
-        <li class="col-sm-6" if.bind="campaign.username!='music-citizen' && record.description">
+        <li class="meta-description col-12" if.bind="campaign.username!='music-citizen' && record.description">
           <div class="lbl" t="item:description">DESCRIPTION</div>
           <div class="val" innerHtml.bind="record.description"></div>
         </li>
@@ -13,15 +13,13 @@
           <div class="lbl" t="item:creator">CREATOR</div>
           <div innerHtml.bind="record.creator" class="val"></div>
         </li>
-        <div class="col-sm-6" repeat.for="dcfield of record.dcfields">
-          <li if.bind="dcfield.label=='rights'">
-            <div class="lbl" t="item:rights-stat">RIGHTS STATEMENT</div>
-						<a if.bind="record.rightsImage" href.bind="record.rights" target="_blank">
-							<img src.bind="record.rightsImage" style="background-color : grey; padding: 5px"/>
-						</a>
-						<div if.bind="!record.rightsImage" class="val"><a href.bind="record.rights" target="_blank">${dcfield.value[0]}</a></div>
-          </li>
-        </div>
+        <li repeat.for="dcfield of record.dcfields" if.bind="dcfield.label=='rights'" class="col-sm-6">
+          <div class="lbl" t="item:rights-stat">RIGHTS STATEMENT</div>
+          <a if.bind="record.rightsImage" href.bind="record.rights" target="_blank">
+            <img src.bind="record.rightsImage" style="background-color : grey; padding: 5px"/>
+          </a>
+          <div if.bind="!record.rightsImage" class="val"><a href.bind="record.rights" target="_blank">${dcfield.value[0]}</a></div>
+        </li>
         <li class="col-sm-6" if.bind="record.dataProvider">
           <div class="lbl" t="item:content-prov">CONTENT PROVIDER</div>
           <div class="val">${record.dataProvider}</div>

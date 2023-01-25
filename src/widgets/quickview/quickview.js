@@ -44,6 +44,7 @@ export class quickview {
     this.userId = '';
     this.imageErrorCounter = 0;
     this.noImageStyle = '';
+    this.extLink = null;
 
     this.mediaDiv = '';
   }
@@ -85,6 +86,7 @@ export class quickview {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
+    this.extLink = this.externalLink()
 		//Load Campaign
 		if (!this.edit) {
       if (params.campaign) {
@@ -144,7 +146,7 @@ export class quickview {
     // Only render placeholder when all sources fail
     if (this.mediaRenderAttempts == this.mediaUrlArray.length) {
       this.mediaRenderAttempts = 0;
-      this.mediaDiv = `<p class="mt-5 mx-4">The media source is unplayable. You can visit the original item <a href="${this.externalLink()}" target="_blank">here</a>.</p>`;
+      this.mediaDiv = `<p class="mt-5 mx-4">The media source is unplayable. You can visit the original item <a href="${this.extLink}" target="_blank">here</a>.</p>`;
     }
   }
 
@@ -204,7 +206,6 @@ export class quickview {
 	}
 
   closeTab() {
-    this.mediaUrlArray = [];
     let mediaPlayer = document.getElementById("mediaplayer");
     if (mediaPlayer) {
       mediaPlayer.pause();

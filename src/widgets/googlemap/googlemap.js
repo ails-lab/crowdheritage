@@ -19,7 +19,7 @@ import mapsapi from 'google-maps-api';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 
-@inject(mapsapi('AIzaSyD4SpqL2DlfdiKJquVUmPnxPqFu56hChK8'),EventAggregator)
+@inject(mapsapi(process.env.GOOGLE_MAPS_API_KEY),EventAggregator)
 
 export class Googlemap {
 

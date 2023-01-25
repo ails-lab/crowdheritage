@@ -23,9 +23,15 @@
       <!-- taglist-->
 			<div class="show-more-parent">
       <ul class="colorBlock taglist color show-more-target">
-        <li repeat.for="ann of colorannotations">
+        <li repeat.for="ann of colorannotations" class.bind="ann.isDuplicate ? 'd-none' : ''">
           <div class="thumbs" style.bind="getStyle(ann)"></div>
           <div class="selected" innerhtml.bind="ann.label"></div>
+          <div
+            class="cg-indicator" if.bind="ann.createdBy[0].externalCreatorId"
+            bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="Computer-Generated"
+          >
+            CG
+          </div>
           <ul class="action">
             <li class="publish-btn" if.bind="isCurrentUserCreator()">
 							<a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
