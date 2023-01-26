@@ -498,6 +498,15 @@ export class Tagitem {
       if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe)) {
         await this.unscore(annoId, annoType, index, mot, tagType);
       }
+      else if(((annoType == 'approved') && rejectedByMe) || ((annoType == 'rejected') && approvedByMe)){
+        let oppositeType = 'approved';
+        if(annoType == 'approved'){
+          oppositeType = 'rejected'
+        }
+
+        await this.unscore(annoId, oppositeType, index, mot, tagType);
+        await this.score(annoId, annoType, index, mot, tagType);
+      }
       else {
         await this.score(annoId, annoType, index, mot, tagType);
       }
