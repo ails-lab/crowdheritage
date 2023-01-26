@@ -28,7 +28,7 @@
           <div class="selected" innerhtml.bind="ann.label"></div>
           <div
             class="cg-indicator" if.bind="ann.createdBy[0].externalCreatorId"
-            bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="Computer-Generated"
+            bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="Computer-Generated: ${ann.cgCreators}"
           >
             CG
           </div>
