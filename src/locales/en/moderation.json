@@ -1,6 +1,18 @@
 {
-  "campaignModeration": "CAMPAIGN MODERATION",
-  "statistics": "Statistics",
-  "validation": "Validation",
-  "dataExport": "Data Export"
+  "campaignModeration" : "CAMPAIGN MODERATION",
+  "statistics" : "Statistics",
+  "validation" : "Validation",
+  "dataExport" : "Data Export",
+  "collection-statistics" : "Statistics per Collection",
+  "total" : "TOTAL",
+  "collection-name" : "Collection Name",
+  "items" : "Items",
+  "total-annotations" : "Total Annotations",
+  "software-annotations" : "Software Annotations",
+  "human-annotations" : "Human Annotations",
+  "software-feedback-rate" : "Software Annotations with Feedback",
+  "total-feedback" : "Total Feedback",
+  "total-upvotes" : "Total Upvotes",
+  "total-downvotes" : "Total Downvotes",
+  "total-ratings" : "Total Ratings"
 }
