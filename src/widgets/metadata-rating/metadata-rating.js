@@ -203,6 +203,7 @@ export class MetadataRating {
         this.itemRatedByMe = true;
         this.initializeRatings();
 				if (!this.annotation.ratedByMe) {
+          this.annotation.ratedByMe = this.itemRatedByMe
 					this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'rated');
 					if (!this.itemRatedByMe) {
 						this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records');
