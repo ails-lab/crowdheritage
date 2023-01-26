@@ -33,14 +33,52 @@
       </div>
     </div>
 
-    <div class="row my-5">
-      <div if.bind="!isRatingCampaign" class="col-md-12">
+    <div if.bind="collectionStatistics.length" class="row my-5">
+      <h3 t="moderation:collection-statistics" class="text-center"></h3>
+      <div class="col-md-12">
+        <table class="collections-statistics-table">
+          <tr>
+            <th t="moderation:collection-name"></th>
+            <th t="moderation:items"></th>
+            <th t="moderation:total-annotations"></th>
+            <th t="moderation:human-annotations"></th>
+            <th t="moderation:software-annotations"></th>
+            <th t="moderation:software-feedback-rate"></th>
+            <th t="moderation:total-feedback" if.bind="!isRatingCampaign"></th>
+            <th t="moderation:total-upvotes" if.bind="!isRatingCampaign"></th>
+            <th t="moderation:total-downvotes" if.bind="!isRatingCampaign"></th>
+            <th t="moderation:total-ratings" if.bind="isRatingCampaign"></th>
+          </tr>
+          <tr repeat.for="statObj of collectionStatistics">
+            <td>${statObj.collectionName}</td>
+            <td>${statObj.collectionItemCount}</td>
+            <td>${statObj.collectionAnnotationsCount}</td>
+            <td>${statObj.collectionHumanAnnotationsCount}</td>
+            <td>${statObj.collectionSoftwareAnnotationsCount}</td>
+            <td>${statObj.softwareCollectionAnnotationsContributionPercentage}%</td>
+            <td if.bind="!isRatingCampaign">${statObj.collectionTotalContributions}</td>
+            <td if.bind="!isRatingCampaign">${statObj.collectionUpvotes}</td>
+            <td if.bind="!isRatingCampaign">${statObj.collectionDownvotes}</td>
+            <td if.bind="isRatingCampaign">${statObj.collectionRatings}</td>
+          </tr>
+          <tr class="total-row">
+            <td t="moderation:total"></td>
+            <td repeat.for="stat of bulkStatistics">
+              ${stat.value}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div if.bind="!isRatingCampaign" class="row my-5">
+      <div class="col-md-12">
         <canvas id="dateChart" height="300" />
       </div>
     </div>
 
-    <div class="row">
-      <div if.bind="!isRatingCampaign" class="col-md-12">
+    <div if.bind="!isRatingCampaign" class="row">
+      <div class="col-md-12">
         <canvas id="countChart" height="300" />
       </div>
     </div>

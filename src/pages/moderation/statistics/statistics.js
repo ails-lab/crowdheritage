@@ -34,6 +34,7 @@ export class Statistics {
     this.isRatingCampaign = false;
 		this.loading = false;
 		this.statistics = [];
+    this.collectionStatistics = [];
 		this.countChartData = {
 			labels: [],
 			datasets: [{
@@ -63,6 +64,15 @@ export class Statistics {
 	  return color;
 	}
 
+  get bulkStatistics() {
+    if (this.statistics.length) {
+      return this.statistics.slice(3, this.statistics.length);
+    }
+    else {
+      return [];
+    }
+  }
+
 	getPercentage(a, b) {
 		return (100 * a / b).toFixed(2);
 	}
@@ -85,14 +95,16 @@ export class Statistics {
 				this.statistics.push({'key': 'Total annotations', 'value': response["annotations-total"], 'info': 'Total number of campaign annotations'});
         this.statistics.push({'key': 'Human annotations', 'value': response["annotations-human"], 'info': 'Number of user-generated campaign annotations'});
         this.statistics.push({'key': 'Software annotations', 'value': response["annotations-software"], 'info': 'Number of existing software-generated campaign annotations'});
-        this.statistics.push({'key': 'Software annotations feedback rate', 'value': 100*response["softwareAnnotationsContributionPercentage"]+'%', 'info': 'Percentage of the software generated annotations that have at least one contribution'});
+        this.statistics.push({'key': 'Software annotations with feedback', 'value': response["softwareAnnotationsContributionPercentage"]+'%', 'info': 'Percentage of the software generated annotations that have at least one contribution'});
         if (!this.isRatingCampaign) {
+          this.statistics.push({'key': 'Total feedback', 'value': response["upvotes"] + response["downvotes"], 'info': 'Number of total campaign upvotes + downvotes'});
           this.statistics.push({'key': 'Total upvotes', 'value': response["upvotes"], 'info': 'Number of total campaign upvotes'});
           this.statistics.push({'key': 'Total downvotes', 'value': response["downvotes"], 'info': 'Number of total campaign downvotes'});
         }
 				else {
           this.statistics.push({'key': 'Total ratings', 'value': response["rates"], 'info': 'Number of total campaign ratings'});
         }
+        this.collectionStatistics = response["collectionStatistics"];
 
 				let countData = response["annotation-count-frequency"];
 				for (const key in countData) {
