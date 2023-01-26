@@ -1072,8 +1072,13 @@ export class Tagitem {
             }
             let userId = this.userServices.current ? this.userServices.current.dbId : "";
             let newAnn = new Annotation(response[i], userId, this.loc);
+            newAnn.cgCreators = newAnn.createdBy[0].externalCreatorName
             let existingAnn = this.colorannotations.find(ann => ann.uri == newAnn.uri);
             newAnn.isDuplicate = !!existingAnn;
+            if(newAnn.isDuplicate){
+              existingAnn.cgCreators += ', ' + newAnn.cgCreators;
+              newAnn.cgCreators = existingAnn.cgCreators;
+            }
             this.colorannotations.push(newAnn);
           }
         }
