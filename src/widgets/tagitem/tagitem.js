@@ -498,6 +498,15 @@ export class Tagitem {
       if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe)) {
         await this.unscore(annoId, annoType, index, mot, tagType);
       }
+      else if(((annoType == 'approved') && rejectedByMe) || ((annoType == 'rejected') && approvedByMe)){
+        let oppositeType = 'approved';
+        if(annoType == 'approved'){
+          oppositeType = 'rejected'
+        }
+
+        await this.unscore(annoId, oppositeType, index, mot, tagType);
+        await this.score(annoId, annoType, index, mot, tagType);
+      }
       else {
         await this.score(annoId, annoType, index, mot, tagType);
       }
@@ -508,6 +517,15 @@ export class Tagitem {
         if (ann.uri == annUri) {
           if (((annoType == 'approved') && approvedByMe) || ((annoType == 'rejected') && rejectedByMe)) {
             await this.unscore(ann.dbId, annoType, i, mot, tagType);
+          }
+          else if(((annoType == 'approved') && rejectedByMe) || ((annoType == 'rejected') && approvedByMe)){
+            let oppositeType = 'approved';
+            if(annoType == 'approved'){
+              oppositeType = 'rejected'
+            }
+            
+            await this.unscore(ann.dbId, oppositeType, i, mot, tagType);
+            await this.score(ann.dbId, annoType, i, mot, tagType);
           }
           else {
             await this.score(ann.dbId, annoType, i, mot, tagType);
@@ -1072,8 +1090,13 @@ export class Tagitem {
             }
             let userId = this.userServices.current ? this.userServices.current.dbId : "";
             let newAnn = new Annotation(response[i], userId, this.loc);
+            newAnn.cgCreators = `<li>${newAnn.createdBy[0].externalCreatorName}</li>`;
             let existingAnn = this.colorannotations.find(ann => ann.uri == newAnn.uri);
             newAnn.isDuplicate = !!existingAnn;
+            if (newAnn.isDuplicate) {
+              existingAnn.cgCreators += newAnn.cgCreators;
+              newAnn.cgCreators = existingAnn.cgCreators;
+            }
             this.colorannotations.push(newAnn);
           }
         }

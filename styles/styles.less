@@ -1369,7 +1369,7 @@ body main section.campaignstats .right {
 
   .show-more-target {
     position: relative;
-    overflow-y: hidden;
+    overflow: visible;
     transition: all 300ms ease;
     padding-left: 30px !important;
     margin-left: -30px !important;
@@ -2839,7 +2839,7 @@ body main section.tagging .right .tag-item .colorbox,
 body main section.tagging .right .tag-user-item .colorbox,
 body main section.tagging .right .tag-geo .colorbox,
 body main section.tagging .right .tag-color .colorbox {
-  background-color: @main-color;
+  background-color: #5C8C8C;
   margin-top: 20px;
   padding: 20px;
   position: relative;
@@ -2864,9 +2864,46 @@ ux-dialog-container.active {
   overflow: auto;
 }
 
-#statisticsPopup {
-  height: calc(100vh - 160px);
-  width: calc(100vw - 100px);
+.collections-statistics-table {
+  margin-top:8px;
+  margin-bottom: 2px;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  th.narrow-column,
+  td.narrow-column {
+    width: 1rem;
+  }
+  td {
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    padding: 3px 12px 3px 12px;
+    p.error-code {
+      margin-bottom: 4px;
+      width: max-content;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+  tr.total-row td {
+    font-weight: bold;
+    border-top: 2px solid gray;
+  }
+  th {
+    border: 1px solid #aaaaaa;
+    padding: 3px 12px 3px 12px;
+    font-family: "Dosis";
+    color: @main-color;
+    font-size: 18px;
+    text-align: center;
+  }
+  tr:nth-child(even) {
+    background-color: #eeeeee;
+  }
 }
 
 #ratingsPopup {
@@ -6617,6 +6654,12 @@ a:hover .social-button.facebook {
 
   .tooltip-inner {
     background-color: @main-color;
+    ol {
+      padding-left: 12px;
+      li::marker {
+        font-weight: bold;
+      }
+    }
   }
 }
 
