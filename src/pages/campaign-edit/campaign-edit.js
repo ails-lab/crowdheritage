@@ -185,8 +185,13 @@ export class CampaignEdit {
   }
 
   addCollection(col) {
-    this.selectedCollections.push(col);
     this.hideSuggestions('col');
+    for (let collection of this.selectedCollections) {
+      if (collection.id == col.id) {
+        return;
+      }
+    }
+    this.selectedCollections.push(col);
   }
 
   removeCollection(index) {
