@@ -3,8 +3,8 @@
     <!-- label-->
     <div class="heading" t="item:meta">ITEM METADATA</div>
     <!-- info-->
-    <div class="show-more-parent">
-      <ul class="meta show-more-target row">
+    <div>
+      <ul class="meta row">
         <li class="meta-description col-12" if.bind="campaign.username!='music-citizen' && record.description">
           <div class="lbl" t="item:description">DESCRIPTION</div>
           <div class="val" innerHtml.bind="record.description"></div>
@@ -28,7 +28,7 @@
           <div class="val" t="[prepend]item:see-it"><a href.bind="record.source_uri" target="_blank" t="item:europeana">Europeana</a></div>
         </li>
       </ul>
-      <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>
+      <!-- <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i> -->
     </div>
     <!-- more-->
     <!-- <div class="loadmore"><a href="#">LOAD MORE</a></div> -->
