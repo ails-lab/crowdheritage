@@ -445,6 +445,9 @@ export class Record {
     if (this.fullres) {
       this.checkFullress();
     }
+    if(!this.thumbnail) {
+      this.thumbnail = this.myfullimg;
+    }
   }
   checkFullress() {
     let self1 = this;
