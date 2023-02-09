@@ -1,0 +1,18 @@
+{
+  "campaignModeration" : "ΔΙΑΧΕΙΡΗΣΗ ΚΑΜΠΑΝΙΑΣ",
+  "statistics" : "ΣΤΑΤΙΣΤΙΚΑ",
+  "validation" : "ΕΠΙΚΥΡΩΣΗ",
+  "dataExport" : "ΕΞΑΓΩΓΗ ΔΕΔΟΜΕΝΩΝ",
+  "collection-statistics" : "Στατιστικά Συλλογής",
+  "total" : "ΣΥΝΟΛΟ",
+  "collection-name" : "Όνομα Συλλογής",
+  "items" : "Αντικείμενα",
+  "total-annotations" : "Συνολικες Επισημάνσεις",
+  "software-annotations" : "Επισημάνσεις Λογισμικού",
+  "human-annotations" : "Επισημάνσεις Ανθρώπων",
+  "software-feedback-rate" : "Επισημάνσεις Λογισμικού με Ανατροφοδότηση απο χρήστη", 
+  "total-feedback" : "Συνολικο επισημάνσεων με Ανατροφοδότηση",
+  "total-upvotes" : "Σύνολο Upvotes",
+  "total-downvotes" : "Σύνολο Downvotes",
+  "total-ratings" : "Συνολο Ratings"
+}
