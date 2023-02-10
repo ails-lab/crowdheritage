@@ -61,6 +61,7 @@ export class App {
   }
 
   activate() {
+    document.documentElement.setAttribute("lang", this.locale);
 		if (this.userServices.isAuthenticated() && this.userServices.current === null) {
 			return Promise.all([
 				this.userServices.reloadCurrentUser()
