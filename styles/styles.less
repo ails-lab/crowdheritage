@@ -1936,21 +1936,24 @@ body main section.learnmore:after {
 body main section.learnmore .container {
   width: 100%;
   padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
 }
 
-body main section.learnmore .left {
-  float: left;
-  width: 50%;
+body main section.learnmore .container::before {
+  display: none;
+}
+
+body main section.learnmore .container::after {
+  display: none;
 }
 
 body main section.learnmore .left img {
   width: 100%;
+  height: 90%;
 }
 
-body main section.learnmore .right {
-  float: left;
-  width: 50%;
-}
 
 body main section.learnmore .right .desc {
   width: 585px;
@@ -2037,6 +2040,14 @@ body main section.learnmore .right .register .wrap .text a.regbtn:hover {
   background-color: #fff;
   color: @main-color;
   border-color: #fff;
+}
+
+body main section.learnmore .social-menu {
+  display: flex;
+  gap: 1rem;
+  float: right;
+  position: relative;
+  top: -25px;
 }
 
 body main section.userprofile,
@@ -4001,6 +4012,7 @@ body footer .container .right li a:hover {
 
   body main section.learnmore .container {
     width: 750px;
+    grid-template-columns: 3fr 1fr;
   }
 
   body main section.learnmore .right .desc {
@@ -6568,9 +6580,6 @@ a .social-button {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  width: 176px;
-  height: 30px;
-  padding-right: 12px;
   color: #fff;
   font-family: "Arial", sans-serif;
   font-size: 13px;
@@ -6601,28 +6610,19 @@ a .social-button.twitter:before {
   display: inline-block;
   font-family: "Genericons";
   content: "\f202";
-  width: 34px;
-  height: 30px;
   font-size: 16px;
   font-size: 1.6rem;
-  padding-left: 10px;
-  margin-right: 12px;
-  background-color: #0085be;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -moz-border-radius-topleft: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  padding: 0 10px;
+  background-color: #00a9f1;
+  border-radius: 4px;
 }
 
-a:hover .social-button.twitter {
+a:hover .social-button.twitter:before {
   background-color: #0085be;
 }
 
 a .social-button.facebook {
   background-color: #4267B2;
-  width: 112px;
 }
 
 a .social-button.facebook .text {
@@ -6636,22 +6636,14 @@ a .social-button.facebook:before {
   display: inline-block;
   font-family: "Genericons";
   content: "\f204";
-  width: 34px;
-  height: 30px;
   font-size: 16px;
   font-size: 1.6rem;
-  padding-left: 9px;
-  margin-right: 12px;
-  background-color: #2F426F;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -moz-border-radius-topleft: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  padding: 0 10px;
+  background-color: #4267B2;
+  border-radius: 4px;
 }
 
-a:hover .social-button.facebook {
+a:hover .social-button.facebook::before {
   background-color: #2F426F;
 }
 
