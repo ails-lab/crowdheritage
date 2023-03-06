@@ -157,11 +157,11 @@ export class quickview {
   }
 
   getCreator(ann) {
-    return ann.createdBy[0].username;
+    return ann.createdBy[0].username || ann.createdBy[0].externalCreatorName;
   }
 
-  isComputerGenerated(ann) {
-    if (ann.createdBy[0].generator == "Image Analysis")
+  computerGeneratedBool(ann) {
+    if (ann.createdBy[0].externalCreatorName.length)
       return true;
     else
       return false;

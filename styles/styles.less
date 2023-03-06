@@ -3727,6 +3727,7 @@ body main section.tagging .right .tag-item .taglist.color > li .selected,
 body main section.tagging .right .tag-user-item .taglist.color > li .selected,
 body main section.tagging .right .tag-geo .taglist.color > li .selected,
 body main section.tagging .right .tag-color .taglist.color > li .selected {
+  position: relative;
   float: left;
   padding: 13px 0 0 15px;
   -webkit-transition: all 0.3s;
@@ -6522,6 +6523,12 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
   left: 0;
   top: -30px;
   margin-left: -60px;
+}
+
+.selected .tooltiptext.absolute {
+  position: absolute;
+  top: -110px;
+  margin-left: 0;
 }
 
 .text .tooltiptext::after,
