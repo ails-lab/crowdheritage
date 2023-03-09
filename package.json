@@ -146,7 +146,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "engines": {
-    "node": "^16",
+    "node": "^16.19.1",
     "npm": "^8"
   }
 }
