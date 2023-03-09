@@ -50,7 +50,6 @@
     }
   },
   "dependencies": {
-    "@hapi/cryptiles": "^6.0.1",
     "aurelia-animator-velocity": "^1.2.0",
     "aurelia-authentication": "^3.8.3",
     "aurelia-bootstrapper": "^2.4.0",
@@ -87,7 +86,6 @@
     "html-minifier": "^4.0.0",
     "html-minifier-loader": "^1.4.1",
     "i18next": "^22.4.10",
-    "i18next-http-backend": "^2.1.1",
     "i18next-xhr-backend": "^3.2.2",
     "imagesloaded": "^5.0.0",
     "imports-loader": "^4.0.1",
@@ -98,7 +96,6 @@
     "less-loader": "^5.0.0",
     "less-plugin-clean-css": "^1.5.1",
     "masonry-layout": "^4.2.2",
-    "meow": "^11.0.0",
     "numeral": "^2.0.6",
     "postcss-loader": "^7.0.2",
     "raw-loader": "^4.0.2",
@@ -106,8 +103,6 @@
     "webpack": "^4.32.2"
   },
   "devDependencies": {
-    "@types/i18next": "^12.1.0",
-    "@types/i18next-xhr-backend": "^1.4.2",
     "@webpack-cli/serve": "^2.0.1",
     "aurelia-protractor-plugin": "^1.0.6",
     "aurelia-tools": "^1.0.0",
@@ -149,5 +144,9 @@
     "wait-on": "^2.1.0",
     "webpack-cli": "^4.4.0",
     "webpack-dev-server": "^4.11.1"
+  },
+  "engines": {
+    "node": "^16",
+    "npm": "^8"
   }
 }
