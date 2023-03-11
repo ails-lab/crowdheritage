@@ -158,4 +158,14 @@ export class CampaignIndex {
       }
   }
 
+  goToCampaign(campaign) {
+    let campaignPage = this.router.routes.find(x => x.name === 'summary');
+    campaignPage.campaignData = campaign;
+    let params = {
+      cname: campaign.username,
+      lang: this.currentLocaleCode
+    };
+    this.router.navigateToRoute('summary', params);
+  }
+
 }

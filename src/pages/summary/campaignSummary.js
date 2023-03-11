@@ -104,26 +104,30 @@ export class CampaignSummary {
     $('.accountmenu').removeClass('active');
   }
 
-  activate(params, route) {
+  async activate(params, route) {
     if (this.i18n.getLocale() != this.locale) {
       this.i18n.setLocale(this.locale);
     }
     this.resetInstance();
-    this.campaignServices.getCampaignByName(params.cname)
-      .then( (result) => {
-        // Based on the selected language, set the campaign
-        this.campaign = new Campaign(result, this.loc);
-
-        this.getUserPoints();
-        if (this.userServices.isAuthenticated()) {
-          this.getUserRank(this.userServices.current.dbId);
-        }
-        route.navModel.setTitle(this.campaign.title);
-        this.collectionsCount = this.campaign.targetCollections.length;
-        this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
-        this.getUserStats();
-        this.isCreator = this.isAuthenticated && this.campaign.creators.includes(this.user.dbId);
-    });
+    if (route.campaignData) {
+      // Shallow copy the campaign data
+      this.campaign = Object.assign({}, route.campaignData);
+      // Clean up campaignData to avoid having stale route data
+      route.campaignData = null;
+    }
+    else {
+      let campaignRawData = await this.campaignServices.getCampaignByName(params.cname);
+      this.campaign = new Campaign(campaignRawData, this.loc);
+    }
+    this.getUserPoints();
+    if (this.userServices.isAuthenticated()) {
+      this.getUserRank(this.userServices.current.dbId);
+    }
+    route.navModel.setTitle(this.campaign.title);
+    this.collectionsCount = this.campaign.targetCollections.length;
+    this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
+    this.getUserStats();
+    this.isCreator = this.isAuthenticated && this.campaign.creators.includes(this.user.dbId);
   }
 
   getUserStats() {
@@ -150,12 +154,6 @@ export class CampaignSummary {
 
 
       }
-
-      // // Old badge awards based on points, now obsolete
-      // if (this.userPoints < this.campaign.badges.bronze) {
-      // else if (this.userPoints < this.campaign.badges.silver) {
-      // else if (this.userPoints < this.campaign.badges.gold) {
-      // else {
 
       // New badge awards based on RANK
       if (this.userRank == '1') {
@@ -224,61 +222,6 @@ export class CampaignSummary {
 				}
 			});
     this.loading = false;
-  }
-
-  goToItem(camp, col, records, offset) {
-    let item = this.router.routes.find(x => x.name === 'item');
-    item.campaign = camp;
-    item.offset = offset;
-    this.records=[];
-    // Get 2 random records to start annotating
-    if (col == 0) {
-      this.loading = true;
-      this.recordServices.getRandomRecordsFromCollections(this.campaign.targetCollections, 2)
-        .then(response => {
-          if (response.length>0) {
-            for (let i in response) {
-              let result = response[i];
-              if (result !== null) {
-                let record = new Record(result);
-                this.records.push(record);
-              }
-            }
-            this.loading = false;
-            item.collection = 0;
-            item.records = this.records;
-            this.router.navigateToRoute('item', {lang: this.loc, cname: camp.username, recid: this.records[0].dbId});
-          }
-          })
-        .catch(error => {
-          this.loading = false;
-          console.error(error.message);
-        });
-    }
-
-    // Get the first 2 records from the given collection
-    else {
-      this.loading = true;
-      this.collectionServices.getRecords(col.dbId, 0, 2)
-        .then(response => {
-          if (response.records.length>0) {
-            for (let i in response.records) {
-              let result = response.records[i];
-              if (result !== null) {
-                let record = new Record(result);
-                this.records.push(record);
-              }
-            }
-            this.loading = false;
-            item.collection = col;
-            item.records = this.records;
-            this.router.navigateToRoute('item', {cname: camp.username, recid: this.records[0].dbId});
-          }
-        }).catch(error => {
-          this.loading = false;
-          console.error(error.message);
-        });
-    }
   }
 
   loadMore() {
