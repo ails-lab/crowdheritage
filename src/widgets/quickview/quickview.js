@@ -157,11 +157,17 @@ export class quickview {
   }
 
   getCreator(ann) {
-    return ann.createdBy[0].username || ann.createdBy[0].externalCreatorName;
+    if (ann.createdBy[0].externalCreatorName) {
+      return ann.createdBy[0].externalCreatorName;
+    }
+    else {
+      // TODO: When username or name info is added here, replace the withCreator
+      return ann.createdBy[0].withCreator;
+    }
   }
 
   computerGeneratedBool(ann) {
-    if (ann.createdBy[0].externalCreatorName.length)
+    if (ann.createdBy[0].externalCreatorName && ann.createdBy[0].externalCreatorName.length)
       return true;
     else
       return false;

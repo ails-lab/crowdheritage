@@ -10,9 +10,13 @@
           <div class="thumbs" style.bind="getStyle(ann)"></div>
           <div class="selected">
             <span style.bind="isCreatedBy(ann) ? 'color: #00ac83;' : ''">${ann.label}</span>
-            <span class="cg-label" title="Computer-generated annotation" if.bind="computerGeneratedBool(ann)">(CG)</span>
-            <span class="tooltiptext absolute">Created By : <b style="color: white;">${getCreator(ann)}</b></span>
+            <span class="tooltiptext absolute">
+              Created by:
+              <br/>
+              <b style="color: white;">${getCreator(ann)}</b>
+            </span>
           </div>
+          <span class="cg-label" title="Computer-generated annotation" if.bind="computerGeneratedBool(ann)">CG</span>
           <ul class="action">
             <li class.bind="isValidatedBy(ann, 'approved') ? 'up active' : 'up'" title="Upvotes">
               <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
