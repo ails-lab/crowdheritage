@@ -3476,6 +3476,7 @@ body main section.tagging .right .tag-item .taglist > li .text,
 body main section.tagging .right .tag-user-item .taglist > li .text,
 body main section.tagging .right .tag-geo .taglist > li .text,
 body main section.tagging .right .tag-color .taglist > li .text {
+  position: relative;
   width: 60%;
   float: left;
 }
@@ -3727,6 +3728,7 @@ body main section.tagging .right .tag-item .taglist.color > li .selected,
 body main section.tagging .right .tag-user-item .taglist.color > li .selected,
 body main section.tagging .right .tag-geo .taglist.color > li .selected,
 body main section.tagging .right .tag-color .taglist.color > li .selected {
+  position: relative;
   float: left;
   padding: 13px 0 0 15px;
   -webkit-transition: all 0.3s;
@@ -6477,10 +6479,12 @@ body main section.tagging .cntr .tag-color .taglist::before {
 body main section.tagging .cntr .tag-item .taglist > li .cg-label,
 body main section.tagging .cntr .tag-user-item .taglist > li .cg-label,
 body main section.tagging .cntr .tag-color .taglist > li .cg-label {
+  display: inline-flex;
   color: @main-color;
-  margin-left: 10px;
+  margin-left: 12px;
   cursor: default;
-  // font-weight: bold;
+  font-size: 12px;
+  font-weight: bold;
 }
 body main section.tagging .cntr .tag-item .taglist > li .up .count,
 body main section.tagging .cntr .tag-user-item .taglist > li .up .count,
@@ -6522,6 +6526,13 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
   left: 0;
   top: -30px;
   margin-left: -60px;
+}
+
+.tooltiptext.absolute {
+  position: absolute;
+  top: -60px;
+  min-width: 200px;
+  margin-left: 0;
 }
 
 .text .tooltiptext::after,
