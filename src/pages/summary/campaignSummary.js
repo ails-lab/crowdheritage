@@ -141,20 +141,17 @@ export class CampaignSummary {
         this.userRatings = this.campaign.userPoints[id].rated;
         this.userPoints = this.userTags + this.userUpvotes + this.userDownvotes + this.userRatings;
         if (this.campaign.userPoints[id].created != null && this.campaign.userPoints[id].karmaPoints != null){
-          if (this.campaign.userPoints[id].created > 0){
+          if (this.campaign.userPoints[id].created > 0) {
             this.userKarma = Math.round( (1 - (this.campaign.userPoints[id].karmaPoints/this.campaign.userPoints[id].created)) * 100);
           }
-          else{
+          else {
             this.userKarma = 100;
           }
         }
-        else{
+        else {
           this.userKarma = 100;
         }
-
-
       }
-
       // New badge awards based on RANK
       if (this.userRank == '1') {
         this.userBadge = '/img/badge-gold.png';
@@ -235,6 +232,17 @@ export class CampaignSummary {
     else {
       $('.sort').addClass('open');
     }
+  }
+
+  goToCollection(collection) {
+    let collectionPage = this.router.routes.find(x => x.name === 'collection');
+    collectionPage.campaignData = this.campaign;
+    let params = {
+      cname: this.campaign.username,
+      colid: collection.dbId,
+      lang: this.loc
+    };
+    this.router.navigateToRoute('collection', params);
   }
 
 }
