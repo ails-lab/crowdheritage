@@ -71,4 +71,10 @@ export class Moderation {
   tabChanged(tab) {
     this.router.navigateToRoute('moderation', {lang: this.locale, cname: this.cname, resource: tab});
   }
+
+  returnToCampaign() {
+    let summary = this.router.routes.find(x => x.name === 'summary');
+    summary.campaign = this.campaign;
+    this.router.navigateToRoute('summary', {cname: this.campaign.username, lang: this.loc});
+  }
 }
