@@ -1,0 +1,17 @@
+<template>
+  <ai-dialog id="cookiesPopup">
+    <button type="button" class="close" click.trigger="controller.cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <img src="/img/assets/img/cookies.png" />
+    <h2 t="app:cookies-modal-title">
+      This site uses cookies!
+    </h2>
+    <p>
+      <span t="app:cookies-modal-text1">Session cookies are necessary to contribute to the platform.</span>
+      <br/>
+      <span t="app:cookies-modal-text2">By logging in, you agree to the use of cookies, in accordance with the</span>
+      <a route-href="route: privacy; params.bind: {lang: locale}" target="_blank" rel="noopener noreferrer" t="app:cookies-modal-text3">Personal Data Protection Policy</a>.
+    </p>
+  </ai-dialog>
+</template>

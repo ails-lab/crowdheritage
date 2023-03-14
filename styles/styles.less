@@ -4949,7 +4949,8 @@ button.email:hover:enabled {
   background-image: linear-gradient(#cc3334, #bb2d2d);
 }
 
-#loginPopup {
+#loginPopup,
+#cookiesPopup {
   z-index: 4;
   box-sizing: border-box;
   max-width: 570px;
@@ -4957,6 +4958,28 @@ button.email:hover:enabled {
   width: 570px;
   height: 220px;
   text-align: center;
+}
+
+#cookiesPopup {
+  width: unset;
+  img {
+    width: 200px;
+    margin-top: 32px;
+  }
+  p {
+    padding: 0 40px 10px;
+  }
+  a {
+    cursor: pointer;
+  }
+  .close {
+    font-size: 32px;
+    position: relative;
+    top: -8px;
+    right: 16px;
+    width: 0;
+    height: 0;
+  }
 }
 
 #loginPopup .emailLogin,
