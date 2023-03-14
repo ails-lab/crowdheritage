@@ -108,11 +108,19 @@ export class App {
 		}).then((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');
+        this.cookiesPopup();
 			} else {
 				console.log('Login cancelled');
 			}
 		});
 	}
+  
+  cookiesPopup(){
+    this.dialogService.open({
+      viewModel: PLATFORM.moduleName('widgets/cookiesDialog/cookiesDialog')
+    })
+  }
+
   pageLocales() {
     return [
       { title: "English",     code: "en", flag: "/img/assets/images/flags/en.png" },

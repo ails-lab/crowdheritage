@@ -65,11 +65,18 @@ export class NavBar {
 		}).whenClosed((response) => {
 			if (!response.wasCancelled) {
 				console.log('NYI - Login User');
+        this.cookiesPopup();
 			} else {
 				console.log('Login cancelled');
 			}
 		});
 	}
+
+  cookiesPopup(){
+    this.dialogService.open({
+      viewModel: PLATFORM.moduleName('widgets/cookiesDialog/cookiesDialog')
+    })
+  }
 
   toggleNavMenu() {
     if ($('#accountmenu').hasClass('active')) {
