@@ -72,6 +72,8 @@ const cssRules = [
 
 const aureliaModules = Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'));
 
+process.noDeprecation = true;
+
 module.exports = ({production, server, extractCss, coverage} = {}) => ({
 
   entry: {
@@ -98,12 +100,13 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
 
   devServer: {
     historyApiFallback: true,
-    stats: 'errors-only',
+    //stats: 'errors-only',
     open: true,
-    inline:true,
     port: 8080,
-    staticOptions: {
-     redirect: false
+    static: {
+     staticOptions: {
+      redirect: false
+     }
     }
   },
 
@@ -138,8 +141,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       baseUrl: baseUrl,
       ENV: JSON.stringify(ENV),
       inject: true,
-      sourceMap: true,
-      chunksSortMode: 'dependency'
+      sourceMap: true
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
@@ -157,7 +159,9 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         }
       }
     }),
-    new CopyWebpackPlugin([
+    new CopyWebpackPlugin(
+      { 
+        patterns:[
       { from: 'src/locales/', to: 'locales/' }, // Multilinguality
       { from: 'img', to: 'img' },
       { from: 'js', to: 'js' },
@@ -166,7 +170,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       { from: 'node_modules/please-wait', to: 'node_modules/please-wait' },
       { from: 'node_modules/spinkit', to: 'node_modules/spinkit' }
       */
-    ]),
+    ]}),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
       allChunks: true,

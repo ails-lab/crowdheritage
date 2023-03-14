@@ -38,7 +38,7 @@
           <p innerHtml.bind="collection.description[loc] && collection.description[loc][0] !== 0 ? collection.description[loc][0] : collection.description.default[0]" />
         </div>
     		<compose view-model="widgets/multiple-items/multiple-items"
-    						 model.bind="{'cname': cname, 'collection': collection, 'router': router, 'lang': loc}">
+    						 model.bind="{'cname': cname, 'collection': collection, 'campaign': campaign, 'router': router, 'lang': loc}">
     		</compose>
     	</div>
     </section>

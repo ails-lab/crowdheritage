@@ -75,37 +75,6 @@ export class ItemDataView {
       return alt;
   }
 
-  toggleFullscreen(){
-    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-    (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-    (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-    (document.msFullscreenElement && document.msFullscreenElement !== null);
-
-    var docElm = document.documentElement;
-    if (!isInFullScreen) {
-      if (docElm.requestFullscreen) {
-        docElm.requestFullscreen();
-      } else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen();
-      } else if (docElm.webkitRequestFullScreen) {
-        docElm.webkitRequestFullScreen();
-      } else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen();
-      }
-      screen.orientation.lock("landscape");
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    }
-  }
-
   likeRecord() {
     document.body.style.cursor = 'wait';
     if (this.isLiked) {
@@ -138,34 +107,6 @@ export class ItemDataView {
           document.body.style.cursor = 'default';
         });
     }
-  }
-
-  previousItem() {
-    // clear previous media
-    this.mediaDiv = '';
-	  let item = this.router.routes.find(x => x.name === 'item');
-	  item.campaign = this.campaign;
-		item.collection = this.collection;
-	  item.records = this.records;
-    item.previous = this.previous;
-    this.records.unshift(this.record);
-	  this.records.unshift(this.previous.shift());
-    item.records = this.records;
-		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
-	}
-
-  nextItem() {
-    // clear previous media
-    this.mediaDiv = '';
-	  let item = this.router.routes.find(x => x.name === 'item');
-	  item.campaign = this.campaign;
-		item.collection = this.collection;
-    this.previous.unshift(this.record);
-    item.previous = this.previous;
-	  item.records = this.records;
-		item.offset = this.offset + 1;
-	  this.router.navigateToRoute('item', {cname: this.campaign.username, recid: this.records[0].dbId, lang: this.loc});
   }
 
   checkURL(url) {

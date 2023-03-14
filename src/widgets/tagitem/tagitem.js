@@ -126,6 +126,10 @@ export class Tagitem {
     await this.getRecordAnnotations(this.recId);
   }
 
+  toggleLoadMore(className) {
+    toggleMore(className);
+  }
+
   async reloadAnnotations() {
     this.tagTypes.forEach(type => {
       this.annotations[type] = [];

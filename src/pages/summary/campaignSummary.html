@@ -174,12 +174,9 @@
         <div class="campaignlist">
           <!-- entry-->
           <div class="entries row" ref="grid" >
-            <!-- item-->
-            <!-- entry-->
-
             <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
               <!-- wrap-->
-							<a route-href="route: collection; params.bind: { cname: campaign.username, colid: col.dbId, lang: loc }">
+							<a click.delegate="goToCollection(col)">
 								<!-- thumb-->
 								<div class="thumbs">
 									<div class="thumbs-images thumbs-count-${col.absMedia.length}">
@@ -198,9 +195,9 @@
                   <div class="desc">
                     <div class="title">${col.title[loc] ? col.title[loc] : col.title.default}</div>
                   </div>
-                </div></a>
+                </div>
+              </a>
             </div>
-
           </div>
           <!-- more-->
           <div class="loadmore">

@@ -48,13 +48,6 @@
         </div>
         <!-- right-->
         <div class="right">
-          <!-- <div class="fullscreen-button">
-            <div class="wrap">
-              <a href="javascript:void(0)" click.delegate="toggleFullscreen()"><span class="exit" t="item:exit">Exit
-                </span><span t="item:fullscreen">Fullscreen</span> <i class="fa fa-arrows-alt"
-                  aria-hidden="true"></i></a>
-            </div>
-          </div> -->
           <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"
             model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'Tagging'}">
           </compose>
@@ -71,17 +64,6 @@
             if.bind="hasMotivation('Polling')"
             model.bind="{'campaign': campaign, 'recId': recId, 'colTitle': collectionTitle, 'motivation': 'Polling'}">
           </compose>
-          <!-- <div class="wrap next-item-alternative-link">
-            <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)" click.delegate="previousItem()"
-              t="item:previous-item">PREVIOUS ITEM</a>
-            <a class="next" href="javascript:void(0)" click.delegate="nextItem()" t="item:next-item">NEXT ITEM</a>
-          </div> -->
-          <div class="fullscreen-navigation">
-            <a if.bind="previous.length!=0" class="previous" href="javascript:void(0)"
-              click.delegate="previousItem()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-            <a class="next" href="javascript:void(0)" click.delegate="nextItem()"><i class="fa fa-arrow-right"
-                aria-hidden="true"></i></a>
-          </div>
         </div>
       </div>
     </div>
