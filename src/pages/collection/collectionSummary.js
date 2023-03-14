@@ -56,18 +56,20 @@ export class CollectionSummary {
 	async activate(params, route) {
     this.loc = params.lang;
 		this.i18n.setLocale(params.lang);
-
 		this.cname = params.cname;
-    this.campaignServices.getCampaignByName(params.cname)
-      .then(result => {
-        // Based on the selected language, set the campaign
-        this.campaign = new Campaign(result, this.loc);
-      });
-
+    if (route.campaignData) {
+      // Shallow copy the campaign data
+      this.campaign = Object.assign({}, route.campaignData);
+      // Clean up campaignData to avoid having stale route data
+      route.campaignData = null;
+    }
+    else {
+      let campaignRawData = await this.campaignServices.getCampaignByName(params.cname);
+      this.campaign = new Campaign(campaignRawData, this.loc);
+    }
 		this.collectionId = params.colid;
 		let collectionData = await this.collectionServices.getCollection(this.collectionId);
 		this.collection = new Collection(collectionData);
-
     let title = this.collection.title[this.loc] && this.collection.title[this.loc][0] !== 0 ? this.collection.title[this.loc][0] : this.collection.title.default[0];
     route.navModel.setTitle('Collection | ' + title);
 	}

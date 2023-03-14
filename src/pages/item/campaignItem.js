@@ -83,7 +83,7 @@ export class CampaignItem {
     }
   }
 
-  async activate(params, routeData, routeConfig) {
+  async activate(params, routeData) {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
@@ -96,7 +96,10 @@ export class CampaignItem {
 
 		//Load Campaign
     if (routeData.campaign) {
-      this.campaign = routeData.campaign;
+      // Shallow copy the campaign-data
+      this.campaign = Object.assign({}, routeData.campaign);
+      // Clean up campaign-data to avoid having stale route data
+      routeData.campaign = null;
     }
     else {
   		this.loadCamp = true;
@@ -113,7 +116,10 @@ export class CampaignItem {
 
 		// Load Collection
 		if (routeData.collection) {
-			this.collection = routeData.collection;
+      // Shallow copy the collection-data
+      this.collection = Object.assign({}, routeData.collection);
+      // Clean up collection-data to avoid having stale route data
+      routeData.collection = null;
 		}
     else {
       let collectionData = await this.collectionServices.getCollection(this.collectionId);
@@ -123,7 +129,10 @@ export class CampaignItem {
 
     // Load RecordIds
     if (routeData.recordIds) {
-      this.recordIds = routeData.recordIds;
+      // Shallow copy the recordIds-data
+      this.recordIds = Object.assign([], routeData.recordIds);
+      // Clean up recordIds-data to avoid having stale route data
+      routeData.recordIds = null;
     }
     else {
       let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, this.sortByContributionCount, params.cname);
@@ -131,12 +140,17 @@ export class CampaignItem {
     }
     this.collectionCount = this.recordIds.length;
     this.recordIndex = (routeData.recordIndex) ? routeData.recordIndex : this.recordIds.indexOf(this.recId);
+    // Clean up recordIndex-data to avoid having stale route data
+    routeData.recordIndex = null;
     this.isFirstItem = this.recordIndex == 0;
     this.isLastItem = this.recordIds[this.recordIds.length - 1] == this.recId;
 
     // Load Record
     if (routeData.record) {
-      this.record = routeData.record;
+      // Shallow copy the record-data
+      this.record = Object.assign({}, routeData.record);
+      // Clean up record-data to avoid having stale route data
+      routeData.record = null;
     }
     else {
       this.loadRec = true;
@@ -161,8 +175,6 @@ export class CampaignItem {
     item.recordIds = this.recordIds;
     item.recordIndex = index;
     item.record = null;
-    item.filterBy = this.filterBy;
-    item.sortBy = this.sortByContributionCount;
 
     let params = {
       cname: this.campaign.username,
