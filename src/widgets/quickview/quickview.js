@@ -157,11 +157,17 @@ export class quickview {
   }
 
   getCreator(ann) {
-    return ann.createdBy[0].username;
+    if (ann.createdBy[0].externalCreatorName) {
+      return ann.createdBy[0].externalCreatorName;
+    }
+    else {
+      // TODO: When username or name info is added here, replace the withCreator
+      return ann.createdBy[0].withCreator;
+    }
   }
 
-  isComputerGenerated(ann) {
-    if (ann.createdBy[0].generator == "Image Analysis")
+  computerGeneratedBool(ann) {
+    if (ann.createdBy[0].externalCreatorName && ann.createdBy[0].externalCreatorName.length)
       return true;
     else
       return false;

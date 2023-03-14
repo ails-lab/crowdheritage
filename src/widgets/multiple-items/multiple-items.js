@@ -50,7 +50,7 @@ export class MultipleItems {
     this.loc;
     this.project = settings.project;
     this.collectionEdit = false;
-    this.campaign = '';
+    this.campaign = null;
     this.cname = '';
     this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
     this.sortBy = "contributions-count";
@@ -65,7 +65,7 @@ export class MultipleItems {
     this.records = [];
     this.collection = null;
     this.user = null;
-    this.campaign = '';
+    this.campaign = null;
     this.cname = '';
     this.loading = false;
     this.totalCount = 0;
@@ -139,13 +139,14 @@ export class MultipleItems {
     this.sortBy = "contributions-count";
   }
 
-  async activate(params, route) {
+  async activate(params) {
     this.resetInstance();
     this.hiddenCount = 0;
     this.loc = params.lang;
     this.i18n.setLocale(params.lang);
     this.cname = params.cname;
     this.router = params.router;
+    this.campaign = params.campaign || null;
     if (params.collectionEdit) {
       this.state = "all-items";
       this.collectionEdit = params.collectionEdit
@@ -160,7 +161,6 @@ export class MultipleItems {
       this.user = params.user;
       this.totalCount = params.totalCount;
     }
-
     if (params.records && this.records.length == 0) {
       this.loading = true;
       this.fillRecordArray(params.records);
@@ -173,12 +173,11 @@ export class MultipleItems {
 
   goToItem(record) {
     let item = this.router.routes.find(x => x.name === 'item');
+    item.campaign = this.campaign;
     item.collection = this.collection;
     item.recordIds = this.recordIds;
     item.record = record;
     item.recordIndex = this.records.indexOf(record);
-    item.filterBy = this.filterBy;
-    item.sortBy = this.sortBy;
     let params = {
       cname: this.cname,
       collectionId: this.collection.dbId,

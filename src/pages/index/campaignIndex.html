@@ -102,7 +102,7 @@
             <div class="thumbs">
               <!-- wrap-->
               <!-- Active campaigns-->
-              <a route-href="route: summary; params.bind: {cname: camp.username, lang: currentLocaleCode}">
+              <a click.delegate="goToCampaign(camp)">
                 <img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
                 <div class="action" t="[append]index:opencampaign"><span class="plus">+ </span></div>
@@ -112,12 +112,11 @@
             <div class="details">
               <!-- title-->
               <!-- Active campaigns-->
-              <a route-href="route: summary; params.bind: {cname: camp.username, lang: currentLocaleCode}">
+              <a click.delegate="goToCampaign(camp)">
                 <h1 if.bind="camp.status == 'active'">${camp.title} <img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"></h1>
                 <h1 if.bind="camp.status == 'inactive'">${camp.title} <img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
                 <h1 if.bind="camp.status == 'upcoming'">${camp.title} <img width="20px" align="right" title="Upcoming Campaign" src="/img/status-upcoming.png"></h1>
               </a>
-
               <!-- desc-->
               <p innerHtml.bind="camp.description"></p>
               <!-- progress-->

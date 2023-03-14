@@ -17,7 +17,7 @@ Crowdheritage is an open crowdsourcing platform with the aim to mobilise users t
 
 ## Getting started
 
-Before you start, make sure you have a recent version of [NodeJS](http://nodejs.org/) environment *>=4.0* with NPM 3.
+Before you start, make sure you have a recent version of [NodeJS](http://nodejs.org/) environment "^16.19.1", with NPM ^8.
 
 From the project folder, execute the following commands:
 
