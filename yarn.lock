@@ -7558,9 +7558,9 @@ promise@^6.0.1:
   dependencies:
     asap "~1.0.0"
 
-protractor@^5.3.2:
+protractor@^5.4.4:
   version "5.4.4"
-  resolved "https://registry.npmjs.org/protractor/-/protractor-5.4.4.tgz"
+  resolved "https://registry.yarnpkg.com/protractor/-/protractor-5.4.4.tgz#b241466aaf83b76bc2c58df67deb9a5cdfc61529"
   integrity sha512-BaL4vePgu3Vfa/whvTUAlgaCAId4uNSGxIFSCXMgj7LMYENPWLp85h5RBi9pdpX/bWQ8SF6flP7afmi2TC4eHw==
   dependencies:
     "@types/q" "^0.0.32"
