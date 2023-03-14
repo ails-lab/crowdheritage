@@ -71,5 +71,10 @@
   "footer-sign"         : "Sign in on the Platform and begin!",
   "footer-register"     : "Register now",
   "cancel"              : "Cancel",
-  "reset"               : "Reset"
+  "reset"               : "Reset",
+
+  "cookies-modal-title" : "This site uses cookies!",
+  "cookies-modal-text1" : "Session cookies are necessary to contribute to the platform.",
+  "cookies-modal-text2" : "By logging in, you agree to the use of cookies, in accordance with the",
+  "cookies-modal-text3" : "Personal Data Protection Policy"
 }

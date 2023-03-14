@@ -1,4 +1,3 @@
-
 import { inject, LogManager } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { Router } from 'aurelia-router';

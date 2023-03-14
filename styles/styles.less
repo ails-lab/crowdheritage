@@ -4960,14 +4960,26 @@ button.email:hover:enabled {
   text-align: center;
 }
 
-#cookiesPopup h2 {
-  margin-top: -40px;
-}
-#cookiesPopup p {
-  padding: 0 40px 10px;
-}
-#cookiesPopup a {
-  cursor: pointer;
+#cookiesPopup {
+  width: unset;
+  img {
+    width: 200px;
+    margin-top: 32px;
+  }
+  p {
+    padding: 0 40px 10px;
+  }
+  a {
+    cursor: pointer;
+  }
+  .close {
+    font-size: 32px;
+    position: relative;
+    top: -8px;
+    right: 16px;
+    width: 0;
+    height: 0;
+  }
 }
 
 #loginPopup .emailLogin,

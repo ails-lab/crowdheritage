@@ -115,10 +115,11 @@ export class App {
 		});
 	}
   
-  cookiesPopup(){
+  cookiesPopup() {
     this.dialogService.open({
-      viewModel: PLATFORM.moduleName('widgets/cookiesDialog/cookiesDialog')
-    })
+      viewModel: PLATFORM.moduleName('widgets/cookiesDialog/cookiesDialog'),
+      overlayDismiss: false
+    });
   }
 
   pageLocales() {
