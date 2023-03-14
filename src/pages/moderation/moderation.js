@@ -40,12 +40,20 @@ export class Moderation {
     $('.accountmenu').removeClass('active');
   }
 
-  async activate(params) {
+  async activate(params, route) {
     this.cname = params.cname;
 
     if (!this.campaign) {
-      let campaignData = await this.campaignServices.getCampaignByName(this.cname);
-      this.campaign = new Campaign(campaignData, this.loc);
+      if (route.campaignData) {
+        // Shallow copy the campaign data
+        this.campaign = Object.assign({}, route.campaignData);
+        // Clean up campaignData to avoid having stale route data
+        route.campaignData = null;
+      }
+      else {
+        let campaignRawData = await this.campaignServices.getCampaignByName(params.cname);
+        this.campaign = new Campaign(campaignRawData, this.loc);
+      }
     }
 
     let isCreator = this.userServices.isAuthenticated() && this.campaign.creators.includes(this.userServices.current.dbId);
@@ -70,11 +78,5 @@ export class Moderation {
 
   tabChanged(tab) {
     this.router.navigateToRoute('moderation', {lang: this.locale, cname: this.cname, resource: tab});
-  }
-
-  returnToCampaign() {
-    let summary = this.router.routes.find(x => x.name === 'summary');
-    summary.campaign = this.campaign;
-    this.router.navigateToRoute('summary', {cname: this.campaign.username, lang: this.loc});
   }
 }

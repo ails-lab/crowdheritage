@@ -15,12 +15,14 @@
         </div>
         <nav class="vertical">
           <ul>
-            <!-- Random records -->
             <li>
-              <a href="javascript:void(0)" click.delegate="returnToCampaign()" t="[prepend]app:return-campaign"><img
-                  src="/img/ic-arrow-right-black.png" class="space"></a>
+              <a
+                t="[prepend]app:return-campaign"
+                route-href="route: summary; params.bind: { cname: campaign.username, lang: loc }"
+              >
+                <img src="/img/ic-arrow-right-black.png">
+              </a>
             </li>
-            
           </ul>
         </nav>
         <div class="bgwrap"></div>

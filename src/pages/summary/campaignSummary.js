@@ -226,6 +226,17 @@ export class CampaignSummary {
     this.loading = false;
   }
 
+  goToModerationPage() {
+    let moderationPage = this.router.routes.find(x => x.name === 'moderation');
+    moderationPage.campaignData = this.campaign;
+    let params = {
+      resource: 'statistics',
+      cname: this.campaign.username,
+      lang: this.loc
+    };
+    this.router.navigateToRoute('moderation', params);
+  }
+
   goToItem(camp, col, records, offset) {
     let item = this.router.routes.find(x => x.name === 'item');
     item.campaign = camp;

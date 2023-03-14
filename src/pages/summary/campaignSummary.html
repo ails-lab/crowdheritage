@@ -155,7 +155,7 @@
           </div>
           <!-- contribute-->
           <div class="contribute">
-            <a if.bind="isCreator" route-href="route: moderation; params.bind: { resource: 'statistics', cname: campaign.username, lang: loc }">MODERATE CAMPAIGN</a>
+            <a if.bind="isCreator" t="summary:moderate-campaign" click.delegate="goToModerationPage()">MODERATE CAMPAIGN</a>
           </div>
         </div>
       </div>
