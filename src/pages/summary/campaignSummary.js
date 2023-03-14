@@ -221,6 +221,17 @@ export class CampaignSummary {
     this.loading = false;
   }
 
+  goToModerationPage() {
+    let moderationPage = this.router.routes.find(x => x.name === 'moderation');
+    moderationPage.campaignData = this.campaign;
+    let params = {
+      resource: 'statistics',
+      cname: this.campaign.username,
+      lang: this.loc
+    };
+    this.router.navigateToRoute('moderation', params);
+  }
+
   loadMore() {
     this.getCampaignCollections(this.campaign.targetCollections, this.currentCount, this.count);
   }
