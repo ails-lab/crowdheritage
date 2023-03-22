@@ -48,12 +48,12 @@ export class Metadata {
               this.date = content[i]['edm:year'];
             }
             if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
-              this.formatUri = content[i]['dc:format'][0]['@id'];
-              this.format = content[i]['dc:format'][1]['@value'].split(' ')[1];
+              this.formatUri = content[i]['dc:format'][0] ? content[i]['dc:format'][0]['@id'] : '';
+              this.format = content[i]['dc:format'][1] && content[i]['dc:format'][1]['@value'] ? content[i]['dc:format'][1]['@value'].split(' ')[1] : '';
             }
             if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
-              this.mediumUri = content[i]['dcterms:medium'][1]['@id'];
-              this.medium = content[i]['dcterms:medium'][0]['@value'].split(' ')[1];
+              this.mediumUri = content[i]['dcterms:medium'][1] ? content[i]['dcterms:medium'][1]['@id'] : '';
+              this.medium = content[i]['dcterms:medium'][0] && content[i]['dcterms:medium'][0]['@value'] ? content[i]['dcterms:medium'][0]['@value'].split(' ')[1] : '';
             }
           }
         }
@@ -62,7 +62,6 @@ export class Metadata {
     catch (err) {
       console.log(err);
     }
-		// alert(this.record.rights);
 		if (typeof this.record.rights !== 'undefined' && this.record.rights.includes("rightsstatements.org")) {
 			let s = this.record.rights.split("/");
 			this.record.rightsImage = "https://rightsstatements.org/files/buttons/"+s[s.length - 3]+".white.svg";
@@ -78,7 +77,6 @@ export class Metadata {
   }
 
   parseDescription(desc) {
-    // console.log(desc);
     let descList = desc.replace(/\//g, '<br>').split('<br>');
     var response = [];
     for (let line of descList) {
