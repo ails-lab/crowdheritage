@@ -139,16 +139,8 @@ You can also combine both features to separate out plugins or resources for lazy
 
 Please see https://github.com/aurelia/webpack-plugin for more information.
 
-## Running The Unit Tests
-
-To run the unit tests:
-
-```shell
-npm test
-```
 
 ## Acknowledgments
 
 Parts of code responsible for Webpack configuration were inspired by or copied from @AngularClass' [angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter).
 
-Parts of code responsible for Webpack-Electron configuration and packaging were inspired by or copied from @chentsulin's [electron-react-boilerplate](https://github.com/chentsulin/electron-react-boilerplate).
