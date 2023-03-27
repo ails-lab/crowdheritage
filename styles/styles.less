@@ -2997,7 +2997,7 @@ ux-dialog-container.active {
 
 body main section.validation {
   margin: 50px 0px 10px 0px;
-  padding: 0px 50px 0px 50px;
+  padding: 0;
 }
 
 body main section.validation .publish-citeria-btn {
@@ -3070,8 +3070,19 @@ body main section.validation .contribute {
 }
 
 body main section.validation .coloraction {
-  width: 680px;
-  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  .validation-header {
+    display: block;
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+  .validation-input {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
 body main section.validation .searchbox input {
@@ -4259,9 +4270,9 @@ body main section.validation .coloraction {
   .name {
     text-align: center;
     font-weight: bold;
-    // text-shadow: 1px 1px 2px #424242;
+    text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
     font-size: 1.1em;
-    // overflow-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 

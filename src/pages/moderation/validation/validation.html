@@ -23,16 +23,21 @@
       </div>
       <!-- ColorTagging -->
       <div class="coloraction" if.bind="hasMotivation('ColorTagging')">
-        <div>
-          <p>Select a <b>color</b> from the Palette and view all the campaign records that have been annotated with it.
+        <div class="validation-header">
+          <p>
+            Select a <b>color</b> from the Palette and view all the campaign records that have been annotated with it.
           </p>
         </div>
-        <section class="color ${color[0]}" repeat.for="color of colorSet" style.bind="color[1]"
-          click.delegate="selectLabel(color[0], 'upvoted', false)">
-          <h2 class="name" style.bind="color[2]" innerhtml.bind="getColorLabel(color[0])"></h2>
-        </section>
-        <!-- hack for last row elements width -->
-        <li class="width-helper" repeat.for="i of 20"></li>
+        <div class="validation-input">
+          <section
+            repeat.for="color of colorPalette"
+            class="color"
+            style.bind="color.style || 'background:'+color.cssHexCode"
+            click.delegate="selectLabel(getColorLabel(color.label), 'upvoted', false)"
+          >
+            <h2 class="name" innerhtml.bind="getColorLabel(color.label)"></h2>
+          </section>
+        </div>
       </div>
       <!-- Tagging -->
       <div class="searchbox" if.bind="hasMotivation('Tagging')">
