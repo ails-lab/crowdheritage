@@ -2631,6 +2631,151 @@ body main section.tagging .left .img .modal {
   /* Black w/ opacity */
 }
 
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+}
+
+body main section.tagging .modal.comparison-modal {
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+body main section.tagging .modal.comparison-modal .modal-content {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  background-color: transparent;
+  gap: 2rem;
+  height: 90vh;
+  width: 90vw;
+  padding: 0 0 20px;
+  position: relative;
+  top: 15px;
+  box-shadow: none;
+  border: 0;
+}
+
+body main section.tagging .modal.comparison-modal .title {
+  color: white;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  margin: auto;
+}
+
+body main section.tagging .modal.comparison-modal .close-comparison-modal {
+  color: white;
+  position: absolute;
+  top: 75px;
+  right: 20px;
+  font-size: 20px;
+  z-index: 5;
+  cursor: pointer;
+}
+
+body main section.tagging .modal.comparison-modal .prev-btn {
+  position: absolute;
+  left: 25px;
+  top: 50%;
+  border: 0;
+  background-color: transparent;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 7;
+}
+
+body main section.tagging .modal.comparison-modal .next-btn {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  border: 0;
+  background-color: transparent;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 7;
+}
+body main section.tagging .modal.comparison-modal .next-btn .submit-comparison-btn{
+  position: relative;
+  top: -80px;
+  font-size: 16px;
+  border: 0;
+  background-color: #2d4372;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  z-index: 7;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .zoomed-images,
+body main section.tagging .modal.comparison-modal .modal-content .original-image {
+  height: 41vh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  gap: 1rem;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .original-image {
+  grid-template-columns: 1fr auto 1fr;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .zoomed-images {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section {
+  color: white;
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  padding: 50px;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section button {
+  border: 0;
+  background-color:#5C8C8C;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .img-container {
+  height: 41vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .img-container.selected {
+  border: 2px solid yellowgreen;
+}
+
+
+body main section.tagging .modal.comparison-modal .modal-content .img-container .label {
+  padding: 0;
+}
+
+  body main section.tagging .modal.comparison-modal .modal-content .img-container .label h5 {
+  margin: 3px 0 0;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .zoomed-images img ,
+body main section.tagging .modal.comparison-modal .modal-content .original-image img{
+  width: 100%;
+  height: 92.5%;
+  object-fit: contain;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .zoomed-images .img-zoom-result {
+  width: 100%;
+  height: 92.5%;
+  object-fit: contain;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 body main section.tagging .left .img .modal {
   z-index: 3;
 }
