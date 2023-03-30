@@ -6,9 +6,9 @@
     <div class="prev-btn" if.bind="step != 1" click.delegate="prevStep()">
       <i class="fa fa-angle-left"></i>
     </div>
-    <div class="next-btn" if.bind="firstSelected || secondSelected" click.delegate="nextStep()">
-      <i if.bind="step != 6" class="fa fa-angle-right"></i>
-      <button else class="submit-comparison-btn" click.delegate="submitComparison()">Submit</button>
+    <div class="next-btn" if.bind="firstSelected || secondSelected">
+      <!-- <i if.bind="step != 6" class="fa fa-angle-right" click.delegate="nextStep()"></i> -->
+      <button if.bind="step == 6" class="submit-comparison-btn" click.delegate="submitComparison()">Submit</button>
     </div>
     <div class="title">
       <h3>${stepLabel} Comparison - Choose the algorithm with the closest resemblance to the original</h3>
@@ -26,26 +26,32 @@
         </div>
         <div class="explanation-section">
           <p if.bind="!zoomInitiated">Hover over the image to zoom in a specific window</p> 
-          <button else click.delegate="stopZoom()">Stop Zoom</button> 
+          <button else click.delegate="stopZoom()">Stop Zoom</button>
+          <div class="zoom-level-btns">
+            <span>Zoom Level:</span>
+            <button click.delegate="zoomLevelChanged(3)" class.bind="zoomLevel == 3 ? 'selected' : ''"">3x</button>
+            <button click.delegate="zoomLevelChanged(5)" class.bind="zoomLevel == 5 ? 'selected' : ''">5x</button>
+            <button click.delegate="zoomLevelChanged(10)" class.bind="zoomLevel == 10 ? 'selected' : ''">10x</button>
+          </div>
         </div>
       </div>
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''" click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="first-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>First Algorithm</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Zoomed Original</h5>
           </div>
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''" click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens"  id="second-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="second-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Second Algorithm</h5>
@@ -66,26 +72,32 @@
         </div>
         <div class="explanation-section">
           <p if.bind="!zoomInitiated">Hover over the image to zoom in a specific window</p> 
-          <button else click.delegate="stopZoom()">Stop Zoom</button> 
+          <button else click.delegate="stopZoom()">Stop Zoom</button>
+          <div class="zoom-level-btns">
+            <span>Zoom Level:</span>
+            <button click.delegate="zoomLevelChanged(3)" class.bind="zoomLevel == 3 ? 'selected' : ''"">3x</button>
+            <button click.delegate="zoomLevelChanged(5)" class.bind="zoomLevel == 5 ? 'selected' : ''">5x</button>
+            <button click.delegate="zoomLevelChanged(10)" class.bind="zoomLevel == 10 ? 'selected' : ''">10x</button>
+          </div>
         </div>
       </div>
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''" click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="first-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>First Algorithm</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Zoomed Original</h5>
           </div>
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''" click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens"  id="second-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="second-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Second Algorithm</h5>
@@ -106,26 +118,32 @@
         </div>
         <div class="explanation-section">
           <p if.bind="!zoomInitiated">Hover over the image to zoom in a specific window</p> 
-          <button else click.delegate="stopZoom()">Stop Zoom</button> 
+          <button else click.delegate="stopZoom()">Stop Zoom</button>
+          <div class="zoom-level-btns">
+            <span>Zoom Level:</span>
+            <button click.delegate="zoomLevelChanged(3)" class.bind="zoomLevel == 3 ? 'selected' : ''"">3x</button>
+            <button click.delegate="zoomLevelChanged(5)" class.bind="zoomLevel == 5 ? 'selected' : ''">5x</button>
+            <button click.delegate="zoomLevelChanged(10)" class.bind="zoomLevel == 10 ? 'selected' : ''">10x</button>
+          </div>
         </div>
       </div>
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''" click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="first-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>First Algorithm</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Zoomed Original</h5>
           </div>
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''" click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens"  id="second-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="second-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Second Algorithm</h5>
@@ -146,26 +164,32 @@
         </div>
         <div class="explanation-section">
           <p if.bind="!zoomInitiated">Hover over the image to zoom in a specific window</p> 
-          <button else click.delegate="stopZoom()">Stop Zoom</button> 
+          <button else click.delegate="stopZoom()">Stop Zoom</button>
+          <div class="zoom-level-btns">
+            <span>Zoom Level:</span>
+            <button click.delegate="zoomLevelChanged(3)" class.bind="zoomLevel == 3 ? 'selected' : ''"">3x</button>
+            <button click.delegate="zoomLevelChanged(5)" class.bind="zoomLevel == 5 ? 'selected' : ''">5x</button>
+            <button click.delegate="zoomLevelChanged(10)" class.bind="zoomLevel == 10 ? 'selected' : ''">10x</button>
+          </div>
         </div>
       </div>
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''" click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="first-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>First Algorithm</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Zoomed Original</h5>
           </div>
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''" click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens"  id="second-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="second-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Second Algorithm</h5>
@@ -187,25 +211,31 @@
         <div class="explanation-section">
           <p if.bind="!zoomInitiated">Hover over the image to zoom in a specific window</p> 
           <button else click.delegate="stopZoom()">Stop Zoom</button> 
+          <div class="zoom-level-btns">
+            <span>Zoom Level:</span>
+            <button click.delegate="zoomLevelChanged(3)" class.bind="zoomLevel == 3 ? 'selected' : ''"">3x</button>
+            <button click.delegate="zoomLevelChanged(5)" class.bind="zoomLevel == 5 ? 'selected' : ''">5x</button>
+            <button click.delegate="zoomLevelChanged(10)" class.bind="zoomLevel == 10 ? 'selected' : ''">10x</button>
+          </div>
         </div>
       </div>
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''" click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="first-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>First Algorithm</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Zoomed Original</h5>
           </div>
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''" click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens"  id="second-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="second-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Second Algorithm</h5>
@@ -226,26 +256,32 @@
         </div>
         <div class="explanation-section">
           <p if.bind="!zoomInitiated">Hover over the image to zoom in a specific window</p> 
-          <button else click.delegate="stopZoom()">Stop Zoom</button> 
+          <button else click.delegate="stopZoom()">Stop Zoom</button>
+          <div class="zoom-level-btns">
+            <span>Zoom Level:</span>
+            <button click.delegate="zoomLevelChanged(3)" class.bind="zoomLevel == 3 ? 'selected' : ''"">3x</button>
+            <button click.delegate="zoomLevelChanged(5)" class.bind="zoomLevel == 5 ? 'selected' : ''">5x</button>
+            <button click.delegate="zoomLevelChanged(10)" class.bind="zoomLevel == 10 ? 'selected' : ''">10x</button>
+          </div>
         </div>
       </div>
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''" click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="first-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>First Algorithm</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Zoomed Original</h5>
           </div>
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''" click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens"  id="second-algorithm-img" src.bind="getValidImg(record, record.validImg.original)">
           <div else id="second-algorithm-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Second Algorithm</h5>

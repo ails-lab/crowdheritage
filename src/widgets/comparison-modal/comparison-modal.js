@@ -16,13 +16,20 @@ export class ComparisonModal {
     this.firstAlgorithmResult = null;
     this.secondAlgorithmResult = null;
     this.originalImageZoomed = null;
+    this.firstAlgorithmImg = null;
+    this.secondAlgorithmImg = null;
+    this.originalImg = null;
     this.zoomInitiated = false;
     this.firstSelected = false;
     this.secondSelected = false;
     this.submitted = false;
+    this.zoomLevel = 3;
   }
 
   get locale() { return window.location.href.split('/')[3]; }
+
+  activate() {
+  }
 
   get stepLabel() {
     if (this.step == 1) {
@@ -37,7 +44,7 @@ export class ComparisonModal {
     return this.step + 'th';
   }
   closeComparisonModal() {
-    if ((this.firstSelected || this.secondSelected || this.step!= 1) && !this.submitted &&
+    if ((this.firstSelected || this.secondSelected || this.step != 1) && !this.submitted &&
       !confirm('If you close the workspace without completing all the comparisons your progress will be lost. Are you sure you want to proceed?')) return;
     var modal = document.getElementById('comparisonModal');
     var banner = document.getElementById("banner");
@@ -70,20 +77,41 @@ export class ComparisonModal {
     this.step--;
   }
 
+  zoomLevelChanged(zoom) {
+    if (this.lens) {
+      this.stopZoom();
+    }
+    this.zoomLevel = zoom;
+  }
+
+  getZoomWindow(){
+    if (this.comparisonOriginalImage.width > this.comparisonOriginalImage.height) {
+      this.zoomWindow = this.comparisonOriginalImage.height / this.zoomLevel;
+    }
+    else{
+      this.zoomWindow = this.comparisonOriginalImage.width / this.zoomLevel;
+    }
+  }
+
   initiateZoomLens() {
     this.comparisonOriginalImage = document.getElementById('comparison-original-image');
+    this.getZoomWindow();
+
+    this.firstAlgorithmImgHeight = document.getElementById("first-algorithm-img").offsetHeight;
+    this.originalImgHeight = document.getElementById("original-img").offsetHeight;
+    this.secondAlgorithmImgHeight = document.getElementById("second-algorithm-img").offsetHeight;
     /* Create lens: */
     this.lens = document.createElement("DIV");
     this.lens.setAttribute("class", "img-zoom-lens");
     if (this.comparisonOriginalImage.width > this.comparisonOriginalImage.height) {
-      this.lens.style.height = "40px";
+      this.lens.style.height = this.zoomWindow + "px";
       let ratio = this.comparisonOriginalImage.width / this.comparisonOriginalImage.height;
-      this.lens.style.width = (ratio * 40) + "px";
+      this.lens.style.width = (ratio * this.zoomWindow) + "px";
     }
     else {
-      this.lens.style.width = "40px";
+      this.lens.style.width = this.zoomWindow + "px";
       let ratio = this.comparisonOriginalImage.height / this.comparisonOriginalImage.width;
-      this.lens.style.height = (ratio * 40) + "px";
+      this.lens.style.height = (ratio * this.zoomWindow) + "px";
     }
     /* Insert lens: */
     this.comparisonOriginalImage.parentElement.insertBefore(this.lens, this.comparisonOriginalImage);
@@ -117,7 +145,8 @@ export class ComparisonModal {
     this.firstAlgorithmResult = document.getElementById("first-algorithm-zoomed");
     /* Calculate the ratio between this.firstAlgorithmResult DIV and lens: */
     if (this.firstAlgorithmResult) {
-      this.firstAlgorithmResult.style.width = ratio * this.firstAlgorithmResult.offsetHeight + "px";
+      this.firstAlgorithmResult.style.height = this.firstAlgorithmImgHeight + "px";
+      this.firstAlgorithmResult.style.width = ratio * this.firstAlgorithmImgHeight + "px";
       cx = this.firstAlgorithmResult.offsetWidth / this.lens.offsetWidth;
       cy = this.firstAlgorithmResult.offsetHeight / this.lens.offsetHeight;
       /* Set background properties for the this.firstAlgorithmResult DIV */
@@ -128,9 +157,11 @@ export class ComparisonModal {
     }
 
     this.originalImageZoomed = document.getElementById("original-zoomed");
+
     /* Calculate the ratio between this.originalImageZoomed DIV and this.lens: */
     if (this.originalImageZoomed) {
-      this.originalImageZoomed.style.width = ratio * this.originalImageZoomed.offsetHeight + "px";
+      this.originalImageZoomed.style.height = this.originalImgHeight + "px";
+      this.originalImageZoomed.style.width = ratio * this.originalImgHeight + "px";
       cx = this.originalImageZoomed.offsetWidth / this.lens.offsetWidth;
       cy = this.originalImageZoomed.offsetHeight / this.lens.offsetHeight;
       /* Set background properties for the this.originalImageZoomed DIV */
@@ -141,10 +172,11 @@ export class ComparisonModal {
     }
 
     this.secondAlgorithmResult = document.getElementById("second-algorithm-zoomed");
+
     /* Calculate the ratio between this.secondAlgorithmResult DIV and this.lens: */
     if (this.secondAlgorithmResult) {
-
-      this.secondAlgorithmResult.style.width = ratio * this.secondAlgorithmResult.offsetHeight + "px";
+      this.secondAlgorithmResult.style.height = this.secondAlgorithmImgHeight + "px";
+      this.secondAlgorithmResult.style.width = ratio * this.secondAlgorithmImgHeight + "px";
       cx = this.secondAlgorithmResult.offsetWidth / this.lens.offsetWidth;
       cy = this.secondAlgorithmResult.offsetHeight / this.lens.offsetHeight;
       /* Set background properties for the this.secondAlgorithmResult DIV */
@@ -176,21 +208,33 @@ export class ComparisonModal {
     this.firstAlgorithmResult = null;
     this.secondAlgorithmResult = null;
     this.originalImageZoomed = null;
+    this.firstAlgorithmImgHeight = null;
+    this.secondAlgorithmImgHeight = null;
+    this.originalImgHeight = null;
     this.zoomInitiated = false;
   }
 
   firstAlgoSelected() {
     this.firstSelected = true;
     this.secondSelected = false;
+    if(this.step != 6) {
+      setTimeout(() => {
+        this.nextStep();
+      }, 750);
+    }
   }
 
   secondAlgoSelected() {
     this.firstSelected = false;
     this.secondSelected = true;
+    if(this.step != 6) {
+      setTimeout(() => {
+        this.nextStep();
+      }, 750);
+    }
   }
 
   submitComparison() {
-    console.log("GVSGFUBVDFVS")
     this.submitted = true;
     this.closeComparisonModal();
   }

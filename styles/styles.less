@@ -2641,8 +2641,8 @@ body main section.tagging .modal.comparison-modal {
 }
 
 body main section.tagging .modal.comparison-modal .modal-content {
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
+  display: grid !important;
+  grid-template-rows: repeat(2, auto);
   place-items: center;
   background-color: transparent;
   gap: 2rem;
@@ -2710,8 +2710,8 @@ body main section.tagging .modal.comparison-modal .next-btn .submit-comparison-b
 
 body main section.tagging .modal.comparison-modal .modal-content .zoomed-images,
 body main section.tagging .modal.comparison-modal .modal-content .original-image {
-  height: 41vh;
-  width: 100%;
+  max-height: 41vh;
+  max-width: 100%;
   overflow: hidden;
   display: grid;
   gap: 1rem;
@@ -2728,9 +2728,12 @@ body main section.tagging .modal.comparison-modal .modal-content .zoomed-images 
 body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section {
   color: white;
   display: grid;
+  gap: 1rem;
   justify-content: start;
   align-items: center;
   padding: 50px;
+  position: relative;
+  min-width: 340px;
 }
 
 body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section button {
@@ -2738,18 +2741,46 @@ body main section.tagging .modal.comparison-modal .modal-content .original-image
   background-color:#5C8C8C;
   color: white;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 0px 10px;
 }
 
+body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  bottom: 7.5%;
+  left: 50px;
+}
+body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button {
+  background-color: transparent;
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button.selected {
+  background-color: #2d4372;
+}
+
+
 body main section.tagging .modal.comparison-modal .modal-content .img-container {
-  height: 41vh;
-  width: 100%;
+  max-height: 41vh;
+  max-width: 100%;
   overflow: hidden;
   position: relative
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .img-container.selected {
-  border: 2px solid yellowgreen;
+body main section.tagging .modal.comparison-modal .modal-content .img-container.selected::after {
+  content: '\2713';
+  color: white;
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  width: 36px;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  background-color: #005b00;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+
 }
 
 
