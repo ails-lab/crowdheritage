@@ -1,5 +1,5 @@
 <template>
-
+  <require from="../../widgets/tooltip/tooltip"></require>
   <main>
     <!-- banner-->
     <section class="banner">
@@ -102,7 +102,7 @@
             <div class="thumbs">
               <!-- wrap-->
               <!-- Active campaigns-->
-              <a click.delegate="goToCampaign(camp)">
+              <a click.delegate="goToCampaign(camp)" role="button">
                 <img class="centered-and-cropped" src.bind="camp.banner" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
                 <!-- action-->
                 <div class="action" t="[append]index:opencampaign"><span class="plus">+ </span></div>
@@ -112,10 +112,26 @@
             <div class="details">
               <!-- title-->
               <!-- Active campaigns-->
-              <a click.delegate="goToCampaign(camp)">
-                <h1 if.bind="camp.status == 'active'">${camp.title} <img width="20px" align="right" title="Active Campaign" src="/img/status-active.png"></h1>
-                <h1 if.bind="camp.status == 'inactive'">${camp.title} <img width="20px" align="right" title="Inactive Campaign" src="/img/status-inactive.png"></h1>
-                <h1 if.bind="camp.status == 'upcoming'">${camp.title} <img width="20px" align="right" title="Upcoming Campaign" src="/img/status-upcoming.png"></h1>
+              <a>
+                <h1 class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <span click.delegate="goToCampaign(camp)" role="button">
+                      ${camp.title}
+                    </span>
+                    <span
+                      if.bind="camp.userGroupIds && camp.userGroupIds.length"
+                      class="restricted-label" t="app:restricted" title.bind="i18n.tr('app:restricted-disclaimer')"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="bootstrap tooltip"
+                    >
+                      RESTRICTED
+                    </span>
+                  </div>
+                  <img
+                    width="20px" align="right" src.bind=`/img/status-${camp.status}.png`
+                    title.bind="capitalizeFirstLetter(camp.status) + ' campaign'"
+                    bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
+                  >
+                </h1>
               </a>
               <!-- desc-->
               <p innerHtml.bind="camp.description"></p>
