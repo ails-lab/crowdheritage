@@ -39,6 +39,8 @@
   "learnmore"           : "LEARN MORE",
   "private"             : "Private",
   "public"              : "Public",
+  "restricted"          : "RESTRICTED",
+  "restricted-disclaimer": "Only invited users can contribute to this campaign",
   "create"              : "Create",
   "delete"              : "Delete",
   "update"              : "Update",

@@ -6707,13 +6707,17 @@ a:hover .social-button.facebook::before {
   }
 }
 
-
+.tooltip.top .tooltip-arrow {
+  border-top-color: @main-color !important;
+  bottom: 1px !important;
+}
 
 .tooltip.left .tooltip-arrow {
   border-left-color: @main-color  !important;
 }
 .tooltip.right .tooltip-arrow {
   border-right-color: @main-color  !important;
+  left: 1px !important;
 }
 
 .publish-btn {
@@ -7792,3 +7796,13 @@ input.tag-type {
  .toast-top-right {
    top: 83px !important;
  }
+
+.restricted-label {
+  margin-left: 8px;
+  border-radius: 6px;
+  background-color: #ff9966;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+}
