@@ -36,11 +36,11 @@ export class CampaignEdit {
 
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
     this.purposes = ['ANNOTATE', 'VALIDATE'];
     this.orientations = ['DATA', 'METADATA'];
     this.feedbackMethods = ['UPVOTE', 'RATE'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -61,8 +61,8 @@ export class CampaignEdit {
   clearInstance() {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
