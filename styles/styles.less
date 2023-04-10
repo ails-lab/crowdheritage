@@ -2646,7 +2646,7 @@ body main section.tagging .modal.comparison-modal .modal-content {
   place-items: center;
   background-color: transparent;
   gap: 2rem;
-  height: 90vh;
+  height: 88vh !important;
   width: 90vw;
   padding: 0 0 20px;
   position: relative;
@@ -2723,6 +2723,7 @@ body main section.tagging .modal.comparison-modal .modal-content .original-image
 
 body main section.tagging .modal.comparison-modal .modal-content .zoomed-images {
   grid-template-columns: repeat(3, 1fr);
+  max-height: 46vh;
 }
 
 body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section {
@@ -2761,10 +2762,14 @@ body main section.tagging .modal.comparison-modal .modal-content .original-image
 
 
 body main section.tagging .modal.comparison-modal .modal-content .img-container {
-  max-height: 41vh;
+  max-height: 45vh;
   max-width: 100%;
   overflow: hidden;
   position: relative
+}
+
+body main section.tagging .modal.comparison-modal .modal-content .original-image .img-container {
+  max-height: 41vh;
 }
 
 body main section.tagging .modal.comparison-modal .modal-content .img-container.selected::after {

@@ -27,7 +27,7 @@
               error.trigger="getPlaceholderImage($event)" click.delegate="closeModal()">
             </div>
             <compose view-model="widgets/comparison-modal/comparison-modal"
-              model.bind="{'lang': loc}">
+              model.bind="{'lang': loc, 'record': record, 'campaignName': campaign.username}">
             </compose>
             <!-- Here goes the media, besides images -->
             <div id="mediadiv" innerhtml.bind='mediaDiv'></div>

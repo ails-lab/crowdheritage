@@ -1,15 +1,19 @@
 import { inject, LogManager } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
+import { RecordServices } from 'RecordServices.js';
+import { AnnotationServices } from 'AnnotationServices.js';
 
 let logger = LogManager.getLogger('comparison-modal.js');
 
-@inject(Router, I18N)
+@inject(Router, I18N, RecordServices, AnnotationServices)
 export class ComparisonModal {
 
-  constructor(router, i18n) {
+  constructor(router, i18n, recordServices, annotationServices) {
     this.router = router;
     this.i18n = i18n;
+    this.recordServices = recordServices;
+    this.annotationServices = annotationServices;
     this.step = 1;
     this.lens = null;
     this.comparisonOriginalImage = null;
@@ -24,11 +28,30 @@ export class ComparisonModal {
     this.secondSelected = false;
     this.submitted = false;
     this.zoomLevel = 3;
+    this.record = null;
+    this.campaignName = '';
+    this.algoWinnerArr = [];
   }
 
   get locale() { return window.location.href.split('/')[3]; }
 
-  activate() {
+  zeros (m, n) {
+    return [...Array(m)].map(e => Array(n).fill(0));
+  }
+
+  activate(params) {
+    this.record = params.record;
+    this.campaignName = params.campaignName;
+    this.algoWinnerArr = this.zeros(4, 4);
+
+
+    this.recordServices.getAnnotations(this.record.dbId, 'ImageTagging', 'CrowdHeritage ' + this.campaignName).then(response => {
+      this.firstAlgo = response[0]
+      this.secondAlgo = response[1]
+      this.thirdAlgo = response[2]
+      this.fourthAlgo = response[3]
+    })
+
   }
 
   get stepLabel() {
@@ -43,39 +66,6 @@ export class ComparisonModal {
     }
     return this.step + 'th';
   }
-  closeComparisonModal() {
-    if ((this.firstSelected || this.secondSelected || this.step != 1) && !this.submitted &&
-      !confirm('If you close the workspace without completing all the comparisons your progress will be lost. Are you sure you want to proceed?')) return;
-    var modal = document.getElementById('comparisonModal');
-    var banner = document.getElementById("banner");
-    banner.style.display = "block";
-    modal.style.display = "none";
-    if (this.lens) {
-      this.stopZoom();
-    }
-    this.step = 1;
-    this.firstSelected = false;
-    this.secondSelected = false;
-    this.submitted = false;
-  }
-
-  nextStep() {
-    if (this.lens) {
-      this.stopZoom();
-    }
-    this.firstSelected = false;
-    this.secondSelected = false;
-    this.step++;
-  }
-
-  prevStep() {
-    if (this.lens) {
-      this.stopZoom();
-    }
-    this.firstSelected = false;
-    this.secondSelected = false;
-    this.step--;
-  }
 
   zoomLevelChanged(zoom) {
     if (this.lens) {
@@ -84,11 +74,11 @@ export class ComparisonModal {
     this.zoomLevel = zoom;
   }
 
-  getZoomWindow(){
+  getZoomWindow() {
     if (this.comparisonOriginalImage.width > this.comparisonOriginalImage.height) {
       this.zoomWindow = this.comparisonOriginalImage.height / this.zoomLevel;
     }
-    else{
+    else {
       this.zoomWindow = this.comparisonOriginalImage.width / this.zoomLevel;
     }
   }
@@ -150,7 +140,7 @@ export class ComparisonModal {
       cx = this.firstAlgorithmResult.offsetWidth / this.lens.offsetWidth;
       cy = this.firstAlgorithmResult.offsetHeight / this.lens.offsetHeight;
       /* Set background properties for the this.firstAlgorithmResult DIV */
-      this.firstAlgorithmResult.style.backgroundImage = "url('" + this.comparisonOriginalImage.src + "')";
+      this.firstAlgorithmResult.style.backgroundImage = "url('" + this.firstAlgorithmResult.dataset.source + "')";
       this.firstAlgorithmResult.style.backgroundSize = (this.comparisonOriginalImage.width * cx) + "px " + (this.comparisonOriginalImage.height * cy) + "px";
       /* Display what the this.lens "sees": */
       this.firstAlgorithmResult.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
@@ -180,7 +170,7 @@ export class ComparisonModal {
       cx = this.secondAlgorithmResult.offsetWidth / this.lens.offsetWidth;
       cy = this.secondAlgorithmResult.offsetHeight / this.lens.offsetHeight;
       /* Set background properties for the this.secondAlgorithmResult DIV */
-      this.secondAlgorithmResult.style.backgroundImage = "url('" + this.comparisonOriginalImage.src + "')";
+      this.secondAlgorithmResult.style.backgroundImage = "url('" + this.secondAlgorithmResult.dataset.source + "')";
       this.secondAlgorithmResult.style.backgroundSize = (this.comparisonOriginalImage.width * cx) + "px " + (this.comparisonOriginalImage.height * cy) + "px";
       /* Display what the this.lens "sees": */
       this.secondAlgorithmResult.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
@@ -217,7 +207,8 @@ export class ComparisonModal {
   firstAlgoSelected() {
     this.firstSelected = true;
     this.secondSelected = false;
-    if(this.step != 6) {
+    this.awardWinner(this.step, 1);
+    if (this.step != 6) {
       setTimeout(() => {
         this.nextStep();
       }, 750);
@@ -227,16 +218,173 @@ export class ComparisonModal {
   secondAlgoSelected() {
     this.firstSelected = false;
     this.secondSelected = true;
-    if(this.step != 6) {
+    this.awardWinner(this.step, 2);
+    if (this.step != 6) {
       setTimeout(() => {
         this.nextStep();
       }, 750);
     }
   }
 
+  awardWinner(step, winner) {
+    if (step == 1) {
+      if (winner == 1 && this.algoWinnerArr[0][1] == 0) {
+        this.algoWinnerArr[0][1]++;
+        this.algoWinnerArr[1][0] = 0;
+      }
+      else if (this.algoWinnerArr[1][0] == 0) {
+        this.algoWinnerArr[1][0]++;
+        this.algoWinnerArr[0][1] = 0;
+      }
+    }
+    else if (step == 2) {
+      if (winner == 1 && this.algoWinnerArr[0][2] == 0) {
+        this.algoWinnerArr[0][2]++;
+        this.algoWinnerArr[2][0] = 0;
+      }
+      else if (this.algoWinnerArr[2][0] == 0) {
+        this.algoWinnerArr[2][0]++;
+        this.algoWinnerArr[0][2] = 0;
+      }
+    }
+    else if (step == 3) {
+      if (winner == 1 && this.algoWinnerArr[0][3] == 0) {
+        this.algoWinnerArr[0][3]++;
+        this.algoWinnerArr[3][0] = 0;
+      }
+      else if (this.algoWinnerArr[3][0] == 0) {
+        this.algoWinnerArr[3][0]++;
+        this.algoWinnerArr[0][3] = 0;
+      }
+    }
+    else if (step == 4) {
+      if (winner == 1 && this.algoWinnerArr[1][2] == 0) {
+        this.algoWinnerArr[1][2]++;
+        this.algoWinnerArr[2][1] = 0;
+      }
+      else if (this.algoWinnerArr[2][1] == 0) {
+        this.algoWinnerArr[2][1]++;
+        this.algoWinnerArr[1][2] = 0;
+      }
+    }
+    else if (step == 5) {
+      if (winner == 1 && this.algoWinnerArr[1][3] == 0) {
+        this.algoWinnerArr[1][3]++;
+        this.algoWinnerArr[3][1] = 0;
+      }
+      else if (this.algoWinnerArr[3][1] == 0) {
+        this.algoWinnerArr[3][1]++;
+        this.algoWinnerArr[1][3] = 0;
+      }
+    }
+    else if (step == 6) {
+      if (winner == 1 && this.algoWinnerArr[2][3] == 0) {
+        this.algoWinnerArr[2][3]++;
+        this.algoWinnerArr[3][2] = 0;
+      }
+      else if (this.algoWinnerArr[3][2] == 0) {
+        this.algoWinnerArr[3][2]++;
+        this.algoWinnerArr[2][3] = 0;
+      }
+    }
+  }
+
+  checkForWinner(step) {
+    this.firstSelected = false;
+    this.secondSelected = false;
+    if (step == 1) {
+      if (this.algoWinnerArr[0][1] == 1) {
+        this.firstSelected = true;
+      }
+      else if (this.algoWinnerArr[1][0] == 1) {
+        this.secondSelected = true;
+      }
+    }
+    if (step == 2) {
+      if (this.algoWinnerArr[0][2] == 1) {
+        this.firstSelected = true;
+      }
+      else if (this.algoWinnerArr[2][0] == 1) {
+        this.secondSelected = true;
+      }
+    }
+    if (step == 3) {
+      if (this.algoWinnerArr[0][3] == 1) {
+        this.firstSelected = true;
+      }
+      else if (this.algoWinnerArr[3][0] == 1) {
+        this.secondSelected = true;
+      }
+    }
+    if (step == 4) {
+      if (this.algoWinnerArr[1][2] == 1) {
+        this.firstSelected = true;
+      }
+      else if (this.algoWinnerArr[2][1] == 1) {
+        this.secondSelected = true;
+      }
+    }
+    if (step == 5) {
+      if (this.algoWinnerArr[1][3] == 1) {
+        this.firstSelected = true;
+      }
+      else if (this.algoWinnerArr[3][1] == 1) {
+        this.secondSelected = true;
+      }
+    }
+  }
+  nextStep() {
+    if (this.lens) {
+      this.stopZoom();
+    }
+    this.step++;
+    this.checkForWinner(this.step);
+  }
+
+  prevStep() {
+    if (this.lens) {
+      this.stopZoom();
+    }
+    this.step--;
+    this.checkForWinner(this.step);
+  }
+
   submitComparison() {
+    let firstAlgoPoints = this.algoWinnerArr[0].reduce((a, b) => a + b, 0)
+    let secondAlgoPoints = this.algoWinnerArr[1].reduce((a, b) => a + b, 0)
+    let thirdAlgoPoints = this.algoWinnerArr[2].reduce((a, b) => a + b, 0)
+    let fourthAlgoPoints = this.algoWinnerArr[3].reduce((a, b) => a + b, 0)
+    let generator = 'CrowdHeritage ' + this.campaignName;
     this.submitted = true;
+    if (firstAlgoPoints) {
+      this.annotationServices.rateAnnotation(this.firstAlgo.dbId, generator, firstAlgoPoints);
+    }
+    if (secondAlgoPoints) {
+      this.annotationServices.rateAnnotation(this.secondAlgo.dbId, generator, secondAlgoPoints);
+    }
+    if (thirdAlgoPoints) {
+      this.annotationServices.rateAnnotation(this.thirdAlgo.dbId, generator, thirdAlgoPoints);
+    }
+    if (fourthAlgoPoints) {
+      this.annotationServices.rateAnnotation(this.fourthAlgo.dbId, generator, fourthAlgoPoints);
+    }
     this.closeComparisonModal();
   }
 
+  closeComparisonModal() {
+    if ((this.firstSelected || this.secondSelected || this.step != 1) && !this.submitted &&
+      !confirm('If you close the workspace without completing all the comparisons your progress will be lost. Are you sure you want to proceed?')) return;
+    var modal = document.getElementById('comparisonModal');
+    var banner = document.getElementById("banner");
+    banner.style.display = "block";
+    modal.style.display = "none";
+    if (this.lens) {
+      this.stopZoom();
+    }
+    this.step = 1;
+    this.firstSelected = false;
+    this.secondSelected = false;
+    this.submitted = false;
+    this.algoWinnerArr = this.zeros(4,4);
+  }
 }
