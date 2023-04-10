@@ -1,4 +1,5 @@
 <template>
+  <require from="../../widgets/tooltip/tooltip"></require>
   <main>
     <section class="banner mini">
       <div class="container">
@@ -68,21 +69,25 @@
               <div class="input-group">
                 <!-- <div class="center">
                   <label t="dashboard:shortName">Username</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="bootstrap tooltip"></i>
                   <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
                     value.bind="campaign.username" autofocus />
                 </div> -->
                 <div class="left">
                   <label t="dashboard:startDate">Start Date</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="The date that the campaign will start"></i>
                   <input t="[placeholder]dashboard:startDate" type="date" placeholder="Start Date" id="startDate"
                     value.bind="campaign.startDate" autofocus />
                 </div>
                 <div class="right">
                   <label t="dashboard:endDate">End Date</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="The date that the campaign will end"></i>
                   <input t="[placeholder]dashboard:endDate" type="date" placeholder="End Date" id="endDate"
                     value.bind="campaign.endDate" autofocus />
                 </div>
                 <div class="center">
                   <label t="dashboard:banner">Banner</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign banner"></i>
                   <div class="banner-edit center">
                     <img src="${campaign.banner.replace('?file=true','')}" alt="${username+'-'+banner}" width="100%">
                     <ul class="itemaction">
@@ -102,11 +107,13 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:title">Title</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign title"></i>
                   <input t="[placeholder]dashboard:title" type="text" placeholder="Title" id="title"
                     value.bind="campaign.titleObject[currentLocale.code]" autofocus />
                 </div>
                 <div class="center">
                   <label t="dashboard:description">Description</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign description"></i>
                   <textarea t="[placeholder]dashboard:description" rows="4" placeholder="Description"
                     id="description" value.bind="campaign.descriptionObject[currentLocale.code]" autofocus>
                   </textarea>
@@ -114,6 +121,7 @@
                 <div class="d-flex">
                   <div class="w-30 me-3">
                     <label t="dashboard:logo">Logo</label>
+                    <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign logo"></i>
                     <div class="logo-edit center">
                       <img if.bind="campaign.logo" src="${campaign.logo.replace('?file=true','')}" alt="${username+'-'+logo}" width="100%">
                       <ul class="itemaction">
@@ -133,6 +141,7 @@
                   </div>
                   <div class="w-70">
                     <label t="dashboard:disclaimer">Disclaimer</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                    <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign disclaimer"></i>
                     <textarea class="disclaimerTextarea" t="[placeholder]dashboard:disclaimer" rows="4" placeholder="Disclaimer" id="disclaimer"
                       value.bind="campaign.disclaimerObject[currentLocale.code]" autofocus>
                     </textarea>
@@ -141,6 +150,7 @@
                 <div class="center">
                   <div repeat.for="prize of prizes" class="mb-3">
                     <label t="dashboard:${prize}"></label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                    <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title.bind="'Message to show to users that earn '+prize"></i>
                     <input t="[placeholder]dashboard:${prize}" type="text" placeholder="${prize}" id="${prize}"
                       value.bind="campaign.prizesObject[prize][currentLocale.code]" autofocus />
                   </div>
@@ -156,6 +166,7 @@
               <div class="input-group">
                 <div class="center autocomplete-container">
                   <label t="dashboard:targetCollections">Target Collections</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Collections that contain items to annotate"></i>
                   <ul class="tagPills">
                     <li repeat.for="col of selectedCollections">
                       <i class="fa fa-folder-open-o me-1" aria-hidden="true"></i>
@@ -176,16 +187,19 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:annotationTarget">Annotation target (number of contributions)</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Number of contributions"></i>
                   <input t="[placeholder]dashboard:target" type="number" id="annotationTarget" value.bind="campaign.target" class="w-100 p-4" />
                 </div>
                 <div class="center">
                   <label t="dashboard:instructions">Instructions</label> <span class="font-italic">(${i18n.tr('dashboard:multilingual')})</span>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Instructions for users annotating this campaign"></i>
                   <textarea t="[placeholder]dashboard:instructions" rows="4" placeholder="Instructions"
                     id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
                   </textarea>
                 </div>
                 <div class="center">
                   <label t="dashboard:campaignPurpose">Campaign purpose</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign purpose "></i>
                   <div class="motivations d-flex">
                     <div class="me-5" repeat.for="purpose of purposes">
                       <input class="form-check-input" type="radio" id.bind="`purpose-${$index}`" model.bind="purpose" checked.bind="campaign.purpose">
@@ -195,6 +209,7 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:campaignOrientation">Campaign orientation</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign Orientation"></i>
                   <div class="motivations d-flex">
                     <div class="me-5" repeat.for="orientation of orientations">
                       <input class="form-check-input" type="radio" id.bind="`orientation-${$index}`" model.bind="orientation" checked.bind="campaign.orientation">
@@ -204,6 +219,7 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:campaignFeedbackMethod">Campaign feedback method</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign feedback method"></i>
                   <div class="motivations d-flex">
                     <div class="me-5" repeat.for="feedback of feedbackMethods">
                       <input class="form-check-input" type="radio" id.bind="`feedback-${$index}`" model.bind="feedback" checked.bind="campaign.feedbackMethod">
@@ -213,6 +229,7 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:campaignMotivations">Campaign motivations</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign motivations"></i>
                   <div class="motivations d-flex">
                     <div class="me-5" repeat.for="mot of motivations">
                       <input class="form-check-input" type="checkbox" id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]">
@@ -222,6 +239,7 @@
                 </div>
                 <div class="center">
                   <label t="dashboard:vocabulariesLabel">Vocabularies</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign vocabularies"></i>
                   <ul class="tagPills">
                     <li repeat.for="voc of selectedVocabularies">
                       <i class="fa fa-book me-1" aria-hidden="true"></i>
@@ -237,6 +255,7 @@
                 <div class="center">
                   <label t="dashboard:vocabulariesMappings">Tag types</label>
                   <span class="me-2">(${i18n.tr("dashboard:optional")})</span>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign tag types"></i>
                   <span class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
                   <br/>
                   <div class="d-flex mt-2" repeat.for="group of tagGroups">
@@ -259,6 +278,7 @@
               <div class="input-group">
                 <div class="center autocomplete-container">
                   <label t="dashboard:campaignModerators">Campaign moderators</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign moderators"></i>
                   <ul class="tagPills">
                     <li repeat.for="mod of moderators">
                       <i class="fa fa-user-o me-1" aria-hidden="true"></i>
@@ -279,6 +299,7 @@
                 </div>
                 <div class="center autocomplete-container">
                   <label t="dashboard:campaignUsergroups">Campaign usergroups</label>
+                  <i class="fa fa-info" bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip" title="Campaign user groups"></i>
                   <ul class="tagPills">
                     <li repeat.for="group of userGroups">
                       <i class="fa fa-users me-1" aria-hidden="true"></i>
