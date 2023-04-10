@@ -17,7 +17,7 @@
 export class TextTrimValueConverter {
   toView(value, max) {
 		if (value == undefined)
-			return "undefined";
+			return "";
 		if (value.length <= max)
 			return value;
     return value.substring(0, max) + '...';
