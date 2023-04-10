@@ -1,10 +1,18 @@
 <template>
+  <require from="../tooltip/tooltip"></require>
   <!-- tagging-->
   <section id="tagging" class="tagging">
     <!-- title-->
     <div class="container pe-0">
-      <div id="scrollPoint" class="title d-flex justify-content-between">
+      <div id="scrollPoint" class="title d-flex justify-content-between align-items-center">
         <span>${record.title}</span>
+        <span
+          if.bind="campaign.userGroupIds && campaign.userGroupIds.length"
+          class="restricted-label" t="app:restricted" title.bind="i18n.tr('app:restricted-disclaimer')"
+          bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
+        >
+          RESTRICTED
+        </span>
 <!--        <button if.bind="userServices.current" type="button" class="favoriteButton">-->
 <!--          <i class.bind="isLiked? 'fa fa-heart' : 'fa fa-heart-o'" aria-hidden="true" click.delegate="likeRecord()"></i>-->
 <!--        </button>-->

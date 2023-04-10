@@ -1,5 +1,3 @@
-
-
 import { inject, LogManager } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { DialogService } from 'aurelia-dialog';
@@ -25,6 +23,7 @@ export class Validation {
       return instance;
     }
     this.colorSet = colorPalette();
+    this.colorPalette = null;
     this.annotationServices = annotationServices;
     this.campaignServices = campaignServices;
     this.recordServices = recordServices;
@@ -123,8 +122,9 @@ export class Validation {
     return false;
   }
 
-  getColorLabel(label) {
-    return this.i18n.tr('item:color:' + label);
+  getColorLabel(labelObject) {
+    let label = labelObject[this.loc] || labelObject['en'];
+    return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
   toggleSortMenu() {
@@ -184,6 +184,8 @@ export class Validation {
 
     this.cname = params.campaign.username;
     this.campaign = params.campaign;
+
+    this.colorPalette = params.campaign ? this.campaign.colorPallete : this.colorSet;
 
     if (!this.popularTags) {
       this.campaignServices.getPopularAnnotations(this.campaign.username)
