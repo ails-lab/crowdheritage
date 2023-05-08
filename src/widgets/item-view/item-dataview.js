@@ -68,13 +68,6 @@ export class ItemDataView {
     modal.style.display = "none";
   }
 
-  openComparisonModal() {
-    var modal = document.getElementById("comparisonModal");
-    var banner = document.getElementById("banner");
-    modal.style.display = "block";
-    banner.style.display = "none";
-  }
-
   getValidImg(rec, alt) {
     if (this.campaign.username === 'garment-type' || this.campaign.username === 'garment-classification')
       return rec.myfullimg;

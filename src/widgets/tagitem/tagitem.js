@@ -47,12 +47,14 @@ export class Tagitem {
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.togglePublishText = this.i18n.tr('item:toggle-publish');
+    this.fullImageSrc = '';
 
     this.suggestionsActive = {};
     this.tagPrefix = {};
     this.annotations = {};
     this.geoannotations = [];
     this.colorannotations = [];
+    this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
     this.suggestedAnnotation = {};
@@ -86,6 +88,7 @@ export class Tagitem {
     toggleMore(".tagBlock");
     toggleMore(".commentBlock");
     toggleMore(".colorBlock");
+    toggleMore(".imageBlock");
     toggleMore(".geoBlock");
   }
 
@@ -116,6 +119,7 @@ export class Tagitem {
     }
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
+    this.imageannotations.splice(0, this.imageannotations.length);
     this.pollannotations.splice(0, this.pollannotations.length);
     this.commentAnnotations.splice(0, this.commentAnnotations.length);
     this.pollTitle = "";
@@ -136,6 +140,7 @@ export class Tagitem {
     });
     this.geoannotations = [];
     this.colorannotations = [];
+    this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
     await this.getRecordAnnotations(this.recId);
@@ -839,6 +844,22 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+    else if (this.widgetMotivation == 'ImageTagging') {
+      await this.recordServices.getAnnotations(this.recId, 'ImageTagging', this.generatorParam).then(response => {
+        this.imageannotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.imageannotations.push(new Annotation(response[i], "", this.loc));
+          } else {
+            this.imageannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.imageannotations.sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
     else if (this.widgetMotivation == 'Commenting') {
       await this.recordServices.getAnnotations(this.recId, 'Commenting', this.generatorParam).then(response => {
         this.commentAnnotations = [];
@@ -1059,6 +1080,30 @@ export class Tagitem {
     this.userComment = '';
     let area = document.getElementById('user-tag-textarea');
     area.style.cssText = 'height: 28px';
+  }
+
+  openComparisonModal() {
+    var modal = document.getElementById("comparisonModal");
+    var banner = document.getElementById("banner");
+    modal.style.display = "block";
+    banner.style.display = "none";
+  }
+
+  showFullImageModal(uri) {
+    this.fullImageSrc = uri;
+    console.log(this.fullImageSrc)
+    var modal = document.getElementById("image-tag-modal");
+    var banner = document.getElementById("banner");
+    modal.style.display = "block";
+    // banner.style.display = "none";
+  }
+
+  hideFullImageModal() {
+    var modal = document.getElementById("image-tag-modal");
+    var banner = document.getElementById("banner");
+    modal.style.display = "none";
+    banner.style.display = "block";
+    this.fullImageSrc = '';
   }
 
 }

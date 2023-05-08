@@ -18,39 +18,45 @@ export class Annotation {
 
   constructor(data, userId, lang="all", generator) {
     this.dbId = data.dbId;
-    this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
-    try {
-      this.labelLang = Object.keys(data.body.label).filter(key => key != "default")[0].toUpperCase();
-    } catch (e) {
-      this.labelLang = "DEFAULT";
-    }
 
-		if (lang !== "all") {
-			if (lang === 'en' && typeof data.body.label.en !== 'undefined') {
-        this.label = this.capitalizeFirstLetter(data.body.label.en[0]);
-        this.labelLang = 'EN';
+    if (data.body.label) {
+      this.label = this.capitalizeFirstLetter(data.body.label.default[0]);
+      try {
+        this.labelLang = Object.keys(data.body.label).filter(key => key != "default")[0].toUpperCase();
+      } catch (e) {
+        this.labelLang = "DEFAULT";
       }
-			else if (lang === 'fr' && typeof data.body.label.fr !== 'undefined') {
-        this.label = this.capitalizeFirstLetter(data.body.label.fr[0]);
-        this.labelLang = 'FR';
+
+      if (lang !== "all") {
+        if (lang === 'en' && typeof data.body.label.en !== 'undefined') {
+          this.label = this.capitalizeFirstLetter(data.body.label.en[0]);
+          this.labelLang = 'EN';
+        }
+        else if (lang === 'fr' && typeof data.body.label.fr !== 'undefined') {
+          this.label = this.capitalizeFirstLetter(data.body.label.fr[0]);
+          this.labelLang = 'FR';
+        }
+        else if (lang === 'it' && typeof data.body.label.it !== 'undefined') {
+          this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
+          this.labelLang = 'IT';
+        }
+        else if (lang === 'es' && typeof data.body.label.es !== 'undefined') {
+          this.label = this.capitalizeFirstLetter(data.body.label.es[0]);
+          this.labelLang = 'ES';
+        }
+        else if (lang === 'pl' && typeof data.body.label.pl !== 'undefined') {
+          this.label = this.capitalizeFirstLetter(data.body.label.pl[0]);
+          this.labelLang = 'PL';
+        }
+        else if (lang === 'el' && typeof data.body.label.el !== 'undefined') {
+          this.label = this.capitalizeFirstLetter(data.body.label.el[0]);
+          this.labelLang = 'EL';
+        }
       }
-			else if (lang === 'it' && typeof data.body.label.it !== 'undefined') {
-        this.label = this.capitalizeFirstLetter(data.body.label.it[0]);
-        this.labelLang = 'IT';
-      }
-      else if (lang === 'es' && typeof data.body.label.es !== 'undefined') {
-        this.label = this.capitalizeFirstLetter(data.body.label.es[0]);
-        this.labelLang = 'ES';
-      }
-      else if (lang === 'pl' && typeof data.body.label.pl !== 'undefined') {
-        this.label = this.capitalizeFirstLetter(data.body.label.pl[0]);
-        this.labelLang = 'PL';
-      }
-      else if (lang === 'el' && typeof data.body.label.el !== 'undefined') {
-        this.label = this.capitalizeFirstLetter(data.body.label.el[0]);
-        this.labelLang = 'EL';
-      }
-		}
+    }
+    else {
+      this.label = data.annotators[0].externalCreatorName || "Image tag";
+    }
 
     this.createdBy = data.annotators;
     this.createdByMe = false;

@@ -1,0 +1,61 @@
+<template>
+  <require from="../tooltip/tooltip"></require>
+  <div id="image-tag-modal" class="modal">
+    <!-- Modal Content - Image) -->
+    <img
+      class="modal-content"
+      src.bind="fullImageSrc"
+      onerror="this.src='/img/assets/img/ui/ic-noimage.png'"
+      click.delegate="hideFullImageModal()"
+    />
+  </div>
+  <compose view-model="widgets/comparison-modal/comparison-modal"
+           model.bind="{'lang': loc, 'record': record, 'campaignName': campaign.username}">
+  </compose>
+  <div class="tag-color">
+    <!-- infobar-->
+    <div class="wrap">
+      <!-- heading-->
+      <div class="heading green" t="item:image-tagging">IMAGE TAGGING</div>
+      <button click.delegate="openComparisonModal()" class="btn btn-comparison">
+        <i class="fa fa-exchange"></i>
+        <span class="ms-2" t="item:compare">Compare</span>
+      </button>
+      <!-- info-->
+      <div class="infobar" innerhtml.bind="campaign.instructions"></div>
+      <!-- searchbox-->
+      <div if.bind="campaign.status == 'active' && colorannotations.length>0" class="colorbox" t="item:image-tags-header"></div>
+      <!-- taglist-->
+      <div class="show-more-parent" show.bind="campaign.status == 'active'">
+        <ul class="imageBlock taglist color show-more-target">
+          <li repeat.for="ann of imageannotations" class.bind="ann.isDuplicate ? 'd-none' : ''">
+            <div class="thumbs">
+              <img
+                src.bind="ann.uri"
+                onerror="this.src='/img/assets/img/ui/ic-noimage.png'"
+                click.delegate="showFullImageModal(ann.uri)"
+              />
+            </div>
+            <div class="selected" innerhtml.bind="ann.label"></div>
+            <ul class="action">
+              <li class="publish-btn" if.bind="isCurrentUserCreator()">
+                <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
+                   title.bind="togglePublishText" click.delegate="togglePublish('image', $index)"
+                >
+								<span>
+									<i class.bind="!ann.publish ? 'fa fa-upload text-danger opacity-50' : 'fa fa-upload text-success'"></i>
+                  <span class="count"></span>
+								</span>
+                </a>
+              </li>
+              <li class="active">
+                <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".colorBlock")'></i>
+      </div>
+    </div>
+  </div>
+</template>
