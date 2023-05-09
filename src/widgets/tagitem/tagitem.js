@@ -47,12 +47,14 @@ export class Tagitem {
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.togglePublishText = this.i18n.tr('item:toggle-publish');
+    this.fullImageSrc = '';
 
     this.suggestionsActive = {};
     this.tagPrefix = {};
     this.annotations = {};
     this.geoannotations = [];
     this.colorannotations = [];
+    this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
     this.suggestedAnnotation = {};
@@ -66,6 +68,7 @@ export class Tagitem {
     this.uriRedirect = false;
 
     this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations() });
+    this.imageTaggingListener = this.ea.subscribe('imagetagging-ranking-added', (e) => this.reloadAnnotations());
     this.handleBodyClick = e => {
       if (e.target.id != "annotationInput") {
         this.suggestedAnnotations = {};
@@ -86,11 +89,13 @@ export class Tagitem {
     toggleMore(".tagBlock");
     toggleMore(".commentBlock");
     toggleMore(".colorBlock");
+    toggleMore(".imageBlock");
     toggleMore(".geoBlock");
   }
 
   detached() {
     this.evsubscr1.dispose();
+    this.imageTaggingListener.dispose();
     document.removeEventListener('click', this.handleBodyClick);
   }
 
@@ -116,6 +121,7 @@ export class Tagitem {
     }
     this.geoannotations.splice(0, this.geoannotations.length);
     this.colorannotations.splice(0, this.colorannotations.length);
+    this.imageannotations.splice(0, this.imageannotations.length);
     this.pollannotations.splice(0, this.pollannotations.length);
     this.commentAnnotations.splice(0, this.commentAnnotations.length);
     this.pollTitle = "";
@@ -136,6 +142,7 @@ export class Tagitem {
     });
     this.geoannotations = [];
     this.colorannotations = [];
+    this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
     await this.getRecordAnnotations(this.recId);
@@ -228,7 +235,7 @@ export class Tagitem {
    }
 
     this.suggestedAnnotations[""] = [];
-  
+
     if (this.selectedAnnotation) {
       let self = this;
       if (!this.hasContributed('all')) {
@@ -516,7 +523,7 @@ export class Tagitem {
             if(annoType == 'approved'){
               oppositeType = 'rejected'
             }
-            
+
             await this.unscore(ann.dbId, oppositeType, i, mot, tagType);
             await this.score(ann.dbId, annoType, i, mot, tagType);
           }
@@ -597,18 +604,18 @@ export class Tagitem {
       } else {
             if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
               await this.userServices.reloadCurrentUser();
-            } 
+            }
             this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
-      }     
+      }
     }
 
     else if (annoType == 'rejected') {
       this.ApproveFlag = obj.approvedByMe;
-     
+
       this.annotationServices.rejectObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
         obj.rejectedBy.push(response);
-        
+
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after rejection  rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
           if (response.score.approvedBy != null && response.score.rejectedBy != null) {
@@ -629,7 +636,7 @@ export class Tagitem {
       }).catch(error => {
         console.error(error.message);
       });
-      
+
       obj.rejectedByMe = true;
       if (obj.approvedByMe) {
           var i = obj.approvedBy.map(function (e) {
@@ -722,12 +729,12 @@ export class Tagitem {
         obj.rejectedBy.splice(i, 1);
       }
       obj.rejectedByMe = false;
-      
+
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
       }
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
-      
+
     }
     if (!this.hasContributed('all')) {
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
@@ -837,6 +844,22 @@ export class Tagitem {
       // Sort the annotations in descending order, based on their score
       this.colorannotations.sort(function (a, b) {
         return b.score - a.score;
+      });
+    }
+    else if (this.widgetMotivation == 'ImageTagging') {
+      await this.recordServices.getAnnotations(this.recId, 'ImageTagging', this.generatorParam).then(response => {
+        this.imageannotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.imageannotations.push(new Annotation(response[i], "", this.loc, this.generatorParam));
+          } else {
+            this.imageannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc, this.generatorParam));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.imageannotations.sort(function (a, b) {
+        return b.ratedByMeValue - a.ratedByMeValue;
       });
     }
     else if (this.widgetMotivation == 'Commenting') {
@@ -1059,6 +1082,30 @@ export class Tagitem {
     this.userComment = '';
     let area = document.getElementById('user-tag-textarea');
     area.style.cssText = 'height: 28px';
+  }
+
+  openComparisonModal() {
+    var modal = document.getElementById("comparisonModal");
+    var banner = document.getElementById("banner");
+    modal.style.display = "block";
+    banner.style.display = "none";
+  }
+
+  showFullImageModal(uri) {
+    this.fullImageSrc = uri;
+    console.log(this.fullImageSrc)
+    var modal = document.getElementById("image-tag-modal");
+    var banner = document.getElementById("banner");
+    modal.style.display = "block";
+    // banner.style.display = "none";
+  }
+
+  hideFullImageModal() {
+    var modal = document.getElementById("image-tag-modal");
+    var banner = document.getElementById("banner");
+    modal.style.display = "none";
+    banner.style.display = "block";
+    this.fullImageSrc = '';
   }
 
 }

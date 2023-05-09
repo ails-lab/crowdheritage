@@ -65,6 +65,9 @@
           <compose view="widgets/tagcolor/tagcolor.html" view-model="widgets/tagitem/tagitem"
             if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ColorTagging'}">
           </compose>
+          <compose view="widgets/tagimage/tagimage.html" view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('ImageTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ImageTagging'}">
+          </compose>
           <compose view="widgets/taggeo/taggeo.html" view-model="widgets/tagitem/tagitem"
             if.bind="hasMotivation('GeoTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'GeoTagging'}">
           </compose>
