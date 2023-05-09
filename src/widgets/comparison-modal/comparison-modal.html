@@ -20,8 +20,9 @@
         <div class=""></div>
 
         <div class="img-container">
-          <img class="" id="comparison-original-image" src.bind="getValidImg(record, record.validImg.original)"
-            mousemove.delegate="initiateZoom($event)">
+          <img class="" id="comparison-original-image" src.bind="record.myfullimg"
+            mousemove.delegate="initiateZoom($event)"
+          >
           <div class="label">
             <h5>Original Image</h5>
           </div>
@@ -40,14 +41,14 @@
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''"
           click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" id="first-algorithm-img" src.bind="firstAlgo.body.uri">
-          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="firstAlgo.body.uri"></div>
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="firstAlgo.uri">
+          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="firstAlgo.uri"></div>
           <div class="label">
             <h5>A</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="record.myfullimg">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Original - zoomed</h5>
@@ -56,8 +57,8 @@
 
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''"
           click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" id="second-algorithm-img" src.bind="secondAlgo.body.uri">
-          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="secondAlgo.body.uri"></div>
+          <img if.bind="!lens" id="second-algorithm-img" src.bind="secondAlgo.uri">
+          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="secondAlgo.uri"></div>
           <div class="label">
             <h5>B</h5>
           </div>
@@ -70,7 +71,7 @@
       <div class="original-image">
         <div class=""></div>
         <div class="img-container">
-          <img class="" id="comparison-original-image" src.bind="getValidImg(record, record.validImg.original)"
+          <img class="" id="comparison-original-image" src.bind="record.myfullimg"
             mousemove.delegate="initiateZoom($event)">
           <div class="label">
             <h5>Original Image</h5>
@@ -90,15 +91,15 @@
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''"
           click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" id="first-algorithm-img" src.bind="firstAlgo.body.uri">
-          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="firstAlgo.body.uri"></div>
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="firstAlgo.uri">
+          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="firstAlgo.uri"></div>
           <div class="label">
             <h5>A</h5>
           </div>
         </div>
 
         <div class="img-container">
-          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="record.myfullimg">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Original - zoomed</h5>
@@ -106,8 +107,8 @@
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''"
           click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" id="second-algorithm-img" src.bind="thirdAlgo.body.uri">
-          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="thirdAlgo.body.uri"></div>
+          <img if.bind="!lens" id="second-algorithm-img" src.bind="thirdAlgo.uri">
+          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="thirdAlgo.uri"></div>
           <div class="label">
             <h5>B</h5>
           </div>
@@ -120,7 +121,7 @@
       <div class="original-image">
         <div class=""></div>
         <div class="img-container">
-          <img class="" id="comparison-original-image" src.bind="getValidImg(record, record.validImg.original)"
+          <img class="" id="comparison-original-image" src.bind="record.myfullimg"
             mousemove.delegate="initiateZoom($event)">
           <div class="label">
             <h5>Original Image</h5>
@@ -140,14 +141,14 @@
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''"
           click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" id="first-algorithm-img" src.bind="firstAlgo.body.uri">
-          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="firstAlgo.body.uri"></div>
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="firstAlgo.uri">
+          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="firstAlgo.uri"></div>
           <div class="label">
             <h5>A</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="record.myfullimg">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Original - zoomed</h5>
@@ -155,8 +156,8 @@
         </div>
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''"
           click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" id="second-algorithm-img" src.bind="fourthAlgo.body.uri">
-          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="fourthAlgo.body.uri"></div>
+          <img if.bind="!lens" id="second-algorithm-img" src.bind="fourthAlgo.uri">
+          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="fourthAlgo.uri"></div>
           <div class="label">
             <h5>B</h5>
           </div>
@@ -169,7 +170,7 @@
       <div class="original-image">
         <div class=""></div>
         <div class="img-container">
-          <img class="" id="comparison-original-image" src.bind="getValidImg(record, record.validImg.original)"
+          <img class="" id="comparison-original-image" src.bind="record.myfullimg"
             mousemove.delegate="initiateZoom($event)">
           <div class="label">
             <h5>Original Image</h5>
@@ -189,14 +190,14 @@
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''"
           click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" id="first-algorithm-img" src.bind="secondAlgo.body.uri">
-          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="secondAlgo.body.uri"></div>
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="secondAlgo.uri">
+          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="secondAlgo.uri"></div>
           <div class="label">
             <h5>A</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="record.myfullimg">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Original - zoomed</h5>
@@ -205,8 +206,8 @@
 
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''"
           click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" id="second-algorithm-img" src.bind="thirdAlgo.body.uri">
-          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="thirdAlgo.body.uri"></div>
+          <img if.bind="!lens" id="second-algorithm-img" src.bind="thirdAlgo.uri">
+          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="thirdAlgo.uri"></div>
           <div class="label">
             <h5>B</h5>
           </div>
@@ -219,7 +220,7 @@
       <div class="original-image">
         <div class=""></div>
         <div class="img-container">
-          <img class="" id="comparison-original-image" src.bind="getValidImg(record, record.validImg.original)"
+          <img class="" id="comparison-original-image" src.bind="record.myfullimg"
             mousemove.delegate="initiateZoom($event)">
           <div class="label">
             <h5>Original Image</h5>
@@ -239,14 +240,14 @@
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''"
           click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" id="first-algorithm-img" src.bind="secondAlgo.body.uri">
-          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="secondAlgo.body.uri"></div>
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="secondAlgo.uri">
+          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="secondAlgo.uri"></div>
           <div class="label">
             <h5>A</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="record.myfullimg">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Original - zoomed</h5>
@@ -255,8 +256,8 @@
 
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''"
           click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" id="second-algorithm-img" src.bind="fourthAlgo.body.uri">
-          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="fourthAlgo.body.uri"></div>
+          <img if.bind="!lens" id="second-algorithm-img" src.bind="fourthAlgo.uri">
+          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="fourthAlgo.uri"></div>
           <div class="label">
             <h5>B</h5>
           </div>
@@ -269,7 +270,7 @@
       <div class="original-image">
         <div class=""></div>
         <div class="img-container">
-          <img class="" id="comparison-original-image" src.bind="getValidImg(record, record.validImg.original)"
+          <img class="" id="comparison-original-image" src.bind="record.myfullimg"
             mousemove.delegate="initiateZoom($event)">
           <div class="label">
             <h5>Original Image</h5>
@@ -289,14 +290,14 @@
       <div class="zoomed-images">
         <div class="img-container cursor-pointer" class.bind="firstSelected ? 'selected' : ''"
           click.delegate="firstAlgoSelected()">
-          <img if.bind="!lens" id="first-algorithm-img" src.bind="thirdAlgo.body.uri">
-          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="thirdAlgo.body.uri"></div>
+          <img if.bind="!lens" id="first-algorithm-img" src.bind="thirdAlgo.uri">
+          <div else id="first-algorithm-zoomed" class="img-zoom-result" data-source.bind="thirdAlgo.uri"></div>
           <div class="label">
             <h5>A</h5>
           </div>
         </div>
         <div class="img-container">
-          <img if.bind="!lens" id="original-img" src.bind="getValidImg(record, record.validImg.original)">
+          <img if.bind="!lens" id="original-img" src.bind="record.myfullimg">
           <div else id="original-zoomed" class="img-zoom-result"></div>
           <div class="label">
             <h5>Original - zoomed</h5>
@@ -305,8 +306,8 @@
 
         <div class="img-container cursor-pointer" class.bind="secondSelected ? 'selected' : ''"
           click.delegate="secondAlgoSelected()">
-          <img if.bind="!lens" id="second-algorithm-img" src.bind="fourthAlgo.body.uri">
-          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="fourthAlgo.body.uri"></div>
+          <img if.bind="!lens" id="second-algorithm-img" src.bind="fourthAlgo.uri">
+          <div else id="second-algorithm-zoomed" class="img-zoom-result" data-source.bind="fourthAlgo.uri"></div>
           <div class="label">
             <h5>B</h5>
           </div>

@@ -2636,11 +2636,11 @@ body main section.tagging .left .img .modal {
   border: 1px solid #d4d4d4;
 }
 
-body main section.tagging .modal.comparison-modal {
+.modal.comparison-modal {
   background-color: rgba(0, 0, 0, 0.95);
 }
 
-body main section.tagging .modal.comparison-modal .modal-content {
+.modal.comparison-modal .modal-content {
   display: grid !important;
   grid-template-rows: repeat(2, auto);
   place-items: center;
@@ -2655,7 +2655,7 @@ body main section.tagging .modal.comparison-modal .modal-content {
   border: 0;
 }
 
-body main section.tagging .modal.comparison-modal .title {
+.modal.comparison-modal .title {
   color: white;
   position: absolute;
   top: 50px;
@@ -2663,7 +2663,7 @@ body main section.tagging .modal.comparison-modal .title {
   margin: auto;
 }
 
-body main section.tagging .modal.comparison-modal .close-comparison-modal {
+.modal.comparison-modal .close-comparison-modal {
   color: white;
   position: absolute;
   top: 75px;
@@ -2673,7 +2673,7 @@ body main section.tagging .modal.comparison-modal .close-comparison-modal {
   cursor: pointer;
 }
 
-body main section.tagging .modal.comparison-modal .prev-btn {
+.modal.comparison-modal .prev-btn {
   position: absolute;
   left: 25px;
   top: 50%;
@@ -2685,7 +2685,7 @@ body main section.tagging .modal.comparison-modal .prev-btn {
   z-index: 7;
 }
 
-body main section.tagging .modal.comparison-modal .next-btn {
+.modal.comparison-modal .next-btn {
   position: absolute;
   right: 25px;
   top: 50%;
@@ -2696,7 +2696,7 @@ body main section.tagging .modal.comparison-modal .next-btn {
   cursor: pointer;
   z-index: 7;
 }
-body main section.tagging .modal.comparison-modal .next-btn .submit-comparison-btn{
+.modal.comparison-modal .next-btn .submit-comparison-btn{
   position: relative;
   top: -80px;
   font-size: 16px;
@@ -2708,8 +2708,8 @@ body main section.tagging .modal.comparison-modal .next-btn .submit-comparison-b
   z-index: 7;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .zoomed-images,
-body main section.tagging .modal.comparison-modal .modal-content .original-image {
+.modal.comparison-modal .modal-content .zoomed-images,
+.modal.comparison-modal .modal-content .original-image {
   max-height: 41vh;
   max-width: 100%;
   overflow: hidden;
@@ -2717,16 +2717,16 @@ body main section.tagging .modal.comparison-modal .modal-content .original-image
   gap: 1rem;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .original-image {
+.modal.comparison-modal .modal-content .original-image {
   grid-template-columns: 1fr auto 1fr;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .zoomed-images {
+.modal.comparison-modal .modal-content .zoomed-images {
   grid-template-columns: repeat(3, 1fr);
   max-height: 46vh;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section {
+.modal.comparison-modal .modal-content .original-image .explanation-section {
   color: white;
   display: grid;
   gap: 1rem;
@@ -2737,7 +2737,7 @@ body main section.tagging .modal.comparison-modal .modal-content .original-image
   min-width: 340px;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section button {
+.modal.comparison-modal .modal-content .original-image .explanation-section button {
   border: 0;
   background-color:#5C8C8C;
   color: white;
@@ -2745,34 +2745,33 @@ body main section.tagging .modal.comparison-modal .modal-content .original-image
   padding: 0px 10px;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns {
+.modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns {
   display: flex;
   gap: 1rem;
   position: absolute;
   bottom: 7.5%;
   left: 50px;
 }
-body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button {
+.modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button {
   background-color: transparent;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button.selected {
+.modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button.selected {
   background-color: #2d4372;
 }
 
-
-body main section.tagging .modal.comparison-modal .modal-content .img-container {
+.modal.comparison-modal .modal-content .img-container {
   max-height: 45vh;
   max-width: 100%;
   overflow: hidden;
   position: relative
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .original-image .img-container {
+.modal.comparison-modal .modal-content .original-image .img-container {
   max-height: 41vh;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .img-container.selected::after {
+.modal.comparison-modal .modal-content .img-container.selected::after {
   content: '\2713';
   color: white;
   position: absolute;
@@ -2789,22 +2788,22 @@ body main section.tagging .modal.comparison-modal .modal-content .img-container.
 }
 
 
-body main section.tagging .modal.comparison-modal .modal-content .img-container .label {
+.modal.comparison-modal .modal-content .img-container .label {
   padding: 0;
 }
 
-  body main section.tagging .modal.comparison-modal .modal-content .img-container .label h5 {
+.modal.comparison-modal .modal-content .img-container .label h5 {
   margin: 3px 0 0;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .zoomed-images img ,
-body main section.tagging .modal.comparison-modal .modal-content .original-image img{
+.modal.comparison-modal .modal-content .zoomed-images img ,
+.modal.comparison-modal .modal-content .original-image img{
   width: 100%;
   height: 92.5%;
   object-fit: contain;
 }
 
-body main section.tagging .modal.comparison-modal .modal-content .zoomed-images .img-zoom-result {
+.modal.comparison-modal .modal-content .zoomed-images .img-zoom-result {
   width: 100%;
   height: 92.5%;
   object-fit: contain;
@@ -7992,6 +7991,8 @@ input.tag-type {
 }
 
 .btn-comparison {
+  display: flex !important;
+  align-items: center;
   position: relative;
   top: -8px;
   padding: 4px 8px !important;

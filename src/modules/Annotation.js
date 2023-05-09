@@ -82,6 +82,7 @@ export class Annotation {
     this.rejectedByMe = false;
     this.ratedBy = [];
     this.ratedByMe = false;
+    this.ratedByMeValue = -1;
     this.score = 0;
     if (data.score) {
       if (data.score.approvedBy) {
@@ -112,6 +113,7 @@ export class Annotation {
           for (let i in this.ratedBy) {
             if (this.ratedBy[i].withCreator == userId) {
               this.ratedByMe = true;
+              this.ratedByMeValue = this.ratedBy[i].confidence;
               break;
             }
           }

@@ -68,6 +68,7 @@ export class Tagitem {
     this.uriRedirect = false;
 
     this.evsubscr1 = this.ea.subscribe('annotations-created', () => { this.reloadAnnotations() });
+    this.imageTaggingListener = this.ea.subscribe('imagetagging-ranking-added', (e) => this.reloadAnnotations());
     this.handleBodyClick = e => {
       if (e.target.id != "annotationInput") {
         this.suggestedAnnotations = {};
@@ -94,6 +95,7 @@ export class Tagitem {
 
   detached() {
     this.evsubscr1.dispose();
+    this.imageTaggingListener.dispose();
     document.removeEventListener('click', this.handleBodyClick);
   }
 
@@ -233,7 +235,7 @@ export class Tagitem {
    }
 
     this.suggestedAnnotations[""] = [];
-  
+
     if (this.selectedAnnotation) {
       let self = this;
       if (!this.hasContributed('all')) {
@@ -521,7 +523,7 @@ export class Tagitem {
             if(annoType == 'approved'){
               oppositeType = 'rejected'
             }
-            
+
             await this.unscore(ann.dbId, oppositeType, i, mot, tagType);
             await this.score(ann.dbId, annoType, i, mot, tagType);
           }
@@ -602,18 +604,18 @@ export class Tagitem {
       } else {
             if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
               await this.userServices.reloadCurrentUser();
-            } 
+            }
             this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
-      }     
+      }
     }
 
     else if (annoType == 'rejected') {
       this.ApproveFlag = obj.approvedByMe;
-     
+
       this.annotationServices.rejectObj(annoId, this.campaign.username).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
         obj.rejectedBy.push(response);
-        
+
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after rejection  rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
           if (response.score.approvedBy != null && response.score.rejectedBy != null) {
@@ -634,7 +636,7 @@ export class Tagitem {
       }).catch(error => {
         console.error(error.message);
       });
-      
+
       obj.rejectedByMe = true;
       if (obj.approvedByMe) {
           var i = obj.approvedBy.map(function (e) {
@@ -727,12 +729,12 @@ export class Tagitem {
         obj.rejectedBy.splice(i, 1);
       }
       obj.rejectedByMe = false;
-      
+
       if ((!this.userServices.isAuthenticated()) || (this.userServices.isAuthenticated() && this.userServices.current === null)) {
         await this.userServices.reloadCurrentUser();
       }
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
-      
+
     }
     if (!this.hasContributed('all')) {
       this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'records')
@@ -849,15 +851,15 @@ export class Tagitem {
         this.imageannotations = [];
         for (var i = 0; i < response.length; i++) {
           if (!this.userServices.current) {
-            this.imageannotations.push(new Annotation(response[i], "", this.loc));
+            this.imageannotations.push(new Annotation(response[i], "", this.loc, this.generatorParam));
           } else {
-            this.imageannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+            this.imageannotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc, this.generatorParam));
           }
         }
       });
       // Sort the annotations in descending order, based on their score
       this.imageannotations.sort(function (a, b) {
-        return b.score - a.score;
+        return b.ratedByMeValue - a.ratedByMeValue;
       });
     }
     else if (this.widgetMotivation == 'Commenting') {

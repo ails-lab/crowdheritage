@@ -10,7 +10,7 @@
     />
   </div>
   <compose view-model="widgets/comparison-modal/comparison-modal"
-           model.bind="{'lang': loc, 'record': record, 'campaignName': campaign.username}">
+           model.bind="{'record': record, 'campaignName': campaign.username, 'annotations': imageannotations}">
   </compose>
   <div class="tag-color">
     <!-- infobar-->
@@ -24,7 +24,7 @@
       <!-- info-->
       <div class="infobar" innerhtml.bind="campaign.instructions"></div>
       <!-- searchbox-->
-      <div if.bind="campaign.status == 'active' && colorannotations.length>0" class="colorbox" t="item:image-tags-header"></div>
+      <div if.bind="campaign.status == 'active' && imageannotations.length>0" class="colorbox" t="item:image-tags-header"></div>
       <!-- taglist-->
       <div class="show-more-parent" show.bind="campaign.status == 'active'">
         <ul class="imageBlock taglist color show-more-target">
@@ -48,13 +48,13 @@
 								</span>
                 </a>
               </li>
-              <li class="active">
-                <i class="fa fa-thumbs-o-up"></i><span class="count">${ann.approvedBy.length}</span>
+              <li class="active" if.bind="ann.ratedByMe">
+                <i class="fa fa-line-chart"></i><span class="count">${ann.ratedByMeValue}</span>
               </li>
             </ul>
           </li>
         </ul>
-        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".colorBlock")'></i>
+        <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".imageBlock")'></i>
       </div>
     </div>
   </div>

@@ -1,18 +1,18 @@
 import { inject, LogManager } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { EventAggregator } from 'aurelia-event-aggregator';
 import { I18N } from 'aurelia-i18n';
-import { RecordServices } from 'RecordServices.js';
 import { AnnotationServices } from 'AnnotationServices.js';
 
 let logger = LogManager.getLogger('comparison-modal.js');
 
-@inject(Router, I18N, RecordServices, AnnotationServices)
+@inject(Router, EventAggregator, I18N, AnnotationServices)
 export class ComparisonModal {
 
-  constructor(router, i18n, recordServices, annotationServices) {
+  constructor(router, eventAggregator, i18n, annotationServices) {
     this.router = router;
+    this.ea = eventAggregator;
     this.i18n = i18n;
-    this.recordServices = recordServices;
     this.annotationServices = annotationServices;
     this.step = 1;
     this.lens = null;
@@ -42,16 +42,13 @@ export class ComparisonModal {
   activate(params) {
     this.record = params.record;
     this.campaignName = params.campaignName;
+    this.annotations = params.annotations;
+
     this.algoWinnerArr = this.zeros(4, 4);
-
-
-    this.recordServices.getAnnotations(this.record.dbId, 'ImageTagging', 'CrowdHeritage ' + this.campaignName).then(response => {
-      this.firstAlgo = response[0]
-      this.secondAlgo = response[1]
-      this.thirdAlgo = response[2]
-      this.fourthAlgo = response[3]
-    })
-
+    this.firstAlgo = this.annotations[0];
+    this.secondAlgo = this.annotations[1];
+    this.thirdAlgo = this.annotations[2];
+    this.fourthAlgo = this.annotations[3];
   }
 
   get stepLabel() {
@@ -93,6 +90,9 @@ export class ComparisonModal {
     /* Create lens: */
     this.lens = document.createElement("DIV");
     this.lens.setAttribute("class", "img-zoom-lens");
+    // this.lens.addEventListener("mousemove", event => {
+    //   event.stopImmediatePropagation();
+    // });
     if (this.comparisonOriginalImage.width > this.comparisonOriginalImage.height) {
       this.lens.style.height = this.zoomWindow + "px";
       let ratio = this.comparisonOriginalImage.width / this.comparisonOriginalImage.height;
@@ -349,25 +349,18 @@ export class ComparisonModal {
     this.checkForWinner(this.step);
   }
 
-  submitComparison() {
+  async submitComparison() {
     let firstAlgoPoints = this.algoWinnerArr[0].reduce((a, b) => a + b, 0)
     let secondAlgoPoints = this.algoWinnerArr[1].reduce((a, b) => a + b, 0)
     let thirdAlgoPoints = this.algoWinnerArr[2].reduce((a, b) => a + b, 0)
     let fourthAlgoPoints = this.algoWinnerArr[3].reduce((a, b) => a + b, 0)
     let generator = 'CrowdHeritage ' + this.campaignName;
     this.submitted = true;
-    if (firstAlgoPoints) {
-      this.annotationServices.rateAnnotation(this.firstAlgo.dbId, generator, firstAlgoPoints);
-    }
-    if (secondAlgoPoints) {
-      this.annotationServices.rateAnnotation(this.secondAlgo.dbId, generator, secondAlgoPoints);
-    }
-    if (thirdAlgoPoints) {
-      this.annotationServices.rateAnnotation(this.thirdAlgo.dbId, generator, thirdAlgoPoints);
-    }
-    if (fourthAlgoPoints) {
-      this.annotationServices.rateAnnotation(this.fourthAlgo.dbId, generator, fourthAlgoPoints);
-    }
+    await this.annotationServices.rateAnnotation(this.firstAlgo.dbId, generator, firstAlgoPoints);
+    await this.annotationServices.rateAnnotation(this.secondAlgo.dbId, generator, secondAlgoPoints);
+    await this.annotationServices.rateAnnotation(this.thirdAlgo.dbId, generator, thirdAlgoPoints);
+    await this.annotationServices.rateAnnotation(this.fourthAlgo.dbId, generator, fourthAlgoPoints);
+    this.ea.publish('imagetagging-ranking-added', 'Ranking submitted');
     this.closeComparisonModal();
   }
 
