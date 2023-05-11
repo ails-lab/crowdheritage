@@ -62,6 +62,8 @@ export class Tagitem {
     this.suggestedAnnotations = {};
     this.selectedAnnotation = null;
     this.userComment = '';
+    this.loadedImagesCount = 0;
+    this.compareDisabled = true;
 
     this.userId = '';
     this.lg = loginPopup;
@@ -1085,6 +1087,9 @@ export class Tagitem {
   }
 
   openComparisonModal() {
+    if (this.compareDisabled){
+      return;
+    }
     var modal = document.getElementById("comparisonModal");
     var banner = document.getElementById("banner");
     modal.style.display = "block";
@@ -1098,6 +1103,13 @@ export class Tagitem {
     var banner = document.getElementById("banner");
     modal.style.display = "block";
     // banner.style.display = "none";
+  }
+
+  algoThumbLoaded(){
+    this.loadedImagesCount++;
+    if(this.loadedImagesCount == 4){
+      this.compareDisabled = false;
+    }
   }
 
   hideFullImageModal() {
