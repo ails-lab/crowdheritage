@@ -10,19 +10,22 @@
     />
   </div>
   <compose view-model="widgets/comparison-modal/comparison-modal"
-           model.bind="{'record': record, 'campaignName': campaign.username, 'annotations': imageannotations}">
+           model.bind="{'record': record, 'campaign': campaign, 'annotations': imageannotations}">
   </compose>
   <div class="tag-color">
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
       <div class="heading green" t="item:image-tagging">IMAGE TAGGING</div>
-      <button click.delegate="openComparisonModal()" class="btn btn-comparison">
-        <i class="fa fa-exchange"></i>
-        <span class="ms-2" t="item:compare">Compare</span>
+      <button click.delegate="openComparisonModal()" class="btn btn-comparison" disabled.bind="compareDisabled" >
+        <i show.bind="compareDisabled" class="fa fa-spinner fa-pulse"></i>
+        <i show.bind="!compareDisabled" class="fa fa-exchange"></i>
+        <span show.bind="!compareDisabled" class="ms-2" t="item:compare">Compare</span>
       </button>
       <!-- info-->
-      <div class="infobar" innerhtml.bind="campaign.instructions"></div>
+
+      <div if.bind="compareDisabled" class="infobar" >Waiting for images to load before starting the comparison...</div>
+      <div else class="infobar" innerhtml.bind="campaign.instructions"></div>
       <!-- searchbox-->
       <div if.bind="campaign.status == 'active' && imageannotations.length>0" class="colorbox" t="item:image-tags-header"></div>
       <!-- taglist-->
@@ -32,6 +35,7 @@
             <div class="thumbs">
               <img
                 src.bind="ann.uri"
+                load.trigger="algoThumbLoaded()"
                 onerror="this.src='/img/assets/img/ui/ic-noimage.png'"
                 click.delegate="showFullImageModal(ann.uri)"
               />
