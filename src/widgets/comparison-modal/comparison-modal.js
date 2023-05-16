@@ -3,17 +3,21 @@ import { Router } from 'aurelia-router';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { I18N } from 'aurelia-i18n';
 import { AnnotationServices } from 'AnnotationServices.js';
+import { CampaignServices } from 'CampaignServices.js';
+import { UserServices } from 'UserServices.js';
 
 let logger = LogManager.getLogger('comparison-modal.js');
 
-@inject(Router, EventAggregator, I18N, AnnotationServices)
+@inject(Router, EventAggregator, I18N, AnnotationServices, CampaignServices, UserServices)
 export class ComparisonModal {
 
-  constructor(router, eventAggregator, i18n, annotationServices) {
+  constructor(router, eventAggregator, i18n, annotationServices, campaignServices, userServices) {
     this.router = router;
     this.ea = eventAggregator;
     this.i18n = i18n;
     this.annotationServices = annotationServices;
+    this.campaignServices = campaignServices;
+    this.userServices = userServices;
     this.step = 1;
     this.lens = null;
     this.comparisonOriginalImage = null;
@@ -41,7 +45,8 @@ export class ComparisonModal {
 
   activate(params) {
     this.record = params.record;
-    this.campaignName = params.campaignName;
+    this.campaignName = params.campaign.username;
+    this.campaignId = params.campaign.dbId;
     this.annotations = params.annotations;
 
     this.algoWinnerArr = this.zeros(4, 4);
@@ -350,18 +355,31 @@ export class ComparisonModal {
   }
 
   async submitComparison() {
-    let firstAlgoPoints = this.algoWinnerArr[0].reduce((a, b) => a + b, 0)
-    let secondAlgoPoints = this.algoWinnerArr[1].reduce((a, b) => a + b, 0)
-    let thirdAlgoPoints = this.algoWinnerArr[2].reduce((a, b) => a + b, 0)
-    let fourthAlgoPoints = this.algoWinnerArr[3].reduce((a, b) => a + b, 0)
-    let generator = 'CrowdHeritage ' + this.campaignName;
     this.submitted = true;
-    await this.annotationServices.rateAnnotation(this.firstAlgo.dbId, generator, firstAlgoPoints);
-    await this.annotationServices.rateAnnotation(this.secondAlgo.dbId, generator, secondAlgoPoints);
-    await this.annotationServices.rateAnnotation(this.thirdAlgo.dbId, generator, thirdAlgoPoints);
-    await this.annotationServices.rateAnnotation(this.fourthAlgo.dbId, generator, fourthAlgoPoints);
+    const algoAnnotations = [
+      this.firstAlgo,
+      this.secondAlgo,
+      this.thirdAlgo,
+      this.fourthAlgo
+    ];
+    const algoPoints = [
+      this.algoWinnerArr[0].reduce((a, b) => a + b, 0),
+      this.algoWinnerArr[1].reduce((a, b) => a + b, 0),
+      this.algoWinnerArr[2].reduce((a, b) => a + b, 0),
+      this.algoWinnerArr[3].reduce((a, b) => a + b, 0)
+    ];
+    for (let i = 0; i < algoAnnotations.length; i++) {
+      await this.annotationServices.rateAnnotation(algoAnnotations[i].dbId, 'CrowdHeritage ' + this.campaignName, algoPoints[i]);
+      if (!algoAnnotations[i].ratedByMe) {
+        await this.campaignServices.incUserPoints(this.campaignId, this.userServices.current.dbId, 'rated');
+      }
+    }
+    if (!algoAnnotations[0].ratedByMe) {
+      await this.campaignServices.incUserPoints(this.campaignId, this.userServices.current.dbId, 'records');
+    }
     this.ea.publish('imagetagging-ranking-added', 'Ranking submitted');
     this.closeComparisonModal();
+    toastr.success("Your votes have been submitted");
   }
 
   closeComparisonModal() {
