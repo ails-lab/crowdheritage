@@ -344,6 +344,7 @@ export class ComparisonModal {
     }
     this.step++;
     this.checkForWinner(this.step);
+    this.addBlurEffect();
   }
 
   prevStep() {
@@ -352,6 +353,22 @@ export class ComparisonModal {
     }
     this.step--;
     this.checkForWinner(this.step);
+    this.addBlurEffect();
+  }
+
+  addBlurEffect() {
+    setTimeout(function() {
+      let comparisonImages = document.querySelectorAll('.img-container');
+      for (let img of comparisonImages) { 
+        img.classList.add('blur-effect');
+      }
+    }, 0)
+    setTimeout(function() {
+      let comparisonImages = document.querySelectorAll('.img-container');
+      for (let img of comparisonImages) { 
+        img.classList.remove('blur-effect');
+      }
+    },800)
   }
 
   async submitComparison() {

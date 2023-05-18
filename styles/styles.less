@@ -2762,11 +2762,14 @@ body main section.tagging .left .img .modal {
   max-height: 45vh;
   max-width: 100%;
   overflow: hidden;
-  position: relative
+  position: relative;
 }
 
 .modal.comparison-modal .modal-content .original-image .img-container {
   max-height: 41vh;
+}
+.modal.comparison-modal .modal-content .img-container.blur-effect {
+  animation: image_blur 750ms;
 }
 
 .modal.comparison-modal .modal-content .img-container.selected::after {
@@ -2834,6 +2837,12 @@ body main section.tagging .left .img .modal-content {
   to {
     transform: scale(1)
   }
+}
+
+@keyframes image_blur {
+  0% { filter: blur(0px);}
+  50% { filter: blur(1.5rem);}
+  100% { filter: blur(0px);}
 }
 
 body main section.tagging .cntr .img .modal #modalImg:hover,
