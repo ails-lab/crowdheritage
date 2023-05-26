@@ -228,11 +228,17 @@ export class CollectionServices {
       .then((response) => response.json());
   }
 
+  countMyAndSharedCollections() {
+    return this.http.fetch('/collection/countMyAndShared', {
+      method: 'GET'
+    }).then((response) => response.json());
+  }
+  
   // username or groupname
-  getEditableCollections(offset, count, username) {
+  getReadableCollections(offset, count, username) {
     return this.http.fetch('/collection/list?' + 'offset=' + offset + '&count=' + count + '&directlyAccessedByUserOrGroup=' + JSON.stringify([{
       user: username,
-      rights: 'WRITE'
+      rights: 'READ'
     }]), {
       method: 'GET'
     }).then((response) => response.json());

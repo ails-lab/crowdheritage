@@ -25,11 +25,13 @@ export class CollectionEditor {
     this.collections = [];
     this.loading = false;
     this.offset = 0;
+    this.mineCollectionsCount = 0;
+    this.sharedCollectionsCount = 0;
   }
 
   get isAuthenticated() { return this.userServices.isAuthenticated(); }
   get user() { return this.userServices.current; }
-  get totalCollectionsCount() { return this.userServices.current.count.myCollections; }
+  get totalCollectionsCount() { return this.mineCollectionsCount + this.sharedCollectionsCount; }
 
   activate(params, route) {
     if (this.i18n.getLocale() != this.loc) {
@@ -40,28 +42,40 @@ export class CollectionEditor {
     }
   }
 
+  userHasShareRights(collection) {
+    let right = false;
+    collection.data.administrative.access.acl.forEach(user => {
+      if(user.user == this.user.dbId && user.level == 'OWN') {
+        right = true;
+        return;
+      }
+    })
+    return right;
+  }
+
+  getCollectionCount() {
+    this.collectionServices.countMyAndSharedCollections().then(response => {
+      this.mineCollectionsCount = response.my.SimpleCollection + response.my.Exhibition;
+      this.sharedCollectionsCount = response.sharedWithMe.SimpleCollection + response.sharedWithMe.Exhibition;
+    });
+  }
+
   getCollectionsByUser() {
     this.loading = true;
-    this.collectionServices.getCollections(this.offset, COUNT, true, false, this.user.username)
-      .then(response => {
-        let collectionIds = response.collectionsOrExhibitions.map(col => {
-          return col.dbId
-        })
-        this.collectionsCount += response.collectionsOrExhibitions.length;
-        this.offset += COUNT;
-        this.collectionServices.getMultipleCollections(collectionIds, 0, COUNT,false)
-          .then(res => {
-            this.more = response.totalCollections > this.collectionsCount
-            if (res.length > 0) {
-              for (let i in res) {
-                this.collections.push(new Collection(res[i]));
-              }
-            }
-            // Reload current user in order to update totalCollectionsCount
-            this.userServices.reloadCurrentUser();
-            this.loading = false;
-          });
-      });
+    this.getCollectionCount();
+
+    this.collectionServices.getReadableCollections(this.offset, COUNT, this.user.username).then(response => {
+      this.collectionsCount += response.collectionsOrExhibitions.length;
+      this.offset += COUNT;
+      this.more = response.collectionsOrExhibitions.length >= COUNT;
+      if (response.collectionsOrExhibitions.length > 0) {
+        for (let i in response.collectionsOrExhibitions) {
+          this.collections.push(new Collection(response.collectionsOrExhibitions[i]));
+        }
+      }
+      this.userServices.reloadCurrentUser();
+      this.loading = false;
+    })
   }
 
   loadMore() {
@@ -69,6 +83,7 @@ export class CollectionEditor {
   }
 
   newCollection() {
+    this.closeShareNav();
     this.edittype = 'new';
     this.editableCollection = null;
     document.getElementById("editSidebar").style.width = "450px";
@@ -76,10 +91,23 @@ export class CollectionEditor {
   }
 
   editCollection(collection) {
+    this.closeShareNav();
     this.edittype = 'edit';
     this.editableCollection = collection;
     document.getElementById("editSidebar").style.width = "450px";
     document.getElementById("editSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
+  }
+
+  shareCollection(collection) {
+    this.closeNav();
+    this.collectionToShare = collection;
+    document.getElementById("shareSidebar").style.width = "450px";
+    document.getElementById("shareSidebar").style.boxShadow = "0px 0px 10px 0px rgba(0,0,0,.6)"
+  }
+
+  closeShareNav() {
+    document.getElementById("shareSidebar").style.width = "0";
+    document.getElementById("shareSidebar").style.boxShadow = "none";
   }
 
   closeNav() {
@@ -91,7 +119,6 @@ export class CollectionEditor {
   }
 
   closeAfterSave(title, description, access, locales) {
-    // console.log(title, description)
     let emptyTitle = true;
     for (const [key, value] of Object.entries(title)) {
       if (key === "default") continue;
@@ -111,7 +138,6 @@ export class CollectionEditor {
       titleObject[loc.code] = title[loc.code] ? [title[loc.code]] : [""]
       descriptionObject[loc.code] = description[loc.code] ? [description[loc.code]] : [""]
     }
-    // console.log(titleObject)
     if (this.edittype === 'new') {
       let collectiontosave = {
         resourceType: 'SimpleCollection',
