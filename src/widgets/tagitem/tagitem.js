@@ -25,6 +25,7 @@ import { bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { toggleMore } from 'utils/Plugin.js';
 import { I18N } from 'aurelia-i18n';
+import * as wheelzoom from 'wheelzoom-revived';
 import settings from 'global.config.js';
 
 @inject(UserServices, RecordServices, CampaignServices, EventAggregator, AnnotationServices, ThesaurusServices, 'loginPopup', I18N, 'colorPalette')
@@ -44,6 +45,7 @@ export class Tagitem {
     this.campaignServices = campaignServices;
     this.annotationServices = annotationServices;
     this.thesaurusServices = thesaurusServices;
+    this.wheelzoom = window.wheelzoom;
 
     this.placeholderText = this.i18n.tr('item:tag-search-text');
     this.togglePublishText = this.i18n.tr('item:toggle-publish');
@@ -1098,11 +1100,12 @@ export class Tagitem {
 
   showFullImageModal(uri) {
     this.fullImageSrc = uri;
-    console.log(this.fullImageSrc)
     var modal = document.getElementById("image-tag-modal");
     var banner = document.getElementById("banner");
     modal.style.display = "block";
-    // banner.style.display = "none";
+
+    const fullsizeImage = document.getElementById('imagetag-img');
+    this.wheelzoom(fullsizeImage, {zoom:0.25, maxZoom:10});
   }
 
   algoThumbLoaded(){
@@ -1113,6 +1116,10 @@ export class Tagitem {
   }
 
   hideFullImageModal() {
+    this.wheelzoom.resetAll;
+    const fullsizeImage = document.getElementById('imagetag-img');
+    fullsizeImage.src = this.fullImageSrc;
+
     var modal = document.getElementById("image-tag-modal");
     var banner = document.getElementById("banner");
     modal.style.display = "none";
