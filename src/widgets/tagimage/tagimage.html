@@ -1,13 +1,19 @@
 <template>
   <require from="../tooltip/tooltip"></require>
   <div id="image-tag-modal" class="modal">
+    <button type="button" class="close-fullscreen-image" click.trigger="hideFullImageModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
     <!-- Modal Content - Image) -->
     <img
+      id="imagetag-img"
       class="modal-content"
       src.bind="fullImageSrc"
       onerror="this.src='/img/assets/img/ui/ic-noimage.png'"
-      click.delegate="hideFullImageModal()"
     />
+    <div t="[append]item:zoom-disclaimer" class="image-zoom-disclaimer">
+      <i class="fa fa-info-circle me-2" aria-hidden="true"></i>
+    </div>
   </div>
   <compose view-model="widgets/comparison-modal/comparison-modal"
            model.bind="{'record': record, 'campaign': campaign, 'annotations': imageannotations}">
