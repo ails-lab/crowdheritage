@@ -68,5 +68,6 @@
   "usertagging": "COMMENTING",
   "usertagging-info": "Describe the item in your own words.",
   "usertagging-textarea": "Write your description here...",
-  "usertagging-submit": "Add"
+  "usertagging-submit": "Add",
+  "zoom-disclaimer": "Use your mouse wheel to zoom in & out of the image"
 }
