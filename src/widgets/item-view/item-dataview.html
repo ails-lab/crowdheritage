@@ -29,9 +29,15 @@
             <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal()" style.bind="noImageStyle" />
             <!-- The modal element -->
             <div id="myModal" class="modal">
+              <button type="button" class="close-fullscreen-image" click.trigger="closeModal()">
+                <span aria-hidden="true">&times;</span>
+              </button>
               <!-- Modal Content - Image) -->
               <img class="modal-content" id="modalImg" src.bind="getValidImg(record, record.myfullimg)"
-              error.trigger="getPlaceholderImage($event)" click.delegate="closeModal()">
+              error.trigger="getPlaceholderImage($event)">
+              <div t="[append]item:zoom-disclaimer" class="image-zoom-disclaimer">
+                <i class="fa fa-info-circle me-2" aria-hidden="true"></i>
+              </div>
             </div>
             <!-- Here goes the media, besides images -->
             <div id="mediadiv" innerhtml.bind='mediaDiv'></div>

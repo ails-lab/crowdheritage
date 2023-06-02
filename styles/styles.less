@@ -2603,8 +2603,8 @@ body main section.tagging .left .img #recImg {
 
 body main section.tagging .cntr .img #recImg:hover,
 body main section.tagging .left .img #recImg:hover {
-  opacity: 0.9;
-  cursor: zoom-in;
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 body main section.tagging .cntr .img .modal,
@@ -2829,6 +2829,13 @@ body main section.tagging .left .img .modal-content {
   animation-duration: 0.6s;
 }
 
+#modalImg {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 @keyframes zoom {
   from {
     transform: scale(0)
@@ -2843,11 +2850,6 @@ body main section.tagging .left .img .modal-content {
   0% { filter: blur(0px);}
   50% { filter: blur(1.5rem);}
   100% { filter: blur(0px);}
-}
-
-body main section.tagging .cntr .img .modal #modalImg:hover,
-body main section.tagging .left .img .modal #modalImg:hover {
-  cursor: zoom-out;
 }
 
 /* 100% Image Width on Smaller Screens */
@@ -8047,4 +8049,25 @@ input.tag-type {
     height: 85vh;
     max-width: 100%;
   }
+}
+
+button.close-fullscreen-image {
+  float: right;
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  font-size: 40px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  span {
+    display: block;
+    line-height: 24px;
+  }
+}
+
+.image-zoom-disclaimer {
+  margin-top: 8px;
+  color: white;
+  font-style: italic;
 }

@@ -19,9 +19,9 @@
         </section>
       </div>
       <!-- searchbox-->
-      <div if.bind="campaign.status == 'active' && colorannotations.length>0" class="colorbox" t="item:votes">Vote submitted colors by other users.</div>
+      <div if.bind="colorannotations.length>0" class="colorbox" t="item:votes">Vote submitted colors by other users.</div>
       <!-- taglist-->
-			<div class="show-more-parent" show.bind="campaign.status == 'active'">
+			<div class="show-more-parent">
       <ul class="colorBlock taglist color show-more-target">
         <li repeat.for="ann of colorannotations" class.bind="ann.isDuplicate ? 'd-none' : ''">
           <div class="thumbs" style.bind="getStyle(ann)"></div>
