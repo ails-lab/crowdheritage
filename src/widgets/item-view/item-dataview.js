@@ -1,6 +1,7 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
+import * as wheelzoom from 'wheelzoom-revived';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
 
@@ -11,6 +12,7 @@ export class ItemDataView {
     this.i18n = i18n;
     this.userServices = userServices;
     this.recordServices = recordServices;
+    this.wheelzoom = window.wheelzoom;
 
     this.campaign = null;
     this.record = null;
@@ -59,9 +61,16 @@ export class ItemDataView {
     var banner = document.getElementById("banner");
     modal.style.display = "block";
     banner.style.display = "none";
+
+    const fullsizeImage = document.getElementById('modalImg');
+    this.wheelzoom(fullsizeImage, {zoom:0.25, maxZoom:10});
   }
 
   closeModal() {
+    this.wheelzoom.resetAll;
+    const fullsizeImage = document.getElementById('modalImg');
+    fullsizeImage.src = this.getValidImg(this.record, this.record.myfullimg);
+    
     var modal = document.getElementById('myModal');
     var banner = document.getElementById("banner");
     banner.style.display = "block";
