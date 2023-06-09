@@ -6968,8 +6968,13 @@ a:hover .social-button.facebook::before {
 
 #mySidebar .action-header .title,
 #editSidebar .action-header .title,
+#shareSidebar .action-header .title,
 #newUserGroupSidebar .action-header .title {
   margin-left: 20px;
+  max-width: 380px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .sidebar {
@@ -7106,8 +7111,8 @@ a:hover .social-button.facebook::before {
 }
 
 .entry .itemaction {
-  top: 3px;
-  right: 41px;
+  top: 5px;
+  right: 36px;
   width: 84px;
 }
 
@@ -7119,12 +7124,13 @@ li.btn-edit-collection a {
 }
 
 .entry:hover .itemaction {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .itemaction li {
-  min-width: 40px;
-  min-height: 40px;
+  padding: 5px 10px;
   list-style-type: none;
   margin: 3px;
   background-color: #2a2b28;
@@ -7132,12 +7138,14 @@ li.btn-edit-collection a {
   align-items: center;
   justify-content: center;
   -webkit-transition: all 0.3s;
-  // -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 
 .itemaction li:hover {
   background-color: @main-color;
+}
+.itemaction li.btn-delete-collection:hover {
+  background-color: rgb(170, 0, 0);
 }
 
 .itemaction-records {
