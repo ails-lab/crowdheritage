@@ -62,13 +62,18 @@
                   </div>
                 </div>
 
-                <ul class="itemaction">
+                <ul class="itemaction"> 
+                  <li class="btn-share-collection" if.bind="userHasShareRights(col)" click.delegate="shareCollection(col)">
+                    <a data-toggle="tooltip" data-placement="top" title="Share Collection">
+                      <img class="editicon" src="/img/assets/img/ui/ic-share.png" />
+                    </a>
+                  </li>
                   <li class="btn-edit-collection" click.delegate="editCollection(col)">
                     <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:editCollection')">
                       <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
                     </a>
                   </li>
-                  <li class="btn-delete-collection" click.delegate="deleteCollection(col)">
+                  <li class="btn-delete-collection" if.bind="userHasShareRights(col)" click.delegate="deleteCollection(col)">
                     <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
                       <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
                     </a>
@@ -95,6 +100,9 @@
     <section>
       <compose view-model="widgets/newcollection/newcollection"
         model.bind="{'collection' : editableCollection, 'type': edittype, 'lang': loc}">
+      </compose>
+      <compose view-model="widgets/share-collection/share-collection"
+        model.bind="{'collection': collectionToShare, 'lang': loc}">
       </compose>
     </section>
   </main>
