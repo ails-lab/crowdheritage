@@ -73,7 +73,7 @@
                       <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
                     </a>
                   </li>
-                  <li class="btn-delete-collection" click.delegate="deleteCollection(col)">
+                  <li class="btn-delete-collection" if.bind="userHasShareRights(col)" click.delegate="deleteCollection(col)">
                     <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
                       <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
                     </a>

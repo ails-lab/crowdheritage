@@ -30,7 +30,7 @@
           </tr>
           <tr repeat.for="user of users">
             <td class="text-left">${user.username}</td>
-            <td class="text-center">${user.admin ? i18n.tr('dashboard:editor') : i18n.tr('dashboard:member')}</td>
+            <td class="text-center">${(user.accessRights === 'OWN') ? i18n.tr('dashboard:editor') : i18n.tr('dashboard:member')}</td>
             <td class="px-2 text-center">
               <i if.bind="!user.admin && userIsNotMe(user)" class="fa fa-trash red-trash"
                 click.delegate="removeAccess(user.username, user.userId, user.category)"></i>
