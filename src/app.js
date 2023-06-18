@@ -128,7 +128,7 @@ export class App {
       { title: "Italiano",    code: "it", flag: "/img/assets/images/flags/it.png" },
       { title: "Français",    code: "fr", flag: "/img/assets/images/flags/fr.png" },
       { title: "Español",     code: "es", flag: "/img/assets/images/flags/es.png" },
-      { title: "Polszczyzna", code: "pl", flag: "/img/assets/images/flags/pl.png" },
+      { title: "Polski", code: "pl", flag: "/img/assets/images/flags/pl.png" },
       { title: "Ελληνικά",    code: "el", flag: "/img/assets/images/flags/el.png" }
       //{ title: "Deutsch",     code: "de", flag: "/img/assets/images/flags/de.png" },
       //{ title: "Nederlands",  code: "nl", flag: "/img/assets/images/flags/nl.png" },
