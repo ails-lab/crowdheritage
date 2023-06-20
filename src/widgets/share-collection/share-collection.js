@@ -70,7 +70,7 @@ export class ShareCollection {
   }
 
   giveAccess(idx) {
-    let username = this.suggestedNames[idx].value;
+    let username = this.suggestedNames[idx].username;
     this.collectionServices.shareCollection(this.collection.dbId, username, 'WRITE').then(response => {
       this.getUsersWithAccess();
       this.hideuSuggestions();

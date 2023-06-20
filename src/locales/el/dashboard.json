@@ -46,7 +46,7 @@
   "creationDate": "Ημερομηνία δημιουργίας",
   "manageUsers": "Διαχείριση χρηστών",
   "addUser": "Προσθήκη χρήστη",
-  "addUserPlaceholder": "Ξεκινήστε να πληκτρολογείτε το όνομα χρήστη",
+  "addUserPlaceholder": "Ξεκινήστε να πληκτρολογείτε όνομα χρήστη ή email",
   "addGroupPlaceholder": "Ξεκινήστε να πληκτρολογείτε το σύντομο όνομα της ομάδας",
   "groupMembers": "Μέλη ομάδας",
   "username": "Username",
