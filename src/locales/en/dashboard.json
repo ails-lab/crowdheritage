@@ -46,7 +46,7 @@
   "creationDate": "Creation date",
   "manageUsers": "Manage Users",
   "addUser": "Add user",
-  "addUserPlaceholder": "Start typing a username",
+  "addUserPlaceholder": "Start typing username or email",
   "addGroupPlaceholder": "Start typing a group short-name",
   "groupMembers": "Group Members",
   "username": "Username",
