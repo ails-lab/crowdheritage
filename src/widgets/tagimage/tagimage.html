@@ -23,19 +23,20 @@
     <div class="wrap">
       <!-- heading-->
       <div class="heading green" t="item:image-tagging">IMAGE COMPARISON</div>
-      <button click.delegate="openComparisonModal()" class="btn btn-comparison" disabled.bind="compareDisabled" >
+      <button click.delegate="openComparisonModal()" class="btn btn-comparison" if.bind="campaign.status=='active'" disabled.bind="compareDisabled" >
         <i show.bind="compareDisabled" class="fa fa-spinner fa-pulse"></i>
         <i show.bind="!compareDisabled" class="fa fa-exchange"></i>
         <span show.bind="!compareDisabled" class="ms-2" t="item:compare">Compare</span>
       </button>
       <!-- info-->
-
-      <div if.bind="compareDisabled" class="infobar" >Waiting for images to load before starting the comparison...</div>
-      <div else class="infobar" innerhtml.bind="campaign.instructions"></div>
+      <template if.bind="campaign.status=='active'">
+        <div if.bind="compareDisabled" class="infobar" >Waiting for images to load before starting the comparison...</div>
+        <div else class="infobar" innerhtml.bind="campaign.instructions"></div>
+      </template>
       <!-- searchbox-->
-      <div if.bind="campaign.status == 'active' && imageannotations.length>0" class="colorbox" t="item:image-tags-header"></div>
+      <div if.bind="imageannotations.length>0" class="colorbox" t="item:image-tags-header"></div>
       <!-- taglist-->
-      <div class="show-more-parent" show.bind="campaign.status == 'active'">
+      <div class="show-more-parent">
         <ul class="imageBlock taglist color show-more-target">
           <li repeat.for="ann of imageannotations" class.bind="ann.isDuplicate ? 'd-none' : ''">
             <div class="thumbs">
