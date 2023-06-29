@@ -36,7 +36,7 @@
             <div id="u${$index}" class="autocomplete-suggestion autocomplete-suggestion-extra"
               mouseover.delegate="domouseover('u'+$index)" mouseout.delegate="domouseout('u'+$index)"
               click.delegate="addMember($index,'user')" repeat.for="item of suggestedNames">
-              ${item.value}
+              ${item.username} (${item.email})
               <!-- <span class="label pull-right" style="color: black">${item.data.category}</span> -->
             </div>
           </div>

@@ -125,10 +125,10 @@ export class Newusergroup {
 	addMember( index, type ) {
 		let name = '';
 		if ( type === 'user' ) {
-			name = this.suggestedNames[index].value;
+			name = this.suggestedNames[index].username;
 			this.hideuSuggestions();
 		} else if ( type === 'group' ) {
-			name = this.suggestedGroupNames[index].value;
+			name = this.suggestedGroupNames[index].username;
 			this.hidegSuggestions();
 		}
 		this.groupServices.findByGroupNameOrEmail(name).then(fresponse => {
