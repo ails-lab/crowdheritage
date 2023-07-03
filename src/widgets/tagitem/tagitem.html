@@ -34,7 +34,12 @@
       <div class="show-more-parent">
         <ul class="tagBlock taglist show-more-target">
           <li repeat.for="ann of annotations[tagType]">
-            <a href.bind="ann.uri" target="_blank">${ann.label}</a>
+            <a
+              href.bind="ann.uri" target="_blank" data-title="<b><u>Added by:</u></b><br/>${ann.createdBy[0].username}" data-html="true"
+              bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-class="creator-tooltip"
+            >
+              ${ann.label}
+            </a>
             <ul class="action">
               <li class="publish-btn" if.bind="isCurrentUserCreator()">
                 <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
