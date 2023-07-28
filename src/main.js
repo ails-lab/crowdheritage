@@ -91,6 +91,7 @@ export async function configure(aurelia) {
         ns: [
           'app',
           'about',
+          'applications',
           'dashboard',
           'feedback',
           'index',

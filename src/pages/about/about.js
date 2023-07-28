@@ -19,7 +19,7 @@ import { UserServices } from 'UserServices.js';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
 
-@inject(UserServices, Element, I18N)//, SpaceServices)
+@inject(UserServices, Element, I18N)
 export class About {
 
 	constructor(userServices, element, i18n) {
@@ -59,6 +59,7 @@ export class About {
 	}
 
   attached() {
+    $('.accountmenu').removeClass('active');
     let stats = document.getElementsByClassName("stat-number");
     for (let stat of stats) {
       this.animateValue(stat, 0, stat.innerHTML, 1200);
