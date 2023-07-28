@@ -15,8 +15,17 @@
           t="[placeholder]item:usertagging-textarea"
           rows="1">
         </textarea>
-        <a id="submit-user-tag" href="javascript:void(0)" click.delegate="submitComment()" t="item:usertagging-submit">
-          Submit
+        <a
+          if.bind="!commentEditing" id="submit-user-tag"
+          click.delegate="submitComment()" t="item:usertagging-submit"
+        >
+          Add
+        </a>
+        <a
+          if.bind="commentEditing" id="submit-user-tag"
+          click.delegate="submitComment()" t="item:usertagging-edit"
+        >
+          Edit
         </a>
       </div>
       <!-- taglist-->
@@ -24,6 +33,13 @@
         <ul class="commentBlock taglist show-more-target">
           <li repeat.for="ann of commentAnnotations">
             <a class="comment-tag">${ann.label}</a>
+            <a
+              class="edit-comment"
+              if.bind="ann.createdByMe && ann.approvedBy.length==1 && ann.rejectedBy.length==0"
+              click.delegate="editCommentAnnotation(ann.dbId, ann.label)"
+            >
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
             <ul class="action">
               <li class="publish-btn" if.bind="isCurrentUserCreator()">
                 <a bootstrap-tooltip data-toggle="tooltip" data-placement="left" data-title="bootstrap tooltip"
