@@ -10,27 +10,23 @@
         </section>
 
 		<section class="generaltext about" if.bind="project=='CrowdHeritage'">
-			<div class="container" t="[html]about:intro">
-				<p><strong>CrowdHeritage is a European project supported by European Union under the framework of the CEF Telecom program - Generic Services.</strong></p>
-				<p>
-					<strong>It is implemented by a consortium of 5 European partners:</strong>
-					<ul>
-						<li>National Technical University of Athens (NTUA), coordinator of the project</li>
-						<li>Europeana Fashion International Association (EFIA)</li>
-						<li>French Ministry of Culture</li>
-						<li>Michael Culture Association</li>
-						<li>Europeana Foundation</li>
-					</ul>
-				</p>
-				<p><strong>The initiative is based on the</strong> standalone online platform for enriching metadata of selected cultural items, developed by NTUA.</p>
-				<p><strong>The platform is aiming to develop</strong> the users experience thanks to participative annotations, depending on the type of content, missing metadata, and validate existing annotations in a user-friendly way.</p>
-				<p>You’re a Fashion, Culture, Art, Heritage, Sport, Music, landscape lover?<br>
-					You’re a student, a professional from Educational or Cultural communities?<br>
-					You’re curious and want to discover European Cultural Heritage?<br>
-					<strong>Join our CrowdHeritage campaigns!</strong>
-				</p>
-				<p>Through the online platform of data collections, you can get access to several collections of cultural content from various Institutions in Europe. According to each campaign, you are invited to contribute by tagging and adding annotations or select colours or images.</p>
-			</div>
+      <div class="container general-statistics">
+        <div class="stats">
+          <div class="stat" repeat.for="stat of generalStatistics">
+            <img class="stat-icon" alt="stat-icon" src.bind="stat.icon">
+            <span class="stat-value">
+              <span class="stat-number">${stat.value}</span>
+              <br/>
+              ${stat.label}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="container about-intro" t="[html]about:intro"></div>
+<!--      <p style='display:flex;'>-->
+<!--        <img style='margin:5px; width:50%;' src='../../../img/flyer1.jpg'>-->
+<!--        <img style='margin:5px; width:50%;' src='../../../img/flyer2.jpg'>-->
+<!--      </p>-->
 		</section>
 		<!-- selection-->
 		<section class="selection">
