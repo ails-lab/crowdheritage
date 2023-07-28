@@ -8084,3 +8084,34 @@ button.close-fullscreen-image {
   font-style: italic;
   text-align: center;
 }
+
+.about-intro {
+  font-size: 1.7rem;
+}
+
+.general-statistics {
+  .stats {
+    padding: 32px;
+    margin: 8px 0 40px 0;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 32px;
+    row-gap: 44px;
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .stat-icon {
+        width: 56px;
+        margin-bottom: 20px;
+      }
+      .stat-value {
+        font-size: 20px;
+        text-align: center;
+        font-weight: 500;
+        line-height: 24px;
+      }
+    }
+  }
+}
