@@ -8090,6 +8090,7 @@ button.close-fullscreen-image {
 }
 
 .general-statistics {
+  animation: fadeInDown 1500ms ease;
   .stats {
     padding: 32px;
     margin: 8px 0 40px 0;
@@ -8111,7 +8112,21 @@ button.close-fullscreen-image {
         text-align: center;
         font-weight: 500;
         line-height: 24px;
+        .stat-number {
+          font-weight: bold;
+        }
       }
     }
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
