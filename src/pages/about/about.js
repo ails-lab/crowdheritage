@@ -18,9 +18,8 @@ import { inject } from 'aurelia-framework';
 import { UserServices } from 'UserServices.js';
 import { I18N } from 'aurelia-i18n';
 import settings from 'global.config.js';
-//import { SpaceServices } from '../../modules/SpaceServices.js';
 
-@inject(UserServices, Element, I18N)//, SpaceServices)
+@inject(UserServices, Element, I18N)
 export class About {
 
 	constructor(userServices, element, i18n) {
@@ -28,14 +27,21 @@ export class About {
 		this.element = element;
 		this.i18n = i18n;
 		this.project = settings.project;
-		//this.spaceServices = spaceServices;
-
 		this.loc;
-		this.isWith = true;
+
+    this.generalStatistics = [
+      { icon: '../../../img/stats/ic-stat-campaign.png', label: this.i18n.tr('about:campaigns'), value: 40 },
+      { icon: '../../../img/stats/ic-stat-contributors.png', label: this.i18n.tr('about:contributors'), value: 977 },
+      { icon: '../../../img/stats/ic-stat-records.png', label: this.i18n.tr('about:records'), value: 47231 },
+      { icon: '../../../img/stats/ic-stat-records-annotated.png', label: this.i18n.tr('about:annotated-records'), value: 24888 },
+      { icon: '../../../img/stats/ic-stat-annotations.png', label: this.i18n.tr('about:annotations'), value: 129254 },
+      { icon: '../../../img/stats/ic-stat-annotations-human.png', label: this.i18n.tr('about:human-annotations'), value: 112558 },
+      { icon: '../../../img/stats/ic-stat-annotations-machine.png', label: this.i18n.tr('about:machine-annotations'), value: 16696 },
+      { icon: '../../../img/stats/ic-stat-validations.png', label: this.i18n.tr('about:validations'), value: 67348 }
+    ];
 	}
 
 	get isAuthenticated() { return this.userServices.isAuthenticated(); }
-	//get space() { return this.spaceServices.active; }
 
 	scrollTo(anchor) {
 		$('html, body').animate({
@@ -50,8 +56,30 @@ export class About {
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
       this.userServices.reloadCurrentUser();
     }
-
-		this.isWith = typeof(params.name) === 'undefined';
-		// TODO: Check for changed space
 	}
+
+  attached() {
+    $('.accountmenu').removeClass('active');
+    let stats = document.getElementsByClassName("stat-number");
+    for (let stat of stats) {
+      this.animateValue(stat, 0, stat.innerHTML, 1200);
+    }
+  }
+
+  animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      obj.innerHTML = Math.floor(progress * (end - start) + start);
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+      else {
+        let finalValue = Number(obj.innerHTML);
+        obj.innerHTML = finalValue.toLocaleString('en', {useGrouping:true});
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
 }

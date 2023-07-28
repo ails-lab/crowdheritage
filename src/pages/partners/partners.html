@@ -1,10 +1,18 @@
 <template>
 
 	<div role="main" class="about au-animate">
-		<section class="pagehero about">
+    <section class="pagehero static">
       <div class="container">
-      	<!-- label-->
+        <!-- label-->
         <h1 class="lbl" t="partners:header">CrowdHeritage Partners</h1>
+        <!-- shortcut-->
+        <ul class="shortcut">
+          <!-- <li><a href="faq.html" title="Frequently Asked Question">FAQ</a></li> --->
+          <li class="active"><a route-href="route: partners; params.bind: {lang:loc}" title="Partners" t="terms:menu-partners">Partners</a></li>
+          <li><a route-href="route: terms; params.bind: {lang:loc}" title="Terms of use" t="terms:menu-terms">Terms of Use</a></li>
+          <li><a route-href="route: privacy; params.bind: {lang:loc}" title="Privacy Policy" t="terms:menu-privacy">Privacy Policy</a></li>
+          <li><a route-href="route: feedback; params.bind: {lang:loc}" title="Feedback" t="[html]terms:menu-feedback">Feedback &amp; Contact</a></li>
+        </ul>
       </div>
     </section>
 

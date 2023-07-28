@@ -7,7 +7,7 @@
         <!-- logo-->
         <div class="logo">
           <a route-href="route: index; params.bind: {lang: locale}" title="Home"><img src="${logo}" alt="Logo"></a>
-          <span if.bind="project == 'CrowdHeritage'" class="logoLabel">beta</span>
+<!--          <span if.bind="project == 'CrowdHeritage'" class="logoLabel">beta</span>-->
         </div>
         <!-- mobile menu-->
         <div class="mobilemenu"><a href="#" title="MENU" data-target="#mobilenav"><img src="/img/ic-menu.png"></a></div>
@@ -48,8 +48,7 @@
           <!-- main-->
           <ul class="main">
             <li><a t="app:home" route-href="route: index; params.bind: {lang: locale}">HOME</a></li>
-            <li if.bind="project=='WITHcrowd'"><a href="http://withculture.eu" target="_blank">WITH</a></li>
-            <li if.bind="project=='CrowdHeritage'"><a route-href="route: partners; params.bind: {lang: locale}" t="app:partners">PARTNERS</a></li>
+            <li><a t="app:applications" route-href="route: applications; params.bind: {lang: locale}">APPLICATIONS</a></li>
             <li><a t="app:about" route-href="route: about; params.bind: {lang: locale}">ABOUT</a></li>
 
             <li if.bind="project=='CrowdHeritage'">
