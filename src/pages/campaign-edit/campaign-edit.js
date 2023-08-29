@@ -357,7 +357,7 @@ export class CampaignEdit {
   }
 
   addMember(index, type) {
-    let name = (type === 'user') ? this.suggestedNames[index].username : this.suggestedGroupNames[index].username;
+    let name = (type === 'user') ? this.suggestedNames[index].username : this.suggestedGroupNames[index].value;
     this.hideSuggestions(type);
 
     this.groupServices.findByGroupNameOrEmail(name)
