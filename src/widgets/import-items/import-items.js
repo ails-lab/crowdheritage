@@ -87,6 +87,16 @@ export class ImportItems {
         }
       ]
     }
+    else if (params.importMethod === "mintImport") {
+      this.inputs = [
+        {
+          textarea: true,
+          value: "",
+          label: this.i18n.tr('dashboard:mintImportLabel'),
+          placeholder: this.i18n.tr('dashboard:mintImportPlaceholder')
+        }
+      ]
+    }
 
     this.inputs.forEach((inp) => {
       this[inp.field] = '';

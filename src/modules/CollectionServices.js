@@ -311,6 +311,16 @@ export class CollectionServices {
     });
   }
 
+  importItemsFromMintUrl(body) {
+    return this.http.fetch('/collection/importMintUrl', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   update(id, collection) {
     return this.http.fetch('/collection/' + id, {
       method: 'PUT',

@@ -144,6 +144,20 @@ export class CollectionEdit {
           toastr.error(error.message);
         });
     }
+    else if (this.importMethod === "mintImport") {
+      let body = {
+        cid: this.collection.dbId,
+        mintUrl: value
+      }
+      this.collectionServices.importItemsFromMintUrl(body)
+        .then(response => {
+          this.afterImport(response);
+        })
+        .catch(error => {
+          this.saving = false;
+          toastr.error(error.message);
+        })
+    }
   }
 
   afterImport(response) {
