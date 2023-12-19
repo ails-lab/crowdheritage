@@ -260,6 +260,19 @@ export class CampaignEdit {
     });
   }
 
+  uploadAnnotations = () => {
+    let input = document.getElementById('annotationsFile');
+    let data = new FormData();
+    data.append('file', input.files[0]);
+
+    // this.mediaServices.upload(data).then((response) => {
+    //   this.campaign.logo = this.displayImage(response.original);
+    // }).catch((error) => {
+    //   logger.error(error);
+    //   toastr.danger('Error uploading the file!');
+    // });
+  }
+
   removeLogo() {
     this.campaign.logo = null;
   }

@@ -131,4 +131,12 @@ export class CampaignServices {
     }).then(response => response.json());
   }
 
+  uploadAnnotationsFromMintUrl(campaignName, motivation, mintUrl) {
+    return this.http.fetch(`/campaign/${campaignName}/importAnnotationsFromMint?`, {
+      method: 'POST'
+    }).then(response => response.json());
+  }
+
+
+
 }

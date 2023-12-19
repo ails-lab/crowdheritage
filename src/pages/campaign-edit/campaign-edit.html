@@ -298,6 +298,30 @@
                   </div>
                 </div>
               </div>
+              <div class="topsection mt-5 mb-3">
+                <div class="sectionlabel">
+                  <div class="bold">
+                    <strong class="text-uppercase me-2" t="dashboard:uploadAnnotations"></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="center">
+                <label t="dashboard:mintUrl">MINT URL</label>
+                <input t="[placeholder]dashboard:mintUrl" type="text" placeholder="MINT URL" id="mintUrl"
+                   autofocus />
+                <div class="motivations d-flex">
+                  <div class="me-5" repeat.for="mot of motivations">
+                    <input class="form-check-input" type="radio">
+                    <span class="form-check-label" for.bind="`mot-${$index}`">${mot}</span>
+                  </div>
+              </div>
+              </div>
+
+                
+              
+              <button t="dashboard:save" class="m-0 btn-red" click.delegate="uploadAnnotations()"></button>
+
+
               <div class="d-flex justify-content-between button-group mt-5">
                 <button t="dashboard:cancel" class="m-0 btn-red" click.delegate="goBackToDashboard()"></button>
                 <button t="dashboard:save" class="m-0 btn-green" click.delegate="updateCampaign()"></button>
