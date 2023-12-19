@@ -237,15 +237,15 @@
                 <div class="center">
                   <label t="dashboard:vocabulariesMappings">Tag types</label>
                   <span class="me-2">(${i18n.tr("dashboard:optional")})</span>
-                  <span class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
+                  <span if.bind="motivationValues.Tagging && selectedVocabularies.length" class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
                   <br/>
                   <div class="d-flex mt-2" repeat.for="group of tagGroups">
-                    <input class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
+                    <input class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" disabled.bind="!motivationValues.Tagging" autofocus />
                     <div class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
-                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]">
+                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]" disabled.bind="!motivationValues.Tagging">
                       <span class="form-check-label">${voc}</span>
                     </div>
-                    <span class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
+                    <span if.bind="motivationValues.Tagging" class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
                   </div>
                 </div>
               </div>
@@ -301,27 +301,55 @@
               <div class="topsection mt-5 mb-3">
                 <div class="sectionlabel">
                   <div class="bold">
-                    <strong class="text-uppercase me-2" t="dashboard:uploadAnnotations"></strong>
+                    <strong class="text-uppercase me-2" t="dashboard:campaignBaseAnnotations"></strong>
                   </div>
                 </div>
               </div>
-              <div class="center">
-                <label t="dashboard:mintUrl">MINT URL</label>
-                <input t="[placeholder]dashboard:mintUrl" type="text" placeholder="MINT URL" id="mintUrl"
-                   autofocus />
-                <div class="motivations d-flex">
-                  <div class="me-5" repeat.for="mot of motivations">
-                    <input class="form-check-input" type="radio">
-                    <span class="form-check-label" for.bind="`mot-${$index}`">${mot}</span>
+              <div class="input-group">
+                <div class="center">
+                  <label t="dashboard:uploadFromMint"></label>
+                  <ul class="tagPills">
+                    <li repeat.for="annoFile of baseAnnotations.MINT">
+                      <i class="fa fa-file-code-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${annoFile.name}</span>
+                    </li>
+                  </ul>
+                  <div class="annotations-upload">
+                    <input class="upload-url" type="text" value.bind="annotationsUpload.MINT.url" placeholder.bind="i18n.tr('dashboard:pasteMintUrl')" />
+                    <select class="motivation-selector" name="mint-upload-motivation" value.bind="annotationsUpload.MINT.motivation">
+                      <option value="" disabled selected t="dashboard:motivationSelectPlaceholder"></option>
+                      <option repeat.for="mot of motivations" value.bind="mot">${mot}</option>
+                    </select>
+                    <i if.bind="annotationsUpload.MINT.status === ''" class="btn-upload fa fa-upload fa-lg" aria-hidden="true" title="Upload Annotations" click.delegate="uploadAnnotations('MINT')"></i>
+                    <span if.bind="annotationsUpload.MINT.status === 'STARTED'" class="upload-status" t="dashboard:uploadStarted"></span>
+                    <span if.bind="annotationsUpload.MINT.status === 'FAILED'" class="upload-status" t="dashboard:uploadFailed"></span>
                   </div>
+                </div>
+                <div class="center">
+                  <label t="dashboard:uploadFromFile"></label>
+                  <ul class="tagPills">
+                    <li repeat.for="annoFile of baseAnnotations.FILE">
+                      <i class="fa fa-file-code-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${annoFile.name}</span>
+                    </li>
+                  </ul>
+                  <div class="annotations-upload">
+                    <div class="annotation-file-upload" click.delegate="loadFromFile('#annotationsFile')">
+                      <span if.bind="!annotationsUpload.FILE.file" t="dashboard:uploadAnnotationFile"></span>
+                      <i if.bind="!annotationsUpload.FILE.file" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                      <span if.bind="annotationsUpload.FILE.file">${annotationsUpload.FILE.fileName}</span>
+                    </div>
+                    <select class="motivation-selector" name="file-upload-motivation" value.bind="annotationsUpload.FILE.motivation">
+                      <option value="" disabled selected t="dashboard:motivationSelectPlaceholder"></option>
+                      <option repeat.for="mot of motivations" value.bind="mot">${mot}</option>
+                    </select>
+                    <i if.bind="annotationsUpload.FILE.status === ''" class="btn-upload fa fa-upload fa-lg" aria-hidden="true" title="Upload Annotations" click.delegate="uploadAnnotations('FILE')"></i>
+                    <span if.bind="annotationsUpload.FILE.status === 'STARTED'" class="upload-status" t="dashboard:uploadStarted"></span>
+                    <span if.bind="annotationsUpload.FILE.status === 'FAILED'" class="upload-status" t="dashboard:uploadFailed"></span>
+                    <input type="file" id="annotationsFile" class="hiddenfile" name="annotations-file" onchange.bind="uploadFile" accept=".json" />
+                  </div>
+                </div>
               </div>
-              </div>
-
-                
-              
-              <button t="dashboard:save" class="m-0 btn-red" click.delegate="uploadAnnotations()"></button>
-
-
               <div class="d-flex justify-content-between button-group mt-5">
                 <button t="dashboard:cancel" class="m-0 btn-red" click.delegate="goBackToDashboard()"></button>
                 <button t="dashboard:save" class="m-0 btn-green" click.delegate="updateCampaign()"></button>
