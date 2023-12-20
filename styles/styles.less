@@ -7765,6 +7765,58 @@ input.tag-type {
   }
 }
 
+.annotations-upload {
+  display: flex;
+  input.upload-url {
+    width: 33% !important;
+    height: 45px;
+    margin-right: 8px;
+  }
+  select.motivation-selector {
+    width: 33% !important;
+  }
+  i.btn-upload {
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    cursor: pointer;
+    &:hover {
+      color: @main-color;
+    }
+  }
+  span.upload-status {
+    font-style: italic;
+    margin-left: 16px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    &.started {
+      color: @main-color;
+    }
+    &.failed {
+      color: red;
+    }
+  }
+  .annotation-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border: 1px solid #cfcfcf;
+    transition: all 0.3s;
+    width: 33% !important;
+    height: 45px;
+    margin-right: 8px;
+    cursor: pointer;
+    &:hover {
+      color: @main-color;
+      border: 1px solid @main-color;
+      font-weight: bold;
+    }
+  }
+}
+
 .deleteButton {
   height: 37px;
   background-color: white;

@@ -122,5 +122,16 @@
   "invalidUsernameError": "The campaign shortname can not contain blank spaces. Use dashes instead",
   "deleteCampaignMessage": "Are you sure you want to delete this campaign?\nThis action can not be undone!\nYou can set the visibility to private, instead.",
   "campaignUpdatedSuccess": "Campaign updated successfully",
-  "campaignUpdatedError": "Campaign update failed"
+  "campaignUpdatedError": "Campaign update failed",
+  "campaignBaseAnnotations": "Campaign Base Annotations",
+  "uploadFromMint": "Ingest Annotations from MINT",
+  "uploadFromFile": "Ingest Annotations from a JSON File",
+  "motivationSelectPlaceholder": "-- Select a motivation for the ingested annotations --",
+  "pasteMintUrl": "Paste your MINT URL",
+  "uploadStarted": "Annotation ingestion initiated.",
+  "uploadFailed": "Annotation ingestion failed.",
+  "uploadAnnotationFile": "Upload your annotation file",
+  "error-no-motivation": "You need to select a motivation",
+  "error-no-file": "You need to upload a file containing the annotations",
+  "error-no-url": "You need to provide a MINT URL"
 }
