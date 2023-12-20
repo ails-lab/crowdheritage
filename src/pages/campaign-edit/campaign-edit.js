@@ -51,6 +51,23 @@ export class CampaignEdit {
     this.userGroups = [];
     this.tagGroups = [];
     this.selectedCollections = [];
+    this.baseAnnotations = {
+      MINT: [],
+      FILE: []
+    };
+    this.annotationsUpload = {
+      MINT: {
+        status: '',
+        motivation: '',
+        url: ''
+      },
+      FILE: {
+        status: '',
+        motivation: '',
+        fileName: '',
+        file: null
+      }
+    };
     this.errors = {};
 
     if (!instance) {
@@ -73,6 +90,23 @@ export class CampaignEdit {
     this.userGroups = [];
     this.tagGroups = [];
     this.selectedCollections = [];
+    this.baseAnnotations = {
+      MINT: [],
+      FILE: []
+    };
+    this.annotationsUpload = {
+      MINT: {
+        status: '',
+        motivation: '',
+        url: ''
+      },
+      FILE: {
+        status: '',
+        motivation: '',
+        fileName: '',
+        file: null
+      }
+    };
   }
 
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
@@ -108,6 +142,11 @@ export class CampaignEdit {
 
     this.campaign.startDate = this.campaign.startDate.replaceAll('/','-');
     this.campaign.endDate = this.campaign.endDate.replaceAll('/','-');
+
+    if (this.campaign.baseAnnotations) {
+      this.baseAnnotations.MINT = this.campaign.baseAnnotations.filter(ba => ba.source === 'MINT');
+      this.baseAnnotations.FILE = this.campaign.baseAnnotations.filter(ba => ba.source === 'FILE');
+    }
 
     if (this.campaign.motivation) {
       for (let mot of this.campaign.motivation) {
@@ -227,6 +266,8 @@ export class CampaignEdit {
   }
 
   loadFromFile(id) {
+    if (id === "#annotationsFile" && this.annotationsUpload.FILE.file) return;
+
     $(id).trigger('click');
   }
 
@@ -382,6 +423,65 @@ export class CampaignEdit {
     const index = this.userGroups.map(group => group.id).indexOf(id);
     if (index > -1) {
       this.userGroups.splice(index, 1);
+    }
+  }
+
+  uploadFile = () => {
+    let self = this;
+    let input = document.getElementById('annotationsFile');
+    let file = input.files[0];
+    this.annotationsUpload.FILE.fileName = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        const fileContent = e.target.result;
+        self.annotationsUpload.FILE.file = JSON.parse(fileContent);
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  uploadAnnotations(source) {
+    if (this.annotationsUpload[source].motivation === "") {
+      toastr.error(this.i18n.tr("dashboard:error-no-motivation"));
+      return;
+    }
+
+    if (source === "FILE") {
+      if (!this.annotationsUpload[source].file) {
+        toastr.error(this.i18n.tr("dashboard:error-no-file"));
+        return;
+      }
+      this.campaignServices.importNtuaAnnotations(this.campaign.username, this.annotationsUpload.FILE.motivation, this.annotationsUpload.FILE.file)
+        .then(response => {
+          console.log(response);
+          this.annotationsUpload.FILE.status = "STARTED";
+        })
+        .catch(error => {
+          console.error(error);
+          this.annotationsUpload.FILE.status = "FAILED";
+        });
+      return;
+    }
+
+    if (source === "MINT") {
+      if (!this.annotationsUpload[source].url) {
+        toastr.error(this.i18n.tr("dashboard:error-no-url"));
+        return;
+      }
+      this.campaignServices.importMintAnnotations(this.campaign.username, this.annotationsUpload.MINT.motivation, this.annotationsUpload.MINT.url)
+        .then(response => {
+          console.log(response);
+          this.annotationsUpload.MINT.status = "STARTED";
+        })
+        .catch(error => {
+          console.error(error);
+          this.annotationsUpload.MINT.status = "FAILED";
+        });
+      return;
     }
   }
 

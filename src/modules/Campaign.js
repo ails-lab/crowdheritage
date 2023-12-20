@@ -56,6 +56,7 @@ export class Campaign {
     this.disclaimerObject = data.disclaimer;
     this.instructionsObject = data.instructions;
     this.prizesObject = data.prizes;
+    this.baseAnnotations = data.baseAnnotations;
 
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
