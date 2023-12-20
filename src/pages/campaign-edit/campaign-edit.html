@@ -321,8 +321,8 @@
                       <option repeat.for="mot of motivations" value.bind="mot">${mot}</option>
                     </select>
                     <i if.bind="annotationsUpload.MINT.status === ''" class="btn-upload fa fa-upload fa-lg" aria-hidden="true" title="Upload Annotations" click.delegate="uploadAnnotations('MINT')"></i>
-                    <span if.bind="annotationsUpload.MINT.status === 'STARTED'" class="upload-status" t="dashboard:uploadStarted"></span>
-                    <span if.bind="annotationsUpload.MINT.status === 'FAILED'" class="upload-status" t="dashboard:uploadFailed"></span>
+                    <span if.bind="annotationsUpload.MINT.status === 'STARTED'" class="upload-status started" t="dashboard:uploadStarted"></span>
+                    <span if.bind="annotationsUpload.MINT.status === 'FAILED'" class="upload-status failed" t="dashboard:uploadFailed"></span>
                   </div>
                 </div>
                 <div class="center">
@@ -344,8 +344,8 @@
                       <option repeat.for="mot of motivations" value.bind="mot">${mot}</option>
                     </select>
                     <i if.bind="annotationsUpload.FILE.status === ''" class="btn-upload fa fa-upload fa-lg" aria-hidden="true" title="Upload Annotations" click.delegate="uploadAnnotations('FILE')"></i>
-                    <span if.bind="annotationsUpload.FILE.status === 'STARTED'" class="upload-status" t="dashboard:uploadStarted"></span>
-                    <span if.bind="annotationsUpload.FILE.status === 'FAILED'" class="upload-status" t="dashboard:uploadFailed"></span>
+                    <span if.bind="annotationsUpload.FILE.status === 'STARTED'" class="upload-status started" t="dashboard:uploadStarted"></span>
+                    <span if.bind="annotationsUpload.FILE.status === 'FAILED'" class="upload-status failed" t="dashboard:uploadFailed"></span>
                     <input type="file" id="annotationsFile" class="hiddenfile" name="annotations-file" onchange.bind="uploadFile" accept=".json" />
                   </div>
                 </div>

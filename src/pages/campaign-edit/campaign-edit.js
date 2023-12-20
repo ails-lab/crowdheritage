@@ -455,7 +455,15 @@ export class CampaignEdit {
         toastr.error(this.i18n.tr("dashboard:error-no-file"));
         return;
       }
-      // TODO: Invoke the relevant API call
+      this.campaignServices.importNtuaAnnotations(this.campaign.username, this.annotationsUpload.FILE.motivation, this.annotationsUpload.FILE.file)
+        .then(response => {
+          console.log(response);
+          this.annotationsUpload.FILE.status = "STARTED";
+        })
+        .catch(error => {
+          console.error(error);
+          this.annotationsUpload.FILE.status = "FAILED";
+        });
       return;
     }
 
@@ -464,7 +472,15 @@ export class CampaignEdit {
         toastr.error(this.i18n.tr("dashboard:error-no-url"));
         return;
       }
-      // TODO: Invoke the relevant API call
+      this.campaignServices.importMintAnnotations(this.campaign.username, this.annotationsUpload.MINT.motivation, this.annotationsUpload.MINT.url)
+        .then(response => {
+          console.log(response);
+          this.annotationsUpload.MINT.status = "STARTED";
+        })
+        .catch(error => {
+          console.error(error);
+          this.annotationsUpload.MINT.status = "FAILED";
+        });
       return;
     }
   }

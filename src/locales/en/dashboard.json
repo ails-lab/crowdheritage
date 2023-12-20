@@ -125,7 +125,7 @@
   "campaignUpdatedError": "Campaign update failed",
   "campaignBaseAnnotations": "Campaign Base Annotations",
   "uploadFromMint": "Ingest Annotations from MINT",
-  "uploadFromFile": "Ingest Annotations from File",
+  "uploadFromFile": "Ingest Annotations from a JSON File",
   "motivationSelectPlaceholder": "-- Select a motivation for the ingested annotations --",
   "pasteMintUrl": "Paste your MINT URL",
   "uploadStarted": "Annotation ingestion initiated.",

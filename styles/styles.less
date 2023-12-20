@@ -7788,6 +7788,15 @@ input.tag-type {
   span.upload-status {
     font-style: italic;
     margin-left: 16px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    &.started {
+      color: @main-color;
+    }
+    &.failed {
+      color: red;
+    }
   }
   .annotation-file-upload {
     display: flex;
