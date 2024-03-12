@@ -229,7 +229,7 @@
                       <a if.bind="motivationValues.Tagging" click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
                     </li>
                   </ul>
-                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
+                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" disabled.bind="!(motivationValues.Tagging || motivationValues.SubTagging)" change.delegate="addVocabulary($event.target.value)">
                     <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
                     <option repeat.for="voc of availableVocabularies" value.bind="voc.name">[${voc.name}] - ${voc.label}</option>
                   </select>

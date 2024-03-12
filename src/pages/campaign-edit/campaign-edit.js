@@ -36,7 +36,7 @@ export class CampaignEdit {
 
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging', 'SubTagging'];
     this.purposes = ['ANNOTATE', 'VALIDATE'];
     this.orientations = ['DATA', 'METADATA'];
     this.feedbackMethods = ['UPVOTE', 'RATE'];
@@ -61,7 +61,7 @@ export class CampaignEdit {
   clearInstance() {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging', 'SubTagging'];
     this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
