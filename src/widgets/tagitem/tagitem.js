@@ -59,6 +59,7 @@ export class Tagitem {
     this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
+    this.subtagAnnotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations = {};
@@ -95,6 +96,7 @@ export class Tagitem {
     toggleMore(".colorBlock");
     toggleMore(".imageBlock");
     toggleMore(".geoBlock");
+    toggleMore(".subtagBlock");
   }
 
   detached() {
@@ -128,6 +130,7 @@ export class Tagitem {
     this.imageannotations.splice(0, this.imageannotations.length);
     this.pollannotations.splice(0, this.pollannotations.length);
     this.commentAnnotations.splice(0, this.commentAnnotations.length);
+    this.subtagAnnotations.splice(0, this.subtagAnnotations.length);
     this.pollTitle = "";
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
@@ -149,6 +152,7 @@ export class Tagitem {
     this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
+    this.subtagAnnotations = [];
     await this.getRecordAnnotations(this.recId);
   }
 
@@ -447,6 +451,9 @@ export class Tagitem {
       else if (mot == 'comment') {
         ann = this.commentAnnotations.splice(index, 1);
       }
+      else if (mot == 'subtag') {
+        ann = this.subtagAnnotations.splice(index, 1);
+      }
       this.reloadAnnotations().then(() => {
         if (this.isCurrentUserCreator()) {
           // Remove one point from each of the upvoters
@@ -567,6 +574,9 @@ export class Tagitem {
     else if (mot == 'comment') {
         obj = this.commentAnnotations[index];
     }
+    else if (mot == 'subtag') {
+        obj = this.subtagAnnotations[index];
+    }
     else {
       return;
     }
@@ -676,6 +686,9 @@ export class Tagitem {
     }
     else if (mot == 'comment') {
         obj = this.commentAnnotations[index];
+    }
+    else if (mot == 'subtag') {
+        obj = this.subtagAnnotations[index];
     }
     else {
       return;
@@ -882,6 +895,22 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+    else if (this.widgetMotivation == 'SubTagging') {
+      await this.recordServices.getAnnotations(this.recId, 'SubTagging', this.generatorParam).then(response => {
+        this.subtagAnnotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.subtagAnnotations.push(new Annotation(response[i], "", this.loc));
+          } else {
+            this.subtagAnnotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.subtagAnnotations.sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
   }
 
   getColorLabel(labelObject) {
@@ -912,6 +941,7 @@ export class Tagitem {
     var colorFlag = false;
     var pollFlag = false;
     var commFlag = false;
+    var subFlag = false;
 
     for (var i in this.annotations) {
       if (this.annotations[i].createdByMe || this.annotations[i].approvedByMe || this.annotations[i].rejectedByMe) {
@@ -943,6 +973,12 @@ export class Tagitem {
         break;
       }
     }
+    for (var i in this.subtagAnnotations) {
+      if (this.subtagAnnotations[i].createdByMe || this.subtagAnnotations[i].approvedByMe || this.subtagAnnotations[i].rejectedByMe) {
+        subFlag = true;
+        break;
+      }
+    }
 
     if (mot == "tag") {
       return tagFlag;
@@ -959,8 +995,11 @@ export class Tagitem {
     else if (mot == "comment") {
       return commFlag;
     }
+    else if (mot == "subtag") {
+      return subFlag;
+    }
     else {
-      return tagFlag || geoFlag || colorFlag || pollFlag || commFlag;
+      return tagFlag || geoFlag || colorFlag || pollFlag || commFlag || subFlag;
     }
   }
 
@@ -1125,6 +1164,15 @@ export class Tagitem {
     modal.style.display = "none";
     banner.style.display = "block";
     this.fullImageSrc = '';
+  }
+
+  subtagTooltipText(ann) {
+    let start = ann.selector.origValue.slice(0, ann.selector.start);
+    let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
+    let end = ann.selector.origValue.slice(ann.selector.end, ann.selector.origValue.length);
+    let value = start + middle + end;
+
+    return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
   }
 
 }
