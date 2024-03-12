@@ -1,14 +1,66 @@
 <template>
+  <require from="../../../widgets/tooltip/tooltip"></require>
   <main>
     <section class="validation data-export">
-        <a id="exportUsers" class="export-btn" click.delegate="exportContributors('json')">
-          <i class="fa fa-users me-3"></i>
-          <span id="exportLabel">${exportUsersLabel}</span>
-        </a>
-        <a id="exportAnnotations" class="export-btn" click.delegate="exportAnnotations()">
-          <i class="fa fa-download me-3"></i>
-          <span id="exportLabel">${exportAnnsLabel}</span>
-        </a>
+      <div class="container pe-0">
+        <section class="entrance">
+          <div class="section-body">
+            <div class="topsection mb-3">
+              <div class="sectionlabel">
+                <div class="bold">
+                  <strong class="text-uppercase me-2" t="moderation:campaign-annotations"></strong>
+                </div>
+              </div>
+            </div>
+            <form role="form">
+              <div class="input-group">
+                <div class="center">
+                  <label t="moderation:export-campaign-annotations"></label>
+                  <div class="d-flex align-items-center mt-3">
+                    <i
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
+                      id="copyAnnotationsLink" class="btn-download fa fa-clipboard fa-lg"
+                      aria-hidden="true" title.bind="i18n.tr('moderation:annotations-link-copy-title')"
+                      click.delegate="copyAnnotationsLinkToClipboard()"
+                    ></i>
+                    <i
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
+                      id="exportAnnotations" class="btn-download fa fa-download fa-lg"
+                      aria-hidden="true" title.bind="i18n.tr('moderation:annotations-download-title')"
+                      click.delegate="exportAnnotations()"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="topsection mb-3 mt-5">
+              <div class="sectionlabel">
+                <div class="bold">
+                  <strong class="text-uppercase me-2" t="moderation:campaign-contributors"></strong>
+                </div>
+              </div>
+            </div>
+            <form role="form">
+              <div class="input-group">
+                <div class="center">
+                  <label t="moderation:export-contributors-as"></label>
+                  <div class="d-flex align-items-center">
+                    <div class="me-5" repeat.for="fileType of fileTypes">
+                      <input class="form-check-input" type="radio" id.bind="`filetype-${$index}`" model.bind="fileType" checked.bind="contributorsFileType">
+                      <span class="form-check-label" for.bind="`filetype-${$index}`">${fileType}</span>
+                    </div>
+                    <i
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
+                      id="exportUsers" class="btn-download fa fa-download fa-lg"
+                      aria-hidden="true" title.bind="i18n.tr('moderation:contributors-download-title')"
+                      click.delegate="exportContributors(contributorsFileType)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
       </div>
     </section>
   </main>

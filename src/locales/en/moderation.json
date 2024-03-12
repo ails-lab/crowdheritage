@@ -14,5 +14,13 @@
   "total-feedback" : "Total Feedback",
   "total-upvotes" : "Total Upvotes",
   "total-downvotes" : "Total Downvotes",
-  "total-ratings" : "Total Ratings"
+  "total-ratings" : "Total Ratings",
+  "campaign-contributors" : "Campaign Contributors",
+  "export-contributors-as" : "Export contributors as",
+  "campaign-annotations" : "Campaign Annotations",
+  "export-campaign-annotations" : "Export campaign annotations",
+  "copyToClipboardSuccess" : "Annotations Download Link Copied to Clipboard",
+  "annotations-link-copy-title" : "Copy Download Link to Clipboard",
+  "annotations-download-title" : "Download Annotations File",
+  "contributors-download-title" : "Download Contributors File"
 }

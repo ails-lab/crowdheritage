@@ -3184,8 +3184,23 @@ ux-dialog-container.active {
 }
 
 body main section.validation {
-  margin: 50px 0px 10px 0px;
+  margin: 16px 0px 8px 0px;
   padding: 0;
+  i.fa {
+    color: @main-color;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    height: 36px;
+    cursor: pointer;
+    border: 1px @main-color solid;
+    border-radius: 8px;
+    padding: 0 8px;
+    &:hover {
+      color: white;
+      background-color: @main-color;
+    }
+  }
 }
 
 body main section.validation .publish-citeria-btn {
