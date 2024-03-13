@@ -22,5 +22,17 @@
   "copyToClipboardSuccess" : "Annotations Download Link Copied to Clipboard",
   "annotations-link-copy-title" : "Copy Download Link to Clipboard",
   "annotations-download-title" : "Download Annotations File",
-  "contributors-download-title" : "Download Contributors File"
+  "contributors-download-title" : "Download Contributors File",
+  "campaign-export-criteria" : "Campaign Export Criteria",
+  "export-criteria-title" : "Specify export criteria",
+  "export-criteria-description" : "Initialize the automatic flagging of annotations for exporting",
+  "campaign-bulk-validation" : "Campaign Bulk Validation",
+  "export-criteria-modal-title" : "Annotations export criteria",
+  "criteria-submission-date" : "Criteria Submission Date",
+  "minimum-annotation-score" : "Minimum annotation score",
+  "minimum-annotation-score-disclaimer" : "The annotation score is calculated as the number of upvotes minus the number of downvotes that an annotation has received",
+  "minimum-annotation-rating-score-disclaimer" : "The annotation score is calculated as the average rating based on the ratings that the annotation has received",
+  "reject-annotations-with-downvotes" : "Reject annotations with downvotes",
+  "reject-annotations-with-downvotes-disclaimer" : "Annotations that have received even one downvote will not be marked for exporting",
+  "export-dialog-warning": "WARNING:\nBy submitting new Export Criteria, the existing export-state of the annotations will be reset and your validation work will be lost.\nAre you sure you want to continue?"
 }

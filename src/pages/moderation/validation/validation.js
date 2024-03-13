@@ -91,6 +91,10 @@ export class Validation {
     else
       return `${settings.project} ${this.caname}`;
   }
+  get bulkValidationEnabled() {
+    // TODO: Specify strategy when functionality is fixed on the backend
+    return false;
+  }
 
   scrollToTop() {
     window.scrollTo(0, 0);
