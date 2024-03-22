@@ -7264,6 +7264,68 @@ background-color: @main-color;
   height: 137px;
 }
 
+.campaign-edit-button-group {
+  width: 100%;
+  position: sticky;
+  top: 70px;
+  background-color: white;
+  padding: 20px 0;
+  z-index: 100;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 0 14px;
+    &:before, &:after {
+      display: none;
+    }
+    .btn {
+      cursor: pointer;
+      display: block;
+      padding: 8px 20px;
+      letter-spacing: 1.3px;
+      transition: all 0.3s;
+      font-size: 1.4rem;
+      min-width: 140px;
+    }
+    .button-green {
+      border: 1px solid @main-color;
+      color: white;
+      background-color: @main-color;
+      &:hover {
+        background-color: white;
+        color: @main-color;
+      }
+    }
+    .button-green-outline {
+      border: 1px solid @main-color;
+      color: @main-color;
+      background-color: white;
+      &:hover {
+        background-color: @main-color;
+        color: white;
+      }
+    }
+    .button-red {
+      border: 1px solid red;
+      color: white;
+      background-color: red;
+      &:hover {
+        background-color: white;
+        color: red;
+      }
+    }
+    .button-red-outline {
+      border: 1px solid red;
+      color: red;
+      background-color: white;
+      &:hover {
+        background-color: red;
+        color: white;
+      }
+    }
+  }
+}
+
 section.campaign-edit {
   min-width: 330px;
 
@@ -7626,7 +7688,7 @@ section.campaign-edit {
 section.entrance.campaign-edit {
   width: 100% !important;
   display: block;
-  padding-top: 30px !important;
+  padding-top: 0 !important;
 }
 
 

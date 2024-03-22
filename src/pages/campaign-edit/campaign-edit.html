@@ -22,22 +22,30 @@
       <i class="fa fa-spinner fa-pulse"></i>
     </div>
     <div if.bind="!loading" role="main">
+      <div class="campaign-edit-button-group">
+        <div class="container">
+          <div class="button-group-left d-flex">
+            <button t="[append]app:delete" class="btn button-red me-3" click.delegate="deleteCampaign()">
+              <i class="fa fa-trash-o me-3" aria-hidden="true"></i>
+            </button>
+            <button t="[append]app:preview" class="btn button-green-outline" click.delegate="previewCampaign()">
+              <i class="fa fa-object-group me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="btn-group-right d-flex">
+            <button t="[append]dashboard:cancel" class="btn button-red-outline me-3" click.delegate="goBackToDashboard()">
+              <i class="fa fa-undo me-3" aria-hidden="true"></i>
+            </button>
+            <button t="[append]dashboard:save" class="btn button-green" click.delegate="updateCampaign()">
+              <i class="fa fa-floppy-o me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="container pe-0">
         <section class="entrance campaign-edit">
           <div class="section-body campaignEditor">
-            <div class="d-flex justify-content-between button-group mb-5">
-              <div class="toggleWrapper">
-                <label class="mb-0 me-4" t="[prepend]dashboard:visibility">:</label>
-                <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked.bind="campaign.isPublic">
-                <label class="mb-0" for="toggle1"></label>
-                <span class="ms-2">${campaign.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}</span>
-              </div>
-              <div>
-                <button t="app:preview" class="m-0 btn-green" click.delegate="previewCampaign()"></button>
-                <button t="app:delete" class="btn-red m-0 me-3" click.delegate="deleteCampaign()"></button>
-              </div>
-            </div>
-            <div class="topsection mb-3">
+            <div class="topsection mt-5 mb-3">
               <div class="sectionlabel">
                 <div class="bold">
                   <strong class="text-uppercase me-2" t="dashboard:campaignDetails"></strong>
@@ -71,6 +79,14 @@
                   <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
                     value.bind="campaign.username" autofocus />
                 </div> -->
+                <div class="center mb-5">
+                  <div class="toggleWrapper">
+                    <label class="mb-0 me-4" t="[prepend]dashboard:visibility">:</label>
+                    <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked.bind="campaign.isPublic">
+                    <label class="mb-0" for="toggle1"></label>
+                    <span class="ms-2">${campaign.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}</span>
+                  </div>
+                </div>
                 <div class="left">
                   <label t="dashboard:startDate">Start Date</label>
                   <input t="[placeholder]dashboard:startDate" type="date" placeholder="Start Date" id="startDate"
@@ -342,10 +358,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="d-flex justify-content-between button-group mt-5">
-                <button t="dashboard:cancel" class="m-0 btn-red" click.delegate="goBackToDashboard()"></button>
-                <button t="dashboard:save" class="m-0 btn-green" click.delegate="updateCampaign()"></button>
               </div>
             </form>
           </div>
