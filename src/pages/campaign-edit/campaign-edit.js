@@ -36,11 +36,30 @@ export class CampaignEdit {
 
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
+    this.campaignTypes = ['Basic', 'Translate', 'Image Comparison'];
+    this.campaignTypeDetails = {
+      'Basic': {
+        'feedbackMethod': 'UPVOTE',
+        'orientation': 'DATA',
+      },
+      'Translate': {
+        'feedbackMethod': 'RATE',
+        'orientation': 'METADATA',
+        'purpose': 'VALIDATE',
+        'motivation': ['Commenting']
+      },
+      'Image Comparison': {
+        'feedbackMethod': 'UPVOTE',
+        'orientation': 'DATA',
+        'purpose': 'VALIDATE',
+        'motivation': ['ImageTagging']
+      }
+    };
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.purposes = ['ANNOTATE', 'VALIDATE'];
     this.orientations = ['DATA', 'METADATA'];
     this.feedbackMethods = ['UPVOTE', 'RATE'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -78,8 +97,8 @@ export class CampaignEdit {
   clearInstance() {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -109,6 +128,7 @@ export class CampaignEdit {
     };
   }
 
+  get selectedMotivations() { return Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]); }
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
   get gsuggestionsActive() { return this.suggestedGroupNames.length !== 0; }
   get csuggestionsActive() { return this.suggestedColNames.length !== 0; }
@@ -508,6 +528,21 @@ export class CampaignEdit {
     return true;
   }
 
+  changeCampaignType(type) {
+    this.campaign.campaignType = type;
+    this.campaign.feedbackMethod = this.campaignTypeDetails[type].feedbackMethod;
+    this.campaign.orientation = this.campaignTypeDetails[type].orientation;
+    this.campaign.purpose = this.campaignTypeDetails[type].purpose || 'ANNOTATE';
+    this.campaign.motivation = this.campaignTypeDetails[type].motivation || ['Tagging'];
+    if (this.campaignTypeDetails[type].motivation) {
+      this.motivations.forEach(mot => {
+        this.motivationValues[mot] = this.campaignTypeDetails[type].motivation.includes(mot);
+      });
+    } else {
+      this.motivationValues = {Tagging: true, GeoTagging: false, ColorTagging: false, Commenting: false};
+    }
+  }
+
   updateCampaign() {
     if (!this.validInput()) {
       window.scrollTo(0,0);
@@ -545,6 +580,9 @@ export class CampaignEdit {
       userGroupIds: this.userGroups.map(group => group.id),
       targetCollections: this.selectedCollections.map(col => col.id)
     };
+    if (this.campaign.campaignType === 'Image Comparison') {
+      camp.motivation = ['ImageTagging'];
+    }
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)
       .then(() => {
