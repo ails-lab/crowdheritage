@@ -128,7 +128,13 @@ export class CampaignEdit {
     };
   }
 
-  get selectedMotivations() { return Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]); }
+  get selectedMotivations() {
+    let motivations = Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]);
+    if (this.campaign.campaignType === 'Image Comparison') {
+      motivations.push('ImageTagging');
+    }
+    return motivations;
+  }
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
   get gsuggestionsActive() { return this.suggestedGroupNames.length !== 0; }
   get csuggestionsActive() { return this.suggestedColNames.length !== 0; }
@@ -515,14 +521,41 @@ export class CampaignEdit {
     }
   }
 
-  validInput() {
+  campaignParamsAreValid() {
     if (new Date(this.campaign.startDate) >= new Date(this.campaign.endDate)) {
       toastr.error("Campaign duration invalid");
+      return false;
+    }
+    if (!this.campaign.titleObject[this.currentLocale.code] || !this.campaign.titleObject[this.currentLocale.code].length) {
+      toastr.error("You need to provide a Campaign Title");
+      return false;
+    }
+    if (!this.campaign.campaignType) {
+      toastr.error("You need to select a Campaign Type");
+      return false;
+    }
+    if (!this.campaign.purpose) {
+      toastr.error("You need to select a Campaign Purpose");
+      return false;
+    }
+    if (!this.campaign.motivation || ! this.campaign.motivation.length) {
+      toastr.error("You need to select at least one Campaign Motivation");
+      return false;
+    }
+    if (this.campaign.motivation.includes('Tagging') && (!this.selectedVocabularies || !this.selectedVocabularies.length)) {
+      toastr.error("You need to select at least one Semantic Tagging Vocabulary");
       return false;
     }
     let target = parseInt(this.campaign.target);
     if (!Number.isInteger(target) || target <= 0) {
       toastr.error("Annotation target must be a positive number");
+      return false;
+    }
+    let baseAnnotationsCampaignType = ['Translate', 'Image Comparison'].includes(this.campaign.campaignType);
+    let noExistingBaseAnnotations = !(this.baseAnnotations.MINT.length || this.baseAnnotations.FILE.length);
+    let noNewBaseAnnotations = !(this.annotationsUpload.MINT.status.length || this.annotationsUpload.FILE.status.length);
+    if (baseAnnotationsCampaignType && noExistingBaseAnnotations && noNewBaseAnnotations) {
+      toastr.error("You need to upload Base Annotation for this Campaign Type");
       return false;
     }
     return true;
@@ -544,7 +577,7 @@ export class CampaignEdit {
   }
 
   updateCampaign() {
-    if (!this.validInput()) {
+    if (!this.campaignParamsAreValid()) {
       window.scrollTo(0,0);
       return;
     }

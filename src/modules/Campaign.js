@@ -98,6 +98,7 @@ export class Campaign {
   get inferredCampaignType() {
     if (this.orientation === 'METADATA') return 'Translate';
     else if (this.motivation && this.motivation.includes('ImageTagging')) return 'Image Comparison';
+    else if (!this.purpose) return null;
     else return 'Basic';
   }
 
