@@ -1,23 +1,35 @@
 <template>
+  <require from="../tooltip/tooltip"></require>
 	<ux-dialog id="publishPopup">
 		<button type="button" class="close" click.trigger="controller.cancel()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 
     <ux-dialog-body>
-			<h2 class="mt-2 mb-5 text-center">Annotation publish criteria</h2>
+			<h2 class="mt-2 mb-5 text-center" t="moderation:export-criteria-modal-title"></h2>
 			<form class="form pt-4 pb-5">
 				<div class="row mx-2 mb-5">
-					<label for="validationStarted" class="col-md-8 px-0 pt-1 mb-0">Validation start date:</label>
+					<label for="validationStarted" class="col-md-8 px-0 pt-1 mb-0" t="moderation:criteria-submission-date"></label>
 					<input disabled type="text" id="validationStarted" value.bind="validationStarted"  class="text-center col-md-4">
 				</div>
+        <hr>
 				<div class="row mx-2 mb-3">
-					<label for="allowRejected" class="col-md-8 pt-1 px-0 mb-0">Minimum annotation score:</label>
+					<label for="minScore" class="col-md-8 pt-1 px-0 mb-0" t="[prepend]moderation:minimum-annotation-score">
+            <i
+              class="help-icon fa fa-question-circle mx-3" bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="bootstrap tooltip"
+              title.bind="i18n.tr('moderation:minimum-annotation-score-disclaimer')"
+            ></i>
+          </label>
 					<input type="number" id="minScore" value.bind="minScore" class="text-center col-md-4 px-0">
 				</div>
 				<div class="row mx-2">
-					<label for="allowRejected" class="col-md-8 pt-1 px-0 mb-0">Allow annotations with downvotes:</label>
-					<input type="checkbox" id="allowRejected" checked.bind="allowRejected">
+					<label for="rejectDownvoted" class="col-md-8 pt-1 px-0 mb-0" t="[prepend]moderation:reject-annotations-with-downvotes">
+            <i
+              class="help-icon fa fa-question-circle mx-3" bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title="bootstrap tooltip"
+              title.bind="i18n.tr('moderation:reject-annotations-with-downvotes-disclaimer')"
+            ></i>
+          </label>
+					<input type="checkbox" id="rejectDownvoted" checked.bind="rejectDownvoted">
 				</div>
 			</form>
     </ux-dialog-body>
