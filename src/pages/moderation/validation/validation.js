@@ -189,7 +189,7 @@ export class Validation {
     this.cname = params.campaign.username;
     this.campaign = params.campaign;
 
-    this.colorPalette = params.campaign ? this.campaign.colorPallete : this.colorSet;
+    this.colorPalette = params.campaign ? this.campaign.colorPalette : this.colorSet;
 
     if (!this.popularTags) {
       this.campaignServices.getPopularAnnotations(this.campaign.username)

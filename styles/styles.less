@@ -7270,7 +7270,7 @@ background-color: @main-color;
   top: 70px;
   background-color: white;
   padding: 20px 0;
-  z-index: 100;
+  z-index: 5;
   .container {
     display: flex;
     justify-content: space-between;
@@ -7280,12 +7280,20 @@ background-color: @main-color;
     }
     .btn {
       cursor: pointer;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 8px 20px;
       letter-spacing: 1.3px;
       transition: all 0.3s;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       min-width: 140px;
+      .fa-undo {
+        -webkit-text-stroke: 1px white;
+        &:hover {
+          -webkit-text-stroke: 1px red;
+        }
+      }
     }
     .button-green {
       border: 1px solid @main-color;
@@ -7775,6 +7783,53 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
           left: 17px;
         }
       }
+    }
+  }
+}
+
+.color-picker {
+  display: flex;
+  align-items: center;
+  .uri-input {
+    max-width: 30%;
+    margin-right: 20px;
+  }
+  .label-input {
+    max-width: 20%;
+    margin-right: 20px;
+  }
+  .hex-input {
+    height: 48px;
+    width: 78px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  .fa {
+    cursor: pointer;
+  }
+}
+
+.colorPills {
+  display: flex;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+  flex-flow: wrap;
+  li {
+    border: 1px black solid;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 6px 10px;
+    .colorLabel, .delete {
+      color: white;
+      text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
+      font-size: 1.6rem;
+    }
+    a:hover {
+      cursor: pointer;
+      text-decoration: none;
     }
   }
 }

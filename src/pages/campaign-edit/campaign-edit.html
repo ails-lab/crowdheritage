@@ -1,4 +1,5 @@
 <template>
+  <require from="../../widgets/tooltip/tooltip"></require>
   <main>
     <section class="banner mini">
       <div class="container">
@@ -26,18 +27,18 @@
         <div class="container">
           <div class="button-group-left d-flex">
             <button t="[append]app:delete" class="btn button-red me-3" click.delegate="deleteCampaign()">
-              <i class="fa fa-trash-o me-3" aria-hidden="true"></i>
+              <i class="fa fa-trash-o fa-lg me-3" aria-hidden="true"></i>
             </button>
             <button t="[append]app:preview" class="btn button-green-outline" click.delegate="previewCampaign()">
-              <i class="fa fa-object-group me-3" aria-hidden="true"></i>
+              <i class="fa fa-object-group fa-lg me-3" aria-hidden="true"></i>
             </button>
           </div>
           <div class="btn-group-right d-flex">
             <button t="[append]dashboard:cancel" class="btn button-red-outline me-3" click.delegate="goBackToDashboard()">
-              <i class="fa fa-undo me-3" aria-hidden="true"></i>
+              <i class="fa fa-undo fa-lg me-3" aria-hidden="true"></i>
             </button>
             <button t="[append]dashboard:save" class="btn button-green" click.delegate="updateCampaign()">
-              <i class="fa fa-floppy-o me-3" aria-hidden="true"></i>
+              <i class="fa fa-floppy-o fa-lg me-3" aria-hidden="true"></i>
             </button>
           </div>
         </div>
@@ -197,6 +198,59 @@
                         ${mot}
                       </span>
                     </div>
+                  </div>
+                </div>
+                <div class="center" if.bind="selectedMotivations.includes('ColorTagging')">
+                  <label t="dashboard:campaignColorPalette">Campaign Color Palette</label>
+                  <ul class="colorPills">
+                    <li
+                      repeat.for="color of campaign.colorPalette"
+                      style.bind="'background-color:'+color.cssHexCode+';'"
+                    >
+                      <a class="me-2" href.bind="color.uri" target="_blank">
+                        <span class="colorLabel">
+                          ${color.label.en}
+                        </span>
+                      </a>
+                      <a click.delegate="removeColorFromPalette(color.uri)">
+                        <i class="delete fa fa-times" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="color-picker">
+                    <input
+                      class="uri-input"
+                      t="[placeholder]dashboard:enter-wikidata-uri"
+                      type="text" id="color-uri-input" autofocus
+                      value.bind="colorUriInput"
+                    />
+                    <input
+                      if.bind="colorLabelInput.length"
+                      class="label-input" disabled
+                      type="text" value.bind="colorLabelInput"
+                    />
+                    <input if.bind="colorHexInput.length" class="hex-input" type="color" value.bind="colorHexInput" />
+                    <i
+                      if.bind="!colorHexInput.length"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top"
+                      title.bind="i18n.tr('dashboard:fetch-color')"
+                      class="fa fa-search fa-lg" aria-hidden="true"
+                      click.delegate="fetchColorFromWikidata()"
+                    ></i>
+                    <i
+                      if.bind="colorHexInput.length"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top"
+                      title.bind="i18n.tr('dashboard:reset-color')"
+                      class="fa fa-trash fa-lg me-4" aria-hidden="true"
+                      click.delegate="resetColorTerm()"
+                    ></i>
+                    <i
+                      if.bind="colorHexInput.length"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top"
+                      title.bind="i18n.tr('dashboard:add-color')"
+                      class="fa fa-plus-square-o fa-lg mt-1" aria-hidden="true"
+                      click.delegate="addColorToPalette()"
+                    ></i>
                   </div>
                 </div>
                 <div class="center" if.bind="motivationValues.Tagging">

@@ -70,6 +70,10 @@ export class CampaignEdit {
     this.userGroups = [];
     this.tagGroups = [];
     this.selectedCollections = [];
+    this.colorUriInput = '';
+    this.colorHexInput = '';
+    this.colorLabelInput = '';
+    this.colorTermInput = {};
     this.baseAnnotations = {
       MINT: [],
       FILE: []
@@ -109,6 +113,10 @@ export class CampaignEdit {
     this.userGroups = [];
     this.tagGroups = [];
     this.selectedCollections = [];
+    this.colorUriInput = '';
+    this.colorHexInput = '';
+    this.colorLabelInput = '';
+    this.colorTermInput = {};
     this.baseAnnotations = {
       MINT: [],
       FILE: []
@@ -576,6 +584,61 @@ export class CampaignEdit {
     }
   }
 
+  fetchColorFromWikidata() {
+    if (!this.colorUriInput.length || !this.colorUriInput.startsWith('https://www.wikidata.org/wiki/')) {
+      toastr.error('Please provide a uri from Wikidata');
+      return;
+    }
+    const wikidataId = this.colorUriInput.split('/').pop();
+    const crowdheritageLangCodes = ['en', 'it', 'fr', 'es', 'pl', 'el', 'de', 'nl'];
+    this.thesaurusServices.getColorTerm(wikidataId)
+      .then(response => {
+        const wikidataLabels = response.entities[wikidataId].labels;
+        const label = Object.keys(wikidataLabels)
+          .filter(code => crowdheritageLangCodes.includes(code))
+          .reduce((color, code) => {
+            color[code] = wikidataLabels[code].value;
+            return color;
+          }, {});
+        const uri = this.colorUriInput;
+        const cssHexCode = `#${response.entities[wikidataId].claims.P465[0].mainsnak.datavalue.value}`;
+        const style = null;
+        this.colorTermInput = { label, uri, cssHexCode, style };
+        this.colorHexInput = cssHexCode;
+        this.colorLabelInput = label.en;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  resetColorTerm() {
+    this.colorUriInput = '';
+    this.colorHexInput = '';
+    this.colorLabelInput = '';
+    this.colorTermInput = {};
+  }
+
+  removeColorFromPalette(uriToRemove) {
+    this.campaign.colorPalette = this.campaign.colorPalette.filter(color => color.uri !== uriToRemove);
+  }
+
+  addColorToPalette() {
+    if (!this.campaign.colorPalette) {
+      this.campaign.colorPalette = [];
+    }
+    const colorExists = this.campaign.colorPalette.some(color => color.uri === this.colorTermInput.uri)
+      || this.campaign.colorPalette.some(color => color.cssHexCode === this.colorTermInput.cssHexCode)
+      || this.campaign.colorPalette.some(color => color.label.en === this.colorTermInput.label.en);
+    if (colorExists) {
+      toastr.error('This color term already exists in your palette');
+      return;
+    }
+    this.colorTermInput.cssHexCode = this.colorHexInput;
+    this.campaign.colorPalette.push(this.colorTermInput);
+    this.resetColorTerm();
+  }
+
   updateCampaign() {
     if (!this.campaignParamsAreValid()) {
       window.scrollTo(0,0);
@@ -615,6 +678,9 @@ export class CampaignEdit {
     };
     if (this.campaign.campaignType === 'Image Comparison') {
       camp.motivation = ['ImageTagging'];
+    }
+    if (this.campaign.colorPalette && this.campaign.colorPalette.length) {
+      camp.colorTaggingColorsTerminology = this.campaign.colorPalette;
     }
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)

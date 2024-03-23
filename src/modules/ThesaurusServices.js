@@ -18,7 +18,7 @@
 import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import fetchConfig from 'fetch.config.js';
-import { checkStatus, fetchConfigGeo, reset } from 'fetch.config.js';
+import { checkStatus, fetchConfigGeo, fetchConfigColor, reset } from 'fetch.config.js';
 
 @inject(HttpClient)
 export class ThesaurusServices {
@@ -57,6 +57,18 @@ export class ThesaurusServices {
       this.http.configure(reset);
       return response.json();
     });
+  }
+
+  async getColorTerm(termWikidataId) {
+	  this.http.configure(fetchConfigColor);
+    const termUri = `https://www.wikidata.org/wiki/Special:EntityData/${termWikidataId}.json`;
+	  return this.http.fetch(termUri, {
+      method: 'GET',
+	  })
+      .then((response) => {
+        this.http.configure(reset);
+        return response.json();
+      });
   }
 
   listVocabularies() {

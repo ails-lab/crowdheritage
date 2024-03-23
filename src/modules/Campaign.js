@@ -49,7 +49,7 @@ export class Campaign {
     this.status = this.campaignStatus;
     this.isPublic = data.isPublic;
     this.validationErrorTypes = data.validationErrorType;
-    this.colorPallete = data.colorTaggingColorsTerminology;
+    this.colorPalette = data.colorTaggingColorsTerminology;
     // Objects for multilinguality
     this.titleObject = data.title;
     this.descriptionObject = data.description;

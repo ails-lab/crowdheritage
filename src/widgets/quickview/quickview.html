@@ -52,7 +52,7 @@
             </compose>
             <compose view="widgets/quickview/tagcomment.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Commenting')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
-            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('ColorTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId, 'colorPalette': campaign.colorPallete}">
+            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('ColorTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId, 'colorPalette': campaign.colorPalette}">
             </compose>
 						<compose view="widgets/quickview/tagpoll.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Polling')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
             </compose>
