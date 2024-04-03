@@ -49,13 +49,15 @@ export class Campaign {
     this.status = this.campaignStatus;
     this.isPublic = data.isPublic;
     this.validationErrorTypes = data.validationErrorType;
-    this.colorPallete = data.colorTaggingColorsTerminology;
+    this.colorPalette = data.colorTaggingColorsTerminology;
     // Objects for multilinguality
     this.titleObject = data.title;
     this.descriptionObject = data.description;
     this.disclaimerObject = data.disclaimer;
     this.instructionsObject = data.instructions;
     this.prizesObject = data.prizes;
+    this.baseAnnotations = data.baseAnnotations;
+    this.campaignType = this.inferredCampaignType;
 
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
@@ -91,6 +93,13 @@ export class Campaign {
       this.prizes.rookie = '';
     }
 
+  }
+
+  get inferredCampaignType() {
+    if (this.orientation === 'METADATA') return 'Translate';
+    else if (this.motivation && this.motivation.includes('ImageTagging')) return 'Image Comparison';
+    else if (!this.purpose) return null;
+    else return 'Basic';
   }
 
   get campaignStatus() {

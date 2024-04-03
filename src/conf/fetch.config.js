@@ -47,9 +47,16 @@ export function fetchConfigGeo(config) {
 				'Accept': 'application/json'
 			}
 		});
-	
 }
 
+export function fetchConfigColor(config) {
+  config
+    .withDefaults({
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+}
 
 export function reset(config){
 	

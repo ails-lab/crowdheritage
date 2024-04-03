@@ -17,18 +17,20 @@
 import { inject, LogManager } from 'aurelia-framework';
 import { DialogController } from 'aurelia-dialog';
 import { CampaignServices } from 'CampaignServices.js';
+import { I18N } from 'aurelia-i18n';
 
-let logger = LogManager.getLogger('logindialog.js');
+let logger = LogManager.getLogger('publishdialog.js');
 
-@inject(DialogController, CampaignServices)
+@inject(DialogController, CampaignServices, I18N)
 export class PublishDialog {
 
-	constructor(controller, campaignServices) {
+	constructor(controller, campaignServices, i18n) {
 		this.controller = controller;
 		this.campaignServices = campaignServices;
+    this.i18n = i18n;
 
 		this.campaign = null;
-		this.allowRejected = false;
+    this.rejectDownvoted = false;
 		this.minScore = '';
 		this.validationStarted = '';
 	}
@@ -40,8 +42,8 @@ export class PublishDialog {
 			return true;
 		}
 		else {
-			return this.allowRejected != this.campaign.publishCriteria.allowRejected
-				|| parseInt(this.minScore) != this.campaign.publishCriteria.minScore;
+			return this.rejectDownvoted === this.campaign.publishCriteria.allowRejected
+				|| parseInt(this.minScore) !== this.campaign.publishCriteria.minScore;
 		}
 	}
 
@@ -49,7 +51,7 @@ export class PublishDialog {
 		this.campaign = params;
 
 		if (this.campaign.publishCriteria) {
-			this.allowRejected = this.campaign.publishCriteria.allowRejected;
+			this.rejectDownvoted = !this.campaign.publishCriteria.allowRejected;
 			this.minScore = this.campaign.publishCriteria.minScore;
 			this.validationStarted = this.campaign.publishCriteria.validationStarted;
 		}
@@ -60,8 +62,8 @@ export class PublishDialog {
 			this.controller.cancel();
 			return;
 		}
-		if (confirm('ATTENTION: If you set new publish criteria, the existing annotation-publish-flags will be reset and your validation work will be lost.\nAre you sure you want to continue?')) {
-			this.campaignServices.initiateValidation(this.campaign.dbId, this.allowRejected, this.minScore)
+		if (confirm(this.i18n.tr('moderation:export-dialog-warning'))) {
+			this.campaignServices.initiateValidation(this.campaign.dbId, this.rejectDownvoted, this.minScore)
 				.then(response => {
 					this.controller.ok();
 					return;

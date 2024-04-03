@@ -1,4 +1,5 @@
 <template>
+  <require from="../../widgets/tooltip/tooltip"></require>
   <main>
     <section class="banner mini">
       <div class="container">
@@ -22,22 +23,30 @@
       <i class="fa fa-spinner fa-pulse"></i>
     </div>
     <div if.bind="!loading" role="main">
+      <div class="campaign-edit-button-group">
+        <div class="container">
+          <div class="button-group-left d-flex">
+            <button t="[append]app:delete" class="btn button-red me-3" click.delegate="deleteCampaign()">
+              <i class="fa fa-trash-o fa-lg me-3" aria-hidden="true"></i>
+            </button>
+            <button t="[append]app:preview" class="btn button-green-outline" click.delegate="previewCampaign()">
+              <i class="fa fa-object-group fa-lg me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="btn-group-right d-flex">
+            <button t="[append]dashboard:cancel" class="btn button-red-outline me-3" click.delegate="goBackToDashboard()">
+              <i class="fa fa-undo fa-lg me-3" aria-hidden="true"></i>
+            </button>
+            <button t="[append]dashboard:save" class="btn button-green" click.delegate="updateCampaign()">
+              <i class="fa fa-floppy-o fa-lg me-3" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="container pe-0">
         <section class="entrance campaign-edit">
           <div class="section-body campaignEditor">
-            <div class="d-flex justify-content-between button-group mb-5">
-              <div class="toggleWrapper">
-                <label class="mb-0 me-4" t="[prepend]dashboard:visibility">:</label>
-                <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked.bind="campaign.isPublic">
-                <label class="mb-0" for="toggle1"></label>
-                <span class="ms-2">${campaign.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}</span>
-              </div>
-              <div>
-                <button t="app:preview" class="m-0 btn-green" click.delegate="previewCampaign()"></button>
-                <button t="app:delete" class="btn-red m-0 me-3" click.delegate="deleteCampaign()"></button>
-              </div>
-            </div>
-            <div class="topsection mb-3">
+            <div class="topsection mt-5 mb-3">
               <div class="sectionlabel">
                 <div class="bold">
                   <strong class="text-uppercase me-2" t="dashboard:campaignDetails"></strong>
@@ -71,6 +80,14 @@
                   <input t="[placeholder]dashboard:username" type="text" placeholder="Username" id="username"
                     value.bind="campaign.username" autofocus />
                 </div> -->
+                <div class="center mb-5">
+                  <div class="toggleWrapper">
+                    <label class="mb-0 me-4" t="[prepend]dashboard:visibility">:</label>
+                    <input type="checkbox" name="toggle1" class="mobileToggle" id="toggle1" checked.bind="campaign.isPublic">
+                    <label class="mb-0" for="toggle1"></label>
+                    <span class="ms-2">${campaign.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}</span>
+                  </div>
+                </div>
                 <div class="left">
                   <label t="dashboard:startDate">Start Date</label>
                   <input t="[placeholder]dashboard:startDate" type="date" placeholder="Start Date" id="startDate"
@@ -154,7 +171,117 @@
                 </div>
               </div>
               <div class="input-group">
-                <div class="center autocomplete-container">
+                <div class="center">
+                  <label t="dashboard:campaignType"></label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="type of campaignTypes">
+                      <input class="form-check-input" type="radio" id.bind="`type-${$index}`" model.bind="type" checked.bind="campaign.campaignType" change.delegate="changeCampaignType(type)">
+                      <span class="form-check-label" for.bind="`type-${$index}`">${type}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center" if.bind="campaign.campaignType === 'Basic'">
+                  <label t="dashboard:campaignPurpose">Campaign purpose</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="purpose of purposes">
+                      <input class="form-check-input" type="radio" id.bind="`purpose-${$index}`" model.bind="purpose" checked.bind="campaign.purpose">
+                      <span class="form-check-label" for.bind="`purpose-${$index}`" t.bind="'dashboard:purposes.'+purpose"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center" if.bind="campaign.campaignType === 'Basic'">
+                  <label t="dashboard:campaignMotivations">Campaign motivations</label>
+                  <div class="motivations d-flex">
+                    <div class="me-5" repeat.for="mot of motivations">
+                      <input class="form-check-input" type="checkbox" id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]">
+                      <span class="form-check-label" for.bind="`mot-${$index}`" t.bind="'dashboard:motivations.'+mot">
+                        ${mot}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="center" if.bind="selectedMotivations.includes('ColorTagging')">
+                  <label t="dashboard:campaignColorPalette">Campaign Color Palette</label>
+                  <ul class="colorPills">
+                    <li
+                      repeat.for="color of campaign.colorPalette"
+                      style.bind="'background-color:'+color.cssHexCode+';'"
+                    >
+                      <a class="me-2" href.bind="color.uri" target="_blank">
+                        <span class="colorLabel">
+                          ${color.label.en}
+                        </span>
+                      </a>
+                      <a click.delegate="removeColorFromPalette(color.uri)">
+                        <i class="delete fa fa-times" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="color-picker">
+                    <input
+                      class="uri-input"
+                      t="[placeholder]dashboard:enter-wikidata-uri"
+                      type="text" id="color-uri-input" autofocus
+                      value.bind="colorUriInput"
+                    />
+                    <input
+                      if.bind="colorLabelInput.length"
+                      class="label-input" disabled
+                      type="text" value.bind="colorLabelInput"
+                    />
+                    <input if.bind="colorHexInput.length" class="hex-input" type="color" value.bind="colorHexInput" />
+                    <i
+                      if.bind="!colorHexInput.length"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top"
+                      title.bind="i18n.tr('dashboard:fetch-color')"
+                      class="fa fa-search fa-lg" aria-hidden="true"
+                      click.delegate="fetchColorFromWikidata()"
+                    ></i>
+                    <i
+                      if.bind="colorHexInput.length"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top"
+                      title.bind="i18n.tr('dashboard:reset-color')"
+                      class="fa fa-trash fa-lg me-4" aria-hidden="true"
+                      click.delegate="resetColorTerm()"
+                    ></i>
+                    <i
+                      if.bind="colorHexInput.length"
+                      bootstrap-tooltip data-toggle="tooltip" data-placement="top"
+                      title.bind="i18n.tr('dashboard:add-color')"
+                      class="fa fa-plus-square-o fa-lg mt-1" aria-hidden="true"
+                      click.delegate="addColorToPalette()"
+                    ></i>
+                  </div>
+                </div>
+                <div class="center" if.bind="motivationValues.Tagging">
+                  <label t="dashboard:vocabulariesLabel">Vocabularies</label>
+                  <ul class="tagPills">
+                    <li repeat.for="voc of selectedVocabularies">
+                      <i class="fa fa-book me-1" aria-hidden="true"></i>
+                      <span class="me-2">${voc}</span>
+                      <a if.bind="motivationValues.Tagging" click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  </ul>
+                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
+                    <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
+                    <option repeat.for="voc of availableVocabularies" value.bind="voc.name">[${voc.name}] - ${voc.label}</option>
+                  </select>
+                </div>
+                <div class="center" if.bind="motivationValues.Tagging && selectedVocabularies.length">
+                  <label t="dashboard:vocabulariesMappings">Tag types</label>
+                  <span class="me-2">(${i18n.tr("dashboard:optional")})</span>
+                  <span if.bind="motivationValues.Tagging && selectedVocabularies.length" class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
+                  <br/>
+                  <div class="d-flex mt-2" repeat.for="group of tagGroups">
+                    <input class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" disabled.bind="!motivationValues.Tagging" autofocus />
+                    <div class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
+                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]" disabled.bind="!motivationValues.Tagging">
+                      <span class="form-check-label">${voc}</span>
+                    </div>
+                    <span if.bind="motivationValues.Tagging" class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
+                  </div>
+                </div>
+                <div class="center autocomplete-container mt-5">
                   <label t="dashboard:targetCollections">Target Collections</label>
                   <ul class="tagPills">
                     <li repeat.for="col of selectedCollections">
@@ -184,68 +311,64 @@
                     id="instructions" value.bind="campaign.instructionsObject[currentLocale.code]" autofocus>
                   </textarea>
                 </div>
-                <div class="center">
-                  <label t="dashboard:campaignPurpose">Campaign purpose</label>
-                  <div class="motivations d-flex">
-                    <div class="me-5" repeat.for="purpose of purposes">
-                      <input class="form-check-input" type="radio" id.bind="`purpose-${$index}`" model.bind="purpose" checked.bind="campaign.purpose">
-                      <span class="form-check-label" for.bind="`purpose-${$index}`">${purpose}</span>
-                    </div>
+              </div>
+              <div class="topsection mt-5 mb-3">
+                <div class="sectionlabel">
+                  <div class="bold">
+                    <strong class="text-uppercase me-2" t="dashboard:campaignBaseAnnotations"></strong>
                   </div>
                 </div>
+              </div>
+              <div class="input-group">
                 <div class="center">
-                  <label t="dashboard:campaignOrientation">Campaign orientation</label>
-                  <div class="motivations d-flex">
-                    <div class="me-5" repeat.for="orientation of orientations">
-                      <input class="form-check-input" type="radio" id.bind="`orientation-${$index}`" model.bind="orientation" checked.bind="campaign.orientation">
-                      <span class="form-check-label" for.bind="`orientation-${$index}`">${orientation}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="center">
-                  <label t="dashboard:campaignFeedbackMethod">Campaign feedback method</label>
-                  <div class="motivations d-flex">
-                    <div class="me-5" repeat.for="feedback of feedbackMethods">
-                      <input class="form-check-input" type="radio" id.bind="`feedback-${$index}`" model.bind="feedback" checked.bind="campaign.feedbackMethod">
-                      <span class="form-check-label" for.bind="`feedback-${$index}`">${feedback}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="center">
-                  <label t="dashboard:campaignMotivations">Campaign motivations</label>
-                  <div class="motivations d-flex">
-                    <div class="me-5" repeat.for="mot of motivations">
-                      <input class="form-check-input" type="checkbox" id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]">
-                      <span class="form-check-label" for.bind="`mot-${$index}`">${mot}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="center">
-                  <label t="dashboard:vocabulariesLabel">Vocabularies</label>
+                  <label t="dashboard:uploadFromMint"></label>
                   <ul class="tagPills">
-                    <li repeat.for="voc of selectedVocabularies">
-                      <i class="fa fa-book me-1" aria-hidden="true"></i>
-                      <span class="me-2">${voc}</span>
-                      <a if.bind="motivationValues.Tagging" click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                    <li
+                      repeat.for="annoFile of baseAnnotations.MINT" bootstrap-tooltip
+                      data-toggle="tooltip" data-html="true"
+                      data-title.bind="baseAnnotationInfo(annoFile)"
+                    >
+                      <i class="fa fa-file-code-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${getTimestamp(annoFile)}</span>
                     </li>
                   </ul>
-                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
-                    <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
-                    <option repeat.for="voc of availableVocabularies" value.bind="voc.name">[${voc.name}] - ${voc.label}</option>
-                  </select>
+                  <div class="annotations-upload">
+                    <input class="upload-url" type="text" value.bind="annotationsUpload.MINT.url" placeholder.bind="i18n.tr('dashboard:pasteMintUrl')" />
+                    <select class="motivation-selector" name="mint-upload-motivation" value.bind="annotationsUpload.MINT.motivation">
+                      <option value="" disabled selected t="dashboard:motivationSelectPlaceholder"></option>
+                      <option repeat.for="mot of selectedMotivations" value.bind="mot">${mot}</option>
+                    </select>
+                    <i if.bind="annotationsUpload.MINT.status === ''" class="btn-upload fa fa-upload fa-lg" aria-hidden="true" title="Upload Annotations" click.delegate="uploadAnnotations('MINT')"></i>
+                    <span if.bind="annotationsUpload.MINT.status === 'STARTED'" class="upload-status started" t="dashboard:uploadStarted"></span>
+                    <span if.bind="annotationsUpload.MINT.status === 'FAILED'" class="upload-status failed" t="dashboard:uploadFailed"></span>
+                  </div>
                 </div>
                 <div class="center">
-                  <label t="dashboard:vocabulariesMappings">Tag types</label>
-                  <span class="me-2">(${i18n.tr("dashboard:optional")})</span>
-                  <span class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
-                  <br/>
-                  <div class="d-flex mt-2" repeat.for="group of tagGroups">
-                    <input class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
-                    <div class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
-                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]">
-                      <span class="form-check-label">${voc}</span>
+                  <label t="dashboard:uploadFromFile"></label>
+                  <ul class="tagPills">
+                    <li
+                      repeat.for="annoFile of baseAnnotations.FILE" bootstrap-tooltip
+                      data-toggle="tooltip" data-html="true"
+                      data-title.bind="baseAnnotationInfo(annoFile)"
+                    >
+                      <i class="fa fa-file-code-o me-1" aria-hidden="true"></i>
+                      <span class="me-2">${getTimestamp(annoFile)}</span>
+                    </li>
+                  </ul>
+                  <div class="annotations-upload">
+                    <div class="annotation-file-upload" click.delegate="loadFromFile('#annotationsFile')">
+                      <span if.bind="!annotationsUpload.FILE.file" t="dashboard:uploadAnnotationFile"></span>
+                      <i if.bind="!annotationsUpload.FILE.file" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                      <span if.bind="annotationsUpload.FILE.file">${annotationsUpload.FILE.fileName}</span>
                     </div>
-                    <span class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
+                    <select class="motivation-selector" name="file-upload-motivation" value.bind="annotationsUpload.FILE.motivation">
+                      <option value="" disabled selected t="dashboard:motivationSelectPlaceholder"></option>
+                      <option repeat.for="mot of selectedMotivations" value.bind="mot">${mot}</option>
+                    </select>
+                    <i if.bind="annotationsUpload.FILE.status === ''" class="btn-upload fa fa-upload fa-lg" aria-hidden="true" title="Upload Annotations" click.delegate="uploadAnnotations('FILE')"></i>
+                    <span if.bind="annotationsUpload.FILE.status === 'STARTED'" class="upload-status started" t="dashboard:uploadStarted"></span>
+                    <span if.bind="annotationsUpload.FILE.status === 'FAILED'" class="upload-status failed" t="dashboard:uploadFailed"></span>
+                    <input type="file" id="annotationsFile" class="hiddenfile" name="annotations-file" onchange.bind="uploadFile" accept=".json" />
                   </div>
                 </div>
               </div>
@@ -297,10 +420,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="d-flex justify-content-between button-group mt-5">
-                <button t="dashboard:cancel" class="m-0 btn-red" click.delegate="goBackToDashboard()"></button>
-                <button t="dashboard:save" class="m-0 btn-green" click.delegate="updateCampaign()"></button>
               </div>
             </form>
           </div>

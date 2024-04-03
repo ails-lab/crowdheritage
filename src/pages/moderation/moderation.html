@@ -36,7 +36,7 @@
             <span t="moderation:statistics"></span>
           </a>
         </li>
-        <li class=${validationTab} click.delegate="tabChanged('validation')">
+        <li class=${validationTab} click.delegate="tabChanged('validation')" if.bind="campaign.campaignType === 'Basic'">
           <a class="nav-link" aria-current="page" href="#">
             <i class="fa fa-list-alt  fa-lg me-3" aria-hidden="true"></i>
             <span t="moderation:validation"></span>

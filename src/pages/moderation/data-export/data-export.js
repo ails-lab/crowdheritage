@@ -3,8 +3,8 @@ import { Router } from 'aurelia-router';
 import { UserServices } from 'UserServices';
 import { Campaign } from 'Campaign.js';
 import { CampaignServices } from 'CampaignServices';
-
 import { I18N } from 'aurelia-i18n';
+import settings from 'global.config.js';
 let logger = LogManager.getLogger('CampaignEditor.js');
 
 let COUNT = 9;
@@ -19,11 +19,13 @@ export class DataExport {
 
     this.i18n = i18n;
     this.cname = '';
-    this.exportAnnsLabel = "EXPORT ANNOTATIONS";
-    this.exportUsersLabel = "EXPORT CONTRIBUTORS";
+    this.exportState = 'idle';
+    this.fileTypes = ['JSON', 'CSV'];
+    this.contributorsFileType = 'JSON';
   }
 
   get user() { return this.userServices.current; }
+  get isAuthenticated() { return this.userServices.isAuthenticated(); }
 
   async activate(params) {
     this.clearInstance();
@@ -36,23 +38,17 @@ export class DataExport {
   }
   clearInstance() {
     this.cname = '';
-    this.exportAnnsLabel = "EXPORT ANNOTATIONS";
-    this.exportUsersLabel = "EXPORT CONTRIBUTORS";
-
+    this.exportState = 'idle';
   }
 
-  get isAuthenticated() { return this.userServices.isAuthenticated(); }
-
   exportAnnotations() {
-    if (this.exportAnnsLabel === "EXPORTING...") {
+    if (this.exportState === 'exporting') {
       return;
     }
-
-    // While waiting for the process to go through, change the cursor to 'wait'
+    this.exportState = 'exporting';
     let expLink = document.getElementById('exportAnnotations');
     document.body.style.cursor = 'wait';
     expLink.style.cursor = 'wait';
-    this.exportAnnsLabel = "EXPORTING...";
 
     this.campaignServices.exportCampaignAnnotations(this.campaign.username)
       .then(response => {
@@ -66,33 +62,31 @@ export class DataExport {
         downloadAnchorNode.remove();
 
         // When the process is finished, change the cursor back to 'default'
+        this.exportState = 'idle';
         document.body.style.cursor = 'default';
         expLink.style.cursor = 'pointer';
-        this.exportAnnsLabel = "EXPORT ANNOTATIONS";
       });
   }
 
   exportContributors(fileType) {
-    if (this.exportUsersLabel === "EXPORTING...") {
+    if (this.exportState === 'exporting') {
       return;
     }
-
-    // While waiting for the process to go through, change the cursor to 'wait'
+    this.exportState = 'exporting';
     let expLink = document.getElementById('exportUsers');
     document.body.style.cursor = 'wait';
     expLink.style.cursor = 'wait';
-    this.exportUsersLabel = "EXPORTING...";
 
     this.campaignServices.getCampaignContributors(this.campaign.username)
       .then(response => {
         var json = response;
         var dataStr = "";
         var downloadAnchorNode = document.createElement('a');
-        var filename = `${this.campaign.username}_contributors.${fileType}`;
+        var filename = `${this.campaign.username}_contributors.${fileType.toLowerCase()}`;
 
-        if (fileType === 'csv') {
+        if (fileType === 'CSV') {
           // Create the downloadable csv file
-          var fields = Object.keys(json[0]);
+          var fields = Object.keys(json[0]).slice(0, -1);
           var replacer = function (key, value) { return value === null ? '' : value };
           var csv = json.map(function (row) {
             return fields.map(function (fieldName) {
@@ -114,9 +108,15 @@ export class DataExport {
         downloadAnchorNode.remove();
 
         // When the process is finished, change the cursor back to 'default'
+        this.exportState = 'idle';
         document.body.style.cursor = 'default';
         expLink.style.cursor = 'pointer';
-        this.exportUsersLabel = "EXPORT CONTRIBUTORS";
       });
+  }
+
+  copyAnnotationsLinkToClipboard() {
+    const downloadLink = `${settings.baseUrl}/annotation/export?campaignName=${this.campaign.username}`;
+    navigator.clipboard.writeText(downloadLink);
+    toastr.success(this.i18n.tr('moderation:copyToClipboardSuccess'));
   }
 }

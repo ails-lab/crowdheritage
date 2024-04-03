@@ -36,11 +36,30 @@ export class CampaignEdit {
 
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
+    this.campaignTypes = ['Basic', 'Translate', 'Image Comparison'];
+    this.campaignTypeDetails = {
+      'Basic': {
+        'feedbackMethod': 'UPVOTE',
+        'orientation': 'DATA',
+      },
+      'Translate': {
+        'feedbackMethod': 'RATE',
+        'orientation': 'METADATA',
+        'purpose': 'VALIDATE',
+        'motivation': ['Commenting']
+      },
+      'Image Comparison': {
+        'feedbackMethod': 'UPVOTE',
+        'orientation': 'DATA',
+        'purpose': 'VALIDATE',
+        'motivation': ['ImageTagging']
+      }
+    };
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.purposes = ['ANNOTATE', 'VALIDATE'];
     this.orientations = ['DATA', 'METADATA'];
     this.feedbackMethods = ['UPVOTE', 'RATE'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -51,6 +70,27 @@ export class CampaignEdit {
     this.userGroups = [];
     this.tagGroups = [];
     this.selectedCollections = [];
+    this.colorUriInput = '';
+    this.colorHexInput = '';
+    this.colorLabelInput = '';
+    this.colorTermInput = {};
+    this.baseAnnotations = {
+      MINT: [],
+      FILE: []
+    };
+    this.annotationsUpload = {
+      MINT: {
+        status: '',
+        motivation: '',
+        url: ''
+      },
+      FILE: {
+        status: '',
+        motivation: '',
+        fileName: '',
+        file: null
+      }
+    };
     this.errors = {};
 
     if (!instance) {
@@ -61,8 +101,8 @@ export class CampaignEdit {
   clearInstance() {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'ImageTagging'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, ImageTagging: false};
+    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -73,8 +113,36 @@ export class CampaignEdit {
     this.userGroups = [];
     this.tagGroups = [];
     this.selectedCollections = [];
+    this.colorUriInput = '';
+    this.colorHexInput = '';
+    this.colorLabelInput = '';
+    this.colorTermInput = {};
+    this.baseAnnotations = {
+      MINT: [],
+      FILE: []
+    };
+    this.annotationsUpload = {
+      MINT: {
+        status: '',
+        motivation: '',
+        url: ''
+      },
+      FILE: {
+        status: '',
+        motivation: '',
+        fileName: '',
+        file: null
+      }
+    };
   }
 
+  get selectedMotivations() {
+    let motivations = Object.keys(this.motivationValues).filter(mot => this.motivationValues[mot]);
+    if (this.campaign.campaignType === 'Image Comparison') {
+      motivations.push('ImageTagging');
+    }
+    return motivations;
+  }
   get suggestionsActive() { return this.suggestedNames.length !== 0; }
   get gsuggestionsActive() { return this.suggestedGroupNames.length !== 0; }
   get csuggestionsActive() { return this.suggestedColNames.length !== 0; }
@@ -108,6 +176,11 @@ export class CampaignEdit {
 
     this.campaign.startDate = this.campaign.startDate.replaceAll('/','-');
     this.campaign.endDate = this.campaign.endDate.replaceAll('/','-');
+
+    if (this.campaign.baseAnnotations) {
+      this.baseAnnotations.MINT = this.campaign.baseAnnotations.filter(ba => ba.source === 'MINT');
+      this.baseAnnotations.FILE = this.campaign.baseAnnotations.filter(ba => ba.source === 'FILE');
+    }
 
     if (this.campaign.motivation) {
       for (let mot of this.campaign.motivation) {
@@ -227,6 +300,8 @@ export class CampaignEdit {
   }
 
   loadFromFile(id) {
+    if (id === "#annotationsFile" && this.annotationsUpload.FILE.file) return;
+
     $(id).trigger('click');
   }
 
@@ -385,6 +460,88 @@ export class CampaignEdit {
     }
   }
 
+  uploadFile = () => {
+    let self = this;
+    let input = document.getElementById('annotationsFile');
+    let file = input.files[0];
+    this.annotationsUpload.FILE.fileName = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        const fileContent = e.target.result;
+        self.annotationsUpload.FILE.file = JSON.parse(fileContent);
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  uploadAnnotations(source) {
+    if (this.annotationsUpload[source].motivation === "") {
+      toastr.error(this.i18n.tr("dashboard:error-no-motivation"));
+      return;
+    }
+
+    if (source === "FILE") {
+      if (!this.annotationsUpload[source].file) {
+        toastr.error(this.i18n.tr("dashboard:error-no-file"));
+        return;
+      }
+      this.campaignServices.importNtuaAnnotations(this.campaign.username, this.annotationsUpload.FILE.motivation, this.annotationsUpload.FILE.file)
+        .then(() => {
+          this.annotationsUpload.FILE.status = "STARTED";
+          this.baseAnnotations.FILE.push({
+            status: "IMPORTING",
+            startedAt: new Date()
+          });
+        })
+        .catch(error => {
+          console.error(error);
+          this.annotationsUpload.FILE.status = "FAILED";
+        });
+      return;
+    }
+
+    if (source === "MINT") {
+      if (!this.annotationsUpload[source].url) {
+        toastr.error(this.i18n.tr("dashboard:error-no-url"));
+        return;
+      }
+      this.campaignServices.importMintAnnotations(this.campaign.username, this.annotationsUpload.MINT.motivation, this.annotationsUpload.MINT.url)
+        .then(() => {
+          this.annotationsUpload.MINT.status = "STARTED";
+          this.baseAnnotations.MINT.push({
+            status: "IMPORTING",
+            startedAt: new Date()
+          })
+        })
+        .catch(error => {
+          console.error(error);
+          this.annotationsUpload.MINT.status = "FAILED";
+        });
+      return;
+    }
+  }
+
+  getTimestamp(annoFile) {
+    const date = annoFile.uploadedAt ? annoFile.uploadedAt : annoFile.startedAt;
+    return new Date(date).toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
+  baseAnnotationInfo(annoFile) {
+    let info = `<strong><u>${annoFile.status}</u></strong>`;
+    if (annoFile.status === "COMPLETED") {
+      info += `<br/>Ingested <strong>${annoFile.successCount}</strong> / <strong>${annoFile.successCount+annoFile.failedCount}</strong> annotations`;
+    }
+    return info;
+  }
+
   deleteCampaign() {
     if (window.confirm(this.i18n.tr('dashboard:deleteCampaignMessage'))) {
       this.campaignServices.deleteCampaign(this.campaign.dbId)
@@ -395,9 +552,29 @@ export class CampaignEdit {
     }
   }
 
-  validInput() {
+  campaignParamsAreValid() {
     if (new Date(this.campaign.startDate) >= new Date(this.campaign.endDate)) {
       toastr.error("Campaign duration invalid");
+      return false;
+    }
+    if (!this.campaign.titleObject[this.currentLocale.code] || !this.campaign.titleObject[this.currentLocale.code].length) {
+      toastr.error("You need to provide a Campaign Title");
+      return false;
+    }
+    if (!this.campaign.campaignType) {
+      toastr.error("You need to select a Campaign Type");
+      return false;
+    }
+    if (!this.campaign.purpose) {
+      toastr.error("You need to select a Campaign Purpose");
+      return false;
+    }
+    if (!this.campaign.motivation || ! this.campaign.motivation.length) {
+      toastr.error("You need to select at least one Campaign Motivation");
+      return false;
+    }
+    if (this.campaign.motivation.includes('Tagging') && (!this.selectedVocabularies || !this.selectedVocabularies.length)) {
+      toastr.error("You need to select at least one Semantic Tagging Vocabulary");
       return false;
     }
     let target = parseInt(this.campaign.target);
@@ -405,11 +582,88 @@ export class CampaignEdit {
       toastr.error("Annotation target must be a positive number");
       return false;
     }
+    let baseAnnotationsCampaignType = ['Translate', 'Image Comparison'].includes(this.campaign.campaignType);
+    let noExistingBaseAnnotations = !(this.baseAnnotations.MINT.length || this.baseAnnotations.FILE.length);
+    let noNewBaseAnnotations = !(this.annotationsUpload.MINT.status.length || this.annotationsUpload.FILE.status.length);
+    if (baseAnnotationsCampaignType && noExistingBaseAnnotations && noNewBaseAnnotations) {
+      toastr.error("You need to upload Base Annotation for this Campaign Type");
+      return false;
+    }
     return true;
   }
 
+  changeCampaignType(type) {
+    this.campaign.campaignType = type;
+    this.campaign.feedbackMethod = this.campaignTypeDetails[type].feedbackMethod;
+    this.campaign.orientation = this.campaignTypeDetails[type].orientation;
+    this.campaign.purpose = this.campaignTypeDetails[type].purpose || 'ANNOTATE';
+    this.campaign.motivation = this.campaignTypeDetails[type].motivation || ['Tagging'];
+    if (this.campaignTypeDetails[type].motivation) {
+      this.motivations.forEach(mot => {
+        this.motivationValues[mot] = this.campaignTypeDetails[type].motivation.includes(mot);
+      });
+    } else {
+      this.motivationValues = {Tagging: true, GeoTagging: false, ColorTagging: false, Commenting: false};
+    }
+  }
+
+  fetchColorFromWikidata() {
+    if (!this.colorUriInput.length || !this.colorUriInput.startsWith('https://www.wikidata.org/wiki/')) {
+      toastr.error('Please provide a uri from Wikidata');
+      return;
+    }
+    const wikidataId = this.colorUriInput.split('/').pop();
+    const crowdheritageLangCodes = ['en', 'it', 'fr', 'es', 'pl', 'el', 'de', 'nl'];
+    this.thesaurusServices.getColorTerm(wikidataId)
+      .then(response => {
+        const wikidataLabels = response.entities[wikidataId].labels;
+        const label = Object.keys(wikidataLabels)
+          .filter(code => crowdheritageLangCodes.includes(code))
+          .reduce((color, code) => {
+            color[code] = wikidataLabels[code].value;
+            return color;
+          }, {});
+        const uri = this.colorUriInput;
+        const cssHexCode = `#${response.entities[wikidataId].claims.P465[0].mainsnak.datavalue.value}`;
+        const style = null;
+        this.colorTermInput = { label, uri, cssHexCode, style };
+        this.colorHexInput = cssHexCode;
+        this.colorLabelInput = label.en;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  resetColorTerm() {
+    this.colorUriInput = '';
+    this.colorHexInput = '';
+    this.colorLabelInput = '';
+    this.colorTermInput = {};
+  }
+
+  removeColorFromPalette(uriToRemove) {
+    this.campaign.colorPalette = this.campaign.colorPalette.filter(color => color.uri !== uriToRemove);
+  }
+
+  addColorToPalette() {
+    if (!this.campaign.colorPalette) {
+      this.campaign.colorPalette = [];
+    }
+    const colorExists = this.campaign.colorPalette.some(color => color.uri === this.colorTermInput.uri)
+      || this.campaign.colorPalette.some(color => color.cssHexCode === this.colorTermInput.cssHexCode)
+      || this.campaign.colorPalette.some(color => color.label.en === this.colorTermInput.label.en);
+    if (colorExists) {
+      toastr.error('This color term already exists in your palette');
+      return;
+    }
+    this.colorTermInput.cssHexCode = this.colorHexInput;
+    this.campaign.colorPalette.push(this.colorTermInput);
+    this.resetColorTerm();
+  }
+
   updateCampaign() {
-    if (!this.validInput()) {
+    if (!this.campaignParamsAreValid()) {
       window.scrollTo(0,0);
       return;
     }
@@ -445,6 +699,12 @@ export class CampaignEdit {
       userGroupIds: this.userGroups.map(group => group.id),
       targetCollections: this.selectedCollections.map(col => col.id)
     };
+    if (this.campaign.campaignType === 'Image Comparison') {
+      camp.motivation = ['ImageTagging'];
+    }
+    if (this.campaign.colorPalette && this.campaign.colorPalette.length) {
+      camp.colorTaggingColorsTerminology = this.campaign.colorPalette;
+    }
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)
       .then(() => {
