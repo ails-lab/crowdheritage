@@ -3187,8 +3187,23 @@ ux-dialog-container.active {
 }
 
 body main section.validation {
-  margin: 50px 0px 10px 0px;
+  margin: 16px 0px 8px 0px;
   padding: 0;
+  i.fa {
+    color: @main-color;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    cursor: pointer;
+    border: 1px @main-color solid;
+    border-radius: 8px;
+    padding: 0 8px;
+    &:hover {
+      color: white;
+      background-color: @main-color;
+    }
+  }
 }
 
 body main section.validation .publish-citeria-btn {
@@ -7252,6 +7267,76 @@ background-color: @main-color;
   height: 137px;
 }
 
+.campaign-edit-button-group {
+  width: 100%;
+  position: sticky;
+  top: 70px;
+  background-color: white;
+  padding: 20px 0;
+  z-index: 5;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 0 14px;
+    &:before, &:after {
+      display: none;
+    }
+    .btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px;
+      letter-spacing: 1.3px;
+      transition: all 0.3s;
+      font-size: 1.5rem;
+      min-width: 140px;
+      .fa-undo {
+        -webkit-text-stroke: 1px white;
+        &:hover {
+          -webkit-text-stroke: 1px red;
+        }
+      }
+    }
+    .button-green {
+      border: 1px solid @main-color;
+      color: white;
+      background-color: @main-color;
+      &:hover {
+        background-color: white;
+        color: @main-color;
+      }
+    }
+    .button-green-outline {
+      border: 1px solid @main-color;
+      color: @main-color;
+      background-color: white;
+      &:hover {
+        background-color: @main-color;
+        color: white;
+      }
+    }
+    .button-red {
+      border: 1px solid red;
+      color: white;
+      background-color: red;
+      &:hover {
+        background-color: white;
+        color: red;
+      }
+    }
+    .button-red-outline {
+      border: 1px solid red;
+      color: red;
+      background-color: white;
+      &:hover {
+        background-color: red;
+        color: white;
+      }
+    }
+  }
+}
+
 section.campaign-edit {
   min-width: 330px;
 
@@ -7614,7 +7699,7 @@ section.campaign-edit {
 section.entrance.campaign-edit {
   width: 100% !important;
   display: block;
-  padding-top: 30px !important;
+  padding-top: 0 !important;
 }
 
 
@@ -7705,6 +7790,53 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
   }
 }
 
+.color-picker {
+  display: flex;
+  align-items: center;
+  .uri-input {
+    max-width: 30%;
+    margin-right: 20px;
+  }
+  .label-input {
+    max-width: 20%;
+    margin-right: 20px;
+  }
+  .hex-input {
+    height: 48px;
+    width: 78px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  .fa {
+    cursor: pointer;
+  }
+}
+
+.colorPills {
+  display: flex;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+  flex-flow: wrap;
+  li {
+    border: 1px black solid;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 6px 10px;
+    .colorLabel, .delete {
+      color: white;
+      text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
+      font-size: 1.6rem;
+    }
+    a:hover {
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}
+
 .tagPills {
   display: flex;
   list-style-type: none;
@@ -7765,6 +7897,58 @@ input.tag-type {
     padding-left: 7px;
     padding-top: 4px;
     align-self: center;
+  }
+}
+
+.annotations-upload {
+  display: flex;
+  input.upload-url {
+    width: 33% !important;
+    height: 45px;
+    margin-right: 8px;
+  }
+  select.motivation-selector {
+    width: 33% !important;
+  }
+  i.btn-upload {
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    cursor: pointer;
+    &:hover {
+      color: @main-color;
+    }
+  }
+  span.upload-status {
+    font-style: italic;
+    margin-left: 16px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    &.started {
+      color: @main-color;
+    }
+    &.failed {
+      color: red;
+    }
+  }
+  .annotation-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border: 1px solid #cfcfcf;
+    transition: all 0.3s;
+    width: 33% !important;
+    height: 45px;
+    margin-right: 8px;
+    cursor: pointer;
+    &:hover {
+      color: @main-color;
+      border: 1px solid @main-color;
+      font-weight: bold;
+    }
   }
 }
 

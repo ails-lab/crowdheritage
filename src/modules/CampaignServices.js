@@ -131,4 +131,19 @@ export class CampaignServices {
     }).then(response => response.json());
   }
 
+  importNtuaAnnotations(campaignName, motivation, annotationsObject) {
+    return this.http.fetch(`/campaign/${campaignName}/importAnnotations?motivation=${motivation}`, {
+      method: 'POST',
+      body: json(annotationsObject)
+    });
+  }
+
+  importMintAnnotations(campaignName, motivation, mintUrl) {
+    return this.http.fetch(`/campaign/${campaignName}/importMintAnnotations?motivation=${motivation}&mintUrl=${mintUrl}`, {
+      method: 'POST',
+    });
+  }
+
+
+
 }

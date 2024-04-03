@@ -109,7 +109,7 @@ export class Tagitem {
     this.campaign = params.campaign;
     this.recId = params.recId;
     this.widgetMotivation = params.motivation;
-    this.colorPalette = params.campaign ? this.campaign.colorPallete : this.colorSet;
+    this.colorPalette = params.campaign ? this.campaign.colorPalette : this.colorSet;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
     this.tagTypes = this.tagTypes.length > 0 ? this.tagTypes : [''];
     this.tagTypes.forEach(type => {
