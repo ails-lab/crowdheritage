@@ -62,10 +62,12 @@ export class CollectionEdit {
     this.importMethod = method;
   }
 
-  closeNav() {
+  async closeNav() {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("mySidebar").style.boxShadow = "none";
     this.importMethod = '';
+    let collectionData = await this.collectionServices.getCollection(this.collectionId, false);
+    this.collection = new Collection(collectionData);
   }
 
   async activate(params, route) {

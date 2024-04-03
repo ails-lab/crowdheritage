@@ -135,13 +135,13 @@ export class CampaignServices {
     return this.http.fetch(`/campaign/${campaignName}/importAnnotations?motivation=${motivation}`, {
       method: 'POST',
       body: json(annotationsObject)
-    }).then(response => response.json());
+    });
   }
 
   importMintAnnotations(campaignName, motivation, mintUrl) {
     return this.http.fetch(`/campaign/${campaignName}/importMintAnnotations?motivation=${motivation}&mintUrl=${mintUrl}`, {
       method: 'POST',
-    }).then(response => response.json());
+    });
   }
 
 

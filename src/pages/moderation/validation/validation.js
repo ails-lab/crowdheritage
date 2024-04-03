@@ -91,6 +91,10 @@ export class Validation {
     else
       return `${settings.project} ${this.caname}`;
   }
+  get bulkValidationEnabled() {
+    // TODO: Specify strategy when functionality is fixed on the backend
+    return false;
+  }
 
   scrollToTop() {
     window.scrollTo(0, 0);
@@ -185,7 +189,7 @@ export class Validation {
     this.cname = params.campaign.username;
     this.campaign = params.campaign;
 
-    this.colorPalette = params.campaign ? this.campaign.colorPallete : this.colorSet;
+    this.colorPalette = params.campaign ? this.campaign.colorPalette : this.colorSet;
 
     if (!this.popularTags) {
       this.campaignServices.getPopularAnnotations(this.campaign.username)

@@ -1,4 +1,14 @@
 {
+  "motivations": {
+    "Tagging": "Semantic Tagging",
+    "GeoTagging": "Geo Tagging",
+    "ColorTagging": "Color Tagging",
+    "Commenting": "Commenting"
+  },
+  "purposes": {
+    "ANNOTATE": "Annotate & Validate",
+    "VALIDATE": "Validate"
+  },
   "campaigns": "Campaigns",
   "collections": "Collections",
   "usergroups": "Usergroups",
@@ -109,6 +119,12 @@
   "campaignModerators": "Campaign moderators",
   "campaignUsergroups": "Campaign usergroups",
   "campaignMotivations": "Campaign motivations",
+  "campaignColorPalette": "Campaign Color Palette",
+  "enter-wikidata-uri": "Enter Wikidata color term URI",
+  "fetch-color": "Fetch color from Wikidata",
+  "reset-color" : "Reset color",
+  "add-color": "Add color to Palette",
+  "campaignType": "Campaign Type",
   "campaignPurpose": "Campaign purpose",
   "campaignOrientation": "Campaign orientation",
   "campaignFeedbackMethod": "Campaign feedback method",
