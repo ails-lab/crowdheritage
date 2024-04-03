@@ -490,9 +490,12 @@ export class CampaignEdit {
         return;
       }
       this.campaignServices.importNtuaAnnotations(this.campaign.username, this.annotationsUpload.FILE.motivation, this.annotationsUpload.FILE.file)
-        .then(response => {
-          console.log(response);
+        .then(() => {
           this.annotationsUpload.FILE.status = "STARTED";
+          this.baseAnnotations.FILE.push({
+            status: "IMPORTING",
+            startedAt: new Date()
+          });
         })
         .catch(error => {
           console.error(error);
@@ -507,9 +510,12 @@ export class CampaignEdit {
         return;
       }
       this.campaignServices.importMintAnnotations(this.campaign.username, this.annotationsUpload.MINT.motivation, this.annotationsUpload.MINT.url)
-        .then(response => {
-          console.log(response);
+        .then(() => {
           this.annotationsUpload.MINT.status = "STARTED";
+          this.baseAnnotations.MINT.push({
+            status: "IMPORTING",
+            startedAt: new Date()
+          })
         })
         .catch(error => {
           console.error(error);
@@ -517,6 +523,23 @@ export class CampaignEdit {
         });
       return;
     }
+  }
+
+  getTimestamp(annoFile) {
+    const date = annoFile.uploadedAt ? annoFile.uploadedAt : annoFile.startedAt;
+    return new Date(date).toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
+  baseAnnotationInfo(annoFile) {
+    let info = `<strong><u>${annoFile.status}</u></strong>`;
+    if (annoFile.status === "COMPLETED") {
+      info += `<br/>Ingested <strong>${annoFile.successCount}</strong> / <strong>${annoFile.successCount+annoFile.failedCount}</strong> annotations`;
+    }
+    return info;
   }
 
   deleteCampaign() {
