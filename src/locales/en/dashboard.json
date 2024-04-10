@@ -3,7 +3,8 @@
     "Tagging": "Semantic Tagging",
     "GeoTagging": "Geo Tagging",
     "ColorTagging": "Color Tagging",
-    "Commenting": "Commenting"
+    "Commenting": "Commenting",
+    "SubTagging": "Property Tagging"
   },
   "purposes": {
     "ANNOTATE": "Annotate & Validate",
@@ -115,6 +116,7 @@
   "addCollectionPlaceholder": "Start typing a collection name",
   "vocabulariesLabel": "Semantic Tagging Vocabularies",
   "vocabulariesMappings": "Semantic Tag Groupings",
+  "targetedProperties": "Targeted Properties",
   "vocabulariesPlaceholder": "-- Select vocabularies for semantic Tagging --",
   "campaignModerators": "Campaign moderators",
   "campaignUsergroups": "Campaign usergroups",
@@ -131,6 +133,7 @@
   "usernameLabel": "Campaign shortname",
   "usernamePlaceholder": "Give a unique, one-word identifier for your campaign",
   "tagType": "Tag type",
+  "property": "Property",
   "campaignSuccessMessage": "Your campaign was created successfully",
   "vocabularySuccessMessage": "Your vocabulary was created successfully",
   "vocabularyErrorMessage": "Vocabulary short-name already exists",

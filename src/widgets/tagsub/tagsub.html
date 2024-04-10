@@ -9,10 +9,15 @@
       <div class="infobar" innerHtml.bind="campaign.instructions"></div>
       <!-- searchbox-->
       <div class="searchbox" if.bind="campaign.status == 'active' && userHasAccessInCampaign()">
-        <input id="annotationInput" autocomplete="off" value.bind="tagPrefix['']" input.delegate="prefixChanged(false, '') & debounce:150"  type="text"  placeholder.bind="placeholderText" class="input-tag"/>
+        <input
+          id="annotationInput" autocomplete="off" value.bind="tagPrefix['']"
+          click.delegate="prefixChanged(false, '')"
+          input.delegate="prefixChanged(false, '') & debounce:150"
+          type="text" placeholder.bind="placeholderText" class="input-tag"
+        />
         <div show.bind='suggestionsActive[""]' class="autocomplete-suggestions-itemview" style="width: 100%; z-index: 9999;">
           <ul class="suggestions">
-            <li repeat.for='item of suggestedAnnotations[""]'  click.delegate="selectSubAnnotation(item.id)">
+            <li repeat.for='item of suggestedAnnotations[""]'  click.delegate="selectSubTagTerm(item)">
               <span>
                 <strong>${item.label}</strong>
                 <a if.bind="item.lang && item.labels.length>1">${item.lang}</a>
@@ -26,10 +31,47 @@
         </div>
         <i class='fa fa-spinner fa-spin ' show.bind="suggestionsLoading"></i>
       </div>
+      <div if.bind="selectingProperty" class="property-selector-block">
+        <div class="term block-section">
+          <div class="section-label">Term :</div>
+          <div class="col-lg-6 term-value">
+            <a href.bind="selectedTerm.uri" target="_blank">
+              ${selectedTerm.label}
+            </a>
+          </div>
+        </div>
+        <div class="property block-section">
+          <div class="section-label">Property :</div>
+          <div class="col-lg-6">
+            <select
+              class="text-center mb-0" name="property-selector" id="propertySelector"
+              change.delegate="selectTargetProperty($event.target.value)"
+            >
+              <option value="" selected disabled>---- Select Target Property ----</option>
+              <option
+                repeat.for="property of tagTypes" value.bind="property"
+              >
+                ${property}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div if.bind="selectedProperty.length" class="text-fragment block-section">
+          <p class="section-label">
+            Text fragment :
+          </p>
+          <p class="text-select-highlight" click.delegate="selectText()">
+            ${selectedPropertyValue}
+          </p>
+          <button class="btn" if.bind="selectedText.length" click.delegate="createSubAnnotation()">
+            Submit
+          </button>
+        </div>
+      </div>
       <!-- taglist-->
       <div class="show-more-parent">
         <ul class="subtagBlock taglist show-more-target">
-          <li repeat.for="ann of subtagAnnotations">
+          <li repeat.for="ann of subtagAnnotations" id="annotation-${ann.dbId}">
             <div class="text">
               <a
                 href.bind="ann.uri"
@@ -42,6 +84,12 @@
               >
                 ${ann.label}
               </a>
+            </div>
+            <div
+              class="cg-indicator" if.bind="ann.createdBy[0].externalCreatorType === 'Software'" data-html="true"
+              bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title.bind="generatorTooltipText(ann)"
+            >
+              CG
             </div>
             <ul class="action">
               <li class="publish-btn" if.bind="isCurrentUserCreator()">
@@ -63,7 +111,7 @@
                 </a>
               </li>
               <li class.bind="ann.rejectedByMe ? 'down active' : 'down'">
-                <a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="validate(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'subtag', '')">
+                <a if.bind="!ann.createdByMe" href="javascript:void(0)" click.delegate="toggleCollapse(ann.dbId)" >
                   <span class="count">${ann.rejectedBy.length}</span><i class="fa fa-thumbs-o-down"></i>
                 </a>
                 <a if.bind="ann.createdByMe" >
@@ -76,6 +124,31 @@
                 </a>
               </li>
             </ul>
+            <div class="feedback hide" id="collapse-${ann.dbId}">
+              <div class="comment-area">
+                <textarea
+                  id="comment-feeedback-${ann.dbId}" name="comment_feedback"
+                  placeholder="Comment" value.bind="commentValue" rows="2"
+                ></textarea>
+              </div>
+              <div class="dropdown-area">
+                <select
+                  class="text-center mb-0" name="errorTypes" id="errorTypesSelector-${ann.dbId}"
+                >
+                  <option value="" selected disabled>---- Select Error Type ----</option>
+                  <option
+                    repeat.for="err of errorTypes" class.bind="err.severity"
+                    value.bind="err.tokenizedVersion" title.bind="err.longDescription"
+                  >
+                    ${err.shortDescription}
+                  </option>
+                </select>
+                <i
+                  class="fa fa-floppy-o fa-lg" aria-hidden="true" title="Submit"
+                  click.delegate="submitRejection(ann.dbId, 'rejected', $index, ann.approvedByMe, ann.rejectedByMe, 'subtag', '')"
+                ></i>
+              </div>
+            </div>
           </li>
         </ul>
         <i class="show-more fa fa-chevron-down green" title="Load more" click.delegate='toggleLoadMore(".subtagBlock")'></i>

@@ -6750,7 +6750,7 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
   color: #999;
 }
 
-.colorBlock li .cg-indicator {
+.cg-indicator {
   display: inline-flex;
   color: @main-color;
   margin-left: 12px;
@@ -8323,10 +8323,99 @@ button.close-fullscreen-image {
 
 ul.subtagBlock {
   overflow-y: visible !important;
+  .text {
+    width: unset !important;
+    .tooltip {
+      min-width: 480px !important;
+      font-size: 11pt;
+    }
+  }
+  .cg-indicator {
+    position: relative;
+    top: -8px;
+    margin-left: 16px;
+  }
   li .text .tooltip {
     max-width: 512px !important;
     .tooltip-inner {
       max-width: 500px !important;
+    }
+  }
+  li .feedback {
+    display: flex !important;
+    flex-direction: column;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin-top: 10px;
+    width: 100%;
+    .comment-area textarea {
+      width: 100%;
+    }
+    .dropdown-area {
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &.hide {
+      display: none !important;
+    }
+  }
+  select {
+    padding: 4px;
+    width: 100%;
+  }
+  i.fa-floppy-o {
+    margin-left: 16px;
+    cursor: pointer;
+    color: @main-color;
+  }
+}
+
+.property-selector-block {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 20px;
+  background-color: #EFDDBB;
+  .block-section {
+    display: flex;
+    justify-content: space-between;
+    .section-label {
+      font-weight: bold;
+    }
+    &.term .term-value {
+      color: @main-color;
+      font-weight: bold;
+      text-align: center;
+      a {
+        padding-right: 16px;
+      }
+    }
+    &.property {
+      margin-top: 8px;
+      select {
+        cursor: pointer;
+        border: none;
+        color: @main-color;
+        background-color: #EFDDBB;
+        font-weight: bold;
+      }
+    }
+    &.text-fragment {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      .text-select-highlight::selection {
+        background-color: @main-color;
+        color: white;
+      }
+      .btn {
+        color: white;
+        background-color: #4F7979;
+        float: right;
+        margin-right: 12px;
+      }
     }
   }
 }

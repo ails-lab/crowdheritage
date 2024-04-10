@@ -67,6 +67,12 @@ export class Tagitem {
     this.userComment = '';
     this.loadedImagesCount = 0;
     this.compareDisabled = true;
+    this.errorTypes = [];
+    this.selectingProperty = false;
+    this.selectedTerm = {};
+    this.selectedProperty = "";
+    this.selectedPropertyValue = "";
+    this.selectedText = "";
 
     this.userId = '';
     this.lg = loginPopup;
@@ -108,6 +114,7 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
+    this.record = params.record;
     this.widgetMotivation = params.motivation;
     this.colorPalette = params.campaign ? this.campaign.colorPalette : this.colorSet;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
@@ -115,6 +122,7 @@ export class Tagitem {
     this.tagTypes.forEach(type => {
       this.annotations[type] = [];
     });
+    this.errorTypes = params.campaign.validationErrorTypes ? params.campaign.validationErrorTypes : [];
 
     if (params.userId) {
       this.userId = params.userId;
@@ -197,7 +205,11 @@ export class Tagitem {
     this.suggestedAnnotations[tagType] = [];
     this.selectedAnnotation = null;
     let self = this;
-    let vocabularies = this.campaign.vocabularyMapping.length > 0 ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies : this.campaign.vocabularies;
+    // TODO: fix this patch
+    // let vocabularies = this.campaign.vocabularyMapping.length > 0 ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies : this.campaign.vocabularies;
+    let vocabularies = this.campaign.vocabularyMapping.length > 0 && !this.campaign.motivation.includes('SubTagging')
+      ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies
+      : this.campaign.vocabularies;
     await this.thesaurusServices.getCampaignSuggestions(prefix, vocabularies, lang).then((res) => {
         this.suggestionsActive[tagType] = true;
         self.suggestedAnnotations[tagType] = res.results;
@@ -1173,6 +1185,71 @@ export class Tagitem {
     let value = start + middle + end;
 
     return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
+  }
+
+  generatorTooltipText(ann) {
+    return `<b><u>Computer Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
+  }
+
+  isFeedbackAccordionOpen(annoId) {
+    return !document.getElementById(`collapse-${annoId}`).classList.contains('hide');
+  }
+
+  toggleCollapse(annoId) {
+    const collapseClasslist = document.getElementById(`collapse-${annoId}`).classList;
+    const annotationEl = document.getElementById(`annotation-${annoId}`);
+    const thumbsDownEl = annotationEl.querySelector('.down');
+    const annIsRejectedByMe = this.subtagAnnotations.find(ann => ann.dbId === annoId).rejectedByMe;
+    if (this.isFeedbackAccordionOpen(annoId)) {
+      collapseClasslist.add('hide');
+      if (!annIsRejectedByMe) {
+        thumbsDownEl.classList.remove('active');
+      }
+    }
+    else {
+      collapseClasslist.remove('hide');
+      if (!annIsRejectedByMe) {
+        thumbsDownEl.classList.add('active');
+      }
+    }
+  }
+
+  selectSubTagTerm(term) {
+    this.tagPrefix[""] = "";
+    this.selectingProperty = true;
+    this.selectedTerm = term;
+    this.selectedProperty = "";
+    this.selectedPropertyValue = "";
+    const propertySelector = document.getElementById("propertySelector");
+    if (propertySelector) {
+      propertySelector.selectedIndex = 0;
+    }
+  }
+  selectTargetProperty(property) {
+    this.selectedProperty = property;
+    this.selectedPropertyValue = this.record[property.split(":")[1]];
+    document.getElementById("propertySelector").blur();
+  }
+
+  createSubAnnotation() {
+    this.selectingProperty = false;
+    this.selectedTerm = {};
+    this.selectedText = "";
+    this.selectedProperty = "";
+    this.selectedPropertyValue = "";
+    const propertySelector = document.getElementById("propertySelector");
+    if (propertySelector) {
+      propertySelector.selectedIndex = 0;
+    }
+  }
+
+  async submitRejection(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType) {
+    await this.validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType);
+    this.toggleCollapse(annoId);
+  }
+
+  selectText() {
+    this.selectedText = window.getSelection().toString().trim();
   }
 
 }

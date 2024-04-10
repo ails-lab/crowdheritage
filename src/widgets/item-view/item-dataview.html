@@ -75,7 +75,7 @@
             if.bind="hasMotivation('ImageTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ImageTagging'}">
           </compose>
           <compose view="widgets/tagsub/tagsub.html" view-model="widgets/tagitem/tagitem"
-            if.bind="hasMotivation('SubTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'SubTagging'}">
+            if.bind="hasMotivation('SubTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'record': record, 'motivation': 'SubTagging'}">
           </compose>
           <compose view="widgets/taggeo/taggeo.html" view-model="widgets/tagitem/tagitem"
             if.bind="hasMotivation('GeoTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'GeoTagging'}">
