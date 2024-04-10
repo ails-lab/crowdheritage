@@ -59,6 +59,7 @@ export class Tagitem {
     this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
+    this.subtagAnnotations = [];
     this.suggestedAnnotation = {};
     this.suggestionsLoading = false;
     this.suggestedAnnotations = {};
@@ -66,6 +67,12 @@ export class Tagitem {
     this.userComment = '';
     this.loadedImagesCount = 0;
     this.compareDisabled = true;
+    this.errorTypes = [];
+    this.selectingProperty = false;
+    this.selectedTerm = {};
+    this.selectedProperty = "";
+    this.selectedPropertyValue = "";
+    this.selectedText = "";
 
     this.userId = '';
     this.lg = loginPopup;
@@ -95,6 +102,7 @@ export class Tagitem {
     toggleMore(".colorBlock");
     toggleMore(".imageBlock");
     toggleMore(".geoBlock");
+    toggleMore(".subtagBlock");
   }
 
   detached() {
@@ -106,6 +114,7 @@ export class Tagitem {
   async activate(params) {
     this.campaign = params.campaign;
     this.recId = params.recId;
+    this.record = params.record;
     this.widgetMotivation = params.motivation;
     this.colorPalette = params.campaign ? this.campaign.colorPalette : this.colorSet;
     this.tagTypes = this.campaign.vocabularyMapping.map(mapping => mapping.labelName);
@@ -113,6 +122,7 @@ export class Tagitem {
     this.tagTypes.forEach(type => {
       this.annotations[type] = [];
     });
+    this.errorTypes = params.campaign.validationErrorTypes ? params.campaign.validationErrorTypes : [];
 
     if (params.userId) {
       this.userId = params.userId;
@@ -128,6 +138,7 @@ export class Tagitem {
     this.imageannotations.splice(0, this.imageannotations.length);
     this.pollannotations.splice(0, this.pollannotations.length);
     this.commentAnnotations.splice(0, this.commentAnnotations.length);
+    this.subtagAnnotations.splice(0, this.subtagAnnotations.length);
     this.pollTitle = "";
 
     if (this.userServices.isAuthenticated() && this.userServices.current === null) {
@@ -149,6 +160,7 @@ export class Tagitem {
     this.imageannotations = [];
     this.pollannotations = [];
     this.commentAnnotations = [];
+    this.subtagAnnotations = [];
     await this.getRecordAnnotations(this.recId);
   }
 
@@ -193,7 +205,11 @@ export class Tagitem {
     this.suggestedAnnotations[tagType] = [];
     this.selectedAnnotation = null;
     let self = this;
-    let vocabularies = this.campaign.vocabularyMapping.length > 0 ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies : this.campaign.vocabularies;
+    // TODO: fix this patch
+    // let vocabularies = this.campaign.vocabularyMapping.length > 0 ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies : this.campaign.vocabularies;
+    let vocabularies = this.campaign.vocabularyMapping.length > 0 && !this.campaign.motivation.includes('SubTagging')
+      ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies
+      : this.campaign.vocabularies;
     await this.thesaurusServices.getCampaignSuggestions(prefix, vocabularies, lang).then((res) => {
         this.suggestionsActive[tagType] = true;
         self.suggestedAnnotations[tagType] = res.results;
@@ -447,6 +463,9 @@ export class Tagitem {
       else if (mot == 'comment') {
         ann = this.commentAnnotations.splice(index, 1);
       }
+      else if (mot == 'subtag') {
+        ann = this.subtagAnnotations.splice(index, 1);
+      }
       this.reloadAnnotations().then(() => {
         if (this.isCurrentUserCreator()) {
           // Remove one point from each of the upvoters
@@ -567,6 +586,9 @@ export class Tagitem {
     else if (mot == 'comment') {
         obj = this.commentAnnotations[index];
     }
+    else if (mot == 'subtag') {
+        obj = this.subtagAnnotations[index];
+    }
     else {
       return;
     }
@@ -676,6 +698,9 @@ export class Tagitem {
     }
     else if (mot == 'comment') {
         obj = this.commentAnnotations[index];
+    }
+    else if (mot == 'subtag') {
+        obj = this.subtagAnnotations[index];
     }
     else {
       return;
@@ -882,6 +907,22 @@ export class Tagitem {
         return b.score - a.score;
       });
     }
+    else if (this.widgetMotivation == 'SubTagging') {
+      await this.recordServices.getAnnotations(this.recId, 'SubTagging', this.generatorParam).then(response => {
+        this.subtagAnnotations = [];
+        for (var i = 0; i < response.length; i++) {
+          if (!this.userServices.current) {
+            this.subtagAnnotations.push(new Annotation(response[i], "", this.loc));
+          } else {
+            this.subtagAnnotations.push(new Annotation(response[i], this.userServices.current.dbId, this.loc));
+          }
+        }
+      });
+      // Sort the annotations in descending order, based on their score
+      this.subtagAnnotations.sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
   }
 
   getColorLabel(labelObject) {
@@ -912,6 +953,7 @@ export class Tagitem {
     var colorFlag = false;
     var pollFlag = false;
     var commFlag = false;
+    var subFlag = false;
 
     for (var i in this.annotations) {
       if (this.annotations[i].createdByMe || this.annotations[i].approvedByMe || this.annotations[i].rejectedByMe) {
@@ -943,6 +985,12 @@ export class Tagitem {
         break;
       }
     }
+    for (var i in this.subtagAnnotations) {
+      if (this.subtagAnnotations[i].createdByMe || this.subtagAnnotations[i].approvedByMe || this.subtagAnnotations[i].rejectedByMe) {
+        subFlag = true;
+        break;
+      }
+    }
 
     if (mot == "tag") {
       return tagFlag;
@@ -959,8 +1007,11 @@ export class Tagitem {
     else if (mot == "comment") {
       return commFlag;
     }
+    else if (mot == "subtag") {
+      return subFlag;
+    }
     else {
-      return tagFlag || geoFlag || colorFlag || pollFlag || commFlag;
+      return tagFlag || geoFlag || colorFlag || pollFlag || commFlag || subFlag;
     }
   }
 
@@ -1125,6 +1176,80 @@ export class Tagitem {
     modal.style.display = "none";
     banner.style.display = "block";
     this.fullImageSrc = '';
+  }
+
+  subtagTooltipText(ann) {
+    let start = ann.selector.origValue.slice(0, ann.selector.start);
+    let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
+    let end = ann.selector.origValue.slice(ann.selector.end, ann.selector.origValue.length);
+    let value = start + middle + end;
+
+    return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
+  }
+
+  generatorTooltipText(ann) {
+    return `<b><u>Computer Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
+  }
+
+  isFeedbackAccordionOpen(annoId) {
+    return !document.getElementById(`collapse-${annoId}`).classList.contains('hide');
+  }
+
+  toggleCollapse(annoId) {
+    const collapseClasslist = document.getElementById(`collapse-${annoId}`).classList;
+    const annotationEl = document.getElementById(`annotation-${annoId}`);
+    const thumbsDownEl = annotationEl.querySelector('.down');
+    const annIsRejectedByMe = this.subtagAnnotations.find(ann => ann.dbId === annoId).rejectedByMe;
+    if (this.isFeedbackAccordionOpen(annoId)) {
+      collapseClasslist.add('hide');
+      if (!annIsRejectedByMe) {
+        thumbsDownEl.classList.remove('active');
+      }
+    }
+    else {
+      collapseClasslist.remove('hide');
+      if (!annIsRejectedByMe) {
+        thumbsDownEl.classList.add('active');
+      }
+    }
+  }
+
+  selectSubTagTerm(term) {
+    this.tagPrefix[""] = "";
+    this.selectingProperty = true;
+    this.selectedTerm = term;
+    this.selectedProperty = "";
+    this.selectedPropertyValue = "";
+    const propertySelector = document.getElementById("propertySelector");
+    if (propertySelector) {
+      propertySelector.selectedIndex = 0;
+    }
+  }
+  selectTargetProperty(property) {
+    this.selectedProperty = property;
+    this.selectedPropertyValue = this.record[property.split(":")[1]];
+    document.getElementById("propertySelector").blur();
+  }
+
+  createSubAnnotation() {
+    this.selectingProperty = false;
+    this.selectedTerm = {};
+    this.selectedText = "";
+    this.selectedProperty = "";
+    this.selectedPropertyValue = "";
+    const propertySelector = document.getElementById("propertySelector");
+    if (propertySelector) {
+      propertySelector.selectedIndex = 0;
+    }
+  }
+
+  async submitRejection(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType) {
+    await this.validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType);
+    this.toggleCollapse(annoId);
+  }
+
+  selectText() {
+    this.selectedText = window.getSelection().toString().trim();
   }
 
 }

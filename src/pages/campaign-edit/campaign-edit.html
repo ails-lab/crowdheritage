@@ -253,32 +253,34 @@
                     ></i>
                   </div>
                 </div>
-                <div class="center" if.bind="motivationValues.Tagging">
+                <div class="center" if.bind="(motivationValues.Tagging || motivationValues.SubTagging)">
                   <label t="dashboard:vocabulariesLabel">Vocabularies</label>
                   <ul class="tagPills">
                     <li repeat.for="voc of selectedVocabularies">
                       <i class="fa fa-book me-1" aria-hidden="true"></i>
                       <span class="me-2">${voc}</span>
-                      <a if.bind="motivationValues.Tagging" click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
+                      <a click.delegate="removeVocabulary(voc)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
                     </li>
                   </ul>
-                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" disabled.bind="!motivationValues.Tagging" change.delegate="addVocabulary($event.target.value)">
+                  <select class="mb-0" name="vocabularies" id="vocabulariesSelector" change.delegate="addVocabulary($event.target.value)">
                     <option value="" disabled selected t="dashboard:vocabulariesPlaceholder"></option>
                     <option repeat.for="voc of availableVocabularies" value.bind="voc.name">[${voc.name}] - ${voc.label}</option>
                   </select>
                 </div>
-                <div class="center" if.bind="motivationValues.Tagging && selectedVocabularies.length">
-                  <label t="dashboard:vocabulariesMappings">Tag types</label>
-                  <span class="me-2">(${i18n.tr("dashboard:optional")})</span>
-                  <span if.bind="motivationValues.Tagging && selectedVocabularies.length" class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
+                <div class="center" if.bind="(motivationValues.Tagging || motivationValues.SubTagging) && selectedVocabularies.length">
+                  <label if.bind="motivationValues.Tagging" t="dashboard:vocabulariesMappings"></label>
+                  <label else t="dashboard:targetedProperties"></label>
+                  <span if.bind="motivationValues.Tagging" class="me-2">(${i18n.tr("dashboard:optional")})</span>
+                  <span class="cursor-pointer" click.delegate="createNewTagGroup()"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i></span>
                   <br/>
                   <div class="d-flex mt-2" repeat.for="group of tagGroups">
-                    <input class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" disabled.bind="!motivationValues.Tagging" autofocus />
+                    <input if.bind="motivationValues.Tagging" class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
+                    <input else class="tag-type me-4" t="[placeholder]dashboard:property" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
                     <div class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
-                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]" disabled.bind="!motivationValues.Tagging">
+                      <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]">
                       <span class="form-check-label">${voc}</span>
                     </div>
-                    <span if.bind="motivationValues.Tagging" class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
+                    <span class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
                   </div>
                 </div>
                 <div class="center autocomplete-container mt-5">
