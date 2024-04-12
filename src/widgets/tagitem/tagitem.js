@@ -205,8 +205,6 @@ export class Tagitem {
     this.suggestedAnnotations[tagType] = [];
     this.selectedAnnotation = null;
     let self = this;
-    // TODO: fix this patch
-    // let vocabularies = this.campaign.vocabularyMapping.length > 0 ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies : this.campaign.vocabularies;
     let vocabularies = this.campaign.vocabularyMapping.length > 0 && !this.campaign.motivation.includes('SubTagging')
       ? this.campaign.vocabularyMapping.find(mapping => mapping.labelName == tagType).vocabularies
       : this.campaign.vocabularies;
@@ -1227,7 +1225,7 @@ export class Tagitem {
   }
   selectTargetProperty(property) {
     this.selectedProperty = property;
-    this.selectedPropertyValue = this.record[property.split(":")[1]];
+    this.selectedPropertyValue = this.record[property.toLowerCase()];
     document.getElementById("propertySelector").blur();
   }
 
