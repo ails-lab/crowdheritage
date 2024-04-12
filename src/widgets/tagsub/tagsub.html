@@ -63,7 +63,10 @@
           <p class="text-select-highlight" click.delegate="selectText()">
             ${selectedPropertyValue}
           </p>
-          <button class="btn" if.bind="selectedText.length" click.delegate="createSubAnnotation()">
+          <button
+            if.bind="selectedText.length && highlightedText.length"
+            class="btn" click.delegate="createSubAnnotation()"
+          >
             Submit
           </button>
         </div>

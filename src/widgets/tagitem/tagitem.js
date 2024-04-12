@@ -95,6 +95,8 @@ export class Tagitem {
       return `${settings.project} ${this.campaign.username}`;
   }
 
+  get highlightedText() { return window.getSelection().toString().trim(); }
+
   attached() {
     document.addEventListener('click', this.handleBodyClick);
     toggleMore(".tagBlock");
@@ -1247,7 +1249,7 @@ export class Tagitem {
   }
 
   selectText() {
-    this.selectedText = window.getSelection().toString().trim();
+    this.selectedText = this.highlightedText;
   }
 
 }
