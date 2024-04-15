@@ -52,7 +52,9 @@ export class Tagitem {
     this.fullImageSrc = '';
 
     this.suggestionsActive = {};
-    this.tagPrefix = {};
+    this.tagPrefix = {
+      '': ''
+    };
     this.annotations = {};
     this.geoannotations = [];
     this.colorannotations = [];
@@ -70,9 +72,13 @@ export class Tagitem {
     this.errorTypes = [];
     this.selectingProperty = false;
     this.selectedTerm = {};
-    this.selectedProperty = "";
-    this.selectedPropertyValue = "";
-    this.selectedText = "";
+    this.selectedProperty = '';
+    this.selectedPropertyValue = '';
+    this.selectedText = {
+      value: '',
+      startAt: -1,
+      endAt: -1
+    };
 
     this.userId = '';
     this.lg = loginPopup;
@@ -96,6 +102,14 @@ export class Tagitem {
   }
 
   get highlightedText() { return window.getSelection().toString().trim(); }
+
+  get isTextFragmentSelected() {
+    if (this.highlightedText.length && this.selectedText.value.length) {
+      let targetedElement = window.getSelection().focusNode.parentElement.id;
+      return targetedElement === "text-fragment-selector";
+    }
+    return false;
+  }
 
   attached() {
     document.addEventListener('click', this.handleBodyClick);
@@ -637,8 +651,14 @@ export class Tagitem {
 
     else if (annoType == 'rejected') {
       this.ApproveFlag = obj.approvedByMe;
-
-      this.annotationServices.rejectObj(annoId, this.campaign.username).then(response => {
+      let reason = null;
+      if (mot === 'subtag') {
+        let hasRejectionReason =
+          this.subtagAnnotations[index].rejectedByMeReason.code.length
+          || this.subtagAnnotations[index].rejectedByMeReason.comment.length;
+        reason = hasRejectionReason ? this.subtagAnnotations[index].rejectedByMeReason : null;
+      }
+      this.annotationServices.rejectObj(annoId, this.campaign.username, reason).then(response => {
         response['withCreator'] = this.userServices.current.dbId;
         obj.rejectedBy.push(response);
 
@@ -1214,6 +1234,15 @@ export class Tagitem {
     }
   }
 
+  selectText() {
+    this.selectedText.value = this.highlightedText;
+    let startIndex = this.selectedPropertyValue.indexOf(this.selectedText.value);
+    if (startIndex >= 0) {
+      this.selectedText.startAt = startIndex;
+      this.selectedText.endAt = startIndex + this.selectedText.value.length;
+    }
+  }
+
   selectSubTagTerm(term) {
     this.tagPrefix[""] = "";
     this.selectingProperty = true;
@@ -1231,10 +1260,14 @@ export class Tagitem {
     document.getElementById("propertySelector").blur();
   }
 
-  createSubAnnotation() {
+  resetSubAnnotation() {
     this.selectingProperty = false;
     this.selectedTerm = {};
-    this.selectedText = "";
+    this.selectedText = {
+      value: '',
+      startAt: -1,
+      endAt: -1,
+    };
     this.selectedProperty = "";
     this.selectedPropertyValue = "";
     const propertySelector = document.getElementById("propertySelector");
@@ -1243,13 +1276,30 @@ export class Tagitem {
     }
   }
 
+  createSubAnnotation() {
+    let selector = {
+      'origValue' : this.selectedPropertyValue,
+      'origLang' : this.record.defaultlanguage.toUpperCase(),
+      'start' : this.selectedText.startAt,
+      'end' : this.selectedText.endAt,
+      'property' : `dc:${this.selectedProperty.toLowerCase()}`,
+    };
+    this.annotationServices.annotateRecord(this.recId, selector, this.selectedTerm, this.campaign.username, 'SubTagging', this.loc)
+      .then(async response => {
+        toastr.success('Annotation added.');
+        this.ea.publish('annotations-created', self.record);
+        this.campaignServices.incUserPoints(this.campaign.dbId, this.userServices.current.dbId, 'created');
+        // After annotating, automatically upvote the new annotation
+        await this.getRecordAnnotations(this.recId);
+        let i = this.subtagAnnotations.findIndex(ann => ann.dbId === response.dbId);
+        this.score(response.dbId, 'approved', i, 'subtag', '');
+        this.resetSubAnnotation();
+      });
+  }
+
   async submitRejection(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType) {
     await this.validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType);
     this.toggleCollapse(annoId);
-  }
-
-  selectText() {
-    this.selectedText = this.highlightedText;
   }
 
 }

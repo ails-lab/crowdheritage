@@ -96,8 +96,15 @@ export class AnnotationServices {
 		}).then(checkStatus);
 	}
 
-	rejectObj(id, camp) {
-		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), created: new Date().toISOString(), confidence: 0.0 };
+	rejectObj(id, camp, reason) {
+    let annotation = {
+      generator: `${settings.project} ${camp}`,
+      generated: new Date().toISOString(),
+      created: new Date().toISOString(),
+      confidence: 0.0,
+      validationErrorType: reason && reason.code ? [reason.code] : undefined,
+      validationComment: reason && reason.comment ? reason.comment : undefined
+    };
 
 		return this.http.fetch(`/annotation/${id}/rejectObj`, {
 			method: 'POST',
@@ -202,7 +209,7 @@ export class AnnotationServices {
 		});
 	}
 
-	async annotateRecord(recid, property, term, camp, mot, lang) {
+	async annotateRecord(recid, selector, term, camp, mot, lang) {
 		let body = {}
 		if (mot == "Commenting") {
 			body = {label: { default: [ term ] } };
@@ -216,8 +223,12 @@ export class AnnotationServices {
 			}
 		}
 		let target = { recordId: recid };
-		if (property) {
-			target.selector = { property: property };
+		if (selector) {
+      if (typeof selector === 'string') {
+        target.selector = { property: selector };
+      } else {
+        target.selector = selector;
+      }
 		}
 		let annotation = { generator: settings.project+' '+camp, generated: new Date().toISOString(), confidence: 0.0, motivation: mot, body: body, target: target };
 
@@ -228,7 +239,7 @@ export class AnnotationServices {
 				'Content-Type': 'application/json'
 			}
 		}).then(checkStatus).then((response) => {
-			response.json();
+			return response.json();
 		});
 	}
 

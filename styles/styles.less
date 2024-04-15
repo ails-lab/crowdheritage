@@ -7838,7 +7838,7 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
 }
 
 #error-type-list {
-  max-height: 185px;
+  max-height: 140px;
   overflow-y: auto;
   .error-type-row {
     display: flex;
@@ -8410,6 +8410,7 @@ ul.subtagBlock {
     justify-content: space-between;
     .section-label {
       font-weight: bold;
+      margin-bottom: 0;
     }
     &.term .term-value {
       color: @main-color;
@@ -8438,11 +8439,26 @@ ul.subtagBlock {
         background-color: @main-color;
         color: white;
       }
+    }
+    &.action-buttons {
+      margin-top: 8px;
       .btn {
-        color: white;
-        background-color: #4F7979;
-        float: right;
-        margin-right: 12px;
+        min-width: 128px;
+        &.submit {
+          color: white;
+          background-color: #4F7979;
+          float: right;
+          margin-right: 12px;
+        }
+        &.cancel {
+          border: 1px solid red;
+          color: red;
+          background-color: white;
+          &:hover {
+            background-color: red;
+            color: white;
+          }
+        }
       }
     }
   }
