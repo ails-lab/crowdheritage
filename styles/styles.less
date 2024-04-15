@@ -7837,6 +7837,33 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
   }
 }
 
+#error-type-list {
+  max-height: 140px;
+  overflow-y: auto;
+  .error-type-row {
+    display: flex;
+    margin: 0.5rem 0;
+    align-items: center;
+    input, select {
+      margin-right: 0.5rem;
+      height: 40px !important;
+      &.error-code {
+        max-width: 110px;
+      }
+      &.error-severity {
+        max-width: 124px;
+        margin-bottom: 0 !important;
+      }
+      &.error-short-desc {
+
+      }
+      &.error-long-desc {
+
+      }
+    }
+  }
+}
+
 .tagPills {
   display: flex;
   list-style-type: none;
@@ -8383,12 +8410,14 @@ ul.subtagBlock {
     justify-content: space-between;
     .section-label {
       font-weight: bold;
+      margin-bottom: 0;
     }
     &.term .term-value {
       color: @main-color;
       font-weight: bold;
       text-align: center;
-      a {
+      a, a:visited, a:hover, a:active {
+        color: inherit;
         padding-right: 16px;
       }
     }
@@ -8410,11 +8439,26 @@ ul.subtagBlock {
         background-color: @main-color;
         color: white;
       }
+    }
+    &.action-buttons {
+      margin-top: 8px;
       .btn {
-        color: white;
-        background-color: #4F7979;
-        float: right;
-        margin-right: 12px;
+        min-width: 128px;
+        &.submit {
+          color: white;
+          background-color: #4F7979;
+          float: right;
+          margin-right: 12px;
+        }
+        &.cancel {
+          border: 1px solid red;
+          color: red;
+          background-color: white;
+          &:hover {
+            background-color: red;
+            color: white;
+          }
+        }
       }
     }
   }

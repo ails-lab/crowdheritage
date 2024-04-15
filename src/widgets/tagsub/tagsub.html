@@ -60,10 +60,18 @@
           <p class="section-label">
             Text fragment :
           </p>
-          <p class="text-select-highlight" click.delegate="selectText()">
+          <p id="text-fragment-selector" class="text-select-highlight" click.delegate="selectText()">
             ${selectedPropertyValue}
           </p>
-          <button class="btn" if.bind="selectedText.length" click.delegate="createSubAnnotation()">
+        </div>
+        <div class="action-buttons block-section">
+          <button class="btn cancel" click.delegate="resetSubAnnotation()">
+            Cancel
+          </button>
+          <button
+            disabled.bind="!isTextFragmentSelected"
+            class="btn submit" click.delegate="createSubAnnotation()"
+          >
             Submit
           </button>
         </div>
@@ -128,12 +136,13 @@
               <div class="comment-area">
                 <textarea
                   id="comment-feeedback-${ann.dbId}" name="comment_feedback"
-                  placeholder="Comment" value.bind="commentValue" rows="2"
+                  placeholder="Comment" value.bind="ann.rejectedByMeReason.comment" rows="2"
                 ></textarea>
               </div>
               <div class="dropdown-area">
                 <select
                   class="text-center mb-0" name="errorTypes" id="errorTypesSelector-${ann.dbId}"
+                  value.bind="ann.rejectedByMeReason.code"
                 >
                   <option value="" selected disabled>---- Select Error Type ----</option>
                   <option

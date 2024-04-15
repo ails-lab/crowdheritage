@@ -253,6 +253,36 @@
                     ></i>
                   </div>
                 </div>
+                <div class="center" if.bind="selectedMotivations.includes('SubTagging') || campaign.campaignType === 'Translate'">
+                  <label t="dashboard:campaignErrorTypes">Campaign Error Types</label>
+                  <span class="cursor-pointer" click.delegate="createNewErrorType()">
+                    <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i>
+                  </span>
+                  <br/>
+                  <div id="error-type-list">
+                    <div class="error-type-row" repeat.for="errorType of campaign.validationErrorTypes">
+                      <input
+                        class="error-code" t="[placeholder]dashboard:error-code" type="text"
+                        id="error-code-${index}" value.bind="errorType.tokenizedVersion"
+                      />
+                      <select class="error-severity" name="error-severity-selector" value.bind="errorType.severity">
+                        <option value="" disabled selected t="dashboard:errorTypeSeveritySelectPlaceholder"></option>
+                        <option repeat.for="level of errorSeverityLevels" value.bind="level">${level}</option>
+                      </select>
+                      <input
+                        class="error-short-desc" t="[placeholder]dashboard:error-short-desc" type="text"
+                        id="error-short-desc-${index}" value.bind="errorType.shortDescription"
+                      />
+                      <input
+                        class="error-long-desc" t="[placeholder]dashboard:error-long-desc" type="text"
+                        id="error-long-desc-${index}" value.bind="errorType.longDescription"
+                      />
+                      <span class="cursor-pointer text-red me-2" click.delegate="deleteErrorType($index)">
+                        <i class="fa fa-lg fa-trash-o" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
                 <div class="center" if.bind="(motivationValues.Tagging || motivationValues.SubTagging)">
                   <label t="dashboard:vocabulariesLabel">Vocabularies</label>
                   <ul class="tagPills">
@@ -276,11 +306,11 @@
                   <div class="d-flex mt-2" repeat.for="group of tagGroups">
                     <input if.bind="motivationValues.Tagging" class="tag-type me-4" t="[placeholder]dashboard:tagType" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
                     <input else class="tag-type me-4" t="[placeholder]dashboard:property" type="text" id="tag-type-1" value.bind="group.tagType" autofocus />
-                    <div class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
+                    <div if.bind="motivationValues.Tagging" class="tag-type-voc me-4" repeat.for="voc of selectedVocabularies">
                       <input class="form-check-input" type="checkbox" id.bind="`voc-${$index}`" checked.bind="group[voc]">
                       <span class="form-check-label">${voc}</span>
                     </div>
-                    <span class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
+                    <span if.bind="motivationValues.Tagging" class="cursor-pointer text-red" click.delegate="deleteTagGroup($index)"><i class="pt-4 fa fa-lg fa-trash-o" aria-hidden="true"></i></span>
                   </div>
                 </div>
                 <div class="center autocomplete-container mt-5">

@@ -92,6 +92,9 @@ export class CampaignEdit {
       }
     };
     this.errors = {};
+    this.errorSeverityLevels = [
+      'Severe', 'High', 'MediumHigh', 'Medium', 'MediumLow', 'Low'
+    ];
 
     if (!instance) {
       instance = this;
@@ -297,6 +300,23 @@ export class CampaignEdit {
 
   deleteTagGroup(index) {
     this.tagGroups.splice(index, 1);
+  }
+
+  async createNewErrorType() {
+    let lastElementIndex = this.campaign.validationErrorTypes.length - 1;
+    let lastElementCode = this.campaign.validationErrorTypes[lastElementIndex].tokenizedVersion.split('_')[1];
+    await this.campaign.validationErrorTypes.push({
+      'tokenizedVersion': `ERROR_${Number(lastElementCode) + 1}`,
+      'severity': 'Severe',
+      'shortDescription': '',
+      'longDescription': ''
+    });
+    let errorList = document.getElementById("error-type-list");
+    errorList.scrollTop = errorList.scrollHeight;
+  }
+
+  deleteErrorType(index) {
+    this.campaign.validationErrorTypes.splice(index, 1);
   }
 
   loadFromFile(id) {
@@ -552,6 +572,10 @@ export class CampaignEdit {
     }
   }
 
+  hasDuplicates(array) {
+    return (new Set(array)).size !== array.length;
+  }
+
   campaignParamsAreValid() {
     if (new Date(this.campaign.startDate) >= new Date(this.campaign.endDate)) {
       toastr.error("Campaign duration invalid");
@@ -580,6 +604,10 @@ export class CampaignEdit {
     let target = parseInt(this.campaign.target);
     if (!Number.isInteger(target) || target <= 0) {
       toastr.error("Annotation target must be a positive number");
+      return false;
+    }
+    if (this.hasDuplicates(this.campaign.validationErrorTypes.map(errorType => errorType.tokenizedVersion))) {
+      toastr.error("Error type Codes must be unique");
       return false;
     }
     let baseAnnotationsCampaignType = ['Translate', 'Image Comparison'].includes(this.campaign.campaignType);
@@ -664,7 +692,7 @@ export class CampaignEdit {
 
   updateCampaign() {
     if (!this.campaignParamsAreValid()) {
-      window.scrollTo(0,0);
+      // window.scrollTo(0,0);
       return;
     }
 
@@ -704,6 +732,12 @@ export class CampaignEdit {
     }
     if (this.campaign.colorPalette && this.campaign.colorPalette.length) {
       camp.colorTaggingColorsTerminology = this.campaign.colorPalette;
+    }
+    if (this.campaign.validationErrorTypes) {
+      this.campaign.validationErrorTypes.filter(errorType =>
+        errorType.tokenizedVersion.length && errorType.severity.length
+          && errorType.shortDescription.length && errorType.longDescription.length);
+      camp.validationErrorTypes = this.campaign.validationErrorTypes;
     }
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)
