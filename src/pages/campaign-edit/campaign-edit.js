@@ -55,11 +55,11 @@ export class CampaignEdit {
         'motivation': ['ImageTagging']
       }
     };
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'SubTagging'];
+    this.motivations = ['Tagging', 'SubTagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.purposes = ['ANNOTATE', 'VALIDATE'];
     this.orientations = ['DATA', 'METADATA'];
     this.feedbackMethods = ['UPVOTE', 'RATE'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, SubTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -104,8 +104,7 @@ export class CampaignEdit {
   clearInstance() {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting', 'SubTagging'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, SubTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -631,7 +630,7 @@ export class CampaignEdit {
         this.motivationValues[mot] = this.campaignTypeDetails[type].motivation.includes(mot);
       });
     } else {
-      this.motivationValues = {Tagging: true, GeoTagging: false, ColorTagging: false, Commenting: false};
+      this.motivationValues = {Tagging: true, GeoTagging: false, ColorTagging: false, Commenting: false, SubTagging: false};
     }
   }
 
@@ -737,7 +736,7 @@ export class CampaignEdit {
       this.campaign.validationErrorTypes.filter(errorType =>
         errorType.tokenizedVersion.length && errorType.severity.length
           && errorType.shortDescription.length && errorType.longDescription.length);
-      camp.validationErrorTypes = this.campaign.validationErrorTypes;
+      camp.validationErrorType = this.campaign.validationErrorTypes;
     }
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)

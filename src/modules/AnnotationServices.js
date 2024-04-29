@@ -121,9 +121,10 @@ export class AnnotationServices {
 		}).then(checkStatus);
 	}
 
-	unscoreObj(id) {
+	unscoreObj(id, annotationAdmin) {
 		return this.http.fetch(`/annotation/${id}/unscoreObj`, {
-			method: 'GET'
+			method: 'POST',
+      body: JSON.stringify(annotationAdmin),
 		}).then(checkStatus);
 	}
 

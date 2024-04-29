@@ -193,7 +193,11 @@
                   <label t="dashboard:campaignMotivations">Campaign motivations</label>
                   <div class="motivations d-flex">
                     <div class="me-5" repeat.for="mot of motivations">
-                      <input class="form-check-input" type="checkbox" id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]">
+                      <input
+                        class="form-check-input" type="checkbox"
+                        id.bind="`mot-${$index}`" checked.bind="motivationValues[mot]"
+                        disabled.bind="motivationValues.Tagging !== motivationValues.SubTagging && !motivationValues[mot] && ['Tagging', 'SubTagging'].includes(mot)"
+                      >
                       <span class="form-check-label" for.bind="`mot-${$index}`" t.bind="'dashboard:motivations.'+mot">
                         ${mot}
                       </span>

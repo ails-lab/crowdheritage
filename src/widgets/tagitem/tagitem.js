@@ -725,9 +725,15 @@ export class Tagitem {
     else {
       return;
     }
+    let validators = [...obj.approvedBy, ...obj.rejectedBy];
+    let validatorObj = validators.find(validator => validator.withCreator === this.userServices.current.dbId);
+    let unscorePayload = {
+      generator: validatorObj.generator,
+      confidence: parseFloat(validatorObj.confidence.toFixed(1))
+    };
 
     if (annoType == 'approved') {
-      this.annotationServices.unscoreObj(annoId).then(r => {
+      this.annotationServices.unscoreObj(annoId, unscorePayload).then(r => {
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after approved unscore rejected - approved = 1 it means that this annotation was ok but now has bad karma and must change -> increase Karma points of the creator
           if (response.score.approvedBy != null && response.score.rejectedBy != null) {
@@ -759,7 +765,7 @@ export class Tagitem {
      this.campaignServices.decUserPoints(this.campaign.dbId, this.userServices.current.dbId, annoType);
     }
     else if (annoType == 'rejected') {
-      this.annotationServices.unscoreObj(annoId).then(r => {
+      this.annotationServices.unscoreObj(annoId, unscorePayload).then(r => {
         this.annotationServices.getAnnotation(annoId).then(response => {
           //If after rejected unscore the score is equal (approved = rejected) it means that this annotation had bad karma and now must change -> reduce Karma points of the creator
           if (response.score.approvedBy != null && response.score.rejectedBy != null) {
