@@ -55,11 +55,11 @@ export class CampaignEdit {
         'motivation': ['ImageTagging']
       }
     };
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
+    this.motivations = ['Tagging', 'SubTagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
     this.purposes = ['ANNOTATE', 'VALIDATE'];
     this.orientations = ['DATA', 'METADATA'];
     this.feedbackMethods = ['UPVOTE', 'RATE'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, SubTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -92,6 +92,9 @@ export class CampaignEdit {
       }
     };
     this.errors = {};
+    this.errorSeverityLevels = [
+      'Severe', 'High', 'MediumHigh', 'Medium', 'MediumLow', 'Low'
+    ];
 
     if (!instance) {
       instance = this;
@@ -101,8 +104,7 @@ export class CampaignEdit {
   clearInstance() {
     this.campaign = null;
     this.prizes = ['gold', 'silver', 'bronze', 'rookie'];
-    this.motivations = ['Tagging', 'GeoTagging', 'ColorTagging', 'Commenting'];
-    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false};
+    this.motivationValues = {Tagging: false, GeoTagging: false, ColorTagging: false, Commenting: false, SubTagging: false};
     this.availableVocabularies = [];
     this.selectedVocabularies = [];
     this.vocabulariesIndexing = {tagType: ''};
@@ -297,6 +299,23 @@ export class CampaignEdit {
 
   deleteTagGroup(index) {
     this.tagGroups.splice(index, 1);
+  }
+
+  async createNewErrorType() {
+    let lastElementIndex = this.campaign.validationErrorTypes.length - 1;
+    let lastElementCode = this.campaign.validationErrorTypes[lastElementIndex].tokenizedVersion.split('_')[1];
+    await this.campaign.validationErrorTypes.push({
+      'tokenizedVersion': `ERROR_${Number(lastElementCode) + 1}`,
+      'severity': 'Severe',
+      'shortDescription': '',
+      'longDescription': ''
+    });
+    let errorList = document.getElementById("error-type-list");
+    errorList.scrollTop = errorList.scrollHeight;
+  }
+
+  deleteErrorType(index) {
+    this.campaign.validationErrorTypes.splice(index, 1);
   }
 
   loadFromFile(id) {
@@ -552,6 +571,10 @@ export class CampaignEdit {
     }
   }
 
+  hasDuplicates(array) {
+    return (new Set(array)).size !== array.length;
+  }
+
   campaignParamsAreValid() {
     if (new Date(this.campaign.startDate) >= new Date(this.campaign.endDate)) {
       toastr.error("Campaign duration invalid");
@@ -582,6 +605,10 @@ export class CampaignEdit {
       toastr.error("Annotation target must be a positive number");
       return false;
     }
+    if (this.hasDuplicates(this.campaign.validationErrorTypes.map(errorType => errorType.tokenizedVersion))) {
+      toastr.error("Error type Codes must be unique");
+      return false;
+    }
     let baseAnnotationsCampaignType = ['Translate', 'Image Comparison'].includes(this.campaign.campaignType);
     let noExistingBaseAnnotations = !(this.baseAnnotations.MINT.length || this.baseAnnotations.FILE.length);
     let noNewBaseAnnotations = !(this.annotationsUpload.MINT.status.length || this.annotationsUpload.FILE.status.length);
@@ -603,7 +630,7 @@ export class CampaignEdit {
         this.motivationValues[mot] = this.campaignTypeDetails[type].motivation.includes(mot);
       });
     } else {
-      this.motivationValues = {Tagging: true, GeoTagging: false, ColorTagging: false, Commenting: false};
+      this.motivationValues = {Tagging: true, GeoTagging: false, ColorTagging: false, Commenting: false, SubTagging: false};
     }
   }
 
@@ -664,7 +691,7 @@ export class CampaignEdit {
 
   updateCampaign() {
     if (!this.campaignParamsAreValid()) {
-      window.scrollTo(0,0);
+      // window.scrollTo(0,0);
       return;
     }
 
@@ -704,6 +731,12 @@ export class CampaignEdit {
     }
     if (this.campaign.colorPalette && this.campaign.colorPalette.length) {
       camp.colorTaggingColorsTerminology = this.campaign.colorPalette;
+    }
+    if (this.campaign.validationErrorTypes) {
+      this.campaign.validationErrorTypes.filter(errorType =>
+        errorType.tokenizedVersion.length && errorType.severity.length
+          && errorType.shortDescription.length && errorType.longDescription.length);
+      camp.validationErrorType = this.campaign.validationErrorTypes;
     }
 
     this.campaignServices.editCampaign(this.campaign.dbId, camp)

@@ -80,6 +80,10 @@ export class Annotation {
     this.approvedByMe = false;
     this.rejectedBy = [];
     this.rejectedByMe = false;
+    this.rejectedByMeReason = {
+      code: '',
+      comment: ''
+    };
     this.ratedBy = [];
     this.ratedByMe = false;
     this.ratedByMeValue = -1;
@@ -101,6 +105,12 @@ export class Annotation {
           for (let i in this.rejectedBy) {
             if (this.rejectedBy[i].withCreator == userId) {
               this.rejectedByMe = true;
+              if (this.motivation === 'SubTagging' && this.rejectedBy[i].validationErrorType) {
+                this.rejectedByMeReason = {
+                  code: this.rejectedBy[i].validationErrorType[0],
+                  comment: this.rejectedBy[i].validationComment
+                };
+              }
               break;
             }
           }
