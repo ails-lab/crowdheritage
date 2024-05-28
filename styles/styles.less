@@ -1954,7 +1954,8 @@ body main section.learnmore .container::after {
 
 body main section.learnmore .left img {
   width: 100%;
-  height: 90%;
+  height: 80%;
+  object-fit: cover;
 }
 
 
@@ -1993,11 +1994,11 @@ body main section.learnmore .right .register {
 }
 
 body main section.learnmore .right .register .wrap {
-  width: 585px;
+  width: 625px;
   height: 100%;
   color: #fff;
   position: relative;
-  padding-left: 133px;
+  padding-left: 190px;
 }
 
 body main section.learnmore .right .register .wrap img {
@@ -6250,6 +6251,161 @@ body div[role='main'] section.generaltext {
 
 body div[role='main'] section.generaltext.applications {
   font-size: 1.7rem;
+}
+
+body main.creation {
+  section.banner {
+    height: 440px;
+    @media (max-width: 1000px) {
+      height: 290px;
+    }
+    .container .bannertext .line .wrap span {
+      font-size: 4rem;
+    }
+    .bgwrap {
+      top: 70px;
+      height: inherit;
+      background-image: url('../img/hero-campaign-creation.jpeg');
+    }
+  }
+  section.campaign-creation {
+    font-size: 1.7rem;
+    .container {
+      .creation-intro {
+        margin: 80px 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        @media (max-width: 1000px) {
+          flex-direction: column;
+        }
+        .right {
+          border: 1px solid @secondary-color;
+          border-radius: 12px;
+          width: 100%;
+          margin: 0 auto;
+          img {
+            width: 100%;
+            border-radius: 12px;
+          }
+        }
+        .left {
+          h2 {
+            color: @alt-color;
+          }
+          p {
+            font-size: 1.8rem;
+          }
+        }
+      }
+      .creation-steps {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 32px;
+        .step {
+          display: flex;
+          border: 1.5px solid @main-color;
+          border-radius: 8px;
+          padding: 16px 40px;
+          @media (max-width: 1000px) {
+            flex-direction: column;
+          }
+          &:hover {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+          }
+          &.end {
+            text-align: right;
+            @media (max-width: 1000px) {
+              text-align: unset;
+              flex-direction: column-reverse;
+            }
+          }
+          .icon {
+            display: flex;
+            align-items: center;
+            @media (max-width: 1000px) {
+              justify-content: center;
+              margin-top: 32px;
+            }
+            img {
+              max-width: 128px;
+            }
+          }
+          .body {
+            padding: 32px;
+            h3 {
+              color: @main-color;
+            }
+            h4 {
+              color: @alt-color;
+            }
+          }
+        }
+      }
+    }
+  }
+  section.call-to-action {
+    margin: 64px 0;
+    background: linear-gradient(to right, @main-color 50%, @secondary-color 50%);
+    color: #FFF;
+    @media (max-width: 1000px){
+      background: linear-gradient(to bottom, @main-color 50%, @secondary-color 50%);
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+      padding: 32px 0;
+      text-align: center;
+      @media (max-width: 1000px) {
+        flex-direction: column;
+      }
+      a {
+        display: block;
+        border: 2px solid #FFF;
+        color: #FFF;
+        font-size: 1.4rem;
+        padding: 7px 15px 6px 15px;
+        -webkit-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+        &:hover {
+          text-decoration: none;
+          background-color: #FFF;
+          border-color: #fff;
+        }
+      }
+      p {
+        max-width: 70%;
+        margin-bottom: 24px;
+      }
+      h3 {
+        margin-top: 0;
+      }
+      .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        @media (max-width: 1000px) {
+          width: unset;
+          margin-bottom: 80px;
+        }
+        a:hover {
+          color: @main-color;
+        }
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        a:hover {
+          color: @secondary-color;
+        }
+      }
+    }
+  }
 }
 
 body div[role='main'] section.partners {

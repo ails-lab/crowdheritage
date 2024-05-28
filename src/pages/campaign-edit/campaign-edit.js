@@ -605,7 +605,7 @@ export class CampaignEdit {
       toastr.error("Annotation target must be a positive number");
       return false;
     }
-    if (this.hasDuplicates(this.campaign.validationErrorTypes.map(errorType => errorType.tokenizedVersion))) {
+    if (this.campaign.validationErrorTypes && this.hasDuplicates(this.campaign.validationErrorTypes.map(errorType => errorType.tokenizedVersion))) {
       toastr.error("Error type Codes must be unique");
       return false;
     }
