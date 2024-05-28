@@ -88,6 +88,7 @@ export class App {
       { route: ':lang/resetPassword',              name: 'resetPassword', 	 moduleId: PLATFORM.moduleName('./pages/resetPassword/resetPassword'),  nav: false, title: 'Reset Password | '+settings.project},
       { route: ':lang/about', href: 'about',       name: 'about',    	       moduleId: PLATFORM.moduleName('./pages/about/about'),                  nav: true,  title: 'About | '+settings.project},
       { route: ':lang/applications', href: 'applications', name: 'applications', moduleId: PLATFORM.moduleName('./pages/applications/applications'), nav: true,  title: 'Applications | '+settings.project},
+      { route: ':lang/campaign-creation', href: 'campaign-creation', name: 'campaign-creation', moduleId: PLATFORM.moduleName('./pages/campaign-creation/campaign-creation'), nav: false,  title: 'Campaign Creation | '+settings.project },
 			{ route: ':lang/partners', href: 'partners', name: 'partners',         moduleId: PLATFORM.moduleName('./pages/partners/partners'),            nav: false, title: 'Partners | '+settings.project},
 			{ route: ':lang/privacy',                    name: 'privacy',  	       moduleId: PLATFORM.moduleName('./pages/privacy/privacy'),              nav: false, title: 'Privacy Policy | '+settings.project},
 			{ route: ':lang/terms',                      name: 'terms',    	       moduleId: PLATFORM.moduleName('./pages/terms/terms'),                  nav: false, title: 'Terms and Conditions | '+settings.project},

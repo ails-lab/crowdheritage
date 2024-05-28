@@ -92,6 +92,7 @@ export async function configure(aurelia) {
           'app',
           'about',
           'applications',
+          'creation',
           'dashboard',
           'feedback',
           'index',
