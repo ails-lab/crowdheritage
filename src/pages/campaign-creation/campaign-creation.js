@@ -17,4 +17,10 @@ export class CampaignCreation {
   attached() {
     $('.accountmenu').removeClass('active');
   }
+
+  scrollTo(anchor) {
+    $('html, body').animate({
+      scrollTop: $(anchor).offset().top
+    }, 1200);
+  }
 }

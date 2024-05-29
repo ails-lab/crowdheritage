@@ -6290,11 +6290,34 @@ body main.creation {
           }
         }
         .left {
+          max-width: 38%;
+          @media (max-width: 1000px) {
+            max-width: unset;
+          }
           h2 {
             color: @alt-color;
+            margin-top: 0;
           }
           p {
             font-size: 1.8rem;
+          }
+        }
+        a.btn-cta {
+          display: block;
+          border: 2px solid @main-color;
+          color: @main-color;
+          font-size: 1.4rem;
+          padding: 7px 15px 6px 15px;
+          -webkit-transition: all 0.3s;
+          -o-transition: all 0.3s;
+          transition: all 0.3s;
+          width: fit-content;
+          cursor: pointer;
+          margin-top: 20px;
+          &:hover {
+            text-decoration: none;
+            background-color: @main-color;
+            color: #fff;
           }
         }
       }
@@ -6361,7 +6384,7 @@ body main.creation {
       @media (max-width: 1000px) {
         flex-direction: column;
       }
-      a {
+      a.btn-cta {
         display: block;
         border: 2px solid #FFF;
         color: #FFF;
