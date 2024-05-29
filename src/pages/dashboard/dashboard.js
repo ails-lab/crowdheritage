@@ -38,7 +38,7 @@ export class Dashboard {
   activate(params) {
     // Check if user is logged in and has elevated access
     if (!this.userServices.isAuthenticated() || !this.userServices.current.isEditor) {
-      this.router.navigateToRoute('index', {lang: this.locale});
+      this.router.navigateToRoute('campaign-creation', {lang: this.locale, user_alert: true});
     }
 
     this.resetClasses();

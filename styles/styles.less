@@ -6268,6 +6268,27 @@ body main.creation {
       background-image: url('../img/hero-campaign-creation.jpeg');
     }
   }
+  section.user-alert {
+    margin-top: 80px;
+    .alert-message {
+      display: flex;
+      align-items: center;
+      border: 2px dashed @main-color;
+      border-radius: 12px;
+      width: 100%;
+      padding: 32px;
+      color: @alt-color;
+      font-size: 18px;
+      p {
+        margin-bottom: 0;
+      }
+      i {
+        max-width: 20%;
+        color: red;
+        margin-right: 32px;
+      }
+    }
+  }
   section.campaign-creation {
     font-size: 1.7rem;
     .container {
