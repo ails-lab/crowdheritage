@@ -6268,6 +6268,27 @@ body main.creation {
       background-image: url('../img/hero-campaign-creation.jpeg');
     }
   }
+  section.user-alert {
+    margin-top: 80px;
+    .alert-message {
+      display: flex;
+      align-items: center;
+      border: 2px dashed @main-color;
+      border-radius: 12px;
+      width: 100%;
+      padding: 32px;
+      color: @alt-color;
+      font-size: 18px;
+      p {
+        margin-bottom: 0;
+      }
+      i {
+        max-width: 20%;
+        color: red;
+        margin-right: 32px;
+      }
+    }
+  }
   section.campaign-creation {
     font-size: 1.7rem;
     .container {
@@ -6290,11 +6311,34 @@ body main.creation {
           }
         }
         .left {
+          max-width: 38%;
+          @media (max-width: 1000px) {
+            max-width: unset;
+          }
           h2 {
             color: @alt-color;
+            margin-top: 0;
           }
           p {
             font-size: 1.8rem;
+          }
+        }
+        a.btn-cta {
+          display: block;
+          border: 2px solid @main-color;
+          color: @main-color;
+          font-size: 1.4rem;
+          padding: 7px 15px 6px 15px;
+          -webkit-transition: all 0.3s;
+          -o-transition: all 0.3s;
+          transition: all 0.3s;
+          width: fit-content;
+          cursor: pointer;
+          margin-top: 20px;
+          &:hover {
+            text-decoration: none;
+            background-color: @main-color;
+            color: #fff;
           }
         }
       }
@@ -6322,10 +6366,8 @@ body main.creation {
             }
           }
           .icon {
-            display: flex;
-            align-items: center;
+            margin: auto;
             @media (max-width: 1000px) {
-              justify-content: center;
               margin-top: 32px;
             }
             img {
@@ -6361,7 +6403,7 @@ body main.creation {
       @media (max-width: 1000px) {
         flex-direction: column;
       }
-      a {
+      a.btn-cta {
         display: block;
         border: 2px solid #FFF;
         color: #FFF;

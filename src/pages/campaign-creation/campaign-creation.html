@@ -14,12 +14,21 @@
       </div>
       <div class="bgwrap"></div>
     </section>
+    <section if.bind="userAlert" class="user-alert">
+      <div class="container">
+        <div class="alert-message">
+          <i class="fa fa-2x fa-exclamation-triangle" aria-hidden="true"></i>
+          <p t="[html]creation:alert-message"></p>
+        </div>
+      </div>
+    </section>
     <section class="generaltext campaign-creation">
       <div class="container">
         <div class="creation-intro">
           <div class="left">
             <h2 t="creation:intro-title"></h2>
             <p t="[html]creation:intro-text"></p>
+            <a click.delegate="scrollTo('#cta')" t="creation:intro-button" class="btn-cta"></a>
           </div>
           <div class="right">
             <img src="/img/dashboard-overview.png" alt="Dashboard Overview">
@@ -69,17 +78,17 @@
         </div>
       </div>
     </section>
-    <section class="call-to-action">
+    <section id="cta" class="call-to-action">
       <div class="container">
         <div class="left">
           <h3 t="creation:cta-1-title"></h3>
           <p t="creation:cta-1-text"></p>
-          <a href="mailto:crowdheritage@ails.ece.ntua.gr" t="creation:cta-1-button"></a>
+          <a href="mailto:crowdheritage@ails.ece.ntua.gr" t="creation:cta-1-button" class="btn-cta"></a>
         </div>
         <div class="right">
           <h3 t="creation:cta-2-title"></h3>
           <p t="creation:cta-2-text"></p>
-          <a href="https://ails-lab.github.io/CrowdHeritage_Documentation" target="_blank" t="creation:cta-2-button"></a>
+          <a href="https://ails-lab.github.io/CrowdHeritage_Documentation" target="_blank" t="creation:cta-2-button" class="btn-cta"></a>
         </div>
       </div>
     </section>
