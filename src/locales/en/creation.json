@@ -1,7 +1,7 @@
 {
   "header-1": "Campaign Creation",
   "header-2": "Made Easy!",
-  "alert-message": "In order to be able to access the Dashboard and all the functionalities it offers for you in configuring your own custom-tailored crowdsourcing campaign, your account must have <strong>Campaign Organiser</strong> rights. Please <a href='mailto:crowdheritage@ails.ece.ntua.gr'>contact us</a> with your request.",
+  "alert-message": "In order to access the Dashboard functionalities and set up your own campaign, your account must have <strong>Campaign Organiser</strong> rights. Please <a href='mailto:crowdheritage@ails.ece.ntua.gr'><strong>contact us</strong></a>, providing your CrowdHeritage <strong>username</strong>, your <strong>details</strong> and campaign <strong>goal</strong>.",
   "intro-title": "Create your own Campaign",
   "intro-text": "Use the new campaign dashboard to create and manage your campaigns end to end. To access the Dashboard, you need to be granted special <strong>Campaign Organiser</strong> rights. Just contact us with the necessary info.",
   "intro-button": "START NOW",
