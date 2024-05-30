@@ -6253,6 +6253,17 @@ body div[role='main'] section.generaltext.applications {
   font-size: 1.7rem;
 }
 
+@keyframes smooth-appear {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
 body main.creation {
   section.banner {
     height: 440px;
@@ -6269,16 +6280,17 @@ body main.creation {
     }
   }
   section.user-alert {
-    margin-top: 80px;
+    margin-top: 60px;
     .alert-message {
       display: flex;
       align-items: center;
       border: 2px dashed @main-color;
       border-radius: 12px;
-      width: 100%;
       padding: 32px;
       color: @alt-color;
       font-size: 18px;
+      width: 100%;
+      animation: smooth-appear 1500ms ease-in-out;
       p {
         margin-bottom: 0;
       }
