@@ -30,14 +30,14 @@ export class About {
 		this.loc;
 
     this.generalStatistics = [
-      { icon: '../../../img/stats/ic-stat-campaign.png', label: this.i18n.tr('about:campaigns'), value: 40 },
-      { icon: '../../../img/stats/ic-stat-contributors.png', label: this.i18n.tr('about:contributors'), value: 977 },
-      { icon: '../../../img/stats/ic-stat-records.png', label: this.i18n.tr('about:records'), value: 47231 },
-      { icon: '../../../img/stats/ic-stat-records-annotated.png', label: this.i18n.tr('about:annotated-records'), value: 24888 },
-      { icon: '../../../img/stats/ic-stat-annotations.png', label: this.i18n.tr('about:annotations'), value: 129254 },
-      { icon: '../../../img/stats/ic-stat-annotations-human.png', label: this.i18n.tr('about:human-annotations'), value: 112558 },
-      { icon: '../../../img/stats/ic-stat-annotations-machine.png', label: this.i18n.tr('about:machine-annotations'), value: 16696 },
-      { icon: '../../../img/stats/ic-stat-validations.png', label: this.i18n.tr('about:validations'), value: 67348 }
+      { icon: '../../../img/icons/ic-stat-campaign.png', label: this.i18n.tr('about:campaigns'), value: 40 },
+      { icon: '../../../img/icons/ic-stat-contributors.png', label: this.i18n.tr('about:contributors'), value: 977 },
+      { icon: '../../../img/icons/ic-stat-records.png', label: this.i18n.tr('about:records'), value: 47231 },
+      { icon: '../../../img/icons/ic-stat-records-annotated.png', label: this.i18n.tr('about:annotated-records'), value: 24888 },
+      { icon: '../../../img/icons/ic-stat-annotations.png', label: this.i18n.tr('about:annotations'), value: 129254 },
+      { icon: '../../../img/icons/ic-stat-annotations-human.png', label: this.i18n.tr('about:human-annotations'), value: 112558 },
+      { icon: '../../../img/icons/ic-stat-annotations-machine.png', label: this.i18n.tr('about:machine-annotations'), value: 16696 },
+      { icon: '../../../img/icons/ic-stat-validations.png', label: this.i18n.tr('about:validations'), value: 67348 }
     ];
 	}
 

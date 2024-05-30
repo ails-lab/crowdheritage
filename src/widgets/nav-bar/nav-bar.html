@@ -39,9 +39,21 @@
             </a>
             <!-- account menu-->
             <ul id="accountmenu" class="accountmenu">
-              <li><a t="app:profile" route-href="route: user; params.bind: { userId: user.dbId, lang: locale }">Profile</a></li>
-              <li if.bind="user.isEditor"><a route-href="route: dashboard; params.bind: {lang: locale, resource: 'campaigns'}">Dashboard</a></li>
-              <li><a t="app:sign-out" href="javascript:void(0)" click.delegate="logout(0)">Sign Out</a></li>
+              <li>
+                <a t="app:profile" route-href="route: user; params.bind: { userId: user.dbId, lang: locale }">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a t="[prepend]app:dashboard" route-href="route: dashboard; params.bind: {lang: locale, resource: 'campaigns'}">
+                  <i if.bind="!user.isEditor" class="ms-3 fa fa-lock" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a t="app:sign-out" href="javascript:void(0)" click.delegate="logout(0)">
+                  Sign Out
+                </a>
+              </li>
             </ul>
           </div>
 
