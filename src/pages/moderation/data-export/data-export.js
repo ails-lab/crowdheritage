@@ -22,6 +22,8 @@ export class DataExport {
     this.exportState = 'idle';
     this.fileTypes = ['JSON', 'CSV'];
     this.contributorsFileType = 'JSON';
+    this.annotationsFilters = ['All', 'Marked for Publish'];
+    this.annotationsFilter = 'All';
   }
 
   get user() { return this.userServices.current; }
@@ -41,6 +43,14 @@ export class DataExport {
     this.exportState = 'idle';
   }
 
+  copyAnnotationsLinkToClipboard() {
+    const filter = this.annotationsFilter !== 'All';
+    const downloadLink =
+      `${settings.baseUrl}/annotation/exportCampaignAnnotations?campaignName=${this.campaign.username}&europeanaModelExport=false&filterForPublish=${filter}`;
+    navigator.clipboard.writeText(downloadLink);
+    toastr.success(this.i18n.tr('moderation:copyToClipboardSuccess'));
+  }
+
   exportAnnotations() {
     if (this.exportState === 'exporting') {
       return;
@@ -50,7 +60,8 @@ export class DataExport {
     document.body.style.cursor = 'wait';
     expLink.style.cursor = 'wait';
 
-    this.campaignServices.exportCampaignAnnotations(this.campaign.username)
+    const filter = this.annotationsFilter !== 'All';
+    this.campaignServices.exportCampaignAnnotations(this.campaign.username, filter)
       .then(response => {
         // Create the downloadable json file and download it
         var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response, null, "\t"));
@@ -112,11 +123,5 @@ export class DataExport {
         document.body.style.cursor = 'default';
         expLink.style.cursor = 'pointer';
       });
-  }
-
-  copyAnnotationsLinkToClipboard() {
-    const downloadLink = `${settings.baseUrl}/annotation/export?campaignName=${this.campaign.username}`;
-    navigator.clipboard.writeText(downloadLink);
-    toastr.success(this.i18n.tr('moderation:copyToClipboardSuccess'));
   }
 }
