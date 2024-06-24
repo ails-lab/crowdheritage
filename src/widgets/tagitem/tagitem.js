@@ -1205,7 +1205,6 @@ export class Tagitem {
   }
 
   showAnnDescription(annId) {
-    console.log(`ann-desc-${annId}`);
     let annDescriptionBlock = document.getElementById(`ann-desc-${annId}`);
     if (annDescriptionBlock) {
       annDescriptionBlock.classList.toggle('hide');
@@ -1226,7 +1225,7 @@ export class Tagitem {
   }
 
   generatorTooltipText(ann) {
-    return `<b><u>Computer Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
+    return `<b><u>Software Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
   }
 
   isFeedbackAccordionOpen(annoId) {
