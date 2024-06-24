@@ -1204,6 +1204,14 @@ export class Tagitem {
     this.fullImageSrc = '';
   }
 
+  showAnnDescription(annId) {
+    console.log(`ann-desc-${annId}`);
+    let annDescriptionBlock = document.getElementById(`ann-desc-${annId}`);
+    if (annDescriptionBlock) {
+      annDescriptionBlock.classList.toggle('hide');
+    }
+  }
+
   subtagTooltipText(ann) {
     let start = ann.selector.origValue.slice(0, ann.selector.start);
     let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
@@ -1211,6 +1219,10 @@ export class Tagitem {
     let value = start + middle + end;
 
     return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
+  }
+
+  creatorTooltipText(ann) {
+    return `<b><u>Human Generated</u></b>:<br/>${ann.createdBy[0].username}`;
   }
 
   generatorTooltipText(ann) {
