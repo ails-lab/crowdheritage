@@ -1204,6 +1204,13 @@ export class Tagitem {
     this.fullImageSrc = '';
   }
 
+  showAnnDescription(annId) {
+    let annDescriptionBlock = document.getElementById(`ann-desc-${annId}`);
+    if (annDescriptionBlock) {
+      annDescriptionBlock.classList.toggle('hide');
+    }
+  }
+
   subtagTooltipText(ann) {
     let start = ann.selector.origValue.slice(0, ann.selector.start);
     let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
@@ -1213,8 +1220,12 @@ export class Tagitem {
     return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
   }
 
+  creatorTooltipText(ann) {
+    return `<b><u>Human Generated</u></b>:<br/>${ann.createdBy[0].username}`;
+  }
+
   generatorTooltipText(ann) {
-    return `<b><u>Computer Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
+    return `<b><u>Software Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
   }
 
   isFeedbackAccordionOpen(annoId) {

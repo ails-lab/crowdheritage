@@ -44,19 +44,7 @@
           </div>
           <!-- metadata-->
           <div class="wrap">
-            <compose
-              if.bind="(campaign.username!='colours-catwalk') && (campaign.username!='garment-type') && (campaign.username!='opera')"
-              view="widgets/metadata/meta-music.html" view-model="widgets/metadata/metadata"
-              model.bind="{'record': record}">
-            </compose>
-            <compose if.bind="campaign.username == 'colours-catwalk'" view="widgets/metadata/meta-colours.html"
-              view-model="widgets/metadata/metadata" model.bind="{'record': record}">
-            </compose>
-            <compose if.bind="campaign.username == 'garment-type'" view="widgets/metadata/meta-garment.html"
-              view-model="widgets/metadata/metadata" model.bind="{'record': record}">
-            </compose>
-            <compose if.bind="campaign.username == 'opera'" view="widgets/metadata/meta-opera.html"
-              view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+            <compose view.bind="metadataView" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
             </compose>
           </div>
         </div>

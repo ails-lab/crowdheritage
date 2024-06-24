@@ -20,6 +20,8 @@ import {
   JsonUtils
 } from 'JsonUtils.js';
 
+const LANG = window.location.href.split('/')[3];
+
 export class Record {
 
   constructor(data) {
@@ -34,8 +36,17 @@ export class Record {
     this.mediatype = '';
     this.creator = '';
     this.vtype = 'IMAGE';
+    this.meta = {
+      title: '',
+      description: '',
+      organizations: [],
+      subjects: [],
+      types: []
+    };
     if (data) {
       this.loadData(data);
+      this.parseJsonld(data);
+      this.populateMeta();
     }
   }
 
@@ -188,6 +199,47 @@ export class Record {
     }
   }
 
+  parseJsonld(data) {
+    if ('content' in data) {
+      let jsonld = JSON.parse(data.content['JSONLD-EDM'])['@graph'];
+      jsonld.forEach((item) => {
+        let type = item['@type'];
+        if (type && type === 'foaf:Organization') {
+          this.meta.organizations.push({
+            label: this.getLabel(item['skos:prefLabel']),
+            uri: item['@id']
+          });
+        }
+      });
+    }
+  }
+
+  getLabel(prefLabel) {
+    if (prefLabel.length) {
+      return prefLabel.filter(label => label['@language'] === LANG)[0]['@value'];
+    } else {
+      return prefLabel['@value'];
+    }
+  }
+
+  populateMeta() {
+    this.meta.title = this.title;
+    this.meta.description = this.description;
+    let dctype = this.dcfields.find(field => field.label === 'type');
+    if (dctype) {
+      let index = dctype.langs.findIndex(l => l.lang === LANG);
+      if (index >= 0) {
+        this.meta.types = dctype.value[index].join(', ');
+      }
+    }
+    let dcsubject = this.dcfields.find(field => field.label === 'subject');
+    if (dcsubject) {
+      let index = dcsubject.langs.findIndex(l => l.lang === LANG);
+      if (index >= 0) {
+        this.meta.subjects = dcsubject.value[index].join(', ');
+      }
+    }
+  }
 
   get Thumbnail() {
     if (this.thumbnail) {
