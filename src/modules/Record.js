@@ -65,7 +65,7 @@ export class Record {
       let langs = Object.keys(this.alldescription);
       for (let i = 0; i < langs.length; i++) {
         if (langs[i] !== "default" && langs[i] !== "unknown") {
-          if (this.description == this.alldescription[langs[i]]) {
+          if (this.description.includes(this.alldescription[langs[i]])) {
             this.defaultlanguage = langs[i];
           }
           this.descriptionlangs.push({
