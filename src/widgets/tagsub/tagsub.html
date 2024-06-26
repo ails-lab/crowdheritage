@@ -63,7 +63,7 @@
           <p class="section-label">
             Text fragment :
           </p>
-          <p id="text-fragment-selector" class="text-select-highlight" click.delegate="selectText()">
+          <p id="text-fragment-selector" class="text-select-highlight" mouseup.delegate="selectText()" touchend.delegate="selectText()">
             ${selectedPropertyValue}
           </p>
         </div>
