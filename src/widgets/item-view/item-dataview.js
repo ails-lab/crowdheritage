@@ -21,6 +21,7 @@ export class ItemDataView {
     this.previous = null;
     this.recId = '';
     this.loc = '';
+    this.metadataView = '';
   }
 
   activate(params) {
@@ -35,6 +36,18 @@ export class ItemDataView {
 
     this.recId = this.record.dbId;
     this.showMedia();
+
+    if (this.campaign.username == 'colours-catwalk') {
+      this.metadataView = 'widgets/metadata/meta-colours.html';
+    } else if (this.campaign.username == 'garment-type') {
+      this.metadataView = 'widgets/metadata/meta-garment.html';
+    } else if (this.campaign.username == 'opera') {
+      this.metadataView = 'widgets/metadata/meta-opera.html';
+    } else if (this.campaign.username.startsWith('debias')) {
+      this.metadataView = 'widgets/metadata/meta-debias.html';
+    } else {
+      this.metadataView = 'widgets/metadata/meta-music.html';
+    }
   }
 
   get isLiked() { return this.recordServices.isLiked(this.record.externalId);	}

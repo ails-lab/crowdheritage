@@ -58,6 +58,42 @@ export class Annotation {
       this.label = data.annotators[0].externalCreatorName || "Image tag";
     }
 
+    if (data.body.description) {
+      this.description = this.capitalizeFirstLetter(data.body.description.default[0]);
+      try {
+        this.descriptionLang = Object.keys(data.body.description).filter(key => key != "default")[0].toUpperCase();
+      } catch (e) {
+        this.descriptionLang = "DEFAULT";
+      }
+
+      if (lang !== "all") {
+        if (lang === 'en' && typeof data.body.description.en !== 'undefined') {
+          this.description = this.capitalizeFirstLetter(data.body.description.en[0]);
+          this.descriptionLang = 'EN';
+        }
+        else if (lang === 'fr' && typeof data.body.description.fr !== 'undefined') {
+          this.description = this.capitalizeFirstLetter(data.body.description.fr[0]);
+          this.descriptionLang = 'FR';
+        }
+        else if (lang === 'it' && typeof data.body.description.it !== 'undefined') {
+          this.description = this.capitalizeFirstLetter(data.body.description.it[0]);
+          this.descriptionLang = 'IT';
+        }
+        else if (lang === 'es' && typeof data.body.description.es !== 'undefined') {
+          this.description = this.capitalizeFirstLetter(data.body.description.es[0]);
+          this.descriptionLang = 'ES';
+        }
+        else if (lang === 'pl' && typeof data.body.description.pl !== 'undefined') {
+          this.description = this.capitalizeFirstLetter(data.body.description.pl[0]);
+          this.descriptionLang = 'PL';
+        }
+        else if (lang === 'el' && typeof data.body.description.el !== 'undefined') {
+          this.description = this.capitalizeFirstLetter(data.body.description.el[0]);
+          this.descriptionLang = 'EL';
+        }
+      }
+    }
+
     this.createdBy = data.annotators;
     this.createdByMe = false;
     for (let i in data.annotators) {

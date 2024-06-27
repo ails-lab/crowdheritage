@@ -4,7 +4,8 @@
     <!-- infobar-->
     <div class="wrap">
       <!-- heading-->
-      <div class="heading green" t="item:sub-tagging">SUBTAGGING</div>
+      <div if.bind="campaign.username.includes('debias')" class="heading green" t="item:bias-tagging">BIAS IN THE METADATA</div>
+      <div else class="heading green" t="item:sub-tagging">PROPERTY TAGGING</div>
       <!-- info-->
       <div class="infobar" innerHtml.bind="campaign.instructions"></div>
       <!-- searchbox-->
@@ -24,7 +25,9 @@
                 <a if.bind="isValidUrl(item.uri)" style="padding-right:10px; padding-top:5px;" class="fa fa-link"
                    click.delegate="goToURI(item.uri)"></a>
                 <br />
-                <i if.bind="item.description.length>0">${item.description}</i>
+                <i if.bind="item.description.length>0" class="term-desc" title.bind="item.description">
+                  ${item.description}
+                </i>
               </span>
             </li>
           </ul>
@@ -49,7 +52,7 @@
             >
               <option value="" selected disabled>---- Select Target Property ----</option>
               <option
-                repeat.for="property of tagTypes" value.bind="property"
+                repeat.for="property of targetProperties" value.bind="property"
               >
                 ${property}
               </option>
@@ -60,8 +63,14 @@
           <p class="section-label">
             Text fragment :
           </p>
-          <p id="text-fragment-selector" class="text-select-highlight" click.delegate="selectText()">
+          <p id="text-fragment-selector" class="text-select-highlight" mouseup.delegate="selectText()" touchend.delegate="selectText()">
             ${selectedPropertyValue}
+          </p>
+          <p
+            if.bind="!isTextFragmentSelected"
+            class="text-red font-italic"
+          >
+            Please highlight the exact word(s) in text where you located the term
           </p>
         </div>
         <div class="action-buttons block-section">
@@ -77,27 +86,39 @@
         </div>
       </div>
       <!-- taglist-->
-      <div class="show-more-parent">
+      <div class="show-more-parent mt-5">
         <ul class="subtagBlock taglist show-more-target">
-          <li repeat.for="ann of subtagAnnotations" id="annotation-${ann.dbId}">
+          <li repeat.for="ann of subtagAnnotations" id="annotation-${ann.dbId}" class="annotation-row">
             <div class="text">
               <a
-                href.bind="ann.uri"
-                target="_blank"
                 bootstrap-tooltip
                 data-title.bind="subtagTooltipText(ann)"
                 data-html="true" data-toggle="tooltip"
                 data-placement="right" data-class="subtag-tooltip"
                 data-boundary="viewport"
+                click.delegate="showAnnDescription(ann.dbId)"
               >
                 ${ann.label}
               </a>
             </div>
+            <a
+              href.bind="ann.uri"
+              target="_blank"
+              class="term-external"
+            >
+              <i class="fa fa-external-link mx-3" aria-hidden="true"></i>
+            </a>
             <div
               class="cg-indicator" if.bind="ann.createdBy[0].externalCreatorType === 'Software'" data-html="true"
               bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title.bind="generatorTooltipText(ann)"
             >
-              CG
+              <i class="fa fa-cogs" aria-hidden="true"></i>
+            </div>
+            <div
+              else class="cg-indicator" data-html="true"
+              bootstrap-tooltip data-toggle="tooltip" data-placement="right" data-title.bind="creatorTooltipText(ann)"
+            >
+              <i class="fa fa-user-o" aria-hidden="true"></i>
             </div>
             <ul class="action">
               <li class="publish-btn" if.bind="isCurrentUserCreator()">
@@ -132,6 +153,9 @@
                 </a>
               </li>
             </ul>
+            <div if.bind="ann.description" id.bind="`ann-desc-${ann.dbId}`" class="annotation-description hide">
+              ${ann.description}
+            </div>
             <div class="feedback hide" id="collapse-${ann.dbId}">
               <div class="comment-area">
                 <textarea

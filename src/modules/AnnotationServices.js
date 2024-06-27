@@ -222,6 +222,10 @@ export class AnnotationServices {
 				body.label = term.labels;
 				body.label.default = [ term.label ];
 			}
+      if (term.description) {
+        body.description = {};
+        body.description.default = [ term.description ];
+      }
 		}
 		let target = { recordId: recid };
 		if (selector) {

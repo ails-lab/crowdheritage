@@ -101,12 +101,6 @@ export class CampaignServices {
 		}).then((response) => response.json());
   }
 
-  getCampaignAnnotations(campaignName='', maxRanking=-1) {
-    return this.http.fetch(`/annotation/export?campaignName=${campaignName}`, {
-      method: 'GET'
-    }).then((response) => response.json());
-  }
-
   getCampaignContributors(cname='') {
     return this.http.fetch(`/campaign/contributors?cname=${cname}`, {
       method: 'GET'
@@ -125,8 +119,8 @@ export class CampaignServices {
     }).then(response => response.json());
   }
 
-  exportCampaignAnnotations(campaignName) {
-    return this.http.fetch(`/annotation/exportCampaignAnnotations?campaignName=${campaignName}`, {
+  exportCampaignAnnotations(campaignName, filter) {
+    return this.http.fetch(`/annotation/exportCampaignAnnotations?campaignName=${campaignName}&europeanaModelExport=false&filterForPublish=${filter}`, {
       method: 'GET'
     }).then(response => response.json());
   }

@@ -17,6 +17,10 @@
                 <div class="center">
                   <label t="moderation:export-campaign-annotations"></label>
                   <div class="d-flex align-items-center mt-3">
+                    <div class="me-5" repeat.for="filter of annotationsFilters">
+                      <input class="form-check-input" type="radio" id.bind="`filter-${$index}`" model.bind="filter" checked.bind="annotationsFilter">
+                      <span class="form-check-label" for.bind="`filter-${$index}`">${filter}</span>
+                    </div>
                     <i
                       bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
                       id="copyAnnotationsLink" class="fa fa-clipboard fa-lg"
