@@ -1,0 +1,15 @@
+{
+  "name"          : "Name",
+  "gender"        : "Gender",
+  "contact"       : "Contact Information",
+  "about"         : "About",
+  "inserted"      : "INSERTED TAGS",
+  "upvotes"       : "UPVOTES",
+  "downvotes"     : "DOWNVOTES",
+  "ratings"       : "RATINGS",
+  "items"         : "ITEMS",
+  "contribute"    : "Contribute more and unlock the next badge.",
+  "contributions" : "CONTRIBUTIONS",
+  "annotated"     : "ANNOTATED ITEMS",
+  "noAnnotedItems": "You haven't annotated any items yet in this campaign"
+}

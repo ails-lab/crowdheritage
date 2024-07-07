@@ -139,6 +139,14 @@ export class Tagitem {
       this.annotations[type] = [];
     });
     this.errorTypes = params.campaign.validationErrorTypes ? params.campaign.validationErrorTypes : [];
+    if (this.record && this.record.meta) {
+      this.targetProperties = this.tagTypes.filter(property => {
+        let recordProperty = this.record.meta[property.toLowerCase()];
+        if (recordProperty !== undefined && recordProperty.length) {
+          return property;
+        }
+      });
+    }
 
     if (params.userId) {
       this.userId = params.userId;
@@ -1204,6 +1212,13 @@ export class Tagitem {
     this.fullImageSrc = '';
   }
 
+  showAnnDescription(annId) {
+    let annDescriptionBlock = document.getElementById(`ann-desc-${annId}`);
+    if (annDescriptionBlock) {
+      annDescriptionBlock.classList.toggle('hide');
+    }
+  }
+
   subtagTooltipText(ann) {
     let start = ann.selector.origValue.slice(0, ann.selector.start);
     let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
@@ -1213,8 +1228,12 @@ export class Tagitem {
     return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
   }
 
+  creatorTooltipText(ann) {
+    return `<b><u>Human Generated</u></b>:<br/>${ann.createdBy[0].username}`;
+  }
+
   generatorTooltipText(ann) {
-    return `<b><u>Computer Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
+    return `<b><u>Software Generated</u></b>:<br/>${ann.createdBy[0].externalCreatorName}`;
   }
 
   isFeedbackAccordionOpen(annoId) {
@@ -1262,7 +1281,7 @@ export class Tagitem {
   }
   selectTargetProperty(property) {
     this.selectedProperty = property;
-    this.selectedPropertyValue = this.record[property.toLowerCase()];
+    this.selectedPropertyValue = this.record.meta[property.toLowerCase()];
     document.getElementById("propertySelector").blur();
   }
 
@@ -1285,7 +1304,7 @@ export class Tagitem {
   createSubAnnotation() {
     let selector = {
       'origValue' : this.selectedPropertyValue,
-      'origLang' : this.record.defaultlanguage.toUpperCase(),
+      'origLang' : this.record.meta.defaultlanguage.toUpperCase(),
       'start' : this.selectedText.startAt,
       'end' : this.selectedText.endAt,
       'property' : `dc:${this.selectedProperty.toLowerCase()}`,

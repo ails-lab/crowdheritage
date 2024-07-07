@@ -27,11 +27,11 @@ export class Metadata {
     this.formatUri = "";
     this.medium = "";
     this.mediumUri = "";
-		this.rightsImage = null;
+	  this.rightsImage = null;
   }
 
   attached() {
-		toggleMore(".meta");
+    // toggleMore(".meta");
   }
 
   async activate(params) {
@@ -62,10 +62,10 @@ export class Metadata {
     catch (err) {
       console.log(err);
     }
-		if (typeof this.record.rights !== 'undefined' && this.record.rights.includes("rightsstatements.org")) {
-			let s = this.record.rights.split("/");
-			this.record.rightsImage = "https://rightsstatements.org/files/buttons/"+s[s.length - 3]+".white.svg";
-		}
+      if (typeof this.record.rights !== 'undefined' && this.record.rights.includes("rightsstatements.org")) {
+        let s = this.record.rights.split("/");
+        this.record.rightsImage = "https://rightsstatements.org/files/buttons/"+s[s.length - 3]+".white.svg";
+      }
   }
 
   toggleLoadMore(container) {

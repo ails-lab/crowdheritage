@@ -20,6 +20,8 @@ import {
   JsonUtils
 } from 'JsonUtils.js';
 
+const LANG = window.location.href.split('/')[3];
+
 export class Record {
 
   constructor(data) {
@@ -34,8 +36,17 @@ export class Record {
     this.mediatype = '';
     this.creator = '';
     this.vtype = 'IMAGE';
+    this.meta = {
+      defaultlanguage: '',
+      title: '',
+      description: '',
+      type: '',
+      organizations: [],
+      subjects: []
+    };
     if (data) {
       this.loadData(data);
+      this.populateMeta(data);
     }
   }
 
@@ -54,7 +65,7 @@ export class Record {
       let langs = Object.keys(this.alldescription);
       for (let i = 0; i < langs.length; i++) {
         if (langs[i] !== "default" && langs[i] !== "unknown") {
-          if (this.description == this.alldescription[langs[i]]) {
+          if (this.description.includes(this.alldescription[langs[i]])) {
             this.defaultlanguage = langs[i];
           }
           this.descriptionlangs.push({
@@ -188,6 +199,70 @@ export class Record {
     }
   }
 
+  parseJsonld(data) {
+    if ('content' in data && 'JSONLD-EDM' in data.content) {
+      let jsonld = JSON.parse(data.content['JSONLD-EDM'])['@graph'];
+      jsonld.forEach((item) => {
+        let type = item['@type'];
+        if (type && type === 'foaf:Organization') {
+          this.meta.organizations.push({
+            label: this.getLabel(item['skos:prefLabel']),
+            uri: item['@id']
+          });
+        }
+      });
+    }
+  }
+
+  getLabel(prefLabel) {
+    if (prefLabel.length) {
+      return prefLabel.filter(label => label['@language'] === LANG)[0]['@value'];
+    } else {
+      return prefLabel['@value'];
+    }
+  }
+
+  getDefaultLanguage(property) {
+    if (!property) {
+      return '';
+    }
+    let defaultPropertyLanguage = 'default';
+    let defaultPropertyValue = JSON.stringify(property.default);
+    for (let lang in property) {
+      if (JSON.stringify(property[lang]) === defaultPropertyValue && lang !== 'default') {
+        defaultPropertyLanguage = lang;
+        break;
+      }
+    }
+    return defaultPropertyLanguage;
+  }
+
+  populateMeta(data) {
+    this.meta.defaultlanguage = this.getDefaultLanguage(data.descriptiveData.label);
+    this.parseJsonld(data);
+    this.meta.titleLang = this.getDefaultLanguage(data.descriptiveData.label);
+    if (data.descriptiveData.label && data.descriptiveData.label[this.meta.titleLang]) {
+      this.meta.title = data.descriptiveData.label[this.meta.titleLang].join('');
+    }
+    this.meta.descriptionLang = this.getDefaultLanguage(data.descriptiveData.description);
+    if (data.descriptiveData.description && data.descriptiveData.description[this.meta.descriptionLang]) {
+      this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join('');
+    }
+    let dctype = this.dcfields.find(field => field.label === 'type');
+    if (dctype) {
+      let index = dctype.langs.findIndex(l => l.lang === LANG);
+      if (index >= 0) {
+        this.meta.type = dctype.value[index].join(', ');
+      }
+    }
+    let dcsubject = this.dcfields.find(field => field.label === 'subject');
+    if (dcsubject) {
+      let index = dcsubject.langs.findIndex(l => l.lang === LANG);
+      if (index >= 0) {
+        this.meta.subjects = dcsubject.value[index].join(', ');
+      }
+    }
+  }
 
   get Thumbnail() {
     if (this.thumbnail) {
