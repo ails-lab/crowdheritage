@@ -52,7 +52,7 @@
             >
               <option value="" selected disabled>---- Select Target Property ----</option>
               <option
-                repeat.for="property of tagTypes" value.bind="property"
+                repeat.for="property of targetProperties" value.bind="property"
               >
                 ${property}
               </option>
@@ -65,6 +65,12 @@
           </p>
           <p id="text-fragment-selector" class="text-select-highlight" mouseup.delegate="selectText()" touchend.delegate="selectText()">
             ${selectedPropertyValue}
+          </p>
+          <p
+            if.bind="!isTextFragmentSelected"
+            class="text-red font-italic"
+          >
+            Please highlight the exact word(s) in text where you located the term
           </p>
         </div>
         <div class="action-buttons block-section">

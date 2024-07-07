@@ -139,6 +139,14 @@ export class Tagitem {
       this.annotations[type] = [];
     });
     this.errorTypes = params.campaign.validationErrorTypes ? params.campaign.validationErrorTypes : [];
+    if (this.record && this.record.meta) {
+      this.targetProperties = this.tagTypes.filter(property => {
+        let recordProperty = this.record.meta[property.toLowerCase()];
+        if (recordProperty !== undefined && recordProperty.length) {
+          return property;
+        }
+      });
+    }
 
     if (params.userId) {
       this.userId = params.userId;
@@ -1273,7 +1281,7 @@ export class Tagitem {
   }
   selectTargetProperty(property) {
     this.selectedProperty = property;
-    this.selectedPropertyValue = this.record[property.toLowerCase()];
+    this.selectedPropertyValue = this.record.meta[property.toLowerCase()];
     document.getElementById("propertySelector").blur();
   }
 
@@ -1296,7 +1304,7 @@ export class Tagitem {
   createSubAnnotation() {
     let selector = {
       'origValue' : this.selectedPropertyValue,
-      'origLang' : this.record.defaultlanguage.toUpperCase(),
+      'origLang' : this.record.meta.defaultlanguage.toUpperCase(),
       'start' : this.selectedText.startAt,
       'end' : this.selectedText.endAt,
       'property' : `dc:${this.selectedProperty.toLowerCase()}`,

@@ -31,7 +31,7 @@ export class Metadata {
   }
 
   attached() {
-    toggleMore(".meta");
+    // toggleMore(".meta");
   }
 
   async activate(params) {

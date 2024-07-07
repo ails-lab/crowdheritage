@@ -1,0 +1,21 @@
+{
+  "header"          : "About CrowdHeritage",
+  "intro"           : "<p>Crowdheritage is an open platform that supports the organisation of online crowdsourcing campaigns for the enrichment and validation of cultural heritage metadata. The platform is mainly used by cultural heritage organisations across Europe and beyond who wish to improve the quality of their collections and engage different target audiences in the process in a playful way. The enriched data can then be published in <a href='https://www.europeana.eu/portal/en' target='_blank' rel='noopener noreferrer'>Europeana</a>, the European portal for cultural heritage, thus improving the searchability and usability of digital collections. The platform is also used by the educational community as well as in the context of citizen science initiatives. The platform had been originally developed by the <a href='https://www.ails.ece.ntua.gr/' target='_blank' rel='noopener noreferrer'>National Technical University of Athens</a> with the contribution of the European Commission under the Connecting Europe Facility (CEF) program. It is currently being administered and being further extended by  <a href='https://datoptron.com/' target='_blank' rel='noopener noreferrer'>Datoptron</a>, a spinoff company of the National Technical University of Athens.</p>",
+  "discover"        : "Discover",
+  "discoverCap"     : "DISCOVER",
+  "contribute"      : "Contribute",
+  "contributeCap"   : "CONTRIBUTE",
+  "rewards"         : "Get rewards",
+  "rewardsCap"      : "GET REWARDS",
+  "discover-text"   : "Discover on our homepage beautiful digital artefacts and collections from museums, archives, libraries and galleries across Europe that need a better description or additional information. Create your account, pick your favourite topic and...",
+  "contribute-text" : "Contribute to our annotation campaigns and join the communities of CrowdHeritage contributors. You will help cultural heritage institutions in improving the quality of their collections’ metadata. You can participate in one or several campaigns. Each campaign has a specific goal and timeline and it will usually stay open for several weeks.",
+  "rewards-text"    : "Once logged in, the more annotations you add the more points you accumulate. The top three contributors get a Gold, Silver and Bronze badge. At the end of each campaign, the first three contributors will get a reward offered by the institution that organised the campaign.",
+  "campaigns": "Campaigns",
+  "contributors": "Contributors",
+  "records": "Records",
+  "annotated-records": "Annotated records",
+  "annotations": "Annotations",
+  "human-annotations": "Human annotations",
+  "machine-annotations": "Machine annotations",
+  "validations": "Validations"
+}

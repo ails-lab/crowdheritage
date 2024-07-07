@@ -3,11 +3,19 @@
     <!-- label-->
     <div class="heading" t="item:meta">ITEM METADATA</div>
     <!-- info-->
-    <div>
+    <div class="debias-meta">
       <ul class="meta row">
-        <li class="meta-description col-12" if.bind="record.description">
+        <li class="meta-description col-12" if.bind="record.meta.title.length">
+          <div class="lbl" t="item:title">TITLE</div>
+          <div class="val" innerHtml.bind="record.meta.title"></div>
+        </li>
+        <li class="meta-description col-12" if.bind="record.meta.description.length">
           <div class="lbl" t="item:description">DESCRIPTION</div>
-          <div class="val" innerHtml.bind="record.description"></div>
+          <div class="val" innerHtml.bind="record.meta.description"></div>
+        </li>
+        <li class="meta-description col-12" if.bind="record.meta.type.length">
+          <div class="lbl">TYPE</div>
+          <div class="val">${record.meta.type}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data.descriptiveData.dccreator">
           <div class="lbl" t="item:creator">CREATOR</div>
@@ -22,19 +30,13 @@
             <br/>
           </div>
         </li>
-        <li class="col-sm-6" if.bind="record.meta.types">
-          <div class="lbl">TYPE</div>
-          <div class="val">${record.meta.types}</div>
-        </li>
         <li class="col-sm-2" if.bind="record.source_uri">
           <div class="val" t="[prepend]item:see-it">
             <a href.bind="record.source_uri" target="_blank" t="item:europeana">Europeana</a>
           </div>
         </li>
       </ul>
-      <!-- <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i> -->
+<!--       <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>-->
     </div>
-    <!-- more-->
-    <!-- <div class="loadmore"><a href="#">LOAD MORE</a></div> -->
   </div>
 </template>

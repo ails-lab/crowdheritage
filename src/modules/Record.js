@@ -37,16 +37,16 @@ export class Record {
     this.creator = '';
     this.vtype = 'IMAGE';
     this.meta = {
+      defaultlanguage: '',
       title: '',
       description: '',
+      type: '',
       organizations: [],
-      subjects: [],
-      types: []
+      subjects: []
     };
     if (data) {
       this.loadData(data);
-      this.parseJsonld(data);
-      this.populateMeta();
+      this.populateMeta(data);
     }
   }
 
@@ -200,7 +200,7 @@ export class Record {
   }
 
   parseJsonld(data) {
-    if ('content' in data) {
+    if ('content' in data && 'JSONLD-EDM' in data.content) {
       let jsonld = JSON.parse(data.content['JSONLD-EDM'])['@graph'];
       jsonld.forEach((item) => {
         let type = item['@type'];
@@ -222,14 +222,37 @@ export class Record {
     }
   }
 
-  populateMeta() {
-    this.meta.title = this.title;
-    this.meta.description = this.description;
+  getDefaultLanguage(property) {
+    if (!property) {
+      return '';
+    }
+    let defaultPropertyLanguage = 'default';
+    let defaultPropertyValue = JSON.stringify(property.default);
+    for (let lang in property) {
+      if (JSON.stringify(property[lang]) === defaultPropertyValue && lang !== 'default') {
+        defaultPropertyLanguage = lang;
+        break;
+      }
+    }
+    return defaultPropertyLanguage;
+  }
+
+  populateMeta(data) {
+    this.meta.defaultlanguage = this.getDefaultLanguage(data.descriptiveData.label);
+    this.parseJsonld(data);
+    this.meta.titleLang = this.getDefaultLanguage(data.descriptiveData.label);
+    if (data.descriptiveData.label && data.descriptiveData.label[this.meta.titleLang]) {
+      this.meta.title = data.descriptiveData.label[this.meta.titleLang].join('');
+    }
+    this.meta.descriptionLang = this.getDefaultLanguage(data.descriptiveData.description);
+    if (data.descriptiveData.description && data.descriptiveData.description[this.meta.descriptionLang]) {
+      this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join('');
+    }
     let dctype = this.dcfields.find(field => field.label === 'type');
     if (dctype) {
       let index = dctype.langs.findIndex(l => l.lang === LANG);
       if (index >= 0) {
-        this.meta.types = dctype.value[index].join(', ');
+        this.meta.type = dctype.value[index].join(', ');
       }
     }
     let dcsubject = this.dcfields.find(field => field.label === 'subject');
