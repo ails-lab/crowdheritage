@@ -302,8 +302,14 @@ export class CampaignEdit {
   }
 
   async createNewErrorType() {
-    let lastElementIndex = this.campaign.validationErrorTypes.length - 1;
-    let lastElementCode = this.campaign.validationErrorTypes[lastElementIndex].tokenizedVersion.split('_')[1];
+    let lastElementIndex = 0;
+    let lastElementCode = 0;
+    if (this.campaign.validationErrorTypes && this.campaign.validationErrorTypes.length > 0) {
+      lastElementIndex = this.campaign.validationErrorTypes.length - 1;
+      lastElementCode = this.campaign.validationErrorTypes[lastElementIndex].tokenizedVersion.split('_')[1];
+    } else {
+      this.campaign.validationErrorTypes = [];
+    }
     await this.campaign.validationErrorTypes.push({
       'tokenizedVersion': `ERROR_${Number(lastElementCode) + 1}`,
       'severity': 'Severe',
