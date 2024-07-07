@@ -200,7 +200,7 @@ export class Record {
   }
 
   parseJsonld(data) {
-    if ('content' in data) {
+    if ('content' in data && 'JSONLD-EDM' in data.content) {
       let jsonld = JSON.parse(data.content['JSONLD-EDM'])['@graph'];
       jsonld.forEach((item) => {
         let type = item['@type'];
@@ -223,6 +223,9 @@ export class Record {
   }
 
   getDefaultLanguage(property) {
+    if (!property) {
+      return '';
+    }
     let defaultPropertyLanguage = 'default';
     let defaultPropertyValue = JSON.stringify(property.default);
     for (let lang in property) {
@@ -238,11 +241,11 @@ export class Record {
     this.meta.defaultlanguage = this.getDefaultLanguage(data.descriptiveData.label);
     this.parseJsonld(data);
     this.meta.titleLang = this.getDefaultLanguage(data.descriptiveData.label);
-    if (data.descriptiveData.label[this.meta.titleLang]) {
+    if (data.descriptiveData.label && data.descriptiveData.label[this.meta.titleLang]) {
       this.meta.title = data.descriptiveData.label[this.meta.titleLang].join('');
     }
     this.meta.descriptionLang = this.getDefaultLanguage(data.descriptiveData.description);
-    if (data.descriptiveData.description[this.meta.descriptionLang]) {
+    if (data.descriptiveData.description && data.descriptiveData.description[this.meta.descriptionLang]) {
       this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join('');
     }
     let dctype = this.dcfields.find(field => field.label === 'type');

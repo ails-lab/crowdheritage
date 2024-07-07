@@ -139,12 +139,14 @@ export class Tagitem {
       this.annotations[type] = [];
     });
     this.errorTypes = params.campaign.validationErrorTypes ? params.campaign.validationErrorTypes : [];
-    this.targetProperties = this.tagTypes.filter(property => {
-      let recordProperty = this.record.meta[property.toLowerCase()];
-      if (recordProperty !== undefined && recordProperty.length) {
-        return property;
-      }
-    });
+    if (this.record && this.record.meta) {
+      this.targetProperties = this.tagTypes.filter(property => {
+        let recordProperty = this.record.meta[property.toLowerCase()];
+        if (recordProperty !== undefined && recordProperty.length) {
+          return property;
+        }
+      });
+    }
 
     if (params.userId) {
       this.userId = params.userId;
