@@ -40,9 +40,9 @@ export class Record {
       defaultlanguage: '',
       title: '',
       description: '',
+      subject: [],
       type: '',
-      organizations: [],
-      subjects: []
+      organizations: []
     };
     if (data) {
       this.loadData(data);
@@ -242,24 +242,21 @@ export class Record {
     this.parseJsonld(data);
     this.meta.titleLang = this.getDefaultLanguage(data.descriptiveData.label);
     if (data.descriptiveData.label && data.descriptiveData.label[this.meta.titleLang]) {
-      this.meta.title = data.descriptiveData.label[this.meta.titleLang].join('');
+      this.meta.title = data.descriptiveData.label[this.meta.titleLang].join(' ; ');
     }
     this.meta.descriptionLang = this.getDefaultLanguage(data.descriptiveData.description);
     if (data.descriptiveData.description && data.descriptiveData.description[this.meta.descriptionLang]) {
-      this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join('');
+      this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join(' ; ');
+    }
+    this.meta.subjectLang = this.getDefaultLanguage(data.descriptiveData.keywords);
+    if (data.descriptiveData.keywords && data.descriptiveData.keywords[this.meta.subjectLang]) {
+      this.meta.subject = data.descriptiveData.keywords[this.meta.subjectLang].join(' ; ');
     }
     let dctype = this.dcfields.find(field => field.label === 'type');
     if (dctype) {
       let index = dctype.langs.findIndex(l => l.lang === LANG);
       if (index >= 0) {
         this.meta.type = dctype.value[index].join(', ');
-      }
-    }
-    let dcsubject = this.dcfields.find(field => field.label === 'subject');
-    if (dcsubject) {
-      let index = dcsubject.langs.findIndex(l => l.lang === LANG);
-      if (index >= 0) {
-        this.meta.subjects = dcsubject.value[index].join(', ');
       }
     }
   }

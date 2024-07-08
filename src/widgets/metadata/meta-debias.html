@@ -13,9 +13,13 @@
           <div class="lbl" t="item:description">DESCRIPTION</div>
           <div class="val" innerHtml.bind="record.meta.description"></div>
         </li>
-        <li class="meta-description col-12" if.bind="record.meta.type.length">
+        <li class="col-sm-6" if.bind="record.meta.type.length">
           <div class="lbl">TYPE</div>
           <div class="val">${record.meta.type}</div>
+        </li>
+        <li class="col-sm-6" if.bind="record.meta.subject.length">
+          <div class="lbl">SUBJECT</div>
+          <div class="val">${record.meta.subject}</div>
         </li>
         <li class="col-sm-6" if.bind="record.data.descriptiveData.dccreator">
           <div class="lbl" t="item:creator">CREATOR</div>
