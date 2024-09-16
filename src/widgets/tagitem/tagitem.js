@@ -1290,11 +1290,17 @@ export class Tagitem {
     if (propertySelector) {
       propertySelector.selectedIndex = 0;
     }
+    if (this.targetProperties.length === 1) {
+      this.selectTargetProperty(this.targetProperties[0]);
+    }
   }
   selectTargetProperty(property) {
     this.selectedProperty = property;
     this.selectedPropertyValue = this.record.meta[property.toLowerCase()];
-    document.getElementById("propertySelector").blur();
+    const propertySelector = document.getElementById("propertySelector");
+    if (propertySelector) {
+      document.getElementById("propertySelector").blur();
+    }
   }
 
   resetSubAnnotation() {
