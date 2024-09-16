@@ -1220,9 +1220,21 @@ export class Tagitem {
   }
 
   subtagTooltipText(ann) {
-    let start = ann.selector.origValue.slice(0, ann.selector.start);
-    let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
-    let end = ann.selector.origValue.slice(ann.selector.end, ann.selector.origValue.length);
+    let start = "";
+    let middle = "";
+    let end = "";
+    if (ann.selector.origValue.length) {
+      const maxContextSize = 300;
+      start = ann.selector.origValue.slice(0, ann.selector.start);
+      start = start.length > maxContextSize ? start.substring(start.length - maxContextSize) : start;
+      middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
+      end = ann.selector.origValue.slice(ann.selector.end, ann.selector.origValue.length);
+      end = end.length > maxContextSize ? end.substring(0,maxContextSize) : end;
+    } else {
+      start = ann.selector.prefix;
+      middle = `<strong class='text-yellow'>${ann.selector.annotatedValue}</strong>`;
+      end = ann.selector.suffix;
+    }
     let value = start + middle + end;
 
     return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
