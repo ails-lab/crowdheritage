@@ -202,15 +202,17 @@ export class Record {
   parseJsonld(data) {
     if ('content' in data && 'JSONLD-EDM' in data.content) {
       let jsonld = JSON.parse(data.content['JSONLD-EDM'])['@graph'];
-      jsonld.forEach((item) => {
-        let type = item['@type'];
-        if (type && type === 'foaf:Organization') {
-          this.meta.organizations.push({
-            label: this.getLabel(item['skos:prefLabel']),
-            uri: item['@id']
-          });
-        }
-      });
+      if (jsonld) {
+        jsonld.forEach((item) => {
+          let type = item['@type'];
+          if (type && type === 'foaf:Organization') {
+            this.meta.organizations.push({
+              label: this.getLabel(item['skos:prefLabel']),
+              uri: item['@id']
+            });
+          }
+        });
+      }
     }
   }
 
