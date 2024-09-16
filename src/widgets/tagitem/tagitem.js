@@ -1341,7 +1341,10 @@ export class Tagitem {
   }
 
   async submitRejection(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType) {
-    await this.validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType);
+    if (rejectedByMe) {
+      await this.validate(annoId, annoType, index, approvedByMe, true, mot, tagType);
+    }
+    await this.validate(annoId, annoType, index, approvedByMe, false, mot, tagType);
     this.toggleCollapse(annoId);
   }
 
