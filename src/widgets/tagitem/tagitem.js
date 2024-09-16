@@ -1220,9 +1220,21 @@ export class Tagitem {
   }
 
   subtagTooltipText(ann) {
-    let start = ann.selector.origValue.slice(0, ann.selector.start);
-    let middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
-    let end = ann.selector.origValue.slice(ann.selector.end, ann.selector.origValue.length);
+    let start = "";
+    let middle = "";
+    let end = "";
+    if (ann.selector.origValue.length) {
+      const maxContextSize = 300;
+      start = ann.selector.origValue.slice(0, ann.selector.start);
+      start = start.length > maxContextSize ? start.substring(start.length - maxContextSize) : start;
+      middle = `<strong class='text-yellow'>${ann.selector.origValue.slice(ann.selector.start, ann.selector.end)}</strong>`;
+      end = ann.selector.origValue.slice(ann.selector.end, ann.selector.origValue.length);
+      end = end.length > maxContextSize ? end.substring(0,maxContextSize) : end;
+    } else {
+      start = ann.selector.prefix;
+      middle = `<strong class='text-yellow'>${ann.selector.annotatedValue}</strong>`;
+      end = ann.selector.suffix;
+    }
     let value = start + middle + end;
 
     return `<b><u>${ann.selector.property}</u></b><br/>${value}`;
@@ -1278,11 +1290,17 @@ export class Tagitem {
     if (propertySelector) {
       propertySelector.selectedIndex = 0;
     }
+    if (this.targetProperties.length === 1) {
+      this.selectTargetProperty(this.targetProperties[0]);
+    }
   }
   selectTargetProperty(property) {
     this.selectedProperty = property;
     this.selectedPropertyValue = this.record.meta[property.toLowerCase()];
-    document.getElementById("propertySelector").blur();
+    const propertySelector = document.getElementById("propertySelector");
+    if (propertySelector) {
+      document.getElementById("propertySelector").blur();
+    }
   }
 
   resetSubAnnotation() {
@@ -1323,7 +1341,10 @@ export class Tagitem {
   }
 
   async submitRejection(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType) {
-    await this.validate(annoId, annoType, index, approvedByMe, rejectedByMe, mot, tagType);
+    if (rejectedByMe) {
+      await this.validate(annoId, annoType, index, approvedByMe, true, mot, tagType);
+    }
+    await this.validate(annoId, annoType, index, approvedByMe, false, mot, tagType);
     this.toggleCollapse(annoId);
   }
 

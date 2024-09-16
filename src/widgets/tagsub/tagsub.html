@@ -50,9 +50,10 @@
               class="text-center mb-0" name="property-selector" id="propertySelector"
               change.delegate="selectTargetProperty($event.target.value)"
             >
-              <option value="" selected disabled>---- Select Target Property ----</option>
+              <option if.bind="targetProperties.length > 1" value="" selected disabled>---- Select Target Property ----</option>
               <option
                 repeat.for="property of targetProperties" value.bind="property"
+                selected.bind="targetProperties.length === 1"
               >
                 ${property}
               </option>

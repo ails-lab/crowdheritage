@@ -63,7 +63,7 @@
   "toggle-publish": "Click to toggle Publish state",
   "toastr-restricted": "You can not annotate. This campaign is private.",
   "usertagging": "COMMENTING",
-  "usertagging-info": "Describe the item in your own words.",
-  "usertagging-textarea": "Write your description here...",
+  "usertagging-info": "Leave your feedback on the item.",
+  "usertagging-textarea": "Start typing your feedback here...",
   "usertagging-submit": "Add"
 }

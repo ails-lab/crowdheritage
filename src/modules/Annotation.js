@@ -55,7 +55,7 @@ export class Annotation {
       }
     }
     else {
-      this.label = data.annotators[0].externalCreatorName || "Image tag";
+      this.label = data.annotators[0].externalCreatorName || "Annotation";
     }
 
     if (data.body.description) {
