@@ -2599,7 +2599,7 @@ body main section.tagging .left .img #recImg {
   cursor: pointer;
   max-height: 400px;
   &.thumb {
-    max-height: 100px;
+    max-height: 250px;
     margin-bottom: 32px;
   }
 }
@@ -8690,6 +8690,31 @@ ul.subtagBlock {
           }
         }
       }
+    }
+  }
+}
+
+.blur-image {
+  filter: blur(6px);
+}
+
+section#nav-arrows {
+  position: fixed;
+  top: 50%;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 32px;
+  align-items: center;
+  a, i {
+    position: relative;
+    z-index: 1000;
+    color: @main-color;
+    font-size: 32px;
+    opacity: 0.9;
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
     }
   }
 }
