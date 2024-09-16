@@ -8693,3 +8693,24 @@ ul.subtagBlock {
     }
   }
 }
+
+section#nav-arrows {
+  position: fixed;
+  top: 50%;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 32px;
+  align-items: center;
+  a, i {
+    position: relative;
+    z-index: 1000;
+    color: @main-color;
+    font-size: 32px;
+    opacity: 0.9;
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+}
