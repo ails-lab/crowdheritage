@@ -1,15 +1,15 @@
 {
   "name"          : "Name",
-  "gender"        : "Gender",
-  "contact"       : "Contact Information",
-  "about"         : "About",
-  "inserted"      : "INSERTED TAGS",
-  "upvotes"       : "UPVOTES",
-  "downvotes"     : "DOWNVOTES",
-  "ratings"       : "RATINGS",
-  "items"         : "ITEMS",
-  "contribute"    : "Contribute more and unlock the next badge.",
-  "contributions" : "CONTRIBUTIONS",
-  "annotated"     : "ANNOTATED ITEMS",
-  "noAnnotedItems": "You haven't annotated any items yet in this campaign"
+  "gender"        : "Geschlecht",
+  "contact"       : "Kontaktinformationen",
+  "about"         : "Über",
+  "inserted"      : "EINGEFÜGTE TAGS",
+  "upvotes"       : "DAUMEN HOCH",
+  "downvotes"     : "DAUMEN RUNTER",
+  "ratings"       : "BEWERTUNGEN",
+  "items"         : "OBJEKTE",
+  "contribute"    : "Tragen Sie weiter bei und schalten Sie das nächste Abzeichen frei.",
+  "contributions" : "BEITRÄGE",
+  "annotated"     : "ANNOTIERTE OBJEKTE",
+  "noAnnotedItems": "Sie haben in dieser Kampagne noch keine Objekte annotiert."
 }
