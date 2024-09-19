@@ -64,9 +64,11 @@
           <p class="section-label">
             Text fragment :
           </p>
-          <p id="text-fragment-selector" class="text-select-highlight" mouseup.delegate="selectText()" touchend.delegate="selectText()">
-            ${selectedPropertyValue}
-          </p>
+          <p
+            id="text-fragment-selector" class="text-select-highlight"
+            innerHtml.bind="selectedPropertyValue"
+            mouseup.delegate="selectText()" touchend.delegate="selectText()"
+          ></p>
           <p
             if.bind="!isTextFragmentSelected"
             class="text-red font-italic"
