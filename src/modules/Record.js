@@ -230,6 +230,10 @@ export class Record {
     }
     let defaultPropertyLanguage = 'default';
     let defaultPropertyValue = JSON.stringify(property.default);
+    if (property[LANG]) {
+      defaultPropertyLanguage = LANG;
+      defaultPropertyValue = JSON.stringify(property[LANG]);
+    }
     for (let lang in property) {
       if (JSON.stringify(property[lang]) === defaultPropertyValue && lang !== 'default') {
         defaultPropertyLanguage = lang;
@@ -240,6 +244,7 @@ export class Record {
   }
 
   populateMeta(data) {
+    // TODO: Separate the multiple meta values and adjust the behaviour in the tagsub.html
     this.meta.defaultlanguage = this.getDefaultLanguage(data.descriptiveData.label);
     this.parseJsonld(data);
     this.meta.titleLang = this.getDefaultLanguage(data.descriptiveData.label);
@@ -248,7 +253,7 @@ export class Record {
     }
     this.meta.descriptionLang = this.getDefaultLanguage(data.descriptiveData.description);
     if (data.descriptiveData.description && data.descriptiveData.description[this.meta.descriptionLang]) {
-      this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join(' ; ');
+      this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join('<br/>---<br>');
     }
     this.meta.subjectLang = this.getDefaultLanguage(data.descriptiveData.keywords);
     if (data.descriptiveData.keywords && data.descriptiveData.keywords[this.meta.subjectLang]) {
