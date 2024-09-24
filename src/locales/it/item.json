@@ -43,6 +43,8 @@
   "europeana": "Europeana",
   "exit": "ESCI ",
   "fullscreen": "SCHERMO INTERO",
+  "sub-tagging": "PROPERTY TAGGING",
+  "bias-tagging": "TERMINI (POTENZIALMENTE) PROBLEMATICI NEI METADATI",
   "color-tagging": "ANNOTAZIONE DEI COLORI",
   "color-info": "Seleziona i colori che vedi nell'immagine a sinistra. <br/>Puoi anche convalidare, votandoli, i colori proposti da altri partecipanti per quest'immagine.",
   "votes": "Vota i colori che ti sei identificato",
@@ -62,8 +64,8 @@
   "toastr-geo": "Annotazioni geografiche già presenti",
   "toggle-publish": "Click to toggle Publish state",
   "toastr-restricted": "You can not annotate. This campaign is private.",
-  "usertagging": "COMMENTING",
-  "usertagging-info": "Leave your feedback on the item.",
-  "usertagging-textarea": "Start typing your feedback here...",
-  "usertagging-submit": "Add"
+  "usertagging": "SPAZIO PER I COMMENTI",
+  "usertagging-info": "Lascia un feedback sull'elemento analizzato.",
+  "usertagging-textarea": "Inizia a digitare il tuo commento qui...",
+  "usertagging-submit": "AGGIUNGI"
 }
