@@ -26,7 +26,13 @@
           <!-- img-->
           <div if.bind="campaign.motivation.includes('SubTagging')" class="img">
             <a href.bind="record.source_uri" target="_blank">
-              <img id="recImg" class="thumb blur-image" show.bind="(record.vtype=='IMAGE')" src.bind="record.thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" style.bind="noImageStyle" />
+              <img
+                id="recImg" class.bind="campaignIsCensored ? 'thumb blur-image' : 'thumb'"
+                show.bind="(record.vtype=='IMAGE')"
+                src.bind="record.thumbnail"
+                onError="this.src='/img/assets/img/ui/ic-noimage.png'"
+                style.bind="noImageStyle"
+              />
             </a>
           </div>
           <div else class="img" with.bind="record">

@@ -27,6 +27,8 @@ import settings from 'global.config.js';
 
 let instance = null;
 
+const censoredCampaigns = ["debias-nisv", "debias-apef-en", "debias-dff", "debias-apef-nl", "debias-apef-de"];
+
 @inject(CollectionServices, RecordServices, UserServices, CampaignServices, I18N, EventAggregator)
 export class MultipleItems {
 
@@ -36,6 +38,7 @@ export class MultipleItems {
   get byUser() { return !!this.user }
   get byCollection() { return !!this.collection && !this.collectionEdit }
   get byCollectionEdit() { return this.collectionEdit }
+  get campaignIsCensored() { return censoredCampaigns.includes(this.campaign.username) }
 
   constructor(collectionServices, recordServices, userServices, campaignServices, i18n, eventAggregator) {
     if (instance) {

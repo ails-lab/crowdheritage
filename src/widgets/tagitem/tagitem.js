@@ -1241,7 +1241,11 @@ export class Tagitem {
   }
 
   creatorTooltipText(ann) {
-    return `<b><u>Human Generated</u></b>:<br/>${ann.createdBy[0].username}`;
+    if (this.isCurrentUserCreator()) {
+      return `<b><u>Human Generated</u></b>:<br/>${ann.createdBy[0].username}`;
+    } else {
+      return '<b>Human Generated</b>';
+    }
   }
 
   generatorTooltipText(ann) {
