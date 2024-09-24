@@ -5,6 +5,8 @@ import * as wheelzoom from 'wheelzoom-revived';
 import { UserServices } from 'UserServices';
 import { RecordServices } from 'RecordServices';
 
+const censoredCampaigns = ["debias-nisv", "debias-apef-en", "debias-dff", "debias-apef-nl", "debias-apef-de"];
+
 @inject(Router, I18N, UserServices, RecordServices)
 export class ItemDataView {
   constructor(router, i18n, userServices, recordServices) {
@@ -51,6 +53,7 @@ export class ItemDataView {
   }
 
   get isLiked() { return this.recordServices.isLiked(this.record.externalId);	}
+  get campaignIsCensored() { return censoredCampaigns.includes(this.campaign.username) }
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);

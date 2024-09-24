@@ -100,7 +100,7 @@
 						<div class="thumbs">
 							<img
                 src.bind="record.Thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'"
-                class.bind="campaign.motivation.includes('SubTagging') ? 'blur-image' : ''"
+                class.bind="campaignIsCensored ? 'blur-image' : ''"
               />
 							<div class="action">
 								<div class="plus">${record.title | textTrim:22}</div>
