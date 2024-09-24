@@ -218,7 +218,8 @@ export class Record {
 
   getLabel(prefLabel) {
     if (prefLabel.length) {
-      return prefLabel.filter(label => label['@language'] === LANG)[0]['@value'];
+      let labels = prefLabel.filter(label => label['@language'] === LANG);
+      return labels.length ? labels[0]['@value'] : prefLabel[0]['@value'];
     } else {
       return prefLabel['@value'];
     }
