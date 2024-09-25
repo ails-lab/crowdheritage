@@ -101,10 +101,10 @@ export class Tagitem {
       return `${settings.project} ${this.campaign.username}`;
   }
 
-  get highlightedText() { return window.getSelection().toString().trim(); }
+  get highlightedText() { return window.getSelection(); }
 
   get isTextFragmentSelected() {
-    if (this.highlightedText.length && this.selectedText.value.length) {
+    if (this.highlightedText.toString().length && this.selectedText.value.length) {
       let targetedElement = window.getSelection().focusNode.parentElement.id;
       return targetedElement === "text-fragment-selector";
     }
@@ -1276,12 +1276,9 @@ export class Tagitem {
   }
 
   selectText() {
-    this.selectedText.value = this.highlightedText;
-    let startIndex = this.selectedPropertyValue.indexOf(this.selectedText.value);
-    if (startIndex >= 0) {
-      this.selectedText.startAt = startIndex;
-      this.selectedText.endAt = startIndex + this.selectedText.value.length;
-    }
+    this.selectedText.value = this.highlightedText.toString();
+    this.selectedText.startAt = this.highlightedText.baseOffset;
+    this.selectedText.endAt = this.highlightedText.extentOffset;
   }
 
   selectSubTagTerm(term) {
