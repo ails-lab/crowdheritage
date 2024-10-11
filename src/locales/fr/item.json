@@ -43,6 +43,8 @@
   "europeana": "Europeana",
   "exit": "SORTIE",
   "fullscreen": "PLEIN ÉCRAN",
+  "bias-tagging": "BIAIS DANS LES MÉTADONNÉES",
+  "subtagging-disclaimer": "Survolez les labels de la liste pour afficher le contexte de chaque annotation",
   "color-tagging": "SÉLECTION DES COULEURS",
   "color-info": "Sélectionnez les couleurs que vous voyez sur l’image de gauche. <br/>Vous pouvez également voter pour les autres couleurs déjà proposées.",
   "votes": "Votez les couleurs que vous avez identifiées vous-même",
@@ -62,8 +64,8 @@
   "toastr-geo": "Ce repère existe déjà",
   "toggle-publish": "Click to toggle Publish state",
   "toastr-restricted": "You can not annotate. This campaign is private.",
-  "usertagging": "COMMENTING",
-  "usertagging-info": "Leave your feedback on the item.",
-  "usertagging-textarea": "Start typing your feedback here...",
-  "usertagging-submit": "Add"
+  "usertagging": "COMMENTAIRE",
+  "usertagging-info": "Laissez votre avis sur l’item.",
+  "usertagging-textarea": "Commencez à taper votre avis ici...",
+  "usertagging-submit": "Ajouter"
 }
