@@ -1346,6 +1346,7 @@ export class Tagitem {
       await this.validate(annoId, annoType, index, approvedByMe, true, mot, tagType);
     }
     await this.validate(annoId, annoType, index, approvedByMe, false, mot, tagType);
+    toastr.success(this.i18n.tr('item:toastr-feedback-registered'));
     this.toggleCollapse(annoId);
   }
 
