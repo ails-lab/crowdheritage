@@ -8717,6 +8717,17 @@ section#nav-arrows {
   justify-content: space-between;
   padding: 0 32px;
   align-items: center;
+  z-index: 10;
+  a {
+    background-color: #fff;
+    border-radius: 32px;
+    &.previous {
+      padding: 9px 16px;
+    }
+    &.next {
+      padding: 4px 16px;
+    }
+  }
   a, i {
     position: relative;
     z-index: 1000;
