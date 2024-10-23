@@ -1,14 +1,16 @@
 <template>
   <main>
     <!-- nav arrows -->
-    <!--section id="nav-arrows">
-      <a if.bind="!isFirstItem" click.delegate="goToItem('previous')">
-        <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-      </a>
-      <a show.bind="!isLastItem" click.delegate="goToItem('next')">
+    <section id="nav-arrows">
+      <div>
+        <a show.bind="!isFirstItem" class="previous" click.delegate="goToItem('previous')">
+          <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+        </a>
+      </div>
+      <a show.bind="!isLastItem" class="next" click.delegate="goToItem('next')">
         <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
       </a>
-    </section-->
+    </section>
     <!-- new banner-->
     <section class="banner mini detail" id="banner">
       <div class="container">
