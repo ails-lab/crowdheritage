@@ -67,6 +67,7 @@ export class Tagitem {
     this.suggestedAnnotations = {};
     this.selectedAnnotation = null;
     this.userComment = '';
+    this.commentEditing = false;
     this.loadedImagesCount = 0;
     this.compareDisabled = true;
     this.errorTypes = [];
@@ -1131,6 +1132,11 @@ export class Tagitem {
   autosizeCommentArea() {
     let area = document.getElementById('user-tag-textarea');
     area.style.cssText = 'height:' + area.scrollHeight + 'px';
+  }
+
+  editCommentAnnotation(annId, annText) {
+    this.commentEditing = true;
+    this.userComment = annText;
   }
 
   submitComment() {
