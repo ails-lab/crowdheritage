@@ -1,0 +1,37 @@
+<template>
+  <div class="metadata">
+    <!-- label-->
+    <div class="heading" t="item:meta">ITEM METADATA</div>
+    <!-- info-->
+    <div class="debias-meta">
+      <ul class="meta row">
+        <li class="meta-description col-12" if.bind="record.meta.title.length">
+          <div class="lbl" t="item:title">TITLE</div>
+          <div class="val" innerHtml.bind="record.meta.title"></div>
+        </li>
+        <li class="meta-description col-12" if.bind="record.meta.isRelatedTo.length">
+          <div class="lbl" t="item:description">RELATED TO</div>
+          <a class="val" href.bind="record.meta.isRelatedTo" target="_blank">${record.meta.isRelatedTo.split("/")[-2]}</a>
+        </li>
+        <li class="col-sm-6" if.bind="record.meta.country.length">
+          <div class="lbl">COUNTRY</div>
+          <div class="val">${record.meta.country}</div>
+        </li>
+        <li class="col-sm-6" if.bind="record.meta.city.length">
+          <div class="lbl">CITY</div>
+          <div class="val">${record.meta.city}</div>
+        </li>
+        <li class="col-sm-6" if.bind="record.meta.date.length">
+          <div class="lbl">DATE</div>
+          <div class="val">${record.meta.date}</div>
+        </li>
+        <li class="col-sm-2" if.bind="record.meta.isShownAt">
+          <div class="val" t="[prepend]item:see-it">
+            <a href.bind="record.meta.isShownAt" target="_blank">ASKSA</a>
+          </div>
+        </li>
+      </ul>
+      <!--       <i class="show-more fa fa-chevron-down" title="Load more" click.delegate='toggleLoadMore(".meta")'></i>-->
+    </div>
+  </div>
+</template>
