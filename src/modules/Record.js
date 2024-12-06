@@ -256,6 +256,23 @@ export class Record {
     if (data.descriptiveData.description && data.descriptiveData.description[this.meta.descriptionLang]) {
       this.meta.description = data.descriptiveData.description[this.meta.descriptionLang].join('<br/>---<br>');
     }
+    this.meta.countryLang = this.getDefaultLanguage(data.descriptiveData.country);
+    if (data.descriptiveData.country && data.descriptiveData.country[this.meta.titleLang]) {
+      this.meta.country = data.descriptiveData.country[this.meta.titleLang].join(' ; ');
+    }
+    this.meta.cityLang = this.getDefaultLanguage(data.descriptiveData.city);
+    if (data.descriptiveData.city && data.descriptiveData.city[this.meta.cityLang]) {
+      this.meta.city = data.descriptiveData.city[this.meta.cityLang].join(' ; ');
+    }
+    if (data.descriptiveData.dates) {
+      this.meta.date = data.descriptiveData.dates[0].free;
+    }
+    if (data.descriptiveData.isRelatedTo) {
+      this.meta.relatedTo = data.descriptiveData.isRelatedTo.uri;
+    }
+    if (data.descriptiveData.isShownAt) {
+      this.meta.isShownAt = data.descriptiveData.isShownAt;
+    }
     this.meta.subjectLang = this.getDefaultLanguage(data.descriptiveData.keywords);
     if (data.descriptiveData.keywords && data.descriptiveData.keywords[this.meta.subjectLang]) {
       this.meta.subject = data.descriptiveData.keywords[this.meta.subjectLang].join(' ; ');

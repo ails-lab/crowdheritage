@@ -47,6 +47,8 @@ export class ItemDataView {
       this.metadataView = 'widgets/metadata/meta-opera.html';
     } else if (this.campaign.username.startsWith('debias')) {
       this.metadataView = 'widgets/metadata/meta-debias.html';
+    } else if (this.campaign.username.includes('asksa')) {
+      this.metadataView = 'widgets/metadata/meta-asksa.html';
     } else {
       this.metadataView = 'widgets/metadata/meta-music.html';
     }

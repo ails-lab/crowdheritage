@@ -46,6 +46,8 @@
               </compose>
               <compose if.bind="campaign.username.startsWith('debias')" view="widgets/metadata/meta-debias.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
               </compose>
+              <compose if.bind="campaign.username.includes('asksa')" view="widgets/metadata/meta-asksa.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              </compose>
             </div>
           </div>
           <div class="cntr" if.bind="!loadCamp && !edit && !metadataMode">
