@@ -8741,3 +8741,35 @@ section#nav-arrows {
     }
   }
 }
+
+.campaign-instructions {
+  .instructions-wrapper {
+    border: 1px @main-color solid;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    .header {
+      background-color: white;
+      color: @main-color;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      .chevron {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        &.rotated {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .infobar {
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      &.expanded {
+        max-height: fit-content;
+        opacity: 1;
+      }
+    }
+  }
+}

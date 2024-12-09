@@ -268,7 +268,8 @@ export class Record {
       this.meta.date = data.descriptiveData.dates[0].free;
     }
     if (data.descriptiveData.isRelatedTo) {
-      this.meta.relatedTo = data.descriptiveData.isRelatedTo.uri;
+      this.meta.relatedToUri = data.descriptiveData.isRelatedTo.uri;
+      this.meta.relatedToLabel = decodeURIComponent(new URL(data.descriptiveData.isRelatedTo.uri).pathname.split('/').pop());
     }
     if (data.descriptiveData.isShownAt) {
       this.meta.isShownAt = data.descriptiveData.isShownAt;

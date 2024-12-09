@@ -7,7 +7,7 @@
       <div if.bind="campaign.username.includes('debias')" class="heading green" t="item:bias-tagging">BIAS IN THE METADATA</div>
       <div else class="heading green" t="item:sub-tagging">PROPERTY TAGGING</div>
       <!-- info-->
-      <div class="infobar" innerHtml.bind="campaign.instructions"></div>
+      <div class="infobar" t="item:sub-tagging-disclaimer"></div>
       <!-- searchbox-->
       <div class="searchbox" if.bind="campaign.status == 'active' && userHasAccessInCampaign()">
         <input
