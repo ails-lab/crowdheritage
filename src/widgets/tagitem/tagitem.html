@@ -3,10 +3,10 @@
   <div class="tag-item">
     <!-- infobar-->
     <div class="wrap">
-      <div class="heading green" t="app:tags">TAGS</div>
-      <div class="infobar" innerHtml.bind="campaign.instructions"></div>
+      <div class="heading green" t="item:tagging">TAGGING</div>
+      <div class="infobar" t="item:tagging-disclaimer"></div>
     </div>
-    <div class="wrap pt-4" repeat.for="tagType of tagTypes">
+    <div class="wrap" repeat.for="tagType of tagTypes">
       <div if.bind="tagType.length > 0" class="heading">${tagType}</div>
       <div class="searchbox" if.bind="campaign.status == 'active' && userHasAccessInCampaign()">
         <input id.bind="'annotationInput-'+$index" autocomplete="off" value.bind="tagPrefix[tagType]"

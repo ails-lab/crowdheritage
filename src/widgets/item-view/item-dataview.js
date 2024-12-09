@@ -26,6 +26,10 @@ export class ItemDataView {
     this.metadataView = '';
   }
 
+  attached() {
+    this.updateUI();
+  }
+
   activate(params) {
     this.loc = params.loc;
     this.campaign = params.campaign;
@@ -35,6 +39,7 @@ export class ItemDataView {
     this.collectionTitle = params.collectionTitle;
     this.imageErrorCounter = 0;
     this.noImageStyle = '';
+    this.instructionsCollapsed = JSON.parse(localStorage.getItem('campaignInstructionsCollapsed')) || false;
 
     this.recId = this.record.dbId;
     this.showMedia();
@@ -56,6 +61,25 @@ export class ItemDataView {
 
   get isLiked() { return this.recordServices.isLiked(this.record.externalId);	}
   get campaignIsCensored() { return censoredCampaigns.includes(this.campaign.username) }
+
+  toggleInstructions() {
+    this.instructionsCollapsed = !this.instructionsCollapsed;
+    localStorage.setItem('campaignInstructionsCollapsed', JSON.stringify(this.instructionsCollapsed));
+    this.updateUI();
+  }
+
+  updateUI() {
+    const infobar = document.querySelector('.infobar');
+    const chevron = document.querySelector('.chevron');
+
+    if (this.instructionsCollapsed) {
+      infobar.classList.remove('expanded');
+      chevron.classList.remove('rotated');
+    } else {
+      infobar.classList.add('expanded');
+      chevron.classList.add('rotated');
+    }
+  }
 
   hasMotivation(name) {
     return !!this.campaign.motivation.includes(name);

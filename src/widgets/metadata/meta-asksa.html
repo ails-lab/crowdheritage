@@ -9,25 +9,25 @@
           <div class="lbl" t="item:title">TITLE</div>
           <div class="val" innerHtml.bind="record.meta.title"></div>
         </li>
-        <li class="meta-description col-12" if.bind="record.meta.isRelatedTo.length">
-          <div class="lbl" t="item:description">RELATED TO</div>
-          <a class="val" href.bind="record.meta.isRelatedTo" target="_blank">${record.meta.isRelatedTo.split("/")[-2]}</a>
+        <li class="meta-description col-12" if.bind="record.meta.relatedToUri.length">
+          <div class="lbl" t="item:object">OBJECT</div>
+          <a class="val" href.bind="record.meta.relatedToUri" target="_blank">${record.meta.relatedToLabel}</a>
         </li>
         <li class="col-sm-6" if.bind="record.meta.country.length">
-          <div class="lbl">COUNTRY</div>
+          <div class="lbl" t="item:country">COUNTRY</div>
           <div class="val">${record.meta.country}</div>
         </li>
         <li class="col-sm-6" if.bind="record.meta.city.length">
-          <div class="lbl">CITY</div>
+          <div class="lbl" t="item:city">CITY</div>
           <div class="val">${record.meta.city}</div>
         </li>
         <li class="col-sm-6" if.bind="record.meta.date.length">
-          <div class="lbl">DATE</div>
+          <div class="lbl" t="item:date">DATE</div>
           <div class="val">${record.meta.date}</div>
         </li>
         <li class="col-sm-2" if.bind="record.meta.isShownAt">
           <div class="val" t="[prepend]item:see-it">
-            <a href.bind="record.meta.isShownAt" target="_blank">ASKSA</a>
+            <a href.bind="record.meta.isShownAt" target="_blank" t="item:asksa">ASKSA</a>
           </div>
         </li>
       </ul>
