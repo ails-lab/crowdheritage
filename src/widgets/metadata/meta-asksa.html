@@ -11,7 +11,7 @@
         </li>
         <li class="meta-description col-12" if.bind="record.meta.relatedToUri.length">
           <div class="lbl" t="item:object">OBJECT</div>
-          <a class="val" href.bind="record.meta.relatedToUri" target="_blank">${record.meta.relatedToLabel}</a>
+          <a href.bind="record.meta.relatedToUri" target="_blank">${record.meta.relatedToLabel}</a>
         </li>
         <li class="col-sm-6" if.bind="record.meta.country.length">
           <div class="lbl" t="item:country">COUNTRY</div>
