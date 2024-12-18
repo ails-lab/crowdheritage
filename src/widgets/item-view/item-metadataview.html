@@ -3,16 +3,32 @@
     <!-- title-->
     <div class="info-container container pe-0">
       <div class="col instructions-container">
-        <div id="scrollPointMetadata" class="title d-flex justify-content-between w-85">
+        <div
+          id="scrollPointMetadata"
+          class="title d-flex justify-content-between w-85"
+        >
           <span>${record.title}</span>
         </div>
         <div class="heading">RATING</div>
-        <p class="campaignInstructions col-md-10 col-sm-8" innerHtml.bind="campaign.instructions"></p>
+        <p
+          class="campaignInstructions col-md-10 col-sm-8"
+          innerHtml.bind="campaign.instructions"
+        ></p>
       </div>
       <div class="col thumb-button-container">
-        <a href="javascript:void(0)" click.delegate="quickView()" class="thumb-button">
+        <a
+          href="javascript:void(0)"
+          click.delegate="quickView()"
+          class="thumb-button"
+        >
           <i if.bind="!record.Thumbnail" class="fa fa-external-link fa-lg"></i>
-          <img class="btn-thumb" if.bind="record.Thumbnail" onerror="this.src='/img/assets/img/ui/ic-noimage.png'" src.bind="record.Thumbnail" width="100" />
+          <img
+            class="btn-thumb"
+            if.bind="record.Thumbnail"
+            onerror="this.src='/img/assets/img/ui/ic-noimage.png'"
+            src.bind="record.Thumbnail"
+            width="100"
+          />
         </a>
       </div>
     </div>
@@ -23,7 +39,8 @@
             repeat.for="annotation of validAnnotations"
             view-model="widgets/metadata-rating/metadata-rating"
             model.bind="{'campaign': campaign, 'annotation': annotation,
-                        'itemRatedByMe': ratedByMe, 'index': $index}">
+                        'itemRatedByMe': ratedByMe, 'index': $index}"
+          >
           </compose>
         </div>
       </div>
@@ -31,8 +48,10 @@
   </section>
   <div role="main">
     <section class="action itemview" if.bind="record">
-      <compose view-model="widgets/quickview/quickview"
-        model.bind="{'metadataMode': true, 'campaign': campaign, 'record': record, 'lang': loc}">
+      <compose
+        view-model="widgets/quickview/quickview"
+        model.bind="{'metadataMode': true, 'campaign': campaign, 'record': record, 'lang': loc}"
+      >
       </compose>
     </section>
   </div>

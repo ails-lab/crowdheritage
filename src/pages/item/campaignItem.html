@@ -3,7 +3,11 @@
     <!-- nav arrows -->
     <section id="nav-arrows">
       <div>
-        <a show.bind="!isFirstItem" class="previous" click.delegate="goToItem('previous')">
+        <a
+          show.bind="!isFirstItem"
+          class="previous"
+          click.delegate="goToItem('previous')"
+        >
           <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
         </a>
       </div>
@@ -26,30 +30,59 @@
           <ul>
             <!-- Random records -->
             <li if.bind="collectionTitle == ''">
-              <a href="javascript:void(0)" click.delegate="returnToCampaign()" t="[prepend]app:return-campaign"><img
-                  src="/img/ic-arrow-right-black.png" class="space"></a>
+              <a
+                href="javascript:void(0)"
+                click.delegate="returnToCampaign()"
+                t="[prepend]app:return-campaign"
+                ><img src="/img/ic-arrow-right-black.png" class="space"
+              /></a>
             </li>
             <!-- Collection records -->
             <li if.bind="collectionTitle != ''">
-              <a href="javascript:void(0)" click.delegate="returnToCollection()" t="[prepend]app:return-collection"><img
-                  src="/img/ic-arrow-right-black.png" class="space"></a>
+              <a
+                href="javascript:void(0)"
+                click.delegate="returnToCollection()"
+                t="[prepend]app:return-collection"
+                ><img src="/img/ic-arrow-right-black.png" class="space"
+              /></a>
             </li>
           </ul>
         </nav>
         <!-- progress-->
         <ul class="collectioninfo">
-          <li class="title" if.bind="collectionTitle != ''"><a href="javascript:void(0)"
-              click.delegate="returnToCollection()">${collectionTitle}</a></li>
+          <li class="title" if.bind="collectionTitle != ''">
+            <a href="javascript:void(0)" click.delegate="returnToCollection()"
+              >${collectionTitle}</a
+            >
+          </li>
           <li class="count">
-            <a show.bind="!isLastItem" class="next" href="javascript:void(0)" click.delegate="goToItem('next')"
-              t="item:next-item">NEXT ITEM</a>
-            <div class="info"><span t="item:item">Item</span> ${recordIndex + 1} <span t="item:out-of">out of</span> ${collectionCount}</div>
-            <a if.bind="!isFirstItem" class="previous" href="javascript:void(0)" click.delegate="goToItem('previous')"
-              t="item:previous-item">PREVIOUS ITEM</a>
+            <a
+              show.bind="!isLastItem"
+              class="next"
+              href="javascript:void(0)"
+              click.delegate="goToItem('next')"
+              t="item:next-item"
+              >NEXT ITEM</a
+            >
+            <div class="info">
+              <span t="item:item">Item</span> ${recordIndex + 1}
+              <span t="item:out-of">out of</span> ${collectionCount}
+            </div>
+            <a
+              if.bind="!isFirstItem"
+              class="previous"
+              href="javascript:void(0)"
+              click.delegate="goToItem('previous')"
+              t="item:previous-item"
+              >PREVIOUS ITEM</a
+            >
           </li>
         </ul>
         <!-- bg-->
-        <div class="bgwrap" style="background-image: url('${campaign.banner}');"></div>
+        <div
+          class="bgwrap"
+          style="background-image: url('${campaign.banner}')"
+        ></div>
       </div>
     </section>
     <compose
