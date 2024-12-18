@@ -57,6 +57,7 @@ export class MetadataRating {
     this.errorTypes = [];
 
     this.arrowImg = "/img/ic-arrow-down-black.png";
+    this.arrowResultsImg = "/img/ic-arrow-down-black.png";
     this.noRatings = false;
     this.ratingValue = 0;
     this.ratingText = "";
@@ -88,6 +89,19 @@ export class MetadataRating {
     }
   }
 
+  get isCommentingAllowed() {
+    return !Boolean(this.campaign.hideComments);
+  }
+  get isRatingAllowed() {
+    return !Boolean(this.campaign.hideRating);
+  }
+  get areResultsPublic() {
+    return Boolean(this.campaign.showcaseResultsPublic);
+  }
+  get hasAvailableErrorTypes() {
+    return Array.isArray(this.errorTypes) && this.errorTypes.length;
+  }
+
   get isCampaignOrganizer() {
     if (this.userServices.current)
       return this.campaign.creators.includes(this.userServices.current.dbId);
@@ -96,6 +110,10 @@ export class MetadataRating {
 
   get isReviewAccordionOpen() {
     return $(`#collapse-${this.index}`).hasClass("in");
+  }
+
+  get isResultsAccordionOpen() {
+    return $(`#collapse-results-${this.index}`).hasClass("in");
   }
 
   get labelText() {
@@ -193,6 +211,17 @@ export class MetadataRating {
     } else {
       $(`#collapse-${this.index}`).collapse("show");
       this.arrowImg = "/img/ic-arrow-up-black.png";
+    }
+  }
+
+  toggleCollapseResults() {
+    // Done in js/jquery because the bootstrap way did not work
+    if (this.isResultsAccordionOpen) {
+      $(`#collapse-results-${this.index}`).collapse("hide");
+      this.arrowResultsImg = "/img/ic-arrow-down-black.png";
+    } else {
+      $(`#collapse-results-${this.index}`).collapse("show");
+      this.arrowResultsImg = "/img/ic-arrow-up-black.png";
     }
   }
 

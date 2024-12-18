@@ -948,8 +948,8 @@ export class CampaignEdit {
       targetCollections: this.selectedCollections.map((col) => col.id),
     };
     if (this.campaign.campaignType === "Translation") {
-      camp.allowComments = Boolean(this.campaign.allowComments);
-      camp.allowRating = Boolean(this.campaign.allowRating);
+      camp.hideComments = Boolean(this.campaign.allowComments);
+      camp.hideRating = Boolean(this.campaign.allowRating);
       camp.showcaseResultsPublic = Boolean(this.campaign.showcaseResultsPublic);
     }
     if (this.campaign.campaignType === "Image Comparison") {

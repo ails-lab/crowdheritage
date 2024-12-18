@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Dosis:500,600,700|Rubik:400,400i,700,700i|PT+Sans:400,400i,700,700i.css');
-@import './../js/vendor/font-awesome/css/font-awesome.min.css';
-@import './../js/vendor/bootstrap/css/bootstrap.css';
+@import url("https://fonts.googleapis.com/css?family=Dosis:500,600,700|Rubik:400,400i,700,700i|PT+Sans:400,400i,700,700i.css");
+@import "./../js/vendor/font-awesome/css/font-awesome.min.css";
+@import "./../js/vendor/bootstrap/css/bootstrap.css";
 // @import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import './../js/vendor/slick.js/slick/slick.css';
-@import '../js/vendor/bootstrap/less/mixins.less';
+@import "./../js/vendor/slick.js/slick/slick.css";
+@import "../js/vendor/bootstrap/less/mixins.less";
 @import "../js/vendor/bootstrap/less/variables.less";
 // custom settings
 @import "custom.inc.less";
@@ -11,15 +11,24 @@
 @import "~toastr/build/toastr.css";
 
 // Green
-@main-color: #4F7979;
-@alt-color: #2F4949;
+@main-color: #4f7979;
+@alt-color: #2f4949;
 //Yellow
-@secondary-color: #CAB284;
-@third-color: #CA8484;
+@secondary-color: #cab284;
+@third-color: #ca8484;
 
 html[lang="el"] body {
   font-family: Ubuntu !important;
-  a, div, h1, h2, h3, h4, h5, li, span, p {
+  a,
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  li,
+  span,
+  p {
     font-family: Ubuntu !important;
   }
 }
@@ -35,7 +44,7 @@ html[lang="el"] body {
 .centered-and-cropped {
   object-fit: cover;
   width: 288.75px;
-  height: 288.75px
+  height: 288.75px;
 }
 
 .float-right {
@@ -122,7 +131,7 @@ a:focus {
 }
 
 #mediaplayer {
-  width: 100%
+  width: 100%;
 }
 
 html,
@@ -281,7 +290,7 @@ body header .wrap .container nav .account a .thumb img {
 }
 
 body header .wrap .container nav .account a:hover .lbl {
-  background-color: #2F4949;
+  background-color: #2f4949;
 }
 
 body header .wrap .container nav .account .accountmenu {
@@ -319,14 +328,14 @@ body header .wrap .container nav .account .accountmenu li a {
 
 body header .wrap .container nav .account .accountmenu li a:hover {
   text-decoration: none;
-  background-color: #2F4949;
+  background-color: #2f4949;
 }
 
-body div[role='main'] .viewer .section-head {
+body div[role="main"] .viewer .section-head {
   position: relative;
 }
 
-body div[role='main'] section.action {
+body div[role="main"] section.action {
   position: fixed;
   width: 40%;
   top: 0px;
@@ -344,11 +353,11 @@ body div[role='main'] section.action {
   outline: 0;
 }
 
-body div[role='main'] section.action.active {
+body div[role="main"] section.action.active {
   right: 0;
 }
 
-body div[role='main'] section.action.access .action-body {
+body div[role="main"] section.action.access .action-body {
   padding: 25px 0 0;
 }
 
@@ -542,7 +551,13 @@ body main section.tagging .wraps .right .next-item-alternative-link .previous {
   padding: 4px 15px 3px 15px;
 }
 
-body main section.tagging .wraps .right .next-item-alternative-link .previous:hover {
+body
+  main
+  section.tagging
+  .wraps
+  .right
+  .next-item-alternative-link
+  .previous:hover {
   border-color: @secondary-color;
   text-decoration: none;
   background-color: @secondary-color;
@@ -563,7 +578,13 @@ body main section.tagging .wraps .right .next-item-alternative-link .next {
   padding: 4px 15px 3px 15px;
 }
 
-body main section.tagging .wraps .right .next-item-alternative-link .next:hover {
+body
+  main
+  section.tagging
+  .wraps
+  .right
+  .next-item-alternative-link
+  .next:hover {
   border-color: @secondary-color;
   text-decoration: none;
   background-color: @secondary-color;
@@ -601,7 +622,7 @@ body main section.banner .container .bannertext .line .wrap {
 body main section.banner .container .bannertext .line .wrap span {
   display: inline-block;
   color: #000;
-  font-size: 3.0rem;
+  font-size: 3rem;
   padding: 0px 15px 2px 15px;
   font-family: "Dosis";
   background: #fff;
@@ -685,7 +706,7 @@ body main section.banner .bgwrap {
   top: 0;
   height: 100%;
   z-index: -1;
-  background-image: url('../img/assets/img/content/bg-search-space.png');
+  background-image: url("../img/assets/img/content/bg-search-space.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -705,7 +726,7 @@ body main section.campaigns-intro:after {
   clear: both;
 }
 
-body main section.campaigns-intro>.container {
+body main section.campaigns-intro > .container {
   padding-right: 0;
 }
 
@@ -729,7 +750,7 @@ body main section.campaigns:after {
   clear: both;
 }
 
-body main section.campaigns>.container {
+body main section.campaigns > .container {
   padding-right: 0;
 }
 
@@ -763,7 +784,7 @@ body main section.campaigns .list .campaign:hover .details a h1 {
 body main section.campaigns .list .campaign span.no {
   width: 10%;
   float: left;
-  font-size: 6.0rem;
+  font-size: 6rem;
   font-family: "Dosis";
   color: #d6d6d6;
   display: block;
@@ -844,7 +865,7 @@ body main section.campaigns .list .campaign .details {
 }
 
 body main section.campaigns .list .campaign .details a h1 {
-  font-size: 2.0rem;
+  font-size: 2rem;
   margin: 0 0 10px 0;
   padding: 0;
   color: #000;
@@ -882,13 +903,30 @@ body main section.campaigns .list .campaign .details .progress-line .progress {
   overflow: inherit;
 }
 
-body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar {
+body
+  main
+  section.campaigns
+  .list
+  .campaign
+  .details
+  .progress-line
+  .progress
+  .progress-bar {
   background-color: @secondary-color;
   box-shadow: none;
   position: relative;
 }
 
-body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar .labl {
+body
+  main
+  section.campaigns
+  .list
+  .campaign
+  .details
+  .progress-line
+  .progress
+  .progress-bar
+  .labl {
   position: absolute;
   right: -25px;
   top: -40px;
@@ -900,7 +938,16 @@ body main section.campaigns .list .campaign .details .progress-line .progress .p
   font-family: "Dosis";
 }
 
-body main section.campaigns .list .campaign .details .progress-line .progress .progress-bar .labl::after {
+body
+  main
+  section.campaigns
+  .list
+  .campaign
+  .details
+  .progress-line
+  .progress
+  .progress-bar
+  .labl::after {
   width: 0;
   height: 0;
   border-style: solid;
@@ -969,7 +1016,15 @@ body main section.campaigns .list .campaign .details ul.stats li.contribute a {
   transition: all 0.3s;
 }
 
-body main section.campaigns .list .campaign .details ul.stats li.contribute a:hover {
+body
+  main
+  section.campaigns
+  .list
+  .campaign
+  .details
+  ul.stats
+  li.contribute
+  a:hover {
   background-color: #000;
   color: #fff;
   border-color: #000;
@@ -1006,7 +1061,7 @@ body main section.collections {
   .clearfix;
 
   // container
-  >.container {
+  > .container {
     padding-right: 0;
   }
 
@@ -1017,7 +1072,6 @@ body main section.collections {
 
   // reel
   .campaignlist {
-
     // loadmore
     .loadmore {
       margin-bottom: 70px;
@@ -1130,10 +1184,8 @@ body main section.collections {
 
         // anchor
         a {
-
           // hover
           &:hover {
-
             // thumbs
             .thumbs {
               .action {
@@ -1144,11 +1196,11 @@ body main section.collections {
         }
       }
 
-      .entry:nth-child(3n+1):last-child,
-      .entry:nth-child(3n+1):nth-last-child(2),
-      .entry:nth-child(3n+2):last-child,
-      .entry:nth-child(3n+1):nth-last-child(3),
-      .entry:nth-child(3n+2):nth-last-child(2),
+      .entry:nth-child(3n + 1):last-child,
+      .entry:nth-child(3n + 1):nth-last-child(2),
+      .entry:nth-child(3n + 2):last-child,
+      .entry:nth-child(3n + 1):nth-last-child(3),
+      .entry:nth-child(3n + 2):nth-last-child(2),
       .entry:nth-child(3n):last-child {
         margin-bottom: 0;
       }
@@ -1215,7 +1267,7 @@ body main section.collections {
         flex-wrap: wrap;
 
         &::after {
-          content: '';
+          content: "";
           flex-grow: 99999999;
           height: 250px;
           flex: inherit;
@@ -1288,7 +1340,8 @@ body main section.collections {
   }
 }
 
-body main section.campaignstats {}
+body main section.campaignstats {
+}
 
 body main section.campaignstats:before,
 body main section.campaignstats:after {
@@ -1337,7 +1390,7 @@ body main section.campaignstats .left .maps .heading {
   top: 0;
   right: -260px;
   width: 230px;
-  font-size: 2.0rem;
+  font-size: 2rem;
   font-family: "Dosis";
 }
 
@@ -1392,7 +1445,7 @@ body main section.campaignstats .right {
     z-index: 0;
 
     &::after {
-      content: '' !important;
+      content: "" !important;
       display: block !important;
       position: absolute !important;
       left: 0;
@@ -1400,9 +1453,21 @@ body main section.campaignstats .right {
       bottom: 0;
       height: 0;
       z-index: 10;
-      background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(242, 242, 242, 1) 100%);
-      background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(242, 242, 242, 1) 100%);
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(242, 242, 242, 1) 100%);
+      background: -moz-linear-gradient(
+        top,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(242, 242, 242, 1) 100%
+      );
+      background: -webkit-linear-gradient(
+        top,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(242, 242, 242, 1) 100%
+      );
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(242, 242, 242, 1) 100%
+      );
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#f2f2f2', GradientType=0);
     }
 
@@ -1467,7 +1532,7 @@ body main section.campaignstats .right .leaderboard div a {
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  padding: 0.30em;
+  padding: 0.3em;
 
   &::before,
   &::after {
@@ -1962,14 +2027,13 @@ body main section.learnmore .left img {
   object-fit: cover;
 }
 
-
 body main section.learnmore .right .desc {
   width: 585px;
   padding: 0px 0 50px 70px;
 }
 
 body main section.learnmore .right .desc h1 {
-  font-size: 2.0rem;
+  font-size: 2rem;
   margin: 0;
   line-height: 2.7rem;
   position: relative;
@@ -2018,7 +2082,7 @@ body main section.learnmore .right .register .wrap .text {
 }
 
 body main section.learnmore .right .register .wrap .text h1 {
-  font-size: 2.0rem;
+  font-size: 2rem;
   margin: 0 0 10px 0;
 }
 
@@ -2060,7 +2124,6 @@ body main section.learnmore .social-menu {
 
 body main section.userprofile,
 body main section.campaigninfo {
-
   &::before,
   &::after {
     content: " ";
@@ -2121,7 +2184,7 @@ body main section.campaigninfo {
         padding: 45px 50px 50px 50px;
 
         h1 {
-          font-size: 2.0rem;
+          font-size: 2rem;
           margin: 0;
         }
 
@@ -2158,7 +2221,7 @@ body main section.campaigninfo {
 
             .val {
               color: #000;
-              font-size: 3.0rem;
+              font-size: 3rem;
               line-height: 4rem;
 
               small {
@@ -2357,7 +2420,7 @@ body main section.userprofile {
 
             i {
               color: @main-color;
-              font-size: 2.0rem;
+              font-size: 2rem;
               padding: 5px;
               // text-shadow: 0 0 5px #FFFFFF;
             }
@@ -2370,7 +2433,7 @@ body main section.userprofile {
         }
       }
 
-      :hover>ul.actions {
+      :hover > ul.actions {
         // display: block;
         opacity: 1;
       }
@@ -2384,7 +2447,7 @@ body main section.userprofile {
       padding: 45px 50px 50px 50px;
 
       h1 {
-        font-size: 2.0rem;
+        font-size: 2rem;
         margin: 0;
       }
 
@@ -2429,7 +2492,7 @@ body main section.userprofile {
 
           .val {
             color: #000;
-            font-size: 3.0rem;
+            font-size: 3rem;
             line-height: 4rem;
 
             small {
@@ -2489,7 +2552,7 @@ body main section.userprofile {
 
         .val {
           color: #000;
-          font-size: 3.0rem;
+          font-size: 3rem;
           line-height: 4rem;
 
           small {
@@ -2523,7 +2586,7 @@ body main section.tagging .collection {
   display: none;
 }
 
-body main section.tagging .title-section{
+body main section.tagging .title-section {
   display: flex;
   gap: 2rem;
 }
@@ -2535,14 +2598,14 @@ body main section.tagging .title-section .tooltip.top {
     border-top-color: @main-color;
   }
 }
-body main section.tagging .title-section i{
+body main section.tagging .title-section i {
   margin-right: 5px;
   font-size: 2rem;
   line-height: 1.6;
-  color: #4F7979;
+  color: #4f7979;
 }
 body main section.tagging .title {
-  font-size: 2.0rem;
+  font-size: 2rem;
   font-family: "Dosis";
   margin-bottom: 40px;
   margin-left: 50px;
@@ -2563,7 +2626,6 @@ body main section.tagging .wraps .container {
   padding-right: 0;
 }
 
-
 body main section.tagging .cntr {
   width: 90%;
   float: left;
@@ -2580,7 +2642,6 @@ body main section.tagging .cntr .img {
 body main section.tagging .cntr .img img {
   max-width: 50%;
 }
-
 
 body main section.tagging .left {
   width: 50%;
@@ -2706,7 +2767,7 @@ body main section.tagging .left .img .modal {
   cursor: pointer;
   z-index: 7;
 }
-.modal.comparison-modal .next-btn .submit-comparison-btn{
+.modal.comparison-modal .next-btn .submit-comparison-btn {
   position: relative;
   top: -80px;
   font-size: 16px;
@@ -2747,26 +2808,44 @@ body main section.tagging .left .img .modal {
   min-width: 340px;
 }
 
-.modal.comparison-modal .modal-content .original-image .explanation-section button {
+.modal.comparison-modal
+  .modal-content
+  .original-image
+  .explanation-section
+  button {
   border: 0;
-  background-color:#5C8C8C;
+  background-color: #5c8c8c;
   color: white;
   border-radius: 5px;
   padding: 0px 10px;
 }
 
-.modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns {
+.modal.comparison-modal
+  .modal-content
+  .original-image
+  .explanation-section
+  .zoom-level-btns {
   display: flex;
   gap: 1rem;
   position: absolute;
   bottom: 7.5%;
   left: 50px;
 }
-.modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button {
+.modal.comparison-modal
+  .modal-content
+  .original-image
+  .explanation-section
+  .zoom-level-btns
+  button {
   background-color: transparent;
 }
 
-.modal.comparison-modal .modal-content .original-image .explanation-section .zoom-level-btns button.selected {
+.modal.comparison-modal
+  .modal-content
+  .original-image
+  .explanation-section
+  .zoom-level-btns
+  button.selected {
   background-color: #2d4372;
 }
 
@@ -2785,7 +2864,7 @@ body main section.tagging .left .img .modal {
 }
 
 .modal.comparison-modal .modal-content .img-container.selected::after {
-  content: '\2713';
+  content: "\2713";
   color: white;
   position: absolute;
   top: 18px;
@@ -2797,9 +2876,7 @@ body main section.tagging .left .img .modal {
   display: grid;
   place-items: center;
   font-size: 21px;
-
 }
-
 
 .modal.comparison-modal .modal-content .img-container .label {
   padding: 0;
@@ -2809,8 +2886,8 @@ body main section.tagging .left .img .modal {
   margin: 3px 0 0;
 }
 
-.modal.comparison-modal .modal-content .zoomed-images img ,
-.modal.comparison-modal .modal-content .original-image img{
+.modal.comparison-modal .modal-content .zoomed-images img,
+.modal.comparison-modal .modal-content .original-image img {
   height: 92.5%;
   object-fit: contain;
 }
@@ -2849,23 +2926,28 @@ body main section.tagging .left .img .modal-content {
 
 @keyframes zoom {
   from {
-    transform: scale(0)
+    transform: scale(0);
   }
 
   to {
-    transform: scale(1)
+    transform: scale(1);
   }
 }
 
 @keyframes image_blur {
-  0% { filter: blur(0px);}
-  50% { filter: blur(1.5rem);}
-  100% { filter: blur(0px);}
+  0% {
+    filter: blur(0px);
+  }
+  50% {
+    filter: blur(1.5rem);
+  }
+  100% {
+    filter: blur(0px);
+  }
 }
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px) {
-
   body main section.tagging .cntr .img .modal-content,
   body main section.tagging .left .img .modal-content {
     width: 100%;
@@ -3057,7 +3139,7 @@ body main section.tagging .right .tag-item .colorbox,
 body main section.tagging .right .tag-user-item .colorbox,
 body main section.tagging .right .tag-geo .colorbox,
 body main section.tagging .right .tag-color .colorbox {
-  background-color: #5C8C8C;
+  background-color: #5c8c8c;
   margin-top: 20px;
   padding: 20px;
   position: relative;
@@ -3075,7 +3157,7 @@ body main section.tagging .right .tag-color .coloraction {
 
 ux-dialog-overlay.active {
   background-color: black;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 ux-dialog-container.active {
@@ -3083,7 +3165,7 @@ ux-dialog-container.active {
 }
 
 .collections-statistics-table {
-  margin-top:8px;
+  margin-top: 8px;
   margin-bottom: 2px;
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -3143,7 +3225,7 @@ ux-dialog-container.active {
   }
 
   .ratings-table {
-    margin-top:8px;
+    margin-top: 8px;
     margin-bottom: 2px;
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -3269,8 +3351,6 @@ body main section.validation .contribute {
       margin-left: 15px;
     }
 
-    ;
-
     .fa {
       font-size: 2.8rem;
     }
@@ -3309,7 +3389,7 @@ body main section.validation .searchbox input {
 
 body main section.validation .searchbox input::-webkit-input-placeholder,
 body main section.validation .searchbox input::placeholder {
-  color: #AAA;
+  color: #aaa;
 }
 
 body main section.validation .coloraction:before,
@@ -3370,9 +3450,27 @@ body main section.tagging .right .tag-color .coloraction li a .action {
 
 body main section.validation .coloraction li a .action .colorname,
 body main section.tagging .right .tag-item .coloraction li a .action .colorname,
-body main section.tagging .right .tag-user-item .coloraction li a .action .colorname,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .coloraction
+  li
+  a
+  .action
+  .colorname,
 body main section.tagging .right .tag-geo .coloraction li a .action .colorname,
-body main section.tagging .right .tag-color .coloraction li a .action .colorname {
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .coloraction
+  li
+  a
+  .action
+  .colorname {
   position: absolute;
   top: -36px;
   background-color: @main-color;
@@ -3390,10 +3488,46 @@ body main section.tagging .right .tag-color .coloraction li a .action .colorname
 }
 
 body main section.validation .coloraction li a .action .colorname::after,
-body main section.tagging .right .tag-item .coloraction li a .action .colorname::after,
-body main section.tagging .right .tag-user-item .coloraction li a .action .colorname::after,
-body main section.tagging .right .tag-geo .coloraction li a .action .colorname::after,
-body main section.tagging .right .tag-color .coloraction li a .action .colorname::after {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .coloraction
+  li
+  a
+  .action
+  .colorname::after,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .coloraction
+  li
+  a
+  .action
+  .colorname::after,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .coloraction
+  li
+  a
+  .action
+  .colorname::after,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .coloraction
+  li
+  a
+  .action
+  .colorname::after {
   content: "";
   display: block;
   width: 0;
@@ -3433,7 +3567,15 @@ body main section.tagging .right .tag-color .coloraction li.big {
 
 body main section.validation .coloraction li.big a .colorname,
 body main section.tagging .right .tag-item .coloraction li.big a .colorname,
-body main section.tagging .right .tag-user-item .coloraction li.big a .colorname,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .coloraction
+  li.big
+  a
+  .colorname,
 body main section.tagging .right .tag-geo .coloraction li.big a .colorname,
 body main section.tagging .right .tag-color .coloraction li.big a .colorname {
   left: 3px;
@@ -3470,10 +3612,34 @@ body main section.tagging .right .tag-color .searchbox .input-tag {
   padding: 5px 70px 5px 0;
 }
 
-body main section.tagging .right .tag-item .searchbox .input-tag::-webkit-input-placeholder,
-body main section.tagging .right .tag-user-item .searchbox .input-tag::-webkit-input-placeholder,
-body main section.tagging .right .tag-geo .searchbox .input-tag::-webkit-input-placeholder,
-body main section.tagging .right .tag-color .searchbox .input-tag::-webkit-input-placeholder {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .searchbox
+  .input-tag::-webkit-input-placeholder,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .searchbox
+  .input-tag::-webkit-input-placeholder,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .searchbox
+  .input-tag::-webkit-input-placeholder,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .searchbox
+  .input-tag::-webkit-input-placeholder {
   color: #bdf4e7;
 }
 
@@ -3490,7 +3656,7 @@ body main section.tagging .right .tag-user-item .searchbox .link,
 body main section.tagging .right .tag-geo .searchbox .link,
 body main section.tagging .right .tag-color .searchbox .link {
   position: absolute;
-  font-size: 1.0rem;
+  font-size: 1rem;
   color: @main-color;
   background: #fff;
   border-radius: 2px;
@@ -3745,7 +3911,16 @@ body main section.tagging .right .tag-color .taglist > li ul.action li {
   // margin-left: 10px;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li
+  .count,
 body main section.tagging .right .tag-geo .taglist > li ul.action li .count,
 body main section.tagging .right .tag-color .taglist > li ul.action li .count {
   font-size: 1.2rem;
@@ -3757,13 +3932,11 @@ body main section.tagging .right .tag-color .taglist > li ul.action li .count {
 }
 
 body main section.tagging .right {
-
   .tag-item,
   .tag-user-item,
   .tag-geo,
   .tag-color {
-    .taglist>li ul.action li {
-
+    .taglist > li ul.action li {
       .fa-thumbs-o-up,
       .fa-thumbs-o-down {
         color: #999;
@@ -3789,12 +3962,48 @@ body main section.tagging .right {
 }
 body main section.tagging .right .tag-item .taglist > .pollAction,
 body main section.tagging .right .tag-user-item .taglist > .pollAction {
-    cursor: pointer;
+  cursor: pointer;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li .thumbs-icon,
-body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon,
-body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon {
   width: 15px;
   height: 14px;
   display: inline-block;
@@ -3802,19 +4011,91 @@ body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-i
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon.up,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li .thumbs-icon.up,
-body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon.up,
-body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon.up {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.up,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.up,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.up,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.up {
   top: 2px;
-  background: url('../img/ic-thumbs-ups.png') 0 -14px;
+  background: url("../img/ic-thumbs-ups.png") 0 -14px;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li .thumbs-icon.down,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li .thumbs-icon.down,
-body main section.tagging .right .tag-geo .taglist > li ul.action li .thumbs-icon.down,
-body main section.tagging .right .tag-color .taglist > li ul.action li .thumbs-icon.down {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.down,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.down,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.down,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li
+  .thumbs-icon.down {
   top: 3px;
-  background: url('../img/ic-thumbs-downs.png') 0 -14px;
+  background: url("../img/ic-thumbs-downs.png") 0 -14px;
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li img,
 body main section.tagging .right .tag-user-item .taglist > li ul.action li img,
@@ -3822,88 +4103,516 @@ body main section.tagging .right .tag-geo .taglist > li ul.action li img,
 body main section.tagging .right .tag-color .taglist > li ul.action li img {
   position: relative;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.up a .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a .count,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.up a .count,
-body main section.tagging .right .tag-color .taglist > li ul.action li.up a .count {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.up
+  a
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.up
+  a
+  .count {
   color: #999;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a:hover,
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover,
-body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover {
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover {
   text-decoration: none;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a:hover .count,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover .count,
-body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover .count {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .count {
   color: #00ac83;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.up a:hover .thumbs-icon,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.up a:hover .thumbs-icon,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.up a:hover .thumbs-icon,
-body main section.tagging .right .tag-color .taglist > li ul.action li.up a:hover .thumbs-icon {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.up
+  a:hover
+  .thumbs-icon {
   background-position: 0 0;
   opacity: 1;
   filter: alpha(opacity=100);
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.up.active .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.up.active .count,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.up.active .count,
-body main section.tagging .right .tag-color .taglist > li ul.action li.up.active .count {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .count {
   color: #00ac83;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.up.active .thumbs-icon,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.up.active .thumbs-icon,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.up.active .thumbs-icon,
-body main section.tagging .right .tag-color .taglist > li ul.action li.up.active .thumbs-icon {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.up.active
+  .thumbs-icon {
   background-position: 0 0;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.down a,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.down a,
 body main section.tagging .right .tag-color .taglist > li ul.action li.down a {
   text-decoration: none;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.down a .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a .count,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.down a .count,
-body main section.tagging .right .tag-color .taglist > li ul.action li.down a .count {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.down
+  a
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.down
+  a
+  .count {
   color: #999;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.down a:hover .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a:hover .count,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.down a:hover .count,
-body main section.tagging .right .tag-color .taglist > li ul.action li.down a:hover .count {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .count {
   color: #ce5e5e;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.down a:hover .thumbs-icon,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.down a:hover .thumbs-icon,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.down a:hover .thumbs-icon,
-body main section.tagging .right .tag-color .taglist > li ul.action li.down a:hover .thumbs-icon {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.down
+  a:hover
+  .thumbs-icon {
   background-position: 0 0;
   opacity: 1;
   filter: alpha(opacity=100);
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .count,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.down.active .count,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .count,
-body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .count {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .count,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .count {
   color: #ce5e5e;
 }
-body main section.tagging .right .tag-item .taglist > li ul.action li.down.active .thumbs-icon,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.down.active .thumbs-icon,
-body main section.tagging .right .tag-geo .taglist > li ul.action li.down.active .thumbs-icon,
-body main section.tagging .right .tag-color .taglist > li ul.action li.down.active .thumbs-icon {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .thumbs-icon,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist
+  > li
+  ul.action
+  li.down.active
+  .thumbs-icon {
   background-position: 0 0;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 body main section.tagging .right .tag-item .taglist > li ul.action li.delete,
-body main section.tagging .right .tag-user-item .taglist > li ul.action li.delete,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist
+  > li
+  ul.action
+  li.delete,
 body main section.tagging .right .tag-geo .taglist > li ul.action li.delete,
 body main section.tagging .right .tag-color .taglist > li ul.action li.delete {
   position: absolute;
@@ -3965,9 +4674,23 @@ body main section.tagging .right .tag-color .taglist.color > li .selected {
   transition: all 0.3s;
 }
 body main section.tagging .right .tag-item .taglist.color > li:hover .selected,
-body main section.tagging .right .tag-user-item .taglist.color > li:hover .selected,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist.color
+  > li:hover
+  .selected,
 body main section.tagging .right .tag-geo .taglist.color > li:hover .selected,
-body main section.tagging .right .tag-color .taglist.color > li:hover .selected {
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist.color
+  > li:hover
+  .selected {
   padding: 13px 0 0 25px;
 }
 body main section.tagging .right .tag-item .taglist.color > li ul.action,
@@ -3976,10 +4699,42 @@ body main section.tagging .right .tag-geo .taglist.color > li ul.action,
 body main section.tagging .right .tag-color .taglist.color > li ul.action {
   padding: 13px 15px 0 0;
 }
-body main section.tagging .right .tag-item .taglist.color > li ul.action li.delete,
-body main section.tagging .right .tag-user-item .taglist.color > li ul.action li.delete,
-body main section.tagging .right .tag-geo .taglist.color > li ul.action li.delete,
-body main section.tagging .right .tag-color .taglist.color > li ul.action li.delete {
+body
+  main
+  section.tagging
+  .right
+  .tag-item
+  .taglist.color
+  > li
+  ul.action
+  li.delete,
+body
+  main
+  section.tagging
+  .right
+  .tag-user-item
+  .taglist.color
+  > li
+  ul.action
+  li.delete,
+body
+  main
+  section.tagging
+  .right
+  .tag-geo
+  .taglist.color
+  > li
+  ul.action
+  li.delete,
+body
+  main
+  section.tagging
+  .right
+  .tag-color
+  .taglist.color
+  > li
+  ul.action
+  li.delete {
   top: 12px;
   right: -24px;
 }
@@ -4225,14 +4980,21 @@ body footer .container .right li a:hover {
   }
 
   body main section.campaigns .list .campaign .details ul.stats li .val {
-    font-size: 3.0rem;
+    font-size: 3rem;
   }
 
   body main section.campaigns .list .campaign .details .progress-line {
     text-align: right;
   }
 
-  body main section.campaigns .list .campaign .details .progress-line .progress {
+  body
+    main
+    section.campaigns
+    .list
+    .campaign
+    .details
+    .progress-line
+    .progress {
     width: 80%;
   }
 
@@ -4392,10 +5154,46 @@ body footer .container .right li a:hover {
     float: left;
     padding-left: 30px;
   }
-  body main section.tagging .wraps .container .right .tag-geo .taglist > li .text,
-  body main section.tagging .wraps .container .right .tag-color .taglist > li .text,
-  body main section.tagging .wraps .container .right .tag-item .taglist > li .text,
-  body main section.tagging .wraps .container .right .tag-user-item .taglist > li .text {
+  body
+    main
+    section.tagging
+    .wraps
+    .container
+    .right
+    .tag-geo
+    .taglist
+    > li
+    .text,
+  body
+    main
+    section.tagging
+    .wraps
+    .container
+    .right
+    .tag-color
+    .taglist
+    > li
+    .text,
+  body
+    main
+    section.tagging
+    .wraps
+    .container
+    .right
+    .tag-item
+    .taglist
+    > li
+    .text,
+  body
+    main
+    section.tagging
+    .wraps
+    .container
+    .right
+    .tag-user-item
+    .taglist
+    > li
+    .text {
     width: 55%;
   }
 
@@ -4411,11 +5209,11 @@ body footer .container .right li a:hover {
     margin-left: 20px;
   }
 
-  body div[role='main'].about .selectioncontent .content .left .thumbs {
+  body div[role="main"].about .selectioncontent .content .left .thumbs {
     max-width: 100%;
   }
 
-  body div[role='main'].about .selectioncontent .content h1 {
+  body div[role="main"].about .selectioncontent .content h1 {
     margin-top: 0;
   }
 }
@@ -4440,7 +5238,7 @@ body {
                   box-shadow: 0 0 20px #424242;
                   color: white;
                   // padding: 1px;
-                  transition: transform .1s;
+                  transition: transform 0.1s;
                   flex-basis: @tagcolorsize;
 
                   &:hover {
@@ -4451,7 +5249,8 @@ body {
                 .name {
                   text-align: center;
                   font-weight: bold;
-                  text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
+                  text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black,
+                    0 -0.8px black;
                   font-size: 1.1em;
                   overflow-wrap: break-word;
                 }
@@ -4477,7 +5276,7 @@ body main section.validation .coloraction {
     box-shadow: 0 0 20px #424242;
     color: white;
     // padding: 1px;
-    transition: transform .1s;
+    transition: transform 0.1s;
     flex-basis: @tagcolorsize;
 
     &:hover {
@@ -4495,10 +5294,10 @@ body main section.validation .coloraction {
 }
 
 @media (min-width: 992px) {
-  body main section.campaigninfo>.container {
+  body main section.campaigninfo > .container {
     display: flex;
 
-    .left>.wrap {
+    .left > .wrap {
       height: 100%;
       display: flex;
       align-items: stretch;
@@ -4655,7 +5454,14 @@ body main section.validation .coloraction {
     margin-bottom: 15px;
   }
 
-  body main section.campaigns .list .campaign .details .progress-line .progress {
+  body
+    main
+    section.campaigns
+    .list
+    .campaign
+    .details
+    .progress-line
+    .progress {
     width: 100%;
     margin-bottom: 5px;
   }
@@ -4816,11 +5622,11 @@ body main section.validation .coloraction {
     margin-top: 20px;
   }
 
-  body div[role='main'].about .selectioncontent .content .left .thumbs {
+  body div[role="main"].about .selectioncontent .content .left .thumbs {
     max-width: 100%;
   }
 
-  body div[role='main'].about .selectioncontent .content h1 {
+  body div[role="main"].about .selectioncontent .content h1 {
     margin-top: 0;
   }
 }
@@ -4845,56 +5651,56 @@ body main section.validation .coloraction {
     width: 100%;
   }
 
-  body div[role='main'].about .selectioncontent {
+  body div[role="main"].about .selectioncontent {
     padding: 0 0 40px 0;
     border-top: 1px solid #d7d7d7;
   }
 
-  body div[role='main'].about .selectioncontent .content {
+  body div[role="main"].about .selectioncontent .content {
     padding-bottom: 0;
   }
 
-  body div[role='main'].about .selectioncontent .content .left,
-  body div[role='main'].about .selectioncontent .content .right {
+  body div[role="main"].about .selectioncontent .content .left,
+  body div[role="main"].about .selectioncontent .content .right {
     float: none;
     width: 100%;
     padding: 0;
   }
 
-  body div[role='main'].about .selectioncontent .content .thumbs,
-  body div[role='main'].about .selectioncontent .content .thumbwide {
+  body div[role="main"].about .selectioncontent .content .thumbs,
+  body div[role="main"].about .selectioncontent .content .thumbwide {
     display: none;
   }
 
-  body div[role='main'].about .selectioncontent .content h1,
-  body div[role='main'].about .selectioncontent .content p {
+  body div[role="main"].about .selectioncontent .content h1,
+  body div[role="main"].about .selectioncontent .content p {
     width: 100%;
   }
 
-  body div[role='main'].about .aboutlink {
+  body div[role="main"].about .aboutlink {
     padding-bottom: 25px;
   }
 
-  body div[role='main'].about .aboutlink .left {
+  body div[role="main"].about .aboutlink .left {
     float: none;
   }
 
-  body div[role='main'].about .aboutlink .left ul {
+  body div[role="main"].about .aboutlink .left ul {
     padding: 0;
     text-align: center;
   }
 
-  body div[role='main'].about .aboutlink .left ul li a {
+  body div[role="main"].about .aboutlink .left ul li a {
     font-size: 1.6rem;
   }
 
-  body div[role='main'].about .aboutlink .right {
+  body div[role="main"].about .aboutlink .right {
     float: none;
     margin-top: 20px;
     text-align: center;
   }
 
-  body div[role='main'] .selection {
+  body div[role="main"] .selection {
     display: none;
   }
 
@@ -4943,16 +5749,31 @@ body main section.validation .coloraction {
   }
 
   body main section.validation .coloraction li,
-  body main section.tagging .wraps .container .right .tag-color .coloraction li {
+  body
+    main
+    section.tagging
+    .wraps
+    .container
+    .right
+    .tag-color
+    .coloraction
+    li {
     width: 20%;
   }
 
   body main section.validation .coloraction li.big,
-  body main section.tagging .wraps .container .right .tag-color .coloraction li.big {
+  body
+    main
+    section.tagging
+    .wraps
+    .container
+    .right
+    .tag-color
+    .coloraction
+    li.big {
     width: 40%;
   }
 }
-
 
 /* Popup Login */
 #login {
@@ -4967,7 +5788,7 @@ body main section.validation .coloraction {
 }
 
 #login h2 {
-  font-family: 'Annie Use Your Telescope';
+  font-family: "Annie Use Your Telescope";
   margin: 2em 0 1em;
 }
 
@@ -5001,15 +5822,15 @@ button.huge p {
   color: #fff;
 }
 
-button.huge>i {
+button.huge > i {
   transition: background-position 0.5s ease-out 0s;
 }
 
-button.huge:hover>i {
+button.huge:hover > i {
   background-position: center -15px;
 }
 
-button.huge:hover>p {
+button.huge:hover > p {
   visibility: visible;
 }
 
@@ -5034,7 +5855,7 @@ i.facebook {
 .google,
 button.google,
 i.twiter {
-  background-color: #4285F4;
+  background-color: #4285f4;
 }
 
 .email,
@@ -5092,7 +5913,7 @@ button:hover .email_huge {
 /* Popup Login */
 ai-dialog-overlay.active {
   background-color: black;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 ai-dialog-open {
@@ -5101,8 +5922,8 @@ ai-dialog-open {
 
 ai-dialog {
   display: table;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-  border: 1px solid rgba(0, 0, 0, .2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   min-width: 300px;
   margin: auto;
@@ -5145,10 +5966,10 @@ button {
   border-radius: 4px;
 }
 
-.button>i,
-.button>span,
-button>i,
-button>span {
+.button > i,
+.button > span,
+button > i,
+button > span {
   vertical-align: middle;
 }
 
@@ -5163,14 +5984,14 @@ button.facebook:hover:enabled {
 }
 
 button.google:hover:enabled {
-  background-image: linear-gradient(#4285F4, #3367D6);
+  background-image: linear-gradient(#4285f4, #3367d6);
 }
 
 button.non-underlined:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 
-span.dark-red:hover{
+span.dark-red:hover {
   color: #7d2220;
 }
 
@@ -5226,11 +6047,11 @@ button.email:hover:enabled {
 }
 
 .forgetPasswordDialog {
-	vertical-align: top;
-	display: none;
+  vertical-align: top;
+  display: none;
 }
 
-#loginPopup .externalLogin>button {
+#loginPopup .externalLogin > button {
   font-size: 14px;
   font-weight: 400;
   height: 42px;
@@ -5278,7 +6099,6 @@ button.close {
 }
 
 @media (min-width: 480px) {
-
   .col-ms-1,
   .col-ms-10,
   .col-ms-11,
@@ -5522,29 +6342,29 @@ button.close {
   }
 }
 
-body div[role='main'] section.entrance .btn-green:hover {
+body div[role="main"] section.entrance .btn-green:hover {
   color: white;
 }
 
-body div[role='main'] section.entrance .btn-green:hover {
+body div[role="main"] section.entrance .btn-green:hover {
   background-color: @main-color;
 }
 
-body div[role='main'] section.entrance .section-header {
+body div[role="main"] section.entrance .section-header {
   color: #4f7979;
   position: relative;
   margin-bottom: 10px;
 }
 
-body div[role='main'] section.entrance .section-header .text {
+body div[role="main"] section.entrance .section-header .text {
   display: inline-block;
   padding-right: 10px;
   background-color: white;
   font-size: 1.6rem;
 }
 
-body div[role='main'] section.entrance .section-header::after {
-  content: '';
+body div[role="main"] section.entrance .section-header::after {
+  content: "";
   z-index: -1;
   position: absolute;
   top: 12px;
@@ -5555,38 +6375,38 @@ body div[role='main'] section.entrance .section-header::after {
   left: 0;
 }
 
-body div[role='main'] section.entrance .input-group {
+body div[role="main"] section.entrance .input-group {
   display: block;
 }
 
-body div[role='main'] section.entrance .input-group:before,
-body div[role='main'] section.entrance .input-group:after {
+body div[role="main"] section.entrance .input-group:before,
+body div[role="main"] section.entrance .input-group:after {
   content: " ";
   display: table;
 }
 
-body div[role='main'] section.entrance .input-group:after {
+body div[role="main"] section.entrance .input-group:after {
   clear: both;
 }
 
-body div[role='main'] section.entrance .input-group .left,
-body div[role='main'] section.entrance .input-group .right {
+body div[role="main"] section.entrance .input-group .left,
+body div[role="main"] section.entrance .input-group .right {
   float: left;
   width: 49%;
   margin-right: 1%;
   margin-bottom: 10px;
 }
 
-body div[role='main'] section.entrance .input-group .right {
+body div[role="main"] section.entrance .input-group .right {
   float: left;
   margin-left: 1%;
   margin-right: 0;
   width: 49%;
 }
-body div[role='main'] section.entrance .input-group .center {
+body div[role="main"] section.entrance .input-group .center {
   margin-bottom: 10px;
 }
-body div[role='main'] section.entrance .input-group .errormsg {
+body div[role="main"] section.entrance .input-group .errormsg {
   color: #9c3b3b;
   line-height: 1.3em;
   text-align: right;
@@ -5596,10 +6416,10 @@ body div[role='main'] section.entrance .input-group .errormsg {
   font-size: 1.4rem;
 }
 
-body div[role='main'] section.entrance .input-group input[type="text"],
-body div[role='main'] section.entrance .input-group input[type="password"],
-body div[role='main'] section.entrance .input-group input[type="date"],
-body div[role='main'] section.entrance .input-group textarea {
+body div[role="main"] section.entrance .input-group input[type="text"],
+body div[role="main"] section.entrance .input-group input[type="password"],
+body div[role="main"] section.entrance .input-group input[type="date"],
+body div[role="main"] section.entrance .input-group textarea {
   padding: 11px 20px;
   border: none;
   border: 1px solid #cfcfcf;
@@ -5609,24 +6429,36 @@ body div[role='main'] section.entrance .input-group textarea {
   transition: all 0.3s;
 }
 
-body div[role='main'] section.entrance .input-group input[type="text"]:hover,
-body div[role='main'] section.entrance .input-group input[type="password"]:hover,
-body div[role='main'] section.entrance .input-group input[type="date"]:hover,
-body div[role='main'] section.entrance .input-group input[type="text"]:focus,
-body div[role='main'] section.entrance .input-group input[type="password"]:focus,
-body div[role='main'] section.entrance .input-group input[type="date"]:focus,
-body div[role='main'] section.entrance .input-group textarea:hover,
-body div[role='main'] section.entrance .input-group textarea:focus {
+body div[role="main"] section.entrance .input-group input[type="text"]:hover,
+body
+  div[role="main"]
+  section.entrance
+  .input-group
+  input[type="password"]:hover,
+body div[role="main"] section.entrance .input-group input[type="date"]:hover,
+body div[role="main"] section.entrance .input-group input[type="text"]:focus,
+body
+  div[role="main"]
+  section.entrance
+  .input-group
+  input[type="password"]:focus,
+body div[role="main"] section.entrance .input-group input[type="date"]:focus,
+body div[role="main"] section.entrance .input-group textarea:hover,
+body div[role="main"] section.entrance .input-group textarea:focus {
   outline: none;
   border: 1px solid #4f7979;
 }
 
-body div[role='main'] section.entrance .input-group input[type="text"].error,
-body div[role='main'] section.entrance .input-group input[type="password"].error {
+body div[role="main"] section.entrance .input-group input[type="text"].error,
+body
+  div[role="main"]
+  section.entrance
+  .input-group
+  input[type="password"].error {
   border: 1px solid #9c3b3b;
 }
 
-body div[role='main'] section.entrance .input-group select {
+body div[role="main"] section.entrance .input-group select {
   border-radius: 0;
   padding: 0 10px;
   margin-bottom: 10px;
@@ -5636,21 +6468,21 @@ body div[role='main'] section.entrance .input-group select {
   border: 1px solid #cfcfcf;
 }
 
-body div[role='main'] section.entrance .input-group select:hover,
-body div[role='main'] section.entrance .input-group select:focus {
+body div[role="main"] section.entrance .input-group select:hover,
+body div[role="main"] section.entrance .input-group select:focus {
   outline: none;
   box-shadow: none;
   border: 1px solid #4f7979;
 }
 
-body div[role='main'] section.entrance .input-group.ack {
+body div[role="main"] section.entrance .input-group.ack {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 13px 0 10px 0;
   margin-bottom: 10px;
 }
 
-body div[role='main'] section.entrance .input-group.ack label {
+body div[role="main"] section.entrance .input-group.ack label {
   font-weight: 300;
   cursor: pointer;
   color: #595959;
@@ -5658,7 +6490,7 @@ body div[role='main'] section.entrance .input-group.ack label {
   font-size: 1.4rem;
 }
 
-body div[role='main'] section.entrance .input-group.ack label a {
+body div[role="main"] section.entrance .input-group.ack label a {
   font-weight: 300;
   text-decoration: none;
   color: inherit;
@@ -5667,8 +6499,8 @@ body div[role='main'] section.entrance .input-group.ack label a {
   transition: color 0.3s;
 }
 
-body div[role='main'] section.entrance .input-group.ack label a:hover,
-body div[role='main'] section.entrance .input-group.ack label a:focus {
+body div[role="main"] section.entrance .input-group.ack label a:hover,
+body div[role="main"] section.entrance .input-group.ack label a:focus {
   color: #4f7979;
 }
 
@@ -5701,31 +6533,31 @@ section.userprofile div.left div.info div.form-group input:focus {
   padding-left: 10px;
 }
 
-body div[role='main'] section.entrance .button-group {
+body div[role="main"] section.entrance .button-group {
   text-align: right;
 }
 
-body div[role='main'] section.entrance .button-group .btn-register {
+body div[role="main"] section.entrance .button-group .btn-register {
   width: 100%;
   padding: 11px 20px;
   text-align: center;
 }
 
-body div[role='main'] section.entrance .or {
+body div[role="main"] section.entrance .or {
   clear: both;
   position: relative;
   text-align: center;
   margin-bottom: 8px;
 }
 
-body div[role='main'] section.entrance .or span.text {
+body div[role="main"] section.entrance .or span.text {
   display: inline-block;
   padding: 0 10px;
   background-color: white;
 }
 
-body div[role='main'] section.entrance .or::before {
-  content: '';
+body div[role="main"] section.entrance .or::before {
+  content: "";
   z-index: -1;
   width: 100%;
   display: block;
@@ -5736,8 +6568,8 @@ body div[role='main'] section.entrance .or::before {
   background-color: #ccc;
 }
 
-body div[role='main'] section.entrance .fb,
-body div[role='main'] section.entrance .gplus {
+body div[role="main"] section.entrance .fb,
+body div[role="main"] section.entrance .gplus {
   display: block;
   float: left;
   width: 49%;
@@ -5753,52 +6585,56 @@ body div[role='main'] section.entrance .gplus {
   text-align: center;
 }
 
-body div[role='main'] section.entrance .fb i,
-body div[role='main'] section.entrance .gplus i {
+body div[role="main"] section.entrance .fb i,
+body div[role="main"] section.entrance .gplus i {
   font-size: 2rem;
   vertical-align: middle;
   display: inline-block;
 }
 
-body div[role='main'] section.entrance .fb .text,
-body div[role='main'] section.entrance .gplus .text {
+body div[role="main"] section.entrance .fb .text,
+body div[role="main"] section.entrance .gplus .text {
   margin-left: 10px;
   vertical-align: middle;
   display: inline-block;
   line-height: 1;
 }
 
-body div[role='main'] section.entrance .fb {
+body div[role="main"] section.entrance .fb {
   background-color: #3b5997;
   margin-right: 1%;
 }
 
-body div[role='main'] section.entrance .fb:hover {
+body div[role="main"] section.entrance .fb:hover {
   background-color: #2d4372;
 }
 
-body div[role='main'] section.entrance .gplus {
+body div[role="main"] section.entrance .gplus {
   margin-left: 1%;
   background-color: #cc3333;
 }
 
-body div[role='main'] section.entrance .gplus:hover {
+body div[role="main"] section.entrance .gplus:hover {
   background-color: #a32929;
 }
 
-body div[role='main'] section.entrance.login .input-group input[type="text"],
-body div[role='main'] section.entrance.login .input-group input[type="password"] {
+body div[role="main"] section.entrance.login .input-group input[type="text"],
+body
+  div[role="main"]
+  section.entrance.login
+  .input-group
+  input[type="password"] {
   width: 100%;
   margin: 0 0 10px 0 !important;
 }
 
-body div[role='main'] section.entrance.login .input-group label {
+body div[role="main"] section.entrance.login .input-group label {
   font-weight: 300;
   color: #bebebe;
   cursor: pointer;
 }
 
-body div[role='main'] section.entrance.login .input-group label a {
+body div[role="main"] section.entrance.login .input-group label a {
   font-weight: 300;
   text-decoration: none;
   color: inherit;
@@ -5807,21 +6643,21 @@ body div[role='main'] section.entrance.login .input-group label a {
   transition: color 0.3s;
 }
 
-body div[role='main'] section.entrance.login .input-group label a:hover,
-body div[role='main'] section.entrance.login .input-group label a:focus {
+body div[role="main"] section.entrance.login .input-group label a:hover,
+body div[role="main"] section.entrance.login .input-group label a:focus {
   color: #4f7979;
 }
 
-body div[role='main'] section.entrance {
+body div[role="main"] section.entrance {
   width: 50%;
   display: table;
   margin: 0 auto;
   padding-top: 100px;
 }
 
-body div[role='main'] section.pagehero {
+body div[role="main"] section.pagehero {
   width: 100%;
-  background: url('../img/assets/img/content/bg-search.png');
+  background: url("../img/assets/img/content/bg-search.png");
   height: 280px;
   background-size: cover;
   background-position: center;
@@ -5832,41 +6668,41 @@ body div[role='main'] section.pagehero {
   padding: 0px 0 0 0;
 }
 
-body div[role='main'] section.pagehero h1.lbl {
+body div[role="main"] section.pagehero h1.lbl {
   margin: 0;
   padding: 0;
   font-size: 3.5rem;
   color: #fff;
 }
 
-body div[role='main'] section.pagehero .sublbl {
+body div[role="main"] section.pagehero .sublbl {
   color: #fff;
   font-size: 1.4rem;
 }
 
-body div[role='main'] section.pagehero.about {
-  background-image: url('../img/assets/img/content/bg-search-space.png');
+body div[role="main"] section.pagehero.about {
+  background-image: url("../img/assets/img/content/bg-search-space.png");
 }
 
-body div[role='main'].about .selection ul li:hover .select-idle {
+body div[role="main"].about .selection ul li:hover .select-idle {
   visibility: visible;
   opacity: 1;
 }
 
-body div[role='main'].about .selection ul li:hover .select-idle::after {
+body div[role="main"].about .selection ul li:hover .select-idle::after {
   opacity: 1;
 }
 
-body div[role='main'].about .selection ul li .select-idle a {
+body div[role="main"].about .selection ul li .select-idle a {
   color: inherit;
 }
 
-body div[role='main'].about .selection ul li .select-idle a:hover {
+body div[role="main"].about .selection ul li .select-idle a:hover {
   text-decoration: none;
 }
 
-body div[role='main'].about .selection ul li .select-idle::after {
-  content: '';
+body div[role="main"].about .selection ul li .select-idle::after {
+  content: "";
   position: absolute;
   right: 0;
   bottom: 0px;
@@ -5884,26 +6720,26 @@ body div[role='main'].about .selection ul li .select-idle::after {
   transition: opacity 0.3s;
 }
 
-body div[role='main'].about .selectioncontent {
+body div[role="main"].about .selectioncontent {
   padding: 40px 0 40px 0;
   overflow: hidden;
 }
 
-body div[role='main'].about .selectioncontent .content {
+body div[role="main"].about .selectioncontent .content {
   padding: 40px 0 40px 0;
 }
 
-body div[role='main'].about .selectioncontent .content:before,
-body div[role='main'].about .selectioncontent .content:after {
+body div[role="main"].about .selectioncontent .content:before,
+body div[role="main"].about .selectioncontent .content:after {
   content: " ";
   display: table;
 }
 
-body div[role='main'].about .selectioncontent .content:after {
+body div[role="main"].about .selectioncontent .content:after {
   clear: both;
 }
 
-body div[role='main'].about .selectioncontent .content h1 {
+body div[role="main"].about .selectioncontent .content h1 {
   font-size: 2.4rem;
   margin: 0 0 20px 0;
   color: #4f7979;
@@ -5912,14 +6748,14 @@ body div[role='main'].about .selectioncontent .content h1 {
   margin-top: 60px;
 }
 
-body div[role='main'].about .selectioncontent .content p {
+body div[role="main"].about .selectioncontent .content p {
   color: #757575;
   text-align: left;
   width: 80%;
   font-size: 1.7rem;
 }
 
-body div[role='main'].about .selectioncontent .content .thumbwide {
+body div[role="main"].about .selectioncontent .content .thumbwide {
   box-shadow: 10px;
   -webkit-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
@@ -5931,11 +6767,11 @@ body div[role='main'].about .selectioncontent .content .thumbwide {
   border-radius: 5px;
 }
 
-body div[role='main'].about .selectioncontent .content .thumbwide.left {
+body div[role="main"].about .selectioncontent .content .thumbwide.left {
   float: right;
 }
 
-body div[role='main'].about .selectioncontent .content .thumbs {
+body div[role="main"].about .selectioncontent .content .thumbs {
   box-shadow: 10px;
   -webkit-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 0px 34px 0px rgba(0, 0, 0, 0.2);
@@ -5943,7 +6779,7 @@ body div[role='main'].about .selectioncontent .content .thumbs {
   border-radius: 5px;
 }
 
-body div[role='main'].about .selectioncontent .content .left {
+body div[role="main"].about .selectioncontent .content .left {
   width: 50%;
   float: left;
   padding-right: 20px;
@@ -5951,7 +6787,7 @@ body div[role='main'].about .selectioncontent .content .left {
   text-align: center;
 }
 
-body div[role='main'].about .selectioncontent .content .right {
+body div[role="main"].about .selectioncontent .content .right {
   width: 50%;
   float: left;
   padding-left: 20px;
@@ -5959,45 +6795,45 @@ body div[role='main'].about .selectioncontent .content .right {
   text-align: center;
 }
 
-body div[role='main'].about .aboutlink {
+body div[role="main"].about .aboutlink {
   border-top: 1px solid #d7d7d7;
   padding: 20px 0 20px 0;
 }
 
-body div[role='main'].about .aboutlink:before,
-body div[role='main'].about .aboutlink:after {
+body div[role="main"].about .aboutlink:before,
+body div[role="main"].about .aboutlink:after {
   content: " ";
   display: table;
 }
 
-body div[role='main'].about .aboutlink:after {
+body div[role="main"].about .aboutlink:after {
   clear: both;
 }
 
-body div[role='main'].about .aboutlink .left {
+body div[role="main"].about .aboutlink .left {
   float: left;
 }
 
-body div[role='main'].about .aboutlink .left ul {
+body div[role="main"].about .aboutlink .left ul {
   margin: 0;
   padding: 5px 0 0 0;
 }
 
-body div[role='main'].about .aboutlink .left ul li {
+body div[role="main"].about .aboutlink .left ul li {
   list-style-type: none;
   display: inline-block;
   margin: 0 15px 0 0;
 }
 
-body div[role='main'].about .aboutlink .left ul li a {
+body div[role="main"].about .aboutlink .left ul li a {
   font-size: 1.4rem;
 }
 
-body div[role='main'].about .aboutlink .right {
+body div[role="main"].about .aboutlink .right {
   float: right;
 }
 
-body div[role='main'].about .aboutlink .right .register {
+body div[role="main"].about .aboutlink .right .register {
   padding: 5px 30px;
   font-size: 12px;
   letter-spacing: 1.3px;
@@ -6018,11 +6854,11 @@ body div[role='main'].about .aboutlink .right .register {
   text-align: center;
 }
 
-body div[role='main'].about .aboutlink .right .register:hover {
+body div[role="main"].about .aboutlink .right .register:hover {
   color: #828282;
 }
 
-body div[role='main'].about .aboutlink .right .register div {
+body div[role="main"].about .aboutlink .right .register div {
   position: absolute;
   background: #9c9c9c;
   -webkit-transition: all 0.3s;
@@ -6030,75 +6866,75 @@ body div[role='main'].about .aboutlink .right .register div {
   transition: all 0.3s;
 }
 
-body div[role='main'].about .aboutlink .right .register div.left {
+body div[role="main"].about .aboutlink .right .register div.left {
   left: -1px;
   bottom: 0;
   width: 2px;
   height: 0;
 }
 
-body div[role='main'].about .aboutlink .right .register div.right {
+body div[role="main"].about .aboutlink .right .register div.right {
   right: -1px;
   top: 0;
   width: 2px;
   height: 0;
 }
 
-body div[role='main'].about .aboutlink .right .register div.bot {
+body div[role="main"].about .aboutlink .right .register div.bot {
   height: 2px;
   width: 0;
   right: 0;
   bottom: -1px;
 }
 
-body div[role='main'].about .aboutlink .right .register div.top {
+body div[role="main"].about .aboutlink .right .register div.top {
   height: 2px;
   width: 0;
   left: 0;
   top: -1px;
 }
 
-body div[role='main'].about .aboutlink .right .register:hover div.left {
+body div[role="main"].about .aboutlink .right .register:hover div.left {
   height: 100%;
 }
 
-body div[role='main'].about .aboutlink .right .register:hover div.right {
+body div[role="main"].about .aboutlink .right .register:hover div.right {
   height: 100%;
 }
 
-body div[role='main'].about .aboutlink .right .register:hover div.bot {
+body div[role="main"].about .aboutlink .right .register:hover div.bot {
   width: 100%;
 }
 
-body div[role='main'].about .aboutlink .right .register:hover div.top {
+body div[role="main"].about .aboutlink .right .register:hover div.top {
   width: 100%;
 }
 
-body div[role='main'] section.action.profile textarea.about {
+body div[role="main"] section.action.profile textarea.about {
   margin-bottom: 0px;
 }
 
-body div[role='main'] section.selection {
+body div[role="main"] section.selection {
   border-top: 1px solid #d7d7d7;
   border-bottom: 1px solid #d7d7d7;
 }
 
-body div[role='main'] section.selection ul {
+body div[role="main"] section.selection ul {
   margin: 0;
   padding: 0;
 }
 
-body div[role='main'] section.selection ul:before,
-body div[role='main'] section.selection ul:after {
+body div[role="main"] section.selection ul:before,
+body div[role="main"] section.selection ul:after {
   content: " ";
   display: table;
 }
 
-body div[role='main'] section.selection ul:after {
+body div[role="main"] section.selection ul:after {
   clear: both;
 }
 
-body div[role='main'] section.selection ul li {
+body div[role="main"] section.selection ul li {
   list-style: none;
   float: left;
   width: 33.333333333%;
@@ -6107,20 +6943,20 @@ body div[role='main'] section.selection ul li {
   position: relative;
 }
 
-body div[role='main'] section.selection ul li:first-child {
+body div[role="main"] section.selection ul li:first-child {
   border-left: 1px solid #d7d7d7;
 }
 
-body div[role='main'] section.selection ul li:hover .select-hover {
+body div[role="main"] section.selection ul li:hover .select-hover {
   opacity: 1;
 }
 
-body div[role='main'] section.selection ul li:hover .select-idle {
+body div[role="main"] section.selection ul li:hover .select-idle {
   opacity: 0;
   visibility: hidden;
 }
 
-body div[role='main'] section.selection ul li .select-hover {
+body div[role="main"] section.selection ul li .select-hover {
   position: relative;
   opacity: 0;
   height: inherit;
@@ -6133,7 +6969,7 @@ body div[role='main'] section.selection ul li .select-hover {
   transition: all 0.3s;
 }
 
-body div[role='main'] section.selection ul li .select-hover p {
+body div[role="main"] section.selection ul li .select-hover p {
   color: inherit;
   margin-bottom: 15px;
   font-size: 14px;
@@ -6141,7 +6977,7 @@ body div[role='main'] section.selection ul li .select-hover p {
   overflow: hidden;
 }
 
-body div[role='main'] section.selection ul li .select-hover a {
+body div[role="main"] section.selection ul li .select-hover a {
   color: #e6e6e6;
   width: 100%;
   border: 1px solid;
@@ -6158,7 +6994,7 @@ body div[role='main'] section.selection ul li .select-hover a {
   letter-spacing: 1.3px;
 }
 
-body div[role='main'] section.selection ul li .select-hover a div {
+body div[role="main"] section.selection ul li .select-hover a div {
   position: absolute;
   background: white;
   -webkit-transition: all 0.3s;
@@ -6166,56 +7002,56 @@ body div[role='main'] section.selection ul li .select-hover a div {
   transition: all 0.3s;
 }
 
-body div[role='main'] section.selection ul li .select-hover a div.left {
+body div[role="main"] section.selection ul li .select-hover a div.left {
   left: -1px;
   bottom: 0;
   width: 2px;
   height: 0;
 }
 
-body div[role='main'] section.selection ul li .select-hover a div.right {
+body div[role="main"] section.selection ul li .select-hover a div.right {
   right: -1px;
   top: 0;
   width: 2px;
   height: 0;
 }
 
-body div[role='main'] section.selection ul li .select-hover a div.bot {
+body div[role="main"] section.selection ul li .select-hover a div.bot {
   height: 2px;
   width: 0;
   right: 0;
   bottom: -1px;
 }
 
-body div[role='main'] section.selection ul li .select-hover a div.top {
+body div[role="main"] section.selection ul li .select-hover a div.top {
   height: 2px;
   width: 0;
   left: 0;
   top: -1px;
 }
 
-body div[role='main'] section.selection ul li .select-hover a:hover div.left {
+body div[role="main"] section.selection ul li .select-hover a:hover div.left {
   height: 100%;
 }
 
-body div[role='main'] section.selection ul li .select-hover a:hover div.right {
+body div[role="main"] section.selection ul li .select-hover a:hover div.right {
   height: 100%;
 }
 
-body div[role='main'] section.selection ul li .select-hover a:hover div.bot {
+body div[role="main"] section.selection ul li .select-hover a:hover div.bot {
   width: 100%;
 }
 
-body div[role='main'] section.selection ul li .select-hover a:hover div.top {
+body div[role="main"] section.selection ul li .select-hover a:hover div.top {
   width: 100%;
 }
 
-body div[role='main'] section.selection ul li .select-hover a:hover {
+body div[role="main"] section.selection ul li .select-hover a:hover {
   color: white;
   background: #598080;
 }
 
-body div[role='main'] section.selection ul li .select-idle {
+body div[role="main"] section.selection ul li .select-idle {
   position: absolute;
   top: 0;
   left: 0;
@@ -6223,8 +7059,8 @@ body div[role='main'] section.selection ul li .select-idle {
   height: 100%;
 }
 
-body div[role='main'] section.selection ul li .select-idle::after {
-  content: '';
+body div[role="main"] section.selection ul li .select-idle::after {
+  content: "";
   position: absolute;
   right: -3px;
   bottom: -8px;
@@ -6238,13 +7074,13 @@ body div[role='main'] section.selection ul li .select-idle::after {
   -ms-transform: rotate(45deg);
 }
 
-body div[role='main'] section.selection ul li .select-idle .icon {
+body div[role="main"] section.selection ul li .select-idle .icon {
   display: table;
   height: 35px;
   margin: 50px auto 22px;
 }
 
-body div[role='main'] section.selection ul li .select-idle .select-heading {
+body div[role="main"] section.selection ul li .select-idle .select-heading {
   display: table;
   margin: auto;
   text-transform: uppercase;
@@ -6253,11 +7089,11 @@ body div[role='main'] section.selection ul li .select-idle .select-heading {
   letter-spacing: 1px;
 }
 
-body div[role='main'] section.generaltext {
+body div[role="main"] section.generaltext {
   padding: 50px 0 50px 0;
 }
 
-body div[role='main'] section.generaltext.applications {
+body div[role="main"] section.generaltext.applications {
   font-size: 1.7rem;
 }
 
@@ -6284,7 +7120,7 @@ body main.creation {
     .bgwrap {
       top: 70px;
       height: inherit;
-      background-image: url('../img/hero-campaign-creation.jpeg');
+      background-image: url("../img/hero-campaign-creation.jpeg");
     }
   }
   section.user-alert {
@@ -6376,7 +7212,8 @@ body main.creation {
             flex-direction: column;
           }
           &:hover {
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+              rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
           }
           &.end {
             text-align: right;
@@ -6409,10 +7246,18 @@ body main.creation {
   }
   section.call-to-action {
     margin: 64px 0;
-    background: linear-gradient(to right, @main-color 50%, @secondary-color 50%);
-    color: #FFF;
-    @media (max-width: 1000px){
-      background: linear-gradient(to bottom, @main-color 50%, @secondary-color 50%);
+    background: linear-gradient(
+      to right,
+      @main-color 50%,
+      @secondary-color 50%
+    );
+    color: #fff;
+    @media (max-width: 1000px) {
+      background: linear-gradient(
+        to bottom,
+        @main-color 50%,
+        @secondary-color 50%
+      );
     }
     .container {
       display: flex;
@@ -6425,8 +7270,8 @@ body main.creation {
       }
       a.btn-cta {
         display: block;
-        border: 2px solid #FFF;
-        color: #FFF;
+        border: 2px solid #fff;
+        color: #fff;
         font-size: 1.4rem;
         padding: 7px 15px 6px 15px;
         -webkit-transition: all 0.3s;
@@ -6434,7 +7279,7 @@ body main.creation {
         transition: all 0.3s;
         &:hover {
           text-decoration: none;
-          background-color: #FFF;
+          background-color: #fff;
           border-color: #fff;
         }
       }
@@ -6470,25 +7315,25 @@ body main.creation {
   }
 }
 
-body div[role='main'] section.partners {
+body div[role="main"] section.partners {
   font-size: 1.7rem;
 }
 
-body div[role='main'] section.generaltext h1 {
+body div[role="main"] section.generaltext h1 {
   margin-top: 0;
 }
 
-body div[role='main'] section.generaltext h2 {
+body div[role="main"] section.generaltext h2 {
   margin-bottom: 25px;
 }
 
-body div[role='main'] section.generaltext .intro {
+body div[role="main"] section.generaltext .intro {
   font-size: 1.6rem;
   color: #666;
   font-style: italic;
 }
 
-body div[role='main'] section.pagehero.static .container {
+body div[role="main"] section.pagehero.static .container {
   position: relative;
   height: 100%;
   display: flex;
@@ -6496,7 +7341,7 @@ body div[role='main'] section.pagehero.static .container {
   justify-content: center;
 }
 
-body div[role='main'] section.pagehero .shortcut {
+body div[role="main"] section.pagehero .shortcut {
   margin: 0;
   padding: 0;
   position: absolute;
@@ -6509,7 +7354,7 @@ body div[role='main'] section.pagehero .shortcut {
   justify-content: center;
 }
 
-body div[role='main'] section.pagehero .shortcut li {
+body div[role="main"] section.pagehero .shortcut li {
   list-style: none;
   float: left;
   width: 26%;
@@ -6524,25 +7369,25 @@ body div[role='main'] section.pagehero .shortcut li {
   transition: all 0.3s;
 }
 
-body div[role='main'] section.pagehero .shortcut li a {
+body div[role="main"] section.pagehero .shortcut li a {
   color: #fff;
   outline: 0;
   display: block;
   font-size: 14pt;
 }
 
-body div[role='main'] section.pagehero .shortcut li a:hover {
+body div[role="main"] section.pagehero .shortcut li a:hover {
   text-decoration: none;
 }
 
-body div[role='main'] section.pagehero .shortcut li.active,
-body div[role='main'] section.pagehero .shortcut li:hover {
+body div[role="main"] section.pagehero .shortcut li.active,
+body div[role="main"] section.pagehero .shortcut li:hover {
   font-weight: bold;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
-body div[role='main'] .static .action {
+body div[role="main"] .static .action {
   width: 300px;
   margin-top: 25px;
 }
@@ -6580,18 +7425,18 @@ a.action.media:hover {
   background: rgba(255, 91, 91, 0.2);
 }
 
-body div[role='main'] section.registernow {
+body div[role="main"] section.registernow {
   padding: 50px 0 50px 0;
   border-top: 1px solid #e3e3e3;
   text-align: center;
 }
 
-body div[role='main'] section.registernow h1 {
+body div[role="main"] section.registernow h1 {
   font-size: 2.2rem;
   margin: 0 0 12px 0;
 }
 
-body div[role='main'] section.registernow .desc {
+body div[role="main"] section.registernow .desc {
   font-family: Lora, "Times New Roman", Times, serif;
   font-style: italic;
   font-size: 1.6rem;
@@ -6600,7 +7445,7 @@ body div[role='main'] section.registernow .desc {
   margin: auto;
 }
 
-body div[role='main'] section.registernow .action {
+body div[role="main"] section.registernow .action {
   width: 250px;
   margin: auto;
   margin-top: 15px;
@@ -6736,7 +7581,7 @@ body.fullscreen {
       height: 1px;
       flex-grow: 1;
 
-      &>.container {
+      & > .container {
         height: 100%;
 
         .left,
@@ -6805,7 +7650,6 @@ section.validation div.validation-info {
 }
 
 section.validation div.validation-button-group {
-
   // margin-top: 5px;
   // position: relative;
   // top: -44px;
@@ -6863,8 +7707,8 @@ section.validation .popular-tags ul.tag-list li.tag a {
 
 section.validation .popular-tags ul.tag-list li.tag a.selected-tag,
 section.validation .popular-tags ul.tag-list li.tag a:hover {
-  background-color: #B1B7C4;
-  color: #2A395B;
+  background-color: #b1b7c4;
+  color: #2a395b;
 
   .tag-count {
     color: #415072;
@@ -6874,7 +7718,7 @@ section.validation .popular-tags ul.tag-list li.tag a:hover {
 
 section.validation .popular-tags ul.tag-list li.tag .tag-count {
   font-size: 8pt;
-  color: #808AA0;
+  color: #808aa0;
 }
 
 .hiddenfile {
@@ -7035,10 +7879,12 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
 }
 
 @font-face {
-  font-family: 'Genericons';
-  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot');
-  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.woff') format('woff'),
-    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot') format('truetype');
+  font-family: "Genericons";
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot");
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.woff")
+      format("woff"),
+    url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/53819/genericons-regular-webfont.eot")
+      format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -7050,7 +7896,7 @@ body main section.tagging .cntr .tag-color .taglist > li .score {
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
   line-height: 1;
-  font-family: 'Genericons';
+  font-family: "Genericons";
   text-decoration: inherit;
   font-weight: normal;
   font-style: normal;
@@ -7106,7 +7952,7 @@ a:hover .social-button.twitter:before {
 }
 
 a .social-button.facebook {
-  background-color: #4267B2;
+  background-color: #4267b2;
 }
 
 a .social-button.facebook .text {
@@ -7123,12 +7969,12 @@ a .social-button.facebook:before {
   font-size: 16px;
   font-size: 1.6rem;
   padding: 0 10px;
-  background-color: #4267B2;
+  background-color: #4267b2;
   border-radius: 4px;
 }
 
 a:hover .social-button.facebook::before {
-  background-color: #2F426F;
+  background-color: #2f426f;
 }
 
 .tooltip {
@@ -7153,10 +7999,10 @@ a:hover .social-button.facebook::before {
 }
 
 .tooltip.left .tooltip-arrow {
-  border-left-color: @main-color  !important;
+  border-left-color: @main-color !important;
 }
 .tooltip.right .tooltip-arrow {
-  border-right-color: @main-color  !important;
+  border-right-color: @main-color !important;
   left: 1px !important;
 }
 
@@ -7204,7 +8050,7 @@ a:hover .social-button.facebook::before {
 }
 
 .import .plus::after {
-  content: '';
+  content: "";
   display: block;
   background-color: inherit;
   width: inherit;
@@ -7275,7 +8121,6 @@ a:hover .social-button.facebook::before {
 
 .action-body {
   padding: 25px 0;
-
 }
 
 .action-body .form-group {
@@ -7427,26 +8272,26 @@ li.btn-edit-collection a {
   // -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-.entry:hover .itemaction-records{
-opacity:1;
+.entry:hover .itemaction-records {
+  opacity: 1;
 }
 
-.itemaction-records li  {
-width: 40px;
-list-style-type: none;
-height: 40px;
-margin:3px;
-background-color: #2a2b28;
-display: flex;
-align-items: center;
-justify-content: center;
--webkit-transition: all 0.3s;
-// -o-transition: all 0.3s;
-transition: all 0.3s;
+.itemaction-records li {
+  width: 40px;
+  list-style-type: none;
+  height: 40px;
+  margin: 3px;
+  background-color: #2a2b28;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-transition: all 0.3s;
+  // -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .itemaction-records li:hover {
-background-color: @main-color;
+  background-color: @main-color;
 }
 
 .editicon {
@@ -7504,7 +8349,8 @@ background-color: @main-color;
     display: flex;
     justify-content: space-between;
     padding: 0 0 0 14px;
-    &:before, &:after {
+    &:before,
+    &:after {
       display: none;
     }
     .btn {
@@ -7640,7 +8486,7 @@ section.campaign-edit {
 
 .detail-user-group .desc .date {
   color: #1a1a1a;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 .detail-user-group .desc .about {
@@ -7708,7 +8554,7 @@ section.campaign-edit {
 }
 
 .user-table {
-  margin-top:8px;
+  margin-top: 8px;
   margin-bottom: 2px;
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -7729,12 +8575,12 @@ section.campaign-edit {
 
 .red-trash {
   color: red;
-  cursor:pointer;
+  cursor: pointer;
   font-size: 20px;
 }
 
 .user-group-table {
-  margin-top:3px;
+  margin-top: 3px;
   margin-bottom: 10px;
   font-family: arial, sans-serif;
   border-collapse: separate;
@@ -7747,13 +8593,13 @@ section.campaign-edit {
 }
 
 .user-group-table th {
-  padding:10px;
+  padding: 10px;
   background-color: @main-color;
   color: white;
 }
 
 .user-group-table tr {
-  padding:10px;
+  padding: 10px;
   transition: 0.2s;
 }
 
@@ -7766,7 +8612,7 @@ section.campaign-edit {
 }
 
 .user-group-table td {
-  padding-left:10px;
+  padding-left: 10px;
 }
 
 .clickable {
@@ -7780,10 +8626,10 @@ section.campaign-edit {
 }
 
 .mt {
-  margin-top:70px;
+  margin-top: 70px;
 }
 .mt-small {
-  margin-top:25px;
+  margin-top: 25px;
 }
 
 .comment-tag {
@@ -7879,7 +8725,7 @@ section.campaign-edit {
 .ribbon::after {
   position: absolute;
   z-index: -1;
-  content: '';
+  content: "";
   display: block;
   border: 5px solid #2980b9;
   border-top-color: transparent;
@@ -7890,9 +8736,9 @@ section.campaign-edit {
   display: block;
   width: 225px;
   padding: 0;
-  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   color: #fff;
-  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   text-align: center;
   right: -12px;
@@ -7928,7 +8774,6 @@ section.entrance.campaign-edit {
   padding-top: 0 !important;
 }
 
-
 section.languages .lang-collection.lang-campEditor .dropdown-menu {
   left: 54px;
 }
@@ -7940,18 +8785,19 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
 }
 
 .beforeAnimation {
-  -moz-transition: .2s cubic-bezier(.24, 0, .5, 1);
-  -o-transition: .2s cubic-bezier(.24, 0, .5, 1);
-  -webkit-transition: .2s cubic-bezier(.24, 0, .5, 1);
-  transition: .2s cubic-bezier(.24, 0, .5, 1);
+  -moz-transition: 0.2s cubic-bezier(0.24, 0, 0.5, 1);
+  -o-transition: 0.2s cubic-bezier(0.24, 0, 0.5, 1);
+  -webkit-transition: 0.2s cubic-bezier(0.24, 0, 0.5, 1);
+  transition: 0.2s cubic-bezier(0.24, 0, 0.5, 1);
 }
 
 .afterAnimation {
-  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 0px 0 hsla(0, 0%, 0%, .04), 0 4px 9px hsla(0, 0%, 0%, .13), 0 3px 3px hsla(0, 0%, 0%, .05);
-  -moz-transition: .35s cubic-bezier(.54, 1.60, .5, 1);
-  -o-transition: .35s cubic-bezier(.54, 1.60, .5, 1);
-  -webkit-transition: .35s cubic-bezier(.54, 1.60, .5, 1);
-  transition: .35s cubic-bezier(.54, 1.60, .5, 1);
+  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 0px 0 hsla(0, 0%, 0%, 0.04),
+    0 4px 9px hsla(0, 0%, 0%, 0.13), 0 3px 3px hsla(0, 0%, 0%, 0.05);
+  -moz-transition: 0.35s cubic-bezier(0.54, 1.6, 0.5, 1);
+  -o-transition: 0.35s cubic-bezier(0.54, 1.6, 0.5, 1);
+  -webkit-transition: 0.35s cubic-bezier(0.54, 1.6, 0.5, 1);
+  transition: 0.35s cubic-bezier(0.54, 1.6, 0.5, 1);
 }
 
 // Mobile Toggle Switch
@@ -7966,10 +8812,10 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
         position: relative;
         display: inline-block;
         user-select: none;
-        -moz-transition: .4s ease;
-        -o-transition: .4s ease;
-        -webkit-transition: .4s ease;
-        transition: .4s ease;
+        -moz-transition: 0.4s ease;
+        -o-transition: 0.4s ease;
+        -webkit-transition: 0.4s ease;
+        transition: 0.4s ease;
         -webkit-tap-highlight-color: transparent;
         height: 23px;
         width: 40px;
@@ -8003,10 +8849,10 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
       &:checked {
         & + label:before {
           background: rgba(131, 188, 63, 0.7); // Active Color
-          -moz-transition: width .2s cubic-bezier(0, 0, 0, .1);
-          -o-transition: width .2s cubic-bezier(0, 0, 0, .1);
-          -webkit-transition: width .2s cubic-bezier(0, 0, 0, .1);
-          transition: width .2s cubic-bezier(0, 0, 0, .1);
+          -moz-transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
+          -o-transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
+          -webkit-transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
+          transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
         }
         & + label:after {
           left: 17px;
@@ -8051,7 +8897,8 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
     margin-right: 5px;
     margin-bottom: 5px;
     padding: 6px 10px;
-    .colorLabel, .delete {
+    .colorLabel,
+    .delete {
       color: white;
       text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
       font-size: 1.6rem;
@@ -8070,7 +8917,8 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
     display: flex;
     margin: 0.5rem 0;
     align-items: center;
-    input, select {
+    input,
+    select {
       margin-right: 0.5rem;
       height: 40px !important;
       &.error-code {
@@ -8081,10 +8929,8 @@ section.languages .lang-collection.lang-campEditor .dropdown-menu {
         margin-bottom: 0 !important;
       }
       &.error-short-desc {
-
       }
       &.error-long-desc {
-
       }
     }
   }
@@ -8270,7 +9116,7 @@ input.tag-type {
           margin-left: 3rem;
         }
         img.btn-thumb {
-          transition: transform ease-in-out .2s;
+          transition: transform ease-in-out 0.2s;
           &:hover {
             transform: scale(1.15);
           }
@@ -8300,7 +9146,7 @@ input.tag-type {
           h4 {
             display: inline-flex;
             .field-lang {
-              background: #708F8F;
+              background: #708f8f;
               color: white;
               border-radius: 4px;
               padding: 2px 6px;
@@ -8362,19 +9208,19 @@ input.tag-type {
             margin: 0;
           }
 
-          input[type=number] {
+          input[type="number"] {
             -moz-appearance: textfield;
           }
 
-          .text-dark{
+          .text-dark {
             color: black;
           }
 
-          .rating-range{
+          .rating-range {
             padding-left: 0;
             cursor: pointer;
           }
-          .rating-text-form{
+          .rating-text-form {
             width: 65px;
             height: 30px;
             text-align: center;
@@ -8382,8 +9228,16 @@ input.tag-type {
           }
         }
         .review-details {
+          .form-label {
+            font-family: "Dosis";
+            line-height: 1.4;
+            color: @main-color;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 4px;
+          }
           select {
-            background-color: rgb(107,117,124);
+            background-color: rgb(107, 117, 124);
             color: white;
             padding: 5px;
             width: 100%;
@@ -8411,7 +9265,7 @@ input.tag-type {
             }
           }
           textarea {
-            width:100%;
+            width: 100%;
             resize: none;
             padding: 5px;
             &.originalValue {
@@ -8437,9 +9291,9 @@ input.tag-type {
   }
 }
 
- .toast-top-right {
-   top: 83px !important;
- }
+.toast-top-right {
+  top: 83px !important;
+}
 
 .restricted-label {
   margin-left: 8px;
@@ -8638,7 +9492,7 @@ ul.subtagBlock {
   flex-direction: column;
   position: relative;
   padding: 20px;
-  background-color: #EFDDBB;
+  background-color: #efddbb;
   .block-section {
     display: flex;
     justify-content: space-between;
@@ -8650,7 +9504,10 @@ ul.subtagBlock {
       color: @main-color;
       font-weight: bold;
       text-align: center;
-      a, a:visited, a:hover, a:active {
+      a,
+      a:visited,
+      a:hover,
+      a:active {
         color: inherit;
         padding-right: 16px;
       }
@@ -8661,7 +9518,7 @@ ul.subtagBlock {
         cursor: pointer;
         border: none;
         color: @main-color;
-        background-color: #EFDDBB;
+        background-color: #efddbb;
         font-weight: bold;
       }
     }
@@ -8680,7 +9537,7 @@ ul.subtagBlock {
         min-width: 128px;
         &.submit {
           color: white;
-          background-color: #4F7979;
+          background-color: #4f7979;
           float: right;
           margin-right: 12px;
         }
@@ -8706,7 +9563,7 @@ ul.subtagBlock {
   position: absolute;
   object-fit: contain;
   height: 250px !important;
-  background-color: #A3B7B7;
+  background-color: #a3b7b7;
 }
 
 section#nav-arrows {
@@ -8729,7 +9586,8 @@ section#nav-arrows {
       padding: 4px 16px;
     }
   }
-  a, i {
+  a,
+  i {
     position: relative;
     z-index: 1000;
     color: @main-color;
