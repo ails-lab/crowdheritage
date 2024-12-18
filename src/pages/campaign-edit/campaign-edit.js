@@ -426,7 +426,7 @@ export class CampaignEdit {
     this.campaign.allowComments = val;
   }
 
-  toggleShowcaseResults(val) {
+  toggleshowcaseResultsPublic(val) {
     this.campaign.allowComments = val;
   }
 
@@ -947,6 +947,11 @@ export class CampaignEdit {
       userGroupIds: this.userGroups.map((group) => group.id),
       targetCollections: this.selectedCollections.map((col) => col.id),
     };
+    if (this.campaign.campaignType === "Translation") {
+      camp.allowComments = Boolean(this.campaign.allowComments);
+      camp.allowRating = Boolean(this.campaign.allowRating);
+      camp.showcaseResultsPublic = Boolean(this.campaign.showcaseResultsPublic);
+    }
     if (this.campaign.campaignType === "Image Comparison") {
       camp.motivation = ["ImageTagging"];
     }

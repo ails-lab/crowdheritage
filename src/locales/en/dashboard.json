@@ -110,6 +110,8 @@
   "silver": "Silver prize message",
   "bronze": "Bronze prize message",
   "rookie": "No prize message",
+  "toggleTrue": "Allow",
+  "toggleFalse": "Not Allow",
   "targetCollections": "Target Collections",
   "addCollectionPlaceholder": "Start typing a collection name",
   "vocabulariesLabel": "Semantic Tagging Vocabularies",

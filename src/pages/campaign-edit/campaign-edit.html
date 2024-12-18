@@ -562,9 +562,13 @@
                         model.bind="true"
                         change.delegate="toggleAllowComments(true)"
                       />
-                      <label class="form-check-label" for="allowCommentsTrue"
-                        >Allow</label
-                      >
+                      <span
+                        t="dashboard:toggleTrue"
+                        class="form-check-label"
+                        for="allowCommentsTrue"
+                      ></span>
+                    </div>
+                    <div class="me-5">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -573,9 +577,11 @@
                         model.bind="false"
                         change.delegate="toggleAllowComments(false)"
                       />
-                      <label class="form-check-label" for="allowCommentsFalse"
-                        >Not Allow</label
-                      >
+                      <span
+                        t="dashboard:toggleFalse"
+                        class="form-check-label"
+                        for="allowCommentsFalse"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -594,9 +600,13 @@
                         model.bind="true"
                         change.delegate="toggleAllowRating(true)"
                       />
-                      <label class="form-check-label" for="allowRatingTrue"
-                        >Allow</label
-                      >
+                      <span
+                        t="dashboard:toggleTrue"
+                        class="form-check-label"
+                        for="allowRatingTrue"
+                      ></span>
+                    </div>
+                    <div class="me-5">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -605,9 +615,11 @@
                         model.bind="false"
                         change.delegate="toggleAllowRating(false)"
                       />
-                      <label class="form-check-label" for="allowRatingFalse"
-                        >Not Allow</label
-                      >
+                      <span
+                        t="dashboard:toggleFalse"
+                        class="form-check-label"
+                        for="allowRatingFalse"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -616,29 +628,37 @@
                   if.bind="campaign.campaignType === 'Translate'"
                 >
                   <label t="dashboard:showResults">Showcase Results</label>
-                  <div class="me-5">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="showcaseResultsTrue"
-                      checked.bind="campaign.showcaseResults"
-                      model.bind="true"
-                      change.delegate="toggleShowcaseResults(true)"
-                    />
-                    <label class="form-check-label" for="showcaseResultsTrue"
-                      >Allow</label
-                    >
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="showcaseResultsFalse"
-                      checked.bind="campaign.showcaseResults"
-                      model.bind="false"
-                      change.delegate="toggleShowcaseResults(false)"
-                    />
-                    <label class="form-check-label" for="showcaseResultsFalse"
-                      >Not Allow</label
-                    >
+                  <div class="motivations d-flex">
+                    <div class="me-5">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        id="showcaseResultsPublicTrue"
+                        checked.bind="campaign.showcaseResultsPublic"
+                        model.bind="true"
+                        change.delegate="toggleshowcaseResultsPublic(true)"
+                      />
+                      <span
+                        t="dashboard:toggleTrue"
+                        class="form-check-label"
+                        for="showcaseResultsPublicTrue"
+                      ></span>
+                    </div>
+                    <div class="me-5">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        id="showcaseResultsPublicFalse"
+                        checked.bind="campaign.showcaseResultsPublic"
+                        model.bind="false"
+                        change.delegate="toggleshowcaseResultsPublic(false)"
+                      />
+                      <span
+                        t="dashboard:toggleFalse"
+                        class="form-check-label"
+                        for="showcaseResultsPublicFalse"
+                      ></span>
+                    </div>
                   </div>
                 </div>
                 <div
