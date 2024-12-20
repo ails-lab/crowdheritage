@@ -64,6 +64,8 @@ export class MetadataRating {
     this.selectedErrorTypes = [];
     this.correctedAnnotation = "";
     this.userComment = "";
+    this.otherCorrections = [];
+    this.otherCorrectionsExist = false;
   }
   activate(params) {
     this.selectedErrorTypes = [];
@@ -73,6 +75,14 @@ export class MetadataRating {
     this.errorTypes = params.campaign.validationErrorTypes;
     this.generator = `${settings.project} ${this.campaign.username}`;
     this.itemRatedByMe = params.itemRatedByMe;
+    this.otherCorrections = params.annotation.ratedBy
+      .filter(
+        (rate) =>
+          rate.validationCorrection &&
+          rate.withCreator !== this.userServices.current.dbId
+      )
+      .map((rate) => rate.validationCorrection);
+    this.otherCorrectionsExist = this.otherCorrections.length > 0;
 
     // Set noRatings flag to true if noone has rated this translation
     if (!this.annotation.ratedBy || this.annotation.ratedBy.length === 0) {
@@ -95,7 +105,7 @@ export class MetadataRating {
   get isRatingAllowed() {
     return !Boolean(this.campaign.hideRating);
   }
-  get areResultsPublic() {
+  get areCorrectionsPublic() {
     return Boolean(this.campaign.showcaseResultsPublic);
   }
   get hasAvailableErrorTypes() {

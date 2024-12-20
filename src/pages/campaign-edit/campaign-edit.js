@@ -900,28 +900,28 @@ export class CampaignEdit {
   }
 
   updateCampaign() {
-    // if (!this.campaignParamsAreValid()) {
-    //   // window.scrollTo(0,0);
-    //   return;
-    // }
+    if (!this.campaignParamsAreValid()) {
+      // window.scrollTo(0,0);
+      return;
+    }
 
-    // let vocabulariesMapping = [];
-    // this.tagGroups
-    //   .filter((tagGroup) => tagGroup.tagType !== "")
-    //   .forEach((tGroup) => {
-    //     vocabulariesMapping.push(
-    //       new Object({
-    //         labelName: tGroup.tagType,
-    //         vocabularies: Object.keys(tGroup).filter(
-    //           (field) => tGroup[field] === true
-    //         ),
-    //       })
-    //     );
-    //   });
+    let vocabulariesMapping = [];
+    this.tagGroups
+      .filter((tagGroup) => tagGroup.tagType !== "")
+      .forEach((tGroup) => {
+        vocabulariesMapping.push(
+          new Object({
+            labelName: tGroup.tagType,
+            vocabularies: Object.keys(tGroup).filter(
+              (field) => tGroup[field] === true
+            ),
+          })
+        );
+      });
 
-    console.log(this.campaign);
+    // console.log(this.campaign);
 
-    return;
+    // return;
     const camp = {
       username: this.campaign.username,
       title: this.campaign.titleObject,
@@ -947,11 +947,11 @@ export class CampaignEdit {
       userGroupIds: this.userGroups.map((group) => group.id),
       targetCollections: this.selectedCollections.map((col) => col.id),
     };
-    if (this.campaign.campaignType === "Translation") {
-      camp.hideComments = Boolean(this.campaign.allowComments);
-      camp.hideRating = Boolean(this.campaign.allowRating);
-      camp.showcaseResultsPublic = Boolean(this.campaign.showcaseResultsPublic);
-    }
+    // if (this.campaign.campaignType === "Translation") {
+    //   camp.hideComments = Boolean(this.campaign.allowComments);
+    //   camp.hideRating = Boolean(this.campaign.allowRating);
+    //   camp.showcaseResultsPublic = Boolean(this.campaign.showcaseResultsPublic);
+    // }
     if (this.campaign.campaignType === "Image Comparison") {
       camp.motivation = ["ImageTagging"];
     }

@@ -155,20 +155,30 @@
               ></textarea>
             </div>
           </div>
-          <div if.bind="!areResultsPublic" class="w-100">
+          <div
+            if.bind="areCorrectionsPublic && otherCorrectionsExist"
+            class="w-100"
+          >
             <div class="center col-md-12 mb-1">
               <button
                 class="form-label btn-link text-decoration-none ps-0"
                 click.delegate="toggleCollapseResults()"
                 role="button"
               >
-                Results
+                Other Corrections
                 <span class="ps-1 pb-2 arrow">
                   <img width="13px" src.bind="arrowResultsImg" />
                 </span>
               </button>
-              <div class="row mt-2 collapse" id="collapse-results-${index}">
-                Perfect results
+              <div class="mt-2 collapse" id="collapse-results-${index}">
+                <div class="other-user-corrections">
+                  <div
+                    repeat.for="correction of otherCorrections"
+                    class="correction"
+                  >
+                    ${correction}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
