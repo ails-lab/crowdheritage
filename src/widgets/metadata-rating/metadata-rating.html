@@ -6,11 +6,12 @@
         <div class="annotation-name col-md-10 col-sm-8 col-xs-6">
           <b>${property}</b>
         </div>
-        <div class="ratings-counter col-md-2 col-sm-4 col-xs-6">
+        <div
+          if.bind="isRatingAllowed"
+          class="ratings-counter col-md-2 col-sm-4 col-xs-6"
+        >
           <a class.bind="cardClass" click.delegate="openRatingsModal()">
-            <span>
-              ${labelText}
-            </span>
+            <span> ${labelText} </span>
           </a>
         </div>
       </div>
@@ -21,18 +22,14 @@
               <span class="field-title">Original Value</span>
               <span class="field-lang">${originalLanguage}</span>
             </h4>
-            <p>
-              ${originalValue}
-            </p>
+            <p>${originalValue}</p>
           </div>
           <div class="translated col-md-6">
             <h4>
               <span class="field-title">Target Value</span>
               <span class="field-lang">${annotationLanguage}</span>
             </h4>
-            <p style="overflow-wrap: break-word;">
-              ${annotationValue}
-            </p>
+            <p style="overflow-wrap: break-word">${annotationValue}</p>
           </div>
         </div>
       </div>
@@ -40,66 +37,150 @@
     <div class="feedback-container">
       <div class="row d-flex justify-content-center mt-3">
         <div class="col-md-12 rating-container">
-          <label for="rating" class="form-label col-md-3 pe-0">
+          <label
+            if.bind="isRatingAllowed"
+            for="rating"
+            class="form-label col-md-3 pe-0"
+          >
             Your rating :
           </label>
           <input
-            type="range" class="form-range col-md-6 pe-0 rating-range" id="rating"
-            value.bind="ratingValue" input.delegate="ratingValueChanged()"
-          >
+            if.bind="isRatingAllowed"
+            type="range"
+            class="form-range col-md-6 pe-0 rating-range"
+            id="rating"
+            value.bind="ratingValue"
+            input.delegate="ratingValueChanged()"
+          />
           <input
-            type="number" min="0" max="100"
-            class="form-text rating-text-form col-md-2" id="ratingText"
-            value.bind="ratingText" input.delegate="ratingTextChanged($event)"
-          >%
-          <button class="form-label btn-link col-md-2 text-decoration-none ps-0" click.delegate="toggleCollapse()" role="button">
+            if.bind="isRatingAllowed"
+            type="number"
+            min="0"
+            max="100"
+            class="form-text rating-text-form col-md-2"
+            id="ratingText"
+            value.bind="ratingText"
+            input.delegate="ratingTextChanged($event)"
+          />
+          <span if.bind="isRatingAllowed">%</span>
+          <span if.bind="!isRatingAllowed" class="col-md-11"></span>
+          <button
+            class="form-label btn-link col-md-2 text-decoration-none ps-0"
+            click.delegate="toggleCollapse()"
+            role="button"
+          >
             Review
             <span class="ps-1 pb-2 arrow">
-              <img width="13px" src.bind="arrowImg">
+              <img width="13px" src.bind="arrowImg" />
             </span>
           </button>
-          <button class="btn btn-submit-details" click.delegate="submitRating()">
+          <button
+            class="btn btn-submit-details"
+            click.delegate="submitRating()"
+          >
             Submit
           </button>
         </div>
       </div>
       <div class="row mt-2 collapse" id="collapse-${index}">
         <div class="col-md-12 review-details">
-          <div class="center col-md-4 mb-1">
-            <h4>Error Types</h4>
-            <ul class="tagPills">
-              <li class="d-flex" repeat.for="err of selectedErrorTypes" bootstrap-tooltip data-toggle="tooltip" data-placement="right"
-              data-title="bootstrap tooltip" title.bind="err.longDescription" class.bind="err.severity">
-                <span class="errorTypePill me-2">${err.shortDescription}</span>
-                <a click.delegate="removeSelectedError(err)"><i class="delete fa fa-times" aria-hidden="true"></i></a>
-              </li>
-            </ul>
-            <select
-              class="text-center mb-0" name="errorTypes" id="errorTypesSelector"
-              change.delegate="addErrorType($event.target.value)"
+          <div class="w-100">
+            <div
+              if.bind="hasAvailableErrorTypes"
+              class="center col-md-${isCommentingAllowed ? 4 : 6} mb-1"
             >
-              <option value="" selected disabled>---- Select Error Type ----</option>
-              <option
-                repeat.for="err of errorTypes" class.bind="err.severity"
-                value.bind="err.tokenizedVersion" title.bind="err.longDescription"
+              <h4>Error Types</h4>
+              <ul class="tagPills">
+                <li
+                  class="d-flex"
+                  repeat.for="err of selectedErrorTypes"
+                  bootstrap-tooltip
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-title="bootstrap tooltip"
+                  title.bind="err.longDescription"
+                  class.bind="err.severity"
+                >
+                  <span class="errorTypePill me-2"
+                    >${err.shortDescription}</span
+                  >
+                  <a click.delegate="removeSelectedError(err)"
+                    ><i class="delete fa fa-times" aria-hidden="true"></i
+                  ></a>
+                </li>
+              </ul>
+              <select
+                class="text-center mb-0"
+                name="errorTypes"
+                id="errorTypesSelector"
+                change.delegate="addErrorType($event.target.value)"
               >
-                ${err.shortDescription}
-              </option>
-            </select>
+                <option value="" selected disabled>
+                  ---- Select Error Type ----
+                </option>
+                <option
+                  repeat.for="err of errorTypes"
+                  class.bind="err.severity"
+                  value.bind="err.tokenizedVersion"
+                  title.bind="err.longDescription"
+                >
+                  ${err.shortDescription}
+                </option>
+              </select>
+            </div>
+            <div
+              class="col-md-${(isCommentingAllowed && hasAvailableErrorTypes) ? 4 : (!isCommentingAllowed && !hasAvailableErrorTypes) ? 12 : 6} mb-1"
+            >
+              <h4>Corrected Target Value</h4>
+              <textarea
+                id="corrected_translation"
+                name="corrected_translation"
+                rows="4"
+                placeholder="Corrected Annotation"
+                value.bind="correctedAnnotation"
+                class.bind="correctedAnnotation == annotationValue ? 'originalValue' : ''"
+              ></textarea>
+            </div>
+            <div
+              if.bind="isCommentingAllowed"
+              class="col-md-${hasAvailableErrorTypes ? 4 : 6} mb-1"
+            >
+              <h4>Comment</h4>
+              <textarea
+                id="comment"
+                name="comment"
+                rows="4"
+                placeholder="Comment"
+                value.bind="userComment"
+              ></textarea>
+            </div>
           </div>
-          <div class="col-md-4 mb-1">
-            <h4>Corrected Target Value</h4>
-            <textarea
-              id="corrected_translation" name="corrected_translation" rows="4"
-              placeholder="Corrected Annotation" value.bind="correctedAnnotation"
-              class.bind="correctedAnnotation == annotationValue ? 'originalValue' : ''"
-            ></textarea>
-          </div>
-          <div class="col-md-4 mb-1">
-            <h4>Comment</h4>
-            <textarea
-              id="comment" name="comment" rows="4" placeholder="Comment" value.bind="userComment"
-            ></textarea>
+          <div
+            if.bind="areCorrectionsPublic && otherCorrectionsExist"
+            class="w-100"
+          >
+            <div class="center col-md-12 mb-1">
+              <button
+                class="form-label btn-link text-decoration-none ps-0"
+                click.delegate="toggleCollapseResults()"
+                role="button"
+              >
+                Other Corrections
+                <span class="ps-1 pb-2 arrow">
+                  <img width="13px" src.bind="arrowResultsImg" />
+                </span>
+              </button>
+              <div class="mt-2 collapse" id="collapse-results-${index}">
+                <div class="other-user-corrections">
+                  <div
+                    repeat.for="correction of otherCorrections"
+                    class="correction"
+                  >
+                    ${correction}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

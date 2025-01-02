@@ -1,9 +1,8 @@
-import { inject } from 'aurelia-framework';
-import { I18N } from 'aurelia-i18n';
+import { inject } from "aurelia-framework";
+import { I18N } from "aurelia-i18n";
 
 @inject(I18N)
 export class CampaignCreation {
-
   constructor(i18n) {
     this.i18n = i18n;
     this.loc;
@@ -17,12 +16,15 @@ export class CampaignCreation {
   }
 
   attached() {
-    $('.accountmenu').removeClass('active');
+    $(".accountmenu").removeClass("active");
   }
 
   scrollTo(anchor) {
-    $('html, body').animate({
-      scrollTop: $(anchor).offset().top
-    }, 1200);
+    $("html, body").animate(
+      {
+        scrollTop: $(anchor).offset().top,
+      },
+      1200
+    );
   }
 }
