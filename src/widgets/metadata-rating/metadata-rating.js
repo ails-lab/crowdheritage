@@ -106,7 +106,7 @@ export class MetadataRating {
     return !Boolean(this.campaign.hideRating);
   }
   get areCorrectionsPublic() {
-    return Boolean(this.campaign.showcaseResultsPublic);
+    return Boolean(this.campaign.hasPublicResults);
   }
   get hasAvailableErrorTypes() {
     return Array.isArray(this.errorTypes) && this.errorTypes.length;

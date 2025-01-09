@@ -633,30 +633,30 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        id="showcaseResultsPublicTrue"
-                        checked.bind="campaign.showcaseResultsPublic"
+                        id="hasPublicResultsTrue"
+                        checked.bind="campaign.hasPublicResults"
                         model.bind="true"
-                        change.delegate="toggleshowcaseResultsPublic(true)"
+                        change.delegate="togglehasPublicResults(true)"
                       />
                       <span
                         t="dashboard:toggleTrue"
                         class="form-check-label"
-                        for="showcaseResultsPublicTrue"
+                        for="hasPublicResultsTrue"
                       ></span>
                     </div>
                     <div class="me-5">
                       <input
                         class="form-check-input"
                         type="radio"
-                        id="showcaseResultsPublicFalse"
-                        checked.bind="campaign.showcaseResultsPublic"
+                        id="hasPublicResultsFalse"
+                        checked.bind="campaign.hasPublicResults"
                         model.bind="false"
-                        change.delegate="toggleshowcaseResultsPublic(false)"
+                        change.delegate="togglehasPublicResults(false)"
                       />
                       <span
                         t="dashboard:toggleFalse"
                         class="form-check-label"
-                        for="showcaseResultsPublicFalse"
+                        for="hasPublicResultsFalse"
                       ></span>
                     </div>
                   </div>
