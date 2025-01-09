@@ -100,10 +100,10 @@ export class MetadataRating {
   }
 
   get isCommentingAllowed() {
-    return !Boolean(this.campaign.hideComments);
+    return Boolean(this.campaign.allowComments);
   }
   get isRatingAllowed() {
-    return !Boolean(this.campaign.hideRating);
+    return Boolean(this.campaign.allowRating);
   }
   get areCorrectionsPublic() {
     return Boolean(this.campaign.hasPublicResults);

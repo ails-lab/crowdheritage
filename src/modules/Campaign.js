@@ -58,6 +58,9 @@ export class Campaign {
     this.prizesObject = data.prizes;
     this.baseAnnotations = data.baseAnnotations;
     this.campaignType = this.inferredCampaignType;
+    this.allowComments = !Boolean(data.hideComments);
+    this.allowRating = !Boolean(data.hideRating);
+    this.hasPublicResults = data.hasPublicResults;
 
     if (data.title)
       this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
