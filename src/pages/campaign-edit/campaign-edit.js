@@ -427,7 +427,7 @@ export class CampaignEdit {
   }
 
   toggleshowcaseResultsPublic(val) {
-    this.campaign.allowComments = val;
+    this.campaign.showcaseResultsPublic = val;
   }
 
   loadFromFile(id) {
