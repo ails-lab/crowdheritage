@@ -39,6 +39,10 @@ export class Record {
       subject: [],
       type: "",
       organizations: [],
+      medium: [],
+      keywords: [],
+      spatial: [],
+      contributors: [],
     };
     if (data) {
       this.loadData(data);
@@ -350,6 +354,21 @@ export class Record {
       this.meta.relatedToLabel = decodeURIComponent(
         new URL(data.descriptiveData.isRelatedTo.uri).pathname.split("/").pop()
       );
+    }
+    if (data.descriptiveData.keywords) {
+      this.meta.keywords = data.descriptiveData.keywords.default;
+    }
+    if (data.descriptiveData.dctermsmedium) {
+      this.meta.medium = data.descriptiveData.dctermsmedium.default;
+    }
+    if (data.descriptiveData.dctermsspatial) {
+      this.meta.spatial = data.descriptiveData.dctermsspatial.default;
+    }
+    if (data.descriptiveData.dccontributor) {
+      this.meta.contributors = data.descriptiveData.dccontributor.default;
+    }
+    if (data.descriptiveData.dclanguage) {
+      this.meta.language = data.descriptiveData.dclanguage.default;
     }
     if (data.descriptiveData.isShownAt) {
       this.meta.isShownAt = data.descriptiveData.isShownAt;
