@@ -3,7 +3,12 @@
   <div class="action-body">
     <div class="group">
       <div class="title">
-        <button type="button" class="close" click.trigger="closeTab()" title="close window">
+        <button
+          type="button"
+          class="close"
+          click.trigger="closeTab()"
+          title="close window"
+        >
           <i class="fa fa-times"></i>
         </button>
       </div>
@@ -11,11 +16,20 @@
         <!-- title-->
         <div show.bind="!loadRec" class="title-section">
           <div id="scrollPoint" class="title">${record.title}</div>
-          <a if.bind="mediaUrlArray.length" href.bind="extLink" 
-              target="_blank" rel="noopener noreferrer">
-                <i class="fa fa-external-link" bootstrap-tooltip 
-                data-toggle="tooltip" data-placement="top"
-                data-title="" title="View original item"></i>
+          <a
+            if.bind="mediaUrlArray.length"
+            href.bind="extLink"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i
+              class="fa fa-external-link"
+              bootstrap-tooltip
+              data-toggle="tooltip"
+              data-placement="top"
+              data-title=""
+              title="View original item"
+            ></i>
           </a>
         </div>
         <div class="wraps">
@@ -24,48 +38,134 @@
             <!-- img-->
             <div class="img" with.bind="record">
               <!-- Trigger the modal element -->
-              <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.myfullimg" error.trigger="getPlaceholderImage($event)" click.delegate="openModal(record.myfullimg)" style.bind="noImageStyle" />
-              <p class="mt-4 font-italic" show.bind="imageErrorCounter > 1">The media file provided in the metadata is not working. You can  visit the original item <a href.bind="extLink" target="_blank" rel="noopener noreferrer">here</a>.</p>
+              <img
+                id="recImg"
+                show.bind="(record.vtype=='IMAGE')"
+                src.bind="record.myfullimg"
+                error.trigger="getPlaceholderImage($event)"
+                click.delegate="openModal(record.myfullimg)"
+                style.bind="noImageStyle"
+              />
+              <p class="mt-4 font-italic" show.bind="imageErrorCounter > 1">
+                The media file provided in the metadata is not working. You can
+                visit the original item
+                <a href.bind="extLink" target="_blank" rel="noopener noreferrer"
+                  >here</a
+                >.
+              </p>
               <!-- The modal element -->
               <div id="myModal" class="modal">
                 <!-- Modal Content - Image) -->
-                <img class="modal-content" id="modalImg" click.delegate="closeModal()" error.trigger="getPlaceholderImage($event)">
+                <img
+                  class="modal-content"
+                  id="modalImg"
+                  click.delegate="closeModal()"
+                  error.trigger="getPlaceholderImage($event)"
+                />
               </div>
               <!-- Here goes the media, besides images -->
-              <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
+              <div id="mediadiv" innerhtml.bind="mediaDiv"></div>
             </div>
             <!-- metadata-->
             <div class="wrap">
-              <compose if.bind="(campaign.username!='colours-catwalk') && (campaign.username!='garment-type')" view="widgets/metadata/meta-music.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              <compose
+                if.bind="(campaign.username!='colours-catwalk') && (campaign.username!='garment-type') && (!campaign.username.toLowerCase().includes('genn'))"
+                view="widgets/metadata/meta-music.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
               </compose>
-              <compose if.bind="campaign.username == 'colours-catwalk'" view="widgets/metadata/meta-colours.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              <compose
+                if.bind="campaign.username == 'colours-catwalk'"
+                view="widgets/metadata/meta-colours.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
               </compose>
-              <compose if.bind="campaign.username == 'garment-type'" view="widgets/metadata/meta-garment.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              <compose
+                if.bind="campaign.username == 'garment-type'"
+                view="widgets/metadata/meta-garment.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
               </compose>
-              <compose if.bind="campaign.username == 'opera'" view="widgets/metadata/meta-opera.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              <compose
+                if.bind="campaign.username == 'opera'"
+                view="widgets/metadata/meta-opera.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
               </compose>
-              <compose if.bind="campaign.username.startsWith('debias')" view="widgets/metadata/meta-debias.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              <compose
+                if.bind="campaign.username.startsWith('debias')"
+                view="widgets/metadata/meta-debias.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
               </compose>
-              <compose if.bind="campaign.username.includes('asksa')" view="widgets/metadata/meta-asksa.html" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+              <compose
+                if.bind="campaign.username.includes('asksa')"
+                view="widgets/metadata/meta-asksa.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
+              </compose>
+              <compose
+                if.bind="campaign.username.toLowerCase().includes('genn')"
+                view="widgets/metadata/meta-gennadius.html"
+                view-model="widgets/metadata/metadata"
+                model.bind="{'record': record}"
+              >
               </compose>
             </div>
           </div>
           <div class="cntr" if.bind="!loadCamp && !edit && !metadataMode">
-						<br/>
-            <compose view="widgets/quickview/tagitem.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Tagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
+            <br />
+            <compose
+              view="widgets/quickview/tagitem.html"
+              view-model="widgets/quickview/taglist"
+              if.bind="hasMotivation('Tagging')"
+              model.bind="{'annotations': record.annotationObjects, 'userId': userId}"
+            >
             </compose>
-            <compose view="widgets/quickview/taggeo.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('GeoTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
+            <compose
+              view="widgets/quickview/taggeo.html"
+              view-model="widgets/quickview/taglist"
+              if.bind="hasMotivation('GeoTagging')"
+              model.bind="{'annotations': record.annotationObjects, 'userId': userId}"
+            >
             </compose>
-            <compose view="widgets/quickview/tagcomment.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Commenting')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
+            <compose
+              view="widgets/quickview/tagcomment.html"
+              view-model="widgets/quickview/taglist"
+              if.bind="hasMotivation('Commenting')"
+              model.bind="{'annotations': record.annotationObjects, 'userId': userId}"
+            >
             </compose>
-            <compose view="widgets/quickview/tagcolor.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('ColorTagging')" model.bind="{'annotations': record.annotationObjects, 'userId': userId, 'colorPalette': campaign.colorPalette}">
+            <compose
+              view="widgets/quickview/tagcolor.html"
+              view-model="widgets/quickview/taglist"
+              if.bind="hasMotivation('ColorTagging')"
+              model.bind="{'annotations': record.annotationObjects, 'userId': userId, 'colorPalette': campaign.colorPalette}"
+            >
             </compose>
-						<compose view="widgets/quickview/tagpoll.html" view-model="widgets/quickview/taglist" if.bind="hasMotivation('Polling')" model.bind="{'annotations': record.annotationObjects, 'userId': userId}">
+            <compose
+              view="widgets/quickview/tagpoll.html"
+              view-model="widgets/quickview/taglist"
+              if.bind="hasMotivation('Polling')"
+              model.bind="{'annotations': record.annotationObjects, 'userId': userId}"
+            >
             </compose>
           </div>
         </div>
       </section>
-			<button class="mt-5 btn-close" click.delegate="closeTab()" if.bind="!edit">Close</button>
+      <button
+        class="mt-5 btn-close"
+        click.delegate="closeTab()"
+        if.bind="!edit"
+      >
+        Close
+      </button>
     </div>
   </div>
 </template>

@@ -1,0 +1,45 @@
+<template>
+  <div class="metadata">
+    <!-- label-->
+    <div class="heading" t="item:meta">ITEM METADATA</div>
+    <!-- info-->
+    <div>
+      <ul class="meta row">
+        <li class="meta-description col-12" if.bind="record.meta.description">
+          <div class="lbl" t="item:description">DESCRIPTION</div>
+          <div class="val" innerHtml.bind="record.description"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.date">
+          <div class="lbl" t="item:date">DATE</div>
+          <div innerHtml.bind="record.meta.date" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.language">
+          <div class="lbl" t="item:language">LANGUAGE</div>
+          <div innerHtml.bind="record.meta.language" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.medium">
+          <div class="lbl" t="item:medium">MEDIUM</div>
+          <div innerHtml.bind="record.meta.medium" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.contributors">
+          <div class="lbl" t="item:contributors">CONTRIBUTORS</div>
+          <div innerHtml.bind="record.meta.contributors" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.type">
+          <div class="lbl" t="item:type">TYPE</div>
+          <div class="val">${record.meta.type}</div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.keywords">
+          <div class="lbl" t="item:keywords">KEYWORDS</div>
+          <div innerHtml.bind="record.meta.keywords" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="record.meta.spatial">
+          <div class="lbl" t="item:spatial">SPATIAL INFO</div>
+          <div class="val">${record.meta.spatial}</div>
+        </li>
+        <!-- TO ADD -->
+        <!-- altLabels, subject, language -->
+      </ul>
+    </div>
+  </div>
+</template>

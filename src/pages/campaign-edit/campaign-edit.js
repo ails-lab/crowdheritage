@@ -426,8 +426,8 @@ export class CampaignEdit {
     this.campaign.allowComments = val;
   }
 
-  toggleshowcaseResultsPublic(val) {
-    this.campaign.allowComments = val;
+  togglehasPublicResults(val) {
+    this.campaign.hasPublicResults = val;
   }
 
   loadFromFile(id) {
@@ -947,11 +947,11 @@ export class CampaignEdit {
       userGroupIds: this.userGroups.map((group) => group.id),
       targetCollections: this.selectedCollections.map((col) => col.id),
     };
-    // if (this.campaign.campaignType === "Translation") {
-    //   camp.hideComments = Boolean(this.campaign.allowComments);
-    //   camp.hideRating = Boolean(this.campaign.allowRating);
-    //   camp.showcaseResultsPublic = Boolean(this.campaign.showcaseResultsPublic);
-    // }
+    if (this.campaign.campaignType === "Translate") {
+      camp.hideComments = Boolean(!this.campaign.allowComments);
+      camp.hideRating = Boolean(!this.campaign.allowRating);
+      camp.hasPublicResults = Boolean(this.campaign.hasPublicResults);
+    }
     if (this.campaign.campaignType === "Image Comparison") {
       camp.motivation = ["ImageTagging"];
     }
