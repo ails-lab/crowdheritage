@@ -247,14 +247,16 @@ export class MetadataRating {
       this.loginPopup();
       return;
     }
-    if (!this.ratingText) {
-      toastr.error("You need to enter a rating value");
-      return;
-    }
-    if (this.ratingValue < 0 || this.ratingValue > 100) {
-      toastr.error("Invalid rating value");
-      this.ratingValue = 0;
-      return;
+    if (this.campaign.allowRating) {
+      if (!this.ratingText) {
+        toastr.error("You need to enter a rating value");
+        return;
+      }
+      if (this.ratingValue < 0 || this.ratingValue > 100) {
+        toastr.error("Invalid rating value");
+        this.ratingValue = 0;
+        return;
+      }
     }
 
     document.body.style.cursor = "wait";
