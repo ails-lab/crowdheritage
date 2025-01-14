@@ -1,7 +1,7 @@
 <template>
   <section id="metadata-tagging" class="tagging metadata-tagging">
     <!-- title-->
-    <div class="info-container container pe-0">
+    <div class="info-container container pe-16">
       <div class="col instructions-container">
         <div
           id="scrollPointMetadata"
@@ -9,8 +9,9 @@
         >
           <span>${record.title}</span>
         </div>
-        <div class="heading">RATING</div>
+        <div if.bind="campaign.allowRating" class="heading">RATING</div>
         <p
+          if.bind="campaign.instructions"
           class="campaignInstructions col-md-10 col-sm-8"
           innerHtml.bind="campaign.instructions"
         ></p>
