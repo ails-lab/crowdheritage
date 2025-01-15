@@ -1,5 +1,5 @@
 <template>
-  <require from="../tooltip/tooltip"></require>
+  <!-- <require from="../tooltip/tooltip"></require> -->
   <div class="card">
     <div class="metadata-container">
       <div class="row">
@@ -35,7 +35,10 @@
       </div>
     </div>
     <div class="feedback-container">
-      <div class="row d-flex justify-content-center mt-3">
+      <div
+        if.bind="isUserLoggedIn"
+        class="row d-flex justify-content-center mt-3"
+      >
         <div class="col-md-12 rating-container">
           <label
             if.bind="isRatingAllowed"
@@ -82,8 +85,12 @@
           </button>
         </div>
       </div>
-      <div class="row mt-2 collapse" id="collapse-${index}">
-        <div class="col-md-12 review-details">
+      <div
+        if.bind="isUserLoggedIn"
+        class="row mt-2 collapse"
+        id="collapse-${index}"
+      >
+        <div class="review-details">
           <div class="w-100">
             <div
               if.bind="hasAvailableErrorTypes"
@@ -184,6 +191,35 @@
           </div>
         </div>
       </div>
+      <template if.bind="!isUserLoggedIn">
+        <div
+          if.bind="areCorrectionsPublic && otherCorrectionsExist"
+          class="w-100"
+        >
+          <div class="center mb-1 ps-4">
+            <button
+              class="form-label btn-link text-decoration-none ps-0"
+              click.delegate="toggleCollapseResults()"
+              role="button"
+            >
+              Other Corrections
+              <span class="ps-1 pb-2 arrow">
+                <img width="13px" src.bind="arrowResultsImg" />
+              </span>
+            </button>
+            <div class="mt-2 collapse" id="collapse-results-${index}">
+              <div class="other-user-corrections">
+                <div
+                  repeat.for="correction of otherCorrections"
+                  class="correction"
+                >
+                  ${correction}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>

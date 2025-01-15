@@ -78,8 +78,9 @@ export class MetadataRating {
     this.otherCorrections = params.annotation.ratedBy
       .filter(
         (rate) =>
-          rate.validationCorrection &&
-          rate.withCreator !== this.userServices.current.dbId
+          !this.userServices.current ||
+          (rate.validationCorrection &&
+            rate.withCreator !== this.userServices.current.dbId)
       )
       .map((rate) => rate.validationCorrection);
     this.otherCorrectionsExist = this.otherCorrections.length > 0;
@@ -124,6 +125,10 @@ export class MetadataRating {
 
   get isResultsAccordionOpen() {
     return $(`#collapse-results-${this.index}`).hasClass("in");
+  }
+
+  get isUserLoggedIn() {
+    return Boolean(this.userServices.current);
   }
 
   get labelText() {
