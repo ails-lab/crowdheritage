@@ -19,14 +19,18 @@
         <div class="main-display d-flex justify-content-between">
           <div class="original col-md-6">
             <h4>
-              <span class="field-title">Original Value</span>
+              <span t="metadataRating:original-value" class="field-title"
+                >Original Value</span
+              >
               <span class="field-lang">${originalLanguage}</span>
             </h4>
             <p>${originalValue}</p>
           </div>
           <div class="translated col-md-6">
             <h4>
-              <span class="field-title">Target Value</span>
+              <span t="metadataRating:target-value" class="field-title"
+                >Target Value</span
+              >
               <span class="field-lang">${annotationLanguage}</span>
             </h4>
             <p style="overflow-wrap: break-word">${annotationValue}</p>
@@ -66,18 +70,19 @@
             input.delegate="ratingTextChanged($event)"
           />
           <span if.bind="isRatingAllowed">%</span>
-          <span if.bind="!isRatingAllowed" class="col-md-11"></span>
+          <span if.bind="!isRatingAllowed" class="col-md-10"></span>
           <button
-            class="form-label btn-link col-md-2 text-decoration-none ps-0"
+            class="form-label btn-link col-md-${isRatingAllowed ? 2 : 3} text-decoration-none ps-0"
             click.delegate="toggleCollapse()"
             role="button"
           >
-            Review
+            <span t="metadataRating:review"> Review </span>
             <span class="ps-1 pb-2 arrow">
               <img width="13px" src.bind="arrowImg" />
             </span>
           </button>
           <button
+            t="metadataRating:submit"
             class="btn btn-submit-details"
             click.delegate="submitRating()"
           >
@@ -138,7 +143,9 @@
             <div
               class="col-md-${(isCommentingAllowed && hasAvailableErrorTypes) ? 4 : (!isCommentingAllowed && !hasAvailableErrorTypes) ? 12 : 6} mb-1"
             >
-              <h4>Corrected Target Value</h4>
+              <h4 t="metadataRating:corrected-target-value">
+                Corrected Target Value
+              </h4>
               <textarea
                 id="corrected_translation"
                 name="corrected_translation"
@@ -172,7 +179,9 @@
                 click.delegate="toggleCollapseResults()"
                 role="button"
               >
-                Other Corrections
+                <span t="metadataRating:other-corrections">
+                  Other Corrections
+                </span>
                 <span class="ps-1 pb-2 arrow">
                   <img width="13px" src.bind="arrowResultsImg" />
                 </span>
