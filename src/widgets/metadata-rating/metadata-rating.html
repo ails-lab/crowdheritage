@@ -1,5 +1,5 @@
 <template>
-  <!-- <require from="../tooltip/tooltip"></require> -->
+  <require from="../tooltip/tooltip"></require>
   <div class="card">
     <div class="metadata-container">
       <div class="row">
@@ -90,7 +90,7 @@
         class="row mt-2 collapse"
         id="collapse-${index}"
       >
-        <div class="review-details">
+        <div class="col-md-12 review-details">
           <div class="w-100">
             <div
               if.bind="hasAvailableErrorTypes"
