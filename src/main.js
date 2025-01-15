@@ -13,33 +13,37 @@
  * under the License.
  */
 
-
 // we want font-awesome to load as soon as possible to show the fa-spinner
-import { AnimatorVelocity }  from 'aurelia-animator-velocity';
-import { LogManager, PLATFORM } from 'aurelia-framework';
-import { I18N, TCustomAttribute } from 'aurelia-i18n';
-import Backend from 'i18next-xhr-backend';
-import 'bootstrap';
-import 'aurelia-validation';
-import config from './conf/auth.config.js';
+import { AnimatorVelocity } from "aurelia-animator-velocity";
+import { LogManager, PLATFORM } from "aurelia-framework";
+import { I18N, TCustomAttribute } from "aurelia-i18n";
+import Backend from "i18next-xhr-backend";
+import "bootstrap";
+import "aurelia-validation";
+import config from "./conf/auth.config.js";
 
 //import * as Bluebird from 'bluebird';
 //Bluebird.config({ warnings: false });
 
 // comment out if you don't want a Promise polyfill (remove also from webpack.common.js)
 
-
 export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .plugin(PLATFORM.moduleName('aurelia-animator-velocity'), (instance) => {
-			instance.options.duration = 200;
-			instance.options.easing = 'linear';
-			instance.enterAnimation = { properties: 'fadeIn', options: { easing: 'easeIn', duration: 100 } };
-			instance.leaveAnimation = { properties: 'fadeOut', options: { easing: 'easeIn', duration: 100 } };
-		})
-		/*
+    .plugin(PLATFORM.moduleName("aurelia-animator-velocity"), (instance) => {
+      instance.options.duration = 200;
+      instance.options.easing = "linear";
+      instance.enterAnimation = {
+        properties: "fadeIn",
+        options: { easing: "easeIn", duration: 100 },
+      };
+      instance.leaveAnimation = {
+        properties: "fadeOut",
+        options: { easing: "easeIn", duration: 100 },
+      };
+    })
+    /*
     .plugin(PLATFORM.moduleName('aurelia-google-maps'), config => {
       config.options({
         apiKey: 'AIzaSyCE-H7wvtVwIt-0w92HpwHnIZppb7u2J_c', // use `false` to disable the key
@@ -56,24 +60,24 @@ export async function configure(aurelia) {
       });
     })
     */
-    .plugin(PLATFORM.moduleName('google-maps-api'), config => {
+    .plugin(PLATFORM.moduleName("google-maps-api"), (config) => {
       config.options({
-        apiKey: process.env.GOOGLE_MAPS_API_KEY
-      })
+        apiKey: process.env.GOOGLE_MAPS_API_KEY,
+      });
     })
-    .plugin(PLATFORM.moduleName('aurelia-dialog'), config => {
+    .plugin(PLATFORM.moduleName("aurelia-dialog"), (config) => {
       config.useDefaults();
       config.settings.lock = true;
       config.settings.overlayDismiss = true;
       config.settings.startingZIndex = 5;
       config.settings.keyboard = true;
     })
-    .plugin(PLATFORM.moduleName('aurelia-authentication'), (baseConfig) => {
-			baseConfig.configure(config);
-		})
-    .plugin(PLATFORM.moduleName('aurelia-validation'))
-    .plugin(PLATFORM.moduleName('aurelia-i18n'), instance => {
-      let aliases = ['t', 'i18n'];
+    .plugin(PLATFORM.moduleName("aurelia-authentication"), (baseConfig) => {
+      baseConfig.configure(config);
+    })
+    .plugin(PLATFORM.moduleName("aurelia-validation"))
+    .plugin(PLATFORM.moduleName("aurelia-i18n"), (instance) => {
+      let aliases = ["t", "i18n"];
       // add aliases for 't' attribute
       TCustomAttribute.configureAliases(aliases);
       // register backend plugin
@@ -81,35 +85,36 @@ export async function configure(aurelia) {
       // adapt options to your needs (see http://i18next.com/docs/options/)
       // make sure to return the promise of the setup method, in order to guarantee proper loading
       return instance.setup({
-        backend: {                                  // <-- configure backend settings
-          loadPath: '/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+        backend: {
+          // <-- configure backend settings
+          loadPath: "/locales/{{lng}}/{{ns}}.json", // <-- XHR settings for where to get the files from
         },
         attributes: aliases,
-        lng : 'en',
-        fallbackLng : 'en',
-        debug : false,
+        lng: "en",
+        fallbackLng: "en",
+        debug: false,
         ns: [
-          'app',
-          'about',
-          'applications',
-          'creation',
-          'dashboard',
-          'feedback',
-          'index',
-          'item',
-          'moderation',
-          'partners',
-          'privacy',
-          'register',
-          'summary',
-          'terms',
-          'user'
+          "app",
+          "about",
+          "applications",
+          "creation",
+          "dashboard",
+          "feedback",
+          "index",
+          "item",
+          "metadataRating",
+          "moderation",
+          "partners",
+          "privacy",
+          "register",
+          "summary",
+          "terms",
+          "user",
         ],
-        defaultNS: 'app'
+        defaultNS: "app",
       });
     })
-    .feature(PLATFORM.moduleName('converters/index'));// All ValueConverters are registered here
-
+    .feature(PLATFORM.moduleName("converters/index")); // All ValueConverters are registered here
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');
@@ -118,11 +123,12 @@ export async function configure(aurelia) {
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin('aurelia-html-import-template-loader')
 
- // await aurelia.start();
- // aurelia.setRoot('app');
+  // await aurelia.start();
+  // aurelia.setRoot('app');
 
-  aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app'),document.body));
-
+  aurelia
+    .start()
+    .then(() => aurelia.setRoot(PLATFORM.moduleName("app"), document.body));
 
   // if you would like your website to work offline (Service Worker),
   // install and enable the @easy-webpack/config-offline package in webpack.config.js and uncomment the following code:
