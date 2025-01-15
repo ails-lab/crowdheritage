@@ -283,7 +283,11 @@ export class MetadataRating {
       )
       .then((response) => {
         document.body.style.cursor = "default";
-        toastr.success("Your rating has been submitted");
+        let successMessage = this.i18n.tr("metadataRating:rating-success");
+        if (!this.isRatingAllowed) {
+          successMessage = this.i18n.tr("metadataRating:annotation-success");
+        }
+        toastr.success(successMessage);
         this.ea.publish("rating-added", {
           index: this.index,
           ratings: response.ratedBy,

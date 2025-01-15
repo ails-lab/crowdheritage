@@ -4,5 +4,7 @@
   "review": "Ανασκόπηση",
   "submit": "Υποβολή",
   "corrected-target-value": "Διορθωμένη Τιμή",
-  "other-corrections": "Άλλες Διορθώσεις"
+  "other-corrections": "Άλλες Διορθώσεις",
+  "rating-success": "Η βαθμολογία σας έχει υποβληθεί",
+  "annotation-success": "Η σημείωσή σας έχει υποβληθεί"
 }
