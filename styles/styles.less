@@ -2568,6 +2568,31 @@ body main section.userprofile {
 
 body main section.tagging {
   padding: 40px 0 0 0;
+  .thumb-button-container {
+    position: relative;
+    // right: 64px;
+    // top: 8px;
+    margin: 0;
+    padding: 0;
+    display: block;
+    height: max-content;
+    width: max-content;
+    .thumb-button {
+      .fa-external-link {
+        position: relative;
+        top: 0;
+        left: 0;
+        color: @main-color;
+        margin-left: 3rem;
+      }
+      img.btn-thumb {
+        transition: transform ease-in-out 0.2s;
+        &:hover {
+          transform: scale(1.15);
+        }
+      }
+    }
+  }
 }
 
 body main section.tagging:before,

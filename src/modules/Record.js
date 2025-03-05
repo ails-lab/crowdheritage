@@ -38,11 +38,11 @@ export class Record {
       description: "",
       subject: [],
       type: "",
-      organizations: [],
-      medium: [],
-      keywords: [],
-      spatial: [],
-      contributors: [],
+      // organizations: [],
+      // medium: [],
+      // keywords: [],
+      // spatial: [],
+      // contributors: [],
     };
     if (data) {
       this.loadData(data);
@@ -372,6 +372,11 @@ export class Record {
     }
     if (data.descriptiveData.isShownAt) {
       this.meta.isShownAt = data.descriptiveData.isShownAt;
+    }
+    if (Array.isArray(data.media) && data.media.length > 1) {
+      this.meta.extraImages = this.data.media
+        .slice(1)
+        .map((media) => media.Original.withUrl);
     }
     this.meta.subjectLang = this.getDefaultLanguage(
       data.descriptiveData.keywords
