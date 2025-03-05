@@ -13,11 +13,10 @@
  * under the License.
  */
 
-import { Record } from 'Record.js';
-import { toggleMore } from 'utils/Plugin.js';
+import { Record } from "Record.js";
+import { toggleMore } from "utils/Plugin.js";
 
 export class Metadata {
-
   constructor() {
     this.record = null;
 
@@ -27,7 +26,8 @@ export class Metadata {
     this.formatUri = "";
     this.medium = "";
     this.mediumUri = "";
-	  this.rightsImage = null;
+    this.rightsImage = null;
+    this.metaFields = {};
   }
 
   attached() {
@@ -38,34 +38,70 @@ export class Metadata {
     this.record = params.record;
     try {
       if (this.record.data) {
-        if ('content' in this.record.data) {
-          let content = JSON.parse(this.record.data.content['JSONLD-EDM'])['@graph'];
+        if ("content" in this.record.data) {
+          let content = JSON.parse(this.record.data.content["JSONLD-EDM"])[
+            "@graph"
+          ];
           for (let i in content) {
-            if ( (content[i]['@type'] == "edm:Place") && (content[i]['skos:altLabel']) && this.isString(content[i]['skos:altLabel']) ) {
-              this.place = content[i]['skos:altLabel'];
+            if (
+              content[i]["@type"] == "edm:Place" &&
+              content[i]["skos:altLabel"] &&
+              this.isString(content[i]["skos:altLabel"])
+            ) {
+              this.place = content[i]["skos:altLabel"];
             }
-            if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['edm:year']) ) {
-              this.date = content[i]['edm:year'];
+            if (content[i]["@type"] == "ore:Proxy" && content[i]["edm:year"]) {
+              this.date = content[i]["edm:year"];
             }
-            if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dc:format']) ) {
-              this.formatUri = content[i]['dc:format'][0] ? content[i]['dc:format'][0]['@id'] : '';
-              this.format = content[i]['dc:format'][1] && content[i]['dc:format'][1]['@value'] ? content[i]['dc:format'][1]['@value'].split(' ')[1] : '';
+            if (content[i]["@type"] == "ore:Proxy" && content[i]["dc:format"]) {
+              this.formatUri = content[i]["dc:format"][0]
+                ? content[i]["dc:format"][0]["@id"]
+                : "";
+              this.format =
+                content[i]["dc:format"][1] &&
+                content[i]["dc:format"][1]["@value"]
+                  ? content[i]["dc:format"][1]["@value"].split(" ")[1]
+                  : "";
             }
-            if ( (content[i]['@type'] == "ore:Proxy") && (content[i]['dcterms:medium']) ) {
-              this.mediumUri = content[i]['dcterms:medium'][1] ? content[i]['dcterms:medium'][1]['@id'] : '';
-              this.medium = content[i]['dcterms:medium'][0] && content[i]['dcterms:medium'][0]['@value'] ? content[i]['dcterms:medium'][0]['@value'].split(' ')[1] : '';
+            if (
+              content[i]["@type"] == "ore:Proxy" &&
+              content[i]["dcterms:medium"]
+            ) {
+              this.mediumUri = content[i]["dcterms:medium"][1]
+                ? content[i]["dcterms:medium"][1]["@id"]
+                : "";
+              this.medium =
+                content[i]["dcterms:medium"][0] &&
+                content[i]["dcterms:medium"][0]["@value"]
+                  ? content[i]["dcterms:medium"][0]["@value"].split(" ")[1]
+                  : "";
             }
           }
         }
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
-      if (typeof this.record.rights !== 'undefined' && this.record.rights.includes("rightsstatements.org")) {
-        let s = this.record.rights.split("/");
-        this.record.rightsImage = "https://rightsstatements.org/files/buttons/"+s[s.length - 3]+".white.svg";
-      }
+    if (
+      typeof this.record.rights !== "undefined" &&
+      this.record.rights.includes("rightsstatements.org")
+    ) {
+      let s = this.record.rights.split("/");
+      this.record.rightsImage =
+        "https://rightsstatements.org/files/buttons/" +
+        s[s.length - 3] +
+        ".white.svg";
+    }
+
+    if (this.record.meta) {
+      Object.entries(this.record.meta).forEach(([key, value]) => {
+        if (this.checkIfArray(value)) {
+          this.metaFields[key] = this.parseArrayToString(value);
+        } else {
+          this.metaFields[key] = value;
+        }
+      });
+    }
   }
 
   toggleLoadMore(container) {
@@ -73,24 +109,39 @@ export class Metadata {
   }
 
   isString(value) {
-    return typeof value === 'string' || value instanceof String;
+    return typeof value === "string" || value instanceof String;
   }
 
   parseDescription(desc) {
-    let descList = desc.replace(/\//g, '<br>').split('<br>');
+    let descList = desc.replace(/\//g, "<br>").split("<br>");
     var response = [];
     for (let line of descList) {
-      let temp = line.split('(');
-      if (temp.length>1) {
+      let temp = line.split("(");
+      if (temp.length > 1) {
         let item = {};
         item["actor"] = temp[0].trim();
-        item["role"] = '('+temp[1];
+        item["role"] = "(" + temp[1];
         response.push(item);
-      }
-      else {
+      } else {
         response.push(temp[0]);
       }
     }
     return response;
+  }
+
+  checkIfArray(item) {
+    if (Array.isArray(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  parseArrayToString(array) {
+    let response = "";
+    for (let item of array) {
+      response += item + ", ";
+    }
+    return response.slice(0, -2);
   }
 }
