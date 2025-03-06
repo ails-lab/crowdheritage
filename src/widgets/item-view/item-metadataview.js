@@ -82,7 +82,20 @@ export class ItemMetadataView {
   }
 
   get validAnnotations() {
-    return this.annotations.filter((ann) => !ann.fieldName);
+    const valid = this.annotations.filter((ann) => !ann.fieldName);
+
+    let titleAnnotation;
+    const titleIndex = valid.findIndex(
+      (ann) => typeof ann.tagType === "string" && ann.tagType.endsWith("title")
+    );
+    if (titleIndex !== -1) {
+      titleAnnotation = valid.splice(titleIndex, 1)[0];
+    }
+
+    if (titleAnnotation) {
+      return [titleAnnotation, ...valid];
+    }
+    return valid;
   }
 
   fetchAnnotations() {
