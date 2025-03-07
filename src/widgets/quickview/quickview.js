@@ -45,6 +45,8 @@ export class quickview {
     this.extLink = null;
 
     this.mediaDiv = "";
+
+    this.isImageQuickViewZoomed = false;
   }
 
   get hasCollection() {
@@ -59,6 +61,8 @@ export class quickview {
       $(".action").removeClass("active");
       $(".action.itemview").addClass("active");
     }
+
+    document.getElementById("modalImg").style.width = "100%";
   }
 
   externalLink() {
@@ -100,6 +104,7 @@ export class quickview {
     ) {
       this.userServices.reloadCurrentUser();
     }
+
     this.extLink = this.externalLink();
     //Load Campaign
     if (!this.edit) {
@@ -275,5 +280,14 @@ export class quickview {
     // var banner = document.getElementById("banner");
     // banner.style.display = "block";
     modal.style.display = "none";
+  }
+
+  zoomIn() {
+    this.isImageQuickViewZoomed = true;
+    document.getElementById("modalImg").style.width = "200%";
+  }
+  zoomOut() {
+    this.isImageQuickViewZoomed = false;
+    document.getElementById("modalImg").style.width = "100%";
   }
 }

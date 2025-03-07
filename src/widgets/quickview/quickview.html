@@ -55,20 +55,40 @@
               </p>
               <!-- The modal element -->
               <div id="myModal" class="modal">
-                <button
-                  type="button"
-                  class="close-fullscreen-image"
-                  click.trigger="closeModal()"
+                <div class="image-quickview-actions">
+                  <button
+                    type="button"
+                    disabled.bind="isImageQuickViewZoomed"
+                    click.trigger="zoomIn()"
+                  >
+                    <i class="fa fa-search-plus" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    type="button"
+                    disabled.bind="!isImageQuickViewZoomed"
+                    click.trigger="zoomOut()"
+                  >
+                    <i class="fa fa-search-minus" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" click.trigger="closeModal()">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div
+                  class="modal-content img-zoom-container"
+                  style="
+                    background: transparent;
+                    max-width: 50%;
+                    overflow: auto;
+                  "
                 >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <!-- Modal Content - Image) -->
-                <img
-                  class="modal-content"
-                  id="modalImg"
-                  click.delegate="closeModal()"
-                  error.trigger="getPlaceholderImage($event)"
-                />
+                  <img
+                    id="modalImg"
+                    style="max-width: 300%"
+                    click.delegate="closeModal()"
+                    error.trigger="getPlaceholderImage($event)"
+                  />
+                </div>
               </div>
               <!-- Here goes the media, besides images -->
               <div id="mediadiv" innerhtml.bind="mediaDiv"></div>
