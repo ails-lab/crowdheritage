@@ -54,7 +54,12 @@
                 >.
               </p>
               <!-- The modal element -->
-              <div id="myModal" class="modal">
+              <compose
+                view="widgets/image-quickview-modal/image-quickview-modal.html"
+                view-model="widgets/image-quickview-modal/image-quickview-modal"
+                model.bind="{'id': 'myModal', 'src': imageQuickViewSrc, 'open': imageQuickViewOpen, 'onClose': imageQuickViewOnClose}"
+              ></compose>
+              <!-- <div id="myModal" class="modal">
                 <button
                   type="button"
                   class="close-fullscreen-image"
@@ -62,14 +67,13 @@
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <!-- Modal Content - Image) -->
                 <img
                   class="modal-content"
                   id="modalImg"
                   click.delegate="closeModal()"
                   error.trigger="getPlaceholderImage($event)"
                 />
-              </div>
+              </div> -->
               <!-- Here goes the media, besides images -->
               <div id="mediadiv" innerhtml.bind="mediaDiv"></div>
             </div>

@@ -45,6 +45,10 @@ export class quickview {
     this.extLink = null;
 
     this.mediaDiv = "";
+
+    this.imageQuickViewSrc = "";
+    this.imageQuickViewOpen = false;
+    this.imageQuickViewOnClose = () => this.handleModalClose();
   }
 
   get hasCollection() {
@@ -100,6 +104,11 @@ export class quickview {
     ) {
       this.userServices.reloadCurrentUser();
     }
+
+    this.imageQuickViewSrc = "";
+    this.imageQuickViewOpen = false;
+    this.imageQuickViewOnClose = () => this.handleModalClose();
+
     this.extLink = this.externalLink();
     //Load Campaign
     if (!this.edit) {
@@ -259,21 +268,31 @@ export class quickview {
     $(".action.itemview").removeClass("active");
   }
 
+  // openModal(imgSrc) {
+  //   if (this.imageErrorCounter >= 2) return;
+  //   var modal = document.getElementById("myModal");
+  //   var img = document.getElementById("recImg");
+  //   var modalImg = document.getElementById("modalImg");
+  //   // var banner = document.getElementById("banner");
+  //   modal.style.display = "block";
+  //   // banner.style.display = "none";
+  //   modalImg.src = imgSrc;
+  // }
+
   openModal(imgSrc) {
-    if (this.imageErrorCounter >= 2) return;
-    var modal = document.getElementById("myModal");
-    var img = document.getElementById("recImg");
-    var modalImg = document.getElementById("modalImg");
-    // var banner = document.getElementById("banner");
-    modal.style.display = "block";
-    // banner.style.display = "none";
-    modalImg.src = imgSrc;
+    this.imageQuickViewSrc = imgSrc;
+    this.imageQuickViewOpen = true;
+    console.log("open");
   }
 
-  closeModal() {
-    var modal = document.getElementById("myModal");
-    // var banner = document.getElementById("banner");
-    // banner.style.display = "block";
-    modal.style.display = "none";
+  handleCloseModal() {
+    this.imageQuickViewOpen = false;
   }
+
+  // closeModal() {
+  //   var modal = document.getElementById("myModal");
+  //   // var banner = document.getElementById("banner");
+  //   // banner.style.display = "block";
+  //   modal.style.display = "none";
+  // }
 }

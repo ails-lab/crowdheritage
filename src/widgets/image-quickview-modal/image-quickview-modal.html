@@ -1,0 +1,18 @@
+<template>
+  <div id.bind="id" class="modal">
+    <button
+      type="button"
+      class="close-fullscreen-image"
+      click.trigger="handleClose()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <img
+      id="modalImg"
+      src.bind="src"
+      class="modal-content"
+      click.delegate="handleClose()"
+      error.trigger="getPlaceholderImage($event)"
+    />
+  </div>
+</template>
