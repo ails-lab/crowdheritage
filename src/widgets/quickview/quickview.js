@@ -46,9 +46,7 @@ export class quickview {
 
     this.mediaDiv = "";
 
-    this.imageQuickViewSrc = "";
-    this.imageQuickViewOpen = false;
-    this.imageQuickViewOnClose = () => this.handleModalClose();
+    this.isImageQuickViewZoomed = false;
   }
 
   get hasCollection() {
@@ -63,6 +61,8 @@ export class quickview {
       $(".action").removeClass("active");
       $(".action.itemview").addClass("active");
     }
+
+    document.getElementById("modalImg").style.width = "100%";
   }
 
   externalLink() {
@@ -104,10 +104,6 @@ export class quickview {
     ) {
       this.userServices.reloadCurrentUser();
     }
-
-    this.imageQuickViewSrc = "";
-    this.imageQuickViewOpen = false;
-    this.imageQuickViewOnClose = () => this.handleModalClose();
 
     this.extLink = this.externalLink();
     //Load Campaign
@@ -268,31 +264,30 @@ export class quickview {
     $(".action.itemview").removeClass("active");
   }
 
-  // openModal(imgSrc) {
-  //   if (this.imageErrorCounter >= 2) return;
-  //   var modal = document.getElementById("myModal");
-  //   var img = document.getElementById("recImg");
-  //   var modalImg = document.getElementById("modalImg");
-  //   // var banner = document.getElementById("banner");
-  //   modal.style.display = "block";
-  //   // banner.style.display = "none";
-  //   modalImg.src = imgSrc;
-  // }
-
   openModal(imgSrc) {
-    this.imageQuickViewSrc = imgSrc;
-    this.imageQuickViewOpen = true;
-    console.log("open");
+    if (this.imageErrorCounter >= 2) return;
+    var modal = document.getElementById("myModal");
+    var img = document.getElementById("recImg");
+    var modalImg = document.getElementById("modalImg");
+    // var banner = document.getElementById("banner");
+    modal.style.display = "block";
+    // banner.style.display = "none";
+    modalImg.src = imgSrc;
   }
 
-  handleCloseModal() {
-    this.imageQuickViewOpen = false;
+  closeModal() {
+    var modal = document.getElementById("myModal");
+    // var banner = document.getElementById("banner");
+    // banner.style.display = "block";
+    modal.style.display = "none";
   }
 
-  // closeModal() {
-  //   var modal = document.getElementById("myModal");
-  //   // var banner = document.getElementById("banner");
-  //   // banner.style.display = "block";
-  //   modal.style.display = "none";
-  // }
+  zoomIn() {
+    this.isImageQuickViewZoomed = true;
+    document.getElementById("modalImg").style.width = "200%";
+  }
+  zoomOut() {
+    this.isImageQuickViewZoomed = false;
+    document.getElementById("modalImg").style.width = "100%";
+  }
 }
