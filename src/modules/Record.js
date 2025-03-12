@@ -302,6 +302,26 @@ export class Record {
     return defaultPropertyLanguage;
   }
 
+  // Check if the string is an array-like string and try to parse it as JSON
+  tryParseArray(str) {
+    // Fix the single quotes ' to double quotes "" and python's None to null
+    const fixedString = str.replace(/'/g, '"').replace(/None/g, "null");
+
+    // Check if the string starts with '[' and ends with ']'
+    if (
+      typeof fixedString === "string" &&
+      fixedString.trim().startsWith("[") &&
+      fixedString.trim().endsWith("]")
+    ) {
+      try {
+        return JSON.parse(fixedString); // Try parsing as JSON
+      } catch (e) {
+        return str; // Return original string if parsing fails
+      }
+    }
+    return str; // Return original string if it's not an array-like string
+  }
+
   populateMeta(data) {
     // TODO: Separate the multiple meta values and adjust the behaviour in the tagsub.html
     this.meta.defaultlanguage = this.getDefaultLanguage(
@@ -347,7 +367,17 @@ export class Record {
         data.descriptiveData.city[this.meta.cityLang].join(" ; ");
     }
     if (data.descriptiveData.dates) {
-      this.meta.date = data.descriptiveData.dates[0].free;
+      // Handle broken backend resulting in a string representation of the same object
+      // For example: free: "[{year: {}}, ...]"
+      const freeDate = data.descriptiveData.dates[0].free;
+      const parsed = this.tryParseArray(freeDate);
+      if (typeof parsed === "string") {
+        this.meta.date = parsed;
+      } else {
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          this.meta.date = parsed[0].free;
+        }
+      }
     }
     if (data.descriptiveData.isRelatedTo) {
       this.meta.relatedToUri = data.descriptiveData.isRelatedTo.uri;

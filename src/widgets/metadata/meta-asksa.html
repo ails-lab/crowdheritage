@@ -9,9 +9,14 @@
           <div class="lbl" t="item:title">TITLE</div>
           <div class="val" innerHtml.bind="record.meta.title"></div>
         </li>
-        <li class="meta-description col-12" if.bind="record.meta.relatedToUri.length">
+        <li
+          class="meta-description col-12"
+          if.bind="record.meta.relatedToUri.length"
+        >
           <div class="lbl" t="item:object">OBJECT</div>
-          <a href.bind="record.meta.relatedToUri" target="_blank">${record.meta.relatedToLabel}</a>
+          <a href.bind="record.meta.relatedToUri" target="_blank"
+            >${record.meta.relatedToLabel}</a
+          >
         </li>
         <li class="col-sm-6" if.bind="record.meta.country.length">
           <div class="lbl" t="item:country">COUNTRY</div>
@@ -27,7 +32,9 @@
         </li>
         <li class="col-sm-2" if.bind="record.meta.isShownAt">
           <div class="val" t="[prepend]item:see-it">
-            <a href.bind="record.meta.isShownAt" target="_blank" t="item:asksa">ASKSA</a>
+            <a href.bind="record.meta.isShownAt" target="_blank" t="item:asksa"
+              >ASKSA</a
+            >
           </div>
         </li>
       </ul>

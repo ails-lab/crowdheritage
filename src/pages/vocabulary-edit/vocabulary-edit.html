@@ -6,38 +6,97 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"><span t="dashboard:curateVocabulary" class="text-uppercase"></span></div>
+            <div class="lbl">
+              <span
+                t="dashboard:curateVocabulary"
+                class="text-uppercase"
+              ></span>
+            </div>
             <div class="wrap"><span>${vocabulary.label}</span></div>
           </div>
         </div>
         <!-- vertical nav-->
         <nav class="vertical">
           <ul>
-            <li><a route-href="route: dashboard; params.bind: { lang: loc, resource: 'vocabularies' }" t="[prepend]dashboard:returnDashboard"><img src="/img/ic-arrow-right-black.png"></a></li>
+            <li>
+              <a
+                route-href="route: dashboard; params.bind: { lang: loc, resource: 'vocabularies' }"
+                t="[prepend]dashboard:returnDashboard"
+                ><img src="/img/ic-arrow-right-black.png"
+              /></a>
+            </li>
           </ul>
         </nav>
-        <div class="bgwrap" style="background-image: url('/img/assets/img/content/background-space.png');"></div>
+        <div
+          class="bgwrap"
+          style="
+            background-image: url('/img/assets/img/content/background-space.png');
+          "
+        ></div>
       </div>
     </section>
-		<section class="collections collection-item-list">
-			<div class="container">
+    <section class="collections collection-item-list">
+      <div class="container">
         <div class="topsection">
           <div class="sectionlabel">
             <div class="bold text-uppercase">
-              <strong class="me-2">${[terms.length, 'term'] | itemCounter}</strong>
+              <strong class="me-2"
+                >${[terms.length, 'term'] | itemCounter}</strong
+              >
             </div>
           </div>
           <div class="import-wrap vocabulary-add-button">
-            <button class="btn btn-outline-dark" t="[append]dashboard:manageTerms" href="javascript:void(0)" data-toggle="dropdown" click.delegate="toggleImportMenu()">
+            <button
+              class="btn btn-outline-dark"
+              t="[append]dashboard:manageTerms"
+              href="javascript:void(0)"
+              data-toggle="dropdown"
+              click.delegate="toggleImportMenu()"
+            >
               <i class="fa fa-cogs fa-lg me-2" aria-hidden="true"></i>
             </button>
             <ul aria-labelledby="import" class="dropdown-menu import-menu">
-              <li><a t="[append]dashboard:uploadTermsCsv" href="#" click.delegate="loadFromFile()"><i class="fa fa-upload me-3" aria-hidden="true"></i></a></li>
-              <li><a t="[append]dashboard:addNewTerms" href="#" click.delegate="openImportSidebar()"><i class="fa fa-plus-square-o me-3" aria-hidden="true"></i></a></li>
-              <li><a t="[append]dashboard:deleteAllTerms" href="#" click.delegate="deleteAllTerms()"><i class="fa fa-trash-o me-3" aria-hidden="true"></i></a></li>
-              <li><a t="[append]dashboard:downloadTermsCsv" href="#" click.delegate="downloadTerms()"><i class="fa fa-download me-3" aria-hidden="true"></i></a></li>
+              <li>
+                <a
+                  t="[append]dashboard:uploadTermsCsv"
+                  href="#"
+                  click.delegate="loadFromFile()"
+                  ><i class="fa fa-upload me-3" aria-hidden="true"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  t="[append]dashboard:addNewTerms"
+                  href="#"
+                  click.delegate="openImportSidebar()"
+                  ><i class="fa fa-plus-square-o me-3" aria-hidden="true"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  t="[append]dashboard:deleteAllTerms"
+                  href="#"
+                  click.delegate="deleteAllTerms()"
+                  ><i class="fa fa-trash-o me-3" aria-hidden="true"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  t="[append]dashboard:downloadTermsCsv"
+                  href="#"
+                  click.delegate="downloadTerms()"
+                  ><i class="fa fa-download me-3" aria-hidden="true"></i
+                ></a>
+              </li>
             </ul>
           </div>
+        </div>
+        <div class="topsection">
+          <p style="font-style: italic">
+            The CSV file should have 3 columns, one for URIS, one for Label, and
+            one more for Description. No headers. The description cannot be
+            empty, if needed copy the values from the labels.
+          </p>
         </div>
         <div class="campaignlist" if.bind="terms.length > 0">
           <div class="entries row" ref="grid">
@@ -48,14 +107,20 @@
                 <th></th>
               </tr>
               <tr repeat.for="term of terms">
-                <td>${term.semantic.prefLabel['en'] || term.semantic.prefLabel['default']}</td>
+                <td>
+                  ${term.semantic.prefLabel['en'] ||
+                  term.semantic.prefLabel['default']}
+                </td>
                 <td>
                   <a href.bind="term.semantic.uri" target="_blank">
                     ${term.semantic.uri}
                   </a>
                 </td>
                 <td class="red-trash">
-                  <i class="fa fa-trash clickable" click.delegate="deleteTerm(term.dbId)"></i>
+                  <i
+                    class="fa fa-trash clickable"
+                    click.delegate="deleteTerm(term.dbId)"
+                  ></i>
                 </td>
               </tr>
             </table>
@@ -68,11 +133,17 @@
         <div if.bind="terms.length===0 && !loading">
           <h5 class="text-center" t="[html]dashboard:noTermsMessage"></h5>
         </div>
-    	</div>
+      </div>
     </section>
 
     <div class="hiddenfile">
-      <input type="file" id="csvUpload" name="csv" onchange.bind="uploadFile" accept=".csv" />
+      <input
+        type="file"
+        id="csvUpload"
+        name="csv"
+        onchange.bind="uploadFile"
+        accept=".csv"
+      />
     </div>
 
     <!-- Import Sidebar -->
@@ -80,16 +151,31 @@
       <div class="action-header">
         <div class="title" t="dashboard:newVocabulary"></div>
       </div>
-      <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()">×</a>
+      <a href="javascript:void(0)" class="closebtn" click.delegate="closeNav()"
+        >×</a
+      >
       <div class="action-body">
         <div class="form-group">
           <label t="dashboard:uriList"></label>
-          <textarea rows="3" type="text" placeholder.bind="i18n.tr('dashboard:uriListPlaceholder')" value.bind="newTerms"></textarea>
+          <textarea
+            rows="3"
+            type="text"
+            placeholder.bind="i18n.tr('dashboard:uriListPlaceholder')"
+            value.bind="newTerms"
+          ></textarea>
         </div>
       </div>
       <div class="d-flex justify-content-between button-group">
-        <button t="dashboard:cancel" class="btn-red" click.delegate="closeNav()"></button>
-        <button t="app:create" class="btn-green" click.delegate="addTerms()"></button>
+        <button
+          t="dashboard:cancel"
+          class="btn-red"
+          click.delegate="closeNav()"
+        ></button>
+        <button
+          t="app:create"
+          class="btn-green"
+          click.delegate="addTerms()"
+        ></button>
       </div>
     </div>
   </main>
