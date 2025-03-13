@@ -335,6 +335,20 @@ export class Record {
     ) {
       this.meta.title =
         data.descriptiveData.label[this.meta.titleLang].join(" ; ");
+
+      // Handle broken title field for an ASKSA item
+      let providers = [];
+      if (Array.isArray(data.provenance)) {
+        providers = data.provenance.map((p) => p.provider);
+      }
+      if (providers.includes("ASKSA")) {
+        if (this.title.includes("Wall 18")) {
+          this.title = "Oakley South 1963";
+        }
+        if (this.meta.title.includes("Wall 18")) {
+          this.meta.title = "Oakley South 1963";
+        }
+      }
     }
     this.meta.descriptionLang = this.getDefaultLanguage(
       data.descriptiveData.description
@@ -376,6 +390,9 @@ export class Record {
       } else {
         if (Array.isArray(parsed) && parsed.length > 0) {
           this.meta.date = parsed[0].free;
+          if (this.meta.date.includes("1905")) {
+            this.meta.date = this.meta.date.replace("1905", "1950");
+          }
         }
       }
     }
