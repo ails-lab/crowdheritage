@@ -195,6 +195,7 @@ export class Record {
           ? data.media[0].Original.url
           : null;
     }
+    this.fullResFullPath = this.getFullResImage();
     this.medium =
       data.media && data.media[0].Medium && data.media[0].Medium.url
         ? data.media[0].Medium.url
@@ -509,7 +510,7 @@ export class Record {
     self1.myfullimg = th;
   }
 
-  get fullresImage() {
+  getFullResImage() {
     if (this.fullres) {
       if (this.fullres.startsWith("http")) {
         return `${this.fullres}`;
@@ -518,5 +519,8 @@ export class Record {
     }
 
     return this.getItemviewThumbnail();
+  }
+  get fullresImage() {
+    return this.getFullResImage();
   }
 }
