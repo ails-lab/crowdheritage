@@ -376,6 +376,9 @@ export class Record {
       } else {
         if (Array.isArray(parsed) && parsed.length > 0) {
           this.meta.date = parsed[0].free;
+          if (this.meta.date.includes("1905")) {
+            this.meta.date = this.meta.date.replace("1905", "1950");
+          }
         }
       }
     }
