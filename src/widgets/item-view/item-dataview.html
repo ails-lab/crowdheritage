@@ -49,7 +49,7 @@
             <img
               id="recImg"
               show.bind="(record.vtype=='IMAGE')"
-              src.bind="record.thumbnail"
+              src.bind="record.fullresImage"
               onError="this.src='/img/assets/img/ui/ic-noimage.png'"
               click.delegate="openModal()"
               style.bind="noImageStyle"
