@@ -385,14 +385,24 @@ export class Record {
       // For example: free: "[{year: {}}, ...]"
       const freeDate = data.descriptiveData.dates[0].free;
       const parsed = this.tryParseArray(freeDate);
+      const itemTitlesThatNeedDateFixing = [
+        "Pouring cement, first floor of Museum addition",
+        "Preparing forms for Museum addition",
+        "Preparing forms for Museum addition",
+        "L. Broneer and ?",
+      ];
       if (typeof parsed === "string") {
         this.meta.date = parsed;
       } else {
         if (Array.isArray(parsed) && parsed.length > 0) {
           this.meta.date = parsed[0].free;
-          if (this.meta.date.includes("1905")) {
-            this.meta.date = this.meta.date.replace("1905", "1950");
-          }
+        }
+      }
+      if (itemTitlesThatNeedDateFixing.includes(this.title)) {
+        if (this.title === "L. Broneer and ?") {
+          this.meta.date = "29/06/1950";
+        } else {
+          this.meta.date = this.meta.date.replace("1905", "1950");
         }
       }
     }
