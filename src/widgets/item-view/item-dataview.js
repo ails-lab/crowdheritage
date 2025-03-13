@@ -44,7 +44,7 @@ export class ItemDataView {
     this.previous = params.previous;
     this.collectionTitle = params.collectionTitle;
     this.imageErrorCounter = 0;
-    this.noImageStyle = "width: 100%;";
+    this.noImageStyle = "width: 100%; object-fit: contain;";
     this.instructionsCollapsed =
       JSON.parse(localStorage.getItem("campaignInstructionsCollapsed")) ||
       false;
