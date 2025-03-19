@@ -13,34 +13,66 @@
  * under the License.
  */
 
-
-import { inject } from 'aurelia-framework';
-import { Collection } from 'Collection.js';
-import { CollectionServices } from 'CollectionServices.js';
-import { Record } from 'Record.js';
-import { RecordServices } from 'RecordServices.js';
-import { UserServices } from 'UserServices';
-import { CampaignServices } from 'CampaignServices';
-import { I18N } from 'aurelia-i18n';
-import { EventAggregator } from 'aurelia-event-aggregator';
-import settings from 'global.config.js';
+import { inject } from "aurelia-framework";
+import { Collection } from "Collection.js";
+import { CollectionServices } from "CollectionServices.js";
+import { Record } from "Record.js";
+import { RecordServices } from "RecordServices.js";
+import { UserServices } from "UserServices";
+import { CampaignServices } from "CampaignServices";
+import { I18N } from "aurelia-i18n";
+import { EventAggregator } from "aurelia-event-aggregator";
+import settings from "global.config.js";
 
 let instance = null;
 
-const censoredCampaigns = ["debias-nisv", "debias-apef-en", "debias-dff", "debias-apef-nl", "debias-apef-de"];
+const censoredCampaigns = [
+  "debias-nisv",
+  "debias-apef-en",
+  "debias-dff",
+  "debias-apef-nl",
+  "debias-apef-de",
+];
 
-@inject(CollectionServices, RecordServices, UserServices, CampaignServices, I18N, EventAggregator)
+@inject(
+  CollectionServices,
+  RecordServices,
+  UserServices,
+  CampaignServices,
+  I18N,
+  EventAggregator
+)
 export class MultipleItems {
+  get smallerClass() {
+    return this.collection ? "" : "smaller";
+  }
+  get more() {
+    return this.records.length < this.totalCount;
+  }
+  get offset() {
+    return this.records.length;
+  }
+  get byUser() {
+    return !!this.user;
+  }
+  get byCollection() {
+    return !!this.collection && !this.collectionEdit;
+  }
+  get byCollectionEdit() {
+    return this.collectionEdit;
+  }
+  get campaignIsCensored() {
+    return censoredCampaigns.includes(this.campaign.username);
+  }
 
-  get smallerClass() { return this.collection ? '' : 'smaller' }
-  get more() { return this.records.length < this.totalCount }
-  get offset() { return this.records.length }
-  get byUser() { return !!this.user }
-  get byCollection() { return !!this.collection && !this.collectionEdit }
-  get byCollectionEdit() { return this.collectionEdit }
-  get campaignIsCensored() { return censoredCampaigns.includes(this.campaign.username) }
-
-  constructor(collectionServices, recordServices, userServices, campaignServices, i18n, eventAggregator) {
+  constructor(
+    collectionServices,
+    recordServices,
+    userServices,
+    campaignServices,
+    i18n,
+    eventAggregator
+  ) {
     if (instance) {
       return instance;
     }
@@ -54,8 +86,10 @@ export class MultipleItems {
     this.project = settings.project;
     this.collectionEdit = false;
     this.campaign = null;
-    this.cname = '';
-    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
+    this.cname = "";
+    this.state = this.userServices.isAuthenticated()
+      ? "not-contributed-items"
+      : "all-items";
     this.sortBy = "contributions-count";
     this.resetInstance();
     if (!instance) {
@@ -69,21 +103,19 @@ export class MultipleItems {
     this.collection = null;
     this.user = null;
     this.campaign = null;
-    this.cname = '';
+    this.cname = "";
     this.loading = false;
     this.totalCount = 0;
     this.count = 24;
-    this.loc = window.location.href.split('/')[3];
+    this.loc = window.location.href.split("/")[3];
   }
 
   get filterBy() {
     if (this.state == "contributed-items") {
       return "FILTER_ONLY_USER_CONTRIBUTIONS";
-    }
-    else if (this.state == "not-contributed-items") {
+    } else if (this.state == "not-contributed-items") {
       return "HIDE_USER_CONTRIBUTIONS";
-    }
-    else {
+    } else {
       return "ALL";
     }
   }
@@ -100,30 +132,52 @@ export class MultipleItems {
 
   async getRecords(initialSetup) {
     if (this.collection) {
-      let sortByMethod = (this.sortBy == 'contributions-count') ? true : false;
+      let sortByMethod = this.sortBy == "contributions-count" ? true : false;
       if (!this.recordIds) {
-        let response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
+        let response = await this.collectionServices.getCollectionRecordIds(
+          this.collection.dbId,
+          this.filterBy,
+          sortByMethod,
+          this.cname
+        );
         if (initialSetup && !response.recordIds.length) {
           this.state = "all-items";
-          response = await this.collectionServices.getCollectionRecordIds(this.collection.dbId, this.filterBy, sortByMethod, this.cname);
+          response = await this.collectionServices.getCollectionRecordIds(
+            this.collection.dbId,
+            this.filterBy,
+            sortByMethod,
+            this.cname
+          );
         }
         this.recordIds = response.recordIds;
         this.totalCount = response.recordIds.length;
       }
-      let idsBatch = this.recordIds.slice(this.offset, this.offset + this.count);
-      this.recordServices.getRecordsByIds(idsBatch)
-        .then(response => {
-          idsBatch.forEach(id => {
-            let rec = response.records.find(r => r.dbId == id);
+      let idsBatch = this.recordIds.slice(
+        this.offset,
+        this.offset + this.count
+      );
+      this.recordServices
+        .getRecordsByIds(idsBatch)
+        .then((response) => {
+          idsBatch.forEach((id) => {
+            let rec = response.records.find((r) => r.dbId == id);
             this.records.push(new Record(rec));
           });
-          this.loading = false;
         })
-        .catch(error => console.error(error));
-    }
-    else if (this.user) {
-      this.userServices.getUserAnnotations(this.user.dbId, this.project, this.cname, this.offset, this.count)
-        .then(response => {
+        .catch((error) => console.error(error))
+        .finally(() => {
+          this.loading = false;
+        });
+    } else if (this.user) {
+      this.userServices
+        .getUserAnnotations(
+          this.user.dbId,
+          this.project,
+          this.cname,
+          this.offset,
+          this.count
+        )
+        .then((response) => {
           this.fillRecordArray(response.records);
           this.loading = false;
         });
@@ -132,13 +186,15 @@ export class MultipleItems {
 
   attached() {
     if (this.byCollection) {
-      window.addEventListener('scroll', e => this.scrollAndLoadMore());
+      window.addEventListener("scroll", (e) => this.scrollAndLoadMore());
     }
   }
 
   detached() {
     this.record = null;
-    this.state = this.userServices.isAuthenticated() ? "not-contributed-items" : "all-items";
+    this.state = this.userServices.isAuthenticated()
+      ? "not-contributed-items"
+      : "all-items";
     this.sortBy = "contributions-count";
   }
 
@@ -152,15 +208,13 @@ export class MultipleItems {
     this.campaign = params.campaign || null;
     if (params.collectionEdit) {
       this.state = "all-items";
-      this.collectionEdit = params.collectionEdit
+      this.collectionEdit = params.collectionEdit;
       this.collection = params.myCollection;
       this.totalCount = this.collection.entryCount;
-    }
-    else if (params.collection) {
+    } else if (params.collection) {
       this.collection = params.collection;
       this.totalCount = this.collection.entryCount;
-    }
-    else if (params.user) {
+    } else if (params.user) {
       this.user = params.user;
       this.totalCount = params.totalCount;
     }
@@ -175,7 +229,7 @@ export class MultipleItems {
   }
 
   goToItem(record) {
-    let item = this.router.routes.find(x => x.name === 'item');
+    let item = this.router.routes.find((x) => x.name === "item");
     item.campaign = this.campaign;
     item.collection = this.collection;
     item.recordIds = this.recordIds;
@@ -185,48 +239,45 @@ export class MultipleItems {
       cname: this.cname,
       collectionId: this.collection.dbId,
       recid: record.dbId,
-      lang: this.loc
-    }
-    if (this.sortBy == 'contributions-count') {
+      lang: this.loc,
+    };
+    if (this.sortBy == "contributions-count") {
       params.sortBy = true;
     }
     if (this.filterBy != "ALL") {
       params.filterBy = this.filterBy;
     }
-    this.router.navigateToRoute('item', params);
+    this.router.navigateToRoute("item", params);
 
     this.record = null;
   }
 
   quickView(record) {
     this.record = record;
-    $('.action').removeClass('active');
-    $('.action.itemview').addClass('active');
+    $(".action").removeClass("active");
+    $(".action.itemview").addClass("active");
   }
 
   toggleStateMenu() {
-    if ($('.state').hasClass('open')) {
-      $('.state').removeClass('open');
-    }
-    else {
-      $('.state').addClass('open');
+    if ($(".state").hasClass("open")) {
+      $(".state").removeClass("open");
+    } else {
+      $(".state").addClass("open");
     }
   }
 
   toggleSortMenu() {
-    if ($('.sort').hasClass('open')) {
-      $('.sort').removeClass('open');
-    }
-    else {
-      $('.sort').addClass('open');
+    if ($(".sort").hasClass("open")) {
+      $(".sort").removeClass("open");
+    } else {
+      $(".sort").addClass("open");
     }
   }
 
   reloadCollection(state, sortBy) {
     if (state == this.state && sortBy == this.sortBy) {
       return;
-    }
-    else {
+    } else {
       this.state = state;
       this.sortBy = sortBy;
       this.recordIds = null;
@@ -247,14 +298,18 @@ export class MultipleItems {
       }
       if (record.score && record.score.approvedBy) {
         for (var j in score.approvedBy) {
-          if (score.approvedBy[j].withCreator == this.userServices.current.dbId) {
+          if (
+            score.approvedBy[j].withCreator == this.userServices.current.dbId
+          ) {
             return true;
           }
         }
       }
       if (record.score && record.score.rejectedBy) {
         for (var j in score.rejectedBy) {
-          if (score.rejectedBy[j].withCreator == this.userServices.current.dbId) {
+          if (
+            score.rejectedBy[j].withCreator == this.userServices.current.dbId
+          ) {
             return true;
           }
         }
@@ -269,21 +324,29 @@ export class MultipleItems {
   }
 
   scrollAndLoadMore() {
-    if (($("#recs").height() - window.scrollY < 900) && !this.loading && this.more) {
+    if (
+      $("#recs").height() - window.scrollY < 900 &&
+      !this.loading &&
+      this.more
+    ) {
       this.loading = true;
       this.getRecords();
     }
   }
 
   deleteRecord(record) {
-    if (window.confirm("Do you really want to delete this record from your collection?")) {
-      this.collectionServices.removeRecord(record.dbId, this.collection.dbId)
+    if (
+      window.confirm(
+        "Do you really want to delete this record from your collection?"
+      )
+    ) {
+      this.collectionServices
+        .removeRecord(record.dbId, this.collection.dbId)
         .then(() => {
-          this.ea.publish('record-removed');
+          this.ea.publish("record-removed");
           this.getRecords();
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
   }
-
 }

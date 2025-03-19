@@ -13,10 +13,9 @@
  * under the License.
  */
 
-import settings from 'global.config.js';
+import settings from "global.config.js";
 
 export class Campaign {
-
   constructor(data, loc) {
     this.dbId = data.dbId;
     this.username = data.username;
@@ -36,16 +35,22 @@ export class Campaign {
     this.rejected = data.annotationCurrent.rejected;
     this.rated = data.annotationCurrent.rated;
     this.contributorsCount = Object.keys(data.contributorsPoints).length;
-    this.totalCurrent = this.created + this.approved + this.rejected + this.rated;
-    this.percentage = Math.min(100, Math.floor(100 * this.totalCurrent / this.target));
+    this.totalCurrent =
+      this.created + this.approved + this.rejected + this.rated;
+    this.percentage = Math.min(
+      100,
+      Math.floor((100 * this.totalCurrent) / this.target)
+    );
     this.userPoints = data.contributorsPoints;
     this.targetCollections = data.targetCollections;
     this.badges = data.badges;
     this.vocabularies = data.vocabularies;
     this.vocabularyMapping = data.vocabularyMapping;
     this.publishCriteria = data.publishCriteria;
-    this.logo = data.logo ? this.setImageProperty(data.logo) : '';
-    this.banner = data.banner ? this.setImageProperty(data.banner) : '../../img/assets/img/content/bg-search-space.png';
+    this.logo = data.logo ? this.setImageProperty(data.logo) : "";
+    this.banner = data.banner
+      ? this.setImageProperty(data.banner)
+      : "../../img/assets/img/content/bg-search-space.png";
     this.status = this.campaignStatus;
     this.isPublic = data.isPublic;
     this.validationErrorTypes = data.validationErrorType;
@@ -58,48 +63,60 @@ export class Campaign {
     this.prizesObject = data.prizes;
     this.baseAnnotations = data.baseAnnotations;
     this.campaignType = this.inferredCampaignType;
+    this.allowComments = !Boolean(data.hideComments);
+    this.allowRating = !Boolean(data.hideRating);
+    this.hasPublicResults = data.hasPublicResults;
 
     if (data.title)
-      this.title = ( data.title[loc] ? data.title[loc] : data.title['en'] );
-    else
-      this.title = '';
+      this.title = data.title[loc] ? data.title[loc] : data.title["en"];
+    else this.title = "";
 
     if (data.description)
-      this.description = ( data.description[loc] ? data.description[loc] : data.description['en'] );
-    else
-      this.description = '';
+      this.description = data.description[loc]
+        ? data.description[loc]
+        : data.description["en"];
+    else this.description = "";
 
     if (data.disclaimer)
-      this.disclaimer = ( data.disclaimer[loc] ? data.disclaimer[loc] : data.disclaimer['en'] );
-    else
-      this.disclaimer = '';
+      this.disclaimer = data.disclaimer[loc]
+        ? data.disclaimer[loc]
+        : data.disclaimer["en"];
+    else this.disclaimer = "";
 
     if (data.instructions)
-      this.instructions = ( data.instructions[loc] ? data.instructions[loc] : data.instructions['en'] );
-    else
-      this.instructions = '';
+      this.instructions = data.instructions[loc]
+        ? data.instructions[loc]
+        : data.instructions["en"];
+    else this.instructions = "";
 
     this.prizes = {};
     if (data.prizes) {
-      this.prizes.gold = ( data.prizes.gold[loc] ? data.prizes.gold[loc] : data.prizes.gold['en'] );
-      this.prizes.silver = ( data.prizes.silver[loc] ? data.prizes.silver[loc] : data.prizes.silver['en'] );
-      this.prizes.bronze = ( data.prizes.bronze[loc] ? data.prizes.bronze[loc] : data.prizes.bronze['en'] );
-      this.prizes.rookie = ( data.prizes.rookie[loc] ? data.prizes.rookie[loc] : data.prizes.rookie['en'] );
+      this.prizes.gold = data.prizes.gold[loc]
+        ? data.prizes.gold[loc]
+        : data.prizes.gold["en"];
+      this.prizes.silver = data.prizes.silver[loc]
+        ? data.prizes.silver[loc]
+        : data.prizes.silver["en"];
+      this.prizes.bronze = data.prizes.bronze[loc]
+        ? data.prizes.bronze[loc]
+        : data.prizes.bronze["en"];
+      this.prizes.rookie = data.prizes.rookie[loc]
+        ? data.prizes.rookie[loc]
+        : data.prizes.rookie["en"];
+    } else {
+      this.prizes.gold = "";
+      this.prizes.silver = "";
+      this.prizes.bronze = "";
+      this.prizes.rookie = "";
     }
-    else {
-      this.prizes.gold = '';
-      this.prizes.silver = '';
-      this.prizes.bronze = '';
-      this.prizes.rookie = '';
-    }
-
   }
 
   get inferredCampaignType() {
-    if (this.orientation === 'METADATA') return 'Translate';
-    else if (this.motivation && this.motivation.includes('ImageTagging')) return 'Image Comparison';
+    if (this.orientation === "METADATA") return "Translate";
+    else if (this.motivation && this.motivation.includes("ImageTagging"))
+      return "Image Comparison";
     else if (!this.purpose) return null;
-    else return 'Basic';
+    else return "Basic";
   }
 
   get campaignStatus() {
@@ -107,21 +124,18 @@ export class Campaign {
     var start = new Date(this.startDate);
     var end = new Date(this.endDate);
 
-    if ( (today>start) && (today<end) ) {
-      return 'active';
-    }
-    else if ( (today>start) && (today>end) ) {
-      return 'inactive';
-    }
-    else if ( (today<start) && (today<end) ) {
-      return 'upcoming';
-    }
-    else {
-      return 'void';
+    if (today > start && today < end) {
+      return "active";
+    } else if (today > start && today > end) {
+      return "inactive";
+    } else if (today < start && today < end) {
+      return "upcoming";
+    } else {
+      return "void";
     }
   }
 
   setImageProperty(img) {
-    return (!img.startsWith('http')) ? `${settings.baseUrl}${img}` : img;
+    return !img.startsWith("http") ? `${settings.baseUrl}${img}` : img;
   }
 }

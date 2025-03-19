@@ -4,18 +4,26 @@
   <section id="tagging" class="tagging">
     <!-- title-->
     <div class="container pe-0">
-      <div id="scrollPoint" class="title d-flex justify-content-between align-items-center">
+      <div
+        id="scrollPoint"
+        class="title d-flex justify-content-between align-items-center"
+      >
         <span>${record.title}</span>
         <span
           if.bind="campaign.userGroupIds && campaign.userGroupIds.length"
-          class="restricted-label" t="app:restricted" title.bind="i18n.tr('app:restricted-disclaimer')"
-          bootstrap-tooltip data-toggle="tooltip" data-placement="top" data-title="bootstrap tooltip"
+          class="restricted-label"
+          t="app:restricted"
+          title.bind="i18n.tr('app:restricted-disclaimer')"
+          bootstrap-tooltip
+          data-toggle="tooltip"
+          data-placement="top"
+          data-title="bootstrap tooltip"
         >
           RESTRICTED
         </span>
-<!--        <button if.bind="userServices.current" type="button" class="favoriteButton">-->
-<!--          <i class.bind="isLiked? 'fa fa-heart' : 'fa fa-heart-o'" aria-hidden="true" click.delegate="likeRecord()"></i>-->
-<!--        </button>-->
+        <!--        <button if.bind="userServices.current" type="button" class="favoriteButton">-->
+        <!--          <i class.bind="isLiked? 'fa fa-heart' : 'fa fa-heart-o'" aria-hidden="true" click.delegate="likeRecord()"></i>-->
+        <!--        </button>-->
       </div>
     </div>
     <!-- wraps-->
@@ -27,7 +35,8 @@
           <div if.bind="campaign.motivation.includes('SubTagging')" class="img">
             <a href.bind="record.source_uri" target="_blank">
               <img
-                id="recImg" class.bind="campaignIsCensored ? 'thumb blur-image' : 'thumb'"
+                id="recImg"
+                class.bind="campaignIsCensored ? 'thumb blur-image' : 'thumb'"
                 show.bind="(record.vtype=='IMAGE')"
                 src.bind="record.thumbnail"
                 onError="this.src='/img/assets/img/ui/ic-noimage.png'"
@@ -35,33 +44,59 @@
               />
             </a>
           </div>
-          <div else class="img" with.bind="record">
+          <div else class="img wrap" with.bind="record">
             <!-- Trigger the modal element -->
-            <img id="recImg" show.bind="(record.vtype=='IMAGE')" src.bind="record.thumbnail" onError="this.src='/img/assets/img/ui/ic-noimage.png'" click.delegate="openModal()" style.bind="noImageStyle" />
+            <img
+              id="recImg"
+              show.bind="(record.vtype=='IMAGE')"
+              src.bind="record.fullResFullPath"
+              onError="this.src='/img/assets/img/ui/ic-noimage.png'"
+              click.delegate="openModal()"
+              style.bind="noImageStyle"
+            />
             <!-- The modal element -->
             <div id="myModal" class="modal">
-              <button type="button" class="close-fullscreen-image" click.trigger="closeModal()">
+              <button
+                type="button"
+                class="close-fullscreen-image"
+                click.trigger="closeModal()"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
               <!-- Modal Content - Image) -->
-              <img class="modal-content" id="modalImg" src.bind="getValidImg(record, record.myfullimg)"
-              error.trigger="getPlaceholderImage($event)">
-              <div t="[append]item:zoom-disclaimer" class="image-zoom-disclaimer">
+              <img
+                class="modal-content"
+                id="modalImg"
+                src.bind="getValidImg(record, record.myfullimg)"
+                error.trigger="getPlaceholderImage($event)"
+              />
+              <div
+                t="[append]item:zoom-disclaimer"
+                class="image-zoom-disclaimer"
+              >
                 <i class="fa fa-info-circle me-2" aria-hidden="true"></i>
               </div>
             </div>
             <!-- Here goes the media, besides images -->
-            <div id="mediadiv" innerhtml.bind='mediaDiv'></div>
+            <div id="mediadiv" innerhtml.bind="mediaDiv"></div>
           </div>
           <!-- metadata-->
           <div class="wrap">
-            <compose view.bind="metadataView" view-model="widgets/metadata/metadata" model.bind="{'record': record}">
+            <compose
+              view.bind="metadataView"
+              view-model="widgets/metadata/metadata"
+              model.bind="{'record': record}"
+            >
             </compose>
           </div>
         </div>
         <!-- right-->
         <div class="right">
-          <div if.bind="campaign.instructions.length" class="campaign-instructions wrap mb-5" id="campaign-instructions">
+          <div
+            if.bind="campaign.instructions.length"
+            class="campaign-instructions wrap mb-5"
+            id="campaign-instructions"
+          >
             <div class="instructions-wrapper">
               <div class="header">
                 <div class="header-left">
@@ -70,34 +105,63 @@
                 </div>
                 <div class="header-right">
                   <a click.delegate="toggleInstructions()">
-                    <i class="fa fa-chevron-down chevron" aria-hidden="true"></i>
+                    <i
+                      class="fa fa-chevron-down chevron"
+                      aria-hidden="true"
+                    ></i>
                   </a>
                 </div>
               </div>
               <div class="infobar" innerHtml.bind="campaign.instructions"></div>
             </div>
           </div>
-          <compose view-model="widgets/tagitem/tagitem" if.bind="hasMotivation('Tagging')"
-            model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'Tagging'}">
+          <compose
+            view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('Tagging')"
+            model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'Tagging'}"
+          >
           </compose>
-          <compose view="widgets/tagsub/tagsub.html" view-model="widgets/tagitem/tagitem"
-            if.bind="hasMotivation('SubTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'record': record, 'motivation': 'SubTagging'}">
+          <compose
+            view="widgets/tagsub/tagsub.html"
+            view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('SubTagging')"
+            model.bind="{'campaign': campaign, 'recId': recId, 'record': record, 'motivation': 'SubTagging'}"
+          >
           </compose>
-          <compose view="widgets/tagcomment/tagcomment.html" view-model="widgets/tagitem/tagitem"
-            if.bind="hasMotivation('Commenting')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'Commenting'}">
+          <compose
+            view="widgets/tagcomment/tagcomment.html"
+            view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('Commenting')"
+            model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'Commenting'}"
+          >
           </compose>
-          <compose view="widgets/tagcolor/tagcolor.html" view-model="widgets/tagitem/tagitem"
-            if.bind="hasMotivation('ColorTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ColorTagging'}">
+          <compose
+            view="widgets/tagcolor/tagcolor.html"
+            view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('ColorTagging')"
+            model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ColorTagging'}"
+          >
           </compose>
-          <compose view="widgets/tagimage/tagimage.html" view-model="widgets/tagitem/tagitem"
-            if.bind="hasMotivation('ImageTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ImageTagging'}">
+          <compose
+            view="widgets/tagimage/tagimage.html"
+            view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('ImageTagging')"
+            model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'ImageTagging'}"
+          >
           </compose>
-          <compose view="widgets/taggeo/taggeo.html" view-model="widgets/tagitem/tagitem"
-            if.bind="hasMotivation('GeoTagging')" model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'GeoTagging'}">
+          <compose
+            view="widgets/taggeo/taggeo.html"
+            view-model="widgets/tagitem/tagitem"
+            if.bind="hasMotivation('GeoTagging')"
+            model.bind="{'campaign': campaign, 'recId': recId, 'motivation': 'GeoTagging'}"
+          >
           </compose>
-          <compose view="widgets/tagpoll/tagpoll.html" view-model="widgets/tagitem/tagitem"
+          <compose
+            view="widgets/tagpoll/tagpoll.html"
+            view-model="widgets/tagitem/tagitem"
             if.bind="hasMotivation('Polling')"
-            model.bind="{'campaign': campaign, 'recId': recId, 'colTitle': collectionTitle, 'motivation': 'Polling'}">
+            model.bind="{'campaign': campaign, 'recId': recId, 'colTitle': collectionTitle, 'motivation': 'Polling'}"
+          >
           </compose>
         </div>
       </div>

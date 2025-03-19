@@ -1,0 +1,10 @@
+{
+  "original-value": "Original Value",
+  "target-value": "Target Value",
+  "review": "Review",
+  "submit": "Submit",
+  "corrected-target-value": "Corrected Target Value",
+  "other-corrections": "Other Corrections",
+  "rating-success": "Your rating has been submitted",
+  "annotation-success": "Your annotation has been submitted"
+}

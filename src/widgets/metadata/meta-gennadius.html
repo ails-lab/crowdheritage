@@ -1,0 +1,60 @@
+<template>
+  <div class="metadata">
+    <!-- label-->
+    <div class="heading" t="item:meta">ITEM METADATA</div>
+    <!-- info-->
+    <div>
+      <ul class="meta row">
+        <li class="meta-description col-12" if.bind="record.meta.description">
+          <div class="lbl" t="item:description">DESCRIPTION</div>
+          <div class="val" innerHtml.bind="record.description"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.date">
+          <div class="lbl" t="item:date">DATE</div>
+          <div innerHtml.bind="metaFields.date" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.language">
+          <div class="lbl" t="item:language">LANGUAGE</div>
+          <div innerHtml.bind="metaFields.language" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.medium">
+          <div class="lbl" t="item:medium">MEDIUM</div>
+          <div innerHtml.bind="metaFields.medium" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.contributors">
+          <div class="lbl" t="item:contributors">CONTRIBUTORS</div>
+          <div innerHtml.bind="metaFields.contributors" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.type">
+          <div class="lbl" t="item:type">TYPE</div>
+          <div innerHtml.bind="metaFields.type" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.keywords">
+          <div class="lbl" t="item:keywords">KEYWORDS</div>
+          <div innerHtml.bind="metaFields.keywords" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.spatial">
+          <div class="lbl" t="item:spatial">SPATIAL INFO</div>
+          <div innerHtml.bind="metaFields.spatial" class="val"></div>
+        </li>
+        <li class="w-100 px-4" if.bind="metaFields.extraImages">
+          <div class="lbl" t="item:images">IMAGES</div>
+          <div class="val">
+            <div class="d-flex pb-4" style="overflow-x:auto">
+              <div repeat.for="img of record.meta.extraImages" class="me-2 col thumb-button-container">
+                <a
+                  href.bind="img"
+                  target="_blank"
+                  class="thumb-button"
+                >
+                  <img src.bind="img" alt="Image" class="btn-thumb object-fit-cover" style="width: 150px; height: 100px;" />
+                </a>
+              </div>
+            </div>  
+        </li>
+        <!-- TO ADD -->
+        <!-- altLabels, subject, language -->
+      </ul>
+    </div>
+  </div>
+</template>
