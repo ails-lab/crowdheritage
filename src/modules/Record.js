@@ -342,7 +342,7 @@ export class Record {
       if (Array.isArray(data.provenance)) {
         providers = data.provenance.map((p) => p.provider);
       }
-      if (providers.includes("ASKSA")) {
+      if (providers.includes("ASKSA") || providers.includes("ASCSA")) {
         if (this.title.includes("Wall 18")) {
           this.title = "Oakley South 1963";
         }

@@ -131,7 +131,7 @@
               >
               </compose>
               <compose
-                if.bind="campaign.username.includes('asksa')"
+                if.bind="campaign.username.includes('asksa') || campaign.username.includes('corinth')"
                 view="widgets/metadata/meta-asksa.html"
                 view-model="widgets/metadata/metadata"
                 model.bind="{'record': record}"
