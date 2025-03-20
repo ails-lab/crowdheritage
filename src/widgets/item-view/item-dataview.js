@@ -92,10 +92,14 @@ export class ItemDataView {
 
     if (this.instructionsCollapsed) {
       infobar.classList.remove("expanded");
-      chevron.classList.remove("rotated");
+      if (chevron) {
+        chevron.classList.remove("rotated");
+      }
     } else {
       infobar.classList.add("expanded");
-      chevron.classList.add("rotated");
+      if (chevron) {
+        chevron.classList.add("rotated");
+      }
     }
   }
 

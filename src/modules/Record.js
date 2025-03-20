@@ -38,11 +38,11 @@ export class Record {
       description: "",
       subject: [],
       type: "",
-      // organizations: [],
-      // medium: [],
-      // keywords: [],
-      // spatial: [],
-      // contributors: [],
+      organizations: [],
+      medium: [],
+      keywords: [],
+      spatial: [],
+      contributors: [],
     };
     if (data) {
       this.loadData(data);
@@ -305,6 +305,8 @@ export class Record {
 
   // Check if the string is an array-like string and try to parse it as JSON
   tryParseArray(str) {
+    if (!str) return str;
+
     // Fix the single quotes ' to double quotes "" and python's None to null
     const fixedString = str.replace(/'/g, '"').replace(/None/g, "null");
 
@@ -432,9 +434,12 @@ export class Record {
       this.meta.isShownAt = data.descriptiveData.isShownAt;
     }
     if (Array.isArray(data.media) && data.media.length > 1) {
-      this.meta.extraImages = this.data.media
-        .slice(1)
-        .map((media) => media.Original.withUrl);
+      this.meta.extraImages = this.data.media.slice(1).map((media) => {
+        if (media.Original && media.Original.withUrl) {
+          return media.Original.withUrl;
+        }
+        return null;
+      });
     }
     this.meta.subjectLang = this.getDefaultLanguage(
       data.descriptiveData.keywords
