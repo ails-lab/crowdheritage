@@ -39,6 +39,7 @@ export class Record {
       subject: [],
       type: "",
       organizations: [],
+      identifiers: [],
       medium: [],
       keywords: [],
       spatial: [],
@@ -457,6 +458,16 @@ export class Record {
       if (index >= 0) {
         this.meta.type = dctype.value[index].join(", ");
       }
+    }
+    const dcidentifiers = this.dcfields.find(
+      (field) => field.label === "identifier"
+    );
+    if (
+      dcidentifiers &&
+      Array.isArray(dcidentifiers.value) &&
+      dcidentifiers.value.length > 0
+    ) {
+      this.meta.identifiers = dcidentifiers.value[0];
     }
   }
 
