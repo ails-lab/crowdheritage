@@ -94,8 +94,9 @@ export class Metadata {
     }
 
     if (this.record.meta) {
+      const ignoreArrays = ["identifiers"];
       Object.entries(this.record.meta).forEach(([key, value]) => {
-        if (this.checkIfArray(value)) {
+        if (this.checkIfArray(value) && !ignoreArrays.includes(key)) {
           this.metaFields[key] = this.parseArrayToString(value);
         } else {
           this.metaFields[key] = value;

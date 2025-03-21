@@ -52,6 +52,14 @@
               </div>
             </div>  
         </li>
+        <li class="w-100 px-4" if.bind="metaFields.identifiers">
+          <div class="lbl" t="item:identifiers">IDENTIFIERS</div>
+          <ul class="identifiers-list">
+            <li repeat.for="id of metaFields.identifiers" class="identifier-item">
+              <div class="val">${id}</div>
+          </ul>
+          <!-- <div innerHtml.bind="metaFields.identifiers" class="val"></div> -->
+        </li>
         <!-- TO ADD -->
         <!-- altLabels, subject, language -->
       </ul>
