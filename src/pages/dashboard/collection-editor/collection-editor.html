@@ -7,11 +7,18 @@
         <div class="topsection mb-3 me-5">
           <div class="sectionlabel">
             <div class="bold">
-              <strong class="me-2">${[totalCollectionsCount, 'collection'] | itemCounter}</strong>
+              <strong class="me-2"
+                >${[totalCollectionsCount, 'collection'] | itemCounter}</strong
+              >
             </div>
           </div>
           <div class="import-wrap">
-            <button type="button" class="btn btn-outline-dark" t="[append]dashboard:newCollection" click.delegate="newCollection()">
+            <button
+              type="button"
+              class="btn btn-outline-dark"
+              t="[append]dashboard:newCollection"
+              click.delegate="newCollection()"
+            >
               <i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>
             </button>
           </div>
@@ -19,12 +26,18 @@
         <div class="campaignlist pe-5" if.bind="collections.length>0">
           <!-- entry-->
           <div class="entries row" ref="grid">
-            <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
-              <a route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }">
+            <div
+              class="entry col-md-4 ${col.dbId}"
+              repeat.for="col of collections"
+            >
+              <a
+                route-href="route: collection-edit; params.bind: { colid: col.dbId, lang: loc }"
+              >
                 <div id="editThumbs" class="thumbs">
                   <div class="ribbon">
                     <span class.bind="col.isPublic ? 'green' : 'red'">
-                      ${col.isPublic ? i18n.tr('app:public') : i18n.tr('app:private')}
+                      ${col.isPublic ? i18n.tr('app:public') :
+                      i18n.tr('app:private')}
                     </span>
                   </div>
                   <div
@@ -55,37 +68,78 @@
                   </div>
                   <!-- title-->
                   <div class="desc">
-                    <div class="title">${col.title[loc] && col.title[loc] !== '' ? col.title[loc] : col.title.default}</div>
+                    <div class="title">
+                      ${col.title[loc] && col.title[loc] !== '' ? col.title[loc]
+                      : col.title.default}
+                    </div>
                     <!-- <div class.bind="col.isPublic ? 'font-italic text-green' : 'font-italic text-red'">
                       ${col.isPublic ? i18n.tr('dashboard:publicCollection') : i18n.tr('dashboard:privateCollection')}
                     </div> -->
                   </div>
                 </div>
 
-                <ul class="itemaction"> 
-                  <li class="btn-share-collection" if.bind="userHasShareRights(col)" click.delegate="shareCollection(col)">
-                    <a data-toggle="tooltip" data-placement="top" title="Share Collection">
-                      <img class="editicon" src="/img/assets/img/ui/ic-share.png" />
+                <ul class="itemaction">
+                  <li
+                    class="btn-share-collection"
+                    if.bind="userHasShareRights(col)"
+                    click.delegate="shareCollection(col)"
+                  >
+                    <a
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Share Collection"
+                    >
+                      <img
+                        class="editicon"
+                        src="/img/assets/img/ui/ic-share.png"
+                      />
                     </a>
                   </li>
-                  <li class="btn-edit-collection" click.delegate="editCollection(col)">
-                    <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:editCollection')">
-                      <img class="editicon" src="/img/assets/img/ui/ic-edit.png" />
+                  <li
+                    class="btn-edit-collection"
+                    click.delegate="editCollection(col)"
+                  >
+                    <a
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title.bind="i18n.tr('dashboard:editCollection')"
+                    >
+                      <img
+                        class="editicon"
+                        src="/img/assets/img/ui/ic-edit.png"
+                      />
                     </a>
                   </li>
-                  <li class="btn-delete-collection" if.bind="userHasShareRights(col)" click.delegate="deleteCollection(col)">
-                    <a data-toggle="tooltip" data-placement="top" title.bind="i18n.tr('dashboard:deleteCollection')" class="delete">
-                      <img class="editicon"src="/img/assets/img/ui/ic-delete.png" />
+                  <li
+                    class="btn-delete-collection"
+                    if.bind="userHasShareRights(col)"
+                    click.delegate="deleteCollection(col)"
+                  >
+                    <a
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title.bind="i18n.tr('dashboard:deleteCollection')"
+                      class="delete"
+                    >
+                      <img
+                        class="editicon"
+                        src="/img/assets/img/ui/ic-delete.png"
+                      />
                     </a>
                   </li>
                 </ul>
               </a>
-
             </div>
           </div>
           <!-- more-->
           <div class="loadmore">
-            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
+            <a
+              href="#"
+              show.bind="!loading && more"
+              click.delegate="loadMore()"
+              t="app:loadmore"
+              >LOAD MORE</a
+            >
           </div>
         </div>
         <div class="d-flex justify-content-center">
@@ -98,11 +152,15 @@
       </div>
     </section>
     <section>
-      <compose view-model="widgets/newcollection/newcollection"
-        model.bind="{'collection' : editableCollection, 'type': edittype, 'lang': loc}">
+      <compose
+        view-model="widgets/newcollection/newcollection"
+        model.bind="{'collectionId' : editableCollectionId, 'type': edittype, 'lang': loc}"
+      >
       </compose>
-      <compose view-model="widgets/share-collection/share-collection"
-        model.bind="{'collection': collectionToShare, 'lang': loc}">
+      <compose
+        view-model="widgets/share-collection/share-collection"
+        model.bind="{'collection': collectionToShare, 'lang': loc}"
+      >
       </compose>
     </section>
   </main>
