@@ -568,18 +568,19 @@ export class Tagitem {
       this.lg.call();
       return;
     }
-    if (this.isCurrentUserCreator()) {
-      if (confirm('ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?')) {
-        console.log("Deleting annotations...");
-      } else {
-        return;
-      }
+    if (
+      confirm(
+        "ATTENTION: This action can not be undone!!\nAre you sure you want to delete the selected annotations?"
+      )
+    ) {
+      console.log("Deleting annotations...");
     } else {
-      // Since on annotating, the user automatically also upvotes the annotation,
-      // when deleting an annotation, you should also remove the point from upvoting
-      this.unscore(id, 'approved', index, mot);
+      return;
     }
 
+    // Since on annotating, the user automatically also upvotes the annotation,
+    // when deleting an annotation, you should also remove the point from upvoting
+    await this.unscore(id, "approved", index, mot, tagType);
 
     this.annotationServices
       .delete(id)
