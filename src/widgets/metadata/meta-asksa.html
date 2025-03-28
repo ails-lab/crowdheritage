@@ -11,6 +11,13 @@
         </li>
         <li
           class="meta-description col-12"
+          if.bind="record.meta.description.length"
+        >
+          <div class="lbl" t="item:description">DESCRIPTION</div>
+          <div class="val" innerHtml.bind="record.meta.description"></div>
+        </li>
+        <li
+          class="meta-description col-12"
           if.bind="record.meta.relatedToUri.length"
         >
           <div class="lbl" t="item:object">OBJECT</div>

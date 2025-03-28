@@ -409,6 +409,15 @@ export class Record {
           this.meta.date = this.meta.date.replace("1905", "1950");
         }
       }
+    } else {
+      const coverage = data.descriptiveData.dccoverage;
+      if (
+        coverage &&
+        Array.isArray(coverage.default) &&
+        coverage.default.length > 0
+      ) {
+        this.meta.date = coverage.default[0];
+      }
     }
     if (data.descriptiveData.isRelatedTo) {
       this.meta.relatedToUri = data.descriptiveData.isRelatedTo.uri;
