@@ -16,6 +16,8 @@
   "login-back": "Πίσω",
   "login-reset-password": "Επαναφορά κωδικού πρόσβασης",
   "login-forget-password": "Ξεχάσατε τον κωδικό πρόσβασης;",
+  "login-username-placeholder": "Email ή όνομα χρήστη",
+  "login-password-placeholder": "Κωδικός πρόσβασης",
 
   "campaign": "ΚΑΜΠΑΝΙΑ",
   "campaigns": "ΚΑΜΠΑΝΙΕΣ",
