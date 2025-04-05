@@ -95,12 +95,17 @@
             data-bind="validationElement: emailUser"
             style="vertical-align: top"
           >
-            <label class="sr-only" for="useremail">Email address</label>
+            <label
+              class="sr-only"
+              for="useremail"
+              t="app:login-username-placeholder"
+              >Email or username</label
+            >
             <input
               type="text"
               class="form-control"
               id="useremail"
-              placeholder="Username or E-mail"
+              placeholder.bind="i18n.tr('app:login-username-placeholder')"
               value.bind="email"
               hasfocus
             />
@@ -108,12 +113,17 @@
         </div>
         <div class="col-md-5 col-sm-5 col-ms-5 col-xs-12">
           <div class="form-group" style="vertical-align: top">
-            <label class="sr-only" for="userpass">Password</label>
+            <label
+              class="sr-only"
+              for="userpass"
+              t="app:login-password-placeholder"
+              >Password</label
+            >
             <input
               type="password"
               class="form-control"
               id="userpass"
-              placeholder="Password"
+              placeholder.bind="i18n.tr('app:login-password-placeholder')"
               value.bind="password"
             />
           </div>
@@ -124,25 +134,27 @@
             class="btn btn-primary btn-block"
             click.delegate="signin()"
             style="vertical-align: top"
+            t="app:login-btn"
           >
             Login
           </button>
         </div>
 
-        <div class="col-xs-3 px-0 mt-2">
+        <div class="col-xs-6 px-0 mt-2">
           <button
             type="button"
             class="btn btn-link"
+            style="float: left"
             click.delegate="scrollDownEmail()"
           >
             <span t="app:login-message-alt">Login with Facebook or Google</span>
           </button>
         </div>
-        <div class="col-xs-6 mt-2"></div>
-        <div class="col-xs-3 px-0 mt-2">
+        <div class="col-xs-6 px-0 mt-2">
           <button
             type="button"
             class="btn btn-link non-underlined"
+            style="float: right"
             click.delegate="showForgetPasswordDialog()"
           >
             <span t="app:login-forget-password" class="text-danger dark-red"
