@@ -17,6 +17,9 @@
   "login-back": "Back",
   "login-reset-password": "Reset password",
   "login-forget-password": "Forgot Password?",
+  "login-username-placeholder": "Email or username",
+  "login-password-placeholder": "Password",
+  "login-btn": "Login",
 
   "campaign": "CAMPAIGN",
   "campaigns": "CAMPAIGNS",
