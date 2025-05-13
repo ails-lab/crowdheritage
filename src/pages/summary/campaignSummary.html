@@ -1,5 +1,4 @@
 <template>
-
   <main>
     <!-- new banner-->
     <section class="banner mini">
@@ -7,27 +6,46 @@
         <!-- lbl-->
         <div class="bannertext">
           <div class="line">
-            <div class="lbl"> <span t="app:campaign">CAMPAIGN</span></div>
+            <div class="lbl"><span t="app:campaign">CAMPAIGN</span></div>
             <div class="wrap"><span>${campaign.title}</span></div>
           </div>
         </div>
         <!-- vertical nav-->
         <nav class="vertical" if.bind="project==campaign.project">
           <ul>
-            <li><a route-href="route: index; params.bind: {lang: loc}" t="[prepend]summary:return-list"><img src="/img/ic-arrow-right-black.png"></a></li>
+            <li>
+              <a
+                route-href="route: index; params.bind: {lang: loc}"
+                t="[prepend]summary:return-list"
+                ><img src="/img/ic-arrow-right-black.png"
+              /></a>
+            </li>
           </ul>
         </nav>
         <nav class="vertical" if.bind="!campaign.isPublic">
-          <ul><li><i>CAMPAIGN</i></li><li><i>PREVIEW</i></li></ul>
+          <ul>
+            <li><i>CAMPAIGN</i></li>
+            <li><i>PREVIEW</i></li>
+          </ul>
         </nav>
         <!-- progress-->
         <div class="progress">
-          <div role="progressbar" aria-valuenow="${campaign.percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${campaign.percentage}%;" class="progress-bar">
+          <div
+            role="progressbar"
+            aria-valuenow="${campaign.percentage}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="width: ${campaign.percentage}%;"
+            class="progress-bar"
+          >
             <div class="labl">${campaign.percentage}%</div>
           </div>
         </div>
         <!-- bg-->
-        <div class="bgwrap" style="background-image: url('${campaign.banner}');"></div>
+        <div
+          class="bgwrap"
+          style="background-image: url('${campaign.banner}')"
+        ></div>
       </div>
     </section>
     <!-- campaign info-->
@@ -35,33 +53,42 @@
       <div class="container">
         <!-- left-->
         <div class="left">
-
           <!-- wrap-->
           <div class="wrap">
             <!-- badge-->
             <div class="badges" if.bind="isAuthenticated">
-							<img src.bind="userBadge">
-							<p innerHtml.bind="userBadgeText"></p>
-						</div>
+              <img src.bind="userBadge" />
+              <p innerHtml.bind="userBadgeText"></p>
+            </div>
             <!-- badge-->
             <div class="badges" if.bind="!isAuthenticated">
-							<img src="/img/badges.png">
-							<p innerHtml.bind="campaign.prizes.rookie"></p>
-						</div>
+              <img src="/img/badges.png" />
+              <p innerHtml.bind="campaign.prizes.rookie"></p>
+            </div>
             <!-- user stat-->
             <div class="userstat" if.bind="isAuthenticated">
               <!-- text-->
               <h1 if.bind="userPoints >= campaign.badges.bronze">
-                <span t="summary:congratulations">Congratulations</span> ${user.firstName}!<br/>
-                <span t="[html]summary:badge-unlocked">You have unlocked the </span> ${userBadgeName} <span t="summary:badge-price">badge</span>.
+                <span t="summary:congratulations">Congratulations</span>
+                ${user.firstName}!<br />
+                <span t="[html]summary:badge-unlocked"
+                  >You have unlocked the
+                </span>
+                ${userBadgeName} <span t="summary:badge-price">badge</span>.
               </h1>
               <h1 if.bind="userPoints<campaign.badges.bronze && userPoints>0">
-                <span t="summary:hello">Hello</span> ${user.firstName}!<br/>
-                <span t="summary:badge-continue">Continue contributing to earn your first badge</span>.
+                <span t="summary:hello">Hello</span> ${user.firstName}!<br />
+                <span t="summary:badge-continue"
+                  >Continue contributing to earn your first badge</span
+                >.
               </h1>
-              <h1 if.bind="(userPoints<campaign.badges.bronze && userPoints==0) || !userPoints">
-                <span t="summary:hello">Hello</span> ${user.firstName}!<br/>
-                <span t="summary:badge-start">Start contributing to earn your first badge</span>.
+              <h1
+                if.bind="(userPoints<campaign.badges.bronze && userPoints==0) || !userPoints"
+              >
+                <span t="summary:hello">Hello</span> ${user.firstName}!<br />
+                <span t="summary:badge-start"
+                  >Start contributing to earn your first badge</span
+                >.
               </h1>
               <!-- stats-->
               <ul class="stats" if.bind="userPoints>0">
@@ -101,21 +128,43 @@
               </ul>
               <!-- description-->
               <div class="desc" t="[prepend]summary:description-left">
-                <a href="javascript:void(0)" click.delegate="scrollTo('#stats')" t="summary:description-right">below</a>.
+                <a
+                  href="javascript:void(0)"
+                  click.delegate="scrollTo('#stats')"
+                  t="summary:description-right"
+                  >below</a
+                >.
               </div>
+              <compose
+                if.bind="shouldShowContributionNote"
+                view="widgets/gennadius-contribution-note/gennadius-contribution-note.html"
+              >
+              </compose>
             </div>
             <!-- user stat-->
             <div class="userstat" if.bind="!isAuthenticated">
               <!-- text-->
-              <h1 t="[html]summary:badge-involved">Get involved!<br/>
-                Join CrowdHeritage and start contributing to our crowdsourcing campaigns.</h1>
+              <h1 t="[html]summary:badge-involved">
+                Get involved!<br />
+                Join CrowdHeritage and start contributing to our crowdsourcing
+                campaigns.
+              </h1>
               <!-- description-->
               <div class="desc" t="[prepend]summary:description-left">
-                <a href="javascript:void(0)" click.delegate="scrollTo('#stats')" t="summary:description-right">below</a>.
+                <a
+                  href="javascript:void(0)"
+                  click.delegate="scrollTo('#stats')"
+                  t="summary:description-right"
+                  >below</a
+                >.
               </div>
+              <compose
+                if.bind="shouldShowContributionNote"
+                view="widgets/gennadius-contribution-note/gennadius-contribution-note.html"
+              >
+              </compose>
             </div>
           </div>
-
         </div>
         <!-- right-->
         <div class="right">
@@ -124,7 +173,7 @@
             <!-- text-->
             <div class="text">
               <!-- heading-->
-              <div class="heading"> <span t="summary:goal">GOAL</span></div>
+              <div class="heading"><span t="summary:goal">GOAL</span></div>
               <!-- desc-->
               <p innerhtml.bind="campaign.description"></p>
               <!-- stats-->
@@ -132,17 +181,19 @@
                 <li>
                   <div class="lbl" t="app:startdate">START DATE</div>
                   <div class="val">${campaign.startDate | dateFormat}</div>
-                  <br/>
+                  <br />
                   <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
                   <div class="val">${campaign.contributorsCount}</div>
                 </li>
                 <li>
                   <div class="lbl" t="app:enddate">END DATE</div>
                   <div class="val">${campaign.endDate | dateFormat}</div>
-                  <br/>
+                  <br />
                   <div class="lbl" t="app:progress">PROGRESS</div>
                   <div class="val">
-                    ${campaign.percentage}%<small>${campaign.totalCurrent}/${campaign.target}</small>
+                    ${campaign.percentage}%<small
+                      >${campaign.totalCurrent}/${campaign.target}</small
+                    >
                   </div>
                 </li>
               </ul>
@@ -155,7 +206,12 @@
           </div>
           <!-- contribute-->
           <div class="contribute">
-            <a if.bind="isCreator" t="summary:moderate-campaign" click.delegate="goToModerationPage()">MODERATE CAMPAIGN</a>
+            <a
+              if.bind="isCreator"
+              t="summary:moderate-campaign"
+              click.delegate="goToModerationPage()"
+              >MODERATE CAMPAIGN</a
+            >
           </div>
         </div>
       </div>
@@ -167,25 +223,46 @@
         <div class="topsection">
           <!-- label-->
           <div class="sectionlabel">
-            <div class="bold" t="summary:collections">COLLECTIONS</div><span t="summary:select-contribute">SELECT TO CONTRIBUTE</span>
+            <div class="bold" t="summary:collections">COLLECTIONS</div>
+            <span t="summary:select-contribute">SELECT TO CONTRIBUTE</span>
           </div>
         </div>
         <!-- campaign reel-->
         <div class="campaignlist">
           <!-- entry-->
-          <div class="entries row" ref="grid" >
-            <div class="entry col-md-4 ${col.dbId}" repeat.for="col of collections">
+          <div class="entries row" ref="grid">
+            <div
+              class="entry col-md-4 ${col.dbId}"
+              repeat.for="col of collections"
+            >
               <!-- wrap-->
-							<a click.delegate="goToCollection(col)">
-								<!-- thumb-->
-								<div class="thumbs">
-									<div class="thumbs-images thumbs-count-${col.absMedia.length}">
-										<img if.bind="col.absMedia.length" repeat.for="med of col.absMedia" src.bind="med" onError="this.src='/img/assets/img/ui/ic-noimage.png'" />
-                    <img else src="/img/assets/img/ui/ic-collection.png" class="empty-collection" />
-									</div>
-									<div if.bind="camp.status == 'active'" class="action" t="[append]app:contribute"><span class="plus">+ </span></div>
+              <a click.delegate="goToCollection(col)">
+                <!-- thumb-->
+                <div class="thumbs">
+                  <div
+                    class="thumbs-images thumbs-count-${col.absMedia.length}"
+                  >
+                    <img
+                      if.bind="col.absMedia.length"
+                      repeat.for="med of col.absMedia"
+                      src.bind="med"
+                      onError="this.src='/img/assets/img/ui/ic-noimage.png'"
+                    />
+                    <img
+                      else
+                      src="/img/assets/img/ui/ic-collection.png"
+                      class="empty-collection"
+                    />
+                  </div>
+                  <div
+                    if.bind="camp.status == 'active'"
+                    class="action"
+                    t="[append]app:contribute"
+                  >
+                    <span class="plus">+ </span>
+                  </div>
                   <div if.bind="camp.status !== 'active'" class="action"></div>
-								</div>
+                </div>
                 <!-- detail-->
                 <div class="detail">
                   <!-- count-->
@@ -194,7 +271,9 @@
                   </div>
                   <!-- title-->
                   <div class="desc">
-                    <div class="title">${col.title[loc] ? col.title[loc] : col.title.default}</div>
+                    <div class="title">
+                      ${col.title[loc] ? col.title[loc] : col.title.default}
+                    </div>
                   </div>
                 </div>
               </a>
@@ -202,8 +281,16 @@
           </div>
           <!-- more-->
           <div class="loadmore">
-            <a href="#" show.bind="!loading && more" click.delegate="loadMore()" t="app:loadmore">LOAD MORE</a>
-            <div class="more"><i show.bind="loading" class="fa fa-spinner fa-pulse"></i></div>
+            <a
+              href="#"
+              show.bind="!loading && more"
+              click.delegate="loadMore()"
+              t="app:loadmore"
+              >LOAD MORE</a
+            >
+            <div class="more">
+              <i show.bind="loading" class="fa fa-spinner fa-pulse"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -226,7 +313,10 @@
         </div> -->
         <div if.bind="points.length > 0" class="right">
           <!-- leaderboard-->
-          <compose view-model="widgets/leaderboard/leaderboard" model.bind="{ 'campaign': campaign, 'points': points}"></compose>
+          <compose
+            view-model="widgets/leaderboard/leaderboard"
+            model.bind="{ 'campaign': campaign, 'points': points}"
+          ></compose>
         </div>
       </div>
     </section>
