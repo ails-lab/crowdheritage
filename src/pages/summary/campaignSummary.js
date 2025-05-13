@@ -91,6 +91,7 @@ export class CampaignSummary {
     if (!instance) {
       instance = this;
     }
+    this.shouldShowContributionNote = false;
   }
 
   resetInstance() {
@@ -111,6 +112,7 @@ export class CampaignSummary {
     this.userBadgeName = "";
     this.userBadgeText = "";
     this.points = [];
+    this.shouldShowContributionNote = false;
   }
 
   get isAuthenticated() {
@@ -142,6 +144,14 @@ export class CampaignSummary {
         params.cname
       );
       this.campaign = new Campaign(campaignRawData, this.loc);
+    }
+    if (
+      this.campaign.title &&
+      (this.campaign.title.includes("Γενναδείου") ||
+        this.campaign.title.includes("Gennadius") ||
+        this.campaign.username.includes("gennadius"))
+    ) {
+      this.shouldShowContributionNote = true;
     }
     this.getUserPoints();
     if (this.userServices.isAuthenticated()) {
