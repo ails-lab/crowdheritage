@@ -74,6 +74,12 @@ export class CampaignSummary {
     this.thisVM = this;
     this.taskQueue = taskQueue;
     this.campaign = 0;
+    this.campaignStats = {
+      contributors: 0,
+      percentage: 0,
+      totalProgress: 0,
+    };
+    this.cname = "";
     this.collections = [];
     this.collectionsCount = 0;
     this.currentCount = 0;
@@ -145,11 +151,14 @@ export class CampaignSummary {
       );
       this.campaign = new Campaign(campaignRawData, this.loc);
     }
+    this.cname = params.cname;
+
     if (
       this.campaign.title &&
       (this.campaign.title.includes("Γενναδείου") ||
         this.campaign.title.includes("Gennadius") ||
-        this.campaign.username.includes("gennadius"))
+        this.campaign.username.includes("gennadius") ||
+        params.cname.includes("gennadius"))
     ) {
       this.shouldShowContributionNote = true;
     }
@@ -159,10 +168,32 @@ export class CampaignSummary {
     }
     route.navModel.setTitle(this.campaign.title);
     this.collectionsCount = this.campaign.targetCollections.length;
+    this.getCampaignStats();
     this.getCampaignCollections(this.campaign.targetCollections, 0, this.count);
     this.getUserStats();
     this.isCreator =
       this.isAuthenticated && this.campaign.creators.includes(this.user.dbId);
+  }
+
+  getCampaignStats() {
+    this.campaignServices.getCampaignStatistics(this.cname).then((res) => {
+      this.campaignStats.totalAnnotations = res["annotations-total"];
+      this.campaignStats.upvotes = res["upvotes"];
+      this.campaignStats.downvotes = res["downvotes"];
+      this.campaignStats.ratings = res["rates"];
+      this.campaignStats.contributors = res["contributors"];
+      this.campaignStats.totalProgress =
+        this.campaignStats.totalAnnotations +
+        this.campaignStats.upvotes +
+        this.campaignStats.downvotes +
+        this.campaignStats.ratings;
+      this.campaignStats.percentage = Math.min(
+        100,
+        Math.round(
+          (this.campaignStats.totalProgress / this.campaign.target) * 100
+        )
+      );
+    });
   }
 
   getUserStats() {
