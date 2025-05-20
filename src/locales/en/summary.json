@@ -23,12 +23,15 @@
   "daily": "DAILY CONTRIBUTIONS",
   "moderate-campaign": "MODERATE CAMPAIGN",
   "note": "Note:",
-  "gennadius-note-title": "Only CrowdHeritage users with specific permissions can contribute to this campaign.",
-  "gennadius-note-intro": "We would appreciate your contribution to improving the multilingual accessibility of the Gennadius scrapbooks collection! Your task will be to evaluate automatically produced translations from Greek to English and correct them, where needed.",
+  "gennadius-note-intro": "The Gennadius School of the American School of Classical Studies needs your help!",
   "gennadius-note-requirements": "If you are:",
   "gennadius-note-requirements-1": "a) fluent in Greek and English",
-  "gennadius-note-requirements-2": "b) familiar with 19th/early 20th century Greek history and the concepts associated with it",
+  "gennadius-note-requirements-2": "b) familiar with 19th/early 20th century Greek history",
   "gennadius-note-requirements-end": "you are the perfect fit!",
+  "gennadius-note-mission-1": "Your mission?",
+  "gennadius-note-mission-2": "Review and refine AI-generated translations from Greek to English - helping ensure these historical gems are accurately represented and accessible to a wider audience.",
+  "gennadius-note-mission-3": "Every contribution brings us one step closer to preserving and sharing Greece’s cultural heritage!",
+  "gennadius-note-permission": "After you are granted the necessary permissions, by signing into the platform, you will be able to participate in the campaign.",
   "gennadius-note-email-disclaimer": "If you wish to become a participant, please send an email to",
   "gennadius-note-email-disclaimer-end": "indicating your name, profession, and affiliation."
 }

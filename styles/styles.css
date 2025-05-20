@@ -1182,7 +1182,7 @@ body main section.campaigninfo .left .wrap .badges {
   justify-content: center;
 }
 body main section.campaigninfo .left .wrap .userstat {
-  width: 58%;
+  width: 100%;
   float: left;
   background-color: #f2f2f2;
   min-height: 390px;
@@ -1208,7 +1208,7 @@ body main section.campaigninfo .left .wrap .userstat ul.stats li {
   list-style: none;
   display: inline-block;
   font-family: "Dosis";
-  width: 28%;
+  width: 25%;
   float: left;
   margin-top: 15px;
 }
