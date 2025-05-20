@@ -32,13 +32,13 @@
         <div class="progress">
           <div
             role="progressbar"
-            aria-valuenow="${campaign.percentage}"
+            aria-valuenow="${campaignStats.percentage}"
             aria-valuemin="0"
             aria-valuemax="100"
-            style="width: ${campaign.percentage}%;"
+            style="width: ${campaignStats.percentage}%"
             class="progress-bar"
           >
-            <div class="labl">${campaign.percentage}%</div>
+            <div class="labl">${campaignStats.percentage}%</div>
           </div>
         </div>
         <!-- bg-->
@@ -55,18 +55,53 @@
         <div class="left">
           <!-- wrap-->
           <div class="wrap">
-            <!-- badge-->
-            <div class="badges" if.bind="isAuthenticated">
-              <img src.bind="userBadge" />
-              <p innerHtml.bind="userBadgeText"></p>
-            </div>
-            <!-- badge-->
-            <div class="badges" if.bind="!isAuthenticated">
-              <img src="/img/badges.png" />
-              <p innerHtml.bind="campaign.prizes.rookie"></p>
-            </div>
             <!-- user stat-->
             <div class="userstat" if.bind="isAuthenticated">
+              <compose
+                if.bind="shouldShowContributionNote"
+                view="widgets/gennadius-contribution-note/gennadius-contribution-note.html"
+              >
+              </compose>
+              <!-- stats-->
+              <!-- <ul class="stats" if.bind="userPoints>0">
+                <li if.bind="campaign.purpose == 'ANNOTATE'">
+                  <div class="lbl" t="app:tags">TAGS</div>
+                  <div class="val">${userTags}</div>
+                </li>
+                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
+                  <div class="lbl" t="user:upvotes">UPVOTES</div>
+                  <div class="val">${userUpvotes}</div>
+                </li>
+                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
+                  <div class="lbl" t="user:downvotes">DOWNVOTES</div>
+                  <div class="val">${userDownvotes}</div>
+                </li>
+                <li>
+                  <strong><div class="lbl" t="app:points">POINTS</div></strong>
+                  <div class="val">${userPoints}</div>
+                </li>
+                <li>
+                  <div class="lbl" t="summary:items">ITEMS</div>
+                  <div class="val">${userRecords}</div>
+                </li>
+                <li>
+                  <div class="lbl" t="summary:rank">CAMPAIGN RANK</div>
+                  <div class="val">${userRank}</div>
+                </li>
+                <li>
+                  <div class="lbl">KARMA</div>
+                  <div class="val">${userKarma}%</div>
+                </li>
+              </ul> -->
+              <!-- description-->
+              <div class="desc" t="[prepend]summary:description-left">
+                <a
+                  href="javascript:void(0)"
+                  click.delegate="scrollTo('#stats')"
+                  t="summary:description-right"
+                  >below</a
+                >.
+              </div>
               <!-- text-->
               <h1 if.bind="userPoints >= campaign.badges.bronze">
                 <span t="summary:congratulations">Congratulations</span>
@@ -90,59 +125,18 @@
                   >Start contributing to earn your first badge</span
                 >.
               </h1>
-              <!-- stats-->
-              <ul class="stats" if.bind="userPoints>0">
-                <li if.bind="campaign.purpose == 'ANNOTATE'">
-                  <div class="lbl" t="app:tags">TAGS</div>
-                  <div class="val">${userTags}</div>
-                </li>
-                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
-                  <div class="lbl" t="user:upvotes">UPVOTES</div>
-                  <div class="val">${userUpvotes}</div>
-                </li>
-                <li if.bind="campaign.feedbackMethod == 'UPVOTE'">
-                  <div class="lbl" t="user:downvotes">DOWNVOTES</div>
-                  <div class="val">${userDownvotes}</div>
-                </li>
-                <li>
-                  <strong><div class="lbl" t="app:points">POINTS</div></strong>
-                  <div class="val">${userPoints}</div>
-                </li>
-                <li>
-                  <div class="lbl" t="summary:items">ITEMS</div>
-                  <div class="val">${userRecords}</div>
-                </li>
-                <li class="wide">
-                  <div class="lbl" t="summary:rank">CAMPAIGN RANK</div>
-                  <div class="val">${userRank}</div>
-                </li>
-                <li>
-                  <div class="lbl">KARMA</div>
-                  <div class="val">${userKarma}%</div>
-                </li>
-
-                <!-- <li>
-                  <div class="lbl" t="summary:badge">BADGE</div>
-                  <div class="val">${userBadgeName}</div>
-                </li> -->
-              </ul>
-              <!-- description-->
-              <div class="desc" t="[prepend]summary:description-left">
-                <a
-                  href="javascript:void(0)"
-                  click.delegate="scrollTo('#stats')"
-                  t="summary:description-right"
-                  >below</a
-                >.
+              <div class="badges">
+                <img src.bind="userBadge" />
+                <p innerHtml.bind="userBadgeText"></p>
               </div>
+            </div>
+            <!-- user stat-->
+            <div class="userstat" if.bind="!isAuthenticated">
               <compose
                 if.bind="shouldShowContributionNote"
                 view="widgets/gennadius-contribution-note/gennadius-contribution-note.html"
               >
               </compose>
-            </div>
-            <!-- user stat-->
-            <div class="userstat" if.bind="!isAuthenticated">
               <!-- text-->
               <h1 t="[html]summary:badge-involved">
                 Get involved!<br />
@@ -158,11 +152,10 @@
                   >below</a
                 >.
               </div>
-              <compose
-                if.bind="shouldShowContributionNote"
-                view="widgets/gennadius-contribution-note/gennadius-contribution-note.html"
-              >
-              </compose>
+              <div class="badges">
+                <img src="/img/badges.png" />
+                <p innerHtml.bind="campaign.prizes.rookie"></p>
+              </div>
             </div>
           </div>
         </div>
@@ -183,16 +176,21 @@
                   <div class="val">${campaign.startDate | dateFormat}</div>
                   <br />
                   <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
-                  <div class="val">${campaign.contributorsCount}</div>
+                  <div if.bind="campaignStats.contributors" class="val">
+                    ${campaignStats.contributors}
+                  </div>
                 </li>
                 <li>
                   <div class="lbl" t="app:enddate">END DATE</div>
                   <div class="val">${campaign.endDate | dateFormat}</div>
                   <br />
                   <div class="lbl" t="app:progress">PROGRESS</div>
-                  <div class="val">
-                    ${campaign.percentage}%<small
-                      >${campaign.totalCurrent}/${campaign.target}</small
+                  <div
+                    if.bind="campaignStats.totalProgress && campaignStats.percentage"
+                    class="val"
+                  >
+                    ${campaignStats.percentage}%<small
+                      >${campaignStats.totalProgress}/${campaign.target}</small
                     >
                   </div>
                 </li>
