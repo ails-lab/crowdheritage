@@ -177,7 +177,7 @@ export class CampaignSummary {
 
   getCampaignStats() {
     this.campaignServices.getCampaignStatistics(this.cname).then((res) => {
-      this.campaignStats.totalAnnotations = res["annotations-total"];
+      this.campaignStats.totalAnnotations = res["annotations-human"];
       this.campaignStats.upvotes = res["upvotes"];
       this.campaignStats.downvotes = res["downvotes"];
       this.campaignStats.ratings = res["rates"];
