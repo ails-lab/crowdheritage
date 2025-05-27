@@ -62,7 +62,7 @@
                 view="widgets/gennadius-contribution-note/gennadius-contribution-note.html"
               >
               </compose>
-              <!-- stats-->
+              <!-- campaignStats-->
               <!-- <ul class="stats" if.bind="userPoints>0">
                 <li if.bind="campaign.purpose == 'ANNOTATE'">
                   <div class="lbl" t="app:tags">TAGS</div>
@@ -176,19 +176,14 @@
                   <div class="val">${campaign.startDate | dateFormat}</div>
                   <br />
                   <div class="lbl" t="app:contributors">CONTRIBUTORS</div>
-                  <div if.bind="campaignStats.contributors" class="val">
-                    ${campaignStats.contributors}
-                  </div>
+                  <div class="val">${campaignStats.contributors}</div>
                 </li>
                 <li>
                   <div class="lbl" t="app:enddate">END DATE</div>
                   <div class="val">${campaign.endDate | dateFormat}</div>
                   <br />
                   <div class="lbl" t="app:progress">PROGRESS</div>
-                  <div
-                    if.bind="campaignStats.totalProgress && campaignStats.percentage"
-                    class="val"
-                  >
+                  <div class="val">
                     ${campaignStats.percentage}%<small
                       >${campaignStats.totalProgress}/${campaign.target}</small
                     >

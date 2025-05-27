@@ -177,7 +177,7 @@ export class CampaignSummary {
 
   getCampaignStats() {
     this.campaignServices.getCampaignStatistics(this.cname).then((res) => {
-      this.campaignStats.totalAnnotations = res["annotations-total"];
+      this.campaignStats.totalAnnotations = res["annotations-human"];
       this.campaignStats.upvotes = res["upvotes"];
       this.campaignStats.downvotes = res["downvotes"];
       this.campaignStats.ratings = res["rates"];
@@ -187,11 +187,13 @@ export class CampaignSummary {
         this.campaignStats.upvotes +
         this.campaignStats.downvotes +
         this.campaignStats.ratings;
+      let percentage =
+        (this.campaignStats.totalProgress / this.campaign.target) * 100;
       this.campaignStats.percentage = Math.min(
         100,
-        Math.round(
-          (this.campaignStats.totalProgress / this.campaign.target) * 100
-        )
+        Number.isInteger(percentage)
+          ? percentage
+          : Math.round(percentage * 10) / 10
       );
     });
   }
