@@ -187,11 +187,13 @@ export class CampaignSummary {
         this.campaignStats.upvotes +
         this.campaignStats.downvotes +
         this.campaignStats.ratings;
+      let percentage =
+        (this.campaignStats.totalProgress / this.campaign.target) * 100;
       this.campaignStats.percentage = Math.min(
         100,
-        Math.round(
-          (this.campaignStats.totalProgress / this.campaign.target) * 100
-        )
+        Number.isInteger(percentage)
+          ? percentage
+          : Math.round(percentage * 10) / 10
       );
     });
   }
