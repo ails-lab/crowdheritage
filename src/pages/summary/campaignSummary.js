@@ -98,6 +98,14 @@ export class CampaignSummary {
       instance = this;
     }
     this.shouldShowContributionNote = false;
+    this.genColThumbnails = [
+      "/img/assets/images/collections/gennadius/gen_thumb_2.jpg",
+      "/img/assets/images/collections/gennadius/gen_thumb_1.jpeg",
+      // "/img/assets/images/collections/gennadius/gen_thumb_3.jpg",
+      "/img/assets/images/collections/gennadius/gen_thumb_4.jpg",
+      // "/img/assets/images/collections/gennadius/gen_thumb_5.jpeg",
+      // "/img/assets/images/collections/gennadius/gen_thumb_6.jpeg",
+    ];
   }
 
   resetInstance() {
@@ -291,7 +299,8 @@ export class CampaignSummary {
         }
         if (response.length > 0) {
           for (let i in response) {
-            self.collections.push(new Collection(response[i]));
+            const collection = new Collection(response[i]);
+            self.collections.push(collection);
           }
         }
       });
