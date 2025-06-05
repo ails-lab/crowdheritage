@@ -192,7 +192,7 @@
               </ul>
               <!-- organizer -->
               <div class="organizer" if.bind="campaign.logo">
-                <span class="info" innerHtml.bind="campaign.disclaimer"></span>
+                <div class="info" innerHtml.bind="campaign.disclaimer"></div>
                 <img class="logo" src.bind="campaign.logo" />
               </div>
             </div>
@@ -233,6 +233,17 @@
                 <!-- thumb-->
                 <div class="thumbs">
                   <div
+                    if.bind="col.titleDefault.toLowerCase().includes('gennadius')"
+                    class="thumbs-images thumbs-count-2"
+                  >
+                    <img
+                      repeat.for="med of genColThumbnails"
+                      src.bind="med"
+                      onError="this.src='/img/assets/img/ui/ic-noimage.png'"
+                    />
+                  </div>
+                  <div
+                    else
                     class="thumbs-images thumbs-count-${col.absMedia.length}"
                   >
                     <img
